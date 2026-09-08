@@ -1,0 +1,94 @@
+{
+  "@@locale": "es",
+
+  "appName": "Just In Time",
+
+  "navTasks": "Tareas",
+  "navSettings": "Ajustes",
+
+  "tasksTitle": "Just In Time",
+  "tasksEmptyTitle": "Nada pendiente todavía",
+  "tasksEmptyBody": "Agrega una tarea y dale un momento — aparecerá aquí, justo a tiempo.",
+  "tasksSectionOverdue": "Vencidas",
+  "tasksSectionToday": "Hoy",
+  "tasksSectionUpcoming": "Próximas",
+  "tasksSectionDone": "Completadas",
+  "tasksAdd": "Nueva tarea",
+  "tasksAddSheetTitle": "Nueva tarea",
+  "tasksEditSheetTitle": "Editar tarea",
+  "tasksFieldTitle": "Título",
+  "tasksFieldTitleHint": "¿Qué hay que hacer?",
+  "tasksFieldNotes": "Notas",
+  "tasksFieldNotesHint": "Agrega detalles (opcional)",
+  "tasksFieldDueDate": "Fecha límite",
+  "tasksFieldDueDateNone": "Sin fecha límite",
+  "tasksFieldPriority": "Prioridad",
+  "priorityLow": "Baja",
+  "priorityMedium": "Media",
+  "priorityHigh": "Alta",
+  "tasksSave": "Guardar",
+  "tasksCancel": "Cancelar",
+  "tasksDelete": "Eliminar",
+  "tasksDeleteConfirmTitle": "¿Eliminar tarea?",
+  "tasksDeleteConfirmBody": "\"{title}\" se eliminará de forma permanente.",
+  "@tasksDeleteConfirmBody": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "tasksMarkDone": "Marcar como completada",
+  "tasksMarkUndone": "Marcar como pendiente",
+  "tasksUndoSnackbar": "Tarea eliminada",
+  "tasksUndoAction": "Deshacer",
+  "tasksErrorEmptyTitle": "Ponle un título a la tarea primero",
+  "tasksCountRemaining": "{count, plural, =0{Todo al día} =1{1 tarea pendiente} other{{count} tareas pendientes}}",
+  "@tasksCountRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "settingsTitle": "Ajustes",
+  "settingsSectionAppearance": "Apariencia",
+  "settingsTheme": "Tema",
+  "settingsThemeSystem": "Sistema",
+  "settingsThemeLight": "Claro",
+  "settingsThemeDark": "Oscuro",
+  "settingsExpressiveColor": "Color expresivo",
+  "settingsExpressiveColorSubtitle": "Usa tonos Material 3 Expressive más vivos",
+  "settingsSectionLanguage": "Idioma",
+  "settingsLanguage": "Idioma de la app",
+  "settingsLanguageSystem": "Igual que el sistema",
+  "settingsSectionSecurity": "Seguridad",
+  "settingsAppLock": "Bloqueo de la app",
+  "settingsAppLockSubtitle": "Pide un PIN para abrir Just In Time",
+  "settingsChangePin": "Cambiar PIN",
+  "settingsSectionAbout": "Acerca de",
+  "settingsAboutVersion": "Versión {version}",
+  "@settingsAboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsAboutArchitecture": "Hecho con arquitectura hexagonal y Riverpod",
+
+  "lockTitle": "Ingresa tu PIN",
+  "lockSubtitle": "Just In Time está bloqueada",
+  "lockSetTitle": "Crea un PIN",
+  "lockSetSubtitle": "Lo necesitarás para desbloquear la app",
+  "lockConfirmTitle": "Confirma tu PIN",
+  "lockError": "PIN incorrecto, intenta de nuevo",
+  "lockMismatch": "Los PIN no coinciden",
+  "lockUnlock": "Desbloquear",
+
+  "commonRetry": "Reintentar",
+  "commonClose": "Cerrar",
+  "commonSomethingWrong": "Algo salió mal",
+  "commonLoading": "Cargando…"
+}

@@ -1,0 +1,97 @@
+{
+  "@@locale": "en",
+
+  "appName": "Just In Time",
+  "@appName": {
+    "description": "The application name, shown in the OS task switcher and window title."
+  },
+
+  "navTasks": "Tasks",
+  "navSettings": "Settings",
+
+  "tasksTitle": "Just In Time",
+  "tasksEmptyTitle": "Nothing due yet",
+  "tasksEmptyBody": "Add a task and give it a moment — it'll show up right here, just in time.",
+  "tasksSectionOverdue": "Overdue",
+  "tasksSectionToday": "Today",
+  "tasksSectionUpcoming": "Upcoming",
+  "tasksSectionDone": "Done",
+  "tasksAdd": "New task",
+  "tasksAddSheetTitle": "New task",
+  "tasksEditSheetTitle": "Edit task",
+  "tasksFieldTitle": "Title",
+  "tasksFieldTitleHint": "What needs to get done?",
+  "tasksFieldNotes": "Notes",
+  "tasksFieldNotesHint": "Add details (optional)",
+  "tasksFieldDueDate": "Due date",
+  "tasksFieldDueDateNone": "No due date",
+  "tasksFieldPriority": "Priority",
+  "priorityLow": "Low",
+  "priorityMedium": "Medium",
+  "priorityHigh": "High",
+  "tasksSave": "Save",
+  "tasksCancel": "Cancel",
+  "tasksDelete": "Delete",
+  "tasksDeleteConfirmTitle": "Delete task?",
+  "tasksDeleteConfirmBody": "\"{title}\" will be removed permanently.",
+  "@tasksDeleteConfirmBody": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "tasksMarkDone": "Mark as done",
+  "tasksMarkUndone": "Mark as not done",
+  "tasksUndoSnackbar": "Task deleted",
+  "tasksUndoAction": "Undo",
+  "tasksErrorEmptyTitle": "Give the task a title first",
+  "tasksCountRemaining": "{count, plural, =0{All caught up} =1{1 task left} other{{count} tasks left}}",
+  "@tasksCountRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "settingsTitle": "Settings",
+  "settingsSectionAppearance": "Appearance",
+  "settingsTheme": "Theme",
+  "settingsThemeSystem": "System",
+  "settingsThemeLight": "Light",
+  "settingsThemeDark": "Dark",
+  "settingsExpressiveColor": "Expressive color",
+  "settingsExpressiveColorSubtitle": "Use richer, more vivid Material 3 Expressive tones",
+  "settingsSectionLanguage": "Language",
+  "settingsLanguage": "App language",
+  "settingsLanguageSystem": "Match system",
+  "settingsSectionSecurity": "Security",
+  "settingsAppLock": "App lock",
+  "settingsAppLockSubtitle": "Require a PIN to open Just In Time",
+  "settingsChangePin": "Change PIN",
+  "settingsSectionAbout": "About",
+  "settingsAboutVersion": "Version {version}",
+  "@settingsAboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsAboutArchitecture": "Built with hexagonal architecture & Riverpod",
+
+  "lockTitle": "Enter your PIN",
+  "lockSubtitle": "Just In Time is locked",
+  "lockSetTitle": "Set a PIN",
+  "lockSetSubtitle": "You'll need it to unlock the app",
+  "lockConfirmTitle": "Confirm your PIN",
+  "lockError": "Incorrect PIN, try again",
+  "lockMismatch": "PINs don't match",
+  "lockUnlock": "Unlock",
+
+  "commonRetry": "Retry",
+  "commonClose": "Close",
+  "commonSomethingWrong": "Something went wrong",
+  "commonLoading": "Loading…"
+}

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Full quality gate before code leaves the machine. Runs the exact same
+# script as CI (tool/check.sh) so there is only one place to update.
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+bash tool/check.sh
