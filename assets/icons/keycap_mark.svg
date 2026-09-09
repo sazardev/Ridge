@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-465 -465 930 930">
+  <!-- The app's mark: a single mechanical-keyboard keycap seen from above.
+       Drawn as one evenodd path (outer body + inner "dish" cut out as a
+       hole) so it still reads as a keycap's bezel under the monochrome
+       tint applied in window_bar.dart, not a solid blob. -->
+  <path
+    fill="currentColor"
+    fill-rule="evenodd"
+    d="M -240,-400
+       L 240,-400
+       A 160,160 0 0 1 400,-240
+       L 400,240
+       A 160,160 0 0 1 240,400
+       L -240,400
+       A 160,160 0 0 1 -400,240
+       L -400,-240
+       A 160,160 0 0 1 -240,-400
+       Z
+       M -150,-260
+       L 150,-260
+       A 110,110 0 0 1 260,-150
+       L 260,150
+       A 110,110 0 0 1 150,260
+       L -150,260
+       A 110,110 0 0 1 -260,150
+       L -260,-150
+       A 110,110 0 0 1 -150,-260
+       Z"
+  />
+</svg>

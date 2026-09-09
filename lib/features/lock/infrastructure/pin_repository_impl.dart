@@ -12,6 +12,7 @@ import 'package:just_in_time/features/lock/domain/repositories/pin_repository.da
 /// of the PIN ever touches disk — the raw PIN lives in memory just long
 /// enough to be hashed.
 class PinRepositoryImpl implements PinRepository {
+  /// Creates the adapter over the given secure-storage instance.
   new(this._storage);
 
   final FlutterSecureStorage _storage;

@@ -8,9 +8,12 @@ part of 'settings_providers.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// Provides the [SettingsLocalDataSource] backed by shared preferences.
 
 @ProviderFor(settingsLocalDataSource)
 final settingsLocalDataSourceProvider = SettingsLocalDataSourceProvider._();
+
+/// Provides the [SettingsLocalDataSource] backed by shared preferences.
 
 final class SettingsLocalDataSourceProvider
     extends
@@ -20,6 +23,7 @@ final class SettingsLocalDataSourceProvider
           SettingsLocalDataSource
         >
     with $Provider<SettingsLocalDataSource> {
+  /// Provides the [SettingsLocalDataSource] backed by shared preferences.
   SettingsLocalDataSourceProvider._()
     : super(
         from: null,
@@ -57,8 +61,12 @@ final class SettingsLocalDataSourceProvider
 String _$settingsLocalDataSourceHash() =>
     r'1f12d9020fc66019fa70d90b573c70abc5cb1a76';
 
+/// Provides the [SettingsRepository] implementation used across the app.
+
 @ProviderFor(settingsRepository)
 final settingsRepositoryProvider = SettingsRepositoryProvider._();
+
+/// Provides the [SettingsRepository] implementation used across the app.
 
 final class SettingsRepositoryProvider
     extends
@@ -68,6 +76,7 @@ final class SettingsRepositoryProvider
           SettingsRepository
         >
     with $Provider<SettingsRepository> {
+  /// Provides the [SettingsRepository] implementation used across the app.
   SettingsRepositoryProvider._()
     : super(
         from: null,
@@ -105,8 +114,12 @@ final class SettingsRepositoryProvider
 String _$settingsRepositoryHash() =>
     r'84dd9cce65defe3e281a05ff8c1d0a5c60c2a0c0';
 
+/// Provides the [WatchSettingsUseCase] for observing preference changes.
+
 @ProviderFor(watchSettingsUseCase)
 final watchSettingsUseCaseProvider = WatchSettingsUseCaseProvider._();
+
+/// Provides the [WatchSettingsUseCase] for observing preference changes.
 
 final class WatchSettingsUseCaseProvider
     extends
@@ -116,6 +129,7 @@ final class WatchSettingsUseCaseProvider
           WatchSettingsUseCase
         >
     with $Provider<WatchSettingsUseCase> {
+  /// Provides the [WatchSettingsUseCase] for observing preference changes.
   WatchSettingsUseCaseProvider._()
     : super(
         from: null,
@@ -153,8 +167,12 @@ final class WatchSettingsUseCaseProvider
 String _$watchSettingsUseCaseHash() =>
     r'f7bf670dc3d4843a8460740751df3c94d41f0c1f';
 
+/// Provides the [UpdateSettingsUseCase] for persisting preference changes.
+
 @ProviderFor(updateSettingsUseCase)
 final updateSettingsUseCaseProvider = UpdateSettingsUseCaseProvider._();
+
+/// Provides the [UpdateSettingsUseCase] for persisting preference changes.
 
 final class UpdateSettingsUseCaseProvider
     extends
@@ -164,6 +182,7 @@ final class UpdateSettingsUseCaseProvider
           UpdateSettingsUseCase
         >
     with $Provider<UpdateSettingsUseCase> {
+  /// Provides the [UpdateSettingsUseCase] for persisting preference changes.
   UpdateSettingsUseCaseProvider._()
     : super(
         from: null,
@@ -201,11 +220,15 @@ final class UpdateSettingsUseCaseProvider
 String _$updateSettingsUseCaseHash() =>
     r'c79b153335835237122e5ad3d54568bb9ff85848';
 
+/// Exposes the current [AppSettings] and the mutations the UI can request.
+
 @ProviderFor(SettingsController)
 final settingsControllerProvider = SettingsControllerProvider._();
 
+/// Exposes the current [AppSettings] and the mutations the UI can request.
 final class SettingsControllerProvider
     extends $StreamNotifierProvider<SettingsController, AppSettings> {
+  /// Exposes the current [AppSettings] and the mutations the UI can request.
   SettingsControllerProvider._()
     : super(
         from: null,
@@ -226,7 +249,9 @@ final class SettingsControllerProvider
 }
 
 String _$settingsControllerHash() =>
-    r'd483b984b02c9fa357ec48dcc243ae3888281056';
+    r'f38b12cd6305ce75683f696f9d81d96cf4ace960';
+
+/// Exposes the current [AppSettings] and the mutations the UI can request.
 
 abstract class _$SettingsController extends $StreamNotifier<AppSettings> {
   Stream<AppSettings> build();

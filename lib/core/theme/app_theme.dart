@@ -5,26 +5,52 @@ import 'package:just_in_time/core/theme/app_motion.dart';
 import 'package:just_in_time/core/theme/app_shapes.dart';
 import 'package:just_in_time/core/theme/app_typography.dart';
 import 'package:just_in_time/core/theme/expressive_ink.dart';
+import 'package:just_in_time/features/settings/domain/entities/app_corner_style.dart';
+import 'package:just_in_time/features/settings/domain/entities/app_palette.dart';
 
 /// The app's whole design system in one place: Material 3 Expressive color
 /// and typography, but rendered completely flat — no shadows, no
 /// gradients, no elevation tint. Hierarchy comes from the tonal surface
 /// container roles instead, which is what keeps a flat UI from looking dead.
 abstract final class AppTheme {
-  static ThemeData light({bool expressiveColor = true}) =>
-      _build(brightness: Brightness.light, expressiveColor: expressiveColor);
+  /// The light [ThemeData] for [palette]/[cornerStyle], expressive-colored
+  /// unless [expressiveColor] is turned off.
+  static ThemeData light({
+    bool expressiveColor = true,
+    AppPaletteId palette = AppPaletteId.ember,
+    AppCornerStyle cornerStyle = AppCornerStyle.soft,
+  }) => _build(
+    brightness: Brightness.light,
+    expressiveColor: expressiveColor,
+    palette: palette,
+    cornerStyle: cornerStyle,
+  );
 
-  static ThemeData dark({bool expressiveColor = true}) =>
-      _build(brightness: Brightness.dark, expressiveColor: expressiveColor);
+  /// The dark [ThemeData] for [palette]/[cornerStyle], expressive-colored
+  /// unless [expressiveColor] is turned off.
+  static ThemeData dark({
+    bool expressiveColor = true,
+    AppPaletteId palette = AppPaletteId.ember,
+    AppCornerStyle cornerStyle = AppCornerStyle.soft,
+  }) => _build(
+    brightness: Brightness.dark,
+    expressiveColor: expressiveColor,
+    palette: palette,
+    cornerStyle: cornerStyle,
+  );
 
   static ThemeData _build({
     required Brightness brightness,
     required bool expressiveColor,
+    required AppPaletteId palette,
+    required AppCornerStyle cornerStyle,
   }) {
     final colorScheme = buildColorScheme(
       brightness: brightness,
       expressive: expressiveColor,
+      palette: palette,
     );
+    final shapes = AppShapeTheme.forStyle(cornerStyle);
     final base = ThemeData(
       colorScheme: colorScheme,
       brightness: brightness,
@@ -34,6 +60,7 @@ abstract final class AppTheme {
     final textTheme = buildAppTextTheme(base.textTheme);
 
     return base.copyWith(
+      extensions: [shapes],
       textTheme: textTheme,
       primaryTextTheme: textTheme,
       scaffoldBackgroundColor: colorScheme.surface,
@@ -66,7 +93,7 @@ abstract final class AppTheme {
         color: colorScheme.surfaceContainerLow,
         surfaceTintColor: Colors.transparent,
         shadowColor: Colors.transparent,
-        shape: AppShapes.large,
+        shape: shapes.largeShape,
       ),
 
       chipTheme: ChipThemeData(
@@ -77,7 +104,7 @@ abstract final class AppTheme {
         surfaceTintColor: Colors.transparent,
         shadowColor: Colors.transparent,
         side: BorderSide.none,
-        shape: AppShapes.small,
+        shape: shapes.smallShape,
         labelStyle: textTheme.labelLarge,
       ),
 
@@ -90,7 +117,7 @@ abstract final class AppTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           elevation: 0,
-          shape: AppShapes.full,
+          shape: shapes.fullShape,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           textStyle: textTheme.labelLarge,
           animationDuration: AppMotion.effectsDefault,
@@ -100,8 +127,8 @@ abstract final class AppTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           elevation: 0,
-          shape: AppShapes.full,
-          side: BorderSide(color: colorScheme.outline),
+          shape: shapes.fullShape,
+          side: BorderSide.none,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           textStyle: textTheme.labelLarge,
         ),
@@ -110,7 +137,7 @@ abstract final class AppTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           elevation: 0,
-          shape: AppShapes.full,
+          shape: shapes.fullShape,
           textStyle: textTheme.labelLarge,
         ),
       ),
@@ -120,14 +147,14 @@ abstract final class AppTheme {
           elevation: 0,
           shadowColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
-          shape: AppShapes.full,
+          shape: shapes.fullShape,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         ),
       ),
 
       iconButtonTheme: IconButtonThemeData(
         style: IconButton.styleFrom(
-          shape: AppShapes.full,
+          shape: shapes.fullShape,
           highlightColor: Colors.transparent,
         ),
       ),
@@ -138,7 +165,7 @@ abstract final class AppTheme {
         focusElevation: 0,
         highlightElevation: 0,
         disabledElevation: 0,
-        shape: AppShapes.largeIncreased,
+        shape: shapes.largeIncreasedShape,
         backgroundColor: colorScheme.primaryContainer,
         foregroundColor: colorScheme.onPrimaryContainer,
       ),
@@ -150,7 +177,7 @@ abstract final class AppTheme {
         surfaceTintColor: Colors.transparent,
         shadowColor: Colors.transparent,
         indicatorColor: colorScheme.secondaryContainer,
-        indicatorShape: AppShapes.medium,
+        indicatorShape: shapes.mediumShape,
         labelTextStyle: WidgetStateProperty.resolveWith(
           (states) => textTheme.labelMedium?.copyWith(
             color: states.contains(WidgetState.selected)
@@ -167,7 +194,7 @@ abstract final class AppTheme {
         elevation: 0,
         backgroundColor: colorScheme.surfaceContainer,
         useIndicator: true,
-        indicatorShape: AppShapes.medium,
+        indicatorShape: shapes.mediumShape,
         indicatorColor: colorScheme.secondaryContainer,
         selectedLabelTextStyle: textTheme.labelMedium?.copyWith(
           color: colorScheme.onSurface,
@@ -183,7 +210,7 @@ abstract final class AppTheme {
         surfaceTintColor: Colors.transparent,
         shadowColor: Colors.transparent,
         backgroundColor: colorScheme.surfaceContainerHigh,
-        shape: AppShapes.extraLarge,
+        shape: shapes.extraLargeShape,
         titleTextStyle: textTheme.headlineSmall?.copyWith(
           color: colorScheme.onSurface,
         ),
@@ -195,9 +222,9 @@ abstract final class AppTheme {
         surfaceTintColor: Colors.transparent,
         shadowColor: Colors.transparent,
         backgroundColor: colorScheme.surfaceContainerHigh,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            top: Radius.circular(AppRadius.extraLarge),
+            top: Radius.circular(shapes.extraLarge),
           ),
         ),
       ),
@@ -210,14 +237,14 @@ abstract final class AppTheme {
         ),
         actionTextColor: colorScheme.inversePrimary,
         behavior: SnackBarBehavior.floating,
-        shape: AppShapes.medium,
+        shape: shapes.mediumShape,
       ),
 
       segmentedButtonTheme: SegmentedButtonThemeData(
         style: SegmentedButton.styleFrom(
           elevation: 0,
-          shape: AppShapes.full,
-          side: BorderSide(color: colorScheme.outlineVariant),
+          shape: shapes.fullShape,
+          side: BorderSide.none,
         ),
       ),
 
@@ -227,23 +254,32 @@ abstract final class AppTheme {
 
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: colorScheme.surfaceContainerHighest,
-        border: OutlineInputBorder(
-          borderRadius: AppShapes.squircleRadius(AppRadius.medium),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: AppShapes.squircleRadius(AppRadius.medium),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: AppShapes.squircleRadius(AppRadius.medium),
-          borderSide: BorderSide(color: colorScheme.primary, width: 2),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: AppShapes.squircleRadius(AppRadius.medium),
-          borderSide: BorderSide(color: colorScheme.error, width: 1.5),
-        ),
+        // No border on any state — focus/error read through the fill color
+        // tinting instead, keeping with the tonal-surface hierarchy used
+        // everywhere else in this theme.
+        fillColor: WidgetStateColor.resolveWith((states) {
+          final resting = colorScheme.surfaceContainerHighest;
+          if (states.contains(WidgetState.disabled)) return resting;
+          if (states.contains(WidgetState.error)) {
+            return Color.alphaBlend(
+              colorScheme.error.withValues(alpha: 0.1),
+              resting,
+            );
+          }
+          if (states.contains(WidgetState.focused)) {
+            return Color.alphaBlend(
+              colorScheme.primary.withValues(alpha: 0.1),
+              resting,
+            );
+          }
+          return resting;
+        }),
+        border: _noInputBorder(shapes),
+        enabledBorder: _noInputBorder(shapes),
+        focusedBorder: _noInputBorder(shapes),
+        errorBorder: _noInputBorder(shapes),
+        focusedErrorBorder: _noInputBorder(shapes),
+        disabledBorder: _noInputBorder(shapes),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 18,
@@ -255,13 +291,13 @@ abstract final class AppTheme {
         backgroundColor: colorScheme.surfaceContainerHigh,
         surfaceTintColor: Colors.transparent,
         shadowColor: Colors.transparent,
-        shape: AppShapes.extraLarge,
+        shape: shapes.extraLargeShape,
       ),
 
       timePickerTheme: TimePickerThemeData(
         elevation: 0,
         backgroundColor: colorScheme.surfaceContainerHigh,
-        shape: AppShapes.extraLarge,
+        shape: shapes.extraLargeShape,
       ),
 
       progressIndicatorTheme: ProgressIndicatorThemeData(
@@ -278,4 +314,10 @@ abstract final class AppTheme {
       ),
     );
   }
+
+  static OutlineInputBorder _noInputBorder(AppShapeTheme shapes) =>
+      OutlineInputBorder(
+        borderRadius: AppShapes.squircleRadius(shapes.medium),
+        borderSide: BorderSide.none,
+      );
 }

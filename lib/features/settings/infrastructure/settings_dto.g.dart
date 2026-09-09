@@ -10,6 +10,12 @@ _SettingsDto _$SettingsDtoFromJson(Map<String, dynamic> json) => _SettingsDto(
   themeMode: json['themeMode'] as String,
   expressiveColor: json['expressiveColor'] as bool,
   appLockEnabled: json['appLockEnabled'] as bool,
+  windowBorderEnabled: json['windowBorderEnabled'] as bool? ?? true,
+  windowBorderWidth: json['windowBorderWidth'] as String? ?? 'medium',
+  cornerStyle: json['cornerStyle'] as String? ?? 'soft',
+  palette: json['palette'] as String? ?? 'ember',
+  soundPack: json['soundPack'] as String? ?? 'mechanical',
+  onboardingCompleted: json['onboardingCompleted'] as bool? ?? false,
   languageCode: json['languageCode'] as String?,
 );
 
@@ -18,5 +24,11 @@ Map<String, dynamic> _$SettingsDtoToJson(_SettingsDto instance) =>
       'themeMode': instance.themeMode,
       'expressiveColor': instance.expressiveColor,
       'appLockEnabled': instance.appLockEnabled,
+      'windowBorderEnabled': instance.windowBorderEnabled,
+      'windowBorderWidth': instance.windowBorderWidth,
+      'cornerStyle': instance.cornerStyle,
+      'palette': instance.palette,
+      'soundPack': instance.soundPack,
+      'onboardingCompleted': instance.onboardingCompleted,
       'languageCode': instance.languageCode,
     };

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:just_in_time/core/theme/app_palette_catalog.dart';
+import 'package:just_in_time/features/settings/domain/entities/app_palette.dart';
 
-/// Single seed for the whole app — a vivid, punctual amber-orange that
-/// reads as "on time" rather than alarming red. Every other color in the
-/// app is derived from this seed through Material 3's color system.
+/// App-wide colors that live outside the user-selectable [ColorScheme].
 abstract final class AppColors {
+  /// The app's original single-hue brand seed — also [AppPaletteId.ember],
+  /// the default palette.
   static const seed = Color(0xFFFF5A36);
 }
 
+/// Builds the app's [ColorScheme] for the given [brightness] and [palette],
+/// either the vivid Material 3 Expressive variant or the more conservative
+/// tonal one depending on [expressive]. See [AppPaletteCatalog] for what
+/// each palette actually looks like.
 ColorScheme buildColorScheme({
   required Brightness brightness,
   required bool expressive,
+  AppPaletteId palette = AppPaletteId.ember,
 }) {
-  return ColorScheme.fromSeed(
-    seedColor: AppColors.seed,
-    brightness: brightness,
-    dynamicSchemeVariant: expressive
-        ? DynamicSchemeVariant.expressive
-        : DynamicSchemeVariant.tonalSpot,
-  );
+  return AppPaletteCatalog.of(palette)
+      .buildScheme(brightness: brightness, expressive: expressive);
 }

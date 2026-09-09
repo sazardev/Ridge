@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:just_in_time/core/theme/app_shapes.dart';
 
+/// A titled card grouping related settings tiles, per the flat design
+/// system (see `AppShapes`, `app_theme.dart`).
 class SettingsSection extends StatelessWidget {
+  /// Creates a settings section labeled [title] wrapping [children].
   const new({required this.title, required this.children, super.key});
 
+  /// Section label shown above the card.
   final String title;
+
+  /// The tiles rendered inside the card.
   final List<Widget> children;
 
   @override
@@ -28,7 +34,7 @@ class SettingsSection extends StatelessWidget {
           ),
           Material(
             color: colorScheme.surfaceContainerLow,
-            shape: AppShapes.large,
+            shape: AppShapes.of(context).largeShape,
             clipBehavior: Clip.antiAlias,
             child: Column(children: children),
           ),

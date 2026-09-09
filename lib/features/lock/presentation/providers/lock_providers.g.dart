@@ -8,13 +8,17 @@ part of 'lock_providers.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// Provides the [PinRepository] implementation used across the app.
 
 @ProviderFor(pinRepository)
 final pinRepositoryProvider = PinRepositoryProvider._();
 
+/// Provides the [PinRepository] implementation used across the app.
+
 final class PinRepositoryProvider
     extends $FunctionalProvider<PinRepository, PinRepository, PinRepository>
     with $Provider<PinRepository> {
+  /// Provides the [PinRepository] implementation used across the app.
   PinRepositoryProvider._()
     : super(
         from: null,
@@ -50,12 +54,17 @@ final class PinRepositoryProvider
 
 String _$pinRepositoryHash() => r'cccf06dadc3f69d1da32a5397dc0f5f20b2fc4fb';
 
+/// Provides the [SetPinUseCase] for setting/replacing the app-lock PIN.
+
 @ProviderFor(setPinUseCase)
 final setPinUseCaseProvider = SetPinUseCaseProvider._();
+
+/// Provides the [SetPinUseCase] for setting/replacing the app-lock PIN.
 
 final class SetPinUseCaseProvider
     extends $FunctionalProvider<SetPinUseCase, SetPinUseCase, SetPinUseCase>
     with $Provider<SetPinUseCase> {
+  /// Provides the [SetPinUseCase] for setting/replacing the app-lock PIN.
   SetPinUseCaseProvider._()
     : super(
         from: null,
@@ -91,8 +100,12 @@ final class SetPinUseCaseProvider
 
 String _$setPinUseCaseHash() => r'9d22b633a7f9b98f9d2a97281a11ae4929e2bb72';
 
+/// Provides the [VerifyPinUseCase] for checking a candidate PIN.
+
 @ProviderFor(verifyPinUseCase)
 final verifyPinUseCaseProvider = VerifyPinUseCaseProvider._();
+
+/// Provides the [VerifyPinUseCase] for checking a candidate PIN.
 
 final class VerifyPinUseCaseProvider
     extends
@@ -102,6 +115,7 @@ final class VerifyPinUseCaseProvider
           VerifyPinUseCase
         >
     with $Provider<VerifyPinUseCase> {
+  /// Provides the [VerifyPinUseCase] for checking a candidate PIN.
   VerifyPinUseCaseProvider._()
     : super(
         from: null,
@@ -137,13 +151,18 @@ final class VerifyPinUseCaseProvider
 
 String _$verifyPinUseCaseHash() => r'fa30d12892a992101d7a04d7f8b11c19039530bc';
 
+/// Provides the [ClearPinUseCase] for disabling the app-lock.
+
 @ProviderFor(clearPinUseCase)
 final clearPinUseCaseProvider = ClearPinUseCaseProvider._();
+
+/// Provides the [ClearPinUseCase] for disabling the app-lock.
 
 final class ClearPinUseCaseProvider
     extends
         $FunctionalProvider<ClearPinUseCase, ClearPinUseCase, ClearPinUseCase>
     with $Provider<ClearPinUseCase> {
+  /// Provides the [ClearPinUseCase] for disabling the app-lock.
   ClearPinUseCaseProvider._()
     : super(
         from: null,
@@ -179,12 +198,17 @@ final class ClearPinUseCaseProvider
 
 String _$clearPinUseCaseHash() => r'59a8f0115a25041065340ea1f12b4ffdeb427783';
 
+/// Whether an app-lock PIN has already been set.
+
 @ProviderFor(hasPin)
 final hasPinProvider = HasPinProvider._();
+
+/// Whether an app-lock PIN has already been set.
 
 final class HasPinProvider
     extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
     with $FutureModifier<bool>, $FutureProvider<bool> {
+  /// Whether an app-lock PIN has already been set.
   HasPinProvider._()
     : super(
         from: null,

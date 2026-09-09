@@ -7,6 +7,7 @@ import 'package:just_in_time/core/theme/app_motion.dart';
 /// shake when [errorTick] changes — the only "loud" motion in the whole
 /// design system, reserved for a genuine mistake.
 class PinDots extends StatelessWidget {
+  /// Creates the dot row for a PIN of the given [length].
   const new({
     required this.length,
     required this.filled,
@@ -14,8 +15,14 @@ class PinDots extends StatelessWidget {
     super.key,
   });
 
+  /// Total number of PIN digits (dots to render).
   final int length;
+
+  /// How many digits have been entered so far (dots to fill).
   final int filled;
+
+  /// Bumped by the caller on a wrong PIN to trigger the shake animation;
+  /// any change (not the value itself) is what triggers it.
   final int errorTick;
 
   @override

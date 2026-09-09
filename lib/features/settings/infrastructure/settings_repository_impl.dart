@@ -12,6 +12,7 @@ import 'package:just_in_time/features/settings/infrastructure/settings_mapper.da
 /// stream alone wouldn't replay anything to a listener that joins after
 /// the last emission.
 class SettingsRepositoryImpl implements SettingsRepository {
+  /// Creates the adapter and immediately starts hydrating from storage.
   new(this._dataSource) {
     _controller = StreamController<AppSettings>.broadcast(
       onListen: () => _controller.add(_current),

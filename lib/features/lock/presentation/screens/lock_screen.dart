@@ -6,18 +6,28 @@ import 'package:go_router/go_router.dart';
 
 import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/core/theme/app_motion.dart';
+import 'package:just_in_time/core/window/window_bar.dart';
 import 'package:just_in_time/features/lock/presentation/providers/lock_providers.dart';
 import 'package:just_in_time/features/lock/presentation/widgets/numeric_keypad.dart';
 import 'package:just_in_time/features/lock/presentation/widgets/pin_dots.dart';
 
-enum LockScreenMode { unlock, setup }
+/// Which of the two flows [LockScreen] is running.
+enum LockScreenMode {
+  /// Asks for the existing PIN once and unlocks the session on a match.
+  unlock,
+
+  /// Asks for a new PIN twice (set, then confirm) and persists it.
+  setup,
+}
 
 /// Gate screen used two ways: as the redirect target when the app is
 /// locked (`unlock`), and pushed from Settings to create a new PIN
 /// (`setup`, which asks twice and pops `true` on success).
 class LockScreen extends ConsumerStatefulWidget {
+  /// Creates the lock screen for the given [mode].
   const new({required this.mode, super.key});
 
+  /// Which flow this instance runs — see [LockScreenMode].
   final LockScreenMode mode;
 
   @override
@@ -60,7 +70,7 @@ class _LockScreenState extends ConsumerState<LockScreen> {
     if (!mounted) return;
     if (result.valueOrNull ?? false) {
       ref.read(appLockSessionProvider.notifier).unlock();
-      context.go('/tasks');
+      context.go('/practice');
       return;
     }
     setState(() {
@@ -123,48 +133,61 @@ class _LockScreenState extends ConsumerState<LockScreen> {
     };
 
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.lock_outline_rounded,
-                  size: 40,
-                  color: colorScheme.primary,
-                ),
-                const SizedBox(height: 24),
-                AnimatedSwitcher(
-                  duration: AppMotion.effectsDefault,
-                  child: Text(
-                    title,
-                    key: ValueKey(title),
-                    style: textTheme.headlineSmall,
-                    textAlign: TextAlign.center,
+      body: Column(
+        children: [
+          const WindowBar(),
+          Expanded(
+            child: SafeArea(
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 32,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.lock_outline_rounded,
+                        size: 40,
+                        color: colorScheme.primary,
+                      ),
+                      const SizedBox(height: 24),
+                      AnimatedSwitcher(
+                        duration: AppMotion.effectsDefault,
+                        child: Text(
+                          title,
+                          key: ValueKey(title),
+                          style: textTheme.headlineSmall,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        subtitle,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 40),
+                      PinDots(
+                        length: _pinLength,
+                        filled: _buffer.length,
+                        errorTick: _errorTick,
+                      ),
+                      const SizedBox(height: 40),
+                      NumericKeypad(
+                        onDigit: _onDigit,
+                        onBackspace: _onBackspace,
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  subtitle,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 40),
-                PinDots(
-                  length: _pinLength,
-                  filled: _buffer.length,
-                  errorTick: _errorTick,
-                ),
-                const SizedBox(height: 40),
-                NumericKeypad(onDigit: _onDigit, onBackspace: _onBackspace),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

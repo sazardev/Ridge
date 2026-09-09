@@ -8,13 +8,23 @@ part of 'app_router.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// The app's single [GoRouter], reactive to auth/lock and settings state via
+/// [_RouterRefreshNotifier] so a change in either redirects immediately
+/// without waiting for the next navigation event.
 
 @ProviderFor(appRouter)
 final appRouterProvider = AppRouterProvider._();
 
+/// The app's single [GoRouter], reactive to auth/lock and settings state via
+/// [_RouterRefreshNotifier] so a change in either redirects immediately
+/// without waiting for the next navigation event.
+
 final class AppRouterProvider
     extends $FunctionalProvider<GoRouter, GoRouter, GoRouter>
     with $Provider<GoRouter> {
+  /// The app's single [GoRouter], reactive to auth/lock and settings state via
+  /// [_RouterRefreshNotifier] so a change in either redirects immediately
+  /// without waiting for the next navigation event.
   AppRouterProvider._()
     : super(
         from: null,
@@ -48,4 +58,4 @@ final class AppRouterProvider
   }
 }
 
-String _$appRouterHash() => r'9a63f81ec2f205d91818c87f97e3e21e5ece3fd1';
+String _$appRouterHash() => r'3a199ef18eacc6e764b3cdc75d7d49c5ba97ea06';

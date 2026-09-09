@@ -10,12 +10,20 @@ part 'settings_dto.g.dart';
 /// logic — only `SettingsMapper` needs to change.
 @freezed
 abstract class SettingsDto with _$SettingsDto {
+  /// Creates a DTO snapshot ready for JSON serialization.
   const factory({
     required String themeMode,
     required bool expressiveColor,
     required bool appLockEnabled,
+    @Default(true) bool windowBorderEnabled,
+    @Default('medium') String windowBorderWidth,
+    @Default('soft') String cornerStyle,
+    @Default('ember') String palette,
+    @Default('mechanical') String soundPack,
+    @Default(false) bool onboardingCompleted,
     String? languageCode,
   }) = _SettingsDto;
 
+  /// Deserializes a DTO from decoded JSON.
   factory fromJson(Map<String, Object?> json) => _$SettingsDtoFromJson(json);
 }

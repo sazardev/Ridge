@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
+/// Font family names registered in `pubspec.yaml`.
 abstract final class AppFonts {
+  /// General UI text.
   static const sans = 'Geist';
+
+  /// Monospaced text — due-date stamps, PIN digits, and (in this repo's
+  /// design system) the app-wide type scale, see [buildAppTextTheme].
   static const mono = 'GeistMono';
 }
 
@@ -41,6 +46,7 @@ TextTheme buildAppTextTheme(TextTheme base) {
 /// Tabular figures for the spots that align digits vertically — due-date
 /// stamps, PIN dots, counters.
 extension TabularFigures on TextStyle {
+  /// This style with fixed-width (tabular) figures enabled.
   TextStyle get tabular =>
       copyWith(fontFeatures: const [FontFeature.tabularFigures()]);
 }

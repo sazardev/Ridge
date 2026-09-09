@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:just_in_time/core/theme/app_motion.dart';
 import 'package:just_in_time/core/theme/app_shapes.dart';
 
+/// A 0-9 numeric pad with a backspace key, laid out for PIN entry.
 class NumericKeypad extends StatelessWidget {
+  /// Creates the keypad, invoking [onDigit] or [onBackspace] on tap.
   const new({required this.onDigit, required this.onBackspace, super.key});
 
+  /// Called with the tapped digit ('0'-'9').
   final ValueChanged<String> onDigit;
+
+  /// Called when the backspace key is tapped.
   final VoidCallback onBackspace;
 
   static const _layout = [
@@ -76,7 +81,7 @@ class _KeypadButtonState extends State<_KeypadButton> {
       curve: AppMotion.spatial,
       child: Material(
         color: enabled ? colorScheme.surfaceContainerHigh : Colors.transparent,
-        shape: AppShapes.full,
+        shape: AppShapes.of(context).fullShape,
         child: InkWell(
           customBorder: const CircleBorder(),
           onTap: widget.onTap,

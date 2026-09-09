@@ -42,6 +42,8 @@ double _getTargetRadius(
 /// language (`paintInkCircle`) but tuned to [AppMotion]'s spatial spring so
 /// every tap reads as part of the same expressive motion system.
 class ExpressiveInkFeatureFactory extends InteractiveInkFeatureFactory {
+  /// Creates the factory — stateless, safe to use as a `const` splash
+  /// factory in a [ThemeData].
   const new();
 
   @override
@@ -74,6 +76,8 @@ class ExpressiveInkFeatureFactory extends InteractiveInkFeatureFactory {
   }
 }
 
+/// The app-wide `InkWell`/`InkResponse` splash factory — set once on
+/// [ThemeData.splashFactory] in `app_theme.dart`.
 const expressiveSplashFactory = ExpressiveInkFeatureFactory();
 
 const _fadeInDuration = Duration(milliseconds: 90);

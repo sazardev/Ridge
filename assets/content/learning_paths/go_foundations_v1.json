@@ -1,0 +1,369 @@
+[
+  {
+    "id": "go-foundations-v1",
+    "language": "go",
+    "lessons": [
+      {
+        "id": "go-foundations-v1-o2-step01",
+        "snippetId": "go-vars-001",
+        "order": 1,
+        "titleEn": "Short variable declarations",
+        "titleEs": "Declaraciones de variables cortas"
+      },
+      {
+        "id": "go-foundations-v1-o2-step02",
+        "snippetId": "go-vars-004",
+        "order": 2,
+        "titleEn": "Swap two variables",
+        "titleEs": "Intercambiar dos variables"
+      },
+      {
+        "id": "go-foundations-v1-o2-step03",
+        "snippetId": "go-vars-002",
+        "order": 3,
+        "titleEn": "Day-of-week constants (iota)",
+        "titleEs": "Constantes de días de la semana (iota)"
+      },
+      {
+        "id": "go-foundations-v1-o2-step04",
+        "snippetId": "go-vars-009",
+        "order": 4,
+        "titleEn": "Byte-size constants (iota shift)",
+        "titleEs": "Constantes de tamaño en bytes (iota con desplazamiento)"
+      },
+      {
+        "id": "go-foundations-v1-o2-step05",
+        "snippetId": "go-vars-005",
+        "order": 5,
+        "titleEn": "Celsius/Fahrenheit named types",
+        "titleEs": "Tipos con nombre Celsius/Fahrenheit"
+      },
+      {
+        "id": "go-foundations-v1-o2-step06",
+        "snippetId": "go-vars-006",
+        "order": 6,
+        "titleEn": "Parse a port number",
+        "titleEs": "Analizar un número de puerto"
+      },
+      {
+        "id": "go-foundations-v1-o2-step07",
+        "snippetId": "go-vars-007",
+        "order": 7,
+        "titleEn": "File mode bit flags",
+        "titleEs": "Flags de bits para modo de archivo"
+      },
+      {
+        "id": "go-foundations-v1-o2-step08",
+        "snippetId": "go-vars-008",
+        "order": 8,
+        "titleEn": "Weekday Stringer",
+        "titleEs": "Stringer para Weekday"
+      },
+      {
+        "id": "go-foundations-v1-o2-step09",
+        "snippetId": "go-vars-003",
+        "order": 9,
+        "titleEn": "Format dimensions with type conversion",
+        "titleEs": "Formatear dimensiones con conversión de tipos"
+      },
+      {
+        "id": "go-foundations-v1-o2-step10",
+        "snippetId": "go-slice-001",
+        "order": 10,
+        "titleEn": "Slice literal + append",
+        "titleEs": "Literal de slice + append"
+      },
+      {
+        "id": "go-foundations-v1-o2-step11",
+        "snippetId": "go-slice-002",
+        "order": 11,
+        "titleEn": "Word frequency count",
+        "titleEs": "Conteo de frecuencia de palabras"
+      },
+      {
+        "id": "go-foundations-v1-o2-step12",
+        "snippetId": "go-slice-003",
+        "order": 12,
+        "titleEn": "Group words by length",
+        "titleEs": "Agrupar palabras por longitud"
+      },
+      {
+        "id": "go-foundations-v1-o2-step13",
+        "snippetId": "go-slice-004",
+        "order": 13,
+        "titleEn": "Dedupe a slice in place",
+        "titleEs": "Eliminar duplicados de un slice in situ"
+      },
+      {
+        "id": "go-foundations-v1-o2-step14",
+        "snippetId": "go-cond-001",
+        "order": 14,
+        "titleEn": "Guard clause: if err != nil",
+        "titleEs": "Cláusula de guarda: if err != nil"
+      },
+      {
+        "id": "go-foundations-v1-o2-step15",
+        "snippetId": "go-cond-003",
+        "order": 15,
+        "titleEn": "Comma-ok map lookup",
+        "titleEs": "Búsqueda en mapa con comma-ok"
+      },
+      {
+        "id": "go-foundations-v1-o2-step16",
+        "snippetId": "go-cond-004",
+        "order": 16,
+        "titleEn": "Max of two ints",
+        "titleEs": "Máximo de dos enteros"
+      },
+      {
+        "id": "go-foundations-v1-o2-step17",
+        "snippetId": "go-cond-009",
+        "order": 17,
+        "titleEn": "Multi-value case clause",
+        "titleEs": "Cláusula case con varios valores"
+      },
+      {
+        "id": "go-foundations-v1-o2-step18",
+        "snippetId": "go-cond-006",
+        "order": 18,
+        "titleEn": "Comma-ok type assertion",
+        "titleEs": "Aserción de tipo con comma-ok"
+      },
+      {
+        "id": "go-foundations-v1-o2-step19",
+        "snippetId": "go-cond-002",
+        "order": 19,
+        "titleEn": "HTTP status category (switch)",
+        "titleEs": "Categoría de estado HTTP (switch)"
+      },
+      {
+        "id": "go-foundations-v1-o2-step20",
+        "snippetId": "go-cond-008",
+        "order": 20,
+        "titleEn": "Switch with fallthrough",
+        "titleEs": "Switch con fallthrough"
+      },
+      {
+        "id": "go-foundations-v1-o2-step21",
+        "snippetId": "go-cond-005",
+        "order": 21,
+        "titleEn": "Type switch describe",
+        "titleEs": "Type switch: describe"
+      },
+      {
+        "id": "go-foundations-v1-o2-step22",
+        "snippetId": "go-cond-007",
+        "order": 22,
+        "titleEn": "Labeled break out of nested loop",
+        "titleEs": "break etiquetado para salir de un bucle anidado"
+      },
+      {
+        "id": "go-foundations-v1-o2-step23",
+        "snippetId": "go-loop-001",
+        "order": 23,
+        "titleEn": "Basic for loop",
+        "titleEs": "Ciclo for básico"
+      },
+      {
+        "id": "go-foundations-v1-o2-step24",
+        "snippetId": "go-loop-009",
+        "order": 24,
+        "titleEn": "Range over an integer",
+        "titleEs": "Range sobre un entero"
+      },
+      {
+        "id": "go-foundations-v1-o2-step25",
+        "snippetId": "go-loop-002",
+        "order": 25,
+        "titleEn": "Sum a slice",
+        "titleEs": "Sumar los elementos de un slice"
+      },
+      {
+        "id": "go-foundations-v1-o2-step26",
+        "snippetId": "go-loop-004",
+        "order": 26,
+        "titleEn": "Print runes with index",
+        "titleEs": "Imprimir runes con índice"
+      },
+      {
+        "id": "go-foundations-v1-o2-step27",
+        "snippetId": "go-loop-006",
+        "order": 27,
+        "titleEn": "For loop as a while loop",
+        "titleEs": "For como bucle while"
+      },
+      {
+        "id": "go-foundations-v1-o2-step28",
+        "snippetId": "go-loop-003",
+        "order": 28,
+        "titleEn": "Filter active usernames",
+        "titleEs": "Filtrar nombres de usuario activos"
+      },
+      {
+        "id": "go-foundations-v1-o2-step29",
+        "snippetId": "go-loop-005",
+        "order": 29,
+        "titleEn": "Build a multiplication table",
+        "titleEs": "Construir una tabla de multiplicar"
+      },
+      {
+        "id": "go-foundations-v1-o2-step30",
+        "snippetId": "go-loop-013",
+        "order": 30,
+        "titleEn": "Put it together: score summary",
+        "titleEs": "Todo junto: resumen de puntajes"
+      },
+      {
+        "id": "go-foundations-v1-o2-step31",
+        "snippetId": "go-loop-007",
+        "order": 31,
+        "titleEn": "Labeled continue over nested rows",
+        "titleEs": "continue etiquetado sobre filas anidadas"
+      },
+      {
+        "id": "go-foundations-v1-o2-step32",
+        "snippetId": "go-loop-008",
+        "order": 32,
+        "titleEn": "Drain a channel until closed",
+        "titleEs": "Vaciar un canal hasta que se cierre"
+      },
+      {
+        "id": "go-foundations-v1-o2-step33",
+        "snippetId": "go-func-001",
+        "order": 33,
+        "titleEn": "Divide (function signature)",
+        "titleEs": "Firma de función: divide"
+      },
+      {
+        "id": "go-foundations-v1-o2-step34",
+        "snippetId": "go-func-005",
+        "order": 34,
+        "titleEn": "Multi-return function signature",
+        "titleEs": "Firma de función con múltiples retornos"
+      },
+      {
+        "id": "go-foundations-v1-o2-step35",
+        "snippetId": "go-func-004",
+        "order": 35,
+        "titleEn": "Named return values",
+        "titleEs": "Valores de retorno nombrados"
+      },
+      {
+        "id": "go-foundations-v1-o2-step36",
+        "snippetId": "go-func-007",
+        "order": 36,
+        "titleEn": "Recursive factorial",
+        "titleEs": "Factorial recursivo"
+      },
+      {
+        "id": "go-foundations-v1-o2-step37",
+        "snippetId": "go-func-002",
+        "order": 37,
+        "titleEn": "Variadic sum",
+        "titleEs": "Suma variádica"
+      },
+      {
+        "id": "go-foundations-v1-o2-step38",
+        "snippetId": "go-func-006",
+        "order": 38,
+        "titleEn": "Higher-order filter function",
+        "titleEs": "Función filter de orden superior"
+      },
+      {
+        "id": "go-foundations-v1-o2-step39",
+        "snippetId": "go-func-003",
+        "order": 39,
+        "titleEn": "Counter closure",
+        "titleEs": "Closure de contador"
+      },
+      {
+        "id": "go-foundations-v1-o2-step40",
+        "snippetId": "go-func-008",
+        "order": 40,
+        "titleEn": "Panic-safe division via recover",
+        "titleEs": "División segura ante pánico con recover"
+      },
+      {
+        "id": "go-foundations-v1-o2-step41",
+        "snippetId": "go-func-009",
+        "order": 41,
+        "titleEn": "Functional options pattern",
+        "titleEs": "Patrón de opciones funcionales"
+      },
+      {
+        "id": "go-foundations-v1-o2-step42",
+        "snippetId": "go-err-001",
+        "order": 42,
+        "titleEn": "Guard clause: return nil, err",
+        "titleEs": "Cláusula de guarda: return nil, err"
+      },
+      {
+        "id": "go-foundations-v1-o2-step43",
+        "snippetId": "go-err-004",
+        "order": 43,
+        "titleEn": "Guard clause returning a zero value",
+        "titleEs": "Cláusula de guarda que devuelve un valor cero"
+      },
+      {
+        "id": "go-foundations-v1-o2-step44",
+        "snippetId": "go-err-005",
+        "order": 44,
+        "titleEn": "Sentinel error",
+        "titleEs": "Error centinela"
+      },
+      {
+        "id": "go-foundations-v1-o2-step45",
+        "snippetId": "go-err-013",
+        "order": 45,
+        "titleEn": "Put it together: load a config",
+        "titleEs": "Todo junto: cargar una configuración"
+      },
+      {
+        "id": "go-foundations-v1-o2-step46",
+        "snippetId": "go-err-003",
+        "order": 46,
+        "titleEn": "Wrap an error with %w",
+        "titleEs": "Envolver un error con %w"
+      },
+      {
+        "id": "go-foundations-v1-o2-step47",
+        "snippetId": "go-err-006",
+        "order": 47,
+        "titleEn": "errors.Is check",
+        "titleEs": "Verificación con errors.Is"
+      },
+      {
+        "id": "go-foundations-v1-o2-step48",
+        "snippetId": "go-err-002",
+        "order": 48,
+        "titleEn": "Custom ValidationError",
+        "titleEs": "Error de validación personalizado"
+      },
+      {
+        "id": "go-foundations-v1-o2-step49",
+        "snippetId": "go-err-007",
+        "order": 49,
+        "titleEn": "errors.As with a custom type",
+        "titleEs": "errors.As con un tipo personalizado"
+      },
+      {
+        "id": "go-foundations-v1-o2-step50",
+        "snippetId": "go-err-008",
+        "order": 50,
+        "titleEn": "Custom error with Unwrap",
+        "titleEs": "Error personalizado con Unwrap"
+      },
+      {
+        "id": "go-foundations-v1-o2-step51",
+        "snippetId": "go-err-009",
+        "order": 51,
+        "titleEn": "Combine errors with errors.Join",
+        "titleEs": "Combinar errores con errors.Join"
+      }
+    ],
+    "titleEn": "Go syntax fundamentals",
+    "titleEs": "Fundamentos de sintaxis Go",
+    "descriptionEn": "A guided, gradual path through Go's fundamentals: variables and types, slices, conditionals, loops, functions, and idiomatic error handling — with real variety at each step and a couple of realistic programs tying it all together. Especially useful for bootcamps and structured self-study.",
+    "descriptionEs": "Una ruta guiada y gradual por los fundamentos de Go: variables y tipos, slices, condicionales, ciclos, funciones y manejo de errores idiomático — con variedad real en cada paso y un par de programas realistas que atan todo junto. Pensada especialmente para bootcamps y autoestudio estructurado."
+  }
+]

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Enforces Conventional Commits (STACK.md §10.4) so tool/version_bump.dart
+# can decide the next release version and CHANGELOG.md entries from `git
+# log` alone. Installed via `bash tool/install_hooks.sh`.
+set -euo pipefail
+
+subject="$(head -n1 "$1")"
+
+case "$subject" in
+  "Merge "*|"Revert "*|"fixup! "*|"squash! "*) exit 0 ;;
+esac
+
+pattern='^(feat|fix|perf|refactor|docs|style|test|chore|build|ci|revert)(\([a-z0-9_.-]+\))?!?: .+'
+if ! [[ "$subject" =~ $pattern ]]; then
+  echo "✖ Commit message doesn't follow Conventional Commits:" >&2
+  echo "    $subject" >&2
+  echo "  Expected: <type>(<scope>)?!: <description>" >&2
+  echo "  type one of: feat fix perf refactor docs style test chore build ci revert" >&2
+  echo "  Example: feat(lock): add PIN retry lockout" >&2
+  exit 1
+fi

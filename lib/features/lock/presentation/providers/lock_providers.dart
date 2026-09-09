@@ -8,26 +8,31 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'lock_providers.g.dart';
 
+/// Provides the [PinRepository] implementation used across the app.
 @Riverpod(keepAlive: true)
 PinRepository pinRepository(Ref ref) {
   return PinRepositoryImpl(ref.watch(secureStorageProvider));
 }
 
+/// Provides the [SetPinUseCase] for setting/replacing the app-lock PIN.
 @riverpod
 SetPinUseCase setPinUseCase(Ref ref) {
   return SetPinUseCase(ref.watch(pinRepositoryProvider));
 }
 
+/// Provides the [VerifyPinUseCase] for checking a candidate PIN.
 @riverpod
 VerifyPinUseCase verifyPinUseCase(Ref ref) {
   return VerifyPinUseCase(ref.watch(pinRepositoryProvider));
 }
 
+/// Provides the [ClearPinUseCase] for disabling the app-lock.
 @riverpod
 ClearPinUseCase clearPinUseCase(Ref ref) {
   return ClearPinUseCase(ref.watch(pinRepositoryProvider));
 }
 
+/// Whether an app-lock PIN has already been set.
 @riverpod
 Future<bool> hasPin(Ref ref) {
   return ref.watch(pinRepositoryProvider).hasPin();
@@ -40,7 +45,9 @@ class AppLockSession extends _$AppLockSession {
   @override
   bool build() => false;
 
+  /// Marks the current session as unlocked.
   void unlock() => state = true;
 
+  /// Re-locks the current session (e.g. on manual lock or sign-out).
   void lock() => state = false;
 }

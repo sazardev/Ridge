@@ -4,7 +4,7 @@
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
-chmod +x tool/git-hooks/pre-commit tool/git-hooks/pre-push tool/format.sh tool/check.sh
+chmod +x tool/git-hooks/pre-commit tool/git-hooks/pre-push tool/git-hooks/commit-msg tool/format.sh tool/check.sh
 git config core.hooksPath tool/git-hooks
 
 echo "Git hooks installed (core.hooksPath = tool/git-hooks)."

@@ -28,3 +28,37 @@ jobs:
             echo "::error::Generated code is stale — run 'dart run build_runner build --delete-conflicting-outputs' and commit the result."
             exit 1
           }
+
+  # Bumps pubspec.yaml + CHANGELOG.md from Conventional Commits and tags the
+  # release (STACK.md §10.4). The tag it creates is what triggers the
+  # per-platform build jobs in §12 — this job never builds or publishes
+  # anything itself.
+  release:
+    needs: quality-gate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.2"
+          channel: stable
+
+      - run: flutter pub get
+
+      - name: Configure release commit identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version, update CHANGELOG.md, tag release
+        run: bash tool/release.sh
+
+      - name: Push release commit and tag
+        run: git push origin HEAD:main --follow-tags
