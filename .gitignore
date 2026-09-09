@@ -20,7 +20,10 @@ migrate_working_dir/
 
 # Claude Code local skill installations — vendored tooling, not app source.
 .agents/
-.claude/
+.claude/*
+!.claude/skills
+.claude/skills/*
+!.claude/skills/content-curriculum
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
