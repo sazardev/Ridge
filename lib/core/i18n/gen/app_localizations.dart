@@ -1616,6 +1616,42 @@ abstract class AppLocalizations {
   /// **'Advanced queries'**
   String get categorySqlAdvancedQueries;
 
+  /// No description provided for @categorySearchAndIndexing.
+  ///
+  /// In en, this message translates to:
+  /// **'Search & indexing'**
+  String get categorySearchAndIndexing;
+
+  /// No description provided for @categoryRegularExpressions.
+  ///
+  /// In en, this message translates to:
+  /// **'Regular expressions'**
+  String get categoryRegularExpressions;
+
+  /// No description provided for @categoryFileOperations.
+  ///
+  /// In en, this message translates to:
+  /// **'File CRUD'**
+  String get categoryFileOperations;
+
+  /// No description provided for @categorySshClient.
+  ///
+  /// In en, this message translates to:
+  /// **'SSH client'**
+  String get categorySshClient;
+
+  /// No description provided for @categorySshServer.
+  ///
+  /// In en, this message translates to:
+  /// **'SSH server'**
+  String get categorySshServer;
+
+  /// No description provided for @categoryShellProfiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Shell profiles'**
+  String get categoryShellProfiles;
+
   /// No description provided for @languageGo.
   ///
   /// In en, this message translates to:

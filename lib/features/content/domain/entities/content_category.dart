@@ -94,6 +94,34 @@ enum ContentCategory {
   /// Learning Route category.
   sqlAdvancedQueries,
 
+  /// Shell-specific: locating files and content with `find`, `fd`,
+  /// ripgrep, and the `locate`/`updatedb` filename index. Introduced by
+  /// the `bash-toolkit-v1` Learning Route.
+  searchAndIndexing,
+
+  /// Shell-specific: extended regular expressions — anchors, quantifiers,
+  /// character classes, groups, alternation, backreferences, and word
+  /// boundaries — applied with `grep -E`, `sed -E`, and `rg`.
+  regularExpressions,
+
+  /// Shell-specific: everyday file CRUD at the user level — create, read,
+  /// copy, move, rename, delete, inspect metadata, set the executable
+  /// bit, and archive with `tar`.
+  fileOperations,
+
+  /// Remote access as an SSH client: connecting, key generation and
+  /// installation, `~/.ssh/config` aliases, the agent, and `scp`.
+  sshClient,
+
+  /// Running an SSH server: `~/.ssh` permissions, `authorized_keys`,
+  /// `sshd_config`, and the `sshd` service.
+  sshServer,
+
+  /// Shell startup files and personalization: `~/.bashrc` vs
+  /// `~/.bash_profile`, `PATH`, exports, aliases, functions, and
+  /// `source`.
+  shellProfiles,
+
   /// DDD domain modeling: entities, value objects, domain-level errors.
   /// Architecture-layer category (unlike the language-feature categories
   /// above) — see `snippet_catalog_completeness_test.dart`'s

@@ -1,0 +1,329 @@
+[
+  {
+    "id": "bash-toolkit-v1",
+    "language": "bash",
+    "titleEn": "Bash toolbox: search, SSH & profiles",
+    "titleEs": "Bash: búsqueda, SSH y perfiles",
+    "descriptionEn": "Everyday shell skills: search, regex, file CRUD, SSH, and profiles.",
+    "descriptionEs": "Habilidades del shell para el día a día: búsqueda, regex, CRUD, SSH y perfiles.",
+    "tagEn": "Toolbox",
+    "tagEs": "Herramientas",
+    "lessons": [
+      {
+        "id": "bash-toolkit-v1-step01",
+        "snippetId": "bash-search-001",
+        "order": 1,
+        "titleEn": "Install `fd`, `ripgrep` and `plocate`",
+        "titleEs": "Instalar `fd`, `ripgrep` y `plocate`"
+      },
+      {
+        "id": "bash-toolkit-v1-step02",
+        "snippetId": "bash-search-002",
+        "order": 2,
+        "titleEn": "Find files by name with `find`",
+        "titleEs": "Buscar archivos por nombre con `find`"
+      },
+      {
+        "id": "bash-toolkit-v1-step03",
+        "snippetId": "bash-search-003",
+        "order": 3,
+        "titleEn": "Filter by type and size",
+        "titleEs": "Filtrar por tipo y tamaño"
+      },
+      {
+        "id": "bash-toolkit-v1-step04",
+        "snippetId": "bash-search-004",
+        "order": 4,
+        "titleEn": "Pipe results into `xargs`",
+        "titleEs": "Pasar resultados a `xargs`"
+      },
+      {
+        "id": "bash-toolkit-v1-step05",
+        "snippetId": "bash-search-005",
+        "order": 5,
+        "titleEn": "Search fast with `fd`",
+        "titleEs": "Buscar rápido con `fd`"
+      },
+      {
+        "id": "bash-toolkit-v1-step06",
+        "snippetId": "bash-search-006",
+        "order": 6,
+        "titleEn": "Search inside files with `rg`",
+        "titleEs": "Buscar dentro de archivos con `rg`"
+      },
+      {
+        "id": "bash-toolkit-v1-step07",
+        "snippetId": "bash-search-007",
+        "order": 7,
+        "titleEn": "List only matching files",
+        "titleEs": "Listar solo archivos que coinciden"
+      },
+      {
+        "id": "bash-toolkit-v1-step08",
+        "snippetId": "bash-search-008",
+        "order": 8,
+        "titleEn": "Query the index with `locate`",
+        "titleEs": "Consultar el índice con `locate`"
+      },
+      {
+        "id": "bash-toolkit-v1-step09",
+        "snippetId": "bash-search-009",
+        "order": 9,
+        "titleEn": "Refresh the index with `updatedb`",
+        "titleEs": "Actualizar el índice con `updatedb`"
+      },
+      {
+        "id": "bash-toolkit-v1-step10",
+        "snippetId": "bash-regex-001",
+        "order": 10,
+        "titleEn": "Anchors and optional characters",
+        "titleEs": "Anclas y caracteres opcionales"
+      },
+      {
+        "id": "bash-toolkit-v1-step11",
+        "snippetId": "bash-regex-002",
+        "order": 11,
+        "titleEn": "Quantifiers: `*` and `.`",
+        "titleEs": "Cuantificadores: `*` y `.`"
+      },
+      {
+        "id": "bash-toolkit-v1-step12",
+        "snippetId": "bash-regex-003",
+        "order": 12,
+        "titleEn": "Character classes `[a-z]`",
+        "titleEs": "Clases de caracteres `[a-z]`"
+      },
+      {
+        "id": "bash-toolkit-v1-step13",
+        "snippetId": "bash-regex-004",
+        "order": 13,
+        "titleEn": "Alternation with `(a|b)`",
+        "titleEs": "Alternancia con `(a|b)`"
+      },
+      {
+        "id": "bash-toolkit-v1-step14",
+        "snippetId": "bash-regex-005",
+        "order": 14,
+        "titleEn": "Extract matches with `-o`",
+        "titleEs": "Extraer coincidencias con `-o`"
+      },
+      {
+        "id": "bash-toolkit-v1-step15",
+        "snippetId": "bash-regex-006",
+        "order": 15,
+        "titleEn": "Groups and backreferences in `sed`",
+        "titleEs": "Grupos y retroreferencias en `sed`"
+      },
+      {
+        "id": "bash-toolkit-v1-step16",
+        "snippetId": "bash-regex-007",
+        "order": 16,
+        "titleEn": "Word boundaries with `\\b`",
+        "titleEs": "Límites de palabra con `\\b`"
+      },
+      {
+        "id": "bash-toolkit-v1-step17",
+        "snippetId": "bash-files-001",
+        "order": 17,
+        "titleEn": "Create directories and files",
+        "titleEs": "Crear directorios y archivos"
+      },
+      {
+        "id": "bash-toolkit-v1-step18",
+        "snippetId": "bash-files-002",
+        "order": 18,
+        "titleEn": "Write and read a text file",
+        "titleEs": "Escribir y leer un archivo de texto"
+      },
+      {
+        "id": "bash-toolkit-v1-step19",
+        "snippetId": "bash-files-003",
+        "order": 19,
+        "titleEn": "Copy files with `cp`",
+        "titleEs": "Copiar archivos con `cp`"
+      },
+      {
+        "id": "bash-toolkit-v1-step20",
+        "snippetId": "bash-files-004",
+        "order": 20,
+        "titleEn": "Rename and move with `mv`",
+        "titleEs": "Renombrar y mover con `mv`"
+      },
+      {
+        "id": "bash-toolkit-v1-step21",
+        "snippetId": "bash-files-005",
+        "order": 21,
+        "titleEn": "Delete with `rm`, carefully",
+        "titleEs": "Eliminar con `rm`, con cuidado"
+      },
+      {
+        "id": "bash-toolkit-v1-step22",
+        "snippetId": "bash-files-006",
+        "order": 22,
+        "titleEn": "Inspect files with `stat` and `file`",
+        "titleEs": "Inspeccionar archivos con `stat` y `file`"
+      },
+      {
+        "id": "bash-toolkit-v1-step23",
+        "snippetId": "bash-files-007",
+        "order": 23,
+        "titleEn": "Make a script executable",
+        "titleEs": "Hacer ejecutable un script"
+      },
+      {
+        "id": "bash-toolkit-v1-step24",
+        "snippetId": "bash-files-008",
+        "order": 24,
+        "titleEn": "Back up with `tar`",
+        "titleEs": "Respaldar con `tar`"
+      },
+      {
+        "id": "bash-toolkit-v1-step25",
+        "snippetId": "bash-ssh-001",
+        "order": 25,
+        "titleEn": "Install OpenSSH",
+        "titleEs": "Instalar OpenSSH"
+      },
+      {
+        "id": "bash-toolkit-v1-step26",
+        "snippetId": "bash-ssh-002",
+        "order": 26,
+        "titleEn": "Connect to a server",
+        "titleEs": "Conectarse a un servidor"
+      },
+      {
+        "id": "bash-toolkit-v1-step27",
+        "snippetId": "bash-ssh-003",
+        "order": 27,
+        "titleEn": "Create an SSH key",
+        "titleEs": "Crear una clave SSH"
+      },
+      {
+        "id": "bash-toolkit-v1-step28",
+        "snippetId": "bash-ssh-004",
+        "order": 28,
+        "titleEn": "Install your key on the server",
+        "titleEs": "Instalar tu clave en el servidor"
+      },
+      {
+        "id": "bash-toolkit-v1-step29",
+        "snippetId": "bash-ssh-005",
+        "order": 29,
+        "titleEn": "Save a host in `~/.ssh/config`",
+        "titleEs": "Guardar un host en `~/.ssh/config`"
+      },
+      {
+        "id": "bash-toolkit-v1-step30",
+        "snippetId": "bash-ssh-006",
+        "order": 30,
+        "titleEn": "Connect using the alias",
+        "titleEs": "Conectarse usando el alias"
+      },
+      {
+        "id": "bash-toolkit-v1-step31",
+        "snippetId": "bash-ssh-007",
+        "order": 31,
+        "titleEn": "Load your key with `ssh-agent`",
+        "titleEs": "Cargar tu clave con `ssh-agent`"
+      },
+      {
+        "id": "bash-toolkit-v1-step32",
+        "snippetId": "bash-ssh-008",
+        "order": 32,
+        "titleEn": "Copy files with `scp`",
+        "titleEs": "Copiar archivos con `scp`"
+      },
+      {
+        "id": "bash-toolkit-v1-step33",
+        "snippetId": "bash-sshserv-001",
+        "order": 33,
+        "titleEn": "Lock down `~/.ssh` permissions",
+        "titleEs": "Asegurar permisos de `~/.ssh`"
+      },
+      {
+        "id": "bash-toolkit-v1-step34",
+        "snippetId": "bash-sshserv-002",
+        "order": 34,
+        "titleEn": "Authorize a public key",
+        "titleEs": "Autorizar una clave pública"
+      },
+      {
+        "id": "bash-toolkit-v1-step35",
+        "snippetId": "bash-sshserv-003",
+        "order": 35,
+        "titleEn": "Inspect `sshd_config`",
+        "titleEs": "Inspeccionar `sshd_config`"
+      },
+      {
+        "id": "bash-toolkit-v1-step36",
+        "snippetId": "bash-sshserv-004",
+        "order": 36,
+        "titleEn": "Disable password login",
+        "titleEs": "Desactivar el login por contraseña"
+      },
+      {
+        "id": "bash-toolkit-v1-step37",
+        "snippetId": "bash-sshserv-005",
+        "order": 37,
+        "titleEn": "Reload the SSH service",
+        "titleEs": "Recargar el servicio SSH"
+      },
+      {
+        "id": "bash-toolkit-v1-step38",
+        "snippetId": "bash-sshserv-006",
+        "order": 38,
+        "titleEn": "Check the listening port",
+        "titleEs": "Verificar el puerto en escucha"
+      },
+      {
+        "id": "bash-toolkit-v1-step39",
+        "snippetId": "bash-profile-001",
+        "order": 39,
+        "titleEn": "See your `PATH`",
+        "titleEs": "Ver tu `PATH`"
+      },
+      {
+        "id": "bash-toolkit-v1-step40",
+        "snippetId": "bash-profile-002",
+        "order": 40,
+        "titleEn": "Prepend to `PATH`",
+        "titleEs": "Agregar al inicio del `PATH`"
+      },
+      {
+        "id": "bash-toolkit-v1-step41",
+        "snippetId": "bash-profile-003",
+        "order": 41,
+        "titleEn": "Create an alias",
+        "titleEs": "Crear un alias"
+      },
+      {
+        "id": "bash-toolkit-v1-step42",
+        "snippetId": "bash-profile-004",
+        "order": 42,
+        "titleEn": "Persist an alias in `~/.bashrc`",
+        "titleEs": "Persistir un alias en `~/.bashrc`"
+      },
+      {
+        "id": "bash-toolkit-v1-step43",
+        "snippetId": "bash-profile-005",
+        "order": 43,
+        "titleEn": "Reload your profile with `source`",
+        "titleEs": "Recargar tu perfil con `source`"
+      },
+      {
+        "id": "bash-toolkit-v1-step44",
+        "snippetId": "bash-profile-006",
+        "order": 44,
+        "titleEn": "Add a function to your profile",
+        "titleEs": "Agregar una función a tu perfil"
+      },
+      {
+        "id": "bash-toolkit-v1-step45",
+        "snippetId": "bash-profile-007",
+        "order": 45,
+        "titleEn": "Chain `.bashrc` from `.bash_profile`",
+        "titleEs": "Encadenar `.bashrc` desde `.bash_profile`"
+      }
+    ]
+  }
+]

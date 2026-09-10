@@ -77,7 +77,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 223)
+        .firstWhere((snippets) => snippets.length == 268)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -91,7 +91,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(223));
+    expect(catalog, hasLength(268));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -103,7 +103,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(223));
+      expect(catalog, hasLength(268));
     },
   );
 
@@ -114,7 +114,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(223));
+    expect(result, hasLength(268));
   });
 
   test(
@@ -144,7 +144,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(64));
+    expect(beginnerSnippets, hasLength(75));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -163,6 +163,13 @@ void main() {
     expect(ids, {
       'bash-func-003',
       'bash-func-004',
+      'bash-profile-007',
+      'bash-ssh-005',
+      'bash-ssh-007',
+      'bash-sshserv-001',
+      'bash-sshserv-002',
+      'bash-sshserv-003',
+      'bash-sshserv-004',
       'go-cond-007',
       'go-err-009',
       'go-err-010',
@@ -176,21 +183,21 @@ void main() {
       'go-loop-007',
       'go-loop-011',
       'go-loop-013',
-      'go-slice-002',
-      'go-slice-003',
-      'go-slice-004',
-      'go-struct-001',
-      'go-struct-004',
-      'go-vars-009',
-      'go-vars-011',
-      'go-vars-012',
       'go-persist-001',
       'go-persist-002',
       'go-persist-003',
       'go-persist-004',
       'go-rest-001',
+      'go-slice-002',
+      'go-slice-003',
+      'go-slice-004',
+      'go-struct-001',
+      'go-struct-004',
       'go-testfakes-001',
       'go-testfakes-002',
+      'go-vars-009',
+      'go-vars-011',
+      'go-vars-012',
       'sql-advanced-002',
       'sql-advanced-003',
       'sql-advanced-004',
@@ -236,6 +243,7 @@ void main() {
     expect(result.isOk, isTrue);
     final ids = result.valueOrNull!.map((s) => s.id.value).toSet();
     expect(ids, {
+      'bash-files-006',
       'bash-vars-007',
       'go-cond-005',
       'go-cond-007',
@@ -249,17 +257,17 @@ void main() {
       'go-loop-004',
       'go-loop-011',
       'go-loop-013',
-      'go-vars-003',
-      'go-vars-006',
-      'go-usecase-001',
-      'go-usecase-002',
-      'go-usecase-003',
-      'go-usecase-004',
       'go-persist-002',
       'go-persist-003',
       'go-rest-002',
       'go-rest-008',
       'go-testfakes-002',
+      'go-usecase-001',
+      'go-usecase-002',
+      'go-usecase-003',
+      'go-usecase-004',
+      'go-vars-003',
+      'go-vars-006',
       'sql-filtering-008',
       'sql-filtering-009',
     });

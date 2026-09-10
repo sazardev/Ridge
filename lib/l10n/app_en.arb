@@ -295,6 +295,12 @@
   "categorySqlJoins": "Joins",
   "categorySqlModifications": "Changing data",
   "categorySqlAdvancedQueries": "Advanced queries",
+  "categorySearchAndIndexing": "Search & indexing",
+  "categoryRegularExpressions": "Regular expressions",
+  "categoryFileOperations": "File CRUD",
+  "categorySshClient": "SSH client",
+  "categorySshServer": "SSH server",
+  "categoryShellProfiles": "Shell profiles",
 
   "languageGo": "Go",
   "languageBash": "Bash",

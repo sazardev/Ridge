@@ -805,6 +805,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categorySqlAdvancedQueries => 'Consultas avanzadas';
 
   @override
+  String get categorySearchAndIndexing => 'Búsqueda e indexación';
+
+  @override
+  String get categoryRegularExpressions => 'Expresiones regulares';
+
+  @override
+  String get categoryFileOperations => 'CRUD de archivos';
+
+  @override
+  String get categorySshClient => 'Cliente SSH';
+
+  @override
+  String get categorySshServer => 'Servidor SSH';
+
+  @override
+  String get categoryShellProfiles => 'Perfiles del shell';
+
+  @override
   String get languageGo => 'Go';
 
   @override

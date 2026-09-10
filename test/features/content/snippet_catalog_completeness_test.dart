@@ -91,6 +91,7 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/go_foundations_v1.json',
   'assets/content/learning_paths/go_ddd_hexagonal_notes_v1.json',
   'assets/content/learning_paths/bash_foundations_v1.json',
+  'assets/content/learning_paths/bash_toolkit_v1.json',
   'assets/content/learning_paths/sql_foundations_v1.json',
 ];
 

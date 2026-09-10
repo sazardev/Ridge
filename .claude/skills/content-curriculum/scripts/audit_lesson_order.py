@@ -221,15 +221,19 @@ def main() -> int:
         if len(sys.argv) > 1
         else repo_root / "assets/content/snippets/go_v1.json"
     )
-    path_path = (
-        Path(sys.argv[2])
+    # One or more Learning Path files may be passed (a language can bundle
+    # several routes sharing one catalog, e.g. Bash foundations + toolkit).
+    path_paths = (
+        [Path(arg) for arg in sys.argv[2:]]
         if len(sys.argv) > 2
-        else repo_root / "assets/content/learning_paths/go_foundations_v1.json"
+        else [repo_root / "assets/content/learning_paths/go_foundations_v1.json"]
     )
 
     catalog = load(snippets_path)
     by_id = {s["id"]: s for s in catalog}
-    paths = load(path_path)
+    paths = []
+    for path_path in path_paths:
+        paths.extend(load(path_path))
 
     all_problems: list[str] = []
     all_problems.extend(check_catalog_completeness(catalog))
