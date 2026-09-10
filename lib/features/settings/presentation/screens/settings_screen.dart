@@ -16,6 +16,7 @@ import 'package:just_in_time/features/settings/presentation/providers/settings_p
 import 'package:just_in_time/features/settings/presentation/widgets/palette_picker.dart';
 import 'package:just_in_time/features/settings/presentation/widgets/settings_section.dart';
 import 'package:just_in_time/features/settings/presentation/widgets/sound_pack_picker.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// The Settings screen: theme, expressive color, language, and app-lock.
 class SettingsScreen extends ConsumerStatefulWidget {
@@ -279,7 +280,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   const Divider(height: 1, indent: 16, endIndent: 16),
                   ListTile(
                     title: Text(l10n.settingsChangePin),
-                    trailing: const Icon(Icons.chevron_right_rounded),
+                    trailing: const Icon(LucideIcons.chevronRight),
                     onTap: () => context.push<bool>('/lock-setup'),
                   ),
                   if (ref.watch(biometricAvailableProvider).value ?? false) ...[
@@ -294,7 +295,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   ],
                   const Divider(height: 1, indent: 16, endIndent: 16),
                   ListTile(
-                    leading: const Icon(Icons.lock_outline_rounded),
+                    leading: const Icon(LucideIcons.lock),
                     title: Text(l10n.settingsLockNow),
                     onTap: () =>
                         ref.read(appLockSessionProvider.notifier).lock(),
@@ -308,7 +309,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ListTile(
                   title: Text(l10n.settingsShortcutsTitle),
                   subtitle: Text(l10n.settingsShortcutsSubtitle),
-                  trailing: const Icon(Icons.chevron_right_rounded),
+                  trailing: const Icon(LucideIcons.chevronRight),
                   onTap: () => context.push('/shortcuts'),
                 ),
               ],
@@ -332,7 +333,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ListTile(
                   title: Text(l10n.settingsAboutChangelog),
                   subtitle: Text(l10n.settingsAboutChangelogSubtitle),
-                  trailing: const Icon(Icons.chevron_right_rounded),
+                  trailing: const Icon(LucideIcons.chevronRight),
                   onTap: () => context.push('/changelog'),
                 ),
               ],

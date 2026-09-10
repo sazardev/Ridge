@@ -7,6 +7,7 @@ import 'package:just_in_time/core/widgets/app_navigation_shortcuts.dart';
 import 'package:just_in_time/core/window/window_bar.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
 import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Adaptive navigation frame: a rail on wide (Linux desktop) windows, a
 /// bottom bar on narrow (Android phone) ones — same destinations
@@ -44,28 +45,28 @@ class AppShell extends ConsumerWidget {
     // [StatefulNavigationShell.currentIndex].
     final destinations = [
       (
-        icon: Icons.school_outlined,
-        selectedIcon: Icons.school_rounded,
+        icon: LucideIcons.keyboard,
+        selectedIcon: LucideIcons.keyboard600,
         label: l10n.navPractice,
       ),
       (
-        icon: Icons.insights_outlined,
-        selectedIcon: Icons.insights_rounded,
+        icon: LucideIcons.chartLine,
+        selectedIcon: LucideIcons.chartLine600,
         label: l10n.navProgress,
       ),
       (
-        icon: Icons.keyboard_outlined,
-        selectedIcon: Icons.keyboard_rounded,
+        icon: LucideIcons.zap,
+        selectedIcon: LucideIcons.zap600,
         label: l10n.navFreePractice,
       ),
       (
-        icon: Icons.person_outline_rounded,
-        selectedIcon: Icons.person_rounded,
+        icon: LucideIcons.user,
+        selectedIcon: LucideIcons.user600,
         label: l10n.navProfile,
       ),
       (
-        icon: Icons.settings_outlined,
-        selectedIcon: Icons.settings_rounded,
+        icon: LucideIcons.settings,
+        selectedIcon: LucideIcons.settings600,
         label: l10n.navSettings,
       ),
     ];

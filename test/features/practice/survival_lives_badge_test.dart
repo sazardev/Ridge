@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/features/practice/domain/services/survival_run_tracker.dart';
 import 'package:just_in_time/features/practice/presentation/widgets/survival_lives_badge.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 Future<void> _pump(WidgetTester tester, SurvivalRunTracker tracker) {
   return tester.pumpWidget(
@@ -24,8 +25,8 @@ void main() {
   ) async {
     final tracker = SurvivalRunTracker();
     await _pump(tester, tracker);
-    expect(find.byIcon(Icons.favorite_rounded), findsNWidgets(5));
-    expect(find.byIcon(Icons.favorite_border_rounded), findsNothing);
+    expect(find.byIcon(LucideIcons.heart600), findsNWidgets(5));
+    expect(find.byIcon(LucideIcons.heart100), findsNothing);
   });
 
   testWidgets('lost lives turn filled hearts into outlined ones', (
@@ -36,7 +37,7 @@ void main() {
       ..recordMistake();
     await _pump(tester, tracker);
     expect(tracker.livesRemaining, 3);
-    expect(find.byIcon(Icons.favorite_rounded), findsNWidgets(3));
-    expect(find.byIcon(Icons.favorite_border_rounded), findsNWidgets(2));
+    expect(find.byIcon(LucideIcons.heart600), findsNWidgets(3));
+    expect(find.byIcon(LucideIcons.heart100), findsNWidgets(2));
   });
 }

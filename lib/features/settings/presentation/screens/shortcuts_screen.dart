@@ -12,6 +12,7 @@ import 'package:just_in_time/features/settings/domain/services/shortcut_conflict
 import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
 import 'package:just_in_time/features/settings/presentation/shortcut_labels.dart';
 import 'package:just_in_time/features/settings/presentation/widgets/settings_section.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Lists every customizable global keyboard shortcut and lets the user
 /// rebind each one (SPEC.md's keyboard-first requirement, STACK.md
@@ -45,7 +46,7 @@ class ShortcutsScreen extends ConsumerWidget {
                     children: [
                       Text(bindings[action]?.displayLabel ?? '—'),
                       const SizedBox(width: 8),
-                      const Icon(Icons.edit_outlined, size: 18),
+                      const Icon(LucideIcons.squarePen, size: 18),
                     ],
                   ),
                   onTap: () => _showCaptureDialog(

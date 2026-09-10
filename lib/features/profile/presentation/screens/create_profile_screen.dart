@@ -8,6 +8,7 @@ import 'package:just_in_time/core/window/window_bar.dart';
 import 'package:just_in_time/features/profile/domain/entities/favorite_language.dart';
 import 'package:just_in_time/features/profile/presentation/profile_labels.dart';
 import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// First-run screen: choose a username and create the on-device Guest
 /// Profile (SPEC.md §7.1), plus an optional quick pick of favorite
@@ -95,7 +96,7 @@ class _CreateProfileScreenState extends ConsumerState<CreateProfileScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                          Icons.person_outline_rounded,
+                          LucideIcons.user,
                           size: 40,
                           color: colorScheme.primary,
                         ),

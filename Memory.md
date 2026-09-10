@@ -39,13 +39,54 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `sqlAggregation` (7), `sqlJoins` (7), `sqlModifications` (5),
   `sqlAdvancedQueries` (6). Dificultad 30/22/7/1.
 - Gate de calidad: `bash tool/check.sh` (format + analyze + arquitectura +
-  tests). Última corrida: **305 tests verdes**.
+  tests). Última corrida: **314 tests verdes**, format/analyze limpios.
+  Arquitectura tiene **1 violación pre-existente** (no de esta sesión):
+  `syntax_tokenizer.dart` en 524 líneas (límite 500) por el WIP de Rust
+  sin commitear — pendiente de partir en part files.
+- Set de íconos: **Lucide** (`lucide_icons_flutter`), no Material `Icons.*`
+  — elegido por combinar con Geist (misma familia visual que usa Vercel/
+  shadcn). `cupertino_icons` (vestigial, nunca usado) fue removido.
 - Último release: **v1.2.0** (CI, `df00321`). El siguiente push a `main`
   genera release automático desde los Conventional Commits.
 
 ---
 
 ## Historial de sesiones
+
+### 2026-09-10 — Migración de íconos: Material → Lucide
+
+- **Decisión** (con el usuario): Material `Icons.*` no combinaba con Geist
+  (tipografía dev-tool de Vercel); se evaluaron Lucide vs Phosphor y se
+  eligió **Lucide** (`lucide_icons_flutter` v3.1.19) por su adopción
+  (191k descargas vs 20.4k de `flutter_lucide`) y porque soporta
+  variantes de grosor de trazo (`100`–`600`) vía sufijo numérico en el
+  nombre del ícono (mismo `IconData`, distinto `fontFamily` empaquetado).
+- **Convención nueva**: sin sufijo (`LucideIcons.x`) = trazo por defecto
+  (stroke 2.0, antes "outlined"/no-seleccionado); sufijo `600` = trazo
+  grueso (stroke 3.0, antes "rounded"/seleccionado o énfasis). Aplicada en
+  los 5 destinos de `app_shell.dart` (nav bar/rail) y en un puñado de
+  toggles filled-vs-empty (corazones de vidas en Survival, check de
+  maestría en Progress) — Lucide no tiene variante "filled" real, solo
+  trazo, así que el contraste de grosor + opacidad ya existente hace ese
+  trabajo.
+- **Alcance**: ~27 archivos bajo `lib/features/**/presentation` y
+  `lib/core/{router,window}` con `Icons.*` → mapeo semántico 1:1 a
+  Lucide (ver diffs; no hay tabla separada). `cupertino_icons` (nunca
+  usado) se quitó de `pubspec.yaml` al agregar `lucide_icons_flutter`.
+- **Tests**: 3 widget tests afirmaban `Icons.*` explícitamente
+  (`session_result_footer_test.dart`,
+  `survival_lives_badge_test.dart` ×2 casos) — actualizados a
+  `LucideIcons.*`. Resto de la suite no tocaba íconos por nombre.
+- **Verificado**: `flutter analyze` limpio, `flutter test` 314/314,
+  `flutter build linux --release` compila (confirma que el
+  font-subsetting de Lucide encontró todos los constantes usados). No se
+  pudo verificar visualmente — este entorno (WSL2) no tiene servidor
+  gráfico.
+- **Nota**: `directives_ordering` (lint de `very_good_analysis`) ordena
+  **todos** los imports `package:` como una sola secuencia alfabética
+  (ignora los saltos de línea que separan "paquetes externos" de
+  `just_in_time/*` por convención visual) — `lucide_icons_flutter` cae
+  después de `just_in_time/*` (`j` < `l`) en casi todos los archivos.
 
 ### 2026-09-10 — Curso SQL/PostgreSQL + integración de WIP (Bash y Survival)
 

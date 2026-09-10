@@ -15,6 +15,7 @@ import 'package:just_in_time/features/settings/domain/entities/app_settings.dart
 import 'package:just_in_time/features/settings/domain/entities/app_shortcut_action.dart';
 import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
 import 'package:just_in_time/features/settings/presentation/shortcut_activator.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// The Progress screen (SPEC.md §4.3/§6): XP/level, streak, weakness
 /// diagnostic, activity report, per-category mastery, and a
@@ -168,8 +169,8 @@ class _OverviewTab extends StatelessWidget {
                     child: Chip(
                       avatar: Icon(
                         status.isMastered
-                            ? Icons.verified_rounded
-                            : Icons.circle_outlined,
+                            ? LucideIcons.badgeCheck600
+                            : LucideIcons.circle,
                         size: 18,
                       ),
                       label: Text(

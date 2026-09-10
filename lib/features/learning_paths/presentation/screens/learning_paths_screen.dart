@@ -12,6 +12,7 @@ import 'package:just_in_time/features/learning_paths/domain/services/lesson_stat
 import 'package:just_in_time/features/learning_paths/presentation/learning_paths_labels.dart';
 import 'package:just_in_time/features/learning_paths/presentation/lesson_navigation.dart';
 import 'package:just_in_time/features/learning_paths/presentation/providers/learning_paths_providers.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// The Practice tab's default, structured home (SPEC.md §5.7): a
 /// language-scoped roadmap of curated lessons — start with the basics,
@@ -238,9 +239,7 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
                                                     theme.colorScheme.primary,
                                                   ),
                                             ),
-                                            icon: const Icon(
-                                              Icons.play_arrow_rounded,
-                                            ),
+                                            icon: const Icon(LucideIcons.play),
                                             tooltip: l10n
                                                 .learningPathsContinueAction,
                                             onPressed: () =>

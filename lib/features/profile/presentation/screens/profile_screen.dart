@@ -10,6 +10,7 @@ import 'package:just_in_time/features/profile/presentation/widgets/profile_about
 import 'package:just_in_time/features/profile/presentation/widgets/profile_device_card.dart';
 import 'package:just_in_time/features/profile/presentation/widgets/profile_stats_card.dart';
 import 'package:just_in_time/features/profile/presentation/widgets/rename_profile_sheet.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// The Profile screen: the Guest Profile's identity (SPEC.md §7.1), a
 /// progression-history preview, self-expression flair (favorite
@@ -58,12 +59,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     context,
                     currentUsername: profile.username,
                   ),
-                  icon: const Icon(Icons.edit_outlined),
+                  icon: const Icon(LucideIcons.squarePen),
                   tooltip: l10n.profileRenameAction,
                 ),
                 IconButton(
                   onPressed: () => context.push('/achievements'),
-                  icon: const Icon(Icons.emoji_events_outlined),
+                  icon: const Icon(LucideIcons.trophy),
                   tooltip: l10n.profileAchievementsAction,
                 ),
               ],

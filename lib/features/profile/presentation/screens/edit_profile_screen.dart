@@ -9,6 +9,7 @@ import 'package:just_in_time/features/profile/domain/entities/keyboard_layout.da
 import 'package:just_in_time/features/profile/presentation/profile_labels.dart';
 import 'package:just_in_time/features/profile/presentation/profile_suggestions.dart';
 import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Full-screen editor for the Guest Profile's self-expression fields
 /// (favorite languages, keyboard layout/brand/model, favorite
@@ -127,7 +128,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       height: 20,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Icon(Icons.check_rounded),
+                  : const Icon(LucideIcons.check),
             ),
           ],
         ),
@@ -151,11 +152,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               textInputAction: TextInputAction.search,
               decoration: InputDecoration(
                 hintText: l10n.profileSearchLanguageHint,
-                prefixIcon: const Icon(Icons.search_rounded),
+                prefixIcon: const Icon(LucideIcons.search),
                 suffixIcon: _languageQuery.isEmpty
                     ? null
                     : IconButton(
-                        icon: const Icon(Icons.clear_rounded),
+                        icon: const Icon(LucideIcons.x),
                         onPressed: _languageSearchController.clear,
                       ),
               ),
@@ -192,7 +193,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     ),
                   if (filteredLanguages.length > _visibleLanguageCount)
                     ActionChip(
-                      avatar: const Icon(Icons.expand_more_rounded, size: 18),
+                      avatar: const Icon(LucideIcons.chevronDown, size: 18),
                       label: Text(l10n.profileLanguageShowMore),
                       onPressed: () => setState(
                         () => _visibleLanguageCount += _languageBatchSize,
@@ -219,7 +220,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             const SizedBox(height: 28),
             _SuggestionField(
               label: l10n.profileKeyboardBrandLabel,
-              icon: Icons.keyboard_alt_outlined,
+              icon: LucideIcons.keyboard,
               initialValue: _brand,
               suggestions: kKeyboardBrandSuggestions,
               onChanged: (value) => _brand = value,
@@ -227,7 +228,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             const SizedBox(height: 16),
             _SuggestionField(
               label: l10n.profileKeyboardModelLabel,
-              icon: Icons.memory_rounded,
+              icon: LucideIcons.memoryStick,
               initialValue: _model,
               suggestions: kKeyboardModelSuggestions,
               onChanged: (value) => _model = value,
@@ -235,7 +236,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             const SizedBox(height: 16),
             _SuggestionField(
               label: l10n.profileFavoriteProgrammerLabel,
-              icon: Icons.person_outline_rounded,
+              icon: LucideIcons.user,
               initialValue: _programmer,
               suggestions: kFavoriteProgrammerSuggestions,
               onChanged: (value) => _programmer = value,
@@ -248,7 +249,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               decoration: InputDecoration(
                 labelText: l10n.profileFavoriteQuoteLabel,
                 alignLabelWithHint: true,
-                prefixIcon: const Icon(Icons.format_quote_rounded),
+                prefixIcon: const Icon(LucideIcons.quote),
               ),
             ),
           ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/core/theme/app_shapes.dart';
 import 'package:just_in_time/features/profile/domain/entities/guest_profile.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// A read-only card of the active profile's auto-detected platform, OS
 /// version, and device model (`EnsureDeviceInfoUseCase`) — unlike
@@ -44,17 +45,17 @@ class ProfileDeviceCard extends StatelessWidget {
               children: [
                 if (profile.platform != null)
                   Chip(
-                    avatar: const Icon(Icons.devices_rounded, size: 18),
+                    avatar: const Icon(LucideIcons.monitorSmartphone, size: 18),
                     label: Text(profile.platform!),
                   ),
                 if (profile.operatingSystemVersion?.isNotEmpty ?? false)
                   Chip(
-                    avatar: const Icon(Icons.dns_rounded, size: 18),
+                    avatar: const Icon(LucideIcons.server, size: 18),
                     label: _ChipLabel(profile.operatingSystemVersion!),
                   ),
                 if (profile.deviceModel?.isNotEmpty ?? false)
                   Chip(
-                    avatar: const Icon(Icons.developer_board_rounded, size: 18),
+                    avatar: const Icon(LucideIcons.circuitBoard, size: 18),
                     label: _ChipLabel(profile.deviceModel!),
                   ),
               ],

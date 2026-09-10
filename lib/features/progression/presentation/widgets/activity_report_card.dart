@@ -11,15 +11,16 @@ import 'package:just_in_time/features/progression/domain/entities/exercise_activ
 import 'package:just_in_time/features/progression/domain/entities/trend.dart';
 import 'package:just_in_time/features/progression/presentation/progression_labels.dart';
 import 'package:just_in_time/features/progression/presentation/providers/progression_providers.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// [Trend]'s icon direction for a "higher = better" score, the inverse
 /// of `TrendPresentation.icon`'s weakness-score direction (see
 /// `CategoryActivityStat.trend`'s doc).
 extension _ActivityTrendIcon on Trend {
   IconData get _icon => switch (this) {
-    Trend.improving => Icons.trending_up_rounded,
-    Trend.worsening => Icons.trending_down_rounded,
-    Trend.stable => Icons.trending_flat_rounded,
+    Trend.improving => LucideIcons.trendingUp,
+    Trend.worsening => LucideIcons.trendingDown,
+    Trend.stable => LucideIcons.moveHorizontal,
   };
 }
 

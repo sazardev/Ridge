@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/core/theme/app_motion.dart';
 import 'package:just_in_time/features/onboarding/presentation/providers/onboarding_providers.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Onboarding step previewing the platform/OS/device
 /// `EnsureDeviceInfoUseCase` will auto-detect and store once the Guest
@@ -24,15 +25,18 @@ class OnboardingDeviceInfoPage extends ConsumerWidget {
 
     final chips = [
       if (deviceInfo?.platform != null)
-        _InfoChip(icon: Icons.devices_rounded, text: deviceInfo!.platform!),
+        _InfoChip(
+          icon: LucideIcons.monitorSmartphone,
+          text: deviceInfo!.platform!,
+        ),
       if (deviceInfo?.operatingSystemVersion?.isNotEmpty ?? false)
         _InfoChip(
-          icon: Icons.dns_rounded,
+          icon: LucideIcons.server,
           text: deviceInfo!.operatingSystemVersion!,
         ),
       if (deviceInfo?.deviceModel?.isNotEmpty ?? false)
         _InfoChip(
-          icon: Icons.developer_board_rounded,
+          icon: LucideIcons.circuitBoard,
           text: deviceInfo!.deviceModel!,
         ),
     ];
@@ -53,7 +57,7 @@ class OnboardingDeviceInfoPage extends ConsumerWidget {
                       color: colorScheme.primaryContainer,
                     ),
                     child: Icon(
-                      Icons.devices_rounded,
+                      LucideIcons.monitorSmartphone,
                       size: 56,
                       color: colorScheme.onPrimaryContainer,
                     ),

@@ -13,6 +13,7 @@ import 'package:just_in_time/features/content/presentation/content_labels.dart';
 import 'package:just_in_time/features/content/presentation/providers/content_providers.dart';
 import 'package:just_in_time/features/content/presentation/widgets/practice_mode_picker_sheet.dart';
 import 'package:just_in_time/features/practice/presentation/widgets/quick_mode_tile.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Free-form practice (SPEC.md §5.1–5.3, §5.8) — Zen/Sprint/Precision/
 /// Survival shortcuts on an arbitrary catalog snippet, plus a link out to
@@ -124,7 +125,7 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
                   children: [
                     Expanded(
                       child: QuickModeTile(
-                        icon: Icons.self_improvement_rounded,
+                        icon: LucideIcons.brain,
                         label: l10n.practiceModeZen,
                         subtitle: l10n.practiceModeZenSubtitle,
                         onTap: () => _startDirect(
@@ -137,7 +138,7 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: QuickModeTile(
-                        icon: Icons.bolt_rounded,
+                        icon: LucideIcons.zap,
                         label: l10n.practiceModeSprint60,
                         subtitle: l10n.practiceModeSprintSubtitle,
                         onTap: () => _startDirect(
@@ -157,7 +158,7 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
                   children: [
                     Expanded(
                       child: QuickModeTile(
-                        icon: Icons.track_changes_rounded,
+                        icon: LucideIcons.target,
                         label: l10n.practiceModePrecision,
                         subtitle: l10n.practiceModePrecisionSubtitle,
                         onTap: () => _startDirect(
@@ -170,7 +171,7 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: QuickModeTile(
-                        icon: Icons.favorite_rounded,
+                        icon: LucideIcons.heart600,
                         label: l10n.practiceModeSurvival,
                         subtitle: l10n.practiceModeSurvivalSubtitle,
                         onTap: () => _startDirect(
@@ -188,7 +189,7 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
             Center(
               child: OutlinedButton.icon(
                 onPressed: () => context.push('/practice/browse'),
-                icon: const Icon(Icons.menu_book_outlined),
+                icon: const Icon(LucideIcons.bookOpen),
                 label: Text(l10n.practiceHubBrowseAllAction),
               ),
             ),

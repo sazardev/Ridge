@@ -4,6 +4,7 @@ import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/core/theme/app_shapes.dart';
 import 'package:just_in_time/features/achievements/domain/entities/achievement.dart';
 import 'package:just_in_time/features/achievements/presentation/achievements_labels.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Shows a short-lived snackbar-style notice for each newly-unlocked
 /// entry in [achievements], right after a practice session finishes
@@ -21,7 +22,7 @@ void showAchievementUnlockedToast(
         shape: AppShapes.of(context).mediumShape,
         content: Row(
           children: [
-            const Icon(Icons.emoji_events_rounded),
+            const Icon(LucideIcons.trophy600),
             const SizedBox(width: 12),
             Expanded(
               child: Text(

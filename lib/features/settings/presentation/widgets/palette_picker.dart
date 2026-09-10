@@ -3,6 +3,7 @@ import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/core/theme/app_palette_catalog.dart';
 import 'package:just_in_time/core/theme/app_shapes.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_palette.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// A flowing, responsive gallery of live-rendered palette previews for
 /// picking the app's global [AppPaletteId] — one continuous [Wrap] with no
@@ -144,7 +145,7 @@ class _PaletteTile extends StatelessWidget {
                       duration: const Duration(milliseconds: 150),
                       opacity: selected ? 1 : 0,
                       child: Icon(
-                        Icons.check_circle_rounded,
+                        LucideIcons.circleCheck,
                         size: 16,
                         color: activePrimary,
                       ),

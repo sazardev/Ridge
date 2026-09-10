@@ -11,6 +11,7 @@ import 'package:just_in_time/features/onboarding/presentation/widgets/onboarding
 import 'package:just_in_time/features/onboarding/presentation/widgets/onboarding_page.dart';
 import 'package:just_in_time/features/onboarding/presentation/widgets/onboarding_page_dots.dart';
 import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// First-run, full-screen introduction shown exactly once — before the
 /// Guest Profile even exists (see `app_router.dart`'s redirect) — walking
@@ -47,21 +48,21 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   List<Widget> _pages(AppLocalizations l10n) => [
     OnboardingPage(
       data: OnboardingPageData(
-        icon: Icons.terminal_rounded,
+        icon: LucideIcons.terminal,
         title: l10n.onboardingWelcomeTitle,
         description: l10n.onboardingWelcomeDescription,
       ),
     ),
     OnboardingPage(
       data: OnboardingPageData(
-        icon: Icons.query_stats_rounded,
+        icon: LucideIcons.chartLine,
         title: l10n.onboardingMetricsTitle,
         description: l10n.onboardingMetricsDescription,
       ),
     ),
     OnboardingPage(
       data: OnboardingPageData(
-        icon: Icons.route_rounded,
+        icon: LucideIcons.route,
         title: l10n.onboardingPathsTitle,
         description: l10n.onboardingPathsDescription,
       ),
@@ -70,7 +71,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     const OnboardingDeviceInfoPage(),
     OnboardingPage(
       data: OnboardingPageData(
-        icon: Icons.rocket_launch_rounded,
+        icon: LucideIcons.rocket,
         title: l10n.onboardingReadyTitle,
         description: l10n.onboardingReadyDescription,
       ),

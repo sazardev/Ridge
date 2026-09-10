@@ -5,6 +5,7 @@ import 'package:just_in_time/features/achievements/domain/entities/achievement_i
 import 'package:just_in_time/features/achievements/domain/entities/maratonista_tier.dart';
 import 'package:just_in_time/features/achievements/domain/entities/streak_tier.dart';
 import 'package:just_in_time/features/content/presentation/content_labels.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Localized display title/description/icon for an [AchievementId],
 /// shared by every widget that renders one (mirrors `content`'s
@@ -35,11 +36,11 @@ extension AchievementIdPresentation on AchievementId {
 
   /// Returns this achievement's display icon.
   IconData get icon => when(
-    ceroErrores: () => Icons.verified_rounded,
-    maratonista: (_) => Icons.directions_run_rounded,
-    ambidiestro: () => Icons.back_hand_rounded,
-    categoryMastery: (_, _) => Icons.workspace_premium_rounded,
-    streak: (_) => Icons.local_fire_department_rounded,
+    ceroErrores: () => LucideIcons.badgeCheck600,
+    maratonista: (_) => LucideIcons.footprints,
+    ambidiestro: () => LucideIcons.hand,
+    categoryMastery: (_, _) => LucideIcons.award,
+    streak: (_) => LucideIcons.flame,
   );
 }
 

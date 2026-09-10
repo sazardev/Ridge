@@ -10,6 +10,7 @@ import 'package:just_in_time/features/content/domain/entities/snippet.dart';
 import 'package:just_in_time/features/content/domain/services/syntax_tokenizer.dart';
 import 'package:just_in_time/features/content/presentation/content_labels.dart';
 import 'package:just_in_time/features/content/presentation/syntax_colors.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Full-screen "what did you just type?" reading view, pushed from the
 /// result screen's fixed footer info button — a comfortable, unhurried
@@ -147,7 +148,7 @@ class _SnippetInfoScreenState extends State<SnippetInfoScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(
-                            Icons.bolt_rounded,
+                            LucideIcons.zap,
                             color: theme.colorScheme.onPrimaryContainer,
                           ),
                           const SizedBox(width: 12),

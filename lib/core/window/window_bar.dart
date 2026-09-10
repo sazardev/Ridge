@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/core/window/desktop_platform.dart';
 import 'package:just_in_time/core/window/window_bar_controller.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:window_manager/window_manager.dart';
 
 /// A fully custom, OS-decoration-free title bar for desktop windows —
@@ -95,19 +96,17 @@ class _WindowBarState extends State<WindowBar> with WindowListener {
             ),
           ),
           _WindowButton(
-            icon: Icons.remove_rounded,
+            icon: LucideIcons.minus,
             tooltip: l10n.windowMinimize,
             onPressed: windowManager.minimize,
           ),
           _WindowButton(
-            icon: _isMaximized
-                ? Icons.filter_none_rounded
-                : Icons.crop_square_rounded,
+            icon: _isMaximized ? LucideIcons.copy : LucideIcons.maximize,
             tooltip: _isMaximized ? l10n.windowRestore : l10n.windowMaximize,
             onPressed: _toggleMaximize,
           ),
           _WindowButton(
-            icon: Icons.close_rounded,
+            icon: LucideIcons.x,
             tooltip: l10n.windowClose,
             onPressed: windowManager.close,
             isClose: true,

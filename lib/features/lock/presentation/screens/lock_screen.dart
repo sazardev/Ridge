@@ -11,6 +11,7 @@ import 'package:just_in_time/features/lock/presentation/providers/lock_providers
 import 'package:just_in_time/features/lock/presentation/widgets/numeric_keypad.dart';
 import 'package:just_in_time/features/lock/presentation/widgets/pin_dots.dart';
 import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Which of the two flows [LockScreen] is running.
 enum LockScreenMode {
@@ -198,7 +199,7 @@ class _LockScreenState extends ConsumerState<LockScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        Icons.lock_outline_rounded,
+                        LucideIcons.lock,
                         size: 40,
                         color: colorScheme.primary,
                       ),
@@ -237,7 +238,7 @@ class _LockScreenState extends ConsumerState<LockScreen> {
                           onPressed: _submitting
                               ? null
                               : _authenticateWithBiometrics,
-                          icon: const Icon(Icons.fingerprint_rounded),
+                          icon: const Icon(LucideIcons.fingerprint),
                           label: Text(l10n.lockUseBiometrics),
                         ),
                       ],

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_sound_pack.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// A selectable list of [AppSoundPack]s for the keystroke sound effects
 /// (see `KeystrokeSoundPlayer`), each row with a one-shot preview button
@@ -69,7 +70,7 @@ class _SoundPackPickerState extends State<SoundPackPicker> {
               value: pack,
               title: Text(_label(l10n, pack)),
               secondary: IconButton(
-                icon: const Icon(Icons.play_circle_outline_rounded),
+                icon: const Icon(LucideIcons.circlePlay),
                 tooltip: l10n.settingsSoundPreview,
                 onPressed: () => _preview(pack),
               ),

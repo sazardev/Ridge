@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/features/practice/presentation/widgets/session_result_footer.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 Future<void> _pumpFooter(
   WidgetTester tester, {
@@ -83,7 +84,7 @@ void main() {
     tester,
   ) async {
     await _pumpFooter(tester, onRetry: () {});
-    expect(find.byIcon(Icons.info_outline), findsNothing);
+    expect(find.byIcon(LucideIcons.info), findsNothing);
 
     var infoShown = false;
     await _pumpFooter(
@@ -91,10 +92,10 @@ void main() {
       onRetry: () {},
       onShowInfo: () => infoShown = true,
     );
-    expect(find.byIcon(Icons.info_outline), findsOneWidget);
+    expect(find.byIcon(LucideIcons.info), findsOneWidget);
     expect(find.text('I'), findsOneWidget);
 
-    await tester.tap(find.byIcon(Icons.info_outline));
+    await tester.tap(find.byIcon(LucideIcons.info));
     expect(infoShown, isTrue);
   });
 }
