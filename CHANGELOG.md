@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-09-10
+
+### Added
+- **content:** add the go-tui-notes-v1 Bubble Tea course (7481669)
+
 ## [1.5.0] - 2026-09-10
 
 ### Added
