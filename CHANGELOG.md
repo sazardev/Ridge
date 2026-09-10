@@ -11,6 +11,13 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-09-10
+
+### Added
+- **docs:** new module (77b1813)
+- **docs:** new module (5181c1a)
+- implement SPEC.md offline core (content, practice, progression, learning paths, achievements, profile) (6bc8034)
+
 ## [1.0.0] - 2026-09-08
 
 ### Added
