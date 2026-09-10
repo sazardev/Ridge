@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SettingsDto {
 
- String get themeMode; bool get expressiveColor; bool get appLockEnabled; bool get windowBorderEnabled; String get windowBorderWidth; String get cornerStyle; String get palette; String get soundPack; bool get onboardingCompleted; Map<String, String> get shortcutBindings; String? get languageCode;
+ String get themeMode; bool get expressiveColor; bool get appLockEnabled; bool get appLockBiometricEnabled; bool get windowBorderEnabled; String get windowBorderWidth; String get cornerStyle; String get palette; String get soundPack; bool get onboardingCompleted; Map<String, String> get shortcutBindings; String? get languageCode;
 /// Create a copy of SettingsDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $SettingsDtoCopyWith<SettingsDto> get copyWith => _$SettingsDtoCopyWithImpl<Sett
 @override
 bool operator ==(Object other) {
   final _this = this as SettingsDto;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsDto&&(identical(other.themeMode, _this.themeMode) || other.themeMode == _this.themeMode)&&(identical(other.expressiveColor, _this.expressiveColor) || other.expressiveColor == _this.expressiveColor)&&(identical(other.appLockEnabled, _this.appLockEnabled) || other.appLockEnabled == _this.appLockEnabled)&&(identical(other.windowBorderEnabled, _this.windowBorderEnabled) || other.windowBorderEnabled == _this.windowBorderEnabled)&&(identical(other.windowBorderWidth, _this.windowBorderWidth) || other.windowBorderWidth == _this.windowBorderWidth)&&(identical(other.cornerStyle, _this.cornerStyle) || other.cornerStyle == _this.cornerStyle)&&(identical(other.palette, _this.palette) || other.palette == _this.palette)&&(identical(other.soundPack, _this.soundPack) || other.soundPack == _this.soundPack)&&(identical(other.onboardingCompleted, _this.onboardingCompleted) || other.onboardingCompleted == _this.onboardingCompleted)&&const DeepCollectionEquality().equals(other.shortcutBindings, _this.shortcutBindings)&&(identical(other.languageCode, _this.languageCode) || other.languageCode == _this.languageCode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingsDto&&(identical(other.themeMode, _this.themeMode) || other.themeMode == _this.themeMode)&&(identical(other.expressiveColor, _this.expressiveColor) || other.expressiveColor == _this.expressiveColor)&&(identical(other.appLockEnabled, _this.appLockEnabled) || other.appLockEnabled == _this.appLockEnabled)&&(identical(other.appLockBiometricEnabled, _this.appLockBiometricEnabled) || other.appLockBiometricEnabled == _this.appLockBiometricEnabled)&&(identical(other.windowBorderEnabled, _this.windowBorderEnabled) || other.windowBorderEnabled == _this.windowBorderEnabled)&&(identical(other.windowBorderWidth, _this.windowBorderWidth) || other.windowBorderWidth == _this.windowBorderWidth)&&(identical(other.cornerStyle, _this.cornerStyle) || other.cornerStyle == _this.cornerStyle)&&(identical(other.palette, _this.palette) || other.palette == _this.palette)&&(identical(other.soundPack, _this.soundPack) || other.soundPack == _this.soundPack)&&(identical(other.onboardingCompleted, _this.onboardingCompleted) || other.onboardingCompleted == _this.onboardingCompleted)&&const DeepCollectionEquality().equals(other.shortcutBindings, _this.shortcutBindings)&&(identical(other.languageCode, _this.languageCode) || other.languageCode == _this.languageCode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as SettingsDto;
-  return Object.hash(runtimeType,_this.themeMode,_this.expressiveColor,_this.appLockEnabled,_this.windowBorderEnabled,_this.windowBorderWidth,_this.cornerStyle,_this.palette,_this.soundPack,_this.onboardingCompleted,const DeepCollectionEquality().hash(_this.shortcutBindings),_this.languageCode);
+  return Object.hash(runtimeType,_this.themeMode,_this.expressiveColor,_this.appLockEnabled,_this.appLockBiometricEnabled,_this.windowBorderEnabled,_this.windowBorderWidth,_this.cornerStyle,_this.palette,_this.soundPack,_this.onboardingCompleted,const DeepCollectionEquality().hash(_this.shortcutBindings),_this.languageCode);
 }
 
 @override
 String toString() {
   final _this = this as SettingsDto;
-  return 'SettingsDto(themeMode: ${_this.themeMode}, expressiveColor: ${_this.expressiveColor}, appLockEnabled: ${_this.appLockEnabled}, windowBorderEnabled: ${_this.windowBorderEnabled}, windowBorderWidth: ${_this.windowBorderWidth}, cornerStyle: ${_this.cornerStyle}, palette: ${_this.palette}, soundPack: ${_this.soundPack}, onboardingCompleted: ${_this.onboardingCompleted}, shortcutBindings: ${_this.shortcutBindings}, languageCode: ${_this.languageCode})';
+  return 'SettingsDto(themeMode: ${_this.themeMode}, expressiveColor: ${_this.expressiveColor}, appLockEnabled: ${_this.appLockEnabled}, appLockBiometricEnabled: ${_this.appLockBiometricEnabled}, windowBorderEnabled: ${_this.windowBorderEnabled}, windowBorderWidth: ${_this.windowBorderWidth}, cornerStyle: ${_this.cornerStyle}, palette: ${_this.palette}, soundPack: ${_this.soundPack}, onboardingCompleted: ${_this.onboardingCompleted}, shortcutBindings: ${_this.shortcutBindings}, languageCode: ${_this.languageCode})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $SettingsDtoCopyWith<$Res>  {
   factory $SettingsDtoCopyWith(SettingsDto value, $Res Function(SettingsDto) _then) = _$SettingsDtoCopyWithImpl;
 @useResult
 $Res call({
- String themeMode, bool expressiveColor, bool appLockEnabled, bool windowBorderEnabled, String windowBorderWidth, String cornerStyle, String palette, String soundPack, bool onboardingCompleted, Map<String, String> shortcutBindings, String? languageCode
+ String themeMode, bool expressiveColor, bool appLockEnabled, bool appLockBiometricEnabled, bool windowBorderEnabled, String windowBorderWidth, String cornerStyle, String palette, String soundPack, bool onboardingCompleted, Map<String, String> shortcutBindings, String? languageCode
 });
 
 
@@ -71,11 +71,12 @@ class _$SettingsDtoCopyWithImpl<$Res>
 
 /// Create a copy of SettingsDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? expressiveColor = null,Object? appLockEnabled = null,Object? windowBorderEnabled = null,Object? windowBorderWidth = null,Object? cornerStyle = null,Object? palette = null,Object? soundPack = null,Object? onboardingCompleted = null,Object? shortcutBindings = null,Object? languageCode = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? expressiveColor = null,Object? appLockEnabled = null,Object? appLockBiometricEnabled = null,Object? windowBorderEnabled = null,Object? windowBorderWidth = null,Object? cornerStyle = null,Object? palette = null,Object? soundPack = null,Object? onboardingCompleted = null,Object? shortcutBindings = null,Object? languageCode = freezed,}) {
   return _then(SettingsDto(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as String,expressiveColor: null == expressiveColor ? _self.expressiveColor : expressiveColor // ignore: cast_nullable_to_non_nullable
 as bool,appLockEnabled: null == appLockEnabled ? _self.appLockEnabled : appLockEnabled // ignore: cast_nullable_to_non_nullable
+as bool,appLockBiometricEnabled: null == appLockBiometricEnabled ? _self.appLockBiometricEnabled : appLockBiometricEnabled // ignore: cast_nullable_to_non_nullable
 as bool,windowBorderEnabled: null == windowBorderEnabled ? _self.windowBorderEnabled : windowBorderEnabled // ignore: cast_nullable_to_non_nullable
 as bool,windowBorderWidth: null == windowBorderWidth ? _self.windowBorderWidth : windowBorderWidth // ignore: cast_nullable_to_non_nullable
 as String,cornerStyle: null == cornerStyle ? _self.cornerStyle : cornerStyle // ignore: cast_nullable_to_non_nullable
@@ -169,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String themeMode,  bool expressiveColor,  bool appLockEnabled,  bool windowBorderEnabled,  String windowBorderWidth,  String cornerStyle,  String palette,  String soundPack,  bool onboardingCompleted,  Map<String, String> shortcutBindings,  String? languageCode)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String themeMode,  bool expressiveColor,  bool appLockEnabled,  bool appLockBiometricEnabled,  bool windowBorderEnabled,  String windowBorderWidth,  String cornerStyle,  String palette,  String soundPack,  bool onboardingCompleted,  Map<String, String> shortcutBindings,  String? languageCode)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SettingsDto() when $default != null:
-return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that.windowBorderEnabled,_that.windowBorderWidth,_that.cornerStyle,_that.palette,_that.soundPack,_that.onboardingCompleted,_that.shortcutBindings,_that.languageCode);case _:
+return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that.appLockBiometricEnabled,_that.windowBorderEnabled,_that.windowBorderWidth,_that.cornerStyle,_that.palette,_that.soundPack,_that.onboardingCompleted,_that.shortcutBindings,_that.languageCode);case _:
   return orElse();
 
 }
@@ -190,10 +191,10 @@ return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String themeMode,  bool expressiveColor,  bool appLockEnabled,  bool windowBorderEnabled,  String windowBorderWidth,  String cornerStyle,  String palette,  String soundPack,  bool onboardingCompleted,  Map<String, String> shortcutBindings,  String? languageCode)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String themeMode,  bool expressiveColor,  bool appLockEnabled,  bool appLockBiometricEnabled,  bool windowBorderEnabled,  String windowBorderWidth,  String cornerStyle,  String palette,  String soundPack,  bool onboardingCompleted,  Map<String, String> shortcutBindings,  String? languageCode)  $default,) {final _that = this;
 switch (_that) {
 case _SettingsDto():
-return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that.windowBorderEnabled,_that.windowBorderWidth,_that.cornerStyle,_that.palette,_that.soundPack,_that.onboardingCompleted,_that.shortcutBindings,_that.languageCode);case _:
+return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that.appLockBiometricEnabled,_that.windowBorderEnabled,_that.windowBorderWidth,_that.cornerStyle,_that.palette,_that.soundPack,_that.onboardingCompleted,_that.shortcutBindings,_that.languageCode);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -210,10 +211,10 @@ return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String themeMode,  bool expressiveColor,  bool appLockEnabled,  bool windowBorderEnabled,  String windowBorderWidth,  String cornerStyle,  String palette,  String soundPack,  bool onboardingCompleted,  Map<String, String> shortcutBindings,  String? languageCode)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String themeMode,  bool expressiveColor,  bool appLockEnabled,  bool appLockBiometricEnabled,  bool windowBorderEnabled,  String windowBorderWidth,  String cornerStyle,  String palette,  String soundPack,  bool onboardingCompleted,  Map<String, String> shortcutBindings,  String? languageCode)?  $default,) {final _that = this;
 switch (_that) {
 case _SettingsDto() when $default != null:
-return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that.windowBorderEnabled,_that.windowBorderWidth,_that.cornerStyle,_that.palette,_that.soundPack,_that.onboardingCompleted,_that.shortcutBindings,_that.languageCode);case _:
+return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that.appLockBiometricEnabled,_that.windowBorderEnabled,_that.windowBorderWidth,_that.cornerStyle,_that.palette,_that.soundPack,_that.onboardingCompleted,_that.shortcutBindings,_that.languageCode);case _:
   return null;
 
 }
@@ -225,12 +226,13 @@ return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that
 @JsonSerializable()
 
 class _SettingsDto implements SettingsDto {
-  const _SettingsDto({required this.themeMode, required this.expressiveColor, required this.appLockEnabled, this.windowBorderEnabled = true, this.windowBorderWidth = 'medium', this.cornerStyle = 'soft', this.palette = 'ember', this.soundPack = 'mechanical', this.onboardingCompleted = false,  Map<String, String> shortcutBindings = const <String, String>{}, this.languageCode}): _shortcutBindings = shortcutBindings;
+  const _SettingsDto({required this.themeMode, required this.expressiveColor, required this.appLockEnabled, this.appLockBiometricEnabled = false, this.windowBorderEnabled = true, this.windowBorderWidth = 'medium', this.cornerStyle = 'soft', this.palette = 'ember', this.soundPack = 'mechanical', this.onboardingCompleted = false,  Map<String, String> shortcutBindings = const <String, String>{}, this.languageCode}): _shortcutBindings = shortcutBindings;
   factory _SettingsDto.fromJson(Map<String, dynamic> json) => _$SettingsDtoFromJson(json);
 
 @override final  String themeMode;
 @override final  bool expressiveColor;
 @override final  bool appLockEnabled;
+@override@JsonKey() final  bool appLockBiometricEnabled;
 @override@JsonKey() final  bool windowBorderEnabled;
 @override@JsonKey() final  String windowBorderWidth;
 @override@JsonKey() final  String cornerStyle;
@@ -259,18 +261,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsDto&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.expressiveColor, expressiveColor) || other.expressiveColor == expressiveColor)&&(identical(other.appLockEnabled, appLockEnabled) || other.appLockEnabled == appLockEnabled)&&(identical(other.windowBorderEnabled, windowBorderEnabled) || other.windowBorderEnabled == windowBorderEnabled)&&(identical(other.windowBorderWidth, windowBorderWidth) || other.windowBorderWidth == windowBorderWidth)&&(identical(other.cornerStyle, cornerStyle) || other.cornerStyle == cornerStyle)&&(identical(other.palette, palette) || other.palette == palette)&&(identical(other.soundPack, soundPack) || other.soundPack == soundPack)&&(identical(other.onboardingCompleted, onboardingCompleted) || other.onboardingCompleted == onboardingCompleted)&&const DeepCollectionEquality().equals(other.shortcutBindings, _shortcutBindings)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SettingsDto&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.expressiveColor, expressiveColor) || other.expressiveColor == expressiveColor)&&(identical(other.appLockEnabled, appLockEnabled) || other.appLockEnabled == appLockEnabled)&&(identical(other.appLockBiometricEnabled, appLockBiometricEnabled) || other.appLockBiometricEnabled == appLockBiometricEnabled)&&(identical(other.windowBorderEnabled, windowBorderEnabled) || other.windowBorderEnabled == windowBorderEnabled)&&(identical(other.windowBorderWidth, windowBorderWidth) || other.windowBorderWidth == windowBorderWidth)&&(identical(other.cornerStyle, cornerStyle) || other.cornerStyle == cornerStyle)&&(identical(other.palette, palette) || other.palette == palette)&&(identical(other.soundPack, soundPack) || other.soundPack == soundPack)&&(identical(other.onboardingCompleted, onboardingCompleted) || other.onboardingCompleted == onboardingCompleted)&&const DeepCollectionEquality().equals(other.shortcutBindings, _shortcutBindings)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,themeMode,expressiveColor,appLockEnabled,windowBorderEnabled,windowBorderWidth,cornerStyle,palette,soundPack,onboardingCompleted,const DeepCollectionEquality().hash(_shortcutBindings),languageCode);
+    return Object.hash(runtimeType,themeMode,expressiveColor,appLockEnabled,appLockBiometricEnabled,windowBorderEnabled,windowBorderWidth,cornerStyle,palette,soundPack,onboardingCompleted,const DeepCollectionEquality().hash(_shortcutBindings),languageCode);
 }
 
 @override
 String toString() {
-    return 'SettingsDto(themeMode: $themeMode, expressiveColor: $expressiveColor, appLockEnabled: $appLockEnabled, windowBorderEnabled: $windowBorderEnabled, windowBorderWidth: $windowBorderWidth, cornerStyle: $cornerStyle, palette: $palette, soundPack: $soundPack, onboardingCompleted: $onboardingCompleted, shortcutBindings: $shortcutBindings, languageCode: $languageCode)';
+    return 'SettingsDto(themeMode: $themeMode, expressiveColor: $expressiveColor, appLockEnabled: $appLockEnabled, appLockBiometricEnabled: $appLockBiometricEnabled, windowBorderEnabled: $windowBorderEnabled, windowBorderWidth: $windowBorderWidth, cornerStyle: $cornerStyle, palette: $palette, soundPack: $soundPack, onboardingCompleted: $onboardingCompleted, shortcutBindings: $shortcutBindings, languageCode: $languageCode)';
 }
 
 
@@ -281,7 +283,7 @@ abstract mixin class _$SettingsDtoCopyWith<$Res> implements $SettingsDtoCopyWith
   factory _$SettingsDtoCopyWith(_SettingsDto value, $Res Function(_SettingsDto) _then) = __$SettingsDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String themeMode, bool expressiveColor, bool appLockEnabled, bool windowBorderEnabled, String windowBorderWidth, String cornerStyle, String palette, String soundPack, bool onboardingCompleted, Map<String, String> shortcutBindings, String? languageCode
+ String themeMode, bool expressiveColor, bool appLockEnabled, bool appLockBiometricEnabled, bool windowBorderEnabled, String windowBorderWidth, String cornerStyle, String palette, String soundPack, bool onboardingCompleted, Map<String, String> shortcutBindings, String? languageCode
 });
 
 
@@ -298,11 +300,12 @@ class __$SettingsDtoCopyWithImpl<$Res>
 
 /// Create a copy of SettingsDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? expressiveColor = null,Object? appLockEnabled = null,Object? windowBorderEnabled = null,Object? windowBorderWidth = null,Object? cornerStyle = null,Object? palette = null,Object? soundPack = null,Object? onboardingCompleted = null,Object? shortcutBindings = null,Object? languageCode = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? expressiveColor = null,Object? appLockEnabled = null,Object? appLockBiometricEnabled = null,Object? windowBorderEnabled = null,Object? windowBorderWidth = null,Object? cornerStyle = null,Object? palette = null,Object? soundPack = null,Object? onboardingCompleted = null,Object? shortcutBindings = null,Object? languageCode = freezed,}) {
   return _then(_SettingsDto(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as String,expressiveColor: null == expressiveColor ? _self.expressiveColor : expressiveColor // ignore: cast_nullable_to_non_nullable
 as bool,appLockEnabled: null == appLockEnabled ? _self.appLockEnabled : appLockEnabled // ignore: cast_nullable_to_non_nullable
+as bool,appLockBiometricEnabled: null == appLockBiometricEnabled ? _self.appLockBiometricEnabled : appLockBiometricEnabled // ignore: cast_nullable_to_non_nullable
 as bool,windowBorderEnabled: null == windowBorderEnabled ? _self.windowBorderEnabled : windowBorderEnabled // ignore: cast_nullable_to_non_nullable
 as bool,windowBorderWidth: null == windowBorderWidth ? _self.windowBorderWidth : windowBorderWidth // ignore: cast_nullable_to_non_nullable
 as String,cornerStyle: null == cornerStyle ? _self.cornerStyle : cornerStyle // ignore: cast_nullable_to_non_nullable

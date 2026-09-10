@@ -65,9 +65,20 @@ class SettingsController extends _$SettingsController {
   Future<void> setLanguageCode(String? code) =>
       _update((s) => s.copyWith(languageCode: code));
 
-  /// Enables or disables the PIN app-lock.
-  Future<void> setAppLockEnabled({required bool value}) =>
-      _update((s) => s.copyWith(appLockEnabled: value));
+  /// Enables or disables the PIN app-lock. Disabling also turns off
+  /// biometric unlock, since it only ever runs as a shortcut for the PIN.
+  Future<void> setAppLockEnabled({required bool value}) => _update(
+    (s) => s.copyWith(
+      appLockEnabled: value,
+      appLockBiometricEnabled: value && s.appLockBiometricEnabled,
+    ),
+  );
+
+  /// Enables or disables biometric (fingerprint/Face ID) unlock as a
+  /// shortcut for the PIN — only meaningful while [AppSettings.appLockEnabled]
+  /// is already on.
+  Future<void> setAppLockBiometricEnabled({required bool value}) =>
+      _update((s) => s.copyWith(appLockBiometricEnabled: value));
 
   /// Toggles the desktop window's custom rounded border and shadow.
   Future<void> setWindowBorderEnabled({required bool value}) =>

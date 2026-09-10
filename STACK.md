@@ -146,6 +146,7 @@ Leyenda: ✅ soportado nativamente sin salvedades · ⚠️ soportado con una sa
 | `cupertino_icons` | ✅ | ✅ | ✅ | ✅ | Fuente de glifos vectoriales; pese al nombre, no implica UI de iOS. |
 | `shared_preferences` | ✅ | ✅ | ✅ | ✅ | Backend de almacenamiento distinto por plataforma (§3.2), API idéntica. |
 | `flutter_secure_storage` | ✅ | ⚠️ | ✅ | ⚠️ | Keystore/Credential Locker nativos en Android/Windows; `libsecret` en Linux (requiere keyring); `localStorage` cifrado en Web (§3.2). |
+| `local_auth` | ✅ | ❌ | ✅ | ❌ | `BiometricPrompt` en Android, Windows Hello en Windows. Sin implementación de Linux ni Web — el feature `lock` (§4.5) lo trata como una mejora opcional, nunca como requisito (§3.2). |
 | `connectivity_plus` | ✅ | ✅ | ✅ | ⚠️ | Estado real de red del SO en nativo; heurística de navegador en Web (§3.2). |
 | `supabase_flutter` | ✅ | ✅ | ✅ | ⚠️ | HTTP + WebSocket puro. En Web, Realtime puede degradarse por proxies/ad-blockers (§3.2). |
 | `drift` + `drift_flutter` + `sqlite3_flutter_libs` + `sqlite3` | ✅ | ✅ | ✅ | ⚠️ | Binario nativo de SQLite en Android/Linux/Windows; `sqlite3.wasm` + OPFS (con salvedad de cabeceras) en Web (§3.2). |
@@ -165,6 +166,12 @@ Leyenda: ✅ soportado nativamente sin salvedades · ⚠️ soportado con una sa
   - En tiempo de ejecución: un *keyring* corriendo (GNOME Keyring, KWallet u otro proveedor del Secret Service). **Riesgo concreto**: en un servidor headless, un contenedor de CI, o una sesión Linux sin entorno de escritorio, no hay Secret Service disponible y las llamadas de lectura/escritura fallan. **Mitigación**: en pipelines de CI que corran en Linux, envolver la ejecución con `dbus-run-session -- gnome-keyring-daemon --unlock` para simular un keyring, o directamente sustituir el repositorio de almacenamiento seguro por un doble de prueba en los tests automatizados que corren en Linux headless — nunca depender de libsecret real en CI.
   - Empaquetado como **Flatpak**: el sandbox de Flatpak no da acceso a D-Bus Secret Service salvo que el manifiesto lo declare explícitamente (`--talk-name=org.freedesktop.secrets`, o el portal `org.freedesktop.portal.Secret`). Sin ese permiso en el manifiesto, el guardado seguro falla silenciosamente dentro del sandbox — se declara como requisito obligatorio del manifiesto Flatpak (§12).
 - **Web**: usa `window.localStorage` con una capa de cifrado adicional de la librería, pero la clave de cifrado también reside en el navegador — **no** ofrece la misma garantía que un Keystore/Credential Locker nativo. Se acepta como limitación conocida para guardar la sesión JWT en Web (mismo nivel de garantía que cualquier SPA que guarda un token en el navegador); no se compensa con criptografía adicional porque el enemigo de ese modelo de amenaza (acceso físico/malware al navegador del propio usuario) no cambia con más cifrado del lado del cliente.
+
+**`local_auth`** — desbloqueo biométrico opcional para el PIN de `lock` (§4.5), nunca su reemplazo:
+- **Android**: `BiometricPrompt` nativo — requiere `minSdkVersion 23`+ (ya cubierto por el `flutter.minSdkVersion` por defecto del proyecto) y que `MainActivity` extienda `FlutterFragmentActivity` en vez de `FlutterActivity` (`android/app/src/main/kotlin/.../MainActivity.kt`), más el permiso `USE_BIOMETRIC` en el manifiesto.
+- **iOS**: Face ID/Touch ID vía `local_auth_darwin` — sin salvedad propia más allá de que iOS está **fuera de alcance v1** (§1); de agregarse la plataforma, requiere declarar `NSFaceIDUsageDescription` en `Info.plist`.
+- **Windows**: Windows Hello vía `local_auth_windows` — sin configuración adicional.
+- **Linux y Web**: **sin implementación** — el paquete no registra ningún plugin ahí. Una llamada sin protección lanzaría una excepción de plugin faltante. **Mitigación** (ya implementada en `LocalAuthBiometricRepository`): toda llamada está envuelta en `try/catch` y `isAvailable()` degrada a `false` ante cualquier excepción, así que en Linux/Web el toggle de biometría de Ajustes simplemente nunca se muestra — el PIN sigue siendo 100% funcional en las cinco plataformas, la biometría es un atajo adicional, no un requisito (principio §0.8).
 
 **`connectivity_plus`** — en Android/Windows/Linux consulta el estado real de la interfaz de red del sistema operativo. En **Web** no existe una forma fiable de saber "hay internet real": el evento `navigator.onLine` del navegador solo indica que hay una interfaz de red activa (un WiFi conectado a un router sin salida a internet igual reporta `online`). **Mitigación**: el `SyncService` (§6) en Web no se queda esperando pasivamente la señal de `connectivity_plus`; además reintenta con *backoff* ante fallos reales de las peticiones HTTP a Supabase, tratando la señal de conectividad como una pista, no como la verdad.
 
@@ -268,7 +275,7 @@ Siguiendo el patrón de `TaskId`, cada entidad de negocio nueva tiene su propio 
 | `leaderboard` **(nuevo)** | §11 Leaderboards |
 | `achievements` **(nuevo)** | §12 Logros e insignias |
 | `settings` **[Vigente]** | Preferencias de la app (tema, idioma) |
-| `lock` **[Vigente]** | Bloqueo local por PIN — sin relación directa con `SPEC.md`, se mantiene como feature independiente |
+| `lock` **[Vigente, se extiende]** | Bloqueo local por PIN + desbloqueo biométrico opcional (Android/iOS/Windows, ver §3.1–3.2) — sin relación directa con `SPEC.md`, se mantiene como feature independiente |
 | `sync` **(nuevo, transversal)** | §8 Sincronización — no es una pantalla, es un servicio de aplicación (§6 de este documento) |
 
 ---

@@ -282,6 +282,23 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     trailing: const Icon(Icons.chevron_right_rounded),
                     onTap: () => context.push<bool>('/lock-setup'),
                   ),
+                  if (ref.watch(biometricAvailableProvider).value ?? false) ...[
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    SwitchListTile(
+                      title: Text(l10n.settingsAppLockBiometric),
+                      subtitle: Text(l10n.settingsAppLockBiometricSubtitle),
+                      value: settings.appLockBiometricEnabled,
+                      onChanged: (value) =>
+                          controller.setAppLockBiometricEnabled(value: value),
+                    ),
+                  ],
+                  const Divider(height: 1, indent: 16, endIndent: 16),
+                  ListTile(
+                    leading: const Icon(Icons.lock_outline_rounded),
+                    title: Text(l10n.settingsLockNow),
+                    onTap: () =>
+                        ref.read(appLockSessionProvider.notifier).lock(),
+                  ),
                 ],
               ],
             ),

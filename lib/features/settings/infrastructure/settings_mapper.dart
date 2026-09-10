@@ -20,6 +20,7 @@ extension SettingsDtoMapper on SettingsDto {
       ),
       expressiveColor: expressiveColor,
       appLockEnabled: appLockEnabled,
+      appLockBiometricEnabled: appLockBiometricEnabled,
       windowBorderEnabled: windowBorderEnabled,
       windowBorderWidth: AppWindowBorderWidth.values.firstWhere(
         (w) => w.name == windowBorderWidth,
@@ -57,6 +58,7 @@ extension AppSettingsMapper on AppSettings {
       themeMode: themeMode.name,
       expressiveColor: expressiveColor,
       appLockEnabled: appLockEnabled,
+      appLockBiometricEnabled: appLockBiometricEnabled,
       windowBorderEnabled: windowBorderEnabled,
       windowBorderWidth: windowBorderWidth.name,
       cornerStyle: cornerStyle.name,

@@ -10,6 +10,7 @@ import 'package:just_in_time/core/window/window_bar.dart';
 import 'package:just_in_time/features/lock/presentation/providers/lock_providers.dart';
 import 'package:just_in_time/features/lock/presentation/widgets/numeric_keypad.dart';
 import 'package:just_in_time/features/lock/presentation/widgets/pin_dots.dart';
+import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
 
 /// Which of the two flows [LockScreen] is running.
 enum LockScreenMode {
@@ -45,6 +46,44 @@ class _LockScreenState extends ConsumerState<LockScreen> {
   bool get _isSetup => widget.mode == LockScreenMode.setup;
   bool get _isConfirmStep => _isSetup && _firstEntry != null;
 
+  @override
+  void initState() {
+    super.initState();
+    if (widget.mode == LockScreenMode.unlock) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        final biometricEnabled =
+            ref
+                .read(settingsControllerProvider)
+                .value
+                ?.appLockBiometricEnabled ??
+            false;
+        if (biometricEnabled) unawaited(_authenticateWithBiometrics());
+      });
+    }
+  }
+
+  Future<void> _authenticateWithBiometrics() async {
+    if (_submitting) return;
+    setState(() => _submitting = true);
+    final reason = AppLocalizations.of(context).lockBiometricReason;
+    final result = await ref.read(authenticateWithBiometricsUseCaseProvider)(
+      reason: reason,
+    );
+    if (!mounted) return;
+    setState(() => _submitting = false);
+    if (result.valueOrNull ?? false) {
+      ref.read(appLockSessionProvider.notifier).unlock();
+      context.go('/practice');
+      return;
+    }
+    if (result.isErr) {
+      final l10n = AppLocalizations.of(context);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(l10n.lockBiometricError)));
+    }
+  }
+
   void _onDigit(String digit) {
     if (_submitting || _buffer.length >= _pinLength) return;
     setState(() => _buffer += digit);
@@ -73,11 +112,14 @@ class _LockScreenState extends ConsumerState<LockScreen> {
       context.go('/practice');
       return;
     }
+    final l10n = AppLocalizations.of(context);
     setState(() {
       _errorTick++;
       _buffer = '';
       _submitting = false;
     });
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(l10n.lockError)));
   }
 
   Future<void> _submitSetup() async {
@@ -108,12 +150,15 @@ class _LockScreenState extends ConsumerState<LockScreen> {
       Navigator.of(context).pop(true);
       return;
     }
+    final l10n = AppLocalizations.of(context);
     setState(() {
       _errorTick++;
       _firstEntry = null;
       _buffer = '';
       _submitting = false;
     });
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(l10n.lockSaveError)));
   }
 
   @override
@@ -121,6 +166,11 @@ class _LockScreenState extends ConsumerState<LockScreen> {
     final l10n = AppLocalizations.of(context);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final biometricEnabled =
+        ref.watch(settingsControllerProvider).value?.appLockBiometricEnabled ??
+        false;
+    final showBiometricButton =
+        widget.mode == LockScreenMode.unlock && biometricEnabled;
 
     final title = switch (widget.mode) {
       LockScreenMode.unlock => l10n.lockTitle,
@@ -181,6 +231,16 @@ class _LockScreenState extends ConsumerState<LockScreen> {
                         onDigit: _onDigit,
                         onBackspace: _onBackspace,
                       ),
+                      if (showBiometricButton) ...[
+                        const SizedBox(height: 24),
+                        TextButton.icon(
+                          onPressed: _submitting
+                              ? null
+                              : _authenticateWithBiometrics,
+                          icon: const Icon(Icons.fingerprint_rounded),
+                          label: Text(l10n.lockUseBiometrics),
+                        ),
+                      ],
                     ],
                   ),
                 ),

@@ -236,6 +236,224 @@ final class HasPinProvider
 
 String _$hasPinHash() => r'9fa555c98b1969568963c4d3e212b1d40e163405';
 
+/// Provides the [BiometricAuthRepository] implementation used across the
+/// app.
+
+@ProviderFor(biometricAuthRepository)
+final biometricAuthRepositoryProvider = BiometricAuthRepositoryProvider._();
+
+/// Provides the [BiometricAuthRepository] implementation used across the
+/// app.
+
+final class BiometricAuthRepositoryProvider
+    extends
+        $FunctionalProvider<
+          BiometricAuthRepository,
+          BiometricAuthRepository,
+          BiometricAuthRepository
+        >
+    with $Provider<BiometricAuthRepository> {
+  /// Provides the [BiometricAuthRepository] implementation used across the
+  /// app.
+  BiometricAuthRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'biometricAuthRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$biometricAuthRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<BiometricAuthRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  BiometricAuthRepository create(Ref ref) {
+    return biometricAuthRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(BiometricAuthRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<BiometricAuthRepository>(value),
+    );
+  }
+}
+
+String _$biometricAuthRepositoryHash() =>
+    r'eecf20d5684d8439d60eb5768f19719d04416743';
+
+/// Provides the [CheckBiometricAvailabilityUseCase].
+
+@ProviderFor(checkBiometricAvailabilityUseCase)
+final checkBiometricAvailabilityUseCaseProvider =
+    CheckBiometricAvailabilityUseCaseProvider._();
+
+/// Provides the [CheckBiometricAvailabilityUseCase].
+
+final class CheckBiometricAvailabilityUseCaseProvider
+    extends
+        $FunctionalProvider<
+          CheckBiometricAvailabilityUseCase,
+          CheckBiometricAvailabilityUseCase,
+          CheckBiometricAvailabilityUseCase
+        >
+    with $Provider<CheckBiometricAvailabilityUseCase> {
+  /// Provides the [CheckBiometricAvailabilityUseCase].
+  CheckBiometricAvailabilityUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'checkBiometricAvailabilityUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() =>
+      _$checkBiometricAvailabilityUseCaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<CheckBiometricAvailabilityUseCase> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  CheckBiometricAvailabilityUseCase create(Ref ref) {
+    return checkBiometricAvailabilityUseCase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CheckBiometricAvailabilityUseCase value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CheckBiometricAvailabilityUseCase>(
+        value,
+      ),
+    );
+  }
+}
+
+String _$checkBiometricAvailabilityUseCaseHash() =>
+    r'0879c8d0fb5541d7df739d31b7120ffd5bbbb610';
+
+/// Provides the [AuthenticateWithBiometricsUseCase].
+
+@ProviderFor(authenticateWithBiometricsUseCase)
+final authenticateWithBiometricsUseCaseProvider =
+    AuthenticateWithBiometricsUseCaseProvider._();
+
+/// Provides the [AuthenticateWithBiometricsUseCase].
+
+final class AuthenticateWithBiometricsUseCaseProvider
+    extends
+        $FunctionalProvider<
+          AuthenticateWithBiometricsUseCase,
+          AuthenticateWithBiometricsUseCase,
+          AuthenticateWithBiometricsUseCase
+        >
+    with $Provider<AuthenticateWithBiometricsUseCase> {
+  /// Provides the [AuthenticateWithBiometricsUseCase].
+  AuthenticateWithBiometricsUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'authenticateWithBiometricsUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() =>
+      _$authenticateWithBiometricsUseCaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<AuthenticateWithBiometricsUseCase> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  AuthenticateWithBiometricsUseCase create(Ref ref) {
+    return authenticateWithBiometricsUseCase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AuthenticateWithBiometricsUseCase value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AuthenticateWithBiometricsUseCase>(
+        value,
+      ),
+    );
+  }
+}
+
+String _$authenticateWithBiometricsUseCaseHash() =>
+    r'21da6b333d1a57188aa7900d3dc95a460df6ff90';
+
+/// Whether this device can currently offer biometric unlock at all
+/// (supported hardware, an enrolled fingerprint/face, and a platform
+/// implementation) — gates the Settings toggle and the lock screen's
+/// biometric prompt.
+
+@ProviderFor(biometricAvailable)
+final biometricAvailableProvider = BiometricAvailableProvider._();
+
+/// Whether this device can currently offer biometric unlock at all
+/// (supported hardware, an enrolled fingerprint/face, and a platform
+/// implementation) — gates the Settings toggle and the lock screen's
+/// biometric prompt.
+
+final class BiometricAvailableProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
+    with $FutureModifier<bool>, $FutureProvider<bool> {
+  /// Whether this device can currently offer biometric unlock at all
+  /// (supported hardware, an enrolled fingerprint/face, and a platform
+  /// implementation) — gates the Settings toggle and the lock screen's
+  /// biometric prompt.
+  BiometricAvailableProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'biometricAvailableProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$biometricAvailableHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool> create(Ref ref) {
+    return biometricAvailable(ref);
+  }
+}
+
+String _$biometricAvailableHash() =>
+    r'bc073cd05a875a7a7e0f3191fd9b3a59a1ab05e0';
+
 /// Whether the current app session has already been unlocked. In-memory
 /// only and on purpose: a fresh process launch must always re-prompt.
 

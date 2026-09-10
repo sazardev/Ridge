@@ -15,6 +15,7 @@ abstract class SettingsDto with _$SettingsDto {
     required String themeMode,
     required bool expressiveColor,
     required bool appLockEnabled,
+    @Default(false) bool appLockBiometricEnabled,
     @Default(true) bool windowBorderEnabled,
     @Default('medium') String windowBorderWidth,
     @Default('soft') String cornerStyle,
