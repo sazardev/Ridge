@@ -284,6 +284,7 @@
   "categoryPointers": "Pointers",
   "categoryConcurrency": "Concurrency",
   "categoryGenerics": "Generics",
+  "categoryModernGo": "Modern Go",
   "categoryIdiomaticFormatting": "Idiomatic formatting",
   "categoryDomainModeling": "Domain modeling",
   "categoryHexagonalPorts": "Hexagonal ports",

@@ -4,59 +4,185 @@
     "language": "go",
     "titleEn": "Go: Intermediate Syntax",
     "titleEs": "Go: Sintaxis Intermedia",
-    "descriptionEn": "Structs, interfaces, pointers, concurrency, generics, and style — six more Go essentials.",
-    "descriptionEs": "Structs, interfaces, punteros, concurrencia, genéricos y estilo — seis esenciales más de Go.",
+    "descriptionEn": "Structs, pointers, interfaces, concurrency, generics, and what's new in Go 1.27.",
+    "descriptionEs": "Structs, punteros, interfaces, concurrencia, genéricos y lo nuevo de Go 1.27.",
     "tagEn": "Intermediate",
     "tagEs": "Intermedio",
     "lessons": [
       {
-        "id": "go-intermediate-syntax-v1-step01",
-        "snippetId": "go-fmt-002",
+        "id": "go-intermediate-syntax-v1-o2-step01",
+        "snippetId": "go-struct-001",
         "order": 1,
-        "titleEn": "Aligned var block",
-        "titleEs": "Bloque var alineado"
+        "titleEn": "Product struct with JSON tags",
+        "titleEs": "Struct Product con etiquetas JSON"
       },
       {
-        "id": "go-intermediate-syntax-v1-step02",
-        "snippetId": "go-struct-002",
+        "id": "go-intermediate-syntax-v1-o2-step02",
+        "snippetId": "go-struct-004",
         "order": 2,
+        "titleEn": "Struct tags for JSON and validation",
+        "titleEs": "Etiquetas de struct para JSON y validación"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step03",
+        "snippetId": "go-struct-002",
+        "order": 3,
         "titleEn": "Struct embedding for composition",
         "titleEs": "Incrustación de structs para composición"
       },
       {
-        "id": "go-intermediate-syntax-v1-step03",
-        "snippetId": "go-iface-001",
-        "order": 3,
-        "titleEn": "Shape interface + Rectangle",
-        "titleEs": "Interfaz Shape + Rectangle"
+        "id": "go-intermediate-syntax-v1-o2-step04",
+        "snippetId": "go-struct-003",
+        "order": 4,
+        "titleEn": "Constructor function with pointer receiver",
+        "titleEs": "Función constructora con receptor puntero"
       },
       {
-        "id": "go-intermediate-syntax-v1-step04",
+        "id": "go-intermediate-syntax-v1-o2-step05",
+        "snippetId": "go-ptr-002",
+        "order": 5,
+        "titleEn": "Address-of and dereference",
+        "titleEs": "Toma de dirección y desreferencia"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step06",
         "snippetId": "go-ptr-001",
-        "order": 4,
+        "order": 6,
         "titleEn": "Increment through a pointer",
         "titleEs": "Incrementar a través de un puntero"
       },
       {
-        "id": "go-intermediate-syntax-v1-step05",
+        "id": "go-intermediate-syntax-v1-o2-step07",
+        "snippetId": "go-ptr-003",
+        "order": 7,
+        "titleEn": "Mixed pointer and value receivers",
+        "titleEs": "Receptores mixtos de puntero y valor"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step08",
+        "snippetId": "go-ptr-004",
+        "order": 8,
+        "titleEn": "Self-referential pointer struct",
+        "titleEs": "Struct autorreferencial con puntero"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step09",
+        "snippetId": "go-iface-001",
+        "order": 9,
+        "titleEn": "Shape interface + Rectangle",
+        "titleEs": "Interfaz Shape + Rectangle"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step10",
+        "snippetId": "go-iface-003",
+        "order": 10,
+        "titleEn": "Reader/Writer interface composition",
+        "titleEs": "Composición de interfaces Reader/Writer"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step11",
+        "snippetId": "go-iface-004",
+        "order": 11,
+        "titleEn": "Interface as a dependency-injection boundary",
+        "titleEs": "Interfaz como límite de inyección de dependencias"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step12",
         "snippetId": "go-concurrency-002",
-        "order": 5,
+        "order": 12,
         "titleEn": "Run a job in a goroutine",
         "titleEs": "Ejecutar una tarea en una goroutine"
       },
       {
-        "id": "go-intermediate-syntax-v1-step06",
+        "id": "go-intermediate-syntax-v1-o2-step13",
         "snippetId": "go-concurrency-003",
-        "order": 6,
+        "order": 13,
         "titleEn": "Mutex-protected counter",
         "titleEs": "Contador protegido con mutex"
       },
       {
-        "id": "go-intermediate-syntax-v1-step07",
+        "id": "go-intermediate-syntax-v1-o2-step14",
+        "snippetId": "go-concurrency-001",
+        "order": 14,
+        "titleEn": "Fetch all concurrently",
+        "titleEs": "Obtener todo de forma concurrente"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step15",
+        "snippetId": "go-concurrency-004",
+        "order": 15,
+        "titleEn": "Context cancellation with select",
+        "titleEs": "Cancelación de contexto con select"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step16",
+        "snippetId": "go-generics-002",
+        "order": 16,
+        "titleEn": "Generic First function",
+        "titleEs": "Función genérica First"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step17",
         "snippetId": "go-generics-003",
-        "order": 7,
+        "order": 17,
         "titleEn": "Generic Contains with comparable",
         "titleEs": "Contains genérico con comparable"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step18",
+        "snippetId": "go-generics-001",
+        "order": 18,
+        "titleEn": "Generic Map function",
+        "titleEs": "Función genérica Map"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step19",
+        "snippetId": "go-generics-004",
+        "order": 19,
+        "titleEn": "Generic Stack type",
+        "titleEs": "Tipo Stack genérico"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step20",
+        "snippetId": "go-modern-001",
+        "order": 20,
+        "titleEn": "Split a path at the last slash (Go 1.27)",
+        "titleEs": "Partir una ruta en la última barra (Go 1.27)"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step21",
+        "snippetId": "go-modern-002",
+        "order": 21,
+        "titleEn": "Generate a UUID with the standard library (Go 1.27)",
+        "titleEs": "Generar un UUID con la biblioteca estándar (Go 1.27)"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step22",
+        "snippetId": "go-modern-003",
+        "order": 22,
+        "titleEn": "Promoted field keys in struct literals (Go 1.27)",
+        "titleEs": "Claves de campo promovido en literales de struct (Go 1.27)"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step23",
+        "snippetId": "go-modern-004",
+        "order": 23,
+        "titleEn": "Function type inference in assignment contexts (Go 1.27)",
+        "titleEs": "Inferencia de tipos de función en contextos de asignación (Go 1.27)"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step24",
+        "snippetId": "go-modern-005",
+        "order": 24,
+        "titleEn": "Report leaked goroutines with pprof (Go 1.27)",
+        "titleEs": "Reportar goroutines con fugas usando pprof (Go 1.27)"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-o2-step25",
+        "snippetId": "go-modern-006",
+        "order": 25,
+        "titleEn": "Generic methods on a generic type (Go 1.27)",
+        "titleEs": "Métodos genéricos en un tipo genérico (Go 1.27)"
       }
     ]
   }

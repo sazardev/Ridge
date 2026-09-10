@@ -1508,6 +1508,12 @@ abstract class AppLocalizations {
   /// **'Generics'**
   String get categoryGenerics;
 
+  /// No description provided for @categoryModernGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Modern Go'**
+  String get categoryModernGo;
+
   /// No description provided for @categoryIdiomaticFormatting.
   ///
   /// In en, this message translates to:

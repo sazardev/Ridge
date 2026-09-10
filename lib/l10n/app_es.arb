@@ -274,6 +274,7 @@
   "categoryPointers": "Punteros",
   "categoryConcurrency": "Concurrencia",
   "categoryGenerics": "Genéricos",
+  "categoryModernGo": "Go moderno",
   "categoryIdiomaticFormatting": "Formato idiomático",
   "categoryDomainModeling": "Modelado de dominio",
   "categoryHexagonalPorts": "Puertos hexagonales",

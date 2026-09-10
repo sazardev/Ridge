@@ -33,6 +33,13 @@ enum ContentCategory {
   /// Generic type parameters and constraints.
   generics,
 
+  /// Features introduced by recent Go releases, showcased in the
+  /// `go-intermediate-syntax-v1` route's closing block: Go 1.27's
+  /// generic methods, promoted-field struct-literal keys, generalized
+  /// function type inference, the `uuid` package, `strings.CutLast`,
+  /// and the `goroutineleak` pprof profile.
+  modernGo,
+
   /// Idiomatic `gofmt` formatting conventions in general.
   idiomaticFormatting,
 

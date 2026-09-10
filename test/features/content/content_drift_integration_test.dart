@@ -78,7 +78,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 309)
+        .firstWhere((snippets) => snippets.length == 315)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -92,7 +92,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(309));
+    expect(catalog, hasLength(315));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -104,7 +104,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(309));
+      expect(catalog, hasLength(315));
     },
   );
 
@@ -115,7 +115,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(309));
+    expect(result, hasLength(315));
   });
 
   test(
@@ -145,7 +145,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(87));
+    expect(beginnerSnippets, hasLength(89));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -267,6 +267,7 @@ void main() {
       'go-loop-004',
       'go-loop-011',
       'go-loop-013',
+      'go-modern-004',
       'go-persist-002',
       'go-persist-003',
       'go-rest-002',

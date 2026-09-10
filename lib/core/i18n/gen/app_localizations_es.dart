@@ -753,6 +753,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categoryGenerics => 'Genéricos';
 
   @override
+  String get categoryModernGo => 'Go moderno';
+
+  @override
   String get categoryIdiomaticFormatting => 'Formato idiomático';
 
   @override

@@ -48,6 +48,7 @@ extension ContentCategoryLabel on ContentCategory {
     ContentCategory.pointers => l10n.categoryPointers,
     ContentCategory.concurrency => l10n.categoryConcurrency,
     ContentCategory.generics => l10n.categoryGenerics,
+    ContentCategory.modernGo => l10n.categoryModernGo,
     ContentCategory.idiomaticFormatting => l10n.categoryIdiomaticFormatting,
     ContentCategory.shellCommands => l10n.categoryShellCommands,
     ContentCategory.pipesAndRedirection => l10n.categoryPipesAndRedirection,
