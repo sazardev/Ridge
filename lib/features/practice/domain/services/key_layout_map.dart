@@ -90,6 +90,15 @@ const Map<PhysicalKeyId, KeyLayoutEntry> keyLayoutMap = {
     row: KeyboardRow.bottomRow,
   ),
   PhysicalKeyId.keyZ: (finger: Finger.leftPinky, row: KeyboardRow.bottomRow),
+  // The ISO extra key between Left Shift and Z (Spanish `<`/`>`,
+  // US-International `<`/`>`, German `#`/`'`, UK `\`/`|`, ...) — hit
+  // with the extended left pinky, same reach the ANSI US layout never
+  // needed to assign. Which character it prints depends on the layout;
+  // the position is stable, which is all metrics care about.
+  PhysicalKeyId.intlBackslash: (
+    finger: Finger.leftPinky,
+    row: KeyboardRow.bottomRow,
+  ),
   PhysicalKeyId.keyX: (finger: Finger.leftRing, row: KeyboardRow.bottomRow),
   PhysicalKeyId.keyC: (finger: Finger.leftMiddle, row: KeyboardRow.bottomRow),
   PhysicalKeyId.keyV: (finger: Finger.leftIndex, row: KeyboardRow.bottomRow),

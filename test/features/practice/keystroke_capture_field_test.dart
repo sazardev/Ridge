@@ -3,6 +3,8 @@
 // via `tester.sendKeyDownEvent`/`sendKeyUpEvent`, plain flutter_test, no
 // integration_test) actually advances the capture engine's buffer and
 // produces classified keystrokes with plausible timing.
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,6 +18,7 @@ import 'package:just_in_time/features/content/domain/value_objects/snippet_id.da
 import 'package:just_in_time/features/practice/domain/entities/keystroke_result.dart';
 import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
 import 'package:just_in_time/features/practice/domain/entities/practice_session_status.dart';
+import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
 import 'package:just_in_time/features/practice/presentation/providers/practice_session_controller.dart';
 import 'package:just_in_time/features/practice/presentation/widgets/keystroke_capture_field.dart';
 
@@ -38,6 +41,59 @@ const _snippet = Snippet(
   explanationEs: 'Explicación de prueba.',
 );
 const _mode = PracticeMode.zen();
+
+/// Dispatches a raw key event through the exact same `KeyEventManager`
+/// path `tester.sendKeyDownEvent` uses, but with a hand-built `KeyData`
+/// — the test harness's own simulator lacks a keycode for the ISO
+/// `intlBackslash` logical key on every platform map, so its key down/up
+/// (and the shift that reaches `>`) have to be synthesized directly.
+/// `synthesized: true` makes `KeyEventManager` dispatch the event
+/// immediately instead of queueing it for a follow-up raw event.
+void _dispatch({
+  required PhysicalKeyboardKey physicalKey,
+  required LogicalKeyboardKey logicalKey,
+  ui.KeyEventType type = ui.KeyEventType.down,
+  String? character,
+  Duration timeStamp = Duration.zero,
+}) {
+  // The deprecated `keyEventManager`/`handleKeyData` are the same APIs
+  // flutter_test's own `simulateKeyDownEvent` uses internally to convert
+  // a `KeyData` into a dispatched `KeyEvent` — there is no replacement
+  // path that also routes synthesized events through `FocusManager`, so
+  // this mirrors the framework's own test harness.
+  // ignore: deprecated_member_use
+  ServicesBinding.instance.keyEventManager.handleKeyData(
+    ui.KeyData(
+      timeStamp: timeStamp,
+      type: type,
+      physical: physicalKey.usbHidUsage,
+      logical: logicalKey.keyId,
+      character: character,
+      synthesized: true,
+    ),
+  );
+}
+
+/// A snippet whose code needs the ISO key Spanish keyboards print `<`/`>`
+/// on — the regression case for the `intlBackslash` capture gap.
+const _angleSnippet = Snippet(
+  id: SnippetId('test-snippet-angles'),
+  revision: 1,
+  language: ProgrammingLanguage.go,
+  difficulty: Difficulty.beginner,
+  category: ContentCategory.variablesAndTypes,
+  symbolFocus: {},
+  length: SnippetLength.short,
+  titleEn: 'Angle brackets',
+  titleEs: 'Ángulos',
+  code: '<>',
+  sourceAttribution: 'hand-authored for test',
+  isActive: true,
+  tldrEn: 'Test tl;dr.',
+  tldrEs: 'Tl;dr de prueba.',
+  explanationEn: 'Test explanation.',
+  explanationEs: 'Explicación de prueba.',
+);
 
 void main() {
   testWidgets(
@@ -197,4 +253,93 @@ void main() {
     // "a" key-down-shaped events reaching the engine.
     expect(state.recorder.keystrokes, hasLength(1));
   });
+
+  testWidgets(
+    'the ISO intlBackslash key types < > (the Spanish-layout path, where '
+    'those characters live between Left Shift and Z, not on ,/. keys)',
+    (tester) async {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            home: Scaffold(
+              body: KeystrokeCaptureField(
+                snippet: _angleSnippet,
+                mode: _mode,
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      // Unshifted: '<' — the ISO key, exactly where a Spanish keyboard
+      // prints it. `character:` stands in for the layout-aware
+      // `KeyEvent.character` Linux/GTK populates for this key, and the
+      // explicit `physicalKey` bypasses the test harness's incomplete
+      // Android physical-key map (which lacks the ISO key).
+      // Unshifted: '<' — the ISO key, exactly where a Spanish keyboard
+      // prints it. `character:` stands in for the layout-aware
+      // `KeyEvent.character` Linux/GTK populates for this key.
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.intlBackslash,
+        logicalKey: LogicalKeyboardKey.intlBackslash,
+        character: '<',
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.intlBackslash,
+        logicalKey: LogicalKeyboardKey.intlBackslash,
+        type: ui.KeyEventType.up,
+        timeStamp: const Duration(milliseconds: 40),
+      );
+      await tester.pump();
+
+      var state = container.read(
+        practiceSessionControllerProvider(_angleSnippet, _mode),
+      );
+      expect(state.recorder.expectedCharStatuses, [true, null]);
+      expect(state.recorder.keystrokes.single.actualChar, '<');
+      expect(
+        state.recorder.keystrokes.single.physicalKeyId,
+        PhysicalKeyId.intlBackslash,
+        reason: 'metrics must record the real ISO physical position, '
+            'not a US-QWERTY stand-in',
+      );
+
+      // Shifted: '>'.
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.shiftLeft,
+        logicalKey: LogicalKeyboardKey.shiftLeft,
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.intlBackslash,
+        logicalKey: LogicalKeyboardKey.intlBackslash,
+        character: '>',
+        timeStamp: const Duration(milliseconds: 40),
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.intlBackslash,
+        logicalKey: LogicalKeyboardKey.intlBackslash,
+        type: ui.KeyEventType.up,
+        timeStamp: const Duration(milliseconds: 80),
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.shiftLeft,
+        logicalKey: LogicalKeyboardKey.shiftLeft,
+        type: ui.KeyEventType.up,
+        timeStamp: const Duration(milliseconds: 80),
+      );
+      await tester.pumpAndSettle();
+
+      state = container.read(
+        practiceSessionControllerProvider(_angleSnippet, _mode),
+      );
+      expect(state.recorder.expectedCharStatuses, [true, true]);
+      expect(state.status, PracticeSessionStatus.result);
+      expect(state.recorder.isComplete, isTrue);
+    },
+  );
 }

@@ -17,7 +17,11 @@ Future<void> main() async {
       size: savedGeometry == null
           ? const Size(1280, 800)
           : Size(savedGeometry.width, savedGeometry.height),
-      minimumSize: const Size(960, 640),
+      // Must sit below `app_shell.dart`'s `_wideBreakpoint` (640) so a
+      // Linux/Windows window can actually be shrunk into the mobile
+      // bottom-nav layout instead of the window manager clamping it at a
+      // width that forces the desktop rail forever.
+      minimumSize: const Size(320, 480),
       center: savedGeometry == null,
       backgroundColor: Colors.transparent,
       titleBarStyle: TitleBarStyle.hidden,

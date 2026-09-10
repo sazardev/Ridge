@@ -57,6 +57,7 @@ extension PhysicalKeyIdLabel on PhysicalKeyId {
     PhysicalKeyId.comma => ',',
     PhysicalKeyId.period => '.',
     PhysicalKeyId.slash => '/',
+    PhysicalKeyId.intlBackslash => '<',
     PhysicalKeyId.space => l10n.progressKeySpace,
     PhysicalKeyId.backspace => l10n.progressKeyBackspace,
     PhysicalKeyId.delete => l10n.progressKeyDelete,

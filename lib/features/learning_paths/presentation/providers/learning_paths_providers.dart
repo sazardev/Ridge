@@ -61,6 +61,16 @@ RecomputeLessonProgressUseCase recomputeLessonProgressUseCase(Ref ref) {
 class LearningPathsController extends _$LearningPathsController {
   @override
   Future<List<LearningPathOverview>> build() async {
+    // The joined view needs `content`'s snippets already in the DB — but
+    // that catalog is seeded asynchronously at app startup, so this
+    // future can resolve empty before the seed lands and would otherwise
+    // stay empty forever (a `Future` never recomputes on its own; only a
+    // hot reload was masking it). Watching the reactive catalog
+    // recomputes this the moment the rows arrive — same self-healing
+    // guarantee `FreePracticeScreen` already gets from that stream.
+    final catalog = ref.watch(snippetCatalogControllerProvider);
+    if (catalog.value == null || catalog.value!.isEmpty) return const [];
+
     final result = await ref.watch(getLearningPathsUseCaseProvider)();
     return result.valueOrNull ?? const [];
   }

@@ -54,6 +54,10 @@ final Map<PhysicalKeyboardKey, PhysicalKeyId> physicalKeyIdMap = {
   PhysicalKeyboardKey.comma: PhysicalKeyId.comma,
   PhysicalKeyboardKey.period: PhysicalKeyId.period,
   PhysicalKeyboardKey.slash: PhysicalKeyId.slash,
+  // The ISO key between Left Shift and Z — every European ISO layout
+  // (and US-International) has it; dropping it is exactly why `<`/`>`
+  // silently did nothing on a Spanish keyboard.
+  PhysicalKeyboardKey.intlBackslash: PhysicalKeyId.intlBackslash,
   PhysicalKeyboardKey.space: PhysicalKeyId.space,
   PhysicalKeyboardKey.backspace: PhysicalKeyId.backspace,
   PhysicalKeyboardKey.delete: PhysicalKeyId.delete,
@@ -92,6 +96,11 @@ final Map<PhysicalKeyId, (String, String)> _shiftPairs = {
   PhysicalKeyId.comma: (',', '<'),
   PhysicalKeyId.period: ('.', '>'),
   PhysicalKeyId.slash: ('/', '?'),
+  // Spanish/Portuguese and US-International print `<`/`>` on this key;
+  // the fallback is inherently US-ish, so it uses the pair the most
+  // layouts agree on (German/French/UK print different characters here,
+  // but those layouts reliably supply `KeyEvent.character` anyway).
+  PhysicalKeyId.intlBackslash: ('<', '>'),
   PhysicalKeyId.space: (' ', ' '),
 };
 

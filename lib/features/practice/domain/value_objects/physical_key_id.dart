@@ -151,6 +151,15 @@ enum PhysicalKeyId {
   /// Unshifted `/`, shifted `?`.
   slash,
 
+  /// The ISO extra key between Left Shift and `Z` — the only physical key
+  /// a standard ISO layout (Spanish, German, UK, US-International,
+  /// French, Italian, ...) has that ANSI US-QWERTY doesn't. Produces `<`
+  /// unshifted and `>` shifted on Spanish/Portuguese and US-International
+  /// (`#`/`'` on German, `*`/`µ` on French, `\`/`|` on UK/Italian) — the
+  /// physical *position* is what matters to metrics, whichever character
+  /// the active layout prints there.
+  intlBackslash,
+
   /// The space bar.
   space,
 
