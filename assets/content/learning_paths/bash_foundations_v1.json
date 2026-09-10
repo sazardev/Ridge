@@ -1,0 +1,364 @@
+[
+  {
+    "id": "bash-foundations-v1",
+    "language": "bash",
+    "titleEn": "Bash & Arch Linux from scratch",
+    "titleEs": "Bash y Arch Linux desde cero",
+    "descriptionEn": "Learn the Linux shell step by step, from your first command to pacman and systemd.",
+    "descriptionEs": "Aprende la shell de Linux paso a paso: de tu primer comando a pacman y systemd.",
+    "tagEn": "Arch Linux",
+    "tagEs": "Arch Linux",
+    "lessons": [
+      {
+        "id": "bash-foundations-v1-step01",
+        "snippetId": "bash-cmd-001",
+        "order": 1,
+        "titleEn": "Your first command: echo",
+        "titleEs": "Tu primer comando: echo"
+      },
+      {
+        "id": "bash-foundations-v1-step02",
+        "snippetId": "bash-cmd-002",
+        "order": 2,
+        "titleEn": "The shebang line",
+        "titleEs": "La línea shebang"
+      },
+      {
+        "id": "bash-foundations-v1-step03",
+        "snippetId": "bash-cmd-003",
+        "order": 3,
+        "titleEn": "Positional arguments: $0 and $1",
+        "titleEs": "Argumentos posicionales: $0 y $1"
+      },
+      {
+        "id": "bash-foundations-v1-step04",
+        "snippetId": "bash-cmd-004",
+        "order": 4,
+        "titleEn": "Command substitution with $()",
+        "titleEs": "Sustitución de comandos con $()"
+      },
+      {
+        "id": "bash-foundations-v1-step05",
+        "snippetId": "bash-vars-001",
+        "order": 5,
+        "titleEn": "Assign and expand a variable",
+        "titleEs": "Asignar y expandir una variable"
+      },
+      {
+        "id": "bash-foundations-v1-step06",
+        "snippetId": "bash-vars-002",
+        "order": 6,
+        "titleEn": "Read input from the user",
+        "titleEs": "Leer entrada del usuario"
+      },
+      {
+        "id": "bash-foundations-v1-step07",
+        "snippetId": "bash-vars-003",
+        "order": 7,
+        "titleEn": "Single vs double quotes",
+        "titleEs": "Comillas simples vs dobles"
+      },
+      {
+        "id": "bash-foundations-v1-step08",
+        "snippetId": "bash-vars-004",
+        "order": 8,
+        "titleEn": "Arithmetic with $(( ))",
+        "titleEs": "Aritmética con $(( ))"
+      },
+      {
+        "id": "bash-foundations-v1-step09",
+        "snippetId": "bash-vars-005",
+        "order": 9,
+        "titleEn": "Arrays: index and length",
+        "titleEs": "Arrays: índice y longitud"
+      },
+      {
+        "id": "bash-foundations-v1-step10",
+        "snippetId": "bash-vars-006",
+        "order": 10,
+        "titleEn": "Default value: `${1:-/tmp}`",
+        "titleEs": "Valor por defecto: `${1:-/tmp}`"
+      },
+      {
+        "id": "bash-foundations-v1-step11",
+        "snippetId": "bash-vars-007",
+        "order": 11,
+        "titleEn": "Trim suffixes and prefixes",
+        "titleEs": "Recortar sufijos y prefijos"
+      },
+      {
+        "id": "bash-foundations-v1-step12",
+        "snippetId": "bash-pipe-001",
+        "order": 12,
+        "titleEn": "Redirect output with >",
+        "titleEs": "Redirigir salida con >"
+      },
+      {
+        "id": "bash-foundations-v1-step13",
+        "snippetId": "bash-pipe-002",
+        "order": 13,
+        "titleEn": "Append with >>",
+        "titleEs": "Agregar con >>"
+      },
+      {
+        "id": "bash-foundations-v1-step14",
+        "snippetId": "bash-pipe-003",
+        "order": 14,
+        "titleEn": "Connect commands with |",
+        "titleEs": "Conectar comandos con |"
+      },
+      {
+        "id": "bash-foundations-v1-step15",
+        "snippetId": "bash-pipe-004",
+        "order": 15,
+        "titleEn": "Redirect errors with 2>",
+        "titleEs": "Redirigir errores con 2>"
+      },
+      {
+        "id": "bash-foundations-v1-step16",
+        "snippetId": "bash-pipe-005",
+        "order": 16,
+        "titleEn": "Merge output with &>",
+        "titleEs": "Combinar salidas con &>"
+      },
+      {
+        "id": "bash-foundations-v1-step17",
+        "snippetId": "bash-pipe-006",
+        "order": 17,
+        "titleEn": "Heredocs: multi-line input",
+        "titleEs": "Heredocs: entrada multilínea"
+      },
+      {
+        "id": "bash-foundations-v1-step18",
+        "snippetId": "bash-cond-001",
+        "order": 18,
+        "titleEn": "if with a directory test",
+        "titleEs": "if con prueba de directorio"
+      },
+      {
+        "id": "bash-foundations-v1-step19",
+        "snippetId": "bash-cond-002",
+        "order": 19,
+        "titleEn": "if/else with a file test",
+        "titleEs": "if/else con prueba de archivo"
+      },
+      {
+        "id": "bash-foundations-v1-step20",
+        "snippetId": "bash-cond-003",
+        "order": 20,
+        "titleEn": "Empty strings with -z",
+        "titleEs": "Cadenas vacías con -z"
+      },
+      {
+        "id": "bash-foundations-v1-step21",
+        "snippetId": "bash-cond-004",
+        "order": 21,
+        "titleEn": "Numeric comparisons",
+        "titleEs": "Comparaciones numéricas"
+      },
+      {
+        "id": "bash-foundations-v1-step22",
+        "snippetId": "bash-cond-005",
+        "order": 22,
+        "titleEn": "Pattern matching with [[ ]]",
+        "titleEs": "Patrones con [[ ]]"
+      },
+      {
+        "id": "bash-foundations-v1-step23",
+        "snippetId": "bash-cond-006",
+        "order": 23,
+        "titleEn": "Branch with case",
+        "titleEs": "Ramificar con case"
+      },
+      {
+        "id": "bash-foundations-v1-step24",
+        "snippetId": "bash-loop-001",
+        "order": 24,
+        "titleEn": "Loop over a list of words",
+        "titleEs": "Recorrer una lista de palabras"
+      },
+      {
+        "id": "bash-foundations-v1-step25",
+        "snippetId": "bash-loop-002",
+        "order": 25,
+        "titleEn": "Loop over a brace range",
+        "titleEs": "Recorrer un rango con llaves"
+      },
+      {
+        "id": "bash-foundations-v1-step26",
+        "snippetId": "bash-loop-003",
+        "order": 26,
+        "titleEn": "Loop over files with a glob",
+        "titleEs": "Recorrer archivos con un glob"
+      },
+      {
+        "id": "bash-foundations-v1-step27",
+        "snippetId": "bash-loop-004",
+        "order": 27,
+        "titleEn": "while loop with arithmetic",
+        "titleEs": "Bucle while con aritmética"
+      },
+      {
+        "id": "bash-foundations-v1-step28",
+        "snippetId": "bash-loop-005",
+        "order": 28,
+        "titleEn": "Read lines with while read",
+        "titleEs": "Leer líneas con while read"
+      },
+      {
+        "id": "bash-foundations-v1-step29",
+        "snippetId": "bash-loop-006",
+        "order": 29,
+        "titleEn": "Skip iterations with continue",
+        "titleEs": "Saltar iteraciones con continue"
+      },
+      {
+        "id": "bash-foundations-v1-step30",
+        "snippetId": "bash-func-001",
+        "order": 30,
+        "titleEn": "Define and call a function",
+        "titleEs": "Definir y llamar una función"
+      },
+      {
+        "id": "bash-foundations-v1-step31",
+        "snippetId": "bash-func-002",
+        "order": 31,
+        "titleEn": "Local variables in a function",
+        "titleEs": "Variables locales en una función"
+      },
+      {
+        "id": "bash-foundations-v1-step32",
+        "snippetId": "bash-func-003",
+        "order": 32,
+        "titleEn": "Return status from a function",
+        "titleEs": "Retornar estado desde una función"
+      },
+      {
+        "id": "bash-foundations-v1-step33",
+        "snippetId": "bash-func-004",
+        "order": 33,
+        "titleEn": "Return values through stdout",
+        "titleEs": "Retornar valores por stdout"
+      },
+      {
+        "id": "bash-foundations-v1-step34",
+        "snippetId": "bash-func-005",
+        "order": 34,
+        "titleEn": "Default an argument with `${1:-mundo}`",
+        "titleEs": "Valor por defecto para un argumento con `${1:-mundo}`"
+      },
+      {
+        "id": "bash-foundations-v1-step35",
+        "snippetId": "bash-err-001",
+        "order": 35,
+        "titleEn": "Exit codes with $?",
+        "titleEs": "Códigos de salida con $?"
+      },
+      {
+        "id": "bash-foundations-v1-step36",
+        "snippetId": "bash-err-002",
+        "order": 36,
+        "titleEn": "Chain commands with && and ||",
+        "titleEs": "Encadenar comandos con && y ||"
+      },
+      {
+        "id": "bash-foundations-v1-step37",
+        "snippetId": "bash-err-003",
+        "order": 37,
+        "titleEn": "Strict mode: set -euo pipefail",
+        "titleEs": "Modo estricto: set -euo pipefail"
+      },
+      {
+        "id": "bash-foundations-v1-step38",
+        "snippetId": "bash-err-004",
+        "order": 38,
+        "titleEn": "Fail with exit 1 and stderr",
+        "titleEs": "Fallar con exit 1 y stderr"
+      },
+      {
+        "id": "bash-foundations-v1-step39",
+        "snippetId": "bash-err-005",
+        "order": 39,
+        "titleEn": "Run cleanup with trap",
+        "titleEs": "Ejecutar limpieza con trap"
+      },
+      {
+        "id": "bash-foundations-v1-step40",
+        "snippetId": "bash-text-001",
+        "order": 40,
+        "titleEn": "Search text with grep",
+        "titleEs": "Buscar texto con grep"
+      },
+      {
+        "id": "bash-foundations-v1-step41",
+        "snippetId": "bash-text-002",
+        "order": 41,
+        "titleEn": "Cut fields with cut",
+        "titleEs": "Cortar campos con cut"
+      },
+      {
+        "id": "bash-foundations-v1-step42",
+        "snippetId": "bash-text-003",
+        "order": 42,
+        "titleEn": "Sort and count duplicates",
+        "titleEs": "Ordenar y contar duplicados"
+      },
+      {
+        "id": "bash-foundations-v1-step43",
+        "snippetId": "bash-text-004",
+        "order": 43,
+        "titleEn": "Substitute text with sed",
+        "titleEs": "Sustituir texto con sed"
+      },
+      {
+        "id": "bash-foundations-v1-step44",
+        "snippetId": "bash-text-005",
+        "order": 44,
+        "titleEn": "Extract columns with awk",
+        "titleEs": "Extraer columnas con awk"
+      },
+      {
+        "id": "bash-foundations-v1-step45",
+        "snippetId": "bash-sys-001",
+        "order": 45,
+        "titleEn": "Query an installed package",
+        "titleEs": "Consultar un paquete instalado"
+      },
+      {
+        "id": "bash-foundations-v1-step46",
+        "snippetId": "bash-sys-002",
+        "order": 46,
+        "titleEn": "Install packages without reinstalling",
+        "titleEs": "Instalar paquetes sin reinstalar"
+      },
+      {
+        "id": "bash-foundations-v1-step47",
+        "snippetId": "bash-sys-003",
+        "order": 47,
+        "titleEn": "Remove a package and its deps",
+        "titleEs": "Eliminar un paquete y sus deps"
+      },
+      {
+        "id": "bash-foundations-v1-step48",
+        "snippetId": "bash-sys-004",
+        "order": 48,
+        "titleEn": "Install from the AUR with paru",
+        "titleEs": "Instalar desde AUR con paru"
+      },
+      {
+        "id": "bash-foundations-v1-step49",
+        "snippetId": "bash-sys-005",
+        "order": 49,
+        "titleEn": "Check a service with systemctl",
+        "titleEs": "Revisar un servicio con systemctl"
+      },
+      {
+        "id": "bash-foundations-v1-step50",
+        "snippetId": "bash-sys-006",
+        "order": 50,
+        "titleEn": "Read service logs with journalctl",
+        "titleEs": "Leer logs de un servicio con journalctl"
+      }
+    ]
+  }
+]

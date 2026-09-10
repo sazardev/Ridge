@@ -1,5 +1,7 @@
 // Regression guard for `KeyLayoutMap`: every character that appears in
-// any seeded snippet in `assets/content/snippets/go_v1.json` must
+// any seeded snippet in the bundled catalogs
+// (`assets/content/snippets/go_v1.json`, `bash_v1.json`,
+// `sql_v1.json`) must
 // resolve to a real physical key (per a standalone, test-owned
 // char->PhysicalKeyId table modeling standard US-QWERTY) that in turn
 // has a `keyLayoutMap` entry. This is what makes adding a new snippet
@@ -119,18 +121,23 @@ const Map<String, PhysicalKeyId> _charToPhysicalKeyId = {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('every character used by the seeded Go catalog resolves to a '
+  test('every character used by the seeded catalogs resolves to a '
       'PhysicalKeyId with a KeyLayoutMap entry', () async {
-    final raw = await rootBundle.loadString(
+    const assetPaths = [
       'assets/content/snippets/go_v1.json',
-    );
-    final entries = jsonDecode(raw) as List<dynamic>;
-    expect(entries, isNotEmpty);
+      'assets/content/snippets/bash_v1.json',
+      'assets/content/snippets/sql_v1.json',
+    ];
 
     final distinctChars = <String>{};
-    for (final entry in entries) {
-      final code = (entry as Map<String, dynamic>)['code'] as String;
-      distinctChars.addAll(code.split(''));
+    for (final assetPath in assetPaths) {
+      final raw = await rootBundle.loadString(assetPath);
+      final entries = jsonDecode(raw) as List<dynamic>;
+      expect(entries, isNotEmpty);
+      for (final entry in entries) {
+        final code = (entry as Map<String, dynamic>)['code'] as String;
+        distinctChars.addAll(code.split(''));
+      }
     }
     expect(distinctChars, isNotEmpty);
 

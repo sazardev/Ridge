@@ -42,4 +42,12 @@ sealed class PracticeMode with _$PracticeMode {
   /// passes the lesson's raw id string when starting the run.
   const factory learningRouteLesson({required String lessonId}) =
       _LearningRouteLesson;
+
+  /// An arcade run (SPEC.md §5.8): a continuous same-difficulty stream of
+  /// snippets with a small pool of lives instead of a clock. Every
+  /// rejected (wrong) keystroke costs one life; reaching zero ends the
+  /// run. A combo multiplier scales the run-local score, and finishing a
+  /// snippet seamlessly advances to the next one — the same stream queue
+  /// Sprint uses.
+  const factory survival() = _Survival;
 }

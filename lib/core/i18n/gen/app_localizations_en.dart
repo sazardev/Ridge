@@ -761,7 +761,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryTestingWithFakes => 'Testing with fakes';
 
   @override
+  String get categoryShellCommands => 'Shell commands';
+
+  @override
+  String get categoryPipesAndRedirection => 'Pipes & redirection';
+
+  @override
+  String get categoryTextProcessing => 'Text processing';
+
+  @override
+  String get categorySystemAdministration => 'System admin (Arch)';
+
+  @override
+  String get categorySqlBasics => 'SQL basics';
+
+  @override
+  String get categorySqlSchema => 'Schema & setup';
+
+  @override
+  String get categorySqlQueries => 'Queries';
+
+  @override
+  String get categorySqlFiltering => 'Filtering';
+
+  @override
+  String get categorySqlAggregation => 'Aggregation';
+
+  @override
+  String get categorySqlJoins => 'Joins';
+
+  @override
+  String get categorySqlModifications => 'Changing data';
+
+  @override
+  String get categorySqlAdvancedQueries => 'Advanced queries';
+
+  @override
   String get languageGo => 'Go';
+
+  @override
+  String get languageBash => 'Bash';
+
+  @override
+  String get languageSql => 'SQL';
 
   @override
   String get snippetPracticeAction => 'Practice';
@@ -784,7 +826,30 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String practiceLiveLives(int count) {
+    return '$count lives left';
+  }
+
+  @override
+  String practiceLiveScore(int score) {
+    return 'Score $score';
+  }
+
+  @override
+  String practiceLiveMultiplier(int multiplier) {
+    return '×$multiplier';
+  }
+
+  @override
+  String practiceLiveSnippets(int count) {
+    return '$count cleared';
+  }
+
+  @override
   String get practiceResultTitle => 'Session complete';
+
+  @override
+  String get practiceResultSurvivalTitle => 'Run over';
 
   @override
   String get practiceResultNetSpeed => 'Net speed';
@@ -800,6 +865,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get practiceResultStreak => 'Longest streak';
+
+  @override
+  String get practiceResultSurvivalSnippets => 'Snippets cleared';
+
+  @override
+  String get practiceResultSurvivalScore => 'Score';
+
+  @override
+  String get practiceResultSurvivalBestMultiplier => 'Best multiplier';
 
   @override
   String get practiceResultWeakestChars => 'Weakest characters this session';
@@ -871,6 +945,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get practiceModePrecisionSubtitle =>
       'Score above 7/10 (80%+ accuracy) to pass.';
+
+  @override
+  String get practiceModeSurvival => 'Survival';
+
+  @override
+  String get practiceModeSurvivalSubtitle =>
+      '5 lives, endless snippets — a mistake costs a heart.';
 
   @override
   String get practiceHubTitle => 'Practice';

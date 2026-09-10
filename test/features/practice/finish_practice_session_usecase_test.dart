@@ -3,8 +3,8 @@
 // hand-written `_FakeSessionRepository` (mirroring `tasks`'s established
 // hand-fake-port test pattern) and fabricated keystrokes, no drift/
 // widget/clock needed. Covers the exact 80%-accuracy/score-8 pass
-// boundary, just above, and just below, plus confirming Zen/Sprint
-// always persist `passed: null`.
+// boundary, just above, and just below, plus confirming Zen/Sprint/
+// Survival always persist `passed: null`.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:just_in_time/core/error/app_failure.dart';
 import 'package:just_in_time/core/utils/result.dart';
@@ -162,7 +162,7 @@ void main() {
     });
   });
 
-  group('Zen and Sprint never gate on accuracy', () {
+  group('Zen, Sprint and Survival never gate on accuracy', () {
     test('Zen always persists passed: null, regardless of accuracy', () async {
       final session = await finish(
         mode: const PracticeMode.zen(),
@@ -179,6 +179,18 @@ void main() {
           mode: const PracticeMode.sprint(window: Duration(seconds: 30)),
           correctCount: 10,
         );
+        expect(session.passed, isNull);
+      },
+    );
+
+    test(
+      'Survival always persists passed: null, regardless of accuracy',
+      () async {
+        final session = await finish(
+          mode: const PracticeMode.survival(),
+          correctCount: 4,
+        );
+        expect(session.accuracyPct, 40);
         expect(session.passed, isNull);
       },
     );

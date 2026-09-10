@@ -1,6 +1,7 @@
-// Data-completeness guard for the bundled Go catalog
-// (`assets/content/snippets/go_v1.json`), independent of drift/seeding —
-// a pure asset-parsing check (same `rootBundle` + `SnippetDto` pattern as
+// Data-completeness guard for the bundled catalogs
+// (`assets/content/snippets/go_v1.json`, `bash_v1.json`,
+// `sql_v1.json`), independent of drift/seeding — a pure asset-parsing
+// check (same `rootBundle` + `SnippetDto` pattern as
 // `content_drift_integration_test.dart` and `key_layout_map_test.dart`)
 // so a future content edit that accidentally thins out a
 // (category, difficulty) cell, orphans a learning-path reference, or
@@ -12,31 +13,52 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:just_in_time/features/content/domain/entities/content_category.dart';
 import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
+import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
 import 'package:just_in_time/features/content/domain/entities/snippet.dart';
 import 'package:just_in_time/features/content/infrastructure/snippet_dto.dart';
 import 'package:just_in_time/features/content/infrastructure/snippet_mapper.dart';
 
-// The 5 categories the first Learning Route (`go_foundations_v1.json`)
-// exercises — SPEC.md's content-model section requires at least 3
-// entries per (category, difficulty) cell for these, vs. just "at least
-// one" for the remaining 7 categories (see `fuzzy-exploring-raven.md`'s
-// content section).
-const Set<ContentCategory> _coreCategories = {
-  ContentCategory.variablesAndTypes,
-  ContentCategory.conditionals,
-  ContentCategory.loops,
-  ContentCategory.functions,
-  ContentCategory.errorHandling,
+/// One bundled catalog asset per language.
+const Map<ProgrammingLanguage, String> _catalogAssetByLanguage = {
+  ProgrammingLanguage.go: 'assets/content/snippets/go_v1.json',
+  ProgrammingLanguage.bash: 'assets/content/snippets/bash_v1.json',
+  ProgrammingLanguage.sql: 'assets/content/snippets/sql_v1.json',
 };
 
-// The 5 categories the go-ddd-hexagonal-notes Learning Route exercises —
-// these represent an ARCHITECTURE LAYER (DDD/hexagonal role), not a Go
-// language feature, so unlike every other category there's no meaningful
-// notion of a "beginner" domain entity or an "expert" repository port:
-// the whole route targets one intermediate/advanced backend audience.
-// Held to a looser bar than every other category (≥1 active entry across
-// ANY difficulty, not ≥1 per each of the 4 difficulty tiers) — see
-// `.claude/skills/content-curriculum/references/content-model.md`.
+/// Languages whose catalog backs free practice (Zen/Sprint/Precision).
+/// These are held to the DENSE-grid rules below: the five core categories
+/// need >=3 active entries per difficulty, and no category they actually
+/// use may have a zero-entry difficulty tier.
+///
+/// Bash is deliberately NOT here: it is a course-only language (its
+/// snippets exist to compose `bash-foundations-v1`, never a free-standing
+/// practice pool), so its catalog is held to the lighter rule that it
+/// contains exactly the snippets its bundled paths use — see the
+/// "course-only" test below. SQL (`sql-foundations-v1`) follows the same
+/// course-only rule.
+const Set<ProgrammingLanguage> _freePracticeLanguages = {
+  ProgrammingLanguage.go,
+};
+
+/// The five categories the Go `go-foundations-v1` route exercises — see
+/// the content-model section requiring at least 3 entries per
+/// (category, difficulty) cell for free-practice languages.
+const Map<ProgrammingLanguage, Set<ContentCategory>> _coreCategoriesByLanguage =
+    {
+      ProgrammingLanguage.go: {
+        ContentCategory.variablesAndTypes,
+        ContentCategory.conditionals,
+        ContentCategory.loops,
+        ContentCategory.functions,
+        ContentCategory.errorHandling,
+      },
+    };
+
+/// The 6 architecture-layer categories represent a DDD/hexagonal role,
+/// not a language feature, so unlike every other category there's no
+/// meaningful notion of a "beginner" or "expert" tier: held to a looser
+/// bar (>=1 active entry across ANY difficulty) than every other
+/// category. See `.claude/skills/content-curriculum/references/content-model.md`.
 const Set<ContentCategory> _architectureLayerCategories = {
   ContentCategory.domainModeling,
   ContentCategory.hexagonalPorts,
@@ -46,8 +68,8 @@ const Set<ContentCategory> _architectureLayerCategories = {
   ContentCategory.testingWithFakes,
 };
 
-Future<List<Snippet>> _loadCatalog() async {
-  final raw = await rootBundle.loadString('assets/content/snippets/go_v1.json');
+Future<List<Snippet>> _loadCatalog(ProgrammingLanguage language) async {
+  final raw = await rootBundle.loadString(_catalogAssetByLanguage[language]!);
   final decoded = jsonDecode(raw) as List<Object?>;
   return [
     for (final entry in decoded)
@@ -55,11 +77,21 @@ Future<List<Snippet>> _loadCatalog() async {
   ];
 }
 
-// Every bundled Learning Path asset — a future third path just means
+Future<List<Snippet>> _loadAllCatalogEntries() async {
+  final all = <Snippet>[];
+  for (final language in _catalogAssetByLanguage.keys) {
+    all.addAll(await _loadCatalog(language));
+  }
+  return all;
+}
+
+// Every bundled Learning Path asset — a future fourth path just means
 // adding its filename here, not touching the tests below.
 const _learningPathAssetPaths = [
   'assets/content/learning_paths/go_foundations_v1.json',
   'assets/content/learning_paths/go_ddd_hexagonal_notes_v1.json',
+  'assets/content/learning_paths/bash_foundations_v1.json',
+  'assets/content/learning_paths/sql_foundations_v1.json',
 ];
 
 Future<Map<String, Object?>> _loadLearningPath(String assetPath) async {
@@ -80,23 +112,29 @@ Future<List<Map<String, Object?>>> _loadLearningPathLessons(
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('no (category, difficulty) cell among the 5 core categories has '
-      'fewer than 3 active entries', () async {
-    final catalog = await _loadCatalog();
-    final active = catalog.where((s) => s.isActive);
-
-    final counts = <(ContentCategory, Difficulty), int>{};
-    for (final snippet in active) {
-      final key = (snippet.category, snippet.difficulty);
-      counts[key] = (counts[key] ?? 0) + 1;
-    }
-
+  test('no (category, difficulty) cell among the core categories of a '
+      'free-practice language has fewer than 3 active entries', () async {
     final underStocked = <String>[];
-    for (final category in _coreCategories) {
-      for (final difficulty in Difficulty.values) {
-        final count = counts[(category, difficulty)] ?? 0;
-        if (count < 3) {
-          underStocked.add('$category/$difficulty has only $count');
+
+    for (final language in _freePracticeLanguages) {
+      final catalog = await _loadCatalog(language);
+      final active = catalog.where((s) => s.isActive);
+
+      final counts = <(ContentCategory, Difficulty), int>{};
+      for (final snippet in active) {
+        final key = (snippet.category, snippet.difficulty);
+        counts[key] = (counts[key] ?? 0) + 1;
+      }
+
+      for (final category in _coreCategoriesByLanguage[language]!) {
+        for (final difficulty in Difficulty.values) {
+          final count = counts[(category, difficulty)] ?? 0;
+          if (count < 3) {
+            underStocked.add(
+              '$language/$category/$difficulty has only '
+              '$count',
+            );
+          }
         }
       }
     }
@@ -105,32 +143,36 @@ void main() {
   });
 
   test(
-    'no (category, difficulty) cell overall has zero active entries, '
-    'except architecture-layer categories which just need >=1 entry total',
+    'no (category, difficulty) cell has zero active entries for a '
+    'category a free-practice language actually uses, except '
+    'architecture-layer categories which just need >=1 entry total',
     () async {
-      final catalog = await _loadCatalog();
-      final active = catalog.where((s) => s.isActive);
-
-      final counts = <(ContentCategory, Difficulty), int>{};
-      final totalsByCategory = <ContentCategory, int>{};
-      for (final snippet in active) {
-        final key = (snippet.category, snippet.difficulty);
-        counts[key] = (counts[key] ?? 0) + 1;
-        totalsByCategory[snippet.category] =
-            (totalsByCategory[snippet.category] ?? 0) + 1;
-      }
-
       final empty = <String>[];
-      for (final category in ContentCategory.values) {
-        if (_architectureLayerCategories.contains(category)) {
-          if ((totalsByCategory[category] ?? 0) == 0) {
-            empty.add('$category has zero active entries (any difficulty)');
-          }
-          continue;
+
+      for (final language in _freePracticeLanguages) {
+        final catalog = await _loadCatalog(language);
+        final active = catalog.where((s) => s.isActive);
+
+        final counts = <(ContentCategory, Difficulty), int>{};
+        final totalsByCategory = <ContentCategory, int>{};
+        for (final snippet in active) {
+          final key = (snippet.category, snippet.difficulty);
+          counts[key] = (counts[key] ?? 0) + 1;
+          totalsByCategory[snippet.category] =
+              (totalsByCategory[snippet.category] ?? 0) + 1;
         }
-        for (final difficulty in Difficulty.values) {
-          if ((counts[(category, difficulty)] ?? 0) == 0) {
-            empty.add('$category/$difficulty');
+
+        for (final category in totalsByCategory.keys) {
+          if (_architectureLayerCategories.contains(category)) {
+            if ((totalsByCategory[category] ?? 0) == 0) {
+              empty.add('$language/$category has zero active entries');
+            }
+            continue;
+          }
+          for (final difficulty in Difficulty.values) {
+            if ((counts[(category, difficulty)] ?? 0) == 0) {
+              empty.add('$language/$category/$difficulty');
+            }
           }
         }
       }
@@ -139,37 +181,78 @@ void main() {
     },
   );
 
-  test('every id has at most one active entry, and the active revision is '
-      'the highest one for that id (immutable-versioning invariant)', () async {
-    final catalog = await _loadCatalog();
-    final byId = <String, List<Snippet>>{};
-    for (final snippet in catalog) {
-      byId.putIfAbsent(snippet.id.value, () => []).add(snippet);
+  test("a course-only language's catalog holds exactly the snippets its "
+      'bundled learning paths use — no orphan practice material', () async {
+    // Which snippet ids each language's bundled paths reference.
+    final referencedByLanguage = <ProgrammingLanguage, Set<String>>{};
+    for (final assetPath in _learningPathAssetPaths) {
+      final path = await _loadLearningPath(assetPath);
+      final language = ProgrammingLanguage.values.byName(
+        path['language']! as String,
+      );
+      final lessons = await _loadLearningPathLessons(assetPath);
+      referencedByLanguage.putIfAbsent(language, () => <String>{}).addAll([
+        for (final lesson in lessons) lesson['snippetId']! as String,
+      ]);
     }
 
+    final problems = <String>[];
+    for (final language in _catalogAssetByLanguage.keys) {
+      if (_freePracticeLanguages.contains(language)) continue;
+
+      final catalog = await _loadCatalog(language);
+      final activeIds = {
+        for (final snippet in catalog)
+          if (snippet.isActive) snippet.id.value,
+      };
+      final referenced = referencedByLanguage[language] ?? const <String>{};
+
+      final orphans = activeIds.difference(referenced);
+      if (orphans.isNotEmpty) {
+        problems.add(
+          '$language has ${orphans.length} active snippet(s) no bundled '
+          'learning path uses: ${orphans.join(', ')}',
+        );
+      }
+    }
+
+    expect(problems, isEmpty, reason: problems.join('\n'));
+  });
+
+  test('every id has at most one active entry, and the active revision is '
+      'the highest one for that id (immutable-versioning invariant)', () async {
     final violations = <String>[];
-    for (final entry in byId.entries) {
-      final revisions = entry.value;
-      final activeOnes = revisions.where((s) => s.isActive).toList();
-      if (activeOnes.length > 1) {
-        violations.add(
-          '${entry.key} has ${activeOnes.length} active revisions',
-        );
-        continue;
+
+    for (final language in _catalogAssetByLanguage.keys) {
+      final catalog = await _loadCatalog(language);
+      final byId = <String, List<Snippet>>{};
+      for (final snippet in catalog) {
+        byId.putIfAbsent(snippet.id.value, () => []).add(snippet);
       }
-      if (activeOnes.isEmpty) {
-        violations.add('${entry.key} has no active revision at all');
-        continue;
-      }
-      final highestRevision = revisions
-          .map((s) => s.revision)
-          .reduce((a, b) => a > b ? a : b);
-      if (activeOnes.single.revision != highestRevision) {
-        violations.add(
-          '${entry.key} active revision '
-          '${activeOnes.single.revision} is not the highest '
-          '($highestRevision)',
-        );
+
+      for (final entry in byId.entries) {
+        final revisions = entry.value;
+        final activeOnes = revisions.where((s) => s.isActive).toList();
+        if (activeOnes.length > 1) {
+          violations.add(
+            '${entry.key} has ${activeOnes.length} active revisions',
+          );
+          continue;
+        }
+        if (activeOnes.isEmpty) {
+          violations.add('${entry.key} has no active revision at all');
+          continue;
+        }
+        final highestRevision = revisions
+            .map((s) => s.revision)
+            .reduce((a, b) => a > b ? a : b);
+        if (activeOnes.single.revision != highestRevision) {
+          violations.add(
+            '${entry.key} active revision '
+            '${activeOnes.single.revision} is not the highest '
+            '($highestRevision)',
+          );
+        }
       }
     }
 
@@ -178,7 +261,7 @@ void main() {
 
   test('every entry has a non-empty, reasonably sized bilingual '
       '"what did you just type?" explanation', () async {
-    final catalog = await _loadCatalog();
+    final catalog = await _loadAllCatalogEntries();
 
     final problems = <String>[];
     for (final snippet in catalog) {
@@ -202,7 +285,7 @@ void main() {
   });
 
   test('every entry has a non-empty bilingual title', () async {
-    final catalog = await _loadCatalog();
+    final catalog = await _loadAllCatalogEntries();
 
     final problems = <String>[];
     for (final snippet in catalog) {
@@ -220,7 +303,7 @@ void main() {
   });
 
   test('every entry has a non-empty, skimmable bilingual tl;dr', () async {
-    final catalog = await _loadCatalog();
+    final catalog = await _loadAllCatalogEntries();
 
     final problems = <String>[];
     for (final snippet in catalog) {
@@ -244,7 +327,7 @@ void main() {
 
   test('every snippet id referenced by every bundled learning path '
       'resolves to an active catalog entry', () async {
-    final catalog = await _loadCatalog();
+    final catalog = await _loadAllCatalogEntries();
     final activeIds = catalog
         .where((s) => s.isActive)
         .map((s) => s.id.value)

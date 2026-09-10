@@ -283,8 +283,22 @@
   "categoryPersistenceAdapters": "Persistence adapters",
   "categoryRestAdapters": "REST adapters",
   "categoryTestingWithFakes": "Testing with fakes",
+  "categoryShellCommands": "Shell commands",
+  "categoryPipesAndRedirection": "Pipes & redirection",
+  "categoryTextProcessing": "Text processing",
+  "categorySystemAdministration": "System admin (Arch)",
+  "categorySqlBasics": "SQL basics",
+  "categorySqlSchema": "Schema & setup",
+  "categorySqlQueries": "Queries",
+  "categorySqlFiltering": "Filtering",
+  "categorySqlAggregation": "Aggregation",
+  "categorySqlJoins": "Joins",
+  "categorySqlModifications": "Changing data",
+  "categorySqlAdvancedQueries": "Advanced queries",
 
   "languageGo": "Go",
+  "languageBash": "Bash",
+  "languageSql": "SQL",
 
   "snippetPracticeAction": "Practice",
 
@@ -306,12 +320,48 @@
       }
     }
   },
+  "practiceLiveLives": "{count} lives left",
+  "@practiceLiveLives": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "practiceLiveScore": "Score {score}",
+  "@practiceLiveScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "practiceLiveMultiplier": "×{multiplier}",
+  "@practiceLiveMultiplier": {
+    "placeholders": {
+      "multiplier": {
+        "type": "int"
+      }
+    }
+  },
+  "practiceLiveSnippets": "{count} cleared",
+  "@practiceLiveSnippets": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "practiceResultTitle": "Session complete",
+  "practiceResultSurvivalTitle": "Run over",
   "practiceResultNetSpeed": "Net speed",
   "practiceResultRawSpeed": "Raw speed",
   "practiceResultAccuracy": "Accuracy",
   "practiceResultConsistency": "Consistency",
   "practiceResultStreak": "Longest streak",
+  "practiceResultSurvivalSnippets": "Snippets cleared",
+  "practiceResultSurvivalScore": "Score",
+  "practiceResultSurvivalBestMultiplier": "Best multiplier",
   "practiceResultWeakestChars": "Weakest characters this session",
   "practiceResultDone": "Done",
   "practiceResultScorePassed": "{score}/10 — Passed!",
@@ -348,6 +398,8 @@
   "practiceModeSprintSubtitle": "Beat the clock — maximize correct characters.",
   "practiceModePrecision": "Precision test",
   "practiceModePrecisionSubtitle": "Score above 7/10 (80%+ accuracy) to pass.",
+  "practiceModeSurvival": "Survival",
+  "practiceModeSurvivalSubtitle": "5 lives, endless snippets — a mistake costs a heart.",
 
   "practiceHubTitle": "Practice",
   "freePracticeTitle": "Free practice",

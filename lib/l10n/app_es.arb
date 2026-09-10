@@ -280,8 +280,22 @@
   "categoryPersistenceAdapters": "Adaptadores de persistencia",
   "categoryRestAdapters": "Adaptadores REST",
   "categoryTestingWithFakes": "Pruebas con dobles falsos",
+  "categoryShellCommands": "Comandos de shell",
+  "categoryPipesAndRedirection": "Pipes y redirección",
+  "categoryTextProcessing": "Procesamiento de texto",
+  "categorySystemAdministration": "Administración (Arch)",
+  "categorySqlBasics": "Fundamentos SQL",
+  "categorySqlSchema": "Schema y setup",
+  "categorySqlQueries": "Consultas",
+  "categorySqlFiltering": "Filtrado",
+  "categorySqlAggregation": "Agregación",
+  "categorySqlJoins": "Joins",
+  "categorySqlModifications": "Modificar datos",
+  "categorySqlAdvancedQueries": "Consultas avanzadas",
 
   "languageGo": "Go",
+  "languageBash": "Bash",
+  "languageSql": "SQL",
 
   "snippetPracticeAction": "Practicar",
 
@@ -303,12 +317,48 @@
       }
     }
   },
+  "practiceLiveLives": "{count} vidas restantes",
+  "@practiceLiveLives": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "practiceLiveScore": "Puntos {score}",
+  "@practiceLiveScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "practiceLiveMultiplier": "×{multiplier}",
+  "@practiceLiveMultiplier": {
+    "placeholders": {
+      "multiplier": {
+        "type": "int"
+      }
+    }
+  },
+  "practiceLiveSnippets": "{count} superados",
+  "@practiceLiveSnippets": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "practiceResultTitle": "Sesión completa",
+  "practiceResultSurvivalTitle": "Ronda terminada",
   "practiceResultNetSpeed": "Velocidad neta",
   "practiceResultRawSpeed": "Velocidad bruta",
   "practiceResultAccuracy": "Precisión",
   "practiceResultConsistency": "Consistencia",
   "practiceResultStreak": "Racha más larga",
+  "practiceResultSurvivalSnippets": "Snippets superados",
+  "practiceResultSurvivalScore": "Puntaje",
+  "practiceResultSurvivalBestMultiplier": "Mejor multiplicador",
   "practiceResultWeakestChars": "Caracteres más débiles de esta sesión",
   "practiceResultDone": "Listo",
   "practiceResultScorePassed": "{score}/10 — ¡Aprobado!",
@@ -345,6 +395,8 @@
   "practiceModeSprintSubtitle": "Compite contra el reloj — maximiza los caracteres correctos.",
   "practiceModePrecision": "Prueba de precisión",
   "practiceModePrecisionSubtitle": "Saca más de 7/10 (80%+ de precisión) para aprobar.",
+  "practiceModeSurvival": "Supervivencia",
+  "practiceModeSurvivalSubtitle": "5 vidas, snippets infinitos — un error cuesta un corazón.",
 
   "practiceHubTitle": "Práctica",
   "freePracticeTitle": "Práctica libre",

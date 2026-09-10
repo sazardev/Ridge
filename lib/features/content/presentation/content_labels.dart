@@ -14,6 +14,8 @@ extension ProgrammingLanguageLabel on ProgrammingLanguage {
   /// Returns this language's localized display name.
   String label(AppLocalizations l10n) => switch (this) {
     ProgrammingLanguage.go => l10n.languageGo,
+    ProgrammingLanguage.bash => l10n.languageBash,
+    ProgrammingLanguage.sql => l10n.languageSql,
   };
 }
 
@@ -46,6 +48,18 @@ extension ContentCategoryLabel on ContentCategory {
     ContentCategory.concurrency => l10n.categoryConcurrency,
     ContentCategory.generics => l10n.categoryGenerics,
     ContentCategory.idiomaticFormatting => l10n.categoryIdiomaticFormatting,
+    ContentCategory.shellCommands => l10n.categoryShellCommands,
+    ContentCategory.pipesAndRedirection => l10n.categoryPipesAndRedirection,
+    ContentCategory.textProcessing => l10n.categoryTextProcessing,
+    ContentCategory.systemAdministration => l10n.categorySystemAdministration,
+    ContentCategory.sqlBasics => l10n.categorySqlBasics,
+    ContentCategory.sqlSchema => l10n.categorySqlSchema,
+    ContentCategory.sqlQueries => l10n.categorySqlQueries,
+    ContentCategory.sqlFiltering => l10n.categorySqlFiltering,
+    ContentCategory.sqlAggregation => l10n.categorySqlAggregation,
+    ContentCategory.sqlJoins => l10n.categorySqlJoins,
+    ContentCategory.sqlModifications => l10n.categorySqlModifications,
+    ContentCategory.sqlAdvancedQueries => l10n.categorySqlAdvancedQueries,
     ContentCategory.domainModeling => l10n.categoryDomainModeling,
     ContentCategory.hexagonalPorts => l10n.categoryHexagonalPorts,
     ContentCategory.applicationUseCases => l10n.categoryApplicationUseCases,

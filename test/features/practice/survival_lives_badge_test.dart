@@ -1,0 +1,42 @@
+// Widget tests for `SurvivalLivesBadge` (SPEC.md §5.8) — proves the
+// filled/outlined heart split tracks the tracker's lives exactly.
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
+import 'package:just_in_time/features/practice/domain/services/survival_run_tracker.dart';
+import 'package:just_in_time/features/practice/presentation/widgets/survival_lives_badge.dart';
+
+Future<void> _pump(WidgetTester tester, SurvivalRunTracker tracker) {
+  return tester.pumpWidget(
+    MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(
+        body: Center(child: SurvivalLivesBadge(tracker: tracker)),
+      ),
+    ),
+  );
+}
+
+void main() {
+  testWidgets('a full run shows exactly one filled heart per life', (
+    tester,
+  ) async {
+    final tracker = SurvivalRunTracker();
+    await _pump(tester, tracker);
+    expect(find.byIcon(Icons.favorite_rounded), findsNWidgets(5));
+    expect(find.byIcon(Icons.favorite_border_rounded), findsNothing);
+  });
+
+  testWidgets('lost lives turn filled hearts into outlined ones', (
+    tester,
+  ) async {
+    final tracker = SurvivalRunTracker()
+      ..recordMistake()
+      ..recordMistake();
+    await _pump(tester, tracker);
+    expect(tracker.livesRemaining, 3);
+    expect(find.byIcon(Icons.favorite_rounded), findsNWidgets(3));
+    expect(find.byIcon(Icons.favorite_border_rounded), findsNWidgets(2));
+  });
+}

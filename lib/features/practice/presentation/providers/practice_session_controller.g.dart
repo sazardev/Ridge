@@ -26,6 +26,12 @@ part of 'practice_session_controller.dart';
 ///   evaluates the finished session's accuracy against the mode's
 ///   threshold. "Retry" ([retry]) is just a fresh `idle -> running` on
 ///   the same snippet, producing a brand-new immutable session row.
+/// - **Survival**: a continuous same-difficulty stream exactly like
+///   Sprint's, but with lives instead of a clock (SPEC.md §5.8). Every
+///   rejected keystroke costs one life (tracked by
+///   `SurvivalRunTracker`); the last life ends the run abruptly, exactly
+///   like a natural finish — the fatal keystroke is still part of the
+///   persisted log, it's simply rejected like any other mismatch.
 ///
 /// Backgrounding freezes elapsed-time accounting (and, for Sprint, the
 /// countdown); backgrounding for longer than [_abandonThreshold] discards
@@ -53,6 +59,12 @@ final practiceSessionControllerProvider = PracticeSessionControllerFamily._();
 ///   evaluates the finished session's accuracy against the mode's
 ///   threshold. "Retry" ([retry]) is just a fresh `idle -> running` on
 ///   the same snippet, producing a brand-new immutable session row.
+/// - **Survival**: a continuous same-difficulty stream exactly like
+///   Sprint's, but with lives instead of a clock (SPEC.md §5.8). Every
+///   rejected keystroke costs one life (tracked by
+///   `SurvivalRunTracker`); the last life ends the run abruptly, exactly
+///   like a natural finish — the fatal keystroke is still part of the
+///   persisted log, it's simply rejected like any other mismatch.
 ///
 /// Backgrounding freezes elapsed-time accounting (and, for Sprint, the
 /// countdown); backgrounding for longer than [_abandonThreshold] discards
@@ -78,6 +90,12 @@ final class PracticeSessionControllerProvider
   ///   evaluates the finished session's accuracy against the mode's
   ///   threshold. "Retry" ([retry]) is just a fresh `idle -> running` on
   ///   the same snippet, producing a brand-new immutable session row.
+  /// - **Survival**: a continuous same-difficulty stream exactly like
+  ///   Sprint's, but with lives instead of a clock (SPEC.md §5.8). Every
+  ///   rejected keystroke costs one life (tracked by
+  ///   `SurvivalRunTracker`); the last life ends the run abruptly, exactly
+  ///   like a natural finish — the fatal keystroke is still part of the
+  ///   persisted log, it's simply rejected like any other mismatch.
   ///
   /// Backgrounding freezes elapsed-time accounting (and, for Sprint, the
   /// countdown); backgrounding for longer than [_abandonThreshold] discards
@@ -129,7 +147,7 @@ final class PracticeSessionControllerProvider
 }
 
 String _$practiceSessionControllerHash() =>
-    r'9676b6c877493a2953a12137ae8aad2f857f53f2';
+    r'e193f421bd5abee75b0702c3816d6e9f5ccb3286';
 
 /// Drives one practice session for a specific `Snippet` through
 /// `idle -> running -> finished -> result` (SPEC.md §5.1-§5.3).
@@ -149,6 +167,12 @@ String _$practiceSessionControllerHash() =>
 ///   evaluates the finished session's accuracy against the mode's
 ///   threshold. "Retry" ([retry]) is just a fresh `idle -> running` on
 ///   the same snippet, producing a brand-new immutable session row.
+/// - **Survival**: a continuous same-difficulty stream exactly like
+///   Sprint's, but with lives instead of a clock (SPEC.md §5.8). Every
+///   rejected keystroke costs one life (tracked by
+///   `SurvivalRunTracker`); the last life ends the run abruptly, exactly
+///   like a natural finish — the fatal keystroke is still part of the
+///   persisted log, it's simply rejected like any other mismatch.
 ///
 /// Backgrounding freezes elapsed-time accounting (and, for Sprint, the
 /// countdown); backgrounding for longer than [_abandonThreshold] discards
@@ -191,6 +215,12 @@ final class PracticeSessionControllerFamily extends $Family
   ///   evaluates the finished session's accuracy against the mode's
   ///   threshold. "Retry" ([retry]) is just a fresh `idle -> running` on
   ///   the same snippet, producing a brand-new immutable session row.
+  /// - **Survival**: a continuous same-difficulty stream exactly like
+  ///   Sprint's, but with lives instead of a clock (SPEC.md §5.8). Every
+  ///   rejected keystroke costs one life (tracked by
+  ///   `SurvivalRunTracker`); the last life ends the run abruptly, exactly
+  ///   like a natural finish — the fatal keystroke is still part of the
+  ///   persisted log, it's simply rejected like any other mismatch.
   ///
   /// Backgrounding freezes elapsed-time accounting (and, for Sprint, the
   /// countdown); backgrounding for longer than [_abandonThreshold] discards
@@ -225,6 +255,12 @@ final class PracticeSessionControllerFamily extends $Family
 ///   evaluates the finished session's accuracy against the mode's
 ///   threshold. "Retry" ([retry]) is just a fresh `idle -> running` on
 ///   the same snippet, producing a brand-new immutable session row.
+/// - **Survival**: a continuous same-difficulty stream exactly like
+///   Sprint's, but with lives instead of a clock (SPEC.md §5.8). Every
+///   rejected keystroke costs one life (tracked by
+///   `SurvivalRunTracker`); the last life ends the run abruptly, exactly
+///   like a natural finish — the fatal keystroke is still part of the
+///   persisted log, it's simply rejected like any other mismatch.
 ///
 /// Backgrounding freezes elapsed-time accounting (and, for Sprint, the
 /// countdown); backgrounding for longer than [_abandonThreshold] discards

@@ -10,6 +10,7 @@ import 'package:just_in_time/features/practice/domain/entities/keystroke.dart';
 import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
 import 'package:just_in_time/features/practice/domain/entities/practice_session_status.dart';
 import 'package:just_in_time/features/practice/domain/services/keystroke_stream_recorder.dart';
+import 'package:just_in_time/features/practice/domain/services/survival_run_tracker.dart';
 import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
 import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
 import 'package:just_in_time/features/practice/presentation/providers/practice_providers.dart';
@@ -49,6 +50,12 @@ const _countdownTickInterval = Duration(milliseconds: 200);
 ///   evaluates the finished session's accuracy against the mode's
 ///   threshold. "Retry" ([retry]) is just a fresh `idle -> running` on
 ///   the same snippet, producing a brand-new immutable session row.
+/// - **Survival**: a continuous same-difficulty stream exactly like
+///   Sprint's, but with lives instead of a clock (SPEC.md §5.8). Every
+///   rejected keystroke costs one life (tracked by
+///   `SurvivalRunTracker`); the last life ends the run abruptly, exactly
+///   like a natural finish — the fatal keystroke is still part of the
+///   persisted log, it's simply rejected like any other mismatch.
 ///
 /// Backgrounding freezes elapsed-time accounting (and, for Sprint, the
 /// countdown); backgrounding for longer than [_abandonThreshold] discards
@@ -61,10 +68,15 @@ class PracticeSessionController extends _$PracticeSessionController {
   DateTime? _backgroundedAt;
   Timer? _countdownTimer;
   final Set<SnippetId> _usedSnippetIds = {};
+  SurvivalRunTracker? _survival;
 
   /// This mode's Sprint window, or `null` for every other mode.
   Duration? get _sprintWindow =>
       mode.maybeWhen(sprint: (window) => window, orElse: () => null);
+
+  /// Whether this session is a Survival run.
+  bool get _isSurvival =>
+      mode.maybeWhen(survival: () => true, orElse: () => false);
 
   @override
   PracticeSessionState build(Snippet snippet, PracticeMode mode) {
@@ -78,11 +90,13 @@ class PracticeSessionController extends _$PracticeSessionController {
     _usedSnippetIds
       ..clear()
       ..add(snippet.id);
+    _survival = _isSurvival ? SurvivalRunTracker() : null;
 
     return PracticeSessionState(
       status: PracticeSessionStatus.idle,
       recorder: KeystrokeStreamRecorder(expectedSnippet: snippet.code),
       snippet: snippet,
+      survival: _survival,
     );
   }
 
@@ -111,6 +125,11 @@ class PracticeSessionController extends _$PracticeSessionController {
       dwell: dwell,
       flight: flight,
     );
+    if (keystroke != null &&
+        (_survival?.recordKeystroke(keystroke.result) ?? false)) {
+      unawaited(_finish());
+      return keystroke;
+    }
     if (state.recorder.isComplete) {
       unawaited(_handleSnippetComplete());
     } else {
@@ -140,6 +159,12 @@ class PracticeSessionController extends _$PracticeSessionController {
       dwell: dwell,
       flight: flight,
     );
+    for (final keystroke in keystrokes) {
+      if (_survival?.recordKeystroke(keystroke.result) ?? false) {
+        unawaited(_finish());
+        return keystrokes;
+      }
+    }
     if (state.recorder.isComplete) {
       unawaited(_handleSnippetComplete());
     } else {
@@ -216,11 +241,18 @@ class PracticeSessionController extends _$PracticeSessionController {
   void retry() => _resetToIdle();
 
   /// Called the instant the buffer reaches the *current* snippet's
-  /// expected length. Zen/Precision finish outright; Sprint instead
-  /// advances to a new same-difficulty snippet within the same session,
-  /// unless the countdown has already run out (finishing outright there
-  /// too) — SPEC.md §5.2's continuous stream.
+  /// expected length. Zen/Precision finish outright; Sprint and Survival
+  /// instead advance to a new same-difficulty snippet within the same
+  /// session — Sprint as long as its countdown hasn't run out (finishing
+  /// outright there too), Survival unconditionally (SPEC.md §5.2/§5.8's
+  /// continuous stream).
   Future<void> _handleSnippetComplete() async {
+    final survival = _survival;
+    if (survival != null) {
+      survival.recordSnippetCleared();
+      await _advanceToNextSnippet();
+      return;
+    }
     final window = _sprintWindow;
     if (window == null) {
       await _finish();
@@ -231,13 +263,12 @@ class PracticeSessionController extends _$PracticeSessionController {
       await _finishAtDeadline();
       return;
     }
-    await _advanceToNextSprintSnippet(remaining: remaining);
+    await _advanceToNextSnippet(remaining: remaining);
   }
 
-  Future<void> _advanceToNextSprintSnippet({
-    required Duration remaining,
-  }) async {
+  Future<void> _advanceToNextSnippet({Duration? remaining}) async {
     final result = await ref.read(getNextSprintSnippetUseCaseProvider)(
+      language: state.snippet.language,
       difficulty: state.snippet.difficulty,
       usedSnippetIds: _usedSnippetIds,
     );
@@ -250,8 +281,8 @@ class PracticeSessionController extends _$PracticeSessionController {
     final nextSnippet = result.valueOrNull;
     if (nextSnippet == null) {
       // Nothing to advance to (e.g. an empty catalog) — finish the run
-      // instead of leaving Sprint stuck on a filled buffer with nowhere
-      // to go.
+      // instead of leaving a stream mode stuck on a filled buffer with
+      // nowhere to go.
       await _finish();
       return;
     }
@@ -263,6 +294,7 @@ class PracticeSessionController extends _$PracticeSessionController {
       snippet: nextSnippet,
       remaining: remaining,
       finishedSession: state.finishedSession,
+      survival: _survival,
       error: state.error,
     );
   }
@@ -313,14 +345,17 @@ class PracticeSessionController extends _$PracticeSessionController {
       snippet: state.snippet,
       remaining: remaining ?? state.remaining,
       finishedSession: state.finishedSession,
+      survival: _survival,
       error: state.error,
     );
   }
 
   /// Normal finish path: the buffer naturally reached the end of all
   /// available text (Zen, Precision, or Sprint when there's genuinely no
-  /// next snippet to advance to). Anything still pending is finalized
-  /// like any other keystroke, since this isn't a hard external cutoff.
+  /// next snippet to advance to), or a Survival run lost its last life
+  /// (`SurvivalRunTracker.recordKeystroke`). Anything still pending is
+  /// finalized like any other keystroke, since this isn't a hard external
+  /// cutoff.
   Future<void> _finish() async {
     _countdownTimer?.cancel();
     _countdownTimer = null;
@@ -348,6 +383,7 @@ class PracticeSessionController extends _$PracticeSessionController {
         recorder: state.recorder,
         snippet: state.snippet,
         remaining: state.remaining,
+        survival: _survival,
         error: 'No guest profile found',
       );
       return;
@@ -398,12 +434,14 @@ class PracticeSessionController extends _$PracticeSessionController {
         snippet: state.snippet,
         remaining: state.remaining,
         finishedSession: finished,
+        survival: _survival,
       ),
       (failure) => PracticeSessionState(
         status: PracticeSessionStatus.result,
         recorder: state.recorder,
         snippet: state.snippet,
         remaining: state.remaining,
+        survival: _survival,
         error: failure.message,
       ),
     );
@@ -435,9 +473,9 @@ class PracticeSessionController extends _$PracticeSessionController {
 
   /// Resets this session back to `idle` on the snippet this controller
   /// was created for — used both when a backgrounded run is abandoned
-  /// and when the user requests a Precision [retry]. Nothing is ever
-  /// persisted for an abandoned or retried run until it's genuinely
-  /// finished (SPEC.md §8.1).
+  /// and when the user requests a Precision [retry] (or replays a
+  /// Survival run). Nothing is ever persisted for an abandoned or retried
+  /// run until it's genuinely finished (SPEC.md §8.1).
   void _resetToIdle() {
     _countdownTimer?.cancel();
     _countdownTimer = null;
@@ -447,10 +485,12 @@ class PracticeSessionController extends _$PracticeSessionController {
     _usedSnippetIds
       ..clear()
       ..add(snippet.id);
+    _survival = _isSurvival ? SurvivalRunTracker() : null;
     state = PracticeSessionState(
       status: PracticeSessionStatus.idle,
       recorder: KeystrokeStreamRecorder(expectedSnippet: snippet.code),
       snippet: snippet,
+      survival: _survival,
     );
   }
 }

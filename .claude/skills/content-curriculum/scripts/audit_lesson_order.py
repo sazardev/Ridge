@@ -45,6 +45,15 @@ ARCHITECTURE_LAYER_CATEGORIES = {
     "testingWithFakes",
 }
 
+# Languages whose catalog exists only to compose a Learning Path (never a
+# free-standing practice pool). Their catalogs are exempt from the dense
+# (category, difficulty) grid — instead every active entry must be used by
+# one of the bundled paths (no orphan practice material). Mirrors
+# `_freePracticeLanguages` in
+# `test/features/content/snippet_catalog_completeness_test.dart`; see
+# SPEC.md §3.2's two catalog tiers.
+COURSE_ONLY_LANGUAGES = {"bash", "sql"}
+
 
 def load(path: Path):
     with path.open() as f:
@@ -84,16 +93,22 @@ def check_catalog_completeness(catalog: list[dict]) -> list[str]:
         "expert",
     }
     categories = {s["category"] for s in catalog}
-    for cat in categories:
-        if cat in ARCHITECTURE_LAYER_CATEGORIES:
-            if totals_by_category.get(cat, 0) == 0:
-                problems.append(f"{cat}: 0 active entries (any difficulty)")
-            continue
-        min_count = 3 if cat in CORE_CATEGORIES else 1
-        for diff in difficulties:
-            n = counts.get((cat, diff), 0)
-            if n < min_count:
-                problems.append(f"{cat}/{diff}: only {n} active (need >= {min_count})")
+    language = catalog[0].get("language") if catalog else None
+    # A course-only language's catalog is checked by its path coverage in
+    # `main()` instead of the dense-grid rule below.
+    if language not in COURSE_ONLY_LANGUAGES:
+        for cat in categories:
+            if cat in ARCHITECTURE_LAYER_CATEGORIES:
+                if totals_by_category.get(cat, 0) == 0:
+                    problems.append(f"{cat}: 0 active entries (any difficulty)")
+                continue
+            min_count = 3 if cat in CORE_CATEGORIES else 1
+            for diff in difficulties:
+                n = counts.get((cat, diff), 0)
+                if n < min_count:
+                    problems.append(
+                        f"{cat}/{diff}: only {n} active (need >= {min_count})"
+                    )
 
     for s in catalog:
         for field in ("tldrEn", "tldrEs"):
@@ -218,6 +233,26 @@ def main() -> int:
 
     all_problems: list[str] = []
     all_problems.extend(check_catalog_completeness(catalog))
+
+    language = catalog[0].get("language") if catalog else None
+    if language in COURSE_ONLY_LANGUAGES:
+        referenced = {
+            lesson["snippetId"]
+            for path_obj in paths
+            for lesson in path_obj["lessons"]
+        }
+        active_ids = {s["id"] for s in catalog if s.get("isActive")}
+        orphans = active_ids - referenced
+        if orphans:
+            all_problems.append(
+                f"[catalog] {language}: {len(orphans)} active snippet(s) not "
+                f"used by any bundled path: {sorted(orphans)}"
+            )
+        else:
+            print(
+                f"NOTE [{language}]: course-only catalog — skipped the dense "
+                f"grid check; every active snippet is used by a bundled path."
+            )
 
     for path_obj in paths:
         problems, notes = check_lesson_order(path_obj, by_id)

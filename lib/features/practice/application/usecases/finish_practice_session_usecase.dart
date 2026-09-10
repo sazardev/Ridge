@@ -32,9 +32,9 @@ typedef FinishedPracticeSession = ({
 /// only ever non-`null` for
 /// [PracticeMode.precision]/[PracticeMode.learningRouteLesson], where it
 /// is [PrecisionScoreCalculator.passes] applied to the just-computed
-/// [SessionMetrics.accuracyPct] (SPEC.md §5.3); Zen and Sprint sessions
-/// always persist `passed: null` — pass/fail is meaningless without a
-/// score to evaluate.
+/// [SessionMetrics.accuracyPct] (SPEC.md §5.3); Zen, Sprint and Survival
+/// sessions always persist `passed: null` — pass/fail is meaningless
+/// without a score to evaluate.
 class FinishPracticeSessionUseCase {
   /// Creates the use case over the given [SessionRepository] port and
   /// optional injected calculators (both default to the real ones —
@@ -73,8 +73,9 @@ class FinishPracticeSessionUseCase {
       totalDuration: duration,
     );
     // Only Precision (and its Learning Route lesson variant) ever has a
-    // pass/fail threshold to evaluate against; every other mode leaves
-    // `passed` at its `null` default (SPEC.md §5.1/§5.2).
+    // pass/fail threshold to evaluate against; every other mode —
+    // including Survival, whose score is run-local flavor — leaves
+    // `passed` at its `null` default (SPEC.md §5.1/§5.2/§5.8).
     final passed = mode.maybeWhen(
       precision: () => scoreCalculator.passes(metrics.accuracyPct),
       learningRouteLesson: (_) => scoreCalculator.passes(metrics.accuracyPct),

@@ -40,11 +40,15 @@ class SnippetDao extends DatabaseAccessor<AppDatabase> with _$SnippetDaoMixin {
   /// Returns every active row matching all of the given, optional column
   /// filters.
   Future<List<SnippetRow>> findByFilters({
+    String? language,
     String? difficulty,
     String? category,
     String? length,
   }) {
     final query = select(snippets)..where((row) => row.isActive.equals(true));
+    if (language != null) {
+      query.where((row) => row.language.equals(language));
+    }
     if (difficulty != null) {
       query.where((row) => row.difficulty.equals(difficulty));
     }

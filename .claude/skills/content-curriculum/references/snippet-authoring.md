@@ -16,6 +16,31 @@ looked fine by eye but didn't actually gofmt-format cleanly, or wouldn't
 compile once wrapped in a runnable `main`). Do this for every new entry,
 not just "complex-looking" ones.
 
+## New SQL code: always run it against PostgreSQL
+
+For the `sql-foundations-v1` catalog, the equivalent of `go run` is
+executing against a real PostgreSQL 16 server — a disposable
+`podman run -d --rm --name jit-sql-pg -e POSTGRES_PASSWORD=postgres
+docker.io/library/postgres:16-alpine` works well and needs no host
+install.
+
+- The course builds a shared `library` database: `authors`, `books`,
+  `members`, `loans`. Verify the `sqlSchema` lessons **cumulatively** in
+  one psql session (start in `postgres`, run `\l`, `CREATE DATABASE
+  library;`, `\c library`, then the `CREATE TABLE`/seed statements in
+  lesson order); verify every other snippet against a freshly seeded
+  copy, and re-seed before each mutating `INSERT`/`UPDATE`/`DELETE`.
+- Assert seed row counts (5 authors, 8 books, 3 members, 5 loans today)
+  so a silently-empty multi-row `INSERT` fails loudly.
+- Keep catalog `code` ASCII-only: `key_layout_map_test.dart` requires
+  every character to map to a physical US-QWERTY key, so accented
+  characters in sample data (`'Garcia'`, not `'García'`) are forbidden
+  in `code` even though the prose fields keep their accents.
+- Bilingual prose is authored separately from code (delegate it to an
+  agent as described below); merge it with the execution-verified code
+  and re-run the PostgreSQL harness on the merged asset, not just on the
+  pre-merge draft.
+
 ## Large batch authoring/rewrites (10+ entries): delegate, then validate twice
 
 When rewriting or extending a large slice of the catalog (e.g. adding

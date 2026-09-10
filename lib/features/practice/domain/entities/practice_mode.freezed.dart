@@ -56,14 +56,15 @@ extension PracticeModePatterns on PracticeMode {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Zen value)?  zen,TResult Function( _Sprint value)?  sprint,TResult Function( _Precision value)?  precision,TResult Function( _LearningRouteLesson value)?  learningRouteLesson,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Zen value)?  zen,TResult Function( _Sprint value)?  sprint,TResult Function( _Precision value)?  precision,TResult Function( _LearningRouteLesson value)?  learningRouteLesson,TResult Function( _Survival value)?  survival,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Zen() when zen != null:
 return zen(_that);case _Sprint() when sprint != null:
 return sprint(_that);case _Precision() when precision != null:
 return precision(_that);case _LearningRouteLesson() when learningRouteLesson != null:
-return learningRouteLesson(_that);case _:
+return learningRouteLesson(_that);case _Survival() when survival != null:
+return survival(_that);case _:
   return orElse();
 
 }
@@ -81,14 +82,15 @@ return learningRouteLesson(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Zen value)  zen,required TResult Function( _Sprint value)  sprint,required TResult Function( _Precision value)  precision,required TResult Function( _LearningRouteLesson value)  learningRouteLesson,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Zen value)  zen,required TResult Function( _Sprint value)  sprint,required TResult Function( _Precision value)  precision,required TResult Function( _LearningRouteLesson value)  learningRouteLesson,required TResult Function( _Survival value)  survival,}){
 final _that = this;
 switch (_that) {
 case _Zen():
 return zen(_that);case _Sprint():
 return sprint(_that);case _Precision():
 return precision(_that);case _LearningRouteLesson():
-return learningRouteLesson(_that);}
+return learningRouteLesson(_that);case _Survival():
+return survival(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -102,14 +104,15 @@ return learningRouteLesson(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Zen value)?  zen,TResult? Function( _Sprint value)?  sprint,TResult? Function( _Precision value)?  precision,TResult? Function( _LearningRouteLesson value)?  learningRouteLesson,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Zen value)?  zen,TResult? Function( _Sprint value)?  sprint,TResult? Function( _Precision value)?  precision,TResult? Function( _LearningRouteLesson value)?  learningRouteLesson,TResult? Function( _Survival value)?  survival,}){
 final _that = this;
 switch (_that) {
 case _Zen() when zen != null:
 return zen(_that);case _Sprint() when sprint != null:
 return sprint(_that);case _Precision() when precision != null:
 return precision(_that);case _LearningRouteLesson() when learningRouteLesson != null:
-return learningRouteLesson(_that);case _:
+return learningRouteLesson(_that);case _Survival() when survival != null:
+return survival(_that);case _:
   return null;
 
 }
@@ -126,13 +129,14 @@ return learningRouteLesson(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  zen,TResult Function( Duration window)?  sprint,TResult Function()?  precision,TResult Function( String lessonId)?  learningRouteLesson,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  zen,TResult Function( Duration window)?  sprint,TResult Function()?  precision,TResult Function( String lessonId)?  learningRouteLesson,TResult Function()?  survival,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Zen() when zen != null:
 return zen();case _Sprint() when sprint != null:
 return sprint(_that.window);case _Precision() when precision != null:
 return precision();case _LearningRouteLesson() when learningRouteLesson != null:
-return learningRouteLesson(_that.lessonId);case _:
+return learningRouteLesson(_that.lessonId);case _Survival() when survival != null:
+return survival();case _:
   return orElse();
 
 }
@@ -150,13 +154,14 @@ return learningRouteLesson(_that.lessonId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  zen,required TResult Function( Duration window)  sprint,required TResult Function()  precision,required TResult Function( String lessonId)  learningRouteLesson,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  zen,required TResult Function( Duration window)  sprint,required TResult Function()  precision,required TResult Function( String lessonId)  learningRouteLesson,required TResult Function()  survival,}) {final _that = this;
 switch (_that) {
 case _Zen():
 return zen();case _Sprint():
 return sprint(_that.window);case _Precision():
 return precision();case _LearningRouteLesson():
-return learningRouteLesson(_that.lessonId);}
+return learningRouteLesson(_that.lessonId);case _Survival():
+return survival();}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -170,13 +175,14 @@ return learningRouteLesson(_that.lessonId);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  zen,TResult? Function( Duration window)?  sprint,TResult? Function()?  precision,TResult? Function( String lessonId)?  learningRouteLesson,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  zen,TResult? Function( Duration window)?  sprint,TResult? Function()?  precision,TResult? Function( String lessonId)?  learningRouteLesson,TResult? Function()?  survival,}) {final _that = this;
 switch (_that) {
 case _Zen() when zen != null:
 return zen();case _Sprint() when sprint != null:
 return sprint(_that.window);case _Precision() when precision != null:
 return precision();case _LearningRouteLesson() when learningRouteLesson != null:
-return learningRouteLesson(_that.lessonId);case _:
+return learningRouteLesson(_that.lessonId);case _Survival() when survival != null:
+return survival();case _:
   return null;
 
 }
@@ -383,5 +389,37 @@ as String,
 
 
 }
+
+/// @nodoc
+
+
+class _Survival implements PracticeMode {
+  const _Survival();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Survival);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+    return 'PracticeMode.survival()';
+}
+
+
+}
+
+
+
 
 // dart format on

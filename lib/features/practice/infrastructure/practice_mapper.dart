@@ -33,6 +33,7 @@ PracticeMode _practiceModeFromName(String mode, String? lessonId) {
     'zen' => const PracticeMode.zen(),
     'sprint' => const PracticeMode.sprint(window: Duration.zero),
     'precision' => const PracticeMode.precision(),
+    'survival' => const PracticeMode.survival(),
     'learningRouteLesson' => PracticeMode.learningRouteLesson(
       lessonId: lessonId ?? '',
     ),
@@ -48,6 +49,7 @@ extension PracticeModeMapper on PracticeMode {
       zen: () => (mode: 'zen', lessonId: null),
       sprint: (window) => (mode: 'sprint', lessonId: null),
       precision: () => (mode: 'precision', lessonId: null),
+      survival: () => (mode: 'survival', lessonId: null),
       learningRouteLesson: (lessonId) =>
           (mode: 'learningRouteLesson', lessonId: lessonId),
     );

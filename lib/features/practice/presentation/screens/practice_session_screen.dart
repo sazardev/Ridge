@@ -16,11 +16,13 @@ import 'package:just_in_time/features/practice/domain/entities/keystroke.dart';
 import 'package:just_in_time/features/practice/domain/entities/keystroke_result.dart';
 import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
 import 'package:just_in_time/features/practice/domain/entities/practice_session_status.dart';
+import 'package:just_in_time/features/practice/domain/services/survival_run_tracker.dart';
 import 'package:just_in_time/features/practice/presentation/providers/practice_session_controller.dart';
 import 'package:just_in_time/features/practice/presentation/widgets/keystroke_capture_field.dart';
 import 'package:just_in_time/features/practice/presentation/widgets/session_result_footer.dart';
 import 'package:just_in_time/features/practice/presentation/widgets/session_result_panel.dart';
 import 'package:just_in_time/features/practice/presentation/widgets/sprint_countdown_badge.dart';
+import 'package:just_in_time/features/practice/presentation/widgets/survival_lives_badge.dart';
 import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
 
 /// Hosts one full `idle -> running -> finished -> result` practice run
@@ -176,13 +178,15 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
     );
     final countdown = state.remaining ?? sprintWindow;
     final passed = state.finishedSession?.session.passed;
+    final survival = state.survival;
 
-    // Retry only applies to modes with a pass/fail gate (Precision/
-    // learning-route lessons); Zen and Sprint never set `passed` (SPEC.md
-    // §5.1/§5.2), so there's nothing to retry against. Continue is only
-    // ever offered on an actual pass — a failed lesson attempt should
-    // retry the same one, never skip ahead.
-    final onRetryAction = passed == null
+    // Retry applies to modes with a pass/fail gate (Precision/
+    // learning-route lessons) and to Survival (a run always worth
+    // replaying); Zen and Sprint never set `passed` and have no gate to
+    // retry against (SPEC.md §5.1/§5.2). Continue is only ever offered on
+    // an actual pass — a failed lesson attempt should retry the same one,
+    // never skip ahead.
+    final onRetryAction = passed == null && survival == null
         ? null
         : ref
               .read(practiceSessionControllerProvider(snippet, mode).notifier)
@@ -238,6 +242,13 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
                   child: SprintCountdownBadge(remaining: countdown),
                 ),
               ),
+            if (survival != null &&
+                (state.status == PracticeSessionStatus.idle ||
+                    state.status == PracticeSessionStatus.running))
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Center(child: SurvivalLivesBadge(tracker: survival)),
+              ),
           ],
         ),
         body: SafeArea(
@@ -254,7 +265,10 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
                   const SizedBox(height: 12),
                 ],
                 if (state.status == PracticeSessionStatus.running) ...[
-                  _LiveStatsRow(keystrokes: state.recorder.keystrokes),
+                  _LiveStatsRow(
+                    keystrokes: state.recorder.keystrokes,
+                    survival: survival,
+                  ),
                   const SizedBox(height: 8),
                 ],
                 // While typing (idle/running), the result area below has
@@ -287,6 +301,7 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
                             child: SessionResultPanel(
                               metrics: state.finishedSession!.metrics,
                               passed: passed,
+                              survival: survival,
                             ),
                           ),
                         PracticeSessionStatus.result => Center(
@@ -322,22 +337,55 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
   }
 }
 
-/// Small live readout of characters typed and running accuracy so far —
-/// shown only while a session is actually `running`, updating on every
-/// keystroke for free (the screen already rebuilds then). A cheap,
-/// deliberately simple companion to the capture field's live per-character
-/// coloring: a continuously-moving number is its own kind of feedback that
-/// "yes, this is working," distinct from (and complementary to) knowing
-/// whether any one character was right or wrong.
+/// Small live readout updated on every keystroke — shown only while a
+/// session is actually `running` (the screen already rebuilds then).
+///
+/// For most modes: characters typed and running accuracy, a cheap,
+/// deliberately simple companion to the capture field's live
+/// per-character coloring: a continuously-moving number is its own kind
+/// of feedback that "yes, this is working," distinct from (and
+/// complementary to) knowing whether any one character was right or
+/// wrong.
+///
+/// For Survival (§5.8): the run-local score, current combo multiplier,
+/// and snippets cleared, since lives/score are the mode's whole point and
+/// accuracy is already reflected in the capture field and result panel.
 class _LiveStatsRow extends StatelessWidget {
-  const new({required this.keystrokes});
+  const new({required this.keystrokes, this.survival});
 
   final List<Keystroke> keystrokes;
+
+  /// The live Survival run state, or `null` for every other mode.
+  final SurvivalRunTracker? survival;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final subtleStyle = theme.textTheme.labelMedium?.copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    );
+
+    final survival = this.survival;
+    if (survival != null) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(l10n.practiceLiveScore(survival.score), style: subtleStyle),
+          Text(
+            l10n.practiceLiveMultiplier(survival.multiplier),
+            style: theme.textTheme.titleSmall?.copyWith(
+              color: theme.colorScheme.primary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            l10n.practiceLiveSnippets(survival.snippetsCleared),
+            style: subtleStyle,
+          ),
+        ],
+      );
+    }
 
     var typed = 0;
     var correct = 0;
@@ -351,17 +399,10 @@ class _LiveStatsRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          l10n.practiceLiveCharsTyped(typed),
-          style: theme.textTheme.labelMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
+        Text(l10n.practiceLiveCharsTyped(typed), style: subtleStyle),
         Text(
           l10n.practiceLiveAccuracy(accuracy.toStringAsFixed(0)),
-          style: theme.textTheme.labelMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
+          style: subtleStyle,
         ),
       ],
     );

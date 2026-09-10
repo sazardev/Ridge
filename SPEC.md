@@ -87,11 +87,11 @@ Segmentos concretos:
 
 ### 3.1 Naturaleza del contenido
 
-Todo el material de escritura es **código Go real, correcto y compilable en su contexto** (no fragmentos rotos ni pseudocódigo). El contenido se organiza en **snippets**: bloques de código de longitud controlada, cada uno etiquetado con:
+Todo el material de escritura es **código real, correcto y ejecutable en su contexto** (no fragmentos rotos ni pseudocódigo): Go para la ruta de fundamentos de Go, Bash (shell de Linux, con ejemplos de Arch Linux) para la ruta de Bash, y SQL (PostgreSQL, con una base de datos de biblioteca compartida) para la ruta de SQL. El contenido se organiza en **snippets**: bloques de código de longitud controlada, cada uno etiquetado con:
 
-- **Lenguaje** (Go en v1; el modelo de contenido está pensado para añadir otros lenguajes a futuro, ver §18).
+- **Lenguaje**: Go, Bash y SQL hoy; el modelo de contenido está pensado para añadir otros lenguajes a futuro (ver §18).
 - **Nivel de dificultad**: Principiante, Intermedio, Avanzado, Experto.
-- **Categoría temática / constructo**: variables y tipos, condicionales, ciclos, funciones, structs, interfaces, slices y maps, manejo de errores, punteros, concurrencia (goroutines/channels), genéricos, formato idiomático (`gofmt`).
+- **Categoría temática / constructo**: para Go: variables y tipos, condicionales, ciclos, funciones, structs, interfaces, slices y maps, manejo de errores, punteros, concurrencia (goroutines/channels), genéricos, formato idiomático (`gofmt`). Para Bash: comandos de shell, variables y expansión, condicionales, ciclos, funciones, manejo de errores, pipes y redirección, procesamiento de texto, y administración de sistema (Arch Linux: `pacman`, `systemd`, `journalctl`). Para SQL: fundamentos de `SELECT`, schema y setup (DDL, `psql`, datos de ejemplo), consultas, filtrado, agregación, joins, modificación de datos y consultas avanzadas (subconsultas, CTEs, `UNION`, `CASE`).
 - **Foco de símbolos**: algunos snippets están diseñados específicamente para forzar la práctica de un símbolo o combinación difícil (llaves anidadas, `:=`, comillas backtick para tags de struct, operadores `&&`/`||`, punteros `*`/`&`, generics `[T any]`).
 - **Longitud**: Corto (una línea o firma de función), Medio (un bloque/función completa), Largo (un archivo pequeño o varias funciones relacionadas).
 
@@ -99,6 +99,7 @@ Todo el material de escritura es **código Go real, correcto y compilable en su 
 
 - El contenido inicial es **curado**, no generado al vuelo: proviene de código idiomático real (librería estándar de Go, proyectos open source reconocidos, o escrito por editores humanos que siguen las convenciones oficiales de estilo de Go).
 - Cada snippet pasa una validación de que es sintácticamente correcto en su contexto antes de entrar al catálogo.
+- El catálogo tiene dos niveles de exigencia. Los lenguajes de **práctica libre** (Go, disponible en Zen/Sprint/Precisión y navegable por categoría/dificultad) mantienen al menos 3 snippets activos por cada celda (categoría, dificultad) en sus categorías núcleo, además de 1 en el resto. Los lenguajes **solo-curso** (Bash y SQL, cuyos snippets existen únicamente para componer sus rutas guiadas) contienen exactamente los snippets que esa ruta usa: nada de material huérfano de práctica libre.
 - El catálogo crece con el tiempo; nuevos snippets se pueden agregar sin afectar el progreso ya registrado de los usuarios (un snippet es una unidad de contenido versionada e inmutable una vez publicada — si se corrige, se publica como una revisión nueva).
 
 ### 3.3 Selección de snippet para una sesión
@@ -178,6 +179,9 @@ Eventos con ventana de tiempo (ej. una semana) donde los miembros de un mismo eq
 
 ### 5.7 Rutas de aprendizaje / Currícula guiada *(individual, offline con progreso sincronizable)*
 Secuencias ordenadas de lecciones y snippets con un objetivo pedagógico explícito (ej. "Fundamentos de sintaxis Go", "Manejo de errores idiomático", "Concurrencia sin miedo"). Se desbloquean en orden; cada lección se marca completa según el criterio de la Prueba de Precisión (§5.3). Pensado especialmente para bootcamps y autoestudio estructurado.
+
+### 5.8 Supervivencia (arcade) *(individual, offline)*
+Run continuo de snippets de la misma dificultad con un pool de vidas en lugar de reloj: cada tecla incorrecta cuesta una vida, y perder la última termina la run en el acto (la corrida completa se registra igual que cualquier otra sesión). Completar un snippet encadena el siguiente sin pausa, con la misma mecánica de stream que Sprint (§5.2). Un multiplicador de combo (crece con los aciertos consecutivos, hasta un tope) escala un puntaje de run que se muestra en vivo y en el resultado, pero que es solo flavor local: no se persiste y no altera el XP ni la certificación de dominio (§6.1, §6.4), que siguen dependiendo de caracteres correctos, dificultad y precisión. Se captura exactamente la misma metadata que en todos los demás modos (§4). Pensado como el modo "una más y lo dejo": presión constante, sesiones cortas, rejugabilidad inmediata.
 
 ---
 
@@ -390,7 +394,7 @@ Dado que el corazón del producto es la comparación (contra uno mismo y contra 
 
 Explícitamente fuera del alcance inicial, para mantener el producto enfocado:
 
-- Lenguajes de programación distintos a Go (el modelo de contenido de §3 está diseñado para poder añadir Python, JavaScript, Rust, etc. más adelante, pero v1 se concentra solo en Go).
+- Lenguajes de programación distintos a Go, Bash y SQL (el modelo de contenido de §3 está diseñado para poder añadir Python, JavaScript, Rust, etc. más adelante).
 - Contenido generado automáticamente/por IA como sustituto del código real curado (contradice el principio #1, §1).
 - Chat de voz o video dentro de Duelos o Escuadrones.
 - Torneos con premios en dinero real.

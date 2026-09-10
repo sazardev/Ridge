@@ -4,9 +4,10 @@
 // repository, not fabricated in-test data). Mirrors
 // `test/features/profile/profile_drift_integration_test.dart`: table
 // creation via the drift migration, the seed usecase actually parsing
-// `assets/content/snippets/go_v1.json` and writing every row through
-// SQL, and every read port (`findByFilters`, `getById`,
-// `findContainingSymbols`) queried back out for real.
+// every bundled catalog asset (`go_v1.json` + `bash_v1.json` +
+// `sql_v1.json`) and writing every row through SQL, and every read port
+// (`findByFilters`, `getById`, `findContainingSymbols`) queried back out
+// for real.
 import 'dart:async';
 
 import 'package:drift/native.dart';
@@ -76,7 +77,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 113)
+        .firstWhere((snippets) => snippets.length == 223)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -90,7 +91,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(113));
+    expect(catalog, hasLength(223));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -102,7 +103,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(113));
+      expect(catalog, hasLength(223));
     },
   );
 
@@ -113,7 +114,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(113));
+    expect(result, hasLength(223));
   });
 
   test(
@@ -143,7 +144,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(22));
+    expect(beginnerSnippets, hasLength(64));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -160,6 +161,8 @@ void main() {
     expect(result.isOk, isTrue);
     final ids = result.valueOrNull!.map((s) => s.id.value).toSet();
     expect(ids, {
+      'bash-func-003',
+      'bash-func-004',
       'go-cond-007',
       'go-err-009',
       'go-err-010',
@@ -188,6 +191,38 @@ void main() {
       'go-rest-001',
       'go-testfakes-001',
       'go-testfakes-002',
+      'sql-advanced-002',
+      'sql-advanced-003',
+      'sql-advanced-004',
+      'sql-aggregation-001',
+      'sql-aggregation-002',
+      'sql-aggregation-003',
+      'sql-aggregation-004',
+      'sql-aggregation-005',
+      'sql-basics-004',
+      'sql-filtering-001',
+      'sql-filtering-002',
+      'sql-filtering-005',
+      'sql-filtering-006',
+      'sql-joins-001',
+      'sql-joins-002',
+      'sql-joins-003',
+      'sql-joins-004',
+      'sql-joins-005',
+      'sql-joins-006',
+      'sql-joins-007',
+      'sql-modifications-002',
+      'sql-modifications-003',
+      'sql-modifications-004',
+      'sql-modifications-005',
+      'sql-queries-003',
+      'sql-schema-004',
+      'sql-schema-005',
+      'sql-schema-006',
+      'sql-schema-007',
+      'sql-schema-011',
+      'sql-schema-012',
+      'sql-schema-013',
     });
   });
 
@@ -201,6 +236,7 @@ void main() {
     expect(result.isOk, isTrue);
     final ids = result.valueOrNull!.map((s) => s.id.value).toSet();
     expect(ids, {
+      'bash-vars-007',
       'go-cond-005',
       'go-cond-007',
       'go-cond-010',
@@ -224,6 +260,8 @@ void main() {
       'go-rest-002',
       'go-rest-008',
       'go-testfakes-002',
+      'sql-filtering-008',
+      'sql-filtering-009',
     });
   });
 

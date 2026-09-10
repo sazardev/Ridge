@@ -48,6 +48,7 @@ PracticeMode _practiceModeFromKind(String modeKind) => switch (modeKind) {
     window: Duration(seconds: 120),
   ),
   practiceModeKindPrecision => const PracticeMode.precision(),
+  practiceModeKindSurvival => const PracticeMode.survival(),
   _ => const PracticeMode.zen(),
 };
 

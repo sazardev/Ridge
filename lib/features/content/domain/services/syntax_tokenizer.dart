@@ -1,6 +1,8 @@
 import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
 import 'package:just_in_time/features/content/domain/entities/syntax_token_type.dart';
 
+part 'sql_syntax_tokenizer.dart';
+
 /// Classifies every character of a source-code string for syntax
 /// highlighting (SPEC.md-adjacent presentation concern, not itself part
 /// of SPEC — a per-language capability, mirroring how [ProgrammingLanguage]
@@ -18,6 +20,8 @@ abstract final class SyntaxTokenizers {
   static SyntaxTokenizer forLanguage(ProgrammingLanguage language) =>
       switch (language) {
         ProgrammingLanguage.go => const GoSyntaxTokenizer(),
+        ProgrammingLanguage.bash => const BashSyntaxTokenizer(),
+        ProgrammingLanguage.sql => const SqlSyntaxTokenizer(),
       };
 }
 
@@ -162,6 +166,177 @@ class GoSyntaxTokenizer implements SyntaxTokenizer {
       c == 'X' ||
       (c.toLowerCase().codeUnitAt(0) >= 0x61 &&
           c.toLowerCase().codeUnitAt(0) <= 0x66); // a-f, for hex literals
+
+  bool _isIdentStart(String c) =>
+      c == '_' ||
+      (c.codeUnitAt(0) >= 0x41 && c.codeUnitAt(0) <= 0x5A) ||
+      (c.codeUnitAt(0) >= 0x61 && c.codeUnitAt(0) <= 0x7A);
+
+  bool _isIdentPart(String c) => _isIdentStart(c) || _isDigit(c);
+}
+
+/// A single-pass lexer for Bash — just enough to color `#` comments,
+/// quoted strings, `$variable`/`${...}` expansions, reserved words and
+/// common builtins, numbers, and punctuation; it never builds an AST and
+/// makes no attempt to tell a command name from an argument.
+class BashSyntaxTokenizer implements SyntaxTokenizer {
+  /// Creates the (stateless) tokenizer.
+  const new();
+
+  static const _keywords = {
+    // Reserved words.
+    'if', 'then', 'else', 'elif', 'fi', 'for', 'in', 'do', 'done',
+    'while', 'until', 'case', 'esac', 'function', 'select', 'time',
+    // Builtins and ubiquitous commands, highlighted so a beginner can
+    // tell structure (`if`, `for`) from the words around it.
+    'alias', 'cd', 'command', 'continue', 'declare', 'echo', 'eval',
+    'exec', 'exit', 'export', 'false', 'kill', 'local', 'printf',
+    'pwd', 'read', 'readonly', 'return', 'set', 'shift', 'source',
+    'test', 'trap', 'true', 'type', 'typeset', 'unset', 'wait',
+  };
+
+  @override
+  List<SyntaxTokenType> classify(String code) {
+    final types = List<SyntaxTokenType>.filled(
+      code.length,
+      SyntaxTokenType.plain,
+    );
+    var i = 0;
+    while (i < code.length) {
+      final c = code[i];
+
+      // `#` opens a comment only at the start of a word — `echo a#b`
+      // keeps the `#` literal, `echo a # b` starts a comment.
+      if (c == '#' && (i == 0 || _isWhitespace(code[i - 1]))) {
+        final start = i;
+        while (i < code.length && code[i] != '\n') {
+          i++;
+        }
+        _fill(types, start, i, SyntaxTokenType.comment);
+        continue;
+      }
+
+      // `$'...'` ANSI-C quoting and `$"..."` locale strings: the `$`
+      // plus the whole quoted literal reads as one string.
+      if (c == r'$' &&
+          i + 1 < code.length &&
+          (code[i + 1] == "'" || code[i + 1] == '"')) {
+        final start = i;
+        final quote = code[i + 1];
+        i += 2;
+        while (i < code.length && code[i] != quote) {
+          i += (quote == '"' && code[i] == r'\' && i + 1 < code.length) ? 2 : 1;
+        }
+        if (i < code.length) i++;
+        _fill(types, start, i, SyntaxTokenType.string);
+        continue;
+      }
+
+      if (c == "'") {
+        final start = i;
+        i++;
+        while (i < code.length && code[i] != "'") {
+          i++;
+        }
+        if (i < code.length) i++;
+        _fill(types, start, i, SyntaxTokenType.string);
+        continue;
+      }
+
+      if (c == '"') {
+        final start = i;
+        i++;
+        while (i < code.length && code[i] != '"') {
+          i += (code[i] == r'\' && i + 1 < code.length) ? 2 : 1;
+        }
+        if (i < code.length) i++;
+        _fill(types, start, i, SyntaxTokenType.string);
+        continue;
+      }
+
+      // Backquotes are legacy command substitution; colored like a
+      // string since everything between them is shell text.
+      if (c == '`') {
+        final start = i;
+        i++;
+        while (i < code.length && code[i] != '`') {
+          i++;
+        }
+        if (i < code.length) i++;
+        _fill(types, start, i, SyntaxTokenType.string);
+        continue;
+      }
+
+      // `$name`, `${...}`, `$1`, `$?`, `$@` — expansions get the keyword
+      // color so variables visibly stand out from bare words.
+      if (c == r'$') {
+        final start = i;
+        i++;
+        if (i < code.length && code[i] == '{') {
+          while (i < code.length && code[i] != '}') {
+            i++;
+          }
+          if (i < code.length) i++;
+        } else if (i < code.length && _isIdentStart(code[i])) {
+          while (i < code.length && _isIdentPart(code[i])) {
+            i++;
+          }
+        } else if (i < code.length) {
+          i++; // `$?`, `$#`, `$@`, `$$`, ...
+        }
+        _fill(types, start, i, SyntaxTokenType.keyword);
+        continue;
+      }
+
+      if (_isDigit(c)) {
+        final start = i;
+        while (i < code.length && _isDigit(code[i])) {
+          i++;
+        }
+        _fill(types, start, i, SyntaxTokenType.number);
+        continue;
+      }
+
+      if (_isIdentStart(c)) {
+        final start = i;
+        while (i < code.length && _isIdentPart(code[i])) {
+          i++;
+        }
+        final word = code.substring(start, i);
+        _fill(
+          types,
+          start,
+          i,
+          _keywords.contains(word)
+              ? SyntaxTokenType.keyword
+              : SyntaxTokenType.identifier,
+        );
+        continue;
+      }
+
+      if (!_isWhitespace(c)) {
+        types[i] = SyntaxTokenType.operatorOrPunctuation;
+      }
+      i++;
+    }
+    return types;
+  }
+
+  void _fill(
+    List<SyntaxTokenType> types,
+    int start,
+    int end,
+    SyntaxTokenType type,
+  ) {
+    for (var j = start; j < end && j < types.length; j++) {
+      types[j] = type;
+    }
+  }
+
+  bool _isWhitespace(String c) =>
+      c == ' ' || c == '\t' || c == '\n' || c == '\r';
+
+  bool _isDigit(String c) => c.codeUnitAt(0) >= 0x30 && c.codeUnitAt(0) <= 0x39;
 
   bool _isIdentStart(String c) =>
       c == '_' ||

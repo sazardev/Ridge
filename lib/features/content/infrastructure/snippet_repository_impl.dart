@@ -2,6 +2,7 @@ import 'package:just_in_time/core/error/app_failure.dart';
 import 'package:just_in_time/core/utils/result.dart';
 import 'package:just_in_time/features/content/domain/entities/content_category.dart';
 import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
+import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
 import 'package:just_in_time/features/content/domain/entities/snippet.dart';
 import 'package:just_in_time/features/content/domain/entities/snippet_length.dart';
 import 'package:just_in_time/features/content/domain/repositories/snippet_repository.dart';
@@ -43,12 +44,14 @@ class SnippetRepositoryImpl implements SnippetRepository {
 
   @override
   Future<Result<List<Snippet>, AppFailure>> findByFilters({
+    ProgrammingLanguage? language,
     Difficulty? difficulty,
     ContentCategory? category,
     SnippetLength? length,
   }) async {
     try {
       final rows = await _dao.findByFilters(
+        language: language?.name,
         difficulty: difficulty?.name,
         category: category?.name,
         length: length?.name,

@@ -5,6 +5,7 @@ import 'package:just_in_time/core/theme/app_shapes.dart';
 import 'package:just_in_time/core/theme/app_typography.dart';
 import 'package:just_in_time/features/practice/domain/entities/session_metrics.dart';
 import 'package:just_in_time/features/practice/domain/services/precision_score_calculator.dart';
+import 'package:just_in_time/features/practice/domain/services/survival_run_tracker.dart';
 import 'package:just_in_time/features/practice/presentation/compiler_flavor.dart';
 
 const _scoreCalculator = PrecisionScoreCalculator();
@@ -18,15 +19,20 @@ const _scoreCalculator = PrecisionScoreCalculator();
 /// scroll view, so a long result never buries them out of reach.
 class SessionResultPanel extends StatelessWidget {
   /// Creates the panel for the given computed [metrics].
-  const new({required this.metrics, this.passed, super.key});
+  const new({required this.metrics, this.passed, this.survival, super.key});
 
   /// The computed metrics for the just-finished session.
   final SessionMetrics metrics;
 
   /// This session's pass/fail outcome (SPEC.md §5.3) — `null` for modes
-  /// without a threshold (Zen, Sprint), in which case no pass/fail
-  /// banner is shown.
+  /// without a threshold (Zen, Sprint, Survival), in which case no
+  /// pass/fail banner is shown.
   final bool? passed;
+
+  /// The final arcade state of a Survival run (SPEC.md §5.8), or `null`
+  /// for every other mode. When present, the panel leads with the run's
+  /// own score/snippets/multiplier rows and titles itself "Run over".
+  final SurvivalRunTracker? survival;
 
   List<MapEntry<String, int>> _weakestCharacters() {
     final withErrors = [
@@ -41,6 +47,7 @@ class SessionResultPanel extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final weakest = _weakestCharacters();
+    final survival = this.survival;
 
     return Container(
       width: double.infinity,
@@ -52,7 +59,12 @@ class SessionResultPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.practiceResultTitle, style: theme.textTheme.titleLarge),
+          Text(
+            survival == null
+                ? l10n.practiceResultTitle
+                : l10n.practiceResultSurvivalTitle,
+            style: theme.textTheme.titleLarge,
+          ),
           if (passed != null) ...[
             const SizedBox(height: 12),
             _PassFailBanner(
@@ -69,6 +81,21 @@ class SessionResultPanel extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
+          if (survival != null) ...[
+            _MetricRow(
+              label: l10n.practiceResultSurvivalScore,
+              value: '${survival.score}',
+            ),
+            _MetricRow(
+              label: l10n.practiceResultSurvivalSnippets,
+              value: '${survival.snippetsCleared}',
+            ),
+            _MetricRow(
+              label: l10n.practiceResultSurvivalBestMultiplier,
+              value: '×${survival.bestMultiplier}',
+            ),
+            const SizedBox(height: 8),
+          ],
           _MetricRow(
             label: l10n.practiceResultNetSpeed,
             value: '${metrics.netSpeedCpm.toStringAsFixed(0)} cpm',

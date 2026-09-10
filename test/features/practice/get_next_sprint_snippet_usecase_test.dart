@@ -16,11 +16,15 @@ import 'package:just_in_time/features/content/domain/repositories/snippet_reposi
 import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
 import 'package:just_in_time/features/practice/application/usecases/get_next_sprint_snippet_usecase.dart';
 
-Snippet _snippet(String id, {Difficulty difficulty = Difficulty.beginner}) {
+Snippet _snippet(
+  String id, {
+  Difficulty difficulty = Difficulty.beginner,
+  ProgrammingLanguage language = ProgrammingLanguage.go,
+}) {
   return Snippet(
     id: SnippetId(id),
     revision: 1,
-    language: ProgrammingLanguage.go,
+    language: language,
     difficulty: difficulty,
     category: ContentCategory.variablesAndTypes,
     symbolFocus: const {},
@@ -38,17 +42,23 @@ Snippet _snippet(String id, {Difficulty difficulty = Difficulty.beginner}) {
 }
 
 class _FakeSnippetRepository implements SnippetRepository {
-  new(this.byDifficulty);
+  new(this.snippets);
 
-  final Map<Difficulty, List<Snippet>> byDifficulty;
+  final List<Snippet> snippets;
 
   @override
   Future<Result<List<Snippet>, AppFailure>> findByFilters({
+    ProgrammingLanguage? language,
     Difficulty? difficulty,
     ContentCategory? category,
     SnippetLength? length,
   }) async {
-    return Result.ok(byDifficulty[difficulty] ?? const []);
+    return Result.ok([
+      for (final snippet in snippets)
+        if ((language == null || snippet.language == language) &&
+            (difficulty == null || snippet.difficulty == difficulty))
+          snippet,
+    ]);
   }
 
   @override
@@ -78,12 +88,15 @@ void main() {
   test(
     'prefers a snippet of the same difficulty not already used this run',
     () async {
-      final repository = _FakeSnippetRepository({
-        Difficulty.beginner: [_snippet('a'), _snippet('b'), _snippet('c')],
-      });
+      final repository = _FakeSnippetRepository([
+        _snippet('a'),
+        _snippet('b'),
+        _snippet('c'),
+      ]);
       final useCase = GetNextSprintSnippetUseCase(repository);
 
       final result = await useCase(
+        language: ProgrammingLanguage.go,
         difficulty: Difficulty.beginner,
         usedSnippetIds: {const SnippetId('a'), const SnippetId('b')},
       );
@@ -95,12 +108,14 @@ void main() {
 
   test('allows repeats once every candidate of that difficulty has been used '
       'rather than dead-ending the Sprint timer', () async {
-    final repository = _FakeSnippetRepository({
-      Difficulty.intermediate: [_snippet('a'), _snippet('b')],
-    });
+    final repository = _FakeSnippetRepository([
+      _snippet('a', difficulty: Difficulty.intermediate),
+      _snippet('b', difficulty: Difficulty.intermediate),
+    ]);
     final useCase = GetNextSprintSnippetUseCase(repository);
 
     final result = await useCase(
+      language: ProgrammingLanguage.go,
       difficulty: Difficulty.intermediate,
       usedSnippetIds: {const SnippetId('a'), const SnippetId('b')},
     );
@@ -115,10 +130,11 @@ void main() {
   test(
     'only a genuinely empty catalog for that difficulty is an error',
     () async {
-      final repository = _FakeSnippetRepository({Difficulty.expert: []});
+      final repository = _FakeSnippetRepository([]);
       final useCase = GetNextSprintSnippetUseCase(repository);
 
       final result = await useCase(
+        language: ProgrammingLanguage.go,
         difficulty: Difficulty.expert,
         usedSnippetIds: const {},
       );
@@ -129,9 +145,11 @@ void main() {
   );
 
   test('an injected random source makes the pick deterministic', () async {
-    final repository = _FakeSnippetRepository({
-      Difficulty.beginner: [_snippet('a'), _snippet('b'), _snippet('c')],
-    });
+    final repository = _FakeSnippetRepository([
+      _snippet('a'),
+      _snippet('b'),
+      _snippet('c'),
+    ]);
     // A fixed seed always produces the same first `nextInt` draw for a
     // given pool size, so this pins down exactly which unused candidate
     // is picked without depending on real randomness.
@@ -141,11 +159,29 @@ void main() {
     );
 
     final result = await useCase(
+      language: ProgrammingLanguage.go,
       difficulty: Difficulty.beginner,
       usedSnippetIds: const {},
     );
 
     expect(result.valueOrNull!.id, const SnippetId('b'));
+  });
+
+  test('never crosses languages: a Go Sprint run only advances to Go '
+      'snippets', () async {
+    final repository = _FakeSnippetRepository([
+      _snippet('go-a'),
+      _snippet('bash-a', language: ProgrammingLanguage.bash),
+    ]);
+    final useCase = GetNextSprintSnippetUseCase(repository);
+
+    final result = await useCase(
+      language: ProgrammingLanguage.go,
+      difficulty: Difficulty.beginner,
+      usedSnippetIds: const {},
+    );
+
+    expect(result.valueOrNull!.id, const SnippetId('go-a'));
   });
 }
 

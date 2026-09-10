@@ -140,11 +140,15 @@ writing new constructors instead of writing `const ClassName(...)`.
 
 ## Content / curriculum editing
 
-Editing Go snippets (`assets/content/snippets/go_v1.json`), a Learning
-Path's lesson order (`assets/content/learning_paths/*.json`), or adding a
-new bilingual (en/es) content field is covered by the `content-curriculum`
-skill — use it rather than hand-editing these JSON files, since lesson
-ordering has produced real beginner-incoherence bugs before.
+Editing snippets (`assets/content/snippets/{go,bash,sql}_v1.json`), a
+Learning Path's lesson order (`assets/content/learning_paths/*.json`), or
+adding a new bilingual (en/es) content field is covered by the
+`content-curriculum` skill — use it rather than hand-editing these JSON
+files, since lesson ordering has produced real beginner-incoherence bugs
+before. Note the two catalog tiers (SPEC.md §3.2): Go backs free practice
+and keeps a dense (category, difficulty) grid; Bash and SQL are
+course-only and contain exactly the snippets `bash-foundations-v1` and
+`sql-foundations-v1` use, respectively.
 
 ## Design system
 

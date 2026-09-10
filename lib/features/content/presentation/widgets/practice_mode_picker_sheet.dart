@@ -28,8 +28,11 @@ const practiceModeKindSprint120 = 'sprint120';
 /// A Precision test at the fixed default threshold (SPEC.md §5.3).
 const practiceModeKindPrecision = 'precision';
 
+/// A Survival arcade run with lives and a combo multiplier (SPEC.md §5.8).
+const practiceModeKindSurvival = 'survival';
+
 /// Shows a modal sheet letting the user choose which practice mode to
-/// start (SPEC.md §5.1-§5.3). Returns one of the `practiceModeKind*`
+/// start (SPEC.md §5.1-§5.3, §5.8). Returns one of the `practiceModeKind*`
 /// constants above, or `null` if dismissed without a choice.
 Future<String?> showPracticeModePickerSheet(BuildContext context) {
   return showModalBottomSheet<String>(
@@ -99,6 +102,11 @@ class _PracticeModePickerSheet extends StatelessWidget {
               label: l10n.practiceModePrecision,
               subtitle: l10n.practiceModePrecisionSubtitle,
               onTap: () => Navigator.of(context).pop(practiceModeKindPrecision),
+            ),
+            _ModeOption(
+              label: l10n.practiceModeSurvival,
+              subtitle: l10n.practiceModeSurvivalSubtitle,
+              onTap: () => Navigator.of(context).pop(practiceModeKindSurvival),
             ),
           ],
         ),

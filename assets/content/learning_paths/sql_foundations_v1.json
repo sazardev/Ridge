@@ -1,0 +1,434 @@
+[
+  {
+    "id": "sql-foundations-v1",
+    "language": "sql",
+    "titleEn": "SQL & PostgreSQL from scratch",
+    "titleEs": "SQL y PostgreSQL desde cero",
+    "descriptionEn": "Learn SQL step by step with PostgreSQL, from your first query to joins and CTEs.",
+    "descriptionEs": "Aprende SQL paso a paso con PostgreSQL: de tu primera consulta a joins y CTEs.",
+    "tagEn": "Databases",
+    "tagEs": "Bases de datos",
+    "lessons": [
+      {
+        "id": "sql-foundations-v1-step01",
+        "snippetId": "sql-basics-001",
+        "order": 1,
+        "titleEn": "Your first SELECT expression",
+        "titleEs": "Tu primera expresión SELECT"
+      },
+      {
+        "id": "sql-foundations-v1-step02",
+        "snippetId": "sql-basics-002",
+        "order": 2,
+        "titleEn": "String literals and escaped quotes",
+        "titleEs": "Literales de texto y comillas escapadas"
+      },
+      {
+        "id": "sql-foundations-v1-step03",
+        "snippetId": "sql-basics-003",
+        "order": 3,
+        "titleEn": "Call a function on a literal",
+        "titleEs": "Llamar una función sobre un literal"
+      },
+      {
+        "id": "sql-foundations-v1-step04",
+        "snippetId": "sql-basics-004",
+        "order": 4,
+        "titleEn": "Get today's date",
+        "titleEs": "Obtener la fecha de hoy"
+      },
+      {
+        "id": "sql-foundations-v1-step05",
+        "snippetId": "sql-basics-005",
+        "order": 5,
+        "titleEn": "Concatenate strings with `||`",
+        "titleEs": "Concatenar cadenas con `||`"
+      },
+      {
+        "id": "sql-foundations-v1-step06",
+        "snippetId": "sql-basics-006",
+        "order": 6,
+        "titleEn": "Comments and integer division",
+        "titleEs": "Comentarios y división entera"
+      },
+      {
+        "id": "sql-foundations-v1-step07",
+        "snippetId": "sql-schema-001",
+        "order": 7,
+        "titleEn": "List databases in `psql`",
+        "titleEs": "Listar bases de datos en `psql`"
+      },
+      {
+        "id": "sql-foundations-v1-step08",
+        "snippetId": "sql-schema-002",
+        "order": 8,
+        "titleEn": "Create your first database",
+        "titleEs": "Crear tu primera base de datos"
+      },
+      {
+        "id": "sql-foundations-v1-step09",
+        "snippetId": "sql-schema-003",
+        "order": 9,
+        "titleEn": "Connect to a database",
+        "titleEs": "Conectarse a una base de datos"
+      },
+      {
+        "id": "sql-foundations-v1-step10",
+        "snippetId": "sql-schema-004",
+        "order": 10,
+        "titleEn": "Create a table with keys",
+        "titleEs": "Crear una tabla con claves"
+      },
+      {
+        "id": "sql-foundations-v1-step11",
+        "snippetId": "sql-schema-005",
+        "order": 11,
+        "titleEn": "Foreign keys and numeric columns",
+        "titleEs": "Claves foráneas y columnas numéricas"
+      },
+      {
+        "id": "sql-foundations-v1-step12",
+        "snippetId": "sql-schema-006",
+        "order": 12,
+        "titleEn": "Unique email and a default date",
+        "titleEs": "Email único y fecha por defecto"
+      },
+      {
+        "id": "sql-foundations-v1-step13",
+        "snippetId": "sql-schema-007",
+        "order": 13,
+        "titleEn": "Two foreign keys in one table",
+        "titleEs": "Dos claves foráneas en una tabla"
+      },
+      {
+        "id": "sql-foundations-v1-step14",
+        "snippetId": "sql-schema-008",
+        "order": 14,
+        "titleEn": "List tables in `psql`",
+        "titleEs": "Listar tablas en `psql`"
+      },
+      {
+        "id": "sql-foundations-v1-step15",
+        "snippetId": "sql-schema-009",
+        "order": 15,
+        "titleEn": "Describe a table",
+        "titleEs": "Describir una tabla"
+      },
+      {
+        "id": "sql-foundations-v1-step16",
+        "snippetId": "sql-schema-010",
+        "order": 16,
+        "titleEn": "Insert several rows at once",
+        "titleEs": "Insertar varias filas a la vez"
+      },
+      {
+        "id": "sql-foundations-v1-step17",
+        "snippetId": "sql-schema-011",
+        "order": 17,
+        "titleEn": "Seed books with a missing rating",
+        "titleEs": "Sembrar libros con una nota ausente"
+      },
+      {
+        "id": "sql-foundations-v1-step18",
+        "snippetId": "sql-schema-012",
+        "order": 18,
+        "titleEn": "Insert members with dates",
+        "titleEs": "Insertar miembros con fechas"
+      },
+      {
+        "id": "sql-foundations-v1-step19",
+        "snippetId": "sql-schema-013",
+        "order": 19,
+        "titleEn": "Seed returned and open loans",
+        "titleEs": "Sembrar préstamos devueltos y abiertos"
+      },
+      {
+        "id": "sql-foundations-v1-step20",
+        "snippetId": "sql-queries-001",
+        "order": 20,
+        "titleEn": "Read one column from a table",
+        "titleEs": "Leer una columna de una tabla"
+      },
+      {
+        "id": "sql-foundations-v1-step21",
+        "snippetId": "sql-queries-002",
+        "order": 21,
+        "titleEn": "Select every column with `*`",
+        "titleEs": "Seleccionar todas las columnas con `*`"
+      },
+      {
+        "id": "sql-foundations-v1-step22",
+        "snippetId": "sql-queries-003",
+        "order": 22,
+        "titleEn": "Project several columns in order",
+        "titleEs": "Proyectar varias columnas en orden"
+      },
+      {
+        "id": "sql-foundations-v1-step23",
+        "snippetId": "sql-queries-004",
+        "order": 23,
+        "titleEn": "Remove duplicates with `DISTINCT`",
+        "titleEs": "Eliminar duplicados con `DISTINCT`"
+      },
+      {
+        "id": "sql-foundations-v1-step24",
+        "snippetId": "sql-queries-005",
+        "order": 24,
+        "titleEn": "Sort results ascending",
+        "titleEs": "Ordenar resultados de forma ascendente"
+      },
+      {
+        "id": "sql-foundations-v1-step25",
+        "snippetId": "sql-queries-006",
+        "order": 25,
+        "titleEn": "Descending order with `NULLS LAST`",
+        "titleEs": "Orden descendente con `NULLS LAST`"
+      },
+      {
+        "id": "sql-foundations-v1-step26",
+        "snippetId": "sql-queries-007",
+        "order": 26,
+        "titleEn": "Paginate with `LIMIT` and `OFFSET`",
+        "titleEs": "Paginar con `LIMIT` y `OFFSET`"
+      },
+      {
+        "id": "sql-foundations-v1-step27",
+        "snippetId": "sql-filtering-001",
+        "order": 27,
+        "titleEn": "Filter rows with `WHERE`",
+        "titleEs": "Filtrar filas con `WHERE`"
+      },
+      {
+        "id": "sql-foundations-v1-step28",
+        "snippetId": "sql-filtering-002",
+        "order": 28,
+        "titleEn": "Compare values with `>=`",
+        "titleEs": "Comparar valores con `>=`"
+      },
+      {
+        "id": "sql-foundations-v1-step29",
+        "snippetId": "sql-filtering-003",
+        "order": 29,
+        "titleEn": "Test for `NULL` with `IS NULL`",
+        "titleEs": "Probar `NULL` con `IS NULL`"
+      },
+      {
+        "id": "sql-foundations-v1-step30",
+        "snippetId": "sql-filtering-004",
+        "order": 30,
+        "titleEn": "Combine predicates with `AND`",
+        "titleEs": "Combinar predicados con `AND`"
+      },
+      {
+        "id": "sql-foundations-v1-step31",
+        "snippetId": "sql-filtering-005",
+        "order": 31,
+        "titleEn": "Widen results with `OR`",
+        "titleEs": "Ampliar resultados con `OR`"
+      },
+      {
+        "id": "sql-foundations-v1-step32",
+        "snippetId": "sql-filtering-006",
+        "order": 32,
+        "titleEn": "Match a list with `IN`",
+        "titleEs": "Coincidir una lista con `IN`"
+      },
+      {
+        "id": "sql-foundations-v1-step33",
+        "snippetId": "sql-filtering-007",
+        "order": 33,
+        "titleEn": "Filter a range with `BETWEEN`",
+        "titleEs": "Filtrar un rango con `BETWEEN`"
+      },
+      {
+        "id": "sql-foundations-v1-step34",
+        "snippetId": "sql-filtering-008",
+        "order": 34,
+        "titleEn": "Pattern matching with `LIKE`",
+        "titleEs": "Coincidencia de patrones con `LIKE`"
+      },
+      {
+        "id": "sql-foundations-v1-step35",
+        "snippetId": "sql-filtering-009",
+        "order": 35,
+        "titleEn": "Case-insensitive search with `ILIKE`",
+        "titleEs": "Búsqueda sin distinguir mayúsculas con `ILIKE`"
+      },
+      {
+        "id": "sql-foundations-v1-step36",
+        "snippetId": "sql-aggregation-001",
+        "order": 36,
+        "titleEn": "Count rows with `COUNT(*)`",
+        "titleEs": "Contar filas con `COUNT(*)`"
+      },
+      {
+        "id": "sql-foundations-v1-step37",
+        "snippetId": "sql-aggregation-002",
+        "order": 37,
+        "titleEn": "Count values and skip `NULL`",
+        "titleEs": "Contar valores y omitir `NULL`"
+      },
+      {
+        "id": "sql-foundations-v1-step38",
+        "snippetId": "sql-aggregation-003",
+        "order": 38,
+        "titleEn": "Add up a column with `SUM`",
+        "titleEs": "Sumar una columna con `SUM`"
+      },
+      {
+        "id": "sql-foundations-v1-step39",
+        "snippetId": "sql-aggregation-004",
+        "order": 39,
+        "titleEn": "Round an average",
+        "titleEs": "Redondear un promedio"
+      },
+      {
+        "id": "sql-foundations-v1-step40",
+        "snippetId": "sql-aggregation-005",
+        "order": 40,
+        "titleEn": "Find the smallest and largest",
+        "titleEs": "Encontrar el menor y el mayor"
+      },
+      {
+        "id": "sql-foundations-v1-step41",
+        "snippetId": "sql-aggregation-006",
+        "order": 41,
+        "titleEn": "Group rows with `GROUP BY`",
+        "titleEs": "Agrupar filas con `GROUP BY`"
+      },
+      {
+        "id": "sql-foundations-v1-step42",
+        "snippetId": "sql-aggregation-007",
+        "order": 42,
+        "titleEn": "Filter groups with `HAVING`",
+        "titleEs": "Filtrar grupos con `HAVING`"
+      },
+      {
+        "id": "sql-foundations-v1-step43",
+        "snippetId": "sql-joins-001",
+        "order": 43,
+        "titleEn": "Join two tables with `INNER JOIN`",
+        "titleEs": "Unir dos tablas con `INNER JOIN`"
+      },
+      {
+        "id": "sql-foundations-v1-step44",
+        "snippetId": "sql-joins-002",
+        "order": 44,
+        "titleEn": "Shorten joins with table aliases",
+        "titleEs": "Acortar joins con alias de tabla"
+      },
+      {
+        "id": "sql-foundations-v1-step45",
+        "snippetId": "sql-joins-003",
+        "order": 45,
+        "titleEn": "Filter a joined column",
+        "titleEs": "Filtrar una columna unida"
+      },
+      {
+        "id": "sql-foundations-v1-step46",
+        "snippetId": "sql-joins-004",
+        "order": 46,
+        "titleEn": "Keep unmatched rows with `LEFT JOIN`",
+        "titleEs": "Conservar filas sin coincidencia con `LEFT JOIN`"
+      },
+      {
+        "id": "sql-foundations-v1-step47",
+        "snippetId": "sql-joins-005",
+        "order": 47,
+        "titleEn": "Find missing matches with `LEFT JOIN`",
+        "titleEs": "Encontrar coincidencias ausentes con `LEFT JOIN`"
+      },
+      {
+        "id": "sql-foundations-v1-step48",
+        "snippetId": "sql-joins-006",
+        "order": 48,
+        "titleEn": "Join and sort by `loaned_on`",
+        "titleEs": "Unir y ordenar por `loaned_on`"
+      },
+      {
+        "id": "sql-foundations-v1-step49",
+        "snippetId": "sql-joins-007",
+        "order": 49,
+        "titleEn": "Chain three joins through one table",
+        "titleEs": "Encadenar tres joins con `loans`"
+      },
+      {
+        "id": "sql-foundations-v1-step50",
+        "snippetId": "sql-modifications-001",
+        "order": 50,
+        "titleEn": "Insert a row with a default",
+        "titleEs": "Insertar una fila con `DEFAULT`"
+      },
+      {
+        "id": "sql-foundations-v1-step51",
+        "snippetId": "sql-modifications-002",
+        "order": 51,
+        "titleEn": "Get generated ids with `RETURNING`",
+        "titleEs": "Obtener ids generados con `RETURNING`"
+      },
+      {
+        "id": "sql-foundations-v1-step52",
+        "snippetId": "sql-modifications-003",
+        "order": 52,
+        "titleEn": "Update one row safely",
+        "titleEs": "Actualizar una fila de forma segura"
+      },
+      {
+        "id": "sql-foundations-v1-step53",
+        "snippetId": "sql-modifications-004",
+        "order": 53,
+        "titleEn": "Update from the current value",
+        "titleEs": "Actualizar desde el valor actual"
+      },
+      {
+        "id": "sql-foundations-v1-step54",
+        "snippetId": "sql-modifications-005",
+        "order": 54,
+        "titleEn": "Delete rows with `RETURNING`",
+        "titleEs": "Eliminar filas con `RETURNING`"
+      },
+      {
+        "id": "sql-foundations-v1-step55",
+        "snippetId": "sql-advanced-001",
+        "order": 55,
+        "titleEn": "Compare against a subquery average",
+        "titleEs": "Comparar con el promedio global"
+      },
+      {
+        "id": "sql-foundations-v1-step56",
+        "snippetId": "sql-advanced-002",
+        "order": 56,
+        "titleEn": "Find rows with `EXISTS`",
+        "titleEs": "Encontrar filas con `EXISTS`"
+      },
+      {
+        "id": "sql-foundations-v1-step57",
+        "snippetId": "sql-advanced-003",
+        "order": 57,
+        "titleEn": "Find rows with `NOT EXISTS`",
+        "titleEs": "Encontrar filas con `NOT EXISTS`"
+      },
+      {
+        "id": "sql-foundations-v1-step58",
+        "snippetId": "sql-advanced-004",
+        "order": 58,
+        "titleEn": "Name a subquery with `WITH`",
+        "titleEs": "Nombrar una subconsulta con `WITH`"
+      },
+      {
+        "id": "sql-foundations-v1-step59",
+        "snippetId": "sql-advanced-005",
+        "order": 59,
+        "titleEn": "Combine results with `UNION`",
+        "titleEs": "Combinar resultados con `UNION`"
+      },
+      {
+        "id": "sql-foundations-v1-step60",
+        "snippetId": "sql-advanced-006",
+        "order": 60,
+        "titleEn": "Build conditional labels with `CASE`",
+        "titleEs": "Crear etiquetas condicionales con `CASE`"
+      }
+    ]
+  }
+]

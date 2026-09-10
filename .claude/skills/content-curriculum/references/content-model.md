@@ -26,12 +26,35 @@ Each entry:
 Invariants enforced by `test/features/content/snippet_catalog_completeness_test.dart`:
 - Every (category, difficulty) cell has ≥3 active entries for the 5 "core"
   categories (variablesAndTypes, conditionals, loops, functions,
-  errorHandling); ≥1 for the other 7.
+  errorHandling); ≥1 for the other 7. **This depth rule applies to
+  free-practice languages only (currently Go)** — a course-only language's
+  catalog instead must contain exactly the snippets its bundled paths use,
+  no orphan practice material (see "Language tiers" below).
 - Exactly one active revision per id, and it's the highest revision number.
 - `explanationEn/Es` non-empty, ≤950 chars (a tight three sentences).
 - `tldrEn/Es` non-empty, ≤80 chars.
 - `titleEn/Es` non-empty.
 - Every Learning Path lesson's `snippetId` resolves to an active entry.
+
+## Language tiers (SPEC.md §3.2)
+
+A language is either **free-practice** or **course-only**:
+
+| Tier | Example | Catalog role | Completeness bar |
+|---|---|---|---|
+| Free-practice | Go | backs Zen/Sprint/Precision and the browser | dense grid: ≥3 per (category, difficulty) cell in core categories, ≥1 elsewhere |
+| Course-only | Bash (and SQL) | exists only to compose its Learning Route | every active snippet must be used by a bundled path; no orphans |
+
+Practical consequences:
+- A course-only language's snippet set is authored together with its path —
+  there is no "extra practice pool" to keep stocked.
+- The browser and free-practice screens filter by language (default Go), so
+  a course-only language never leaks into random practice.
+- A new language still needs code changes only for the shared enums
+  (`ProgrammingLanguage`, and new `ContentCategory` values if its concepts
+  don't fit the existing ones), its tokenizer, and its asset paths — the
+  Learning Paths screen and language selector already handle any number of
+  languages.
 
 **Learning Path** — `assets/content/learning_paths/go_foundations_v1.json`,
 an array with one path object:

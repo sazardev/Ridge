@@ -59,9 +59,15 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
             return Center(child: Text(l10n.learningPathsEmptyState));
           }
 
-          final languages = {
-            for (final o in overviews) o.path.language,
-          }.toList()..sort((a, b) => a.name.compareTo(b.name));
+          // Enum declaration order (Go first), not alphabetical — the
+          // selector's default is the first present language, and that
+          // should be the primary free-practice language, matching
+          // `FreePracticeScreen`/`SnippetBrowserScreen`.
+          final present = {for (final o in overviews) o.path.language};
+          final languages = [
+            for (final language in ProgrammingLanguage.values)
+              if (present.contains(language)) language,
+          ];
           _selectedLanguage ??= languages.first;
           final selected = languages.contains(_selectedLanguage)
               ? _selectedLanguage!

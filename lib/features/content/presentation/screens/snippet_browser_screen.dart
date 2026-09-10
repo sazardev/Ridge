@@ -6,6 +6,8 @@ import 'package:just_in_time/core/widgets/escape_to_pop.dart';
 import 'package:just_in_time/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:just_in_time/features/content/domain/entities/content_category.dart';
 import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
+import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
+import 'package:just_in_time/features/content/domain/entities/snippet.dart';
 import 'package:just_in_time/features/content/presentation/providers/content_providers.dart';
 import 'package:just_in_time/features/content/presentation/widgets/snippet_filter_bar.dart';
 import 'package:just_in_time/features/content/presentation/widgets/snippet_list_tile.dart';
@@ -24,6 +26,10 @@ class SnippetBrowserScreen extends ConsumerStatefulWidget {
 }
 
 class _SnippetBrowserScreenState extends ConsumerState<SnippetBrowserScreen> {
+  // Defaults to Go — Bash content is course-only (see
+  // `bash_foundations_v1.json`), so it only appears here once the user
+  // explicitly picks the Bash chip (or "All").
+  ProgrammingLanguage? _language = ProgrammingLanguage.go;
   Difficulty? _difficulty;
   ContentCategory? _category;
   final _scrollController = ScrollController();
@@ -34,10 +40,40 @@ class _SnippetBrowserScreenState extends ConsumerState<SnippetBrowserScreen> {
     super.dispose();
   }
 
+  /// Every language actually present in [snippets], in enum declaration
+  /// order (Go first today) — the filter bar hides its language row when
+  /// there's only one.
+  List<ProgrammingLanguage> _languagesIn(List<Snippet> snippets) {
+    final present = {for (final snippet in snippets) snippet.language};
+    return [
+      for (final language in ProgrammingLanguage.values)
+        if (present.contains(language)) language,
+    ];
+  }
+
+  /// Every category actually present in [snippets] for [language] (or for
+  /// every language when [language] is `null`), in enum declaration
+  /// order — a Go-only or SQL-only category never renders as a chip under
+  /// a language that has no entry for it.
+  List<ContentCategory> _categoriesIn(
+    List<Snippet> snippets,
+    ProgrammingLanguage? language,
+  ) {
+    final present = {
+      for (final snippet in snippets)
+        if (language == null || snippet.language == language) snippet.category,
+    };
+    return [
+      for (final category in ContentCategory.values)
+        if (present.contains(category)) category,
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final catalogAsync = ref.watch(snippetCatalogControllerProvider);
+    final catalog = catalogAsync.value ?? const <Snippet>[];
 
     return EscapeToPop(
       child: Scaffold(
@@ -45,6 +81,19 @@ class _SnippetBrowserScreenState extends ConsumerState<SnippetBrowserScreen> {
         body: Column(
           children: [
             SnippetFilterBar(
+              languages: _languagesIn(catalog),
+              selectedLanguage: _language,
+              onLanguageChanged: (value) => setState(() {
+                _language = value;
+                // A category chip that belonged to the previous language
+                // may no longer exist — clear it instead of silently
+                // filtering the new language down to nothing.
+                if (_category != null &&
+                    !_categoriesIn(catalog, value).contains(_category)) {
+                  _category = null;
+                }
+              }),
+              categories: _categoriesIn(catalog, _language),
               selectedDifficulty: _difficulty,
               selectedCategory: _category,
               onDifficultyChanged: (value) =>
@@ -56,7 +105,9 @@ class _SnippetBrowserScreenState extends ConsumerState<SnippetBrowserScreen> {
                 data: (snippets) {
                   final filtered = [
                     for (final snippet in snippets)
-                      if ((_difficulty == null ||
+                      if ((_language == null ||
+                              snippet.language == _language) &&
+                          (_difficulty == null ||
                               snippet.difficulty == _difficulty) &&
                           (_category == null || snippet.category == _category))
                         snippet,

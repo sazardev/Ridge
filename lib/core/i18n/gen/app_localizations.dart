@@ -1544,11 +1544,95 @@ abstract class AppLocalizations {
   /// **'Testing with fakes'**
   String get categoryTestingWithFakes;
 
+  /// No description provided for @categoryShellCommands.
+  ///
+  /// In en, this message translates to:
+  /// **'Shell commands'**
+  String get categoryShellCommands;
+
+  /// No description provided for @categoryPipesAndRedirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Pipes & redirection'**
+  String get categoryPipesAndRedirection;
+
+  /// No description provided for @categoryTextProcessing.
+  ///
+  /// In en, this message translates to:
+  /// **'Text processing'**
+  String get categoryTextProcessing;
+
+  /// No description provided for @categorySystemAdministration.
+  ///
+  /// In en, this message translates to:
+  /// **'System admin (Arch)'**
+  String get categorySystemAdministration;
+
+  /// No description provided for @categorySqlBasics.
+  ///
+  /// In en, this message translates to:
+  /// **'SQL basics'**
+  String get categorySqlBasics;
+
+  /// No description provided for @categorySqlSchema.
+  ///
+  /// In en, this message translates to:
+  /// **'Schema & setup'**
+  String get categorySqlSchema;
+
+  /// No description provided for @categorySqlQueries.
+  ///
+  /// In en, this message translates to:
+  /// **'Queries'**
+  String get categorySqlQueries;
+
+  /// No description provided for @categorySqlFiltering.
+  ///
+  /// In en, this message translates to:
+  /// **'Filtering'**
+  String get categorySqlFiltering;
+
+  /// No description provided for @categorySqlAggregation.
+  ///
+  /// In en, this message translates to:
+  /// **'Aggregation'**
+  String get categorySqlAggregation;
+
+  /// No description provided for @categorySqlJoins.
+  ///
+  /// In en, this message translates to:
+  /// **'Joins'**
+  String get categorySqlJoins;
+
+  /// No description provided for @categorySqlModifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Changing data'**
+  String get categorySqlModifications;
+
+  /// No description provided for @categorySqlAdvancedQueries.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced queries'**
+  String get categorySqlAdvancedQueries;
+
   /// No description provided for @languageGo.
   ///
   /// In en, this message translates to:
   /// **'Go'**
   String get languageGo;
+
+  /// No description provided for @languageBash.
+  ///
+  /// In en, this message translates to:
+  /// **'Bash'**
+  String get languageBash;
+
+  /// No description provided for @languageSql.
+  ///
+  /// In en, this message translates to:
+  /// **'SQL'**
+  String get languageSql;
 
   /// No description provided for @snippetPracticeAction.
   ///
@@ -1580,11 +1664,41 @@ abstract class AppLocalizations {
   /// **'{pct}% so far'**
   String practiceLiveAccuracy(String pct);
 
+  /// No description provided for @practiceLiveLives.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} lives left'**
+  String practiceLiveLives(int count);
+
+  /// No description provided for @practiceLiveScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Score {score}'**
+  String practiceLiveScore(int score);
+
+  /// No description provided for @practiceLiveMultiplier.
+  ///
+  /// In en, this message translates to:
+  /// **'×{multiplier}'**
+  String practiceLiveMultiplier(int multiplier);
+
+  /// No description provided for @practiceLiveSnippets.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} cleared'**
+  String practiceLiveSnippets(int count);
+
   /// No description provided for @practiceResultTitle.
   ///
   /// In en, this message translates to:
   /// **'Session complete'**
   String get practiceResultTitle;
+
+  /// No description provided for @practiceResultSurvivalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Run over'**
+  String get practiceResultSurvivalTitle;
 
   /// No description provided for @practiceResultNetSpeed.
   ///
@@ -1615,6 +1729,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Longest streak'**
   String get practiceResultStreak;
+
+  /// No description provided for @practiceResultSurvivalSnippets.
+  ///
+  /// In en, this message translates to:
+  /// **'Snippets cleared'**
+  String get practiceResultSurvivalSnippets;
+
+  /// No description provided for @practiceResultSurvivalScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Score'**
+  String get practiceResultSurvivalScore;
+
+  /// No description provided for @practiceResultSurvivalBestMultiplier.
+  ///
+  /// In en, this message translates to:
+  /// **'Best multiplier'**
+  String get practiceResultSurvivalBestMultiplier;
 
   /// No description provided for @practiceResultWeakestChars.
   ///
@@ -1741,6 +1873,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Score above 7/10 (80%+ accuracy) to pass.'**
   String get practiceModePrecisionSubtitle;
+
+  /// No description provided for @practiceModeSurvival.
+  ///
+  /// In en, this message translates to:
+  /// **'Survival'**
+  String get practiceModeSurvival;
+
+  /// No description provided for @practiceModeSurvivalSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'5 lives, endless snippets — a mistake costs a heart.'**
+  String get practiceModeSurvivalSubtitle;
 
   /// No description provided for @practiceHubTitle.
   ///

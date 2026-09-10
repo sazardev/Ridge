@@ -13,6 +13,7 @@ class PracticeSessionState {
     required this.snippet,
     this.remaining,
     this.finishedSession,
+    this.survival,
     this.error,
   });
 
@@ -35,6 +36,12 @@ class PracticeSessionState {
   /// Frozen (not updated) while the app is backgrounded, exactly like the
   /// elapsed-time clock used for the final persisted duration.
   final Duration? remaining;
+
+  /// The live arcade state of a Survival run (lives, combo, score), or
+  /// `null` for every other mode. Like [recorder], this is the same
+  /// mutable engine across every emission — the UI reads its getters
+  /// fresh on each rebuild.
+  final SurvivalRunTracker? survival;
 
   /// The persisted session + computed metrics, once [status] reaches
   /// [PracticeSessionStatus.result].

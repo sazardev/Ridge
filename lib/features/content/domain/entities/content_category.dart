@@ -36,6 +36,64 @@ enum ContentCategory {
   /// Idiomatic `gofmt` formatting conventions in general.
   idiomaticFormatting,
 
+  /// Shell-specific: running commands, `echo`/`printf`, script
+  /// arguments (`$1`, `$#`, `$@`), and command substitution. Introduced
+  /// by the `bash-foundations-v1` Learning Route.
+  shellCommands,
+
+  /// Shell-specific: pipes (`|`), redirection (`>`, `>>`, `<`, `2>`,
+  /// `&>`), heredocs, and process substitution. Bash Learning Route
+  /// category.
+  pipesAndRedirection,
+
+  /// Shell-specific: filtering and transforming text with `grep`,
+  /// `cut`, `sort`, `uniq`, `wc`, `tr`, `head`/`tail`, and a taste of
+  /// `sed`/`awk`. Bash Learning Route category.
+  textProcessing,
+
+  /// Arch Linux system administration through the shell: `pacman`,
+  /// AUR helpers (`paru`/`yay`), `systemctl`, and `journalctl`. Bash
+  /// Learning Route category.
+  systemAdministration,
+
+  /// SQL basics: `SELECT` over literal expressions, aliases, arithmetic,
+  /// string concatenation with `||`, and built-in values like
+  /// `CURRENT_DATE`. Introduced by the PostgreSQL `sql-foundations-v1`
+  /// Learning Route.
+  sqlBasics,
+
+  /// SQL schema definition and setup: `psql` meta-commands (`\l`, `\c`,
+  /// `\dt`, `\d`), `CREATE TABLE`/`CREATE DATABASE`, column types and
+  /// constraints (`PRIMARY KEY`, `NOT NULL`, `UNIQUE`, `DEFAULT`,
+  /// `REFERENCES`), and seeding the sample library database.
+  sqlSchema,
+
+  /// Reading data: `SELECT` from tables, column projection, `DISTINCT`,
+  /// `ORDER BY`, and `LIMIT`/`OFFSET`. SQL Learning Route category.
+  sqlQueries,
+
+  /// Narrowing rows: `WHERE` with comparison operators, `AND`/`OR`/`NOT`,
+  /// `IN`, `BETWEEN`, `LIKE`/`ILIKE`, and `IS NULL`. SQL Learning Route
+  /// category.
+  sqlFiltering,
+
+  /// Summarizing rows: `COUNT`/`SUM`/`AVG`/`MIN`/`MAX`, `GROUP BY`,
+  /// `HAVING`, and rounding. SQL Learning Route category.
+  sqlAggregation,
+
+  /// Combining tables: `INNER JOIN`, `LEFT JOIN`, table aliases, and
+  /// multi-table joins. SQL Learning Route category.
+  sqlJoins,
+
+  /// Changing data: `INSERT`, `UPDATE`, `DELETE`, and `RETURNING`.
+  /// SQL Learning Route category.
+  sqlModifications,
+
+  /// Advanced querying: subqueries, `EXISTS`, common table expressions
+  /// (`WITH`), set operations (`UNION`), and `CASE` expressions. SQL
+  /// Learning Route category.
+  sqlAdvancedQueries,
+
   /// DDD domain modeling: entities, value objects, domain-level errors.
   /// Architecture-layer category (unlike the language-feature categories
   /// above) — see `snippet_catalog_completeness_test.dart`'s

@@ -2,6 +2,7 @@ import 'package:just_in_time/core/error/app_failure.dart';
 import 'package:just_in_time/core/utils/result.dart';
 import 'package:just_in_time/features/content/domain/entities/content_category.dart';
 import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
+import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
 import 'package:just_in_time/features/content/domain/entities/snippet.dart';
 import 'package:just_in_time/features/content/domain/entities/snippet_length.dart';
 import 'package:just_in_time/features/content/domain/repositories/snippet_catalog_source.dart';
@@ -20,6 +21,7 @@ abstract interface class SnippetRepository {
   /// Returns every active catalog entry matching all of the given,
   /// optional filters. A `null` filter means "don't filter on this".
   Future<Result<List<Snippet>, AppFailure>> findByFilters({
+    ProgrammingLanguage? language,
     Difficulty? difficulty,
     ContentCategory? category,
     SnippetLength? length,
