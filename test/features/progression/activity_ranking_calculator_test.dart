@@ -8,12 +8,12 @@
 // `WeaknessRankingCalculator`'s, since higher performanceScore is
 // better).
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/progression/domain/entities/activity_report.dart';
-import 'package:just_in_time/features/progression/domain/entities/session_activity_sample.dart';
-import 'package:just_in_time/features/progression/domain/entities/trend.dart';
-import 'package:just_in_time/features/progression/domain/services/activity_ranking_calculator.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/progression/domain/entities/activity_report.dart';
+import 'package:ridge/features/progression/domain/entities/session_activity_sample.dart';
+import 'package:ridge/features/progression/domain/entities/trend.dart';
+import 'package:ridge/features/progression/domain/services/activity_ranking_calculator.dart';
 
 void main() {
   const calculator = ActivityRankingCalculator();

@@ -4,15 +4,15 @@
 // action.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/widgets/inline_code_text.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet_length.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/practice/presentation/screens/snippet_info_screen.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/widgets/inline_code_text.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/entities/snippet_length.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/practice/presentation/screens/snippet_info_screen.dart';
 
 const _snippet = Snippet(
   id: SnippetId('go-test-info-001'),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/features/content/domain/entities/syntax_token_type.dart';
+import 'package:ridge/features/content/domain/entities/syntax_token_type.dart';
 
 /// Syntax-highlighting colors for one rendered code block, derived from
 /// the *currently active* [ColorScheme] rather than a fixed palette-by-

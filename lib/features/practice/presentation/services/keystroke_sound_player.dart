@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_sound_pack.dart';
+import 'package:ridge/features/settings/domain/entities/app_sound_pack.dart';
 
 /// Plays short, low-latency sound effects for the capture engine — a
 /// distinct "click" for every committed keystroke (forward or

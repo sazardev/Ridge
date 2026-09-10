@@ -1,14 +1,14 @@
 import 'dart:math' as math;
 
-import 'package:just_in_time/features/practice/domain/entities/character_stat.dart';
-import 'package:just_in_time/features/practice/domain/entities/finger.dart';
-import 'package:just_in_time/features/practice/domain/entities/finger_stat.dart';
-import 'package:just_in_time/features/practice/domain/entities/hand.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke_result.dart';
-import 'package:just_in_time/features/practice/domain/entities/ngram_stat.dart';
-import 'package:just_in_time/features/practice/domain/entities/session_metrics.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/entities/character_stat.dart';
+import 'package:ridge/features/practice/domain/entities/finger.dart';
+import 'package:ridge/features/practice/domain/entities/finger_stat.dart';
+import 'package:ridge/features/practice/domain/entities/hand.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
+import 'package:ridge/features/practice/domain/entities/ngram_stat.dart';
+import 'package:ridge/features/practice/domain/entities/session_metrics.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 
 const _ngramSizes = [2, 3];
 

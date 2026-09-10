@@ -4,16 +4,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/widgets/keyboard_scroll_shortcuts.dart';
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/presentation/content_labels.dart';
-import 'package:just_in_time/features/content/presentation/providers/content_providers.dart';
-import 'package:just_in_time/features/content/presentation/widgets/practice_mode_picker_sheet.dart';
-import 'package:just_in_time/features/practice/presentation/widgets/quick_mode_tile.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/presentation/content_labels.dart';
+import 'package:ridge/features/content/presentation/providers/content_providers.dart';
+import 'package:ridge/features/content/presentation/widgets/practice_mode_picker_sheet.dart';
+import 'package:ridge/features/practice/presentation/widgets/quick_mode_tile.dart';
 
 /// Free-form practice (SPEC.md §5.1–5.3, §5.8) — Zen/Sprint/Precision/
 /// Survival shortcuts on an arbitrary catalog snippet, plus a link out to
@@ -82,118 +81,126 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
         ? null
         : pool[Random().nextInt(pool.length)];
 
+    // No `AppBar` title here: the nav rail/bar destination already reads
+    // "Free" right next to this screen, so repeating it would just be
+    // noise (`SafeArea` stands in for the status-bar inset an `AppBar`
+    // would otherwise have handled).
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.freePracticeTitle)),
-      body: KeyboardScrollShortcuts(
-        controller: _scrollController,
-        child: ListView(
+      body: SafeArea(
+        child: KeyboardScrollShortcuts(
           controller: _scrollController,
-          padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
-          children: [
-            if (languages.length > 1) ...[
-              Align(
-                alignment: Alignment.centerLeft,
-                child: SegmentedButton<ProgrammingLanguage>(
-                  segments: [
-                    for (final language in languages)
-                      ButtonSegment(
-                        value: language,
-                        label: Text(language.label(l10n)),
-                      ),
-                  ],
-                  selected: {selectedLanguage!},
-                  showSelectedIcon: false,
-                  onSelectionChanged: (values) =>
-                      setState(() => _language = values.first),
+          child: ListView(
+            controller: _scrollController,
+            padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
+            children: [
+              if (languages.length > 1) ...[
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: SegmentedButton<ProgrammingLanguage>(
+                    segments: [
+                      for (final language in languages)
+                        ButtonSegment(
+                          value: language,
+                          label: Text(language.label(l10n)),
+                        ),
+                    ],
+                    selected: {selectedLanguage!},
+                    showSelectedIcon: false,
+                    onSelectionChanged: (values) =>
+                        setState(() => _language = values.first),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-            ],
-            Text(l10n.practiceHubQuickModesTitle, style: textTheme.titleMedium),
-            const SizedBox(height: 12),
-            if (quickModeSnippet == null && catalogAsync.isLoading)
-              const Center(child: CircularProgressIndicator())
-            else if (quickModeSnippet == null)
+                const SizedBox(height: 20),
+              ],
               Text(
-                l10n.practiceHubNoSnippetsAvailable,
-                style: textTheme.bodyMedium,
-              )
-            else ...[
-              IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: QuickModeTile(
-                        icon: LucideIcons.brain,
-                        label: l10n.practiceModeZen,
-                        subtitle: l10n.practiceModeZenSubtitle,
-                        onTap: () => _startDirect(
-                          context,
-                          quickModeSnippet,
-                          practiceModeKindZen,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: QuickModeTile(
-                        icon: LucideIcons.zap,
-                        label: l10n.practiceModeSprint60,
-                        subtitle: l10n.practiceModeSprintSubtitle,
-                        onTap: () => _startDirect(
-                          context,
-                          quickModeSnippet,
-                          practiceModeKindSprint60,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                l10n.practiceHubQuickModesTitle,
+                style: textTheme.titleMedium,
               ),
               const SizedBox(height: 12),
-              IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: QuickModeTile(
-                        icon: LucideIcons.target,
-                        label: l10n.practiceModePrecision,
-                        subtitle: l10n.practiceModePrecisionSubtitle,
-                        onTap: () => _startDirect(
-                          context,
-                          quickModeSnippet,
-                          practiceModeKindPrecision,
+              if (quickModeSnippet == null && catalogAsync.isLoading)
+                const Center(child: CircularProgressIndicator())
+              else if (quickModeSnippet == null)
+                Text(
+                  l10n.practiceHubNoSnippetsAvailable,
+                  style: textTheme.bodyMedium,
+                )
+              else ...[
+                IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: QuickModeTile(
+                          icon: LucideIcons.brain300,
+                          label: l10n.practiceModeZen,
+                          subtitle: l10n.practiceModeZenSubtitle,
+                          onTap: () => _startDirect(
+                            context,
+                            quickModeSnippet,
+                            practiceModeKindZen,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: QuickModeTile(
-                        icon: LucideIcons.heart600,
-                        label: l10n.practiceModeSurvival,
-                        subtitle: l10n.practiceModeSurvivalSubtitle,
-                        onTap: () => _startDirect(
-                          context,
-                          quickModeSnippet,
-                          practiceModeKindSurvival,
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: QuickModeTile(
+                          icon: LucideIcons.zap300,
+                          label: l10n.practiceModeSprint60,
+                          subtitle: l10n.practiceModeSprintSubtitle,
+                          onTap: () => _startDirect(
+                            context,
+                            quickModeSnippet,
+                            practiceModeKindSprint60,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: QuickModeTile(
+                          icon: LucideIcons.target300,
+                          label: l10n.practiceModePrecision,
+                          subtitle: l10n.practiceModePrecisionSubtitle,
+                          onTap: () => _startDirect(
+                            context,
+                            quickModeSnippet,
+                            practiceModeKindPrecision,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: QuickModeTile(
+                          icon: LucideIcons.heart600,
+                          label: l10n.practiceModeSurvival,
+                          subtitle: l10n.practiceModeSurvivalSubtitle,
+                          onTap: () => _startDirect(
+                            context,
+                            quickModeSnippet,
+                            practiceModeKindSurvival,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+              const SizedBox(height: 24),
+              Center(
+                child: OutlinedButton.icon(
+                  onPressed: () => context.push('/practice/browse'),
+                  icon: const Icon(LucideIcons.bookOpen300),
+                  label: Text(l10n.practiceHubBrowseAllAction),
                 ),
               ),
             ],
-            const SizedBox(height: 24),
-            Center(
-              child: OutlinedButton.icon(
-                onPressed: () => context.push('/practice/browse'),
-                icon: const Icon(LucideIcons.bookOpen),
-                label: Text(l10n.practiceHubBrowseAllAction),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

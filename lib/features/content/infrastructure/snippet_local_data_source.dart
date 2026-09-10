@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/repositories/snippet_catalog_source.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_dto.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_mapper.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/repositories/snippet_catalog_source.dart';
+import 'package:ridge/features/content/infrastructure/snippet_dto.dart';
+import 'package:ridge/features/content/infrastructure/snippet_mapper.dart';
 
 /// Loads the bundled, curated snippet catalog from its JSON assets — one
 /// file per language, merged into a single catalog (ids are globally

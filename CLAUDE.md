@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Just In Time is a typing-practice game for programmers (Flutter, hexagonal
+Ridge is a typing-practice game for programmers (Flutter, hexagonal
 architecture). Business logic lives in **`SPEC.md`** (game modes, metrics
 engine, accounts, competition, business model — zero technical detail);
 technical architecture lives in **`STACK.md`** (Flutter/Riverpod stack,

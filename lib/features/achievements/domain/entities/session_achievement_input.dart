@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
 
 part 'session_achievement_input.freezed.dart';
 

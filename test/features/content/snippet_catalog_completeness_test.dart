@@ -11,12 +11,12 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_dto.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_mapper.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/infrastructure/snippet_dto.dart';
+import 'package:ridge/features/content/infrastructure/snippet_mapper.dart';
 
 /// One bundled catalog asset per language.
 const Map<ProgrammingLanguage, String> _catalogAssetByLanguage = {

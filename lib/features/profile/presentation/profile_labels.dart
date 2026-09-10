@@ -1,6 +1,6 @@
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/features/profile/domain/entities/favorite_language.dart';
-import 'package:just_in_time/features/profile/domain/entities/keyboard_layout.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
 
 /// Localized display label for a [FavoriteLanguage], shared by every
 /// widget that renders one so the mapping lives in exactly one place.

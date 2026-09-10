@@ -4,8 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/features/settings/presentation/screens/changelog_screen.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/features/settings/presentation/screens/changelog_screen.dart';
 
 void main() {
   testWidgets('renders the bundled CHANGELOG.md content', (tester) async {

@@ -1,6 +1,6 @@
-import 'package:just_in_time/features/practice/domain/entities/finger.dart';
-import 'package:just_in_time/features/practice/domain/entities/keyboard_row.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/entities/finger.dart';
+import 'package:ridge/features/practice/domain/entities/keyboard_row.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 
 /// The finger and keyboard row a [PhysicalKeyId] resolves to under
 /// standard-US-QWERTY touch typing.

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/core/theme/app_typography.dart';
-import 'package:just_in_time/features/practice/domain/entities/session_metrics.dart';
-import 'package:just_in_time/features/practice/domain/services/precision_score_calculator.dart';
-import 'package:just_in_time/features/practice/domain/services/survival_run_tracker.dart';
-import 'package:just_in_time/features/practice/presentation/compiler_flavor.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/theme/app_typography.dart';
+import 'package:ridge/features/practice/domain/entities/session_metrics.dart';
+import 'package:ridge/features/practice/domain/services/precision_score_calculator.dart';
+import 'package:ridge/features/practice/domain/services/survival_run_tracker.dart';
+import 'package:ridge/features/practice/presentation/compiler_flavor.dart';
 
 const _scoreCalculator = PrecisionScoreCalculator();
 

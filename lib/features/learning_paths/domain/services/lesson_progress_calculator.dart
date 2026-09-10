@@ -1,7 +1,7 @@
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_attempt.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_status.dart';
-import 'package:just_in_time/features/learning_paths/domain/value_objects/lesson_id.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_attempt.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
 
 /// One lesson's derived [LessonStatus] plus the summary stats
 /// `RecomputeLessonProgressUseCase` caches alongside it.

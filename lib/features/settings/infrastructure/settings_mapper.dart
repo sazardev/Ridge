@@ -1,12 +1,12 @@
-import 'package:just_in_time/features/settings/domain/entities/app_corner_style.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_palette.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_shortcut_action.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_sound_pack.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_theme_mode.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_window_border_width.dart';
-import 'package:just_in_time/features/settings/domain/entities/shortcut_binding.dart';
-import 'package:just_in_time/features/settings/infrastructure/settings_dto.dart';
+import 'package:ridge/features/settings/domain/entities/app_corner_style.dart';
+import 'package:ridge/features/settings/domain/entities/app_palette.dart';
+import 'package:ridge/features/settings/domain/entities/app_settings.dart';
+import 'package:ridge/features/settings/domain/entities/app_shortcut_action.dart';
+import 'package:ridge/features/settings/domain/entities/app_sound_pack.dart';
+import 'package:ridge/features/settings/domain/entities/app_theme_mode.dart';
+import 'package:ridge/features/settings/domain/entities/app_window_border_width.dart';
+import 'package:ridge/features/settings/domain/entities/shortcut_binding.dart';
+import 'package:ridge/features/settings/infrastructure/settings_dto.dart';
 
 /// Converts a [SettingsDto] into its domain [AppSettings] representation.
 extension SettingsDtoMapper on SettingsDto {

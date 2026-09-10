@@ -1,6 +1,6 @@
-import 'package:just_in_time/features/profile/domain/entities/guest_profile.dart';
-import 'package:just_in_time/features/profile/domain/repositories/device_info_source.dart';
-import 'package:just_in_time/features/profile/domain/repositories/profile_repository.dart';
+import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/domain/repositories/device_info_source.dart';
+import 'package:ridge/features/profile/domain/repositories/profile_repository.dart';
 
 /// Detects and persists the current device's platform/OS/model onto the
 /// existing Guest Profile — but only once, ever: the device a Guest

@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// The application name, shown in the OS task switcher and window title.
   ///
   /// In en, this message translates to:
-  /// **'Just In Time'**
+  /// **'Ridge'**
   String get appName;
 
   /// No description provided for @navPractice.
@@ -133,12 +133,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get navSettings;
-
-  /// No description provided for @profileTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Profile'**
-  String get profileTitle;
 
   /// No description provided for @profileCreateTitle.
   ///
@@ -596,12 +590,6 @@ abstract class AppLocalizations {
   /// **'Other'**
   String get keyboardLayoutOther;
 
-  /// No description provided for @settingsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get settingsTitle;
-
   /// No description provided for @settingsSectionAppearance.
   ///
   /// In en, this message translates to:
@@ -959,7 +947,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsAppLockSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Require a PIN to open Just In Time'**
+  /// **'Require a PIN to open Ridge'**
   String get settingsAppLockSubtitle;
 
   /// No description provided for @settingsChangePin.
@@ -1289,7 +1277,7 @@ abstract class AppLocalizations {
   /// No description provided for @lockSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Just In Time is locked'**
+  /// **'Ridge is locked'**
   String get lockSubtitle;
 
   /// No description provided for @lockSetTitle.
@@ -1343,7 +1331,7 @@ abstract class AppLocalizations {
   /// No description provided for @lockBiometricReason.
   ///
   /// In en, this message translates to:
-  /// **'Unlock Just In Time'**
+  /// **'Unlock Ridge'**
   String get lockBiometricReason;
 
   /// No description provided for @lockBiometricError.
@@ -1934,18 +1922,6 @@ abstract class AppLocalizations {
   /// **'5 lives, endless snippets — a mistake costs a heart.'**
   String get practiceModeSurvivalSubtitle;
 
-  /// No description provided for @practiceHubTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Practice'**
-  String get practiceHubTitle;
-
-  /// No description provided for @freePracticeTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Free practice'**
-  String get freePracticeTitle;
-
   /// No description provided for @practiceHubQuickModesTitle.
   ///
   /// In en, this message translates to:
@@ -1963,12 +1939,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No snippets available yet.'**
   String get practiceHubNoSnippetsAvailable;
-
-  /// No description provided for @progressTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Progress'**
-  String get progressTitle;
 
   /// No description provided for @progressEmptyState.
   ///
@@ -2407,6 +2377,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Practice {days} days in a row'**
   String achievementStreakDescription(int days);
+
+  /// No description provided for @achievementsUnlockedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{unlocked} of {total} unlocked'**
+  String achievementsUnlockedCount(int unlocked, int total);
+
+  /// No description provided for @achievementsMilestonesSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestones'**
+  String get achievementsMilestonesSectionTitle;
+
+  /// No description provided for @achievementsCategoryMasterySectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Category mastery'**
+  String get achievementsCategoryMasterySectionTitle;
+
+  /// No description provided for @achievementsCategoryMasteryLegend.
+  ///
+  /// In en, this message translates to:
+  /// **'Each row: Beginner, Intermediate, Advanced, Expert'**
+  String get achievementsCategoryMasteryLegend;
 
   /// No description provided for @onboardingSkip.
   ///

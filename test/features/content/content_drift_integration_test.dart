@@ -14,13 +14,13 @@ import 'dart:async';
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/core/persistence/drift/database_provider.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_local_data_source.dart';
-import 'package:just_in_time/features/content/presentation/providers/content_providers.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/core/persistence/drift/database_provider.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/content/infrastructure/snippet_local_data_source.dart';
+import 'package:ridge/features/content/presentation/providers/content_providers.dart';
 
 void main() {
   // Loading the real asset via `rootBundle` requires a real (test)
@@ -49,7 +49,6 @@ void main() {
       ],
     );
     addTearDown(() => database.close());
-    addTearDown(container.dispose);
 
     // Riverpod only pumps a StreamNotifier's underlying subscription
     // while something is actively watching/listening to it (mirrors
@@ -62,6 +61,13 @@ void main() {
     container.listen(snippetCatalogControllerProvider, (_, next) {
       if (next.hasValue) catalogUpdates.add(next.value!);
     });
+    // Registered last so it tears down first (addTearDown runs LIFO):
+    // disposing the container cancels the `listen` above, so no
+    // trailing emission can ever land on `catalogUpdates` after it's
+    // closed — a real race once seeding became a single batched write
+    // (one notification arriving on its own timing) rather than one
+    // write per row.
+    addTearDown(container.dispose);
   });
 
   Future<void> seed() async {

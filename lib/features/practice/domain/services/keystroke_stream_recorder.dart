@@ -1,7 +1,7 @@
-import 'package:just_in_time/features/practice/domain/entities/keystroke.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke_result.dart';
-import 'package:just_in_time/features/practice/domain/services/key_layout_map.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
+import 'package:ridge/features/practice/domain/services/key_layout_map.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 
 /// Pure, stateful domain service that turns a live stream of physical key
 /// events into classified [Keystroke]s against an expected snippet

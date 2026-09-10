@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/learning_paths/domain/value_objects/lesson_id.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
 
 part 'lesson_attempt.freezed.dart';
 

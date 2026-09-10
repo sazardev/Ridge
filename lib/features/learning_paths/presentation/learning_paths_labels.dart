@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/learning_path.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_status.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/features/learning_paths/domain/entities/learning_path.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
 
 /// Locale-resolved access to a bilingual [LearningPath]'s title/
 /// description — free-form curriculum prose, so (like `content`'s
@@ -50,8 +49,8 @@ extension LessonStatusPresentation on LessonStatus {
 
   /// Returns this status's display icon.
   IconData get icon => switch (this) {
-    LessonStatus.locked => LucideIcons.lock,
-    LessonStatus.unlocked => LucideIcons.circlePlay,
-    LessonStatus.completed => LucideIcons.circleCheck,
+    LessonStatus.locked => LucideIcons.lock300,
+    LessonStatus.unlocked => LucideIcons.circlePlay300,
+    LessonStatus.completed => LucideIcons.circleCheck300,
   };
 }

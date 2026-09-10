@@ -10,7 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'Just In Time';
+  String get appName => 'Ridge';
 
   @override
   String get navPractice => 'Practice';
@@ -26,9 +26,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navSettings => 'Settings';
-
-  @override
-  String get profileTitle => 'Profile';
 
   @override
   String get profileCreateTitle => 'Create your profile';
@@ -266,9 +263,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get keyboardLayoutOther => 'Other';
 
   @override
-  String get settingsTitle => 'Settings';
-
-  @override
   String get settingsSectionAppearance => 'Appearance';
 
   @override
@@ -451,7 +445,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsAppLock => 'App lock';
 
   @override
-  String get settingsAppLockSubtitle => 'Require a PIN to open Just In Time';
+  String get settingsAppLockSubtitle => 'Require a PIN to open Ridge';
 
   @override
   String get settingsChangePin => 'Change PIN';
@@ -634,7 +628,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lockTitle => 'Enter your PIN';
 
   @override
-  String get lockSubtitle => 'Just In Time is locked';
+  String get lockSubtitle => 'Ridge is locked';
 
   @override
   String get lockSetTitle => 'Set a PIN';
@@ -661,7 +655,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lockUseBiometrics => 'Use biometrics';
 
   @override
-  String get lockBiometricReason => 'Unlock Just In Time';
+  String get lockBiometricReason => 'Unlock Ridge';
 
   @override
   String get lockBiometricError => 'Biometric authentication failed';
@@ -980,12 +974,6 @@ class AppLocalizationsEn extends AppLocalizations {
       '5 lives, endless snippets — a mistake costs a heart.';
 
   @override
-  String get practiceHubTitle => 'Practice';
-
-  @override
-  String get freePracticeTitle => 'Free practice';
-
-  @override
   String get practiceHubQuickModesTitle => 'Quick practice';
 
   @override
@@ -993,9 +981,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get practiceHubNoSnippetsAvailable => 'No snippets available yet.';
-
-  @override
-  String get progressTitle => 'Progress';
 
   @override
   String get progressEmptyState =>
@@ -1250,6 +1235,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String achievementStreakDescription(int days) {
     return 'Practice $days days in a row';
   }
+
+  @override
+  String achievementsUnlockedCount(int unlocked, int total) {
+    return '$unlocked of $total unlocked';
+  }
+
+  @override
+  String get achievementsMilestonesSectionTitle => 'Milestones';
+
+  @override
+  String get achievementsCategoryMasterySectionTitle => 'Category mastery';
+
+  @override
+  String get achievementsCategoryMasteryLegend =>
+      'Each row: Beginner, Intermediate, Advanced, Expert';
 
   @override
   String get onboardingSkip => 'Skip';

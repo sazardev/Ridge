@@ -6,9 +6,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/core/widgets/app_navigation_shortcuts.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_shortcut_action.dart';
-import 'package:just_in_time/features/settings/domain/entities/shortcut_binding.dart';
+import 'package:ridge/core/widgets/app_navigation_shortcuts.dart';
+import 'package:ridge/features/settings/domain/entities/app_shortcut_action.dart';
+import 'package:ridge/features/settings/domain/entities/shortcut_binding.dart';
 
 const Map<AppShortcutAction, ShortcutBinding> _defaultBindings = {
   AppShortcutAction.goToPractice: ShortcutBinding(

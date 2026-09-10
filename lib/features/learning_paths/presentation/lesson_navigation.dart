@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:just_in_time/features/learning_paths/application/usecases/get_learning_paths_usecase.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
+import 'package:ridge/features/learning_paths/application/usecases/get_learning_paths_usecase.dart';
+import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
 
 /// Shared "start/continue a learning-path lesson" navigation — one
 /// source of truth for how a lesson attempt is pushed and chained, used

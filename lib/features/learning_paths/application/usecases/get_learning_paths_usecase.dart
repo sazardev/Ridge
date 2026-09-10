@@ -1,10 +1,10 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/repositories/snippet_repository.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/learning_path.dart';
-import 'package:just_in_time/features/learning_paths/domain/repositories/learning_path_repository.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/repositories/snippet_repository.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/learning_paths/domain/entities/learning_path.dart';
+import 'package:ridge/features/learning_paths/domain/repositories/learning_path_repository.dart';
 
 /// One bundled [LearningPath] paired with the [Snippet] each of its
 /// lessons references — the read view `learning_paths`' presentation
@@ -30,18 +30,29 @@ class GetLearningPathsUseCase {
   Future<Result<List<LearningPathOverview>, AppFailure>> call() async {
     final paths = await _pathRepository.watchPaths().first;
 
+    final allSnippetIds = <SnippetId>{
+      for (final path in paths)
+        for (final lesson in path.lessons) lesson.snippetId,
+    };
+    final snippetsResult = await _snippetRepository.getByIds(allSnippetIds);
+    if (snippetsResult.isErr) {
+      return Result.err(snippetsResult.failureOrNull!);
+    }
+    final snippetById = <SnippetId, Snippet>{
+      for (final snippet in snippetsResult.valueOrNull!) snippet.id: snippet,
+    };
+
     final overviews = <LearningPathOverview>[];
     for (final path in paths) {
       final snippetsById = <SnippetId, Snippet>{};
       for (final lesson in path.lessons) {
-        if (snippetsById.containsKey(lesson.snippetId)) continue;
-        final snippetResult = await _snippetRepository.getById(
-          lesson.snippetId,
-        );
-        if (snippetResult.isErr) {
-          return Result.err(snippetResult.failureOrNull!);
+        final snippet = snippetById[lesson.snippetId];
+        if (snippet == null) {
+          return Result.err(
+            NotFoundFailure('No snippet with id ${lesson.snippetId.value}'),
+          );
         }
-        snippetsById[lesson.snippetId] = snippetResult.valueOrNull!;
+        snippetsById[lesson.snippetId] = snippet;
       }
       overviews.add((path: path, snippetsById: snippetsById));
     }

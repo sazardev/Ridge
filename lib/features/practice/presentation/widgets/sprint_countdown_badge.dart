@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
 
 /// How much time remains before a countdown is considered "urgent" enough
 /// to switch to the error color — a last-seconds visual cue (SPEC.md

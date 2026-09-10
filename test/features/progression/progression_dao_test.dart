@@ -8,8 +8,8 @@
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/features/progression/infrastructure/progression_dao.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/features/progression/infrastructure/progression_dao.dart';
 
 KeystrokeEventsCompanion _event({
   required String sessionId,

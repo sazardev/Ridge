@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_palette.dart';
+import 'package:ridge/features/settings/domain/entities/app_palette.dart';
 
 part 'app_palette_schemes_a.dart';
 part 'app_palette_schemes_b.dart';

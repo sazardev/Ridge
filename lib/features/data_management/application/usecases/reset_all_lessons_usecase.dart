@@ -1,7 +1,7 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/data_management/domain/repositories/data_reset_repository.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/data_management/domain/repositories/data_reset_repository.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
 /// Deletes every attempt a [ProfileId] has ever made at any lesson,
 /// across every learning path — resetting all of them back to

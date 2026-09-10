@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/core/widgets/escape_to_pop.dart';
+import 'package:ridge/core/widgets/escape_to_pop.dart';
 
 void main() {
   testWidgets('Escape pops the pushed route back to the previous one', (

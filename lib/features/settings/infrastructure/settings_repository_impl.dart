@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
-import 'package:just_in_time/features/settings/domain/repositories/settings_repository.dart';
-import 'package:just_in_time/features/settings/infrastructure/settings_local_data_source.dart';
-import 'package:just_in_time/features/settings/infrastructure/settings_mapper.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/settings/domain/entities/app_settings.dart';
+import 'package:ridge/features/settings/domain/repositories/settings_repository.dart';
+import 'package:ridge/features/settings/infrastructure/settings_local_data_source.dart';
+import 'package:ridge/features/settings/infrastructure/settings_mapper.dart';
 
 /// Local-storage adapter for [SettingsRepository]. Keeps an in-memory
 /// current value so late subscribers immediately receive it — a broadcast

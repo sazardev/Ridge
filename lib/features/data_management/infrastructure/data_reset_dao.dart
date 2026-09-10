@@ -1,14 +1,14 @@
 import 'package:drift/drift.dart';
 
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/features/achievements/infrastructure/tables/achievements_unlocked_table.dart';
-import 'package:just_in_time/features/learning_paths/infrastructure/tables/lesson_progress_cache_table.dart';
-import 'package:just_in_time/features/practice/infrastructure/tables/keystroke_events_table.dart';
-import 'package:just_in_time/features/practice/infrastructure/tables/typing_sessions_table.dart';
-import 'package:just_in_time/features/profile/infrastructure/tables/guest_profiles_table.dart';
-import 'package:just_in_time/features/progression/infrastructure/tables/mastery_status_cache_table.dart';
-import 'package:just_in_time/features/progression/infrastructure/tables/processed_sessions_table.dart';
-import 'package:just_in_time/features/progression/infrastructure/tables/progress_snapshot_cache_table.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/features/achievements/infrastructure/tables/achievements_unlocked_table.dart';
+import 'package:ridge/features/learning_paths/infrastructure/tables/lesson_progress_cache_table.dart';
+import 'package:ridge/features/practice/infrastructure/tables/keystroke_events_table.dart';
+import 'package:ridge/features/practice/infrastructure/tables/typing_sessions_table.dart';
+import 'package:ridge/features/profile/infrastructure/tables/guest_profiles_table.dart';
+import 'package:ridge/features/progression/infrastructure/tables/mastery_status_cache_table.dart';
+import 'package:ridge/features/progression/infrastructure/tables/processed_sessions_table.dart';
+import 'package:ridge/features/progression/infrastructure/tables/progress_snapshot_cache_table.dart';
 
 part 'data_reset_dao.g.dart';
 

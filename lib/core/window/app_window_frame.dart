@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_corner_style.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_window_border_width.dart';
+import 'package:ridge/features/settings/domain/entities/app_corner_style.dart';
+import 'package:ridge/features/settings/domain/entities/app_window_border_width.dart';
 import 'package:window_manager/window_manager.dart';
 
 final bool _kIsLinux = !kIsWeb && Platform.isLinux;

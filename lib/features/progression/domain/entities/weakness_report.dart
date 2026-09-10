@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/progression/domain/entities/weak_character.dart';
-import 'package:just_in_time/features/progression/domain/entities/weak_finger.dart';
-import 'package:just_in_time/features/progression/domain/entities/weak_key_transition.dart';
-import 'package:just_in_time/features/progression/domain/entities/weak_ngram.dart';
+import 'package:ridge/features/progression/domain/entities/weak_character.dart';
+import 'package:ridge/features/progression/domain/entities/weak_finger.dart';
+import 'package:ridge/features/progression/domain/entities/weak_key_transition.dart';
+import 'package:ridge/features/progression/domain/entities/weak_ngram.dart';
 
 part 'weakness_report.freezed.dart';
 

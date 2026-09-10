@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 
 RectCallback? _getClipCallback(
   RenderBox referenceBox,

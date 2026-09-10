@@ -1,7 +1,7 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/lock/domain/repositories/biometric_auth_repository.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/lock/domain/repositories/biometric_auth_repository.dart';
 
 /// `local_auth` adapter for [BiometricAuthRepository]. Android, iOS/macOS
 /// and Windows each ship their own native implementation behind this same

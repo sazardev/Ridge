@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/core/theme/app_colors.dart';
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/core/theme/app_typography.dart';
-import 'package:just_in_time/core/theme/expressive_ink.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_corner_style.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_palette.dart';
+import 'package:ridge/core/theme/app_colors.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/theme/app_typography.dart';
+import 'package:ridge/core/theme/expressive_ink.dart';
+import 'package:ridge/features/settings/domain/entities/app_corner_style.dart';
+import 'package:ridge/features/settings/domain/entities/app_palette.dart';
 
 /// The app's whole design system in one place: Material 3 Expressive color
 /// and typography, but rendered completely flat — no shadows, no

@@ -1,12 +1,12 @@
 import 'package:drift/drift.dart';
 
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/features/achievements/domain/entities/achievement.dart';
-import 'package:just_in_time/features/achievements/domain/entities/achievement_id.dart';
-import 'package:just_in_time/features/achievements/domain/entities/session_achievement_input.dart';
-import 'package:just_in_time/features/achievements/infrastructure/achievement_dao.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/features/achievements/domain/entities/achievement.dart';
+import 'package:ridge/features/achievements/domain/entities/achievement_id.dart';
+import 'package:ridge/features/achievements/domain/entities/session_achievement_input.dart';
+import 'package:ridge/features/achievements/infrastructure/achievement_dao.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
 /// Converts a raw [AchievementUnlockedRow] into its domain [Achievement].
 extension AchievementUnlockedRowMapper on AchievementUnlockedRow {

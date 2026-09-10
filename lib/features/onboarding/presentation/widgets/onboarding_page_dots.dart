@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 
 /// Row of dots marking progress through the onboarding [PageView] — the
 /// active dot stretches into a pill, mirroring `PinDots`' fill animation.

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
-import 'package:just_in_time/features/profile/domain/repositories/device_info_source.dart';
+import 'package:ridge/features/profile/domain/repositories/device_info_source.dart';
 
 /// [DeviceInfoSource] adapter over `device_info_plus` — one branch per
 /// platform this app actually targets (Android, Linux, Windows, Web —

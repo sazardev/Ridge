@@ -1,7 +1,7 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
 
 /// Validates that a [Snippet] + [PracticeMode] combination can actually
 /// be started. Deliberately thin: the real running state (buffer,

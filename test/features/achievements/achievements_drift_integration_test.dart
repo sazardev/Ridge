@@ -11,24 +11,24 @@
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/core/persistence/drift/database_provider.dart';
-import 'package:just_in_time/features/achievements/domain/entities/achievement_id.dart';
-import 'package:just_in_time/features/achievements/domain/entities/maratonista_tier.dart';
-import 'package:just_in_time/features/achievements/presentation/providers/achievements_providers.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet_length.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
-import 'package:just_in_time/features/practice/domain/services/keystroke_stream_recorder.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
-import 'package:just_in_time/features/practice/presentation/providers/practice_providers.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/core/persistence/drift/database_provider.dart';
+import 'package:ridge/features/achievements/domain/entities/achievement_id.dart';
+import 'package:ridge/features/achievements/domain/entities/maratonista_tier.dart';
+import 'package:ridge/features/achievements/presentation/providers/achievements_providers.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/entities/snippet_length.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
+import 'package:ridge/features/practice/domain/services/keystroke_stream_recorder.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
+import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 
 /// Builds a `Snippet` whose `code` is [length] copies of `'a'` — perfect
 /// completion is then just "type 'a' [length] times", with no need to

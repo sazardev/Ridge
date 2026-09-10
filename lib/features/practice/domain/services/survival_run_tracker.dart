@@ -1,4 +1,4 @@
-import 'package:just_in_time/features/practice/domain/entities/keystroke_result.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
 
 /// Pure, mutable state for one Survival-mode run (SPEC.md §5.8): remaining
 /// lives, the current combo, its score multiplier, and how many snippets

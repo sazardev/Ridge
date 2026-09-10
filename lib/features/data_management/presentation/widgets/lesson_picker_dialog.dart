@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_status.dart';
-import 'package:just_in_time/features/learning_paths/domain/value_objects/lesson_id.dart';
-import 'package:just_in_time/features/learning_paths/presentation/learning_paths_labels.dart';
-import 'package:just_in_time/features/learning_paths/presentation/providers/learning_paths_providers.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
+import 'package:ridge/features/learning_paths/presentation/learning_paths_labels.dart';
+import 'package:ridge/features/learning_paths/presentation/providers/learning_paths_providers.dart';
 
 /// Prompts the user to pick one [LessonId] to reset, grouped by learning
 /// path — every bundled lesson is offered, not just completed ones,

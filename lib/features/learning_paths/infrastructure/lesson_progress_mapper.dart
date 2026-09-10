@@ -1,12 +1,12 @@
 import 'package:drift/drift.dart';
 
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_attempt.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_progress.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_status.dart';
-import 'package:just_in_time/features/learning_paths/domain/value_objects/learning_path_id.dart';
-import 'package:just_in_time/features/learning_paths/domain/value_objects/lesson_id.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_attempt.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_progress.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/learning_path_id.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
 /// Converts a raw [TypingSessionRow] tagged with a lesson id into a
 /// [LessonAttempt] — drops every column `learning_paths` doesn't care

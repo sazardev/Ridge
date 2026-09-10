@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/core/widgets/keyboard_scroll_shortcuts.dart';
-import 'package:just_in_time/features/learning_paths/application/usecases/get_learning_paths_usecase.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_status.dart';
-import 'package:just_in_time/features/learning_paths/domain/services/lesson_status_resolver.dart';
-import 'package:just_in_time/features/learning_paths/domain/value_objects/learning_path_id.dart';
-import 'package:just_in_time/features/learning_paths/domain/value_objects/lesson_id.dart';
-import 'package:just_in_time/features/learning_paths/presentation/lesson_navigation.dart';
-import 'package:just_in_time/features/learning_paths/presentation/providers/learning_paths_providers.dart';
-import 'package:just_in_time/features/learning_paths/presentation/widgets/lesson_tree_tile.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/features/learning_paths/application/usecases/get_learning_paths_usecase.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
+import 'package:ridge/features/learning_paths/domain/services/lesson_status_resolver.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/learning_path_id.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
+import 'package:ridge/features/learning_paths/presentation/lesson_navigation.dart';
+import 'package:ridge/features/learning_paths/presentation/providers/learning_paths_providers.dart';
+import 'package:ridge/features/learning_paths/presentation/widgets/lesson_tree_tile.dart';
 
 /// One learning path's ordered lesson tree (SPEC.md §5.7): locked/
 /// unlocked/completed visual state per lesson. Tapping an

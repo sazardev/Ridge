@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/features/practice/domain/services/survival_run_tracker.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/features/practice/domain/services/survival_run_tracker.dart';
 
 /// Small pill showing a Survival run's remaining lives as hearts (SPEC.md
 /// §5.8), one heart per [SurvivalRunTracker.startingLives]. Filled hearts

@@ -1,20 +1,20 @@
 import 'package:drift/drift.dart';
 
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/practice/domain/entities/finger.dart';
-import 'package:just_in_time/features/practice/domain/entities/keyboard_row.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke_result.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
-import 'package:just_in_time/features/practice/domain/entities/typing_session.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
-import 'package:just_in_time/features/practice/infrastructure/keystroke_dto.dart';
-import 'package:just_in_time/features/practice/infrastructure/typing_session_dto.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/practice/domain/entities/finger.dart';
+import 'package:ridge/features/practice/domain/entities/keyboard_row.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
+import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
+import 'package:ridge/features/practice/domain/entities/typing_session.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
+import 'package:ridge/features/practice/infrastructure/keystroke_dto.dart';
+import 'package:ridge/features/practice/infrastructure/typing_session_dto.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
 /// Reconstructs a [PracticeMode] from its persisted discriminator name.
 ///

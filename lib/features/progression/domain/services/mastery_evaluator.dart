@@ -1,7 +1,7 @@
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/progression/domain/entities/mastery_status.dart';
-import 'package:just_in_time/features/progression/domain/entities/precision_result.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/progression/domain/entities/mastery_status.dart';
+import 'package:ridge/features/progression/domain/entities/precision_result.dart';
 
 /// Pure, stateless dominance certification (SPEC.md §6.4): the last 5
 /// Precision-mode sessions for a (category, difficulty) pair, each

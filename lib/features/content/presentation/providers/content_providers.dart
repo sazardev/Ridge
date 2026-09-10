@@ -1,15 +1,15 @@
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/core/persistence/drift/database_provider.dart';
-import 'package:just_in_time/features/content/application/usecases/browse_snippets_usecase.dart';
-import 'package:just_in_time/features/content/application/usecases/get_snippet_by_id_usecase.dart';
-import 'package:just_in_time/features/content/application/usecases/seed_snippet_catalog_usecase.dart';
-import 'package:just_in_time/features/content/application/usecases/watch_snippet_catalog_usecase.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/repositories/snippet_catalog_source.dart';
-import 'package:just_in_time/features/content/domain/repositories/snippet_repository.dart';
-import 'package:just_in_time/features/content/infrastructure/composite_snippet_catalog_source.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_dao.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_repository_impl.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/core/persistence/drift/database_provider.dart';
+import 'package:ridge/features/content/application/usecases/browse_snippets_usecase.dart';
+import 'package:ridge/features/content/application/usecases/get_snippet_by_id_usecase.dart';
+import 'package:ridge/features/content/application/usecases/seed_snippet_catalog_usecase.dart';
+import 'package:ridge/features/content/application/usecases/watch_snippet_catalog_usecase.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/repositories/snippet_catalog_source.dart';
+import 'package:ridge/features/content/domain/repositories/snippet_repository.dart';
+import 'package:ridge/features/content/infrastructure/composite_snippet_catalog_source.dart';
+import 'package:ridge/features/content/infrastructure/snippet_dao.dart';
+import 'package:ridge/features/content/infrastructure/snippet_repository_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'content_providers.g.dart';
@@ -63,7 +63,7 @@ WatchSnippetCatalogUseCase watchSnippetCatalogUseCase(Ref ref) {
 }
 
 /// Runs the (idempotent) catalog seed once at app startup. Watched from
-/// `JustInTimeApp`'s build method so it fires as soon as the app starts,
+/// `RidgeApp`'s build method so it fires as soon as the app starts,
 /// regardless of which route the router lands on first — `keepAlive`
 /// means it only ever runs once for the app's lifetime.
 @Riverpod(keepAlive: true)

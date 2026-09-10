@@ -1,7 +1,7 @@
 import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/material.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_corner_style.dart';
+import 'package:ridge/features/settings/domain/entities/app_corner_style.dart';
 
 /// Material 3 shape-scale radii — the "soft" (default) reference values
 /// [AppShapeTheme.forStyle] scales from. Kept as plain doubles so any

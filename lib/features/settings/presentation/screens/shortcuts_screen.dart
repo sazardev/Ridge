@@ -3,16 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_shortcut_action.dart';
-import 'package:just_in_time/features/settings/domain/entities/shortcut_binding.dart';
-import 'package:just_in_time/features/settings/domain/services/shortcut_conflict_checker.dart';
-import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
-import 'package:just_in_time/features/settings/presentation/shortcut_labels.dart';
-import 'package:just_in_time/features/settings/presentation/widgets/settings_section.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/features/settings/domain/entities/app_settings.dart';
+import 'package:ridge/features/settings/domain/entities/app_shortcut_action.dart';
+import 'package:ridge/features/settings/domain/entities/shortcut_binding.dart';
+import 'package:ridge/features/settings/domain/services/shortcut_conflict_checker.dart';
+import 'package:ridge/features/settings/presentation/providers/settings_providers.dart';
+import 'package:ridge/features/settings/presentation/shortcut_labels.dart';
+import 'package:ridge/features/settings/presentation/widgets/settings_section.dart';
 
 /// Lists every customizable global keyboard shortcut and lets the user
 /// rebind each one (SPEC.md's keyboard-first requirement, STACK.md
@@ -46,7 +45,7 @@ class ShortcutsScreen extends ConsumerWidget {
                     children: [
                       Text(bindings[action]?.displayLabel ?? '—'),
                       const SizedBox(width: 8),
-                      const Icon(LucideIcons.squarePen, size: 18),
+                      const Icon(LucideIcons.squarePen300, size: 18),
                     ],
                   ),
                   onTap: () => _showCaptureDialog(

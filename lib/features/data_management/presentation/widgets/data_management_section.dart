@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/features/data_management/presentation/providers/data_management_providers.dart';
-import 'package:just_in_time/features/data_management/presentation/widgets/lesson_picker_dialog.dart';
-import 'package:just_in_time/features/learning_paths/presentation/learning_paths_labels.dart';
-import 'package:just_in_time/features/learning_paths/presentation/providers/learning_paths_providers.dart';
-import 'package:just_in_time/features/settings/presentation/widgets/settings_section.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/features/data_management/presentation/providers/data_management_providers.dart';
+import 'package:ridge/features/data_management/presentation/widgets/lesson_picker_dialog.dart';
+import 'package:ridge/features/learning_paths/presentation/learning_paths_labels.dart';
+import 'package:ridge/features/learning_paths/presentation/providers/learning_paths_providers.dart';
+import 'package:ridge/features/settings/presentation/widgets/settings_section.dart';
 
 /// Asks the user to confirm a destructive action before running it —
 /// every "danger zone" tile below goes through this, styled with the

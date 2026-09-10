@@ -4,8 +4,8 @@
 // boundary behavior at exact thresholds, and the four difficulty-unlock
 // levels (SPEC.md §6.2).
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/progression/domain/services/level_calculator.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/progression/domain/services/level_calculator.dart';
 
 void main() {
   const calculator = LevelCalculator();

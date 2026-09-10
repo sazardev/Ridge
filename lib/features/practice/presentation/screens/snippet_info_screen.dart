@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/core/theme/app_typography.dart';
-import 'package:just_in_time/core/widgets/inline_code_text.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/services/syntax_tokenizer.dart';
-import 'package:just_in_time/features/content/presentation/content_labels.dart';
-import 'package:just_in_time/features/content/presentation/syntax_colors.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/theme/app_typography.dart';
+import 'package:ridge/core/widgets/inline_code_text.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/services/syntax_tokenizer.dart';
+import 'package:ridge/features/content/presentation/content_labels.dart';
+import 'package:ridge/features/content/presentation/syntax_colors.dart';
 
 /// Full-screen "what did you just type?" reading view, pushed from the
 /// result screen's fixed footer info button — a comfortable, unhurried
@@ -148,7 +147,7 @@ class _SnippetInfoScreenState extends State<SnippetInfoScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(
-                            LucideIcons.zap,
+                            LucideIcons.zap300,
                             color: theme.colorScheme.onPrimaryContainer,
                           ),
                           const SizedBox(width: 12),

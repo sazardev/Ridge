@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/practice/domain/entities/finger.dart';
-import 'package:just_in_time/features/practice/domain/entities/keyboard_row.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke_result.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/entities/finger.dart';
+import 'package:ridge/features/practice/domain/entities/keyboard_row.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 
 part 'keystroke.freezed.dart';
 

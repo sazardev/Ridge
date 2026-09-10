@@ -1,5 +1,5 @@
-import 'package:just_in_time/features/achievements/domain/entities/maratonista_tier.dart';
-import 'package:just_in_time/features/achievements/domain/entities/streak_tier.dart';
+import 'package:ridge/features/achievements/domain/entities/maratonista_tier.dart';
+import 'package:ridge/features/achievements/domain/entities/streak_tier.dart';
 
 /// Pure, stateless predicates for SPEC.md §12's five locally-computable
 /// achievement rules. Each takes only already-computed inputs (session

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/features/progression/domain/entities/xp_summary.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/features/progression/domain/entities/xp_summary.dart';
 
 /// XP/level progress bar (SPEC.md §6.1-§6.2) — level, total XP, and how
 /// far through the current level's bracket the profile is.

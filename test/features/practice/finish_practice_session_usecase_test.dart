@@ -6,25 +6,25 @@
 // boundary, just above, and just below, plus confirming Zen/Sprint/
 // Survival always persist `passed: null`.
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet_length.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/practice/application/usecases/finish_practice_session_usecase.dart';
-import 'package:just_in_time/features/practice/domain/entities/finger.dart';
-import 'package:just_in_time/features/practice/domain/entities/keyboard_row.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke_result.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
-import 'package:just_in_time/features/practice/domain/entities/typing_session.dart';
-import 'package:just_in_time/features/practice/domain/repositories/session_repository.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/entities/snippet_length.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/practice/application/usecases/finish_practice_session_usecase.dart';
+import 'package:ridge/features/practice/domain/entities/finger.dart';
+import 'package:ridge/features/practice/domain/entities/keyboard_row.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
+import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
+import 'package:ridge/features/practice/domain/entities/typing_session.dart';
+import 'package:ridge/features/practice/domain/repositories/session_repository.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
 const _snippet = Snippet(
   id: SnippetId('go-test-precision'),

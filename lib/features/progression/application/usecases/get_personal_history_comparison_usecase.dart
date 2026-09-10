@@ -1,10 +1,10 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
-import 'package:just_in_time/features/progression/domain/entities/personal_history_comparison.dart';
-import 'package:just_in_time/features/progression/domain/repositories/progression_repository.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/features/progression/domain/entities/personal_history_comparison.dart';
+import 'package:ridge/features/progression/domain/repositories/progression_repository.dart';
 
 /// SPEC.md §7.1/§11.4's guest-only "local leaderboard": a rolling
 /// comparison of the user's own last-N sessions of the same snippet or

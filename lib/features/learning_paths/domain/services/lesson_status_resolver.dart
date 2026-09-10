@@ -1,6 +1,6 @@
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_status.dart';
-import 'package:just_in_time/features/learning_paths/domain/value_objects/lesson_id.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
 
 /// Resolves a lesson's [LessonStatus] from the *cached* progress map the
 /// presentation layer already has in hand — a thin, UI-facing

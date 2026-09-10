@@ -1,21 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:just_in_time/features/achievements/presentation/providers/achievements_providers.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/learning_paths/presentation/providers/learning_paths_providers.dart';
-import 'package:just_in_time/features/practice/application/usecases/finish_practice_session_usecase.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_session_status.dart';
-import 'package:just_in_time/features/practice/domain/services/keystroke_stream_recorder.dart';
-import 'package:just_in_time/features/practice/domain/services/survival_run_tracker.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
-import 'package:just_in_time/features/practice/presentation/providers/practice_providers.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
-import 'package:just_in_time/features/progression/presentation/providers/progression_providers.dart';
+import 'package:ridge/features/achievements/presentation/providers/achievements_providers.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/learning_paths/presentation/providers/learning_paths_providers.dart';
+import 'package:ridge/features/practice/application/usecases/finish_practice_session_usecase.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke.dart';
+import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
+import 'package:ridge/features/practice/domain/entities/practice_session_status.dart';
+import 'package:ridge/features/practice/domain/services/keystroke_stream_recorder.dart';
+import 'package:ridge/features/practice/domain/services/survival_run_tracker.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
+import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/features/progression/presentation/providers/progression_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'practice_session_controller.g.dart';

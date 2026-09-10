@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
 
 part 'exercise_activity_stat.freezed.dart';
 

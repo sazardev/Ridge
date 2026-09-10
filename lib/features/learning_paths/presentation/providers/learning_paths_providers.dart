@@ -1,18 +1,18 @@
 import 'dart:async';
 
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/core/persistence/drift/database_provider.dart';
-import 'package:just_in_time/features/content/presentation/providers/content_providers.dart';
-import 'package:just_in_time/features/learning_paths/application/usecases/get_learning_paths_usecase.dart';
-import 'package:just_in_time/features/learning_paths/application/usecases/recompute_lesson_progress_usecase.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_status.dart';
-import 'package:just_in_time/features/learning_paths/domain/repositories/learning_path_repository.dart';
-import 'package:just_in_time/features/learning_paths/domain/repositories/lesson_progress_repository.dart';
-import 'package:just_in_time/features/learning_paths/domain/value_objects/lesson_id.dart';
-import 'package:just_in_time/features/learning_paths/infrastructure/learning_path_repository_impl.dart';
-import 'package:just_in_time/features/learning_paths/infrastructure/lesson_progress_dao.dart';
-import 'package:just_in_time/features/learning_paths/infrastructure/lesson_progress_repository_impl.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/core/persistence/drift/database_provider.dart';
+import 'package:ridge/features/content/presentation/providers/content_providers.dart';
+import 'package:ridge/features/learning_paths/application/usecases/get_learning_paths_usecase.dart';
+import 'package:ridge/features/learning_paths/application/usecases/recompute_lesson_progress_usecase.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
+import 'package:ridge/features/learning_paths/domain/repositories/learning_path_repository.dart';
+import 'package:ridge/features/learning_paths/domain/repositories/lesson_progress_repository.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
+import 'package:ridge/features/learning_paths/infrastructure/learning_path_repository_impl.dart';
+import 'package:ridge/features/learning_paths/infrastructure/lesson_progress_dao.dart';
+import 'package:ridge/features/learning_paths/infrastructure/lesson_progress_repository_impl.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'learning_paths_providers.g.dart';
@@ -27,7 +27,7 @@ LessonProgressDao lessonProgressDao(Ref ref) {
 /// app.
 @Riverpod(keepAlive: true)
 LearningPathRepository learningPathRepository(Ref ref) {
-  return const LearningPathRepositoryImpl();
+  return LearningPathRepositoryImpl();
 }
 
 /// Provides the [LessonProgressRepository] implementation used across the

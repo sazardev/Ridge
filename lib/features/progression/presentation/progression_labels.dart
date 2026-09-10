@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/features/practice/domain/entities/finger.dart';
-import 'package:just_in_time/features/progression/domain/entities/trend.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/features/practice/domain/entities/finger.dart';
+import 'package:ridge/features/progression/domain/entities/trend.dart';
 
 /// Localized display label for a [Finger], shared by every widget that
 /// renders one so the mapping lives in exactly one place (mirrors
@@ -36,8 +35,8 @@ extension TrendPresentation on Trend {
 
   /// Returns this trend's display icon.
   IconData get icon => switch (this) {
-    Trend.improving => LucideIcons.trendingDown,
-    Trend.worsening => LucideIcons.trendingUp,
-    Trend.stable => LucideIcons.moveHorizontal,
+    Trend.improving => LucideIcons.trendingDown300,
+    Trend.worsening => LucideIcons.trendingUp300,
+    Trend.stable => LucideIcons.moveHorizontal300,
   };
 }

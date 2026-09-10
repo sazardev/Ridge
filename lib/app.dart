@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/router/app_router.dart';
-import 'package:just_in_time/core/theme/app_theme.dart';
-import 'package:just_in_time/core/window/app_window_frame.dart';
-import 'package:just_in_time/core/window/desktop_platform.dart';
-import 'package:just_in_time/features/content/presentation/providers/content_providers.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_theme_mode.dart';
-import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/router/app_router.dart';
+import 'package:ridge/core/theme/app_theme.dart';
+import 'package:ridge/core/window/app_window_frame.dart';
+import 'package:ridge/core/window/desktop_platform.dart';
+import 'package:ridge/features/content/presentation/providers/content_providers.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/features/settings/domain/entities/app_settings.dart';
+import 'package:ridge/features/settings/domain/entities/app_theme_mode.dart';
+import 'package:ridge/features/settings/presentation/providers/settings_providers.dart';
 
 /// The app's root widget: wires the router, theme, and locale to the
 /// current [AppSettings] so a settings change repaints the whole tree.
-class JustInTimeApp extends ConsumerWidget {
+class RidgeApp extends ConsumerWidget {
   /// Creates the app's root widget.
   const new({super.key});
 

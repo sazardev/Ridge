@@ -1,14 +1,14 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet_length.dart';
-import 'package:just_in_time/features/content/domain/repositories/snippet_repository.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_dao.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_mapper.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/entities/snippet_length.dart';
+import 'package:ridge/features/content/domain/repositories/snippet_repository.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/content/infrastructure/snippet_dao.dart';
+import 'package:ridge/features/content/infrastructure/snippet_mapper.dart';
 
 /// Drift-backed adapter for [SnippetRepository].
 ///
@@ -83,14 +83,24 @@ class SnippetRepositoryImpl implements SnippetRepository {
     List<Snippet> entries,
   ) async {
     try {
-      for (final entry in entries) {
-        await _dao.upsertSnippet(entry.toDto().toCompanion());
-      }
+      await _dao.upsertSnippets([
+        for (final entry in entries) entry.toDto().toCompanion(),
+      ]);
       return const Result.ok(null);
     } on Exception catch (e) {
       return Result.err(
         StorageFailure('Could not seed snippet catalog', cause: e),
       );
+    }
+  }
+
+  @override
+  Future<Result<List<Snippet>, AppFailure>> getByIds(Set<SnippetId> ids) async {
+    try {
+      final rows = await _dao.getByIds({for (final id in ids) id.value});
+      return Result.ok([for (final row in rows) row.toDto().toDomain()]);
+    } on Exception catch (e) {
+      return Result.err(StorageFailure('Could not load snippets', cause: e));
     }
   }
 }

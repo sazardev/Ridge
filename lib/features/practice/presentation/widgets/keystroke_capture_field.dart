@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/core/theme/app_typography.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/entities/syntax_token_type.dart';
-import 'package:just_in_time/features/content/domain/services/syntax_tokenizer.dart';
-import 'package:just_in_time/features/content/presentation/syntax_colors.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke_result.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_session_status.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
-import 'package:just_in_time/features/practice/presentation/physical_key_id_mapper.dart';
-import 'package:just_in_time/features/practice/presentation/providers/practice_providers.dart';
-import 'package:just_in_time/features/practice/presentation/providers/practice_session_controller.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/theme/app_typography.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/entities/syntax_token_type.dart';
+import 'package:ridge/features/content/domain/services/syntax_tokenizer.dart';
+import 'package:ridge/features/content/presentation/syntax_colors.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
+import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
+import 'package:ridge/features/practice/domain/entities/practice_session_status.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/presentation/physical_key_id_mapper.dart';
+import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
+import 'package:ridge/features/practice/presentation/providers/practice_session_controller.dart';
 
 /// The capture engine itself: renders [snippet]'s code with live
 /// per-character green/red feedback and turns real physical keyboard

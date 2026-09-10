@@ -1,10 +1,10 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_progress.dart';
-import 'package:just_in_time/features/learning_paths/domain/repositories/learning_path_repository.dart';
-import 'package:just_in_time/features/learning_paths/domain/repositories/lesson_progress_repository.dart';
-import 'package:just_in_time/features/learning_paths/domain/services/lesson_progress_calculator.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_progress.dart';
+import 'package:ridge/features/learning_paths/domain/repositories/learning_path_repository.dart';
+import 'package:ridge/features/learning_paths/domain/repositories/lesson_progress_repository.dart';
+import 'package:ridge/features/learning_paths/domain/services/lesson_progress_calculator.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
 /// Recomputes and persists every lesson's [LessonProgress] for one
 /// profile, across every bundled learning path (SPEC.md §5.7) —

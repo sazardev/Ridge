@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/widgets/escape_to_pop.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/widgets/escape_to_pop.dart';
 
 /// Displays the project's `CHANGELOG.md`, bundled as a Flutter asset so the
 /// running app can show its own release history without anyone needing the

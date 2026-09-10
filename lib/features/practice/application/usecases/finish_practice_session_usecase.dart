@@ -1,15 +1,15 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
-import 'package:just_in_time/features/practice/domain/entities/session_metrics.dart';
-import 'package:just_in_time/features/practice/domain/entities/typing_session.dart';
-import 'package:just_in_time/features/practice/domain/repositories/session_repository.dart';
-import 'package:just_in_time/features/practice/domain/services/metrics_calculator.dart';
-import 'package:just_in_time/features/practice/domain/services/precision_score_calculator.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke.dart';
+import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
+import 'package:ridge/features/practice/domain/entities/session_metrics.dart';
+import 'package:ridge/features/practice/domain/entities/typing_session.dart';
+import 'package:ridge/features/practice/domain/repositories/session_repository.dart';
+import 'package:ridge/features/practice/domain/services/metrics_calculator.dart';
+import 'package:ridge/features/practice/domain/services/precision_score_calculator.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
 /// The result of successfully finishing and persisting a practice
 /// session: the immutable record that was written, and the full derived

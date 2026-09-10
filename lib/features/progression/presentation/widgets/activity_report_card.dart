@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/core/theme/app_typography.dart';
-import 'package:just_in_time/features/content/presentation/content_labels.dart';
-import 'package:just_in_time/features/progression/domain/entities/activity_report.dart';
-import 'package:just_in_time/features/progression/domain/entities/category_activity_stat.dart';
-import 'package:just_in_time/features/progression/domain/entities/exercise_activity_stat.dart';
-import 'package:just_in_time/features/progression/domain/entities/trend.dart';
-import 'package:just_in_time/features/progression/presentation/progression_labels.dart';
-import 'package:just_in_time/features/progression/presentation/providers/progression_providers.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/theme/app_typography.dart';
+import 'package:ridge/features/content/presentation/content_labels.dart';
+import 'package:ridge/features/progression/domain/entities/activity_report.dart';
+import 'package:ridge/features/progression/domain/entities/category_activity_stat.dart';
+import 'package:ridge/features/progression/domain/entities/exercise_activity_stat.dart';
+import 'package:ridge/features/progression/domain/entities/trend.dart';
+import 'package:ridge/features/progression/presentation/progression_labels.dart';
+import 'package:ridge/features/progression/presentation/providers/progression_providers.dart';
 
 /// [Trend]'s icon direction for a "higher = better" score, the inverse
 /// of `TrendPresentation.icon`'s weakness-score direction (see
 /// `CategoryActivityStat.trend`'s doc).
 extension _ActivityTrendIcon on Trend {
   IconData get _icon => switch (this) {
-    Trend.improving => LucideIcons.trendingUp,
-    Trend.worsening => LucideIcons.trendingDown,
-    Trend.stable => LucideIcons.moveHorizontal,
+    Trend.improving => LucideIcons.trendingUp300,
+    Trend.worsening => LucideIcons.trendingDown300,
+    Trend.stable => LucideIcons.moveHorizontal300,
   };
 }
 

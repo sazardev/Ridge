@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/core/theme/app_theme.dart';
+import 'package:ridge/core/theme/app_theme.dart';
 
 void main() {
   testWidgets('AppTheme renders Material 3 widgets without shadows', (
@@ -12,7 +12,7 @@ void main() {
         home: Scaffold(
           body: Column(
             children: [
-              const Text('Just In Time'),
+              const Text('Ridge'),
               FilledButton(onPressed: () {}, child: const Text('New task')),
             ],
           ),
@@ -20,7 +20,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Just In Time'), findsOneWidget);
+    expect(find.text('Ridge'), findsOneWidget);
     expect(find.widgetWithText(FilledButton, 'New task'), findsOneWidget);
 
     final card = tester.widget<MaterialApp>(find.byType(MaterialApp));

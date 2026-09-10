@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/window/desktop_platform.dart';
-import 'package:just_in_time/core/window/window_bar_controller.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/window/desktop_platform.dart';
+import 'package:ridge/core/window/window_bar_controller.dart';
 import 'package:window_manager/window_manager.dart';
 
 /// A fully custom, OS-decoration-free title bar for desktop windows —
@@ -96,17 +96,17 @@ class _WindowBarState extends State<WindowBar> with WindowListener {
             ),
           ),
           _WindowButton(
-            icon: LucideIcons.minus,
+            icon: LucideIcons.minus300,
             tooltip: l10n.windowMinimize,
             onPressed: windowManager.minimize,
           ),
           _WindowButton(
-            icon: _isMaximized ? LucideIcons.copy : LucideIcons.maximize,
+            icon: _isMaximized ? LucideIcons.copy300 : LucideIcons.maximize300,
             tooltip: _isMaximized ? l10n.windowRestore : l10n.windowMaximize,
             onPressed: _toggleMaximize,
           ),
           _WindowButton(
-            icon: LucideIcons.x,
+            icon: LucideIcons.x300,
             tooltip: l10n.windowClose,
             onPressed: windowManager.close,
             isClose: true,

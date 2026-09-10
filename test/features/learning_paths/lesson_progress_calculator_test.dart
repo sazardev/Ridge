@@ -3,12 +3,12 @@
 // `LessonAttempt` values — mirrors `progression`'s calculator tests'
 // style (e.g. `mastery_evaluator_test.dart`).
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_attempt.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_status.dart';
-import 'package:just_in_time/features/learning_paths/domain/services/lesson_progress_calculator.dart';
-import 'package:just_in_time/features/learning_paths/domain/value_objects/lesson_id.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_attempt.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
+import 'package:ridge/features/learning_paths/domain/services/lesson_progress_calculator.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
 
 const _calculator = LessonProgressCalculator();
 

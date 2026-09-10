@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:just_in_time/core/window/window_geometry_store.dart';
+import 'package:ridge/core/window/window_geometry_store.dart';
 import 'package:window_manager/window_manager.dart';
 
 /// Persists the window's bounds + maximized state on every resize/move so

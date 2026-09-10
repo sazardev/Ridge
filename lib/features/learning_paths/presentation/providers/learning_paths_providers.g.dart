@@ -114,7 +114,7 @@ final class LearningPathRepositoryProvider
 }
 
 String _$learningPathRepositoryHash() =>
-    r'a6ed3004ef141148260b91bb652f7b4508da3dea';
+    r'b1bc342dd60eae80da17c8562b3cf1dbfcc58b86';
 
 /// Provides the [LessonProgressRepository] implementation used across the
 /// app.

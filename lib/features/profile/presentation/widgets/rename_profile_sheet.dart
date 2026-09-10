@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 
 /// Shows a modal sheet to rename the Guest Profile.
 Future<void> showRenameProfileSheet(

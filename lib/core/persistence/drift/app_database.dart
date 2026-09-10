@@ -1,22 +1,22 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
-import 'package:just_in_time/features/achievements/infrastructure/achievement_dao.dart';
-import 'package:just_in_time/features/achievements/infrastructure/tables/achievements_unlocked_table.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_dao.dart';
-import 'package:just_in_time/features/content/infrastructure/tables/snippets_table.dart';
-import 'package:just_in_time/features/data_management/infrastructure/data_reset_dao.dart';
-import 'package:just_in_time/features/learning_paths/infrastructure/lesson_progress_dao.dart';
-import 'package:just_in_time/features/learning_paths/infrastructure/tables/lesson_progress_cache_table.dart';
-import 'package:just_in_time/features/practice/infrastructure/practice_dao.dart';
-import 'package:just_in_time/features/practice/infrastructure/tables/keystroke_events_table.dart';
-import 'package:just_in_time/features/practice/infrastructure/tables/typing_sessions_table.dart';
-import 'package:just_in_time/features/profile/infrastructure/guest_profile_dao.dart';
-import 'package:just_in_time/features/profile/infrastructure/tables/guest_profiles_table.dart';
-import 'package:just_in_time/features/progression/infrastructure/progression_dao.dart';
-import 'package:just_in_time/features/progression/infrastructure/tables/mastery_status_cache_table.dart';
-import 'package:just_in_time/features/progression/infrastructure/tables/processed_sessions_table.dart';
-import 'package:just_in_time/features/progression/infrastructure/tables/progress_snapshot_cache_table.dart';
+import 'package:ridge/features/achievements/infrastructure/achievement_dao.dart';
+import 'package:ridge/features/achievements/infrastructure/tables/achievements_unlocked_table.dart';
+import 'package:ridge/features/content/infrastructure/snippet_dao.dart';
+import 'package:ridge/features/content/infrastructure/tables/snippets_table.dart';
+import 'package:ridge/features/data_management/infrastructure/data_reset_dao.dart';
+import 'package:ridge/features/learning_paths/infrastructure/lesson_progress_dao.dart';
+import 'package:ridge/features/learning_paths/infrastructure/tables/lesson_progress_cache_table.dart';
+import 'package:ridge/features/practice/infrastructure/practice_dao.dart';
+import 'package:ridge/features/practice/infrastructure/tables/keystroke_events_table.dart';
+import 'package:ridge/features/practice/infrastructure/tables/typing_sessions_table.dart';
+import 'package:ridge/features/profile/infrastructure/guest_profile_dao.dart';
+import 'package:ridge/features/profile/infrastructure/tables/guest_profiles_table.dart';
+import 'package:ridge/features/progression/infrastructure/progression_dao.dart';
+import 'package:ridge/features/progression/infrastructure/tables/mastery_status_cache_table.dart';
+import 'package:ridge/features/progression/infrastructure/tables/processed_sessions_table.dart';
+import 'package:ridge/features/progression/infrastructure/tables/progress_snapshot_cache_table.dart';
 
 part 'app_database.g.dart';
 
@@ -87,7 +87,7 @@ class AppDatabase extends _$AppDatabase {
   /// `NativeDatabase.memory()`, production falls back to `drift_flutter`'s
   /// cross-platform opener.
   new([QueryExecutor? executor])
-    : super(executor ?? driftDatabase(name: 'jit.db'));
+    : super(executor ?? driftDatabase(name: 'ridge.db'));
 
   @override
   int get schemaVersion => 13;

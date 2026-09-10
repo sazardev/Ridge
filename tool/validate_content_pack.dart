@@ -21,12 +21,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet_length.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_dto.dart';
-import 'package:just_in_time/features/learning_paths/infrastructure/learning_path_dto.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/snippet_length.dart';
+import 'package:ridge/features/content/infrastructure/snippet_dto.dart';
+import 'package:ridge/features/learning_paths/infrastructure/learning_path_dto.dart';
 
 const _maxTldrChars = 80;
 const _maxExplanationChars = 950;

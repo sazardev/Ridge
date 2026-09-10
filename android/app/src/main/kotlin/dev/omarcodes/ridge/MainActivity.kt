@@ -1,4 +1,4 @@
-package dev.omarcodes.just_in_time
+package dev.omarcodes.ridge
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

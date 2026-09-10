@@ -10,7 +10,7 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
-  String get appName => 'Just In Time';
+  String get appName => 'Ridge';
 
   @override
   String get navPractice => 'Práctica';
@@ -26,9 +26,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get navSettings => 'Ajustes';
-
-  @override
-  String get profileTitle => 'Perfil';
 
   @override
   String get profileCreateTitle => 'Crea tu perfil';
@@ -269,9 +266,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get keyboardLayoutOther => 'Otra';
 
   @override
-  String get settingsTitle => 'Ajustes';
-
-  @override
   String get settingsSectionAppearance => 'Apariencia';
 
   @override
@@ -454,7 +448,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsAppLock => 'Bloqueo de la app';
 
   @override
-  String get settingsAppLockSubtitle => 'Pide un PIN para abrir Just In Time';
+  String get settingsAppLockSubtitle => 'Pide un PIN para abrir Ridge';
 
   @override
   String get settingsChangePin => 'Cambiar PIN';
@@ -642,7 +636,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get lockTitle => 'Ingresa tu PIN';
 
   @override
-  String get lockSubtitle => 'Just In Time está bloqueada';
+  String get lockSubtitle => 'Ridge está bloqueada';
 
   @override
   String get lockSetTitle => 'Crea un PIN';
@@ -669,7 +663,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get lockUseBiometrics => 'Usar biometría';
 
   @override
-  String get lockBiometricReason => 'Desbloquea Just In Time';
+  String get lockBiometricReason => 'Desbloquea Ridge';
 
   @override
   String get lockBiometricError => 'No se pudo autenticar con biometría';
@@ -989,12 +983,6 @@ class AppLocalizationsEs extends AppLocalizations {
       '5 vidas, snippets infinitos — un error cuesta un corazón.';
 
   @override
-  String get practiceHubTitle => 'Práctica';
-
-  @override
-  String get freePracticeTitle => 'Práctica libre';
-
-  @override
   String get practiceHubQuickModesTitle => 'Práctica rápida';
 
   @override
@@ -1003,9 +991,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get practiceHubNoSnippetsAvailable =>
       'Aún no hay snippets disponibles.';
-
-  @override
-  String get progressTitle => 'Progreso';
 
   @override
   String get progressEmptyState =>
@@ -1261,6 +1246,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String achievementStreakDescription(int days) {
     return 'Practica $days días seguidos';
   }
+
+  @override
+  String achievementsUnlockedCount(int unlocked, int total) {
+    return '$unlocked de $total desbloqueados';
+  }
+
+  @override
+  String get achievementsMilestonesSectionTitle => 'Hitos';
+
+  @override
+  String get achievementsCategoryMasterySectionTitle => 'Dominio de categorías';
+
+  @override
+  String get achievementsCategoryMasteryLegend =>
+      'Cada fila: Principiante, Intermedio, Avanzado, Experto';
 
   @override
   String get onboardingSkip => 'Omitir';

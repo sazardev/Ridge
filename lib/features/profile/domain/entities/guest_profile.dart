@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/profile/domain/entities/favorite_language.dart';
-import 'package:just_in_time/features/profile/domain/entities/keyboard_layout.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
 part 'guest_profile.freezed.dart';
 

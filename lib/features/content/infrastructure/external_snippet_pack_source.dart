@@ -3,11 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart' show debugPrint;
 
-import 'package:just_in_time/core/content_packs/content_packs_directory.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/repositories/snippet_catalog_source.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_dto.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_mapper.dart';
+import 'package:ridge/core/content_packs/content_packs_directory.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/repositories/snippet_catalog_source.dart';
+import 'package:ridge/features/content/infrastructure/snippet_dto.dart';
+import 'package:ridge/features/content/infrastructure/snippet_mapper.dart';
 
 /// Loads every third-party snippet pack dropped into
 /// `contentPacksSnippetsDir()` — each file a `List<SnippetDto>` in the

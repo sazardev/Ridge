@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/widgets/keyboard_scroll_shortcuts.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
-import 'package:just_in_time/features/profile/presentation/widgets/profile_about_card.dart';
-import 'package:just_in_time/features/profile/presentation/widgets/profile_device_card.dart';
-import 'package:just_in_time/features/profile/presentation/widgets/profile_stats_card.dart';
-import 'package:just_in_time/features/profile/presentation/widgets/rename_profile_sheet.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/features/profile/presentation/widgets/profile_about_card.dart';
+import 'package:ridge/features/profile/presentation/widgets/profile_device_card.dart';
+import 'package:ridge/features/profile/presentation/widgets/profile_stats_card.dart';
+import 'package:ridge/features/profile/presentation/widgets/rename_profile_sheet.dart';
 
 /// The Profile screen: the Guest Profile's identity (SPEC.md §7.1), a
 /// progression-history preview, self-expression flair (favorite
@@ -49,8 +48,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final profile = profileAsync.value;
 
     return Scaffold(
+      // No title here: the nav rail/bar destination already reads
+      // "Profile" right next to this screen, so repeating it would just
+      // be noise — the `AppBar` sticks around only to host the actions
+      // below.
       appBar: AppBar(
-        title: Text(l10n.profileTitle),
         actions: profile == null
             ? null
             : [
@@ -59,12 +61,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     context,
                     currentUsername: profile.username,
                   ),
-                  icon: const Icon(LucideIcons.squarePen),
+                  icon: const Icon(LucideIcons.squarePen300),
                   tooltip: l10n.profileRenameAction,
                 ),
                 IconButton(
                   onPressed: () => context.push('/achievements'),
-                  icon: const Icon(LucideIcons.trophy),
+                  icon: const Icon(LucideIcons.trophy300),
                   tooltip: l10n.profileAchievementsAction,
                 ),
               ],

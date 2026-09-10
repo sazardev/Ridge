@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:just_in_time/core/theme/app_palette_catalog.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_palette.dart';
+import 'package:ridge/core/theme/app_palette_catalog.dart';
+import 'package:ridge/features/settings/domain/entities/app_palette.dart';
 
 /// App-wide colors that live outside the user-selectable [ColorScheme].
 abstract final class AppColors {

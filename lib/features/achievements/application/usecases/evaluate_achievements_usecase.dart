@@ -1,14 +1,14 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/achievements/domain/entities/achievement.dart';
-import 'package:just_in_time/features/achievements/domain/entities/achievement_id.dart';
-import 'package:just_in_time/features/achievements/domain/entities/maratonista_tier.dart';
-import 'package:just_in_time/features/achievements/domain/entities/streak_tier.dart';
-import 'package:just_in_time/features/achievements/domain/repositories/achievement_repository.dart';
-import 'package:just_in_time/features/achievements/domain/services/achievement_rules.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
-import 'package:just_in_time/features/progression/application/usecases/recompute_progress_snapshot_usecase.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/achievements/domain/entities/achievement.dart';
+import 'package:ridge/features/achievements/domain/entities/achievement_id.dart';
+import 'package:ridge/features/achievements/domain/entities/maratonista_tier.dart';
+import 'package:ridge/features/achievements/domain/entities/streak_tier.dart';
+import 'package:ridge/features/achievements/domain/repositories/achievement_repository.dart';
+import 'package:ridge/features/achievements/domain/services/achievement_rules.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/features/progression/application/usecases/recompute_progress_snapshot_usecase.dart';
 
 /// Evaluates every SPEC.md §12 achievement rule for one profile and
 /// unlocks whatever newly qualifies — idempotent, safe to call after

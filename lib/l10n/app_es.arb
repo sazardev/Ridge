@@ -1,7 +1,7 @@
 {
   "@@locale": "es",
 
-  "appName": "Just In Time",
+  "appName": "Ridge",
 
   "navPractice": "Práctica",
   "navProgress": "Progreso",
@@ -9,7 +9,6 @@
   "navProfile": "Perfil",
   "navSettings": "Ajustes",
 
-  "profileTitle": "Perfil",
   "profileCreateTitle": "Crea tu perfil",
   "profileCreateSubtitle": "Elige un nombre de usuario para empezar a practicar",
   "profileUsernameLabel": "Nombre de usuario",
@@ -94,7 +93,6 @@
   "keyboardLayoutWorkman": "Workman",
   "keyboardLayoutOther": "Otra",
 
-  "settingsTitle": "Ajustes",
   "settingsSectionAppearance": "Apariencia",
   "settingsTheme": "Tema",
   "settingsThemeSystem": "Sistema",
@@ -154,7 +152,7 @@
   "settingsLanguageSystem": "Igual que el sistema",
   "settingsSectionSecurity": "Seguridad",
   "settingsAppLock": "Bloqueo de la app",
-  "settingsAppLockSubtitle": "Pide un PIN para abrir Just In Time",
+  "settingsAppLockSubtitle": "Pide un PIN para abrir Ridge",
   "settingsChangePin": "Cambiar PIN",
   "settingsAppLockBiometric": "Usar biometría",
   "settingsAppLockBiometricSubtitle": "Desbloquea con huella o Face ID en lugar de escribir tu PIN",
@@ -232,7 +230,7 @@
   "settingsDataActionError": "Algo salió mal. Intenta de nuevo.",
 
   "lockTitle": "Ingresa tu PIN",
-  "lockSubtitle": "Just In Time está bloqueada",
+  "lockSubtitle": "Ridge está bloqueada",
   "lockSetTitle": "Crea un PIN",
   "lockSetSubtitle": "Lo necesitarás para desbloquear la app",
   "lockConfirmTitle": "Confirma tu PIN",
@@ -241,7 +239,7 @@
   "lockSaveError": "No se pudo guardar tu PIN. Intenta de nuevo.",
   "lockUnlock": "Desbloquear",
   "lockUseBiometrics": "Usar biometría",
-  "lockBiometricReason": "Desbloquea Just In Time",
+  "lockBiometricReason": "Desbloquea Ridge",
   "lockBiometricError": "No se pudo autenticar con biometría",
 
   "commonRetry": "Reintentar",
@@ -406,13 +404,10 @@
   "practiceModeSurvival": "Supervivencia",
   "practiceModeSurvivalSubtitle": "5 vidas, snippets infinitos — un error cuesta un corazón.",
 
-  "practiceHubTitle": "Práctica",
-  "freePracticeTitle": "Práctica libre",
   "practiceHubQuickModesTitle": "Práctica rápida",
   "practiceHubBrowseAllAction": "Explorar todos los snippets",
   "practiceHubNoSnippetsAvailable": "Aún no hay snippets disponibles.",
 
-  "progressTitle": "Progreso",
   "progressEmptyState": "Termina una sesión de práctica para ver tu progreso aquí.",
   "progressTabOverview": "Resumen",
   "progressTabWeaknesses": "Debilidades",
@@ -513,6 +508,10 @@
   "achievementCategoryMasteryDescription": "Certifica el dominio de una categoría y dificultad",
   "achievementStreakTitle": "Racha de {days} días",
   "achievementStreakDescription": "Practica {days} días seguidos",
+  "achievementsUnlockedCount": "{unlocked} de {total} desbloqueados",
+  "achievementsMilestonesSectionTitle": "Hitos",
+  "achievementsCategoryMasterySectionTitle": "Dominio de categorías",
+  "achievementsCategoryMasteryLegend": "Cada fila: Principiante, Intermedio, Avanzado, Experto",
 
   "onboardingSkip": "Omitir",
   "onboardingNext": "Siguiente",

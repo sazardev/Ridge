@@ -30,7 +30,7 @@ static void my_application_activate(GApplication* application) {
   // and `window_manager` hides the OS decorations at runtime from Dart.
   // Setting a GTK titlebar widget here would fight window_manager for
   // control and could leave a second, native close button on screen.
-  gtk_window_set_title(window, "Just In Time");
+  gtk_window_set_title(window, "Ridge");
   gtk_window_set_default_size(window, 1280, 800);
 
   // Give the window an alpha channel so the areas Flutter paints as

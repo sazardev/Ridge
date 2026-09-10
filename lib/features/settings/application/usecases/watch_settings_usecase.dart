@@ -1,5 +1,5 @@
-import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
-import 'package:just_in_time/features/settings/domain/repositories/settings_repository.dart';
+import 'package:ridge/features/settings/domain/entities/app_settings.dart';
+import 'package:ridge/features/settings/domain/repositories/settings_repository.dart';
 
 /// Streams the current [AppSettings] and every subsequent update.
 class WatchSettingsUseCase {

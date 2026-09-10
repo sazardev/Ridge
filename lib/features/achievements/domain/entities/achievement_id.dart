@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/achievements/domain/entities/maratonista_tier.dart';
-import 'package:just_in_time/features/achievements/domain/entities/streak_tier.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/achievements/domain/entities/maratonista_tier.dart';
+import 'package:ridge/features/achievements/domain/entities/streak_tier.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
 
 part 'achievement_id.freezed.dart';
 

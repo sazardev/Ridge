@@ -11,10 +11,10 @@ import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/core/persistence/drift/database_provider.dart';
-import 'package:just_in_time/features/profile/domain/entities/guest_profile.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/core/persistence/drift/database_provider.dart';
+import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 
 void main() {
   late AppDatabase database;

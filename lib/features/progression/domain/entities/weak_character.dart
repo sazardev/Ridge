@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/progression/domain/entities/trend.dart';
+import 'package:ridge/features/progression/domain/entities/trend.dart';
 
 part 'weak_character.freezed.dart';
 

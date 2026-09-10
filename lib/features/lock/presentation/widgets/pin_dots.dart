@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-import 'package:just_in_time/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 
 /// Row of dots that fill in as PIN digits are entered, with a restrained
 /// shake when [errorTick] changes — the only "loud" motion in the whole

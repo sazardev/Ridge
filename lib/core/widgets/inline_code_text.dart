@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/core/theme/app_shapes.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
 
 /// Renders [text] as rich text, styling every `` `backtick` ``-delimited
 /// fragment as inline code instead of showing the literal backticks.

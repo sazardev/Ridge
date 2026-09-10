@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/features/profile/infrastructure/tables/guest_profiles_table.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/features/profile/infrastructure/tables/guest_profiles_table.dart';
 
 part 'guest_profile_dao.g.dart';
 

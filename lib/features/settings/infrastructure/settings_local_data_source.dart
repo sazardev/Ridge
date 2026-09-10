@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:just_in_time/features/settings/infrastructure/settings_dto.dart';
+import 'package:ridge/features/settings/infrastructure/settings_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Reads and writes the persisted [SettingsDto] behind `shared_preferences`.

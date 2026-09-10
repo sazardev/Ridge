@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/features/achievements/domain/entities/achievement_id.dart';
-import 'package:just_in_time/features/achievements/domain/entities/maratonista_tier.dart';
-import 'package:just_in_time/features/achievements/domain/entities/streak_tier.dart';
-import 'package:just_in_time/features/content/presentation/content_labels.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/features/achievements/domain/entities/achievement_id.dart';
+import 'package:ridge/features/achievements/domain/entities/maratonista_tier.dart';
+import 'package:ridge/features/achievements/domain/entities/streak_tier.dart';
+import 'package:ridge/features/content/presentation/content_labels.dart';
 
 /// Localized display title/description/icon for an [AchievementId],
 /// shared by every widget that renders one (mirrors `content`'s
@@ -37,10 +36,10 @@ extension AchievementIdPresentation on AchievementId {
   /// Returns this achievement's display icon.
   IconData get icon => when(
     ceroErrores: () => LucideIcons.badgeCheck600,
-    maratonista: (_) => LucideIcons.footprints,
-    ambidiestro: () => LucideIcons.hand,
-    categoryMastery: (_, _) => LucideIcons.award,
-    streak: (_) => LucideIcons.flame,
+    maratonista: (_) => LucideIcons.footprints300,
+    ambidiestro: () => LucideIcons.hand300,
+    categoryMastery: (_, _) => LucideIcons.award300,
+    streak: (_) => LucideIcons.flame300,
   );
 }
 

@@ -2,9 +2,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/features/profile/presentation/keyboard_shape_family.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/features/profile/presentation/keyboard_shape_family.dart';
 
 /// A decorative 2D silhouette of [family] — an unlabeled grid of keycap
 /// rectangles approximating that physical layout's size and cluster

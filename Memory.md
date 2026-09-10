@@ -53,6 +53,53 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ## Historial de sesiones
 
+### 2026-09-10 — Rebranding: Just In Time → Ridge
+
+- Producto renombrado de "Just In Time" a **Ridge** en toda la app y el
+  repo (branding puro — `SPEC.md`/`STACK.md` solo cambiaron el título y el
+  correo sintético de ejemplo de Supabase Auth §7, ninguna regla de negocio).
+- Paquete Dart: `just_in_time` → `ridge` (`pubspec.yaml` `name:` +
+  ~230 `package:` imports vía sed en `lib/`, `test/`, `tool/`).
+- Clase raíz `JustInTimeApp` → `RidgeApp` (`lib/app.dart`, `lib/main.dart`).
+- Android: `applicationId`/`namespace` `dev.omarcodes.just_in_time` →
+  `dev.omarcodes.ridge`; `MainActivity.kt` movido de paquete; `android:label`
+  → "Ridge". Sin riesgo de romper nada publicado: la app nunca tuvo firma de
+  release real (usa la debug key) ni presencia en Play Store.
+- Linux: `BINARY_NAME`/`APPLICATION_ID` en `CMakeLists.txt` → `ridge` /
+  `dev.omarcodes.ridge`; título de ventana GTK en `my_application.cc` →
+  "Ridge".
+- l10n: `appName` y strings de bloqueo/PIN en `app_en.arb`/`app_es.arb` →
+  "Ridge"; regenerado con `flutter gen-l10n`.
+- DB local: `driftDatabase(name: 'jit.db')` → `'ridge.db'`
+  (`app_database.dart`) — instalaciones de dev existentes arrancan con base
+  vacía bajo el nuevo nombre; el `jit.db` viejo queda en disco sin usarse,
+  no se borra nada.
+- Referencias a `jit.db.sqlite`/`jit-sql-pg` en este archivo y en
+  `.claude/skills/content-curriculum/` actualizadas a
+  `ridge.db.sqlite`/`ridge-sql-pg`.
+- `dart fix --apply` corrigió automáticamente 36 archivos con
+  `directives_ordering` roto por el cambio alfabético de
+  `package:ridge/*` vs `package:lucide_icons_flutter/*` (ver nota debajo).
+- Verificado con `bash tool/check.sh` tras el rebrand: format/analyze
+  limpios, arquitectura sin violaciones nuevas, **314 tests verdes**.
+- **Continuación en la misma sesión** (con confirmación del usuario):
+  - Repo de GitHub renombrado `sazardev/Just-In-Time` → `sazardev/Ridge`
+    (`gh repo rename`; GitHub deja redirect automático del nombre viejo).
+    Remote local actualizado con `git remote set-url origin`.
+  - Carpeta local renombrada `/home/omar/personal/just_in_time` →
+    `/home/omar/personal/ridge` (`mv`); se limpió y regeneró
+    `build/linux` porque CMake cachea la ruta absoluta del build anterior
+    y falla si no coincide con la carpeta actual.
+  - Ícono de launcher Android reemplazado: squircle plano en el naranja
+    ember de marca (`AppColors.seed`, `0xFFFF5A36`) con una marca de dos
+    picos ("ridge"). Fuente de 1024×1024 en
+    `assets/icons/ridge_launcher_master.png`, generada con `rsvg-convert`
+    + `magick` (sin depender de `flutter_launcher_icons`) y aplicada a los
+    5 tamaños existentes en `android/app/src/main/res/mipmap-*/ic_launcher.png`.
+    Linux sigue sin `.desktop`/ícono empaquetado (no existía antes tampoco).
+- Verificado de nuevo tras repo+carpeta+ícono: `bash tool/check.sh` limpio
+  y `flutter build linux --debug` compila desde la ruta nueva.
+
 ### 2026-09-10 — Migración de íconos: Material → Lucide
 
 - **Decisión** (con el usuario): Material `Icons.*` no combinaba con Geist
@@ -85,8 +132,9 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 - **Nota**: `directives_ordering` (lint de `very_good_analysis`) ordena
   **todos** los imports `package:` como una sola secuencia alfabética
   (ignora los saltos de línea que separan "paquetes externos" de
-  `just_in_time/*` por convención visual) — `lucide_icons_flutter` cae
-  después de `just_in_time/*` (`j` < `l`) en casi todos los archivos.
+  `ridge/*` por convención visual) — tras el rebranding a Ridge,
+  `lucide_icons_flutter` ahora cae **antes** de `ridge/*` (`l` < `r`),
+  al revés que con `just_in_time/*` (`j` < `l`).
 
 ### 2026-09-10 — Curso SQL/PostgreSQL + integración de WIP (Bash y Survival)
 
@@ -152,7 +200,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 - **Verificar todo contenido ejecutándolo**: Go `gofmt` + `go run`; SQL
   PostgreSQL 16 real; Bash smoke run.
 - **Progreso por `lessonId`**: antes de reasignar snippet a un id de lección
-  con progreso real, consultar `~/Documents/jit.db.sqlite`
+  con progreso real, consultar `~/Documents/ridge.db.sqlite`
   (`lesson_progress_cache`).
 
 ## Pendientes / próximos pasos
@@ -175,6 +223,6 @@ python3 .claude/skills/content-curriculum/scripts/audit_lesson_order.py \
   assets/content/snippets/sql_v1.json \
   assets/content/learning_paths/sql_foundations_v1.json
 # Postgres para verificar snippets SQL:
-podman run -d --rm --name jit-sql-pg -e POSTGRES_PASSWORD=postgres \
+podman run -d --rm --name ridge-sql-pg -e POSTGRES_PASSWORD=postgres \
   docker.io/library/postgres:16-alpine
 ```

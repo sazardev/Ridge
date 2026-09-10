@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
 
 /// A 0-9 numeric pad with a backspace key, laid out for PIN entry.
 class NumericKeypad extends StatelessWidget {
@@ -93,7 +92,7 @@ class _KeypadButtonState extends State<_KeypadButton> {
             child: Center(
               child: widget.label == '⌫'
                   ? Icon(
-                      LucideIcons.delete,
+                      LucideIcons.delete300,
                       color: colorScheme.onSurfaceVariant,
                     )
                   : Text(

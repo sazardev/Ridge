@@ -1,23 +1,23 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
-import 'package:just_in_time/features/progression/domain/entities/key_transition_sample.dart';
-import 'package:just_in_time/features/progression/domain/entities/keystroke_sample.dart';
-import 'package:just_in_time/features/progression/domain/entities/mastery_status.dart';
-import 'package:just_in_time/features/progression/domain/entities/ngram_sample.dart';
-import 'package:just_in_time/features/progression/domain/entities/personal_history_comparison.dart';
-import 'package:just_in_time/features/progression/domain/entities/precision_result.dart';
-import 'package:just_in_time/features/progression/domain/entities/progress_snapshot.dart';
-import 'package:just_in_time/features/progression/domain/entities/session_activity_sample.dart';
-import 'package:just_in_time/features/progression/domain/entities/unprocessed_session.dart';
-import 'package:just_in_time/features/progression/domain/repositories/progression_repository.dart';
-import 'package:just_in_time/features/progression/infrastructure/progression_dao.dart';
-import 'package:just_in_time/features/progression/infrastructure/progression_mapper.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/features/progression/domain/entities/key_transition_sample.dart';
+import 'package:ridge/features/progression/domain/entities/keystroke_sample.dart';
+import 'package:ridge/features/progression/domain/entities/mastery_status.dart';
+import 'package:ridge/features/progression/domain/entities/ngram_sample.dart';
+import 'package:ridge/features/progression/domain/entities/personal_history_comparison.dart';
+import 'package:ridge/features/progression/domain/entities/precision_result.dart';
+import 'package:ridge/features/progression/domain/entities/progress_snapshot.dart';
+import 'package:ridge/features/progression/domain/entities/session_activity_sample.dart';
+import 'package:ridge/features/progression/domain/entities/unprocessed_session.dart';
+import 'package:ridge/features/progression/domain/repositories/progression_repository.dart';
+import 'package:ridge/features/progression/infrastructure/progression_dao.dart';
+import 'package:ridge/features/progression/infrastructure/progression_mapper.dart';
 
 /// Drift-backed adapter for [ProgressionRepository], over [ProgressionDao]
 /// (which owns every query — see its class doc for why this lives

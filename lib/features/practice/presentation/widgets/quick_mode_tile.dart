@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/core/theme/app_shapes.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
 
 /// A single direct-entry practice-mode shortcut on the Practice hub
 /// (SPEC.md §5.1-§5.3) — unlike `showPracticeModePickerSheet`, tapping

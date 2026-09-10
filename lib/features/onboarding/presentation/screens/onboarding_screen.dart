@@ -2,16 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/core/window/window_bar.dart';
-import 'package:just_in_time/features/onboarding/presentation/widgets/onboarding_appearance_page.dart';
-import 'package:just_in_time/features/onboarding/presentation/widgets/onboarding_device_info_page.dart';
-import 'package:just_in_time/features/onboarding/presentation/widgets/onboarding_page.dart';
-import 'package:just_in_time/features/onboarding/presentation/widgets/onboarding_page_dots.dart';
-import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/window/window_bar.dart';
+import 'package:ridge/features/onboarding/presentation/widgets/onboarding_appearance_page.dart';
+import 'package:ridge/features/onboarding/presentation/widgets/onboarding_device_info_page.dart';
+import 'package:ridge/features/onboarding/presentation/widgets/onboarding_page.dart';
+import 'package:ridge/features/onboarding/presentation/widgets/onboarding_page_dots.dart';
+import 'package:ridge/features/settings/presentation/providers/settings_providers.dart';
 
 /// First-run, full-screen introduction shown exactly once — before the
 /// Guest Profile even exists (see `app_router.dart`'s redirect) — walking
@@ -48,21 +47,21 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   List<Widget> _pages(AppLocalizations l10n) => [
     OnboardingPage(
       data: OnboardingPageData(
-        icon: LucideIcons.terminal,
+        icon: LucideIcons.terminal300,
         title: l10n.onboardingWelcomeTitle,
         description: l10n.onboardingWelcomeDescription,
       ),
     ),
     OnboardingPage(
       data: OnboardingPageData(
-        icon: LucideIcons.chartLine,
+        icon: LucideIcons.chartLine300,
         title: l10n.onboardingMetricsTitle,
         description: l10n.onboardingMetricsDescription,
       ),
     ),
     OnboardingPage(
       data: OnboardingPageData(
-        icon: LucideIcons.route,
+        icon: LucideIcons.route300,
         title: l10n.onboardingPathsTitle,
         description: l10n.onboardingPathsDescription,
       ),
@@ -71,7 +70,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     const OnboardingDeviceInfoPage(),
     OnboardingPage(
       data: OnboardingPageData(
-        icon: LucideIcons.rocket,
+        icon: LucideIcons.rocket300,
         title: l10n.onboardingReadyTitle,
         description: l10n.onboardingReadyDescription,
       ),

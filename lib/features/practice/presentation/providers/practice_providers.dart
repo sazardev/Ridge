@@ -1,15 +1,15 @@
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/core/persistence/drift/database_provider.dart';
-import 'package:just_in_time/features/content/presentation/providers/content_providers.dart';
-import 'package:just_in_time/features/practice/application/usecases/finish_practice_session_usecase.dart';
-import 'package:just_in_time/features/practice/application/usecases/get_next_sprint_snippet_usecase.dart';
-import 'package:just_in_time/features/practice/application/usecases/start_practice_session_usecase.dart';
-import 'package:just_in_time/features/practice/domain/repositories/session_repository.dart';
-import 'package:just_in_time/features/practice/infrastructure/practice_dao.dart';
-import 'package:just_in_time/features/practice/infrastructure/session_repository_impl.dart';
-import 'package:just_in_time/features/practice/presentation/services/keystroke_sound_player.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_sound_pack.dart';
-import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/core/persistence/drift/database_provider.dart';
+import 'package:ridge/features/content/presentation/providers/content_providers.dart';
+import 'package:ridge/features/practice/application/usecases/finish_practice_session_usecase.dart';
+import 'package:ridge/features/practice/application/usecases/get_next_sprint_snippet_usecase.dart';
+import 'package:ridge/features/practice/application/usecases/start_practice_session_usecase.dart';
+import 'package:ridge/features/practice/domain/repositories/session_repository.dart';
+import 'package:ridge/features/practice/infrastructure/practice_dao.dart';
+import 'package:ridge/features/practice/infrastructure/session_repository_impl.dart';
+import 'package:ridge/features/practice/presentation/services/keystroke_sound_player.dart';
+import 'package:ridge/features/settings/domain/entities/app_sound_pack.dart';
+import 'package:ridge/features/settings/presentation/providers/settings_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'practice_providers.g.dart';

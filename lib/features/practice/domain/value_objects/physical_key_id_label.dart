@@ -1,5 +1,5 @@
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 
 /// Localized display label for a [PhysicalKeyId], shared by every widget
 /// that renders one raw physical key (SPEC.md §4.1's key-transition

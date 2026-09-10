@@ -1,4 +1,4 @@
-import 'package:just_in_time/features/practice/domain/entities/hand.dart';
+import 'package:ridge/features/practice/domain/entities/hand.dart';
 
 /// The finger assigned to a key under standard touch-typing technique
 /// (SPEC.md §4.1).

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/core/window/window_bar.dart';
-import 'package:just_in_time/features/profile/domain/entities/favorite_language.dart';
-import 'package:just_in_time/features/profile/presentation/profile_labels.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/window/window_bar.dart';
+import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
+import 'package:ridge/features/profile/presentation/profile_labels.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 
 /// First-run screen: choose a username and create the on-device Guest
 /// Profile (SPEC.md §7.1), plus an optional quick pick of favorite
@@ -96,7 +95,7 @@ class _CreateProfileScreenState extends ConsumerState<CreateProfileScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                          LucideIcons.user,
+                          LucideIcons.user300,
                           size: 40,
                           color: colorScheme.primary,
                         ),

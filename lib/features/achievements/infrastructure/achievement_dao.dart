@@ -1,9 +1,9 @@
 import 'package:drift/drift.dart';
 
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/features/achievements/infrastructure/tables/achievements_unlocked_table.dart';
-import 'package:just_in_time/features/practice/infrastructure/tables/keystroke_events_table.dart';
-import 'package:just_in_time/features/practice/infrastructure/tables/typing_sessions_table.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/features/achievements/infrastructure/tables/achievements_unlocked_table.dart';
+import 'package:ridge/features/practice/infrastructure/tables/keystroke_events_table.dart';
+import 'package:ridge/features/practice/infrastructure/tables/typing_sessions_table.dart';
 
 part 'achievement_dao.g.dart';
 

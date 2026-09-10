@@ -4,9 +4,9 @@
 // (backspace, and Delete-to-truncate via review-cursor navigation), and
 // the live green/red classification of a clean run.
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke_result.dart';
-import 'package:just_in_time/features/practice/domain/services/keystroke_stream_recorder.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
+import 'package:ridge/features/practice/domain/services/keystroke_stream_recorder.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 
 void main() {
   group('clean run (live feedback, hard lock)', () {

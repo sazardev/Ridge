@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_typography.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_typography.dart';
 
 /// The result screen's fixed (never-scrolls) footer: Retry/Continue side
 /// by side — Retry on the left, Continue on the right, matching how a
@@ -61,7 +60,7 @@ class SessionResultFooter extends StatelessWidget {
                         vertical: 12,
                       ),
                     ),
-                    icon: const Icon(LucideIcons.info),
+                    icon: const Icon(LucideIcons.info300),
                     label: _ButtonLabelWithKeyHint(
                       label: l10n.practiceResultLearnMoreTitle,
                       keyHint: 'I',

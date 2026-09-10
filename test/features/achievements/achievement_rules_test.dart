@@ -2,9 +2,9 @@
 // is hand-fabricated. Covers each of SPEC.md §12's five rules at their
 // exact boundary (the threshold itself passes; one unit below does not).
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/achievements/domain/entities/maratonista_tier.dart';
-import 'package:just_in_time/features/achievements/domain/entities/streak_tier.dart';
-import 'package:just_in_time/features/achievements/domain/services/achievement_rules.dart';
+import 'package:ridge/features/achievements/domain/entities/maratonista_tier.dart';
+import 'package:ridge/features/achievements/domain/entities/streak_tier.dart';
+import 'package:ridge/features/achievements/domain/services/achievement_rules.dart';
 
 void main() {
   const rules = AchievementRules();

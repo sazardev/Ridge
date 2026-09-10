@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/core/theme/app_typography.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/presentation/content_labels.dart';
-import 'package:just_in_time/features/content/presentation/widgets/practice_mode_picker_sheet.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/theme/app_typography.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/presentation/content_labels.dart';
+import 'package:ridge/features/content/presentation/widgets/practice_mode_picker_sheet.dart';
 
 /// A single catalog entry in the snippet browser: title, difficulty and
 /// category badges, and a one-line code preview.

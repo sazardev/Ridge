@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
 
 /// Plain string identifiers for the practice-mode choices offered by
 /// [showPracticeModePickerSheet] — deliberately *not* `practice`'s own

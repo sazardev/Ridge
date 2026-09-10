@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/core/theme/app_shapes.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
 
 /// A titled card grouping related settings tiles, per the flat design
 /// system (see `AppShapes`, `app_theme.dart`).

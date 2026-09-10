@@ -1,5 +1,5 @@
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/syntax_token_type.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/syntax_token_type.dart';
 
 part 'rust_syntax_tokenizer.dart';
 part 'sql_syntax_tokenizer.dart';

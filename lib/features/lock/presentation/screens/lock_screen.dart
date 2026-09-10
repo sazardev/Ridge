@@ -3,15 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/core/window/window_bar.dart';
-import 'package:just_in_time/features/lock/presentation/providers/lock_providers.dart';
-import 'package:just_in_time/features/lock/presentation/widgets/numeric_keypad.dart';
-import 'package:just_in_time/features/lock/presentation/widgets/pin_dots.dart';
-import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/window/window_bar.dart';
+import 'package:ridge/features/lock/presentation/providers/lock_providers.dart';
+import 'package:ridge/features/lock/presentation/widgets/numeric_keypad.dart';
+import 'package:ridge/features/lock/presentation/widgets/pin_dots.dart';
+import 'package:ridge/features/settings/presentation/providers/settings_providers.dart';
 
 /// Which of the two flows [LockScreen] is running.
 enum LockScreenMode {
@@ -199,7 +198,7 @@ class _LockScreenState extends ConsumerState<LockScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        LucideIcons.lock,
+                        LucideIcons.lock300,
                         size: 40,
                         color: colorScheme.primary,
                       ),
@@ -238,7 +237,7 @@ class _LockScreenState extends ConsumerState<LockScreen> {
                           onPressed: _submitting
                               ? null
                               : _authenticateWithBiometrics,
-                          icon: const Icon(LucideIcons.fingerprint),
+                          icon: const Icon(LucideIcons.fingerprint300),
                           label: Text(l10n.lockUseBiometrics),
                         ),
                       ],

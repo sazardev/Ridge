@@ -20,7 +20,7 @@ not just "complex-looking" ones.
 
 For the `sql-foundations-v1` catalog, the equivalent of `go run` is
 executing against a real PostgreSQL 16 server — a disposable
-`podman run -d --rm --name jit-sql-pg -e POSTGRES_PASSWORD=postgres
+`podman run -d --rm --name ridge-sql-pg -e POSTGRES_PASSWORD=postgres
 docker.io/library/postgres:16-alpine` works well and needs no host
 install.
 

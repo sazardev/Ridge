@@ -6,11 +6,11 @@
 // silently dropped (the reported bug this test pins down).
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/practice/domain/entities/finger.dart';
-import 'package:just_in_time/features/practice/domain/entities/keyboard_row.dart';
-import 'package:just_in_time/features/practice/domain/services/key_layout_map.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
-import 'package:just_in_time/features/practice/presentation/physical_key_id_mapper.dart';
+import 'package:ridge/features/practice/domain/entities/finger.dart';
+import 'package:ridge/features/practice/domain/entities/keyboard_row.dart';
+import 'package:ridge/features/practice/domain/services/key_layout_map.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/presentation/physical_key_id_mapper.dart';
 
 void main() {
   test('the ISO intlBackslash key resolves to its own PhysicalKeyId', () {

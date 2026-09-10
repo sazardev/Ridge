@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:just_in_time/features/progression/domain/entities/trend.dart';
+import 'package:ridge/features/progression/domain/entities/trend.dart';
 
 /// One raw observation feeding a weakness ranking for a single key
 /// (character, finger, or n-gram text) — already reduced to exactly what

@@ -8,25 +8,25 @@
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/core/persistence/drift/database_provider.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet_length.dart';
-import 'package:just_in_time/features/content/domain/repositories/snippet_repository.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/content/presentation/providers/content_providers.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_session_status.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
-import 'package:just_in_time/features/practice/presentation/providers/practice_providers.dart';
-import 'package:just_in_time/features/practice/presentation/providers/practice_session_controller.dart';
-import 'package:just_in_time/features/profile/domain/entities/guest_profile.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/core/persistence/drift/database_provider.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/entities/snippet_length.dart';
+import 'package:ridge/features/content/domain/repositories/snippet_repository.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/content/presentation/providers/content_providers.dart';
+import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
+import 'package:ridge/features/practice/domain/entities/practice_session_status.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
+import 'package:ridge/features/practice/presentation/providers/practice_session_controller.dart';
+import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 
 const _snippet = Snippet(
   id: SnippetId('go-survival-test-001'),
@@ -114,6 +114,14 @@ class _FakeSnippetRepository implements SnippetRepository {
   Future<Result<void, AppFailure>> upsertCatalogEntries(
     List<Snippet> entries,
   ) async => const Result.ok(null);
+
+  @override
+  Future<Result<List<Snippet>, AppFailure>> getByIds(Set<SnippetId> ids) async {
+    return Result.ok([
+      for (final snippet in snippets)
+        if (ids.contains(snippet.id)) snippet,
+    ]);
+  }
 }
 
 /// Polls [condition] until it holds, failing the test on timeout — used

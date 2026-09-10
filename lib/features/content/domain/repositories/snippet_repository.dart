@@ -1,12 +1,12 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet_length.dart';
-import 'package:just_in_time/features/content/domain/repositories/snippet_catalog_source.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/entities/snippet_length.dart';
+import 'package:ridge/features/content/domain/repositories/snippet_catalog_source.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
 
 /// Driven port: the application core depends on this abstraction only.
 /// Infrastructure provides the adapter (currently a local drift table
@@ -17,6 +17,12 @@ abstract interface class SnippetRepository {
 
   /// Returns the catalog entry identified by [id].
   Future<Result<Snippet, AppFailure>> getById(SnippetId id);
+
+  /// Returns every catalog entry whose id is in [ids] — a single batched
+  /// lookup, for callers that would otherwise call [getById] once per id
+  /// in a loop (e.g. joining a Learning Path's lessons against the
+  /// catalog).
+  Future<Result<List<Snippet>, AppFailure>> getByIds(Set<SnippetId> ids);
 
   /// Returns every active catalog entry matching all of the given,
   /// optional filters. A `null` filter means "don't filter on this".

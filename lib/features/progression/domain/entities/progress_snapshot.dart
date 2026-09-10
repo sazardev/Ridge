@@ -1,10 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
-import 'package:just_in_time/features/progression/domain/entities/activity_report.dart';
-import 'package:just_in_time/features/progression/domain/entities/mastery_status.dart';
-import 'package:just_in_time/features/progression/domain/entities/weakness_report.dart';
-import 'package:just_in_time/features/progression/domain/entities/xp_summary.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/features/progression/domain/entities/activity_report.dart';
+import 'package:ridge/features/progression/domain/entities/mastery_status.dart';
+import 'package:ridge/features/progression/domain/entities/weakness_report.dart';
+import 'package:ridge/features/progression/domain/entities/xp_summary.dart';
 
 part 'progress_snapshot.freezed.dart';
 

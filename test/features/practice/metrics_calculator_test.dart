@@ -5,12 +5,12 @@
 // fatigue-by-thirds, max streak, and the zero-keystroke/only-corrections
 // edge cases.
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/practice/domain/entities/finger.dart';
-import 'package:just_in_time/features/practice/domain/entities/keyboard_row.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke_result.dart';
-import 'package:just_in_time/features/practice/domain/services/metrics_calculator.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/entities/finger.dart';
+import 'package:ridge/features/practice/domain/entities/keyboard_row.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
+import 'package:ridge/features/practice/domain/services/metrics_calculator.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 
 Keystroke _keystroke({
   required int seq,

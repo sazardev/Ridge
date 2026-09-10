@@ -30,8 +30,8 @@ leniency, not because the concept itself is optional).
 just tests —
 
 ```bash
-sqlite3 ~/Documents/jit.db.sqlite "PRAGMA user_version;"          # matches new schemaVersion
-sqlite3 ~/Documents/jit.db.sqlite "PRAGMA table_info(snippets);"  # new columns present
+sqlite3 ~/Documents/ridge.db.sqlite "PRAGMA user_version;"          # matches new schemaVersion
+sqlite3 ~/Documents/ridge.db.sqlite "PRAGMA table_info(snippets);"  # new columns present
 ```
 
 (The migration only actually runs the next time the real app launches and

@@ -2,11 +2,11 @@
 // backward-compatibility fallback for blobs persisted before shortcuts
 // became customizable.
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_shortcut_action.dart';
-import 'package:just_in_time/features/settings/domain/entities/shortcut_binding.dart';
-import 'package:just_in_time/features/settings/infrastructure/settings_dto.dart';
-import 'package:just_in_time/features/settings/infrastructure/settings_mapper.dart';
+import 'package:ridge/features/settings/domain/entities/app_settings.dart';
+import 'package:ridge/features/settings/domain/entities/app_shortcut_action.dart';
+import 'package:ridge/features/settings/domain/entities/shortcut_binding.dart';
+import 'package:ridge/features/settings/infrastructure/settings_dto.dart';
+import 'package:ridge/features/settings/infrastructure/settings_mapper.dart';
 
 void main() {
   test('toDto -> toDomain round-trips a customized binding exactly', () {

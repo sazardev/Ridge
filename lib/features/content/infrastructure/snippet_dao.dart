@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/features/content/infrastructure/tables/snippets_table.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/features/content/infrastructure/tables/snippets_table.dart';
 
 part 'snippet_dao.g.dart';
 
@@ -79,5 +79,18 @@ class SnippetDao extends DatabaseAccessor<AppDatabase> with _$SnippetDaoMixin {
   /// Inserts [row], or replaces the existing row with the same id.
   Future<void> upsertSnippet(SnippetsCompanion row) {
     return into(snippets).insertOnConflictUpdate(row);
+  }
+
+  /// Inserts/replaces every row in [rows] in one batch — a single table
+  /// change notification instead of one per row, unlike calling
+  /// [upsertSnippet] in a loop.
+  Future<void> upsertSnippets(List<SnippetsCompanion> rows) {
+    return batch((batch) => batch.insertAllOnConflictUpdate(snippets, rows));
+  }
+
+  /// Returns every row (regardless of active status) whose id is in [ids].
+  Future<List<SnippetRow>> getByIds(Set<String> ids) {
+    if (ids.isEmpty) return Future.value(const []);
+    return (select(snippets)..where((row) => row.id.isIn(ids))).get();
   }
 }

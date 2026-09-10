@@ -1,20 +1,20 @@
 import 'dart:async';
 
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/core/persistence/drift/database_provider.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/content/presentation/providers/content_providers.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
-import 'package:just_in_time/features/progression/application/usecases/get_personal_history_comparison_usecase.dart';
-import 'package:just_in_time/features/progression/application/usecases/get_recommended_snippet_usecase.dart';
-import 'package:just_in_time/features/progression/application/usecases/recompute_progress_snapshot_usecase.dart';
-import 'package:just_in_time/features/progression/domain/entities/personal_history_comparison.dart';
-import 'package:just_in_time/features/progression/domain/entities/progress_snapshot.dart';
-import 'package:just_in_time/features/progression/domain/repositories/progression_repository.dart';
-import 'package:just_in_time/features/progression/infrastructure/progression_dao.dart';
-import 'package:just_in_time/features/progression/infrastructure/progression_repository_impl.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/core/persistence/drift/database_provider.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/content/presentation/providers/content_providers.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/features/progression/application/usecases/get_personal_history_comparison_usecase.dart';
+import 'package:ridge/features/progression/application/usecases/get_recommended_snippet_usecase.dart';
+import 'package:ridge/features/progression/application/usecases/recompute_progress_snapshot_usecase.dart';
+import 'package:ridge/features/progression/domain/entities/personal_history_comparison.dart';
+import 'package:ridge/features/progression/domain/entities/progress_snapshot.dart';
+import 'package:ridge/features/progression/domain/repositories/progression_repository.dart';
+import 'package:ridge/features/progression/infrastructure/progression_dao.dart';
+import 'package:ridge/features/progression/infrastructure/progression_repository_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'progression_providers.g.dart';

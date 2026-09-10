@@ -5,25 +5,25 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/features/achievements/domain/entities/achievement.dart';
-import 'package:just_in_time/features/achievements/presentation/providers/achievements_providers.dart';
-import 'package:just_in_time/features/achievements/presentation/widgets/achievement_unlocked_toast.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/presentation/content_labels.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke_result.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_mode.dart';
-import 'package:just_in_time/features/practice/domain/entities/practice_session_status.dart';
-import 'package:just_in_time/features/practice/domain/services/survival_run_tracker.dart';
-import 'package:just_in_time/features/practice/presentation/providers/practice_session_controller.dart';
-import 'package:just_in_time/features/practice/presentation/widgets/keystroke_capture_field.dart';
-import 'package:just_in_time/features/practice/presentation/widgets/session_result_footer.dart';
-import 'package:just_in_time/features/practice/presentation/widgets/session_result_panel.dart';
-import 'package:just_in_time/features/practice/presentation/widgets/sprint_countdown_badge.dart';
-import 'package:just_in_time/features/practice/presentation/widgets/survival_lives_badge.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/features/achievements/domain/entities/achievement.dart';
+import 'package:ridge/features/achievements/presentation/providers/achievements_providers.dart';
+import 'package:ridge/features/achievements/presentation/widgets/achievement_unlocked_toast.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/presentation/content_labels.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
+import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
+import 'package:ridge/features/practice/domain/entities/practice_session_status.dart';
+import 'package:ridge/features/practice/domain/services/survival_run_tracker.dart';
+import 'package:ridge/features/practice/presentation/providers/practice_session_controller.dart';
+import 'package:ridge/features/practice/presentation/widgets/keystroke_capture_field.dart';
+import 'package:ridge/features/practice/presentation/widgets/session_result_footer.dart';
+import 'package:ridge/features/practice/presentation/widgets/session_result_panel.dart';
+import 'package:ridge/features/practice/presentation/widgets/sprint_countdown_badge.dart';
+import 'package:ridge/features/practice/presentation/widgets/survival_lives_badge.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 
 /// Hosts one full `idle -> running -> finished -> result` practice run
 /// for [snippet] under [mode] as a single screen — no route change

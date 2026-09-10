@@ -1,4 +1,4 @@
-import 'package:just_in_time/features/profile/presentation/keyboard_shape_family.dart';
+import 'package:ridge/features/profile/presentation/keyboard_shape_family.dart';
 
 /// Curated `keyboardModel` string → [KeyboardShapeFamily] classification,
 /// one entry per non-`'Other'` value in `kKeyboardModelSuggestions`

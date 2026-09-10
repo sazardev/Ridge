@@ -1,10 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/practice/domain/entities/character_stat.dart';
-import 'package:just_in_time/features/practice/domain/entities/finger.dart';
-import 'package:just_in_time/features/practice/domain/entities/finger_stat.dart';
-import 'package:just_in_time/features/practice/domain/entities/ngram_stat.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/entities/character_stat.dart';
+import 'package:ridge/features/practice/domain/entities/finger.dart';
+import 'package:ridge/features/practice/domain/entities/finger_stat.dart';
+import 'package:ridge/features/practice/domain/entities/ngram_stat.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 
 part 'session_metrics.freezed.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 
 /// The one place Flutter's `PhysicalKeyboardKey` space gets translated
 /// into our own domain [PhysicalKeyId] — the capture widget is the only

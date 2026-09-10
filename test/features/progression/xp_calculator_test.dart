@@ -4,8 +4,8 @@
 // (applied once per call when `isFirstCompletion` is true), and the
 // streak bonus cap at 14 days (SPEC.md §6.1).
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/progression/domain/services/xp_calculator.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/progression/domain/services/xp_calculator.dart';
 
 void main() {
   const calculator = XpCalculator();

@@ -1,4 +1,4 @@
-# STACK.md — Just In Time
+# STACK.md — Ridge
 ### Arquitectura técnica y stack tecnológico
 
 > Este documento declara **cómo se construye** el producto descrito en `SPEC.md`. Toda decisión aquí debe trazarse a una necesidad de negocio de `SPEC.md`; si una sección de este documento no sirve a ninguna regla de negocio, sobra. Donde sea relevante se referencia la sección de `SPEC.md` que justifica la decisión técnica.
@@ -290,7 +290,7 @@ Cubre, con una sola pieza de infraestructura administrada y de bajo costo, los c
 Requisito de negocio (`SPEC.md §7`): dos identidades, ninguna con correo electrónico.
 
 - **Perfil de Invitado**: **no usa Supabase Auth**. Es un UUID generado en el dispositivo (`uuid` package) más un `username` local. Vive enteramente en `drift`. Nunca toca la red (`SPEC.md §7.1`, §8.1).
-- **Cuenta Registrada**: Supabase Auth exige internamente un correo o teléfono como identificador; para no exponer ese requisito al usuario, se usa un **correo sintético interno**, derivado determinísticamente del username (p. ej. `"<username-normalizado>@users.justintime.internal"`), nunca mostrado en la UI y nunca usado para enviar nada:
+- **Cuenta Registrada**: Supabase Auth exige internamente un correo o teléfono como identificador; para no exponer ese requisito al usuario, se usa un **correo sintético interno**, derivado determinísticamente del username (p. ej. `"<username-normalizado>@users.ridge.internal"`), nunca mostrado en la UI y nunca usado para enviar nada:
   - **Registro**: el cliente llama a una Edge Function `register` con `{username, password}`. La función valida formato/unicidad de `username`, crea el usuario en Supabase Auth (Admin API) con el correo sintético, crea la fila en `profiles`, genera un **código de recuperación** de un solo uso (`SPEC.md §7.2`), guarda solo su hash (nunca el valor en claro) en `recovery_codes`, y devuelve el código en claro **una única vez** para que el cliente lo muestre y el usuario lo guarde.
   - **Login**: el cliente deriva el mismo correo sintético a partir del `username` ingresado y llama directamente a `supabase.auth.signInWithPassword` — no necesita ida y vuelta a una función para iniciar sesión, lo que mantiene el login rápido y disponible incluso con conectividad intermitente.
   - **Recuperación**: Edge Function `recoverAccount` con `{username, recoveryCode, newPassword}`; verifica el hash, usa la Admin API para fijar la nueva contraseña, e invalida/reemite un nuevo código de recuperación de un solo uso.

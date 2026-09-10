@@ -6,7 +6,7 @@
 // this app's own default (dark, non-expressive) palette.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/content/presentation/syntax_colors.dart';
+import 'package:ridge/features/content/presentation/syntax_colors.dart';
 
 double _hue(Color c) => HSLColor.fromColor(c).hue;
 

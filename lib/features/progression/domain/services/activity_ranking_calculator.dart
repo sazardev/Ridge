@@ -1,12 +1,12 @@
 import 'dart:math' as math;
 
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/progression/domain/entities/activity_report.dart';
-import 'package:just_in_time/features/progression/domain/entities/category_activity_stat.dart';
-import 'package:just_in_time/features/progression/domain/entities/exercise_activity_stat.dart';
-import 'package:just_in_time/features/progression/domain/entities/session_activity_sample.dart';
-import 'package:just_in_time/features/progression/domain/entities/trend.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/progression/domain/entities/activity_report.dart';
+import 'package:ridge/features/progression/domain/entities/category_activity_stat.dart';
+import 'package:ridge/features/progression/domain/entities/exercise_activity_stat.dart';
+import 'package:ridge/features/progression/domain/entities/session_activity_sample.dart';
+import 'package:ridge/features/progression/domain/entities/trend.dart';
 
 /// Pure, stateless activity-ranking math: "dónde practicas más" and
 /// "dónde tienes el puntaje más bajo", per category and per exercise.

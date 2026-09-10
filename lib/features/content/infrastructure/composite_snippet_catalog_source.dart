@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart' show debugPrint;
 
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/repositories/snippet_catalog_source.dart';
-import 'package:just_in_time/features/content/infrastructure/external_snippet_pack_source.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_local_data_source.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/repositories/snippet_catalog_source.dart';
+import 'package:ridge/features/content/infrastructure/external_snippet_pack_source.dart';
+import 'package:ridge/features/content/infrastructure/snippet_local_data_source.dart';
 
 /// The [SnippetCatalogSource] actually bound at runtime
 /// (`content_providers.dart`): every bundled snippet, plus every snippet

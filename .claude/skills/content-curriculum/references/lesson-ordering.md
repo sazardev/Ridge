@@ -87,7 +87,7 @@ Before reassigning which snippet occupies an existing lesson id (i.e. any
 reorder), always check the real dev database first:
 
 ```bash
-sqlite3 ~/Documents/jit.db.sqlite \
+sqlite3 ~/Documents/ridge.db.sqlite \
   "SELECT lesson_id, status FROM lesson_progress_cache WHERE status != 'locked';"
 ```
 

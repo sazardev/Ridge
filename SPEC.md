@@ -1,4 +1,4 @@
-# SPEC — Just In Time
+# SPEC — Ridge
 ### La lógica de negocio del juego de mecanografía para programadores
 
 > Este documento describe **qué es el producto y cómo se comporta**, no cómo se construye. No contiene arquitectura, stacks, esquemas de base de datos ni contratos de API. Es la fuente de verdad conceptual: cualquier decisión de diseño o de implementación debe poder trazarse a una regla escrita aquí.
@@ -32,7 +32,7 @@
 
 ## 0. Resumen ejecutivo
 
-**Just In Time** es un juego de mecanografía diseñado específicamente para programadores. A diferencia de las apps de mecanografía genéricas (que usan frases aleatorias, citas o texto literario), el material de práctica es **código real** — empezando por Go — de modo que el usuario entrena el músculo que realmente usa en su trabajo: escribir `func`, `if err != nil {`, llaves, dos puntos, guiones bajos, paréntesis anidados y operadores, no prosa.
+**Ridge** es un juego de mecanografía diseñado específicamente para programadores. A diferencia de las apps de mecanografía genéricas (que usan frases aleatorias, citas o texto literario), el material de práctica es **código real** — empezando por Go — de modo que el usuario entrena el músculo que realmente usa en su trabajo: escribir `func`, `if err != nil {`, llaves, dos puntos, guiones bajos, paréntesis anidados y operadores, no prosa.
 
 El diferenciador del producto no es "otro juego de teclear rápido": es la **profundidad y calidad de la metadata** que se captura de cada sesión — tiempo por carácter, dedo usado, velocidad por cadena de caracteres, consistencia, errores por tipo — convertida en información accionable para que el usuario entienda *exactamente* qué le cuesta trabajo y por qué.
 

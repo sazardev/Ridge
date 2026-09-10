@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/achievements/domain/entities/achievement_id.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
+import 'package:ridge/features/achievements/domain/entities/achievement_id.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
 
 part 'achievement.freezed.dart';
 

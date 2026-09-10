@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_shortcut_action.dart';
-import 'package:just_in_time/features/settings/domain/entities/shortcut_binding.dart';
-import 'package:just_in_time/features/settings/presentation/shortcut_activator.dart';
+import 'package:ridge/features/settings/domain/entities/app_shortcut_action.dart';
+import 'package:ridge/features/settings/domain/entities/shortcut_binding.dart';
+import 'package:ridge/features/settings/presentation/shortcut_activator.dart';
 
 /// Binds each of the 5 "go to section" [AppShortcutAction]s (capped to
 /// [branchCount]) to jump straight to that top-level app section, and

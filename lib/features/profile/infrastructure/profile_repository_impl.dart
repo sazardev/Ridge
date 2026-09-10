@@ -1,13 +1,13 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/profile/domain/entities/favorite_language.dart';
-import 'package:just_in_time/features/profile/domain/entities/guest_profile.dart';
-import 'package:just_in_time/features/profile/domain/entities/keyboard_layout.dart';
-import 'package:just_in_time/features/profile/domain/repositories/device_info_source.dart';
-import 'package:just_in_time/features/profile/domain/repositories/profile_repository.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
-import 'package:just_in_time/features/profile/infrastructure/guest_profile_dao.dart';
-import 'package:just_in_time/features/profile/infrastructure/profile_mapper.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
+import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
+import 'package:ridge/features/profile/domain/repositories/device_info_source.dart';
+import 'package:ridge/features/profile/domain/repositories/profile_repository.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/features/profile/infrastructure/guest_profile_dao.dart';
+import 'package:ridge/features/profile/infrastructure/profile_mapper.dart';
 
 /// Drift-backed adapter for [ProfileRepository].
 ///

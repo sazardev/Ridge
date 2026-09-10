@@ -4,7 +4,7 @@
 // timezone-safe local-date handling (dates with a time-of-day component
 // must still bucket correctly by calendar day).
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/progression/domain/services/streak_calculator.dart';
+import 'package:ridge/features/progression/domain/services/streak_calculator.dart';
 
 void main() {
   const calculator = StreakCalculator();

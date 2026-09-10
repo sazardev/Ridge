@@ -1,5 +1,5 @@
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/repositories/snippet_repository.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/repositories/snippet_repository.dart';
 
 /// Driven port for the bundled, curated snippet catalog (SPEC.md §3.2).
 ///

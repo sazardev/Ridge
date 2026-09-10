@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:just_in_time/app.dart';
-import 'package:just_in_time/core/window/desktop_platform.dart';
-import 'package:just_in_time/core/window/window_geometry_listener.dart';
-import 'package:just_in_time/core/window/window_geometry_store.dart';
+import 'package:ridge/app.dart';
+import 'package:ridge/core/window/desktop_platform.dart';
+import 'package:ridge/core/window/window_geometry_listener.dart';
+import 'package:ridge/core/window/window_geometry_store.dart';
 import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
@@ -25,7 +25,7 @@ Future<void> main() async {
       center: savedGeometry == null,
       backgroundColor: Colors.transparent,
       titleBarStyle: TitleBarStyle.hidden,
-      title: 'Just In Time',
+      title: 'Ridge',
     );
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
       if (savedGeometry != null) {
@@ -45,5 +45,5 @@ Future<void> main() async {
     windowManager.addListener(WindowGeometryListener(geometryStore));
   }
 
-  runApp(const ProviderScope(child: JustInTimeApp()));
+  runApp(const ProviderScope(child: RidgeApp()));
 }

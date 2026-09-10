@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/core/persistence/drift/database_provider.dart';
-import 'package:just_in_time/features/achievements/application/usecases/evaluate_achievements_usecase.dart';
-import 'package:just_in_time/features/achievements/domain/entities/achievement.dart';
-import 'package:just_in_time/features/achievements/domain/repositories/achievement_repository.dart';
-import 'package:just_in_time/features/achievements/infrastructure/achievement_dao.dart';
-import 'package:just_in_time/features/achievements/infrastructure/achievement_repository_impl.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
-import 'package:just_in_time/features/progression/presentation/providers/progression_providers.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/core/persistence/drift/database_provider.dart';
+import 'package:ridge/features/achievements/application/usecases/evaluate_achievements_usecase.dart';
+import 'package:ridge/features/achievements/domain/entities/achievement.dart';
+import 'package:ridge/features/achievements/domain/repositories/achievement_repository.dart';
+import 'package:ridge/features/achievements/infrastructure/achievement_dao.dart';
+import 'package:ridge/features/achievements/infrastructure/achievement_repository_impl.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/features/progression/presentation/providers/progression_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'achievements_providers.g.dart';

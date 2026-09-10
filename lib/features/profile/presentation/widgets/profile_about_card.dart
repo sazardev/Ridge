@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/features/profile/domain/entities/guest_profile.dart';
-import 'package:just_in_time/features/profile/presentation/keyboard_shape_lookup.dart';
-import 'package:just_in_time/features/profile/presentation/profile_labels.dart';
-import 'package:just_in_time/features/profile/presentation/widgets/keyboard_shape_preview.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/presentation/keyboard_shape_lookup.dart';
+import 'package:ridge/features/profile/presentation/profile_labels.dart';
+import 'package:ridge/features/profile/presentation/widgets/keyboard_shape_preview.dart';
 
 /// A card of the active profile's self-expression flair — favorite
 /// language, keyboard layout/brand, and favorite quote/programmer — with
@@ -56,7 +55,7 @@ class ProfileAboutCard extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: onEdit,
-                  icon: const Icon(LucideIcons.squarePen),
+                  icon: const Icon(LucideIcons.squarePen300),
                   tooltip: l10n.profileEditCustomizationAction,
                 ),
               ],
@@ -72,7 +71,7 @@ class ProfileAboutCard extends StatelessWidget {
               const SizedBox(height: 12),
               OutlinedButton.icon(
                 onPressed: onEdit,
-                icon: const Icon(LucideIcons.sparkles),
+                icon: const Icon(LucideIcons.sparkles300),
                 label: Text(l10n.profileEditCustomizationAction),
               ),
             ] else ...[
@@ -83,27 +82,27 @@ class ProfileAboutCard extends StatelessWidget {
                 children: [
                   for (final language in profile.favoriteLanguages)
                     Chip(
-                      avatar: const Icon(LucideIcons.code, size: 18),
+                      avatar: const Icon(LucideIcons.code300, size: 18),
                       label: Text(language.label(l10n)),
                     ),
                   if (profile.keyboardLayout != null)
                     Chip(
-                      avatar: const Icon(LucideIcons.keyboard, size: 18),
+                      avatar: const Icon(LucideIcons.keyboard300, size: 18),
                       label: Text(profile.keyboardLayout!.label(l10n)),
                     ),
                   if (profile.keyboardBrand?.isNotEmpty ?? false)
                     Chip(
-                      avatar: const Icon(LucideIcons.memoryStick, size: 18),
+                      avatar: const Icon(LucideIcons.memoryStick300, size: 18),
                       label: _ChipLabel(profile.keyboardBrand!),
                     ),
                   if (profile.keyboardModel?.isNotEmpty ?? false)
                     Chip(
-                      avatar: const Icon(LucideIcons.circuitBoard, size: 18),
+                      avatar: const Icon(LucideIcons.circuitBoard300, size: 18),
                       label: _ChipLabel(profile.keyboardModel!),
                     ),
                   if (profile.favoriteProgrammer?.isNotEmpty ?? false)
                     Chip(
-                      avatar: const Icon(LucideIcons.user, size: 18),
+                      avatar: const Icon(LucideIcons.user300, size: 18),
                       label: _ChipLabel(profile.favoriteProgrammer!),
                     ),
                 ],
@@ -127,7 +126,7 @@ class ProfileAboutCard extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(LucideIcons.quote, color: colorScheme.primary),
+                        Icon(LucideIcons.quote300, color: colorScheme.primary),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(

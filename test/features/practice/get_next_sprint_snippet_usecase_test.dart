@@ -5,16 +5,16 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet_length.dart';
-import 'package:just_in_time/features/content/domain/repositories/snippet_repository.dart';
-import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
-import 'package:just_in_time/features/practice/application/usecases/get_next_sprint_snippet_usecase.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/domain/entities/snippet_length.dart';
+import 'package:ridge/features/content/domain/repositories/snippet_repository.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/practice/application/usecases/get_next_sprint_snippet_usecase.dart';
 
 Snippet _snippet(
   String id, {
@@ -80,6 +80,11 @@ class _FakeSnippetRepository implements SnippetRepository {
   Future<Result<void, AppFailure>> upsertCatalogEntries(
     List<Snippet> entries,
   ) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<List<Snippet>, AppFailure>> getByIds(Set<SnippetId> ids) async {
     throw UnimplementedError();
   }
 }

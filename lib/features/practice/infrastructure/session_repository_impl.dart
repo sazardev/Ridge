@@ -1,12 +1,12 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/practice/domain/entities/keystroke.dart';
-import 'package:just_in_time/features/practice/domain/entities/typing_session.dart';
-import 'package:just_in_time/features/practice/domain/repositories/session_repository.dart';
-import 'package:just_in_time/features/practice/infrastructure/practice_dao.dart';
-import 'package:just_in_time/features/practice/infrastructure/practice_mapper.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/practice/domain/entities/keystroke.dart';
+import 'package:ridge/features/practice/domain/entities/typing_session.dart';
+import 'package:ridge/features/practice/domain/repositories/session_repository.dart';
+import 'package:ridge/features/practice/infrastructure/practice_dao.dart';
+import 'package:ridge/features/practice/infrastructure/practice_mapper.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
 /// Which third (0, 1, or 2) of the session a keystroke at forward-index
 /// [forwardIndex] (out of [totalForward] forward keystrokes) falls in —

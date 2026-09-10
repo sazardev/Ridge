@@ -1,14 +1,14 @@
-import 'package:just_in_time/core/security/secure_storage_provider.dart';
-import 'package:just_in_time/features/lock/application/usecases/authenticate_with_biometrics_usecase.dart';
-import 'package:just_in_time/features/lock/application/usecases/check_biometric_availability_usecase.dart';
-import 'package:just_in_time/features/lock/application/usecases/clear_pin_usecase.dart';
-import 'package:just_in_time/features/lock/application/usecases/set_pin_usecase.dart';
-import 'package:just_in_time/features/lock/application/usecases/verify_pin_usecase.dart';
-import 'package:just_in_time/features/lock/domain/repositories/biometric_auth_repository.dart';
-import 'package:just_in_time/features/lock/domain/repositories/pin_repository.dart';
-import 'package:just_in_time/features/lock/infrastructure/local_auth_biometric_repository.dart';
-import 'package:just_in_time/features/lock/infrastructure/pin_repository_impl.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:ridge/core/security/secure_storage_provider.dart';
+import 'package:ridge/features/lock/application/usecases/authenticate_with_biometrics_usecase.dart';
+import 'package:ridge/features/lock/application/usecases/check_biometric_availability_usecase.dart';
+import 'package:ridge/features/lock/application/usecases/clear_pin_usecase.dart';
+import 'package:ridge/features/lock/application/usecases/set_pin_usecase.dart';
+import 'package:ridge/features/lock/application/usecases/verify_pin_usecase.dart';
+import 'package:ridge/features/lock/domain/repositories/biometric_auth_repository.dart';
+import 'package:ridge/features/lock/domain/repositories/pin_repository.dart';
+import 'package:ridge/features/lock/infrastructure/local_auth_biometric_repository.dart';
+import 'package:ridge/features/lock/infrastructure/pin_repository_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'lock_providers.g.dart';

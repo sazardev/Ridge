@@ -2,10 +2,10 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/features/progression/domain/entities/personal_history_comparison.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/features/progression/domain/entities/personal_history_comparison.dart';
 
 /// A simple bar/sparkline row (SPEC.md §7.1/§11.4's guest-only "local
 /// leaderboard") — one bar per recent session's net speed, tallest-first

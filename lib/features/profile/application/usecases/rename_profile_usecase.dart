@@ -1,7 +1,7 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/profile/application/usecases/create_guest_profile_usecase.dart';
-import 'package:just_in_time/features/profile/domain/repositories/profile_repository.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/profile/application/usecases/create_guest_profile_usecase.dart';
+import 'package:ridge/features/profile/domain/repositories/profile_repository.dart';
 
 /// Renames the on-device Guest Profile, applying the same validation as
 /// [CreateGuestProfileUseCase].

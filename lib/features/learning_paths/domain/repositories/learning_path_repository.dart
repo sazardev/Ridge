@@ -1,7 +1,7 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/learning_path.dart';
-import 'package:just_in_time/features/learning_paths/domain/value_objects/learning_path_id.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/learning_paths/domain/entities/learning_path.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/learning_path_id.dart';
 
 /// Driven port: read-only access to the bundled, curated curriculum
 /// (SPEC.md §5.7) — no user data lives behind this port, only authored

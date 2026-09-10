@@ -6,10 +6,10 @@
 // same calculator called three times with different key types), and
 // trend comparison across two adjacent 14-day windows.
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/practice/domain/entities/finger.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
-import 'package:just_in_time/features/progression/domain/entities/trend.dart';
-import 'package:just_in_time/features/progression/domain/services/weakness_ranking_calculator.dart';
+import 'package:ridge/features/practice/domain/entities/finger.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/progression/domain/entities/trend.dart';
+import 'package:ridge/features/progression/domain/services/weakness_ranking_calculator.dart';
 
 void main() {
   const calculator = WeaknessRankingCalculator();

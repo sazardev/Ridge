@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:just_in_time/features/settings/domain/entities/shortcut_binding.dart';
+import 'package:ridge/features/settings/domain/entities/shortcut_binding.dart';
 
 /// Converts a persisted, Flutter-free [ShortcutBinding] into the
 /// `SingleActivator` `CallbackShortcuts` widgets actually bind against —

@@ -2,9 +2,9 @@
 // for syntax-highlighting the capture field's code display, mirroring
 // `syntax_tokenizer_test.dart`'s Go coverage.
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/syntax_token_type.dart';
-import 'package:just_in_time/features/content/domain/services/syntax_tokenizer.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/syntax_token_type.dart';
+import 'package:ridge/features/content/domain/services/syntax_tokenizer.dart';
 
 void main() {
   const tokenizer = BashSyntaxTokenizer();

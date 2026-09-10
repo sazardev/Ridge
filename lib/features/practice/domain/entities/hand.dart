@@ -1,4 +1,4 @@
-import 'package:just_in_time/features/practice/domain/entities/finger.dart'
+import 'package:ridge/features/practice/domain/entities/finger.dart'
     show Finger;
 
 /// Which hand a [Finger] belongs to.

@@ -1,4 +1,4 @@
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'database_provider.g.dart';

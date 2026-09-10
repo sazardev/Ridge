@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/widgets/app_navigation_shortcuts.dart';
-import 'package:just_in_time/core/window/window_bar.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
-import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/widgets/app_navigation_shortcuts.dart';
+import 'package:ridge/core/window/window_bar.dart';
+import 'package:ridge/features/settings/domain/entities/app_settings.dart';
+import 'package:ridge/features/settings/presentation/providers/settings_providers.dart';
 
 /// Adaptive navigation frame: a rail on wide (Linux desktop) windows, a
 /// bottom bar on narrow (Android phone) ones — same destinations
@@ -45,27 +44,27 @@ class AppShell extends ConsumerWidget {
     // [StatefulNavigationShell.currentIndex].
     final destinations = [
       (
-        icon: LucideIcons.keyboard,
+        icon: LucideIcons.keyboard300,
         selectedIcon: LucideIcons.keyboard600,
         label: l10n.navPractice,
       ),
       (
-        icon: LucideIcons.chartLine,
+        icon: LucideIcons.chartLine300,
         selectedIcon: LucideIcons.chartLine600,
         label: l10n.navProgress,
       ),
       (
-        icon: LucideIcons.zap,
+        icon: LucideIcons.zap300,
         selectedIcon: LucideIcons.zap600,
         label: l10n.navFreePractice,
       ),
       (
-        icon: LucideIcons.user,
+        icon: LucideIcons.user300,
         selectedIcon: LucideIcons.user600,
         label: l10n.navProfile,
       ),
       (
-        icon: LucideIcons.settings,
+        icon: LucideIcons.settings300,
         selectedIcon: LucideIcons.settings600,
         label: l10n.navSettings,
       ),

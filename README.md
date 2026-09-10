@@ -1,4 +1,4 @@
-# Just In Time
+# Ridge
 
 **El juego de mecanografía para programadores.** Aprende a escribir código más rápido y con menos errores practicando con código Go real — no frases al azar — mientras un motor de métricas captura cada carácter, cada dedo y cada combinación de teclas para decirte exactamente qué te cuesta trabajo.
 
@@ -23,7 +23,7 @@
 
 ## Qué es esto
 
-Just In Time convierte el "calentamiento" antes de programar en un juego con datos reales de desempeño:
+Ridge convierte el "calentamiento" antes de programar en un juego con datos reales de desempeño:
 
 - **Contenido real**: se practica con código Go idiomático, no con lorem ipsum ni citas.
 - **Metadata ultra detallada**: tiempo por carácter, dedo y mano usados, n-gramas típicos de código (`:=`, `err`, `{}`), consistencia, rachas y curva de fatiga.
@@ -189,9 +189,11 @@ before the first `flutter run -d windows` / `-d chrome` (see
 
 - Geist and Geist Mono are bundled under `assets/fonts/` (SIL Open Font
   License — see `assets/fonts/LICENSE.txt`).
-- The launcher icon is still the Flutter default; swap
-  `android/app/src/main/res/mipmap-*` and the Linux desktop file/icon before
-  shipping.
+- Android's launcher icon (`android/app/src/main/res/mipmap-*`) is the
+  Ridge mark (flat squircle, brand ember orange, `assets/icons/
+  ridge_launcher_master.png` is the 1024×1024 source). Linux still has no
+  packaged `.desktop` file/icon yet — add one before shipping a Linux
+  build outside `flutter run`.
 
 ## Status
 

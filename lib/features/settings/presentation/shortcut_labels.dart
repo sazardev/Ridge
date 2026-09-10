@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_shortcut_action.dart';
-import 'package:just_in_time/features/settings/domain/entities/shortcut_binding.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/features/settings/domain/entities/app_shortcut_action.dart';
+import 'package:ridge/features/settings/domain/entities/shortcut_binding.dart';
 
 /// Localized display label for an [AppShortcutAction], shared by every
 /// widget that renders one so the mapping lives in exactly one place

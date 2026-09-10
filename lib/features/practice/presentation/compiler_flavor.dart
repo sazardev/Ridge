@@ -1,5 +1,5 @@
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/features/practice/domain/entities/session_metrics.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/features/practice/domain/entities/session_metrics.dart';
 
 /// Picks a short, programmer/compiler-themed flavor line for a just-finished
 /// session's result panel — purely cosmetic (never affects any stored

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:just_in_time/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 
 /// Adds Home/End/PageUp/PageDown keyboard scrolling to [child] — a
 /// [Scrollable] must live somewhere below it (a `ListView`/`GridView`/

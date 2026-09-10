@@ -4,10 +4,10 @@
 // not-enough-history case (fewer than 5 results), and the exact
 // accuracy/speed threshold boundaries (SPEC.md §6.4).
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/progression/domain/entities/precision_result.dart';
-import 'package:just_in_time/features/progression/domain/services/mastery_evaluator.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/progression/domain/entities/precision_result.dart';
+import 'package:ridge/features/progression/domain/services/mastery_evaluator.dart';
 
 void main() {
   const evaluator = MasteryEvaluator();

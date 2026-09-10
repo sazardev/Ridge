@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/progression/domain/entities/category_activity_stat.dart';
-import 'package:just_in_time/features/progression/domain/entities/exercise_activity_stat.dart';
+import 'package:ridge/features/progression/domain/entities/category_activity_stat.dart';
+import 'package:ridge/features/progression/domain/entities/exercise_activity_stat.dart';
 
 part 'activity_report.freezed.dart';
 

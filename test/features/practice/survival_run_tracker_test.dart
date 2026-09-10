@@ -2,7 +2,7 @@
 // rules behind Survival mode: lives, combo, multiplier, score and
 // cleared-snippet count. No widgets, clock or storage needed.
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/practice/domain/services/survival_run_tracker.dart';
+import 'package:ridge/features/practice/domain/services/survival_run_tracker.dart';
 
 void main() {
   test('a fresh run starts with 5 lives, 1× multiplier and no score', () {

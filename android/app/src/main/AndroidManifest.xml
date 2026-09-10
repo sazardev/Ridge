@@ -2,7 +2,7 @@
     <!-- Required by local_auth for biometric app-lock unlock. -->
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
     <application
-        android:label="Just In Time"
+        android:label="Ridge"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

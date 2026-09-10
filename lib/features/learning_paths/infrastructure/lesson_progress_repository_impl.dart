@@ -1,11 +1,11 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_attempt.dart';
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_progress.dart';
-import 'package:just_in_time/features/learning_paths/domain/repositories/lesson_progress_repository.dart';
-import 'package:just_in_time/features/learning_paths/infrastructure/lesson_progress_dao.dart';
-import 'package:just_in_time/features/learning_paths/infrastructure/lesson_progress_mapper.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_attempt.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_progress.dart';
+import 'package:ridge/features/learning_paths/domain/repositories/lesson_progress_repository.dart';
+import 'package:ridge/features/learning_paths/infrastructure/lesson_progress_dao.dart';
+import 'package:ridge/features/learning_paths/infrastructure/lesson_progress_mapper.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
 /// Drift-backed adapter for [LessonProgressRepository], over
 /// [LessonProgressDao] (which owns every query — see its class doc for

@@ -1,5 +1,5 @@
-import 'package:just_in_time/features/profile/domain/repositories/device_info_source.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/features/profile/domain/repositories/device_info_source.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'onboarding_providers.g.dart';

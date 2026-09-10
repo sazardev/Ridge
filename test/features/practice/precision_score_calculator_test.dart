@@ -2,7 +2,7 @@
 // replaced a flat "98% or nothing" Precision pass bar with something
 // more forgiving of a strong-but-imperfect run (SPEC.md §5.3).
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/practice/domain/services/precision_score_calculator.dart';
+import 'package:ridge/features/practice/domain/services/precision_score_calculator.dart';
 
 void main() {
   const calculator = PrecisionScoreCalculator();

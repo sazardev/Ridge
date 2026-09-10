@@ -1,4 +1,4 @@
-import 'package:just_in_time/features/lock/domain/repositories/biometric_auth_repository.dart';
+import 'package:ridge/features/lock/domain/repositories/biometric_auth_repository.dart';
 
 /// Checks whether biometric unlock can be offered on this device at all.
 class CheckBiometricAvailabilityUseCase {

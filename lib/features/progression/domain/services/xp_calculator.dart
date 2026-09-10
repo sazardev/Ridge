@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
 
 /// Pure, stateless XP formula (SPEC.md §6.1):
 ///

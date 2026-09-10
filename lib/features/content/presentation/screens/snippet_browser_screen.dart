@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/widgets/escape_to_pop.dart';
-import 'package:just_in_time/core/widgets/keyboard_scroll_shortcuts.dart';
-import 'package:just_in_time/features/content/domain/entities/content_category.dart';
-import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
-import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
-import 'package:just_in_time/features/content/domain/entities/snippet.dart';
-import 'package:just_in_time/features/content/presentation/providers/content_providers.dart';
-import 'package:just_in_time/features/content/presentation/widgets/snippet_filter_bar.dart';
-import 'package:just_in_time/features/content/presentation/widgets/snippet_list_tile.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/widgets/escape_to_pop.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/features/content/domain/entities/content_category.dart';
+import 'package:ridge/features/content/domain/entities/difficulty.dart';
+import 'package:ridge/features/content/domain/entities/programming_language.dart';
+import 'package:ridge/features/content/domain/entities/snippet.dart';
+import 'package:ridge/features/content/presentation/providers/content_providers.dart';
+import 'package:ridge/features/content/presentation/widgets/snippet_filter_bar.dart';
+import 'package:ridge/features/content/presentation/widgets/snippet_list_tile.dart';
 
 /// A filterable list of the seeded catalog — reachable from the Practice
 /// hub's "Browse all snippets" action (`/practice/browse`), a pushed

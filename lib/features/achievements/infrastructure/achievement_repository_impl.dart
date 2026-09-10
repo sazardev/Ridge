@@ -1,11 +1,11 @@
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/achievements/domain/entities/achievement.dart';
-import 'package:just_in_time/features/achievements/domain/entities/session_achievement_input.dart';
-import 'package:just_in_time/features/achievements/domain/repositories/achievement_repository.dart';
-import 'package:just_in_time/features/achievements/infrastructure/achievement_dao.dart';
-import 'package:just_in_time/features/achievements/infrastructure/achievement_mapper.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/achievements/domain/entities/achievement.dart';
+import 'package:ridge/features/achievements/domain/entities/session_achievement_input.dart';
+import 'package:ridge/features/achievements/domain/repositories/achievement_repository.dart';
+import 'package:ridge/features/achievements/infrastructure/achievement_dao.dart';
+import 'package:ridge/features/achievements/infrastructure/achievement_mapper.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
 /// Drift-backed adapter for [AchievementRepository], over [AchievementDao]
 /// (which owns every query — see its class doc for why this lives

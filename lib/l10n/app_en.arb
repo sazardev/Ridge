@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
 
-  "appName": "Just In Time",
+  "appName": "Ridge",
   "@appName": {
     "description": "The application name, shown in the OS task switcher and window title."
   },
@@ -12,7 +12,6 @@
   "navProfile": "Profile",
   "navSettings": "Settings",
 
-  "profileTitle": "Profile",
   "profileCreateTitle": "Create your profile",
   "profileCreateSubtitle": "Pick a username to start practicing",
   "profileUsernameLabel": "Username",
@@ -104,7 +103,6 @@
   "keyboardLayoutWorkman": "Workman",
   "keyboardLayoutOther": "Other",
 
-  "settingsTitle": "Settings",
   "settingsSectionAppearance": "Appearance",
   "settingsTheme": "Theme",
   "settingsThemeSystem": "System",
@@ -164,7 +162,7 @@
   "settingsLanguageSystem": "Match system",
   "settingsSectionSecurity": "Security",
   "settingsAppLock": "App lock",
-  "settingsAppLockSubtitle": "Require a PIN to open Just In Time",
+  "settingsAppLockSubtitle": "Require a PIN to open Ridge",
   "settingsChangePin": "Change PIN",
   "settingsAppLockBiometric": "Use biometrics",
   "settingsAppLockBiometricSubtitle": "Unlock with fingerprint or Face ID instead of typing your PIN",
@@ -242,7 +240,7 @@
   "settingsDataActionError": "Something went wrong. Try again.",
 
   "lockTitle": "Enter your PIN",
-  "lockSubtitle": "Just In Time is locked",
+  "lockSubtitle": "Ridge is locked",
   "lockSetTitle": "Set a PIN",
   "lockSetSubtitle": "You'll need it to unlock the app",
   "lockConfirmTitle": "Confirm your PIN",
@@ -251,7 +249,7 @@
   "lockSaveError": "Couldn't save your PIN. Try again.",
   "lockUnlock": "Unlock",
   "lockUseBiometrics": "Use biometrics",
-  "lockBiometricReason": "Unlock Just In Time",
+  "lockBiometricReason": "Unlock Ridge",
   "lockBiometricError": "Biometric authentication failed",
 
   "commonRetry": "Retry",
@@ -416,13 +414,10 @@
   "practiceModeSurvival": "Survival",
   "practiceModeSurvivalSubtitle": "5 lives, endless snippets — a mistake costs a heart.",
 
-  "practiceHubTitle": "Practice",
-  "freePracticeTitle": "Free practice",
   "practiceHubQuickModesTitle": "Quick practice",
   "practiceHubBrowseAllAction": "Browse all snippets",
   "practiceHubNoSnippetsAvailable": "No snippets available yet.",
 
-  "progressTitle": "Progress",
   "progressEmptyState": "Finish a practice session to see your progress here.",
   "progressTabOverview": "Overview",
   "progressTabWeaknesses": "Weaknesses",
@@ -602,6 +597,20 @@
       }
     }
   },
+  "achievementsUnlockedCount": "{unlocked} of {total} unlocked",
+  "@achievementsUnlockedCount": {
+    "placeholders": {
+      "unlocked": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "achievementsMilestonesSectionTitle": "Milestones",
+  "achievementsCategoryMasterySectionTitle": "Category mastery",
+  "achievementsCategoryMasteryLegend": "Each row: Beginner, Intermediate, Advanced, Expert",
 
   "onboardingSkip": "Skip",
   "onboardingNext": "Next",

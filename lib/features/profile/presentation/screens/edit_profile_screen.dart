@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/widgets/escape_to_pop.dart';
-import 'package:just_in_time/features/profile/domain/entities/favorite_language.dart';
-import 'package:just_in_time/features/profile/domain/entities/guest_profile.dart';
-import 'package:just_in_time/features/profile/domain/entities/keyboard_layout.dart';
-import 'package:just_in_time/features/profile/presentation/profile_labels.dart';
-import 'package:just_in_time/features/profile/presentation/profile_suggestions.dart';
-import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/widgets/escape_to_pop.dart';
+import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
+import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
+import 'package:ridge/features/profile/presentation/profile_labels.dart';
+import 'package:ridge/features/profile/presentation/profile_suggestions.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 
 /// Full-screen editor for the Guest Profile's self-expression fields
 /// (favorite languages, keyboard layout/brand/model, favorite
@@ -128,7 +127,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       height: 20,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Icon(LucideIcons.check),
+                  : const Icon(LucideIcons.check300),
             ),
           ],
         ),
@@ -152,11 +151,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               textInputAction: TextInputAction.search,
               decoration: InputDecoration(
                 hintText: l10n.profileSearchLanguageHint,
-                prefixIcon: const Icon(LucideIcons.search),
+                prefixIcon: const Icon(LucideIcons.search300),
                 suffixIcon: _languageQuery.isEmpty
                     ? null
                     : IconButton(
-                        icon: const Icon(LucideIcons.x),
+                        icon: const Icon(LucideIcons.x300),
                         onPressed: _languageSearchController.clear,
                       ),
               ),
@@ -193,7 +192,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     ),
                   if (filteredLanguages.length > _visibleLanguageCount)
                     ActionChip(
-                      avatar: const Icon(LucideIcons.chevronDown, size: 18),
+                      avatar: const Icon(LucideIcons.chevronDown300, size: 18),
                       label: Text(l10n.profileLanguageShowMore),
                       onPressed: () => setState(
                         () => _visibleLanguageCount += _languageBatchSize,
@@ -220,7 +219,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             const SizedBox(height: 28),
             _SuggestionField(
               label: l10n.profileKeyboardBrandLabel,
-              icon: LucideIcons.keyboard,
+              icon: LucideIcons.keyboard300,
               initialValue: _brand,
               suggestions: kKeyboardBrandSuggestions,
               onChanged: (value) => _brand = value,
@@ -228,7 +227,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             const SizedBox(height: 16),
             _SuggestionField(
               label: l10n.profileKeyboardModelLabel,
-              icon: LucideIcons.memoryStick,
+              icon: LucideIcons.memoryStick300,
               initialValue: _model,
               suggestions: kKeyboardModelSuggestions,
               onChanged: (value) => _model = value,
@@ -236,7 +235,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             const SizedBox(height: 16),
             _SuggestionField(
               label: l10n.profileFavoriteProgrammerLabel,
-              icon: LucideIcons.user,
+              icon: LucideIcons.user300,
               initialValue: _programmer,
               suggestions: kFavoriteProgrammerSuggestions,
               onChanged: (value) => _programmer = value,
@@ -249,7 +248,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               decoration: InputDecoration(
                 labelText: l10n.profileFavoriteQuoteLabel,
                 alignLabelWithHint: true,
-                prefixIcon: const Icon(LucideIcons.quote),
+                prefixIcon: const Icon(LucideIcons.quote300),
               ),
             ),
           ],

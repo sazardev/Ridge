@@ -1,10 +1,10 @@
 import 'package:drift/drift.dart' show Value;
-import 'package:just_in_time/core/persistence/drift/app_database.dart';
-import 'package:just_in_time/features/profile/domain/entities/favorite_language.dart';
-import 'package:just_in_time/features/profile/domain/entities/guest_profile.dart';
-import 'package:just_in_time/features/profile/domain/entities/keyboard_layout.dart';
-import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
-import 'package:just_in_time/features/profile/infrastructure/profile_dto.dart';
+import 'package:ridge/core/persistence/drift/app_database.dart';
+import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
+import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/features/profile/infrastructure/profile_dto.dart';
 
 /// Converts a [ProfileDto] into its domain [GuestProfile] representation.
 extension ProfileDtoMapper on ProfileDto {

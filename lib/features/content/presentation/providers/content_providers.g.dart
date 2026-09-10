@@ -382,7 +382,7 @@ String _$watchSnippetCatalogUseCaseHash() =>
     r'261bc0e29e319aea0c03348feec2f045e28e1458';
 
 /// Runs the (idempotent) catalog seed once at app startup. Watched from
-/// `JustInTimeApp`'s build method so it fires as soon as the app starts,
+/// `RidgeApp`'s build method so it fires as soon as the app starts,
 /// regardless of which route the router lands on first — `keepAlive`
 /// means it only ever runs once for the app's lifetime.
 
@@ -390,7 +390,7 @@ String _$watchSnippetCatalogUseCaseHash() =>
 final catalogSeedProvider = CatalogSeedProvider._();
 
 /// Runs the (idempotent) catalog seed once at app startup. Watched from
-/// `JustInTimeApp`'s build method so it fires as soon as the app starts,
+/// `RidgeApp`'s build method so it fires as soon as the app starts,
 /// regardless of which route the router lands on first — `keepAlive`
 /// means it only ever runs once for the app's lifetime.
 
@@ -398,7 +398,7 @@ final class CatalogSeedProvider
     extends $FunctionalProvider<AsyncValue<void>, void, FutureOr<void>>
     with $FutureModifier<void>, $FutureProvider<void> {
   /// Runs the (idempotent) catalog seed once at app startup. Watched from
-  /// `JustInTimeApp`'s build method so it fires as soon as the app starts,
+  /// `RidgeApp`'s build method so it fires as soon as the app starts,
   /// regardless of which route the router lands on first — `keepAlive`
   /// means it only ever runs once for the app's lifetime.
   CatalogSeedProvider._()

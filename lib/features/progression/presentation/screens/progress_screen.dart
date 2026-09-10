@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/widgets/keyboard_scroll_shortcuts.dart';
-import 'package:just_in_time/features/content/presentation/content_labels.dart';
-import 'package:just_in_time/features/progression/domain/entities/progress_snapshot.dart';
-import 'package:just_in_time/features/progression/presentation/providers/progression_providers.dart';
-import 'package:just_in_time/features/progression/presentation/widgets/activity_report_card.dart';
-import 'package:just_in_time/features/progression/presentation/widgets/keyboard_heatmap.dart';
-import 'package:just_in_time/features/progression/presentation/widgets/personal_history_chart.dart';
-import 'package:just_in_time/features/progression/presentation/widgets/weakness_report_card.dart';
-import 'package:just_in_time/features/progression/presentation/widgets/xp_level_bar.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_shortcut_action.dart';
-import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
-import 'package:just_in_time/features/settings/presentation/shortcut_activator.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/features/content/presentation/content_labels.dart';
+import 'package:ridge/features/progression/domain/entities/progress_snapshot.dart';
+import 'package:ridge/features/progression/presentation/providers/progression_providers.dart';
+import 'package:ridge/features/progression/presentation/widgets/activity_report_card.dart';
+import 'package:ridge/features/progression/presentation/widgets/keyboard_heatmap.dart';
+import 'package:ridge/features/progression/presentation/widgets/personal_history_chart.dart';
+import 'package:ridge/features/progression/presentation/widgets/weakness_report_card.dart';
+import 'package:ridge/features/progression/presentation/widgets/xp_level_bar.dart';
+import 'package:ridge/features/settings/domain/entities/app_settings.dart';
+import 'package:ridge/features/settings/domain/entities/app_shortcut_action.dart';
+import 'package:ridge/features/settings/presentation/providers/settings_providers.dart';
+import 'package:ridge/features/settings/presentation/shortcut_activator.dart';
 
 /// The Progress screen (SPEC.md §4.3/§6): XP/level, streak, weakness
 /// diagnostic, activity report, per-category mastery, and a
@@ -58,8 +57,14 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen>
         AppSettings.initial.shortcutBindings;
 
     return Scaffold(
+      // No title here: the nav rail/bar destination already reads
+      // "Progress" right next to this screen, so repeating it would just
+      // be noise — the `AppBar` sticks around only to host the tab bar
+      // below. `toolbarHeight: 0` collapses the now-empty title row so the
+      // tab bar sits flush at the top instead of leaving a blank gap where
+      // the title used to be.
       appBar: AppBar(
-        title: Text(l10n.progressTitle),
+        toolbarHeight: 0,
         bottom: TabBar(
           controller: _tabController,
           tabs: [
@@ -170,7 +175,7 @@ class _OverviewTab extends StatelessWidget {
                       avatar: Icon(
                         status.isMastered
                             ? LucideIcons.badgeCheck600
-                            : LucideIcons.circle,
+                            : LucideIcons.circle300,
                         size: 18,
                       ),
                       label: Text(

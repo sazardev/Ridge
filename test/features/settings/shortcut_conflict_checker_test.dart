@@ -1,8 +1,8 @@
 // Unit tests for `findShortcutConflict` — pure and stateless.
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_shortcut_action.dart';
-import 'package:just_in_time/features/settings/domain/entities/shortcut_binding.dart';
-import 'package:just_in_time/features/settings/domain/services/shortcut_conflict_checker.dart';
+import 'package:ridge/features/settings/domain/entities/app_shortcut_action.dart';
+import 'package:ridge/features/settings/domain/entities/shortcut_binding.dart';
+import 'package:ridge/features/settings/domain/services/shortcut_conflict_checker.dart';
 
 void main() {
   const ctrl1 = ShortcutBinding(

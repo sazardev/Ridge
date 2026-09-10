@@ -4,9 +4,9 @@ import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'package:just_in_time/core/error/app_failure.dart';
-import 'package:just_in_time/core/utils/result.dart';
-import 'package:just_in_time/features/lock/domain/repositories/pin_repository.dart';
+import 'package:ridge/core/error/app_failure.dart';
+import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/lock/domain/repositories/pin_repository.dart';
 
 /// Secure-storage adapter for [PinRepository]. Only a salted SHA-256 digest
 /// of the PIN ever touches disk — the raw PIN lives in memory just long

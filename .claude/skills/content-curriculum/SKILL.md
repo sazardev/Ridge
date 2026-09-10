@@ -63,7 +63,7 @@ into drift tables on launch, paths are read straight from the bundle.
 - Hand-curate Learning Path lesson order by concept dependency; get an
   adversarial second opinion before calling it done (see
   `references/lesson-ordering.md`)
-- Check the real dev db (`~/Documents/jit.db.sqlite`,
+- Check the real dev db (`~/Documents/ridge.db.sqlite`,
   `lesson_progress_cache`/`typing_sessions`) for genuine completed progress
   before reassigning which snippet occupies an existing lesson id — bump
   the id scheme (e.g. `-o2-` → `-o3-`) if any real completion exists

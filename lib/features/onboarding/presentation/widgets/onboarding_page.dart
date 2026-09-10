@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-import 'package:just_in_time/core/theme/app_motion.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 
 /// Content for a single onboarding step: an icon, a title, and a
 /// supporting line. Plain data so the step list stays declarative and

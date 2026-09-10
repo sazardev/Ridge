@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_motion.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_corner_style.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
-import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
-import 'package:just_in_time/features/settings/presentation/widgets/palette_picker.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/features/settings/domain/entities/app_corner_style.dart';
+import 'package:ridge/features/settings/domain/entities/app_settings.dart';
+import 'package:ridge/features/settings/presentation/providers/settings_providers.dart';
+import 'package:ridge/features/settings/presentation/widgets/palette_picker.dart';
 
 /// Onboarding step that doubles as a live editor for the same
 /// [settingsControllerProvider] Settings itself writes to — a pick here is

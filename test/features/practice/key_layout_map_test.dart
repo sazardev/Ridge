@@ -11,8 +11,8 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/features/practice/domain/services/key_layout_map.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/services/key_layout_map.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 
 /// Which physical key (unshifted) a character needs, under standard
 /// US-QWERTY — independent of `lib/`'s own `physicalKeyIdMapper` (a

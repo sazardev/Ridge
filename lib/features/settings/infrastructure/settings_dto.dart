@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:just_in_time/features/settings/domain/entities/app_settings.dart'
+import 'package:ridge/features/settings/domain/entities/app_settings.dart'
     show AppSettings;
 
 part 'settings_dto.freezed.dart';

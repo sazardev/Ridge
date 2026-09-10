@@ -10,10 +10,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:just_in_time/core/content_packs/content_packs_directory.dart';
-import 'package:just_in_time/features/learning_paths/infrastructure/learning_path_repository_impl.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:ridge/core/content_packs/content_packs_directory.dart';
+import 'package:ridge/features/learning_paths/infrastructure/learning_path_repository_impl.dart';
 
 class _FakePathProviderPlatform extends Fake
     with MockPlatformInterfaceMixin
@@ -77,7 +77,7 @@ void main() {
   );
 
   test('an empty packs directory yields only the bundled paths', () async {
-    const repo = LearningPathRepositoryImpl([]);
+    final repo = LearningPathRepositoryImpl([]);
     final result = await repo.watchPaths().first;
     expect(result, isEmpty);
   });
@@ -89,7 +89,7 @@ void main() {
       ]),
     );
 
-    const repo = LearningPathRepositoryImpl([]);
+    final repo = LearningPathRepositoryImpl([]);
     final result = await repo.watchPaths().first;
 
     expect(result, hasLength(1));
@@ -105,7 +105,7 @@ void main() {
       File('${packsDir.path}/pack1.json')
           .writeAsStringSync(_pack([badEntry, _validPathMap('ext-good')]));
 
-      const repo = LearningPathRepositoryImpl([]);
+      final repo = LearningPathRepositoryImpl([]);
       final result = await repo.watchPaths().first;
 
       expect(result, hasLength(1));
@@ -118,7 +118,7 @@ void main() {
     File('${packsDir.path}/good.json')
         .writeAsStringSync(_pack([_validPathMap('ext-still-loads')]));
 
-    const repo = LearningPathRepositoryImpl([]);
+    final repo = LearningPathRepositoryImpl([]);
     final result = await repo.watchPaths().first;
 
     expect(result, hasLength(1));
@@ -138,7 +138,7 @@ void main() {
         _pack([_validPathMap('go-foundations-v1', snippetIds: [])]),
       );
 
-      const repo = LearningPathRepositoryImpl([
+      final repo = LearningPathRepositoryImpl([
         'assets/content/learning_paths/go_foundations_v1.json',
       ]);
       final result = await repo.watchPaths().first;

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
-import 'package:just_in_time/core/theme/app_shapes.dart';
-import 'package:just_in_time/core/theme/app_typography.dart';
-import 'package:just_in_time/features/content/presentation/content_labels.dart';
-import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id_label.dart';
-import 'package:just_in_time/features/progression/presentation/providers/progression_providers.dart';
-import 'package:just_in_time/features/progression/presentation/widgets/xp_level_bar.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/theme/app_typography.dart';
+import 'package:ridge/features/content/presentation/content_labels.dart';
+import 'package:ridge/features/practice/domain/value_objects/physical_key_id_label.dart';
+import 'package:ridge/features/progression/presentation/providers/progression_providers.dart';
+import 'package:ridge/features/progression/presentation/widgets/xp_level_bar.dart';
 
 /// A compact preview of the active profile's progression history — level,
 /// XP progress, current streak, and (when available) a one-line taste of
@@ -37,7 +36,7 @@ class ProfileStatsCard extends ConsumerWidget {
             ? Row(
                 children: [
                   Icon(
-                    LucideIcons.barChart3,
+                    LucideIcons.barChart3300,
                     color: colorScheme.onSurfaceVariant,
                   ),
                   const SizedBox(width: 12),
@@ -64,7 +63,7 @@ class ProfileStatsCard extends ConsumerWidget {
                       ),
                       const SizedBox(width: 8),
                       Icon(
-                        LucideIcons.flame,
+                        LucideIcons.flame300,
                         size: 18,
                         color: colorScheme.primary,
                       ),
@@ -94,7 +93,7 @@ class ProfileStatsCard extends ConsumerWidget {
                             .weakKeyTransitions
                             .isNotEmpty)
                           _StatHighlight(
-                            icon: LucideIcons.triangleAlert,
+                            icon: LucideIcons.triangleAlert300,
                             label: () {
                               final worst = snapshot
                                   .weaknessReport
@@ -109,7 +108,7 @@ class ProfileStatsCard extends ConsumerWidget {
                             .mostPracticedCategories
                             .isNotEmpty)
                           _StatHighlight(
-                            icon: LucideIcons.repeat,
+                            icon: LucideIcons.repeat300,
                             label: snapshot
                                 .activityReport
                                 .mostPracticedCategories
@@ -125,7 +124,7 @@ class ProfileStatsCard extends ConsumerWidget {
                     alignment: Alignment.centerRight,
                     child: TextButton.icon(
                       onPressed: () => context.push('/progress'),
-                      icon: const Icon(LucideIcons.arrowRight, size: 18),
+                      icon: const Icon(LucideIcons.arrowRight300, size: 18),
                       label: Text(l10n.profileViewProgressAction),
                     ),
                   ),

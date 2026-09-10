@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:just_in_time/features/learning_paths/domain/entities/lesson_status.dart';
-import 'package:just_in_time/features/learning_paths/domain/value_objects/learning_path_id.dart';
-import 'package:just_in_time/features/learning_paths/domain/value_objects/lesson_id.dart';
+import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/learning_path_id.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
 
 part 'lesson_progress.freezed.dart';
 
