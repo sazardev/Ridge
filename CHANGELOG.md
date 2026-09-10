@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-09-10
+
+### Added
+- **content:** rebuild go-intermediate-syntax-v1 with a Go 1.27 block (e42516a)
+
 ## [1.6.0] - 2026-09-10
 
 ### Added
