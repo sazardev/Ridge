@@ -73,6 +73,10 @@ extension ContentCategoryLabel on ContentCategory {
     ContentCategory.persistenceAdapters => l10n.categoryPersistenceAdapters,
     ContentCategory.restAdapters => l10n.categoryRestAdapters,
     ContentCategory.testingWithFakes => l10n.categoryTestingWithFakes,
+    ContentCategory.tuiArchitecture => l10n.categoryTuiArchitecture,
+    ContentCategory.tuiStyling => l10n.categoryTuiStyling,
+    ContentCategory.tuiComponents => l10n.categoryTuiComponents,
+    ContentCategory.tuiAdapter => l10n.categoryTuiAdapter,
   };
 }
 

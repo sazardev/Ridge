@@ -41,6 +41,32 @@ install.
   and re-run the PostgreSQL harness on the merged asset, not just on the
   pre-merge draft.
 
+## Go code with third-party deps (TUI/Bubble Tea): extract from a compiled app
+
+For snippets that import external packages (`bubbletea`, `lipgloss`,
+`bubbles`), `go run /tmp/check.go` proves little and an interactive program
+never exits. The pattern used for `go-tui-notes-v1`:
+
+- Build a small reference app in a scratch module (`/tmp/opencode/jit-tui`)
+  with pinned versions (`go get github.com/charmbracelet/bubbletea@v1.3.10`
+  etc.), structured so every lesson is a contiguous declaration or method
+  chunk.
+- Make the app pass `gofmt -l` (no output), `go build ./...`, `go vet ./...`
+  and `go test ./...`, including a **headless program test**:
+  `tea.NewProgram(m, tea.WithInput(strings.NewReader("q")),
+  tea.WithOutput(io.Discard))` run in a goroutine under a timeout — this
+  exercises the real event loop (Init/Update/View + commands) with no TTY.
+- Extract each snippet mechanically (start/end marker script) into JSON, and
+  assert every chunk is a **verbatim substring** of the app source plus
+  ASCII-only (the `key_layout_map_test` requirement). Never hand-copy code
+  into the catalog.
+- A snippet that uses a shared declaration introduced in another snippet
+  must *show* that declaration in the earliest lesson that needs it (e.g.
+  `const listWidth = 40`), or the learner cannot compile along.
+- TUI lessons are unusually interdependent: get a fresh adversarial review of
+  the ordering — it is what caught nine forward references (styles/widgets
+  used before their own lesson) in the first `go-tui-notes-v1` pass.
+
 ## Large batch authoring/rewrites (10+ entries): delegate, then validate twice
 
 When rewriting or extending a large slice of the catalog (e.g. adding

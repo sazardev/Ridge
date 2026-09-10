@@ -766,6 +766,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryTestingWithFakes => 'Testing with fakes';
 
   @override
+  String get categoryTuiArchitecture => 'TUI architecture';
+
+  @override
+  String get categoryTuiStyling => 'Terminal styling';
+
+  @override
+  String get categoryTuiComponents => 'TUI components';
+
+  @override
+  String get categoryTuiAdapter => 'TUI adapter';
+
+  @override
   String get categoryShellCommands => 'Shell commands';
 
   @override

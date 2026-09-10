@@ -78,7 +78,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 280)
+        .firstWhere((snippets) => snippets.length == 309)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -92,7 +92,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(280));
+    expect(catalog, hasLength(309));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -104,7 +104,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(280));
+      expect(catalog, hasLength(309));
     },
   );
 
@@ -115,7 +115,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(280));
+    expect(result, hasLength(309));
   });
 
   test(
@@ -196,6 +196,14 @@ void main() {
       'go-struct-004',
       'go-testfakes-001',
       'go-testfakes-002',
+      'go-tui-008',
+      'go-tui-009',
+      'go-tui-010',
+      'go-tui-011',
+      'go-tui-013',
+      'go-tui-027',
+      'go-tui-028',
+      'go-tui-029',
       'go-vars-009',
       'go-vars-011',
       'go-vars-012',
@@ -264,6 +272,14 @@ void main() {
       'go-rest-002',
       'go-rest-008',
       'go-testfakes-002',
+      'go-tui-005',
+      'go-tui-006',
+      'go-tui-007',
+      'go-tui-012',
+      'go-tui-013',
+      'go-tui-025',
+      'go-tui-028',
+      'go-tui-029',
       'go-usecase-001',
       'go-usecase-002',
       'go-usecase-003',

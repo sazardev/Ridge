@@ -55,10 +55,10 @@ const Map<ProgrammingLanguage, Set<ContentCategory>> _coreCategoriesByLanguage =
       },
     };
 
-/// The 6 architecture-layer categories represent a DDD/hexagonal role,
-/// not a language feature, so unlike every other category there's no
-/// meaningful notion of a "beginner" or "expert" tier: held to a looser
-/// bar (>=1 active entry across ANY difficulty) than every other
+/// The 10 architecture-layer categories represent a DDD/hexagonal or TUI
+/// role, not a language feature, so unlike every other category there's
+/// no meaningful notion of a "beginner" or "expert" tier: held to a
+/// looser bar (>=1 active entry across ANY difficulty) than every other
 /// category. See `.claude/skills/content-curriculum/references/content-model.md`.
 const Set<ContentCategory> _architectureLayerCategories = {
   ContentCategory.domainModeling,
@@ -67,6 +67,10 @@ const Set<ContentCategory> _architectureLayerCategories = {
   ContentCategory.persistenceAdapters,
   ContentCategory.restAdapters,
   ContentCategory.testingWithFakes,
+  ContentCategory.tuiArchitecture,
+  ContentCategory.tuiStyling,
+  ContentCategory.tuiComponents,
+  ContentCategory.tuiAdapter,
 };
 
 Future<List<Snippet>> _loadCatalog(ProgrammingLanguage language) async {
@@ -92,6 +96,7 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/go_foundations_v1.json',
   'assets/content/learning_paths/go_ddd_hexagonal_notes_v1.json',
   'assets/content/learning_paths/go_intermediate_syntax_v1.json',
+  'assets/content/learning_paths/go_tui_notes_v1.json',
   'assets/content/learning_paths/bash_foundations_v1.json',
   'assets/content/learning_paths/bash_toolkit_v1.json',
   'assets/content/learning_paths/sql_foundations_v1.json',

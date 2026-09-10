@@ -29,7 +29,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
   | Lenguaje | Catálogo | Ruta | Tier |
   |---|---|---|---|
-  | Go | 113 snippets | `go-foundations-v1` (~51 lecciones) + notas DDD | práctica libre (grid denso) |
+  | Go | 142 snippets | `go-foundations-v1` (~51 lecciones) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) | práctica libre (grid denso) |
   | Bash (Arch) | 50 snippets | `bash-foundations-v1` (50) | solo-curso |
   | SQL (PostgreSQL) | 60 snippets | `sql-foundations-v1` (60) | solo-curso |
 
@@ -52,6 +52,34 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 ---
 
 ## Historial de sesiones
+
+### 2026-09-10 — Curso Go: TUI con Bubble Tea (`go-tui-notes-v1`)
+
+- **Curso nuevo de 29 lecciones** que construye una TUI de notas con
+  **Bubble Tea + Lip Gloss + Bubbles** (v1.3.10 / v1.1.0 / v1.0.0) sobre un
+  núcleo DDD/hexagonal: dominio → puertos → casos de uso → adaptadores
+  (memoria, system, jsonfile) → TUI (estilos → componentes → `model`,
+  `Init`, mensajes, `tea.Cmd`, `Update`, `handleKey`, `renderList`, `View`)
+  → `main` → tests. Cuatro categorías nuevas de capa de arquitectura
+  (`tuiArchitecture`, `tuiStyling`, `tuiComponents`, `tuiAdapter`), exentas
+  del grid denso con la misma regla que las 6 de DDD.
+- **Contenido**: 29 snippets nuevos en `go_v1.json` (113→142), extraídos
+  **verbatim** de una app Go de referencia que pasa `gofmt` + `go build` +
+  `go vet` + `go test` (incluye un test headless del loop real con
+  `tea.WithInput`/`WithOutput`). Prosa bilingüe delegada a un agente y
+  fusionada con validación independiente del orquestador.
+- **Orden**: la revisión adversarial (agente fresco) detectó referencias
+  hacia adelante en el bloque TUI (estilos/componentes usados antes de su
+  lección) → se reordenó por dependencia real (estilos → componentes →
+  arquitectura), se renumeraron los snippets y una segunda pasada confirmó
+  el arreglo. `audit_lesson_order.py` verde (solo quedan flags de tamaño
+  informativos ya evaluados).
+- **Integración**: `pubspec`, `LearningPathRepositoryImpl`, test de
+  completitud; labels ARB en/es + `content_labels.dart`; conteos de
+  `content_drift_integration_test` 280→309 (beginner sigue 87); sets de
+  `findContainingSymbols` (`_`, `%`) actualizados.
+- **Verificado**: `bash tool/check.sh` verde (314 tests; format, analyze y
+  arquitectura limpios).
 
 ### 2026-09-10 — Migración de íconos: Material → Lucide
 
@@ -150,7 +178,9 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `scripts/audit_lesson_order.py` y **revisión adversarial** por un agente
   fresco (ver skill `content-curriculum`).
 - **Verificar todo contenido ejecutándolo**: Go `gofmt` + `go run`; SQL
-  PostgreSQL 16 real; Bash smoke run.
+  PostgreSQL 16 real; Bash smoke run; snippets de TUI con dependencias
+  externas, extraídos verbatim de una app de referencia compilada y con
+  test headless del loop (ver `references/snippet-authoring.md`).
 - **Progreso por `lessonId`**: antes de reasignar snippet a un id de lección
   con progreso real, consultar `~/Documents/jit.db.sqlite`
   (`lesson_progress_cache`).
@@ -170,7 +200,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ```sh
 bash tool/check.sh                         # gate completo
-flutter test                               # suite (305 tests)
+flutter test                               # suite (314 tests)
 python3 .claude/skills/content-curriculum/scripts/audit_lesson_order.py \
   assets/content/snippets/sql_v1.json \
   assets/content/learning_paths/sql_foundations_v1.json
