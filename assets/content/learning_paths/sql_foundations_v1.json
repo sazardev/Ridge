@@ -48,8 +48,8 @@
         "id": "sql-foundations-v1-step06",
         "snippetId": "sql-basics-006",
         "order": 6,
-        "titleEn": "Comments and integer division",
-        "titleEs": "Comentarios y división entera"
+        "titleEn": "Divide two integers with `/`",
+        "titleEs": "Dividir dos enteros con `/`"
       },
       {
         "id": "sql-foundations-v1-step07",

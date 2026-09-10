@@ -52,6 +52,44 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ## Historial de sesiones
 
+### 2026-09-10 — Fix: comentarios colándose en el tipeo de `go-tui-notes-v1`
+
+- Reporte de usuario: la ruta `go-tui-notes-v1` (agregada hoy mismo, commit
+  `7481669`) obligaba a tipear líneas de comentario Go (`// NoteID is...`)
+  como parte del snippet — nunca debe pasar, el tipeo debe ser código puro.
+- Causa: los 29 snippets se extrajeron **verbatim** de una app Go de
+  referencia real (ver `snippet-authoring.md`), y el código idiomático
+  incluye doc-comments de símbolos exportados. No hay ninguna lógica en
+  `lib/` que filtre comentarios antes de usar `Snippet.code` como
+  `expectedSnippet` — nunca la hubo ni la debe haber (afectaría offsets de
+  resaltado de sintaxis y métricas por carácter en todos los modos).
+- Fix: se limpiaron las 27 de 29 entradas de `go-tui-*` en
+  `assets/content/snippets/go_v1.json` que tenían líneas `//`, quitando
+  solo esas líneas (sin tocar el resto del código). Verificado: JSON
+  válido, `gofmt -l` limpio en cada snippet modificado (envuelto en
+  `package main`), sin líneas en blanco dobles resultantes, cero snippets
+  de ninguna lección de `go-tui-notes-v1` con prosa (`titleEn/Es`,
+  `explanationEn/Es`) que dependa del comentario para tener sentido.
+  Editado en sitio (sin bump de `revision`): no había ninguna
+  `typing_session`/`lesson_progress_cache` con progreso real sobre estos
+  ids en `~/Documents/ridge.db.sqlite` — la ruta se agregó hoy y nadie
+  la había completado.
+- `snippet_catalog_completeness_test.dart`, `content_drift_integration_test.dart`
+  y `scripts/audit_lesson_order.py` (contra `go_v1.json` +
+  `go_tui_notes_v1.json`) pasan tras el cambio.
+- `sql-basics-006` (`sql-foundations-v1`) tenía una línea
+  `-- Arithmetic in the SELECT list` intencional — el título/explicación de
+  esa lección eran literalmente sobre qué es un comentario SQL, a
+  diferencia del caso de arriba que fue un efecto secundario accidental de
+  la extracción verbatim. Usuario confirmó que quiere la regla "código
+  puro, cero comentarios" sin excepciones: se quitó la línea de comentario
+  y se reescribió la lección (título/tldr/explicación EN/ES en
+  `sql_v1.json` + título del step en `sql_foundations_v1.json`) para que
+  gire solo en torno a la división entera (`SELECT 10 / 2 AS half;`),
+  `length` short → coherente con el resto de `sqlBasics`.
+- Confirmado (script de auditoría): ningún snippet referenciado por
+  `go-tui-notes-v1` ni `sql-foundations-v1` conserva líneas `//`/`--`/`#`.
+
 ### 2026-09-10 — Rebranding: Just In Time → Ridge
 
 - Producto renombrado de "Just In Time" a **Ridge** en toda la app y el

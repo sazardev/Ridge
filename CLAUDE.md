@@ -80,9 +80,14 @@ under `lib/` exceeding 500 lines. Generated files (`*.g.dart`,
 `*.freezed.dart`, `lib/core/i18n/gen/**`) are exempt from every hand-authored
 rule (analyzer, architecture check, line limit).
 
-Cross-cutting code (design system, `Result`/`AppFailure` error vocabulary,
-router, secure storage, shared preferences, the drift database) lives under
-`lib/core/`.
+Cross-cutting code lives under `lib/core/`: design system (`theme/`),
+`Result`/`AppFailure` error vocabulary (`error/`, `utils/`), router
+(`router/`), secure storage (`security/`), shared preferences
+(`persistence/preferences_provider.dart`), the drift database
+(`persistence/drift/`), the custom desktop titlebar/window-frame chrome on
+Linux/Windows via `window_manager` (`window/`), and the on-device
+directory for user-supplied "content pack" JSON (`content_packs/` — see
+below).
 
 ### Error handling
 
@@ -105,6 +110,19 @@ what changed and why existing rows are unaffected). Custom indices that
 drift's `Table` class can't express inline are created via a helper
 (`_createPracticeIndices`-style) called from both `onCreate` and the
 migration step that introduces the table.
+
+### Content sourcing
+
+Snippet/Learning Path catalogs come from two merged sources, combined by a
+`composite_snippet_catalog_source.dart`-style adapter in each content
+feature's `infrastructure/`: the bundled read-only assets
+(`assets/content/{snippets,learning_paths}/*.json`, edited per the
+`content-curriculum` skill) and an optional on-device "content pack"
+directory (`lib/core/content_packs/content_packs_directory.dart` resolves
+it under app-support storage; `external_snippet_pack_source.dart` reads
+it). The app never writes to the pack directory itself — it's a
+drop-in extension point for externally supplied JSON in the same DTO
+shape, not a user-facing feature yet.
 
 ### Riverpod
 
@@ -146,15 +164,16 @@ writing new constructors instead of writing `const ClassName(...)`.
 
 ## Content / curriculum editing
 
-Editing snippets (`assets/content/snippets/{go,bash,sql}_v1.json`), a
+Editing snippets (`assets/content/snippets/{go,bash,sql,rust}_v1.json`), a
 Learning Path's lesson order (`assets/content/learning_paths/*.json`), or
 adding a new bilingual (en/es) content field is covered by the
 `content-curriculum` skill — use it rather than hand-editing these JSON
 files, since lesson ordering has produced real beginner-incoherence bugs
 before. Note the two catalog tiers (SPEC.md §3.2): Go backs free practice
-and keeps a dense (category, difficulty) grid; Bash and SQL are
-course-only and contain exactly the snippets `bash-foundations-v1` and
-`sql-foundations-v1` use, respectively.
+and keeps a dense (category, difficulty) grid; Bash, SQL, and Rust are
+course-only and contain exactly the snippets their Learning Path(s) use
+(`bash-foundations-v1`, `sql-foundations-v1`, `rust-foundations-v1` —
+Rust is beginner-only and reuses Go's generic categories).
 
 ## Design system
 
