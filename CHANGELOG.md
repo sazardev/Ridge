@@ -11,6 +11,14 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-09-10
+
+### Added
+- add Bash and SQL learning routes and Survival mode (42cfc2f)
+
+### Fixed
+- **settings:** derive latest changelog heading in test (46dd367)
+
 ## [1.2.0] - 2026-09-10
 
 ### Added
