@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-09-10
+
+### Added
+- **content:** add the bash-toolkit-v1 course (95408b1)
+
 ## [1.3.0] - 2026-09-10
 
 ### Added
