@@ -331,7 +331,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         _ => '…',
                       }),
                     ),
-                    subtitle: Text(l10n.settingsAboutArchitecture),
                   ),
                   const Divider(height: 1, indent: 16, endIndent: 16),
                   ListTile(

@@ -44,15 +44,58 @@ class _ChangelogBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final lines = markdown.split('\n');
+    final lines = _versionEntries(markdown);
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: lines.length,
-      itemBuilder: (context, index) => _lineWidget(lines[index], theme),
+      itemBuilder: (context, index) =>
+          _lineWidget(lines[index], theme, isFirst: index == 0),
     );
   }
 
-  Widget _lineWidget(String line, ThemeData theme) {
+  /// Drops the doc preamble (title + boilerplate paragraph) and starts
+  /// rendering at the first version heading, e.g. `## [1.7.0] - 2026-09-10`.
+  List<String> _versionEntries(String markdown) {
+    final lines = markdown.split('\n');
+    final start = lines.indexWhere((line) => line.startsWith('## ['));
+    return start == -1 ? lines : lines.sublist(start);
+  }
+
+  Widget _lineWidget(String line, ThemeData theme, {required bool isFirst}) {
+    if (line.startsWith('## ')) {
+      final heading = line.substring(3);
+      final match = RegExp(r'^\[(.+?)\]\s*-\s*(.+)$').firstMatch(heading);
+      return Padding(
+        padding: EdgeInsets.only(top: isFirst ? 0 : 24, bottom: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (!isFirst) const Divider(height: 25),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  match?.group(1) ?? heading,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                if (match != null) ...[
+                  const SizedBox(width: 8),
+                  Text(
+                    match.group(2)!,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ],
+        ),
+      );
+    }
     if (line.startsWith('### ')) {
       return Padding(
         padding: const EdgeInsets.only(top: 12, bottom: 4),
@@ -64,12 +107,6 @@ class _ChangelogBody extends StatelessWidget {
         ),
       );
     }
-    if (line.startsWith('## ')) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 20, bottom: 8),
-        child: Text(line.substring(3), style: theme.textTheme.titleLarge),
-      );
-    }
     if (line.startsWith('# ')) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 12),
@@ -77,6 +114,7 @@ class _ChangelogBody extends StatelessWidget {
       );
     }
     if (line.startsWith('- ')) {
+      final style = theme.textTheme.bodyMedium;
       return Padding(
         padding: const EdgeInsets.only(left: 8, bottom: 4),
         child: Row(
@@ -84,7 +122,9 @@ class _ChangelogBody extends StatelessWidget {
           children: [
             const Text('•  '),
             Expanded(
-              child: Text(line.substring(2), style: theme.textTheme.bodyMedium),
+              child: Text.rich(
+                TextSpan(children: _inlineSpans(line.substring(2), style)),
+              ),
             ),
           ],
         ),
@@ -95,7 +135,32 @@ class _ChangelogBody extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
-      child: Text(line, style: theme.textTheme.bodyMedium),
+      child: Text.rich(
+        TextSpan(children: _inlineSpans(line, theme.textTheme.bodyMedium)),
+      ),
     );
+  }
+
+  /// Renders inline `**bold**` markdown spans within a single line.
+  List<InlineSpan> _inlineSpans(String text, TextStyle? style) {
+    final spans = <InlineSpan>[];
+    final boldPattern = RegExp(r'\*\*(.+?)\*\*');
+    var cursor = 0;
+    for (final match in boldPattern.allMatches(text)) {
+      if (match.start > cursor) {
+        spans.add(TextSpan(text: text.substring(cursor, match.start)));
+      }
+      spans.add(
+        TextSpan(
+          text: match.group(1),
+          style: style?.copyWith(fontWeight: FontWeight.bold),
+        ),
+      );
+      cursor = match.end;
+    }
+    if (cursor < text.length) {
+      spans.add(TextSpan(text: text.substring(cursor)));
+    }
+    return [TextSpan(style: style, children: spans)];
   }
 }
