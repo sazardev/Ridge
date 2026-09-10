@@ -29,7 +29,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
   | Lenguaje | Catálogo | Ruta | Tier |
   |---|---|---|---|
-  | Go | 142 snippets | `go-foundations-v1` (~51 lecciones) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) | práctica libre (grid denso) |
+  | Go | 148 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) | práctica libre (grid denso) |
   | Bash (Arch) | 50 snippets | `bash-foundations-v1` (50) | solo-curso |
   | SQL (PostgreSQL) | 60 snippets | `sql-foundations-v1` (60) | solo-curso |
 
@@ -46,12 +46,49 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 - Set de íconos: **Lucide** (`lucide_icons_flutter`), no Material `Icons.*`
   — elegido por combinar con Geist (misma familia visual que usa Vercel/
   shadcn). `cupertino_icons` (vestigial, nunca usado) fue removido.
-- Último release: **v1.2.0** (CI, `df00321`). El siguiente push a `main`
+- Último release: **v1.5.0** (`d9ef12f`). El siguiente push a `main`
   genera release automático desde los Conventional Commits.
 
 ---
 
 ## Historial de sesiones
+
+### 2026-09-10 — Ruta Go intermedia v2 + contenido Go 1.27
+
+- **`go-intermediate-syntax-v1` reescrita de 7 a 25 lecciones** (working
+  tree, sin commitear aún): bloques contiguos `structs` (4) → `pointers`
+  (4) → `interfaces` (3) → `concurrency` (4) → `generics` (4) →
+  `modernGo` (6), ordenadas a mano por dependencia conceptual (no por tag
+  de dificultad ni longitud). La versión vieja era un muestreo aleatorio
+  que arrancaba con un bloque `var` alineado.
+- **6 snippets nuevos Go 1.27** (`go-modern-001..006`, catálogo Go
+  142→148): `strings.CutLast`, `uuid.NewV7/Parse`, claves de campo
+  promovido en struct literals, inferencia generalizada de tipos de
+  función (literales/conversiones/envíos), perfil `goroutineleak` de
+  pprof, y métodos genéricos. Cada `code` verificado con toolchain real
+  **go1.27.0** (`gofmt` + `go run`, salida esperada); el resto del
+  catálogo usa go1.26.5.
+- **Categoría nueva `modernGo`** (enum + ARB en/es + `content_labels` +
+  l10n regenerado) como bloque final "qué hay de nuevo" del que cuelgan
+  los 6 snippets.
+- **Bloqueo del agente adversarial**: la ruta original ya estaba en
+  v1.5.0, así que reutilizar `go-intermediate-syntax-v1-stepNN` para
+  otros snippets habría marcado mal progreso de usuarios reales. Los ids
+  pasaron al esquema `-o2-stepNN` (como `go-foundations-v1-o2`). La DB
+  local no tenía intentos, pero el tag publicado manda.
+- **Dos prosa corregidas en snippets existentes**: `go-concurrency-001`
+  explicaba el peligro de la variable de bucle como si Go 1.22 no
+  existiera; `go-concurrency-004` ES usaba "filtrada" (calco) ahora
+  "filtrarse".
+- **Integración**: `content_drift_integration_test` 309→315 y beginner
+  87→89; set de `findContainingSymbols` para `%` + `go-modern-004`.
+- **Verificado**: `audit_lesson_order.py` verde; **dos pasadas de
+  revisión adversarial** (la primera cazó el blocker de ids y 4 hallazgos
+  más, la segunda confirmó los fixes y dejó solo nits de estilo); `bash
+  tool/check.sh` verde (format, analyze, arquitectura, **314 tests**).
+- **Trade-off aceptado**: `go-struct-004` conserva su tag `expert` del
+  catálogo aunque en la ruta sea la lección 2; retaggearlo dejaría
+  `structs/expert` en 0 y la regla de grid exige ≥1 por celda.
 
 ### 2026-09-10 — Curso Go: TUI con Bubble Tea (`go-tui-notes-v1`)
 
@@ -183,11 +220,14 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   test headless del loop (ver `references/snippet-authoring.md`).
 - **Progreso por `lessonId`**: antes de reasignar snippet a un id de lección
   con progreso real, consultar `~/Documents/jit.db.sqlite`
-  (`lesson_progress_cache`).
+  (`lesson_progress_cache`). Si la ruta ya salió en un release, **bumpear
+  el sufijo de versión de los ids** (`...-o2-stepNN`) aunque la DB local
+  no tenga intentos: el release implica usuarios reales.
 
 ## Pendientes / próximos pasos
 
-- Confirmar que CI generó el release (v1.3.0 previsible) tras `42cfc2f`.
+- Commitear la ruta intermedia v2 + contenido Go 1.27 (probable v1.6.0 al
+  pushear; `feat(content)` + `chore`).
 - Todo lo online de `SPEC.md` §5/§9 y `STACK.md` §5–6 (Supabase, sync,
   duelos, escuadrones, leaderboards).
 - Scaffold de Windows/Web (`flutter create --platforms=windows,web .`).
