@@ -2,7 +2,7 @@ name: just_in_time
 description: "Just In Time — a hexagonal-architecture Flutter app for Linux and Android."
 publish_to: 'none'
 
-version: 1.1.0+2
+version: 1.2.0+3
 
 environment:
   sdk: ^3.13.2

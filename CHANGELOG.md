@@ -11,6 +11,16 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-09-10
+
+### Added
+- **lock:** add biometric unlock option (1aac79e)
+- **profile:** auto-detect device platform, OS, and model (afcd8f5)
+- initial commit (4ce19b6)
+
+### Fixed
+- **settings:** update stale changelog screen test assertion (bc1026f)
+
 ## [1.1.0] - 2026-09-10
 
 ### Added
