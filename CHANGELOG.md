@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-09-10
+
+### Added
+- rebrand product to Ridge and switch Lucide icons to weight 300 (fe284a6)
+
 ## [1.7.0] - 2026-09-10
 
 ### Added
