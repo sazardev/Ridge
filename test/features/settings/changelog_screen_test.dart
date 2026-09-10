@@ -16,12 +16,14 @@ void main() {
     // valid across releases while still proving the *latest* entry is
     // what renders first.
     final changelog = await rootBundle.loadString('CHANGELOG.md');
-    final latestReleasedHeading = RegExp(
-      r'^## (\[\d+\.\d+\.\d+\][^\n]*)$',
+    // Just the semver, not the trailing " - date": the widget renders the
+    // version and its date as two separate Text widgets side by side.
+    final latestReleasedVersion = RegExp(
+      r'^## \[(\d+\.\d+\.\d+)\]',
       multiLine: true,
     ).firstMatch(changelog)?.group(1);
     expect(
-      latestReleasedHeading,
+      latestReleasedVersion,
       isNotNull,
       reason: 'CHANGELOG.md should list at least one released version',
     );
@@ -35,11 +37,14 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Changelog'), findsWidgets);
+    // The screen title ("What's new") rather than the markdown's own "#
+    // Changelog" preamble, which the body intentionally skips to start
+    // straight at the most recent version heading.
+    expect(find.textContaining("What's new"), findsWidgets);
     expect(find.textContaining('Unreleased'), findsOneWidget);
     // The body is a lazy ListView, so only content visible without
     // scrolling renders — the latest released heading (the top-most one)
     // must be visible, not an older entry further down.
-    expect(find.textContaining(latestReleasedHeading!), findsOneWidget);
+    expect(find.textContaining(latestReleasedVersion!), findsOneWidget);
   });
 }
