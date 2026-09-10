@@ -1,0 +1,139 @@
+# Memory — Bitácora de avances
+
+Documento vivo para humanos y agentes de IA: registra **en qué punto está el
+proyecto, qué se verificó y qué sigue**. No sustituye a los otros docs:
+
+- `SPEC.md` — lógica de negocio (qué hace el producto).
+- `STACK.md` — arquitectura técnica (cómo está construido).
+- `CHANGELOG.md` — historial de releases (autogenerado desde Conventional
+  Commits; no editar a mano).
+- `CLAUDE.md` — guía operativa para agentes (comandos, convenciones).
+
+**Cómo actualizarlo:** al cerrar una sesión de trabajo, añade una entrada
+fechada al historial, actualiza "Estado actual" si cambió, y ajusta
+"Pendientes". Sé breve: hechos verificables y comandos, no prosa.
+
+---
+
+## Estado actual (2026-09-10)
+
+- App **offline-only** (drift/SQLite + secure storage + shared_preferences).
+  Todo lo online (auth, duelos, escuadrones, leaderboards, sync Supabase)
+  está especificado en `SPEC.md`/`STACK.md` pero **sin implementar**.
+- Features implementadas: `content`, `practice`, `progression`,
+  `learning_paths`, `achievements`, `profile`, `settings`, `lock`,
+  `onboarding`, `data_management`.
+- Modos de práctica: Zen, Sprint, Precisión y **Survival** (SPEC.md §5.8:
+  vidas, combo, multiplicador).
+- Catálogos y rutas (contenido bilingüe en/es):
+
+  | Lenguaje | Catálogo | Ruta | Tier |
+  |---|---|---|---|
+  | Go | 113 snippets | `go-foundations-v1` (~51 lecciones) + notas DDD | práctica libre (grid denso) |
+  | Bash (Arch) | 50 snippets | `bash-foundations-v1` (50) | solo-curso |
+  | SQL (PostgreSQL) | 60 snippets | `sql-foundations-v1` (60) | solo-curso |
+
+- Curso SQL: base de datos de ejemplo compartida tipo biblioteca
+  (`authors`, `books`, `members`, `loans`), 8 categorías contiguas:
+  `sqlBasics` (6), `sqlSchema` (13), `sqlQueries` (7), `sqlFiltering` (9),
+  `sqlAggregation` (7), `sqlJoins` (7), `sqlModifications` (5),
+  `sqlAdvancedQueries` (6). Dificultad 30/22/7/1.
+- Gate de calidad: `bash tool/check.sh` (format + analyze + arquitectura +
+  tests). Última corrida: **305 tests verdes**.
+- Último release: **v1.2.0** (CI, `df00321`). El siguiente push a `main`
+  genera release automático desde los Conventional Commits.
+
+---
+
+## Historial de sesiones
+
+### 2026-09-10 — Curso SQL/PostgreSQL + integración de WIP (Bash y Survival)
+
+- **Curso SQL completo** (`sql-foundations-v1`, 60 lecciones), decidido con
+  el usuario:
+  - Dialecto **PostgreSQL**; schema compartido "biblioteca"; **solo-curso**
+    (mismo tier que Bash); ~50 lecciones objetivo → 60 finales.
+  - `ProgrammingLanguage.sql` + `SqlSyntaxTokenizer` (en part file de
+    `syntax_tokenizer.dart` para no pasar el límite de 500 líneas) +
+    8 `ContentCategory` nuevas + labels ARB en/es.
+  - Prosa bilingüe delegada a un agente; código autorado y verificado por
+    el orquestador.
+- **Verificación de contenido**: los 60 snippets se ejecutaron contra
+  **PostgreSQL 16 real** (contenedor `podman` desechable): bloque
+  `sqlSchema` acumulativo (crea la DB `library`), el resto contra una copia
+  recién sembrada, con asserts de counts de seed (5/8/3/5). Los scripts
+  vivieron en `/tmp/opencode/` (efímeros); el procedimiento quedó
+  documentado en la skill `content-curriculum`.
+- **Doble revisión adversarial** (agentes frescos) → 12 hallazgos
+  corregidos: entre ellos un `UPDATE` no-op, un `ILIKE` que no demostraba
+  case-insensitivity, un `LEFT JOIN` enseñado ya como anti-join, y
+  `symbolFocus` con valores crudos que rompían la carga del catálogo
+  (el enum `SymbolFocus` es Go-específico; SQL usa `[]`, como Bash).
+- **Fix extra**: el selector de rutas ordenaba idiomas alfabéticamente
+  (default Bash); ahora usa orden de declaración del enum → default Go.
+- **Integración**: el working tree tenía WIP sin commitear de Bash y
+  Survival entrelazado en archivos compartidos; se commiteó junto y se
+  pusheó: `42cfc2f` (feat) + `b54e0b4` (chore). Rebase limpio sobre el
+  release v1.2.0 del remoto.
+- **Incidente**: un proceso externo (buffers viejos de editor, aparente)
+  revirtió `lib/l10n/*.arb` y `lib/core/i18n/gen/*` justo tras commitear.
+  Se restauró desde el commit y se re-verificó. **Antes de commitear/pushear,
+  comprobar `git status` y que las claves nuevas sigan en los ARB.**
+
+### 2026-09-09/10 — Núcleo offline y features iniciales
+
+- `6bc8034` núcleo offline según SPEC.md (content, practice, progression,
+  learning paths, achievements, profile).
+- `1aac79e` biometría en lock; `afcd8f5` auto-detección de plataforma en
+  perfil; `bc1026f` fix de test de changelog. Releases v1.0.0–v1.2.0
+  (ver `CHANGELOG.md`).
+- Sesión previa (WIP ahora commiteado con `42cfc2f`): curso **Bash/Arch
+  Linux**, selector de idioma en práctica libre/Sprint y browser de
+  snippets, y modo **Survival**.
+
+---
+
+## Decisiones duraderas
+
+- **Agregar un lenguaje** = nuevo case en `ProgrammingLanguage` + tokenizer
+  (part file) + asset de catálogo + ruta + categorías si aplica + labels en
+  `content_labels.dart` + claves ARB en/es. Nada de rediseño.
+- **Tiers de catálogo** (SPEC.md §3.2): práctica libre exige grid denso
+  (≥3 por celda en categorías núcleo); solo-curso exige exactamente los
+  snippets que usa su ruta (cero huérfanos). Lo verifica
+  `snippet_catalog_completeness_test.dart`.
+- **Código del catálogo es ASCII-only** (el `key_layout_map_test` exige que
+  cada carácter mapee a una tecla US-QWERTY). Los acentos van solo en la
+  prosa en/es.
+- **Ordenar lecciones** es a mano por dependencia conceptual, luego
+  `scripts/audit_lesson_order.py` y **revisión adversarial** por un agente
+  fresco (ver skill `content-curriculum`).
+- **Verificar todo contenido ejecutándolo**: Go `gofmt` + `go run`; SQL
+  PostgreSQL 16 real; Bash smoke run.
+- **Progreso por `lessonId`**: antes de reasignar snippet a un id de lección
+  con progreso real, consultar `~/Documents/jit.db.sqlite`
+  (`lesson_progress_cache`).
+
+## Pendientes / próximos pasos
+
+- Confirmar que CI generó el release (v1.3.0 previsible) tras `42cfc2f`.
+- Todo lo online de `SPEC.md` §5/§9 y `STACK.md` §5–6 (Supabase, sync,
+  duelos, escuadrones, leaderboards).
+- Scaffold de Windows/Web (`flutter create --platforms=windows,web .`).
+- Evaluar si `symbolFocus` merece valores SQL (hoy `[]`, como Bash) si se
+  le da uso real en recomendaciones.
+- Considerar versionar el harness de verificación de contenido SQL dentro
+  de `tool/` (hoy efímero en `/tmp`).
+
+## Comandos clave
+
+```sh
+bash tool/check.sh                         # gate completo
+flutter test                               # suite (305 tests)
+python3 .claude/skills/content-curriculum/scripts/audit_lesson_order.py \
+  assets/content/snippets/sql_v1.json \
+  assets/content/learning_paths/sql_foundations_v1.json
+# Postgres para verificar snippets SQL:
+podman run -d --rm --name jit-sql-pg -e POSTGRES_PASSWORD=postgres \
+  docker.io/library/postgres:16-alpine
+```

@@ -13,6 +13,12 @@ matrix, versioning/deployment). Any non-trivial code decision should trace
 to a rule written in one of these two docs. Both are in Spanish; code,
 identifiers, and comments are in English.
 
+Progress/status lives in **`Memory.md`** (repo root, Spanish): current
+state, dated session log, durable decisions, and next steps. Read it at the
+start of a work session and update it when you finish one — it exists so
+context survives across sessions. `CHANGELOG.md` is auto-generated from
+Conventional Commits and is never edited by hand.
+
 Currently implemented (`lib/features/`): `content`, `practice`,
 `progression`, `learning_paths`, `achievements`, `profile`, `settings`,
 `lock`, `onboarding`, `data_management`. Everything online — auth, duels,
