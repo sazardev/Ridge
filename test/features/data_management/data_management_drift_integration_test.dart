@@ -7,6 +7,7 @@
 // is the one hand-faked port here: `flutter_secure_storage` has no
 // platform channel under plain `flutter test`.
 import 'dart:async';
+import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -38,6 +39,8 @@ import 'package:just_in_time/features/profile/presentation/providers/profile_pro
 import 'package:just_in_time/features/progression/presentation/providers/progression_providers.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
 import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
+import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 
@@ -45,6 +48,23 @@ import 'package:shared_preferences_platform_interface/shared_preferences_async_p
 // `assets/content/learning_paths/go_foundations_v1.json`).
 const _lesson1Id = 'go-foundations-v1-o2-step01';
 const _lesson2Id = 'go-foundations-v1-o2-step02';
+
+// `LearningPathRepositoryImpl`/`CompositeSnippetCatalogSource` (both
+// exercised for real below) scan an external content-packs directory via
+// `path_provider`, which also has no platform channel under plain
+// `flutter test` — same rationale as the `shared_preferences` fake
+// above. An empty temp directory is all that's needed: this file's
+// concern is the reset/wipe use cases, not external packs.
+class _FakePathProviderPlatform extends Fake
+    with MockPlatformInterfaceMixin
+    implements PathProviderPlatform {
+  new(this._path);
+
+  final String _path;
+
+  @override
+  Future<String?> getApplicationSupportPath() async => _path;
+}
 
 const _lesson1Snippet = Snippet(
   id: SnippetId('go-vars-001'),
@@ -192,16 +212,19 @@ void main() {
   // real (test) binding to be initialized.
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  late Directory supportDir;
   late AppDatabase database;
   late ProviderContainer container;
   late _FakePinRepository fakePinRepository;
 
-  setUp(() {
+  setUp(() async {
     // `SettingsController`/`wipeAllData` touch `shared_preferences`, which
     // has no platform channel under plain `flutter test` either — an
     // in-memory fake, same rationale as `_FakePinRepository` above.
     SharedPreferencesAsyncPlatform.instance =
         InMemorySharedPreferencesAsync.empty();
+    supportDir = await Directory.systemTemp.createTemp('jit_test_support_');
+    PathProviderPlatform.instance = _FakePathProviderPlatform(supportDir.path);
     database = AppDatabase(NativeDatabase.memory());
     fakePinRepository = _FakePinRepository();
     container = ProviderContainer(
@@ -212,6 +235,9 @@ void main() {
     );
     addTearDown(() => database.close());
     addTearDown(container.dispose);
+    addTearDown(() {
+      if (supportDir.existsSync()) supportDir.deleteSync(recursive: true);
+    });
   });
 
   Future<Map<String, String>> statusByLessonId(ProfileId profileId) async {
