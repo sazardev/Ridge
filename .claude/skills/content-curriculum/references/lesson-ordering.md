@@ -56,6 +56,21 @@ specifically need — a method receiver — is already taught even earlier, in
 `variablesAndTypes`), that's an acceptable, bounded trade-off: leave the
 category where it is.
 
+**This cuts both ways — check contiguity BEFORE assigning a category to a
+new lesson, not after.** Building the `go-ddd-hexagonal-notes-v1` path, two
+lessons (hand-written test fakes + the table-driven test using them) were
+initially tagged the same category as an earlier block of lessons
+(`applicationUseCases`, since they test a use case) purely by topical
+similarity — but they were positioned at the very END of the path (after
+persistence/REST/wiring lessons), so that category tag now appeared twice,
+non-contiguously. `scripts/audit_lesson_order.py` catches this
+mechanically, but the fix isn't to move the lessons earlier (that would
+lose the deliberate "testing ties everything together" capstone
+placement) — it's to give them their own category
+(`testingWithFakes`) instead. When a new category is topically similar to
+an existing one but will land at a different POSITION in the sequence,
+give it its own tag rather than reusing the existing one.
+
 **Accepted trade-off, don't re-litigate it every time**: a category early
 in the macro order will sometimes need to use a construct (e.g. `func`, or
 `for range`) that its own formally-dedicated category doesn't teach until

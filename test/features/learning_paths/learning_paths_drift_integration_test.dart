@@ -9,6 +9,8 @@
 // rule: the first lesson starts unlocked; a passing attempt completes
 // its lesson and unlocks the next one; a failing attempt does neither.
 // Mirrors `progression_drift_integration_test.dart`'s style.
+import 'dart:io';
+
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -29,6 +31,27 @@ import 'package:just_in_time/features/practice/domain/value_objects/typing_sessi
 import 'package:just_in_time/features/practice/presentation/providers/practice_providers.dart';
 import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
 import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
+import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+
+// `LearningPathRepositoryImpl` (exercised for real below, via the real
+// provider graph) also scans an external content-packs directory via
+// `path_provider` — `flutter_test`'s binding doesn't implement that
+// plugin's platform channel, so it needs the same fake substitution as
+// `test/features/learning_paths/learning_path_repository_impl_external_test.dart`
+// (see that file's header for why `MockPlatformInterfaceMixin` is
+// required). An empty temp directory is all that's needed here: this
+// file's concern is the bundled curriculum, not external packs.
+class _FakePathProviderPlatform extends Fake
+    with MockPlatformInterfaceMixin
+    implements PathProviderPlatform {
+  new(this._path);
+
+  final String _path;
+
+  @override
+  Future<String?> getApplicationSupportPath() async => _path;
+}
 
 // The real curriculum's first three lessons (see
 // `assets/content/learning_paths/go_foundations_v1.json`) — this test
@@ -126,14 +149,21 @@ void main() {
   // *integration* test rather than a pure-Dart unit test.
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  late Directory supportDir;
   late AppDatabase database;
   late ProviderContainer container;
 
-  setUp(() {
+  setUp(() async {
+    supportDir = await Directory.systemTemp.createTemp('jit_test_support_');
+    PathProviderPlatform.instance = _FakePathProviderPlatform(supportDir.path);
+
     database = AppDatabase(NativeDatabase.memory());
     container = ProviderContainer(
       overrides: [appDatabaseProvider.overrideWithValue(database)],
     );
+    addTearDown(() {
+      if (supportDir.existsSync()) supportDir.deleteSync(recursive: true);
+    });
     addTearDown(() => database.close());
     addTearDown(container.dispose);
   });

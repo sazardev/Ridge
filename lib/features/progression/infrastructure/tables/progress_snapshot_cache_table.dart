@@ -30,6 +30,13 @@ class ProgressSnapshotCache extends Table {
   /// JSON-encoded `WeaknessReportDto` — see this table's class doc.
   TextColumn get weaknessReportJson => text()();
 
+  /// JSON-encoded `ActivityReportDto`, same blob-cache reasoning as
+  /// [weaknessReportJson]. Nullable because it was added in a later
+  /// migration than this table itself — rows cached before that
+  /// migration have no value until the next recompute backfills one;
+  /// `null` maps to `ActivityReport.empty` in the meantime.
+  TextColumn get activityReportJson => text().nullable()();
+
   /// When this snapshot was computed, as UTC microseconds since epoch.
   IntColumn get computedAtUtcMicros => integer()();
 

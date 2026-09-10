@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/core/theme/app_shapes.dart';
 import 'package:just_in_time/core/theme/app_typography.dart';
+import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id_label.dart';
 import 'package:just_in_time/features/progression/domain/entities/weakness_report.dart';
 import 'package:just_in_time/features/progression/presentation/progression_labels.dart';
 
@@ -76,6 +77,24 @@ class WeaknessReportCard extends StatelessWidget {
                 for (final w in report.weakNgrams.take(_maxEntriesShown))
                   (
                     label: w.text,
+                    score: w.score,
+                    trendLabel: w.trend.label(l10n),
+                    trendIcon: w.trend.icon,
+                  ),
+              ],
+              emptyLabel: l10n.progressWeaknessEmpty,
+            ),
+            const SizedBox(height: 12),
+            _WeaknessSection(
+              title: l10n.progressWeaknessKeyTransitions,
+              entries: [
+                for (final w in report.weakKeyTransitions.take(
+                  _maxEntriesShown,
+                ))
+                  (
+                    label:
+                        '${w.fromKey.displayLabel(l10n)} '
+                        '→ ${w.toKey.displayLabel(l10n)}',
                     score: w.score,
                     trendLabel: w.trend.label(l10n),
                     trendIcon: w.trend.icon,

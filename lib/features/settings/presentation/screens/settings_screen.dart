@@ -286,6 +286,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ],
             ),
             SettingsSection(
+              title: l10n.settingsSectionShortcuts,
+              children: [
+                ListTile(
+                  title: Text(l10n.settingsShortcutsTitle),
+                  subtitle: Text(l10n.settingsShortcutsSubtitle),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () => context.push('/shortcuts'),
+                ),
+              ],
+            ),
+            SettingsSection(
               title: l10n.settingsSectionAbout,
               children: [
                 ListTile(

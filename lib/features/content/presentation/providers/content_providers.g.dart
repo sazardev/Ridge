@@ -106,12 +106,16 @@ final class SnippetRepositoryProvider
 
 String _$snippetRepositoryHash() => r'c331cfcc4e63db14d27df7100a3686d13d71f4b5';
 
-/// Provides the [SnippetCatalogSource] adapter (bundled JSON asset).
+/// Provides the [SnippetCatalogSource] adapter — every bundled snippet
+/// plus every snippet contributed by a third-party pack (see
+/// [CompositeSnippetCatalogSource]).
 
 @ProviderFor(snippetCatalogSource)
 final snippetCatalogSourceProvider = SnippetCatalogSourceProvider._();
 
-/// Provides the [SnippetCatalogSource] adapter (bundled JSON asset).
+/// Provides the [SnippetCatalogSource] adapter — every bundled snippet
+/// plus every snippet contributed by a third-party pack (see
+/// [CompositeSnippetCatalogSource]).
 
 final class SnippetCatalogSourceProvider
     extends
@@ -121,7 +125,9 @@ final class SnippetCatalogSourceProvider
           SnippetCatalogSource
         >
     with $Provider<SnippetCatalogSource> {
-  /// Provides the [SnippetCatalogSource] adapter (bundled JSON asset).
+  /// Provides the [SnippetCatalogSource] adapter — every bundled snippet
+  /// plus every snippet contributed by a third-party pack (see
+  /// [CompositeSnippetCatalogSource]).
   SnippetCatalogSourceProvider._()
     : super(
         from: null,
@@ -157,7 +163,7 @@ final class SnippetCatalogSourceProvider
 }
 
 String _$snippetCatalogSourceHash() =>
-    r'a22464c139be3a424c3e54450f6dd350eba10c23';
+    r'23f36da4b462de1c2eb27738f93aca7eae8daee6';
 
 /// Provides the [SeedSnippetCatalogUseCase] used to seed the catalog at
 /// app startup.

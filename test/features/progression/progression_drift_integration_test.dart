@@ -199,6 +199,32 @@ void main() {
     expect(mastery.isMastered, isTrue);
     expect(mastery.passCountInLastFive, 5);
 
+    // Each of the 6 perfect runs types 'abcde' via keys A-B-C-D-E, so
+    // every session contributes the same 4 error-free physical key
+    // transitions — proof `getKeyTransitionSamplesRaw`'s self-join
+    // really reads `physical_key_id`, not `actual_char`.
+    final transitionPairs = {
+      for (final t in snapshot.weaknessReport.weakKeyTransitions)
+        (t.fromKey, t.toKey),
+    };
+    expect(transitionPairs, {
+      (PhysicalKeyId.keyA, PhysicalKeyId.keyB),
+      (PhysicalKeyId.keyB, PhysicalKeyId.keyC),
+      (PhysicalKeyId.keyC, PhysicalKeyId.keyD),
+      (PhysicalKeyId.keyD, PhysicalKeyId.keyE),
+    });
+
+    // All 6 sessions land in the one category/snippet practiced.
+    final mostPracticedCategory =
+        snapshot.activityReport.mostPracticedCategories.single;
+    expect(mostPracticedCategory.category, ContentCategory.errorHandling);
+    expect(mostPracticedCategory.sessionCount, 6);
+
+    final mostPracticedExercise =
+        snapshot.activityReport.mostPracticedExercises.single;
+    expect(mostPracticedExercise.snippetId, _snippet.id);
+    expect(mostPracticedExercise.sessionCount, 6);
+
     // --- Idempotency: recomputing again must not double-count. ---
     final secondRecompute = await recompute(
       profileId: profileId,

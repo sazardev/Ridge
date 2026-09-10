@@ -123,6 +123,20 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
                             final progressFraction = totalLessons == 0
                                 ? 0.0
                                 : completedCount / totalLessons;
+                            // The entry-point difficulty (first lesson's
+                            // snippet) — a quick "how hard is this to
+                            // start" signal, shown as a chip instead of
+                            // making the learner open the path to find
+                            // out.
+                            final entryDifficulty = totalLessons == 0
+                                ? null
+                                : overview
+                                      .snippetsById[overview
+                                          .path
+                                          .lessons
+                                          .first
+                                          .snippetId]
+                                      ?.difficulty;
                             return Card(
                               margin: const EdgeInsets.symmetric(
                                 horizontal: 16,
@@ -158,6 +172,29 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
+                                        const SizedBox(height: 4),
+                                        Wrap(
+                                          spacing: 6,
+                                          runSpacing: 6,
+                                          children: [
+                                            _MiniChip(
+                                              label: overview.path.language
+                                                  .label(l10n),
+                                            ),
+                                            _MiniChip(
+                                              label: overview.path.tagFor(
+                                                context,
+                                              ),
+                                            ),
+                                            if (entryDifficulty != null)
+                                              _MiniChip(
+                                                label: entryDifficulty.label(
+                                                  l10n,
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 6),
                                         Text(
                                           overview.path.descriptionFor(context),
                                         ),
@@ -239,6 +276,33 @@ Color _accessibleForegroundFor(Color background) =>
     ThemeData.estimateBrightnessForColor(background) == Brightness.dark
     ? Colors.white
     : Colors.black;
+
+/// A small, dense identifying badge (language / topic / entry level) —
+/// deliberately terser than a full [Chip] so 2-3 of these read as quick
+/// tags rather than competing with the card's title for attention.
+class _MiniChip extends StatelessWidget {
+  const new({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainerHighest,
+        borderRadius: AppShapes.squircleRadius(AppRadius.full),
+      ),
+      child: Text(
+        label,
+        style: theme.textTheme.labelSmall?.copyWith(
+          color: theme.colorScheme.onSurfaceVariant,
+        ),
+      ),
+    );
+  }
+}
 
 class _LanguageSelector extends StatelessWidget {
   const new({

@@ -386,6 +386,105 @@ final class PersonalHistoryForCategoryFamily extends $Family
   String toString() => r'personalHistoryForCategoryProvider';
 }
 
+/// The catalog entry for [id], for `ActivityReportCard`'s exercise-level
+/// lists — those store only a `SnippetId`, resolving its display title
+/// is a presentation concern (mirrors `content`'s own id-only-in-domain
+/// pattern). `null` if the snippet was deleted after being practiced or
+/// the lookup fails.
+
+@ProviderFor(snippetById)
+final snippetByIdProvider = SnippetByIdFamily._();
+
+/// The catalog entry for [id], for `ActivityReportCard`'s exercise-level
+/// lists — those store only a `SnippetId`, resolving its display title
+/// is a presentation concern (mirrors `content`'s own id-only-in-domain
+/// pattern). `null` if the snippet was deleted after being practiced or
+/// the lookup fails.
+
+final class SnippetByIdProvider
+    extends
+        $FunctionalProvider<AsyncValue<Snippet?>, Snippet?, FutureOr<Snippet?>>
+    with $FutureModifier<Snippet?>, $FutureProvider<Snippet?> {
+  /// The catalog entry for [id], for `ActivityReportCard`'s exercise-level
+  /// lists — those store only a `SnippetId`, resolving its display title
+  /// is a presentation concern (mirrors `content`'s own id-only-in-domain
+  /// pattern). `null` if the snippet was deleted after being practiced or
+  /// the lookup fails.
+  SnippetByIdProvider._({
+    required SnippetByIdFamily super.from,
+    required SnippetId super.argument,
+  }) : super(
+         retry: null,
+         name: r'snippetByIdProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$snippetByIdHash();
+
+  @override
+  String toString() {
+    return r'snippetByIdProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<Snippet?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Snippet?> create(Ref ref) {
+    final argument = this.argument as SnippetId;
+    return snippetById(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SnippetByIdProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$snippetByIdHash() => r'715db1635e1d3e95017a6a60e1002b3823e20901';
+
+/// The catalog entry for [id], for `ActivityReportCard`'s exercise-level
+/// lists — those store only a `SnippetId`, resolving its display title
+/// is a presentation concern (mirrors `content`'s own id-only-in-domain
+/// pattern). `null` if the snippet was deleted after being practiced or
+/// the lookup fails.
+
+final class SnippetByIdFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<Snippet?>, SnippetId> {
+  SnippetByIdFamily._()
+    : super(
+        retry: null,
+        name: r'snippetByIdProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The catalog entry for [id], for `ActivityReportCard`'s exercise-level
+  /// lists — those store only a `SnippetId`, resolving its display title
+  /// is a presentation concern (mirrors `content`'s own id-only-in-domain
+  /// pattern). `null` if the snippet was deleted after being practiced or
+  /// the lookup fails.
+
+  SnippetByIdProvider call(SnippetId id) =>
+      SnippetByIdProvider._(argument: id, from: this);
+
+  @override
+  String toString() => r'snippetByIdProvider';
+}
+
 /// Exposes the active profile's cached [ProgressSnapshot] reactively,
 /// recomputing/backfilling on first load as a safety net for anything a
 /// prior fire-and-forget recompute might have missed (e.g. an app crash

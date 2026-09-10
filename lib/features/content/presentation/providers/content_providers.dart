@@ -7,8 +7,8 @@ import 'package:just_in_time/features/content/application/usecases/watch_snippet
 import 'package:just_in_time/features/content/domain/entities/snippet.dart';
 import 'package:just_in_time/features/content/domain/repositories/snippet_catalog_source.dart';
 import 'package:just_in_time/features/content/domain/repositories/snippet_repository.dart';
+import 'package:just_in_time/features/content/infrastructure/composite_snippet_catalog_source.dart';
 import 'package:just_in_time/features/content/infrastructure/snippet_dao.dart';
-import 'package:just_in_time/features/content/infrastructure/snippet_local_data_source.dart';
 import 'package:just_in_time/features/content/infrastructure/snippet_repository_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -26,10 +26,12 @@ SnippetRepository snippetRepository(Ref ref) {
   return SnippetRepositoryImpl(ref.watch(snippetDaoProvider));
 }
 
-/// Provides the [SnippetCatalogSource] adapter (bundled JSON asset).
+/// Provides the [SnippetCatalogSource] adapter — every bundled snippet
+/// plus every snippet contributed by a third-party pack (see
+/// [CompositeSnippetCatalogSource]).
 @Riverpod(keepAlive: true)
 SnippetCatalogSource snippetCatalogSource(Ref ref) {
-  return const SnippetLocalDataSource();
+  return const CompositeSnippetCatalogSource();
 }
 
 /// Provides the [SeedSnippetCatalogUseCase] used to seed the catalog at

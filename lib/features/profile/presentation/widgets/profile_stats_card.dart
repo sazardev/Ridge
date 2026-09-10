@@ -4,14 +4,19 @@ import 'package:go_router/go_router.dart';
 
 import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/core/theme/app_shapes.dart';
+import 'package:just_in_time/core/theme/app_typography.dart';
+import 'package:just_in_time/features/content/presentation/content_labels.dart';
+import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id_label.dart';
 import 'package:just_in_time/features/progression/presentation/providers/progression_providers.dart';
 import 'package:just_in_time/features/progression/presentation/widgets/xp_level_bar.dart';
 
 /// A compact preview of the active profile's progression history — level,
-/// XP progress, and current streak — reusing the already-computed
-/// [progressSnapshotControllerProvider] so this card never duplicates
-/// progression logic, only previews it, with a link out to the full
-/// Progress screen for the rest of the history.
+/// XP progress, current streak, and (when available) a one-line taste of
+/// the top weak key-transition and most-practiced category — reusing the
+/// already-computed [progressSnapshotControllerProvider] so this card
+/// never duplicates the full ranked lists (those stay on the Progress
+/// screen), only previews the single most eye-catching entry of each,
+/// with a link out to the full Progress screen for the rest.
 class ProfileStatsCard extends ConsumerWidget {
   /// Creates the card.
   const new({super.key});
@@ -73,6 +78,47 @@ class ProfileStatsCard extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   XpLevelBar(xpSummary: snapshot.xpSummary),
+                  if (snapshot.weaknessReport.weakKeyTransitions.isNotEmpty ||
+                      snapshot
+                          .activityReport
+                          .mostPracticedCategories
+                          .isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    Wrap(
+                      spacing: 16,
+                      runSpacing: 4,
+                      children: [
+                        if (snapshot
+                            .weaknessReport
+                            .weakKeyTransitions
+                            .isNotEmpty)
+                          _StatHighlight(
+                            icon: Icons.warning_amber_rounded,
+                            label: () {
+                              final worst = snapshot
+                                  .weaknessReport
+                                  .weakKeyTransitions
+                                  .first;
+                              return '${worst.fromKey.displayLabel(l10n)} '
+                                  '→ ${worst.toKey.displayLabel(l10n)}';
+                            }(),
+                          ),
+                        if (snapshot
+                            .activityReport
+                            .mostPracticedCategories
+                            .isNotEmpty)
+                          _StatHighlight(
+                            icon: Icons.repeat_rounded,
+                            label: snapshot
+                                .activityReport
+                                .mostPracticedCategories
+                                .first
+                                .category
+                                .label(l10n),
+                          ),
+                      ],
+                    ),
+                  ],
                   const SizedBox(height: 12),
                   Align(
                     alignment: Alignment.centerRight,
@@ -85,6 +131,33 @@ class ProfileStatsCard extends ConsumerWidget {
                 ],
               ),
       ),
+    );
+  }
+}
+
+/// One small icon+label preview chip, used for the top weak
+/// key-transition and top most-practiced category previews above.
+class _StatHighlight extends StatelessWidget {
+  const new({required this.icon, required this.label});
+
+  final IconData icon;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 16, color: colorScheme.onSurfaceVariant),
+        const SizedBox(width: 4),
+        Text(
+          label,
+          style: textTheme.bodySmall?.copyWith(fontFamily: AppFonts.mono),
+        ),
+      ],
     );
   }
 }

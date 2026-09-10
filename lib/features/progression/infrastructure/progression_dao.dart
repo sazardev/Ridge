@@ -40,6 +40,40 @@ class NgramSampleRow {
   final int sessionStartedAtUtcMicros;
 }
 
+/// One raw physical key-transition observation, produced by the same
+/// self-join shape as [NgramSampleRow] (`k2.seq = k1.seq + 1`, same
+/// session) but reading each side's `physicalKeyId` instead of its
+/// `actualChar` — SPEC.md §4.1's "conexiones" independent of which
+/// letter each key produced.
+class KeyTransitionSampleRow {
+  /// Creates an immutable raw key-transition row.
+  const new({
+    required this.fromKey,
+    required this.toKey,
+    required this.isError,
+    required this.flightMicros,
+    required this.sessionStartedAtUtcMicros,
+  });
+
+  /// The first key's `PhysicalKeyId` enum name.
+  final String fromKey;
+
+  /// The second key's `PhysicalKeyId` enum name.
+  final String toKey;
+
+  /// Whether either half of the pair wasn't a correct keystroke.
+  final bool isError;
+
+  /// The second key's flight duration (time since the first key's
+  /// keydown) — the pair's own "how long did this transition take".
+  final int flightMicros;
+
+  /// The owning session's start time, denormalized the same way
+  /// [NgramSampleRow] does — the recency reference point for weakness
+  /// ranking.
+  final int sessionStartedAtUtcMicros;
+}
+
 /// `progression`-owned queries issued directly against `practice`'s
 /// [TypingSessions]/[KeystrokeEvents] drift tables (an allowed
 /// infrastructure-to-infrastructure import — see the project plan), plus
@@ -234,6 +268,62 @@ class ProgressionDao extends DatabaseAccessor<AppDatabase>
               .sessionStartedAtUtcMicros,
         ),
     ];
+  }
+
+  /// Raw physical key-transition rows for [profileId] since
+  /// [sinceUtcMicros] — the same self-join shape as
+  /// [getNgramSamplesRaw], but reading `physical_key_id` instead of
+  /// `actual_char`, for key-transition weakness ranking (SPEC.md §4.1).
+  Future<List<KeyTransitionSampleRow>> getKeyTransitionSamplesRaw({
+    required String profileId,
+    required int sinceUtcMicros,
+  }) async {
+    final k1 = alias(keystrokeEvents, 'k1');
+    final k2 = alias(keystrokeEvents, 'k2');
+    final query =
+        select(k1).join([
+            innerJoin(
+              k2,
+              k2.sessionId.equalsExp(k1.sessionId) &
+                  k2.seq.equalsExp(k1.seq + const Constant(1)),
+            ),
+            innerJoin(
+              typingSessions,
+              typingSessions.id.equalsExp(k1.sessionId),
+            ),
+          ])
+          ..where(typingSessions.profileId.equals(profileId))
+          ..where(k1.isCorrection.equals(false))
+          ..where(k2.isCorrection.equals(false))
+          ..where(
+            k1.sessionStartedAtUtcMicros.isBiggerOrEqualValue(sinceUtcMicros),
+          );
+
+    final rows = await query.get();
+    return [
+      for (final row in rows)
+        KeyTransitionSampleRow(
+          fromKey: row.readTable(k1).physicalKeyId,
+          toKey: row.readTable(k2).physicalKeyId,
+          isError:
+              row.readTable(k1).result != 'correct' ||
+              row.readTable(k2).result != 'correct',
+          flightMicros: row.readTable(k2).flightMicros ?? 0,
+          sessionStartedAtUtcMicros: row
+              .readTable(k1)
+              .sessionStartedAtUtcMicros,
+        ),
+    ];
+  }
+
+  /// Every finished session for [profileId], reduced to exactly what
+  /// activity ranking needs — no `since` filter, since
+  /// `ActivityRankingCalculator` itself partitions "most practiced"
+  /// (lifetime) from "lowest scoring" (recency-windowed) internally.
+  Future<List<TypingSessionRow>> getSessionActivityRaw(String profileId) {
+    return (select(
+      typingSessions,
+    )..where((r) => r.profileId.equals(profileId))).get();
   }
 
   /// The most recent Precision-mode sessions for [profileId] on

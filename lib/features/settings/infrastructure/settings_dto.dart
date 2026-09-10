@@ -21,6 +21,7 @@ abstract class SettingsDto with _$SettingsDto {
     @Default('ember') String palette,
     @Default('mechanical') String soundPack,
     @Default(false) bool onboardingCompleted,
+    @Default(<String, String>{}) Map<String, String> shortcutBindings,
     String? languageCode,
   }) = _SettingsDto;
 

@@ -956,6 +956,126 @@ abstract class AppLocalizations {
   /// **'Change PIN'**
   String get settingsChangePin;
 
+  /// No description provided for @settingsSectionShortcuts.
+  ///
+  /// In en, this message translates to:
+  /// **'Keyboard shortcuts'**
+  String get settingsSectionShortcuts;
+
+  /// No description provided for @settingsShortcutsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keyboard shortcuts'**
+  String get settingsShortcutsTitle;
+
+  /// No description provided for @settingsShortcutsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View and customize how you navigate without a mouse'**
+  String get settingsShortcutsSubtitle;
+
+  /// No description provided for @shortcutsScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keyboard shortcuts'**
+  String get shortcutsScreenTitle;
+
+  /// No description provided for @shortcutActionGoToPractice.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Practice'**
+  String get shortcutActionGoToPractice;
+
+  /// No description provided for @shortcutActionGoToProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Progress'**
+  String get shortcutActionGoToProgress;
+
+  /// No description provided for @shortcutActionGoToFreePractice.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Free Practice'**
+  String get shortcutActionGoToFreePractice;
+
+  /// No description provided for @shortcutActionGoToProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Profile'**
+  String get shortcutActionGoToProfile;
+
+  /// No description provided for @shortcutActionGoToSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Settings'**
+  String get shortcutActionGoToSettings;
+
+  /// No description provided for @shortcutActionCycleNextSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Next section'**
+  String get shortcutActionCycleNextSection;
+
+  /// No description provided for @shortcutActionCyclePreviousSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous section'**
+  String get shortcutActionCyclePreviousSection;
+
+  /// No description provided for @shortcutActionCycleNextTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Next tab'**
+  String get shortcutActionCycleNextTab;
+
+  /// No description provided for @shortcutActionCyclePreviousTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous tab'**
+  String get shortcutActionCyclePreviousTab;
+
+  /// No description provided for @shortcutsCaptureDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Press a key combination'**
+  String get shortcutsCaptureDialogTitle;
+
+  /// No description provided for @shortcutsCaptureDialogHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Must include Ctrl or Alt'**
+  String get shortcutsCaptureDialogHint;
+
+  /// No description provided for @shortcutsCaptureDialogWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for input…'**
+  String get shortcutsCaptureDialogWaiting;
+
+  /// No description provided for @shortcutsCaptureDialogNeedsModifier.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Ctrl or Alt to this combination'**
+  String get shortcutsCaptureDialogNeedsModifier;
+
+  /// No description provided for @shortcutsCaptureDialogConflict.
+  ///
+  /// In en, this message translates to:
+  /// **'Already used by \"{action}\"'**
+  String shortcutsCaptureDialogConflict(String action);
+
+  /// No description provided for @shortcutsCaptureDialogSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Shortcut updated'**
+  String get shortcutsCaptureDialogSaved;
+
+  /// No description provided for @shortcutsCaptureCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get shortcutsCaptureCancel;
+
   /// No description provided for @settingsSectionAbout.
   ///
   /// In en, this message translates to:
@@ -1340,6 +1460,42 @@ abstract class AppLocalizations {
   /// **'Idiomatic formatting'**
   String get categoryIdiomaticFormatting;
 
+  /// No description provided for @categoryDomainModeling.
+  ///
+  /// In en, this message translates to:
+  /// **'Domain modeling'**
+  String get categoryDomainModeling;
+
+  /// No description provided for @categoryHexagonalPorts.
+  ///
+  /// In en, this message translates to:
+  /// **'Hexagonal ports'**
+  String get categoryHexagonalPorts;
+
+  /// No description provided for @categoryApplicationUseCases.
+  ///
+  /// In en, this message translates to:
+  /// **'Application use cases'**
+  String get categoryApplicationUseCases;
+
+  /// No description provided for @categoryPersistenceAdapters.
+  ///
+  /// In en, this message translates to:
+  /// **'Persistence adapters'**
+  String get categoryPersistenceAdapters;
+
+  /// No description provided for @categoryRestAdapters.
+  ///
+  /// In en, this message translates to:
+  /// **'REST adapters'**
+  String get categoryRestAdapters;
+
+  /// No description provided for @categoryTestingWithFakes.
+  ///
+  /// In en, this message translates to:
+  /// **'Testing with fakes'**
+  String get categoryTestingWithFakes;
+
   /// No description provided for @languageGo.
   ///
   /// In en, this message translates to:
@@ -1580,6 +1736,30 @@ abstract class AppLocalizations {
   /// **'Finish a practice session to see your progress here.'**
   String get progressEmptyState;
 
+  /// No description provided for @progressTabOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get progressTabOverview;
+
+  /// No description provided for @progressTabWeaknesses.
+  ///
+  /// In en, this message translates to:
+  /// **'Weaknesses'**
+  String get progressTabWeaknesses;
+
+  /// No description provided for @progressTabActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get progressTabActivity;
+
+  /// No description provided for @progressTabHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get progressTabHistory;
+
   /// No description provided for @progressLevelLabel.
   ///
   /// In en, this message translates to:
@@ -1621,6 +1801,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Combinations'**
   String get progressWeaknessNgrams;
+
+  /// No description provided for @progressWeaknessKeyTransitions.
+  ///
+  /// In en, this message translates to:
+  /// **'Key transitions'**
+  String get progressWeaknessKeyTransitions;
 
   /// No description provided for @progressWeaknessEmpty.
   ///
@@ -1747,6 +1933,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stable'**
   String get progressTrendStable;
+
+  /// No description provided for @progressKeySpace.
+  ///
+  /// In en, this message translates to:
+  /// **'Space'**
+  String get progressKeySpace;
+
+  /// No description provided for @progressKeyTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Tab'**
+  String get progressKeyTab;
+
+  /// No description provided for @progressKeyEnter.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter'**
+  String get progressKeyEnter;
+
+  /// No description provided for @progressKeyBackspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Backspace'**
+  String get progressKeyBackspace;
+
+  /// No description provided for @progressKeyDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get progressKeyDelete;
+
+  /// No description provided for @progressKeyArrowLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Left arrow'**
+  String get progressKeyArrowLeft;
+
+  /// No description provided for @progressKeyArrowRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right arrow'**
+  String get progressKeyArrowRight;
+
+  /// No description provided for @progressKeyShiftLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Left shift'**
+  String get progressKeyShiftLeft;
+
+  /// No description provided for @progressKeyShiftRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right shift'**
+  String get progressKeyShiftRight;
+
+  /// No description provided for @progressActivityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get progressActivityTitle;
+
+  /// No description provided for @progressActivityMostPracticedCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Most practiced categories'**
+  String get progressActivityMostPracticedCategories;
+
+  /// No description provided for @progressActivityLowestScoringCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest-scoring categories'**
+  String get progressActivityLowestScoringCategories;
+
+  /// No description provided for @progressActivityMostPracticedExercises.
+  ///
+  /// In en, this message translates to:
+  /// **'Most practiced exercises'**
+  String get progressActivityMostPracticedExercises;
+
+  /// No description provided for @progressActivityLowestScoringExercises.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest-scoring exercises'**
+  String get progressActivityLowestScoringExercises;
+
+  /// No description provided for @progressActivitySessionCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sessions'**
+  String progressActivitySessionCount(int count);
+
+  /// No description provided for @progressActivityScoreLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Score: {score}'**
+  String progressActivityScoreLabel(int score);
 
   /// No description provided for @learningPathsTitle.
   ///

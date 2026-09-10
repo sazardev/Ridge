@@ -90,7 +90,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? driftDatabase(name: 'jit.db'));
 
   @override
-  int get schemaVersion => 11;
+  int get schemaVersion => 12;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -197,6 +197,18 @@ class AppDatabase extends _$AppDatabase {
       if (from < 11) {
         await m.addColumn(snippets, snippets.tldrEn);
         await m.addColumn(snippets, snippets.tldrEs);
+      }
+      // v11 -> v12: added the nullable activity_report_json column to
+      // progress_snapshot_cache (SPEC.md §4.2/§4.3's "dónde practicas
+      // más"/"dónde tienes el puntaje más bajo" report). Existing cached
+      // rows get NULL until the next recompute backfills a real value —
+      // `ProgressSnapshotCacheRowMapper` treats NULL as
+      // `ActivityReport.empty` in the meantime.
+      if (from < 12) {
+        await m.addColumn(
+          progressSnapshotCache,
+          progressSnapshotCache.activityReportJson,
+        );
       }
     },
   );

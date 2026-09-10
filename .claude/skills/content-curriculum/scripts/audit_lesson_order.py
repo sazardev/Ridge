@@ -31,6 +31,20 @@ CORE_CATEGORIES = {
     "errorHandling",
 }
 
+# Mirrors `_architectureLayerCategories` in
+# snippet_catalog_completeness_test.dart — these represent a DDD/hexagonal
+# ARCHITECTURE LAYER rather than a Go language feature, so there's no
+# meaningful "beginner"/"expert" tier for them; held to a looser bar
+# (>=1 active entry across ANY difficulty) than every other category.
+ARCHITECTURE_LAYER_CATEGORIES = {
+    "domainModeling",
+    "hexagonalPorts",
+    "applicationUseCases",
+    "persistenceAdapters",
+    "restAdapters",
+    "testingWithFakes",
+}
+
 
 def load(path: Path):
     with path.open() as f:
@@ -59,8 +73,10 @@ def check_catalog_completeness(catalog: list[dict]) -> list[str]:
             )
 
     counts: dict[tuple[str, str], int] = defaultdict(int)
+    totals_by_category: dict[str, int] = defaultdict(int)
     for s in active:
         counts[(s["category"], s["difficulty"])] += 1
+        totals_by_category[s["category"]] += 1
     difficulties = {s["difficulty"] for s in catalog} or {
         "beginner",
         "intermediate",
@@ -69,6 +85,10 @@ def check_catalog_completeness(catalog: list[dict]) -> list[str]:
     }
     categories = {s["category"] for s in catalog}
     for cat in categories:
+        if cat in ARCHITECTURE_LAYER_CATEGORIES:
+            if totals_by_category.get(cat, 0) == 0:
+                problems.append(f"{cat}: 0 active entries (any difficulty)")
+            continue
         min_count = 3 if cat in CORE_CATEGORIES else 1
         for diff in difficulties:
             n = counts.get((cat, diff), 0)

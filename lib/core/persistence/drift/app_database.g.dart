@@ -3868,6 +3868,17 @@ class $ProgressSnapshotCacheTable extends ProgressSnapshotCache
         type: DriftSqlType.string,
         requiredDuringInsert: true,
       );
+  static const VerificationMeta _activityReportJsonMeta =
+      const VerificationMeta('activityReportJson');
+  @override
+  late final GeneratedColumn<String> activityReportJson =
+      GeneratedColumn<String>(
+        'activity_report_json',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
   static const VerificationMeta _computedAtUtcMicrosMeta =
       const VerificationMeta('computedAtUtcMicros');
   @override
@@ -3887,6 +3898,7 @@ class $ProgressSnapshotCacheTable extends ProgressSnapshotCache
     xpForNextLevel,
     currentStreakDays,
     weaknessReportJson,
+    activityReportJson,
     computedAtUtcMicros,
   ];
   @override
@@ -3969,6 +3981,15 @@ class $ProgressSnapshotCacheTable extends ProgressSnapshotCache
     } else if (isInserting) {
       context.missing(_weaknessReportJsonMeta);
     }
+    if (data.containsKey('activity_report_json')) {
+      context.handle(
+        _activityReportJsonMeta,
+        activityReportJson.isAcceptableOrUnknown(
+          data['activity_report_json']!,
+          _activityReportJsonMeta,
+        ),
+      );
+    }
     if (data.containsKey('computed_at_utc_micros')) {
       context.handle(
         _computedAtUtcMicrosMeta,
@@ -4020,6 +4041,10 @@ class $ProgressSnapshotCacheTable extends ProgressSnapshotCache
         DriftSqlType.string,
         data['${effectivePrefix}weakness_report_json'],
       )!,
+      activityReportJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}activity_report_json'],
+      ),
       computedAtUtcMicros: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}computed_at_utc_micros'],
@@ -4056,6 +4081,13 @@ class ProgressSnapshotCacheRow extends DataClass
   /// JSON-encoded `WeaknessReportDto` — see this table's class doc.
   final String weaknessReportJson;
 
+  /// JSON-encoded `ActivityReportDto`, same blob-cache reasoning as
+  /// [weaknessReportJson]. Nullable because it was added in a later
+  /// migration than this table itself — rows cached before that
+  /// migration have no value until the next recompute backfills one;
+  /// `null` maps to `ActivityReport.empty` in the meantime.
+  final String? activityReportJson;
+
   /// When this snapshot was computed, as UTC microseconds since epoch.
   final int computedAtUtcMicros;
   const ProgressSnapshotCacheRow({
@@ -4066,6 +4098,7 @@ class ProgressSnapshotCacheRow extends DataClass
     required this.xpForNextLevel,
     required this.currentStreakDays,
     required this.weaknessReportJson,
+    this.activityReportJson,
     required this.computedAtUtcMicros,
   });
   @override
@@ -4078,6 +4111,9 @@ class ProgressSnapshotCacheRow extends DataClass
     map['xp_for_next_level'] = Variable<int>(xpForNextLevel);
     map['current_streak_days'] = Variable<int>(currentStreakDays);
     map['weakness_report_json'] = Variable<String>(weaknessReportJson);
+    if (!nullToAbsent || activityReportJson != null) {
+      map['activity_report_json'] = Variable<String>(activityReportJson);
+    }
     map['computed_at_utc_micros'] = Variable<int>(computedAtUtcMicros);
     return map;
   }
@@ -4091,6 +4127,9 @@ class ProgressSnapshotCacheRow extends DataClass
       xpForNextLevel: Value(xpForNextLevel),
       currentStreakDays: Value(currentStreakDays),
       weaknessReportJson: Value(weaknessReportJson),
+      activityReportJson: activityReportJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(activityReportJson),
       computedAtUtcMicros: Value(computedAtUtcMicros),
     );
   }
@@ -4110,6 +4149,9 @@ class ProgressSnapshotCacheRow extends DataClass
       weaknessReportJson: serializer.fromJson<String>(
         json['weaknessReportJson'],
       ),
+      activityReportJson: serializer.fromJson<String?>(
+        json['activityReportJson'],
+      ),
       computedAtUtcMicros: serializer.fromJson<int>(
         json['computedAtUtcMicros'],
       ),
@@ -4126,6 +4168,7 @@ class ProgressSnapshotCacheRow extends DataClass
       'xpForNextLevel': serializer.toJson<int>(xpForNextLevel),
       'currentStreakDays': serializer.toJson<int>(currentStreakDays),
       'weaknessReportJson': serializer.toJson<String>(weaknessReportJson),
+      'activityReportJson': serializer.toJson<String?>(activityReportJson),
       'computedAtUtcMicros': serializer.toJson<int>(computedAtUtcMicros),
     };
   }
@@ -4138,6 +4181,7 @@ class ProgressSnapshotCacheRow extends DataClass
     int? xpForNextLevel,
     int? currentStreakDays,
     String? weaknessReportJson,
+    Value<String?> activityReportJson = const Value.absent(),
     int? computedAtUtcMicros,
   }) => ProgressSnapshotCacheRow(
     profileId: profileId ?? this.profileId,
@@ -4147,6 +4191,9 @@ class ProgressSnapshotCacheRow extends DataClass
     xpForNextLevel: xpForNextLevel ?? this.xpForNextLevel,
     currentStreakDays: currentStreakDays ?? this.currentStreakDays,
     weaknessReportJson: weaknessReportJson ?? this.weaknessReportJson,
+    activityReportJson: activityReportJson.present
+        ? activityReportJson.value
+        : this.activityReportJson,
     computedAtUtcMicros: computedAtUtcMicros ?? this.computedAtUtcMicros,
   );
   ProgressSnapshotCacheRow copyWithCompanion(
@@ -4168,6 +4215,9 @@ class ProgressSnapshotCacheRow extends DataClass
       weaknessReportJson: data.weaknessReportJson.present
           ? data.weaknessReportJson.value
           : this.weaknessReportJson,
+      activityReportJson: data.activityReportJson.present
+          ? data.activityReportJson.value
+          : this.activityReportJson,
       computedAtUtcMicros: data.computedAtUtcMicros.present
           ? data.computedAtUtcMicros.value
           : this.computedAtUtcMicros,
@@ -4184,6 +4234,7 @@ class ProgressSnapshotCacheRow extends DataClass
           ..write('xpForNextLevel: $xpForNextLevel, ')
           ..write('currentStreakDays: $currentStreakDays, ')
           ..write('weaknessReportJson: $weaknessReportJson, ')
+          ..write('activityReportJson: $activityReportJson, ')
           ..write('computedAtUtcMicros: $computedAtUtcMicros')
           ..write(')'))
         .toString();
@@ -4198,6 +4249,7 @@ class ProgressSnapshotCacheRow extends DataClass
     xpForNextLevel,
     currentStreakDays,
     weaknessReportJson,
+    activityReportJson,
     computedAtUtcMicros,
   );
   @override
@@ -4211,6 +4263,7 @@ class ProgressSnapshotCacheRow extends DataClass
           other.xpForNextLevel == this.xpForNextLevel &&
           other.currentStreakDays == this.currentStreakDays &&
           other.weaknessReportJson == this.weaknessReportJson &&
+          other.activityReportJson == this.activityReportJson &&
           other.computedAtUtcMicros == this.computedAtUtcMicros);
 }
 
@@ -4223,6 +4276,7 @@ class ProgressSnapshotCacheCompanion
   final Value<int> xpForNextLevel;
   final Value<int> currentStreakDays;
   final Value<String> weaknessReportJson;
+  final Value<String?> activityReportJson;
   final Value<int> computedAtUtcMicros;
   final Value<int> rowid;
   const ProgressSnapshotCacheCompanion({
@@ -4233,6 +4287,7 @@ class ProgressSnapshotCacheCompanion
     this.xpForNextLevel = const Value.absent(),
     this.currentStreakDays = const Value.absent(),
     this.weaknessReportJson = const Value.absent(),
+    this.activityReportJson = const Value.absent(),
     this.computedAtUtcMicros = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -4244,6 +4299,7 @@ class ProgressSnapshotCacheCompanion
     required int xpForNextLevel,
     required int currentStreakDays,
     required String weaknessReportJson,
+    this.activityReportJson = const Value.absent(),
     required int computedAtUtcMicros,
     this.rowid = const Value.absent(),
   }) : profileId = Value(profileId),
@@ -4262,6 +4318,7 @@ class ProgressSnapshotCacheCompanion
     Expression<int>? xpForNextLevel,
     Expression<int>? currentStreakDays,
     Expression<String>? weaknessReportJson,
+    Expression<String>? activityReportJson,
     Expression<int>? computedAtUtcMicros,
     Expression<int>? rowid,
   }) {
@@ -4274,6 +4331,8 @@ class ProgressSnapshotCacheCompanion
       if (currentStreakDays != null) 'current_streak_days': currentStreakDays,
       if (weaknessReportJson != null)
         'weakness_report_json': weaknessReportJson,
+      if (activityReportJson != null)
+        'activity_report_json': activityReportJson,
       if (computedAtUtcMicros != null)
         'computed_at_utc_micros': computedAtUtcMicros,
       if (rowid != null) 'rowid': rowid,
@@ -4288,6 +4347,7 @@ class ProgressSnapshotCacheCompanion
     Value<int>? xpForNextLevel,
     Value<int>? currentStreakDays,
     Value<String>? weaknessReportJson,
+    Value<String?>? activityReportJson,
     Value<int>? computedAtUtcMicros,
     Value<int>? rowid,
   }) {
@@ -4299,6 +4359,7 @@ class ProgressSnapshotCacheCompanion
       xpForNextLevel: xpForNextLevel ?? this.xpForNextLevel,
       currentStreakDays: currentStreakDays ?? this.currentStreakDays,
       weaknessReportJson: weaknessReportJson ?? this.weaknessReportJson,
+      activityReportJson: activityReportJson ?? this.activityReportJson,
       computedAtUtcMicros: computedAtUtcMicros ?? this.computedAtUtcMicros,
       rowid: rowid ?? this.rowid,
     );
@@ -4328,6 +4389,9 @@ class ProgressSnapshotCacheCompanion
     if (weaknessReportJson.present) {
       map['weakness_report_json'] = Variable<String>(weaknessReportJson.value);
     }
+    if (activityReportJson.present) {
+      map['activity_report_json'] = Variable<String>(activityReportJson.value);
+    }
     if (computedAtUtcMicros.present) {
       map['computed_at_utc_micros'] = Variable<int>(computedAtUtcMicros.value);
     }
@@ -4347,6 +4411,7 @@ class ProgressSnapshotCacheCompanion
           ..write('xpForNextLevel: $xpForNextLevel, ')
           ..write('currentStreakDays: $currentStreakDays, ')
           ..write('weaknessReportJson: $weaknessReportJson, ')
+          ..write('activityReportJson: $activityReportJson, ')
           ..write('computedAtUtcMicros: $computedAtUtcMicros, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -7665,6 +7730,7 @@ typedef $$ProgressSnapshotCacheTableCreateCompanionBuilder =
       required int xpForNextLevel,
       required int currentStreakDays,
       required String weaknessReportJson,
+      Value<String?> activityReportJson,
       required int computedAtUtcMicros,
       Value<int> rowid,
     });
@@ -7677,6 +7743,7 @@ typedef $$ProgressSnapshotCacheTableUpdateCompanionBuilder =
       Value<int> xpForNextLevel,
       Value<int> currentStreakDays,
       Value<String> weaknessReportJson,
+      Value<String?> activityReportJson,
       Value<int> computedAtUtcMicros,
       Value<int> rowid,
     });
@@ -7722,6 +7789,11 @@ class $$ProgressSnapshotCacheTableFilterComposer
 
   ColumnFilters<String> get weaknessReportJson => $composableBuilder(
     column: $table.weaknessReportJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get activityReportJson => $composableBuilder(
+    column: $table.activityReportJson,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -7775,6 +7847,11 @@ class $$ProgressSnapshotCacheTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get activityReportJson => $composableBuilder(
+    column: $table.activityReportJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get computedAtUtcMicros => $composableBuilder(
     column: $table.computedAtUtcMicros,
     builder: (column) => ColumnOrderings(column),
@@ -7816,6 +7893,11 @@ class $$ProgressSnapshotCacheTableAnnotationComposer
 
   GeneratedColumn<String> get weaknessReportJson => $composableBuilder(
     column: $table.weaknessReportJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get activityReportJson => $composableBuilder(
+    column: $table.activityReportJson,
     builder: (column) => column,
   );
 
@@ -7878,6 +7960,7 @@ class $$ProgressSnapshotCacheTableTableManager
                 Value<int> xpForNextLevel = const Value.absent(),
                 Value<int> currentStreakDays = const Value.absent(),
                 Value<String> weaknessReportJson = const Value.absent(),
+                Value<String?> activityReportJson = const Value.absent(),
                 Value<int> computedAtUtcMicros = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ProgressSnapshotCacheCompanion(
@@ -7888,6 +7971,7 @@ class $$ProgressSnapshotCacheTableTableManager
                 xpForNextLevel: xpForNextLevel,
                 currentStreakDays: currentStreakDays,
                 weaknessReportJson: weaknessReportJson,
+                activityReportJson: activityReportJson,
                 computedAtUtcMicros: computedAtUtcMicros,
                 rowid: rowid,
               ),
@@ -7900,6 +7984,7 @@ class $$ProgressSnapshotCacheTableTableManager
                 required int xpForNextLevel,
                 required int currentStreakDays,
                 required String weaknessReportJson,
+                Value<String?> activityReportJson = const Value.absent(),
                 required int computedAtUtcMicros,
                 Value<int> rowid = const Value.absent(),
               }) => ProgressSnapshotCacheCompanion.insert(
@@ -7910,6 +7995,7 @@ class $$ProgressSnapshotCacheTableTableManager
                 xpForNextLevel: xpForNextLevel,
                 currentStreakDays: currentStreakDays,
                 weaknessReportJson: weaknessReportJson,
+                activityReportJson: activityReportJson,
                 computedAtUtcMicros: computedAtUtcMicros,
                 rowid: rowid,
               ),

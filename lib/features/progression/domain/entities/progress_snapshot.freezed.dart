@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProgressSnapshot {
 
- ProfileId get profileId; XpSummary get xpSummary; int get currentStreakDays; WeaknessReport get weaknessReport; List<MasteryStatus> get masteryStatuses; DateTime get computedAt;
+ ProfileId get profileId; XpSummary get xpSummary; int get currentStreakDays; WeaknessReport get weaknessReport; ActivityReport get activityReport; List<MasteryStatus> get masteryStatuses; DateTime get computedAt;
 /// Create a copy of ProgressSnapshot
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,20 +27,20 @@ $ProgressSnapshotCopyWith<ProgressSnapshot> get copyWith => _$ProgressSnapshotCo
 @override
 bool operator ==(Object other) {
   final _this = this as ProgressSnapshot;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProgressSnapshot&&(identical(other.profileId, _this.profileId) || other.profileId == _this.profileId)&&(identical(other.xpSummary, _this.xpSummary) || other.xpSummary == _this.xpSummary)&&(identical(other.currentStreakDays, _this.currentStreakDays) || other.currentStreakDays == _this.currentStreakDays)&&(identical(other.weaknessReport, _this.weaknessReport) || other.weaknessReport == _this.weaknessReport)&&const DeepCollectionEquality().equals(other.masteryStatuses, _this.masteryStatuses)&&(identical(other.computedAt, _this.computedAt) || other.computedAt == _this.computedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProgressSnapshot&&(identical(other.profileId, _this.profileId) || other.profileId == _this.profileId)&&(identical(other.xpSummary, _this.xpSummary) || other.xpSummary == _this.xpSummary)&&(identical(other.currentStreakDays, _this.currentStreakDays) || other.currentStreakDays == _this.currentStreakDays)&&(identical(other.weaknessReport, _this.weaknessReport) || other.weaknessReport == _this.weaknessReport)&&(identical(other.activityReport, _this.activityReport) || other.activityReport == _this.activityReport)&&const DeepCollectionEquality().equals(other.masteryStatuses, _this.masteryStatuses)&&(identical(other.computedAt, _this.computedAt) || other.computedAt == _this.computedAt));
 }
 
 
 @override
 int get hashCode {
   final _this = this as ProgressSnapshot;
-  return Object.hash(runtimeType,_this.profileId,_this.xpSummary,_this.currentStreakDays,_this.weaknessReport,const DeepCollectionEquality().hash(_this.masteryStatuses),_this.computedAt);
+  return Object.hash(runtimeType,_this.profileId,_this.xpSummary,_this.currentStreakDays,_this.weaknessReport,_this.activityReport,const DeepCollectionEquality().hash(_this.masteryStatuses),_this.computedAt);
 }
 
 @override
 String toString() {
   final _this = this as ProgressSnapshot;
-  return 'ProgressSnapshot(profileId: ${_this.profileId}, xpSummary: ${_this.xpSummary}, currentStreakDays: ${_this.currentStreakDays}, weaknessReport: ${_this.weaknessReport}, masteryStatuses: ${_this.masteryStatuses}, computedAt: ${_this.computedAt})';
+  return 'ProgressSnapshot(profileId: ${_this.profileId}, xpSummary: ${_this.xpSummary}, currentStreakDays: ${_this.currentStreakDays}, weaknessReport: ${_this.weaknessReport}, activityReport: ${_this.activityReport}, masteryStatuses: ${_this.masteryStatuses}, computedAt: ${_this.computedAt})';
 }
 
 
@@ -51,11 +51,11 @@ abstract mixin class $ProgressSnapshotCopyWith<$Res>  {
   factory $ProgressSnapshotCopyWith(ProgressSnapshot value, $Res Function(ProgressSnapshot) _then) = _$ProgressSnapshotCopyWithImpl;
 @useResult
 $Res call({
- ProfileId profileId, XpSummary xpSummary, int currentStreakDays, WeaknessReport weaknessReport, List<MasteryStatus> masteryStatuses, DateTime computedAt
+ ProfileId profileId, XpSummary xpSummary, int currentStreakDays, WeaknessReport weaknessReport, ActivityReport activityReport, List<MasteryStatus> masteryStatuses, DateTime computedAt
 });
 
 
-$ProfileIdCopyWith<$Res> get profileId;$XpSummaryCopyWith<$Res> get xpSummary;$WeaknessReportCopyWith<$Res> get weaknessReport;
+$ProfileIdCopyWith<$Res> get profileId;$XpSummaryCopyWith<$Res> get xpSummary;$WeaknessReportCopyWith<$Res> get weaknessReport;$ActivityReportCopyWith<$Res> get activityReport;
 
 }
 /// @nodoc
@@ -68,13 +68,14 @@ class _$ProgressSnapshotCopyWithImpl<$Res>
 
 /// Create a copy of ProgressSnapshot
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? profileId = null,Object? xpSummary = null,Object? currentStreakDays = null,Object? weaknessReport = null,Object? masteryStatuses = null,Object? computedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? profileId = null,Object? xpSummary = null,Object? currentStreakDays = null,Object? weaknessReport = null,Object? activityReport = null,Object? masteryStatuses = null,Object? computedAt = null,}) {
   return _then(ProgressSnapshot(
 profileId: null == profileId ? _self.profileId : profileId // ignore: cast_nullable_to_non_nullable
 as ProfileId,xpSummary: null == xpSummary ? _self.xpSummary : xpSummary // ignore: cast_nullable_to_non_nullable
 as XpSummary,currentStreakDays: null == currentStreakDays ? _self.currentStreakDays : currentStreakDays // ignore: cast_nullable_to_non_nullable
 as int,weaknessReport: null == weaknessReport ? _self.weaknessReport : weaknessReport // ignore: cast_nullable_to_non_nullable
-as WeaknessReport,masteryStatuses: null == masteryStatuses ? _self.masteryStatuses : masteryStatuses // ignore: cast_nullable_to_non_nullable
+as WeaknessReport,activityReport: null == activityReport ? _self.activityReport : activityReport // ignore: cast_nullable_to_non_nullable
+as ActivityReport,masteryStatuses: null == masteryStatuses ? _self.masteryStatuses : masteryStatuses // ignore: cast_nullable_to_non_nullable
 as List<MasteryStatus>,computedAt: null == computedAt ? _self.computedAt : computedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -105,6 +106,15 @@ $WeaknessReportCopyWith<$Res> get weaknessReport {
   
   return $WeaknessReportCopyWith<$Res>(_self.weaknessReport, (value) {
     return _then(_self.copyWith(weaknessReport: value));
+  });
+}/// Create a copy of ProgressSnapshot
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ActivityReportCopyWith<$Res> get activityReport {
+  
+  return $ActivityReportCopyWith<$Res>(_self.activityReport, (value) {
+    return _then(_self.copyWith(activityReport: value));
   });
 }
 }
@@ -188,10 +198,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ProfileId profileId,  XpSummary xpSummary,  int currentStreakDays,  WeaknessReport weaknessReport,  List<MasteryStatus> masteryStatuses,  DateTime computedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ProfileId profileId,  XpSummary xpSummary,  int currentStreakDays,  WeaknessReport weaknessReport,  ActivityReport activityReport,  List<MasteryStatus> masteryStatuses,  DateTime computedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProgressSnapshot() when $default != null:
-return $default(_that.profileId,_that.xpSummary,_that.currentStreakDays,_that.weaknessReport,_that.masteryStatuses,_that.computedAt);case _:
+return $default(_that.profileId,_that.xpSummary,_that.currentStreakDays,_that.weaknessReport,_that.activityReport,_that.masteryStatuses,_that.computedAt);case _:
   return orElse();
 
 }
@@ -209,10 +219,10 @@ return $default(_that.profileId,_that.xpSummary,_that.currentStreakDays,_that.we
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ProfileId profileId,  XpSummary xpSummary,  int currentStreakDays,  WeaknessReport weaknessReport,  List<MasteryStatus> masteryStatuses,  DateTime computedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ProfileId profileId,  XpSummary xpSummary,  int currentStreakDays,  WeaknessReport weaknessReport,  ActivityReport activityReport,  List<MasteryStatus> masteryStatuses,  DateTime computedAt)  $default,) {final _that = this;
 switch (_that) {
 case _ProgressSnapshot():
-return $default(_that.profileId,_that.xpSummary,_that.currentStreakDays,_that.weaknessReport,_that.masteryStatuses,_that.computedAt);case _:
+return $default(_that.profileId,_that.xpSummary,_that.currentStreakDays,_that.weaknessReport,_that.activityReport,_that.masteryStatuses,_that.computedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -229,10 +239,10 @@ return $default(_that.profileId,_that.xpSummary,_that.currentStreakDays,_that.we
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ProfileId profileId,  XpSummary xpSummary,  int currentStreakDays,  WeaknessReport weaknessReport,  List<MasteryStatus> masteryStatuses,  DateTime computedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ProfileId profileId,  XpSummary xpSummary,  int currentStreakDays,  WeaknessReport weaknessReport,  ActivityReport activityReport,  List<MasteryStatus> masteryStatuses,  DateTime computedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _ProgressSnapshot() when $default != null:
-return $default(_that.profileId,_that.xpSummary,_that.currentStreakDays,_that.weaknessReport,_that.masteryStatuses,_that.computedAt);case _:
+return $default(_that.profileId,_that.xpSummary,_that.currentStreakDays,_that.weaknessReport,_that.activityReport,_that.masteryStatuses,_that.computedAt);case _:
   return null;
 
 }
@@ -244,13 +254,14 @@ return $default(_that.profileId,_that.xpSummary,_that.currentStreakDays,_that.we
 
 
 class _ProgressSnapshot implements ProgressSnapshot {
-  const _ProgressSnapshot({required this.profileId, required this.xpSummary, required this.currentStreakDays, required this.weaknessReport, required  List<MasteryStatus> masteryStatuses, required this.computedAt}): _masteryStatuses = masteryStatuses;
+  const _ProgressSnapshot({required this.profileId, required this.xpSummary, required this.currentStreakDays, required this.weaknessReport, required this.activityReport, required  List<MasteryStatus> masteryStatuses, required this.computedAt}): _masteryStatuses = masteryStatuses;
   
 
 @override final  ProfileId profileId;
 @override final  XpSummary xpSummary;
 @override final  int currentStreakDays;
 @override final  WeaknessReport weaknessReport;
+@override final  ActivityReport activityReport;
  final  List<MasteryStatus> _masteryStatuses;
 @override List<MasteryStatus> get masteryStatuses {
   if (_masteryStatuses is EqualUnmodifiableListView) return _masteryStatuses;
@@ -270,18 +281,18 @@ _$ProgressSnapshotCopyWith<_ProgressSnapshot> get copyWith => __$ProgressSnapsho
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProgressSnapshot&&(identical(other.profileId, profileId) || other.profileId == profileId)&&(identical(other.xpSummary, xpSummary) || other.xpSummary == xpSummary)&&(identical(other.currentStreakDays, currentStreakDays) || other.currentStreakDays == currentStreakDays)&&(identical(other.weaknessReport, weaknessReport) || other.weaknessReport == weaknessReport)&&const DeepCollectionEquality().equals(other.masteryStatuses, _masteryStatuses)&&(identical(other.computedAt, computedAt) || other.computedAt == computedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProgressSnapshot&&(identical(other.profileId, profileId) || other.profileId == profileId)&&(identical(other.xpSummary, xpSummary) || other.xpSummary == xpSummary)&&(identical(other.currentStreakDays, currentStreakDays) || other.currentStreakDays == currentStreakDays)&&(identical(other.weaknessReport, weaknessReport) || other.weaknessReport == weaknessReport)&&(identical(other.activityReport, activityReport) || other.activityReport == activityReport)&&const DeepCollectionEquality().equals(other.masteryStatuses, _masteryStatuses)&&(identical(other.computedAt, computedAt) || other.computedAt == computedAt));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,profileId,xpSummary,currentStreakDays,weaknessReport,const DeepCollectionEquality().hash(_masteryStatuses),computedAt);
+    return Object.hash(runtimeType,profileId,xpSummary,currentStreakDays,weaknessReport,activityReport,const DeepCollectionEquality().hash(_masteryStatuses),computedAt);
 }
 
 @override
 String toString() {
-    return 'ProgressSnapshot(profileId: $profileId, xpSummary: $xpSummary, currentStreakDays: $currentStreakDays, weaknessReport: $weaknessReport, masteryStatuses: $masteryStatuses, computedAt: $computedAt)';
+    return 'ProgressSnapshot(profileId: $profileId, xpSummary: $xpSummary, currentStreakDays: $currentStreakDays, weaknessReport: $weaknessReport, activityReport: $activityReport, masteryStatuses: $masteryStatuses, computedAt: $computedAt)';
 }
 
 
@@ -292,11 +303,11 @@ abstract mixin class _$ProgressSnapshotCopyWith<$Res> implements $ProgressSnapsh
   factory _$ProgressSnapshotCopyWith(_ProgressSnapshot value, $Res Function(_ProgressSnapshot) _then) = __$ProgressSnapshotCopyWithImpl;
 @override @useResult
 $Res call({
- ProfileId profileId, XpSummary xpSummary, int currentStreakDays, WeaknessReport weaknessReport, List<MasteryStatus> masteryStatuses, DateTime computedAt
+ ProfileId profileId, XpSummary xpSummary, int currentStreakDays, WeaknessReport weaknessReport, ActivityReport activityReport, List<MasteryStatus> masteryStatuses, DateTime computedAt
 });
 
 
-@override $ProfileIdCopyWith<$Res> get profileId;@override $XpSummaryCopyWith<$Res> get xpSummary;@override $WeaknessReportCopyWith<$Res> get weaknessReport;
+@override $ProfileIdCopyWith<$Res> get profileId;@override $XpSummaryCopyWith<$Res> get xpSummary;@override $WeaknessReportCopyWith<$Res> get weaknessReport;@override $ActivityReportCopyWith<$Res> get activityReport;
 
 }
 /// @nodoc
@@ -309,13 +320,14 @@ class __$ProgressSnapshotCopyWithImpl<$Res>
 
 /// Create a copy of ProgressSnapshot
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? profileId = null,Object? xpSummary = null,Object? currentStreakDays = null,Object? weaknessReport = null,Object? masteryStatuses = null,Object? computedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? profileId = null,Object? xpSummary = null,Object? currentStreakDays = null,Object? weaknessReport = null,Object? activityReport = null,Object? masteryStatuses = null,Object? computedAt = null,}) {
   return _then(_ProgressSnapshot(
 profileId: null == profileId ? _self.profileId : profileId // ignore: cast_nullable_to_non_nullable
 as ProfileId,xpSummary: null == xpSummary ? _self.xpSummary : xpSummary // ignore: cast_nullable_to_non_nullable
 as XpSummary,currentStreakDays: null == currentStreakDays ? _self.currentStreakDays : currentStreakDays // ignore: cast_nullable_to_non_nullable
 as int,weaknessReport: null == weaknessReport ? _self.weaknessReport : weaknessReport // ignore: cast_nullable_to_non_nullable
-as WeaknessReport,masteryStatuses: null == masteryStatuses ? _self._masteryStatuses : masteryStatuses // ignore: cast_nullable_to_non_nullable
+as WeaknessReport,activityReport: null == activityReport ? _self.activityReport : activityReport // ignore: cast_nullable_to_non_nullable
+as ActivityReport,masteryStatuses: null == masteryStatuses ? _self._masteryStatuses : masteryStatuses // ignore: cast_nullable_to_non_nullable
 as List<MasteryStatus>,computedAt: null == computedAt ? _self.computedAt : computedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -347,6 +359,15 @@ $WeaknessReportCopyWith<$Res> get weaknessReport {
   
   return $WeaknessReportCopyWith<$Res>(_self.weaknessReport, (value) {
     return _then(_self.copyWith(weaknessReport: value));
+  });
+}/// Create a copy of ProgressSnapshot
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ActivityReportCopyWith<$Res> get activityReport {
+  
+  return $ActivityReportCopyWith<$Res>(_self.activityReport, (value) {
+    return _then(_self.copyWith(activityReport: value));
   });
 }
 }

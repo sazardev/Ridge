@@ -17,6 +17,7 @@ import 'package:just_in_time/core/persistence/drift/database_provider.dart';
 import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
 import 'package:just_in_time/features/content/domain/entities/snippet.dart';
 import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
+import 'package:just_in_time/features/content/infrastructure/snippet_local_data_source.dart';
 import 'package:just_in_time/features/content/presentation/providers/content_providers.dart';
 
 void main() {
@@ -32,7 +33,18 @@ void main() {
   setUp(() {
     database = AppDatabase(NativeDatabase.memory());
     container = ProviderContainer(
-      overrides: [appDatabaseProvider.overrideWithValue(database)],
+      overrides: [
+        appDatabaseProvider.overrideWithValue(database),
+        // This test's concern is the bundled catalog's seed/query path,
+        // not `CompositeSnippetCatalogSource`'s external-pack merging
+        // (see `external_snippet_pack_source_test.dart` for that) —
+        // pinning the bundled-only source here also means this test
+        // never touches `path_provider`'s platform channel, which
+        // `flutter_test`'s binding doesn't implement.
+        snippetCatalogSourceProvider.overrideWithValue(
+          const SnippetLocalDataSource(),
+        ),
+      ],
     );
     addTearDown(() => database.close());
     addTearDown(container.dispose);
@@ -64,7 +76,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 90)
+        .firstWhere((snippets) => snippets.length == 113)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -78,7 +90,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(90));
+    expect(catalog, hasLength(113));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -90,7 +102,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(90));
+      expect(catalog, hasLength(113));
     },
   );
 
@@ -101,7 +113,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(90));
+    expect(result, hasLength(113));
   });
 
   test(
@@ -169,6 +181,13 @@ void main() {
       'go-vars-009',
       'go-vars-011',
       'go-vars-012',
+      'go-persist-001',
+      'go-persist-002',
+      'go-persist-003',
+      'go-persist-004',
+      'go-rest-001',
+      'go-testfakes-001',
+      'go-testfakes-002',
     });
   });
 
@@ -196,6 +215,15 @@ void main() {
       'go-loop-013',
       'go-vars-003',
       'go-vars-006',
+      'go-usecase-001',
+      'go-usecase-002',
+      'go-usecase-003',
+      'go-usecase-004',
+      'go-persist-002',
+      'go-persist-003',
+      'go-rest-002',
+      'go-rest-008',
+      'go-testfakes-002',
     });
   });
 

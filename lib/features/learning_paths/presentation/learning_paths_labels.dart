@@ -21,6 +21,11 @@ extension LearningPathLabel on LearningPath {
       Localizations.localeOf(context).languageCode == 'es'
       ? descriptionEs
       : descriptionEn;
+
+  /// Returns [LearningPath.tagEs] under a Spanish app locale, else
+  /// [LearningPath.tagEn].
+  String tagFor(BuildContext context) =>
+      Localizations.localeOf(context).languageCode == 'es' ? tagEs : tagEn;
 }
 
 /// Locale-resolved access to a bilingual [Lesson]'s title.

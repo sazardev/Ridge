@@ -1,0 +1,175 @@
+[
+  {
+    "id": "go-ddd-hexagonal-notes-v1",
+    "language": "go",
+    "titleEn": "Go: DDD & Hexagonal Architecture",
+    "titleEs": "Go: DDD y Arquitectura Hexagonal",
+    "descriptionEn": "Build a complete Notes REST API in Go, layer by layer: domain, ports, use cases, and adapters.",
+    "descriptionEs": "Construye una API REST de notas en Go, capa por capa: dominio, puertos, casos de uso y adaptadores.",
+    "lessons": [
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step01",
+        "snippetId": "go-domain-001",
+        "order": 1,
+        "titleEn": "`Note`: an aggregate root that can't be constructed invalid",
+        "titleEs": "`Note`: una raíz de agregado que no se puede construir inválida"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step02",
+        "snippetId": "go-domain-002",
+        "order": 2,
+        "titleEn": "`Rename` and `UpdateContent`: mutations that re-check the invariant",
+        "titleEs": "`Rename` y `UpdateContent`: mutaciones que revalidan el invariante"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step03",
+        "snippetId": "go-domain-003",
+        "order": 3,
+        "titleEn": "`ErrEmptyTitle`: a sentinel error owned by the domain",
+        "titleEs": "`ErrEmptyTitle`: un error centinela que pertenece al dominio"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step04",
+        "snippetId": "go-port-001",
+        "order": 4,
+        "titleEn": "`NoteRepository`: the port that hides the storage technology",
+        "titleEs": "`NoteRepository`: el puerto que oculta la tecnología de almacenamiento"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step05",
+        "snippetId": "go-port-002",
+        "order": 5,
+        "titleEn": "`Clock` and `IDGenerator`: ports for the un-testable parts of Go",
+        "titleEs": "`Clock` e `IDGenerator`: puertos para lo no-testeable de Go"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step06",
+        "snippetId": "go-usecase-001",
+        "order": 6,
+        "titleEn": "`CreateNote`: a use case that only knows about ports",
+        "titleEs": "`CreateNote`: un caso de uso que solo conoce puertos"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step07",
+        "snippetId": "go-usecase-002",
+        "order": 7,
+        "titleEn": "`GetNote` and `ListNotes`: read use cases that add only error context",
+        "titleEs": "`GetNote` y `ListNotes`: casos de uso de lectura que solo añaden contexto"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step08",
+        "snippetId": "go-usecase-003",
+        "order": 8,
+        "titleEn": "`UpdateNoteInput`: pointer fields distinguish unchanged from empty",
+        "titleEs": "`UpdateNoteInput`: campos puntero distinguen sin cambios de vacío"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step09",
+        "snippetId": "go-usecase-004",
+        "order": 9,
+        "titleEn": "`DeleteNote`: the smallest possible use case",
+        "titleEs": "`DeleteNote`: el caso de uso más pequeño posible"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step10",
+        "snippetId": "go-persist-001",
+        "order": 10,
+        "titleEn": "The in-memory adapter: one interface, first of two implementations",
+        "titleEs": "El adaptador en memoria: una interfaz, la primera de dos implementaciones"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step11",
+        "snippetId": "go-persist-002",
+        "order": 11,
+        "titleEn": "`system.Clock` and `system.IDGenerator`: the real adapters behind the ports",
+        "titleEs": "`system.Clock` y `system.IDGenerator`: los adaptadores reales tras los puertos"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step12",
+        "snippetId": "go-persist-003",
+        "order": 12,
+        "titleEn": "`jsonfile`'s `noteRecord`: a second, file-shaped translation of `Note`",
+        "titleEs": "`noteRecord` de `jsonfile`: una segunda traducción de `Note`, moldeada al archivo"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step13",
+        "snippetId": "go-persist-004",
+        "order": 13,
+        "titleEn": "`jsonfile`'s CRUD methods: read-modify-write under one mutex",
+        "titleEs": "Los métodos CRUD de `jsonfile`: leer-modificar-escribir bajo un mutex"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step14",
+        "snippetId": "go-rest-001",
+        "order": 14,
+        "titleEn": "`httpapi`'s DTOs: the wire contract, kept separate from `domain.Note`",
+        "titleEs": "Los DTO de `httpapi`: el contrato de red, separado de `domain.Note`"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step15",
+        "snippetId": "go-rest-002",
+        "order": 15,
+        "titleEn": "`writeError`: the single place domain errors become HTTP status codes",
+        "titleEs": "`writeError`: el único lugar donde los errores de dominio son códigos HTTP"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step16",
+        "snippetId": "go-rest-003",
+        "order": 16,
+        "titleEn": "`CreateHandler`: decoding JSON, calling a use case, nothing more",
+        "titleEs": "`CreateHandler`: decodificar JSON, llamar a un caso de uso y nada más"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step17",
+        "snippetId": "go-rest-004",
+        "order": 17,
+        "titleEn": "`GetHandler` and `ListHandler`: path values in, DTOs out",
+        "titleEs": "`GetHandler` y `ListHandler`: valores de ruta entran, DTO salen"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step18",
+        "snippetId": "go-rest-005",
+        "order": 18,
+        "titleEn": "`UpdateHandler`: a path value and a partial body, together",
+        "titleEs": "`UpdateHandler`: un valor de ruta y un cuerpo parcial, juntos"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step19",
+        "snippetId": "go-rest-006",
+        "order": 19,
+        "titleEn": "`DeleteHandler`: no body, no response payload, just a status code",
+        "titleEs": "`DeleteHandler`: sin cuerpo, sin payload de respuesta, solo un estado"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step20",
+        "snippetId": "go-rest-007",
+        "order": 20,
+        "titleEn": "`NewRouter`: wiring five routes with Go's built-in method matching",
+        "titleEs": "`NewRouter`: conectar cinco rutas con el emparejamiento nativo de Go"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step21",
+        "snippetId": "go-rest-008",
+        "order": 21,
+        "titleEn": "`main`: the composition root where concrete adapters get chosen",
+        "titleEs": "`main`: la raíz de composición donde se eligen los adaptadores"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step22",
+        "snippetId": "go-testfakes-001",
+        "order": 22,
+        "titleEn": "Hand-written fakes: test doubles that only exist because of ports",
+        "titleEs": "Fakes escritos a mano: dobles de prueba que existen gracias a los puertos"
+      },
+      {
+        "id": "go-ddd-hexagonal-notes-v1-step23",
+        "snippetId": "go-testfakes-002",
+        "order": 23,
+        "titleEn": "`TestCreateNote_Execute`: one table, four behaviors of `CreateNote`",
+        "titleEs": "`TestCreateNote_Execute`: una tabla, cuatro comportamientos de `CreateNote`"
+      }
+    ],
+    "tagEn": "Backend",
+    "tagEs": "Backend"
+  }
+]

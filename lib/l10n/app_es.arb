@@ -154,6 +154,33 @@
   "settingsAppLock": "Bloqueo de la app",
   "settingsAppLockSubtitle": "Pide un PIN para abrir Just In Time",
   "settingsChangePin": "Cambiar PIN",
+  "settingsSectionShortcuts": "Atajos de teclado",
+  "settingsShortcutsTitle": "Atajos de teclado",
+  "settingsShortcutsSubtitle": "Ve y personaliza cómo navegar sin usar el mouse",
+  "shortcutsScreenTitle": "Atajos de teclado",
+  "shortcutActionGoToPractice": "Ir a Práctica",
+  "shortcutActionGoToProgress": "Ir a Progreso",
+  "shortcutActionGoToFreePractice": "Ir a Práctica libre",
+  "shortcutActionGoToProfile": "Ir a Perfil",
+  "shortcutActionGoToSettings": "Ir a Ajustes",
+  "shortcutActionCycleNextSection": "Siguiente sección",
+  "shortcutActionCyclePreviousSection": "Sección anterior",
+  "shortcutActionCycleNextTab": "Siguiente pestaña",
+  "shortcutActionCyclePreviousTab": "Pestaña anterior",
+  "shortcutsCaptureDialogTitle": "Presiona una combinación de teclas",
+  "shortcutsCaptureDialogHint": "Debe incluir Ctrl o Alt",
+  "shortcutsCaptureDialogWaiting": "Esperando una tecla…",
+  "shortcutsCaptureDialogNeedsModifier": "Agrega Ctrl o Alt a esta combinación",
+  "shortcutsCaptureDialogConflict": "Ya la usa \"{action}\"",
+  "@shortcutsCaptureDialogConflict": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "shortcutsCaptureDialogSaved": "Atajo actualizado",
+  "shortcutsCaptureCancel": "Cancelar",
   "settingsSectionAbout": "Acerca de",
   "settingsAboutVersion": "Versión {version}",
   "@settingsAboutVersion": {
@@ -239,6 +266,12 @@
   "categoryConcurrency": "Concurrencia",
   "categoryGenerics": "Genéricos",
   "categoryIdiomaticFormatting": "Formato idiomático",
+  "categoryDomainModeling": "Modelado de dominio",
+  "categoryHexagonalPorts": "Puertos hexagonales",
+  "categoryApplicationUseCases": "Casos de uso de aplicación",
+  "categoryPersistenceAdapters": "Adaptadores de persistencia",
+  "categoryRestAdapters": "Adaptadores REST",
+  "categoryTestingWithFakes": "Pruebas con dobles falsos",
 
   "languageGo": "Go",
 
@@ -313,6 +346,10 @@
 
   "progressTitle": "Progreso",
   "progressEmptyState": "Termina una sesión de práctica para ver tu progreso aquí.",
+  "progressTabOverview": "Resumen",
+  "progressTabWeaknesses": "Debilidades",
+  "progressTabActivity": "Actividad",
+  "progressTabHistory": "Historial",
   "progressLevelLabel": "Nivel {level}",
   "progressTotalXp": "{xp} XP",
   "progressStreakLabel": "Racha de {days} días",
@@ -320,6 +357,7 @@
   "progressWeaknessCharacters": "Caracteres",
   "progressWeaknessFingers": "Dedos",
   "progressWeaknessNgrams": "Combinaciones",
+  "progressWeaknessKeyTransitions": "Transiciones de teclas",
   "progressWeaknessEmpty": "Aún no hay suficientes datos",
   "progressHeatmapTitle": "Mapa de calor del teclado",
   "progressMasteryTitle": "Dominio",
@@ -343,6 +381,38 @@
   "progressTrendImproving": "Mejorando",
   "progressTrendWorsening": "Empeorando",
   "progressTrendStable": "Estable",
+
+  "progressKeySpace": "Espacio",
+  "progressKeyTab": "Tab",
+  "progressKeyEnter": "Intro",
+  "progressKeyBackspace": "Retroceso",
+  "progressKeyDelete": "Suprimir",
+  "progressKeyArrowLeft": "Flecha izquierda",
+  "progressKeyArrowRight": "Flecha derecha",
+  "progressKeyShiftLeft": "Mayús izquierda",
+  "progressKeyShiftRight": "Mayús derecha",
+
+  "progressActivityTitle": "Actividad",
+  "progressActivityMostPracticedCategories": "Categorías más practicadas",
+  "progressActivityLowestScoringCategories": "Categorías con puntaje más bajo",
+  "progressActivityMostPracticedExercises": "Ejercicios más practicados",
+  "progressActivityLowestScoringExercises": "Ejercicios con puntaje más bajo",
+  "progressActivitySessionCount": "{count} sesiones",
+  "@progressActivitySessionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "progressActivityScoreLabel": "Puntaje: {score}",
+  "@progressActivityScoreLabel": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
 
   "learningPathsTitle": "Rutas de aprendizaje",
   "learningPathsEmptyState": "Aún no hay rutas de aprendizaje disponibles.",

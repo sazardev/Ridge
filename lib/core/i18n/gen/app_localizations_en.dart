@@ -449,6 +449,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsChangePin => 'Change PIN';
 
   @override
+  String get settingsSectionShortcuts => 'Keyboard shortcuts';
+
+  @override
+  String get settingsShortcutsTitle => 'Keyboard shortcuts';
+
+  @override
+  String get settingsShortcutsSubtitle =>
+      'View and customize how you navigate without a mouse';
+
+  @override
+  String get shortcutsScreenTitle => 'Keyboard shortcuts';
+
+  @override
+  String get shortcutActionGoToPractice => 'Go to Practice';
+
+  @override
+  String get shortcutActionGoToProgress => 'Go to Progress';
+
+  @override
+  String get shortcutActionGoToFreePractice => 'Go to Free Practice';
+
+  @override
+  String get shortcutActionGoToProfile => 'Go to Profile';
+
+  @override
+  String get shortcutActionGoToSettings => 'Go to Settings';
+
+  @override
+  String get shortcutActionCycleNextSection => 'Next section';
+
+  @override
+  String get shortcutActionCyclePreviousSection => 'Previous section';
+
+  @override
+  String get shortcutActionCycleNextTab => 'Next tab';
+
+  @override
+  String get shortcutActionCyclePreviousTab => 'Previous tab';
+
+  @override
+  String get shortcutsCaptureDialogTitle => 'Press a key combination';
+
+  @override
+  String get shortcutsCaptureDialogHint => 'Must include Ctrl or Alt';
+
+  @override
+  String get shortcutsCaptureDialogWaiting => 'Waiting for input…';
+
+  @override
+  String get shortcutsCaptureDialogNeedsModifier =>
+      'Add Ctrl or Alt to this combination';
+
+  @override
+  String shortcutsCaptureDialogConflict(String action) {
+    return 'Already used by \"$action\"';
+  }
+
+  @override
+  String get shortcutsCaptureDialogSaved => 'Shortcut updated';
+
+  @override
+  String get shortcutsCaptureCancel => 'Cancel';
+
+  @override
   String get settingsSectionAbout => 'About';
 
   @override
@@ -654,6 +718,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryIdiomaticFormatting => 'Idiomatic formatting';
 
   @override
+  String get categoryDomainModeling => 'Domain modeling';
+
+  @override
+  String get categoryHexagonalPorts => 'Hexagonal ports';
+
+  @override
+  String get categoryApplicationUseCases => 'Application use cases';
+
+  @override
+  String get categoryPersistenceAdapters => 'Persistence adapters';
+
+  @override
+  String get categoryRestAdapters => 'REST adapters';
+
+  @override
+  String get categoryTestingWithFakes => 'Testing with fakes';
+
+  @override
   String get languageGo => 'Go';
 
   @override
@@ -788,6 +870,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Finish a practice session to see your progress here.';
 
   @override
+  String get progressTabOverview => 'Overview';
+
+  @override
+  String get progressTabWeaknesses => 'Weaknesses';
+
+  @override
+  String get progressTabActivity => 'Activity';
+
+  @override
+  String get progressTabHistory => 'History';
+
+  @override
   String progressLevelLabel(int level) {
     return 'Level $level';
   }
@@ -813,6 +907,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get progressWeaknessNgrams => 'Combinations';
+
+  @override
+  String get progressWeaknessKeyTransitions => 'Key transitions';
 
   @override
   String get progressWeaknessEmpty => 'Not enough data yet';
@@ -879,6 +976,62 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get progressTrendStable => 'Stable';
+
+  @override
+  String get progressKeySpace => 'Space';
+
+  @override
+  String get progressKeyTab => 'Tab';
+
+  @override
+  String get progressKeyEnter => 'Enter';
+
+  @override
+  String get progressKeyBackspace => 'Backspace';
+
+  @override
+  String get progressKeyDelete => 'Delete';
+
+  @override
+  String get progressKeyArrowLeft => 'Left arrow';
+
+  @override
+  String get progressKeyArrowRight => 'Right arrow';
+
+  @override
+  String get progressKeyShiftLeft => 'Left shift';
+
+  @override
+  String get progressKeyShiftRight => 'Right shift';
+
+  @override
+  String get progressActivityTitle => 'Activity';
+
+  @override
+  String get progressActivityMostPracticedCategories =>
+      'Most practiced categories';
+
+  @override
+  String get progressActivityLowestScoringCategories =>
+      'Lowest-scoring categories';
+
+  @override
+  String get progressActivityMostPracticedExercises =>
+      'Most practiced exercises';
+
+  @override
+  String get progressActivityLowestScoringExercises =>
+      'Lowest-scoring exercises';
+
+  @override
+  String progressActivitySessionCount(int count) {
+    return '$count sessions';
+  }
+
+  @override
+  String progressActivityScoreLabel(int score) {
+    return 'Score: $score';
+  }
 
   @override
   String get learningPathsTitle => 'Learning paths';

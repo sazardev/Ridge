@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
+import 'package:just_in_time/core/widgets/escape_to_pop.dart';
 
 /// Displays the project's `CHANGELOG.md`, bundled as a Flutter asset so the
 /// running app can show its own release history without anyone needing the
@@ -15,19 +16,21 @@ class ChangelogScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.changelogScreenTitle)),
-      body: FutureBuilder<String>(
-        future: rootBundle.loadString('CHANGELOG.md'),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(child: Text(l10n.changelogLoadError));
-          }
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return _ChangelogBody(markdown: snapshot.data!);
-        },
+    return EscapeToPop(
+      child: Scaffold(
+        appBar: AppBar(title: Text(l10n.changelogScreenTitle)),
+        body: FutureBuilder<String>(
+          future: rootBundle.loadString('CHANGELOG.md'),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(child: Text(l10n.changelogLoadError));
+            }
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return _ChangelogBody(markdown: snapshot.data!);
+          },
+        ),
       ),
     );
   }

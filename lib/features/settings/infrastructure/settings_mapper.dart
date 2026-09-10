@@ -1,9 +1,11 @@
 import 'package:just_in_time/features/settings/domain/entities/app_corner_style.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_palette.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
+import 'package:just_in_time/features/settings/domain/entities/app_shortcut_action.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_sound_pack.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_theme_mode.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_window_border_width.dart';
+import 'package:just_in_time/features/settings/domain/entities/shortcut_binding.dart';
 import 'package:just_in_time/features/settings/infrastructure/settings_dto.dart';
 
 /// Converts a [SettingsDto] into its domain [AppSettings] representation.
@@ -36,6 +38,12 @@ extension SettingsDtoMapper on SettingsDto {
         orElse: () => AppSoundPack.mechanical,
       ),
       onboardingCompleted: onboardingCompleted,
+      shortcutBindings: {
+        for (final action in AppShortcutAction.values)
+          action:
+              _decodeBinding(shortcutBindings[action.name]) ??
+              AppSettings.initial.shortcutBindings[action]!,
+      },
       languageCode: languageCode,
     );
   }
@@ -55,7 +63,38 @@ extension AppSettingsMapper on AppSettings {
       palette: palette.name,
       soundPack: soundPack.name,
       onboardingCompleted: onboardingCompleted,
+      shortcutBindings: {
+        for (final entry in shortcutBindings.entries)
+          entry.key.name: _encodeBinding(entry.value),
+      },
       languageCode: languageCode,
     );
   }
+}
+
+/// Encodes [binding] as a compact `"keyId|control|alt|shift"` string —
+/// plain enough that `SettingsDto.shortcutBindings` stays a native
+/// `Map<String, String>` json_serializable already knows how to
+/// (de)serialize, no nested-object schema needed.
+String _encodeBinding(ShortcutBinding binding) {
+  return '${binding.keyId}|${binding.control}|${binding.alt}|${binding.shift}';
+}
+
+/// Decodes a string produced by [_encodeBinding], or `null` if [raw] is
+/// absent or malformed (a missing action — e.g. an older persisted blob
+/// from before shortcuts were customizable — or corrupted data) so the
+/// caller can fall back to [AppSettings.initial]'s default for that
+/// action instead of crashing.
+ShortcutBinding? _decodeBinding(String? raw) {
+  if (raw == null) return null;
+  final parts = raw.split('|');
+  if (parts.length != 4) return null;
+  final keyId = int.tryParse(parts[0]);
+  if (keyId == null) return null;
+  return ShortcutBinding(
+    keyId: keyId,
+    control: parts[1] == 'true',
+    alt: parts[2] == 'true',
+    shift: parts[3] == 'true',
+  );
 }

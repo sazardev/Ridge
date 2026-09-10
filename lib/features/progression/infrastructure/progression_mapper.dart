@@ -7,18 +7,25 @@ import 'package:just_in_time/features/content/domain/entities/content_category.d
 import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
 import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
 import 'package:just_in_time/features/practice/domain/entities/finger.dart';
+import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
 import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
 import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:just_in_time/features/progression/domain/entities/activity_report.dart';
+import 'package:just_in_time/features/progression/domain/entities/category_activity_stat.dart';
+import 'package:just_in_time/features/progression/domain/entities/exercise_activity_stat.dart';
+import 'package:just_in_time/features/progression/domain/entities/key_transition_sample.dart';
 import 'package:just_in_time/features/progression/domain/entities/keystroke_sample.dart';
 import 'package:just_in_time/features/progression/domain/entities/mastery_status.dart';
 import 'package:just_in_time/features/progression/domain/entities/ngram_sample.dart';
 import 'package:just_in_time/features/progression/domain/entities/personal_history_comparison.dart';
 import 'package:just_in_time/features/progression/domain/entities/precision_result.dart';
 import 'package:just_in_time/features/progression/domain/entities/progress_snapshot.dart';
+import 'package:just_in_time/features/progression/domain/entities/session_activity_sample.dart';
 import 'package:just_in_time/features/progression/domain/entities/trend.dart';
 import 'package:just_in_time/features/progression/domain/entities/unprocessed_session.dart';
 import 'package:just_in_time/features/progression/domain/entities/weak_character.dart';
 import 'package:just_in_time/features/progression/domain/entities/weak_finger.dart';
+import 'package:just_in_time/features/progression/domain/entities/weak_key_transition.dart';
 import 'package:just_in_time/features/progression/domain/entities/weak_ngram.dart';
 import 'package:just_in_time/features/progression/domain/entities/weakness_report.dart';
 import 'package:just_in_time/features/progression/domain/entities/xp_summary.dart';
@@ -89,6 +96,43 @@ extension NgramSampleRowProgressionMapper on NgramSampleRow {
   }
 }
 
+/// Converts a raw [KeyTransitionSampleRow] into a [KeyTransitionSample]
+/// for weakness ranking.
+extension KeyTransitionSampleRowProgressionMapper on KeyTransitionSampleRow {
+  /// Maps this row to a [KeyTransitionSample].
+  KeyTransitionSample toKeyTransitionSample() {
+    return KeyTransitionSample(
+      fromKey: PhysicalKeyId.values.byName(fromKey),
+      toKey: PhysicalKeyId.values.byName(toKey),
+      isError: isError,
+      flightMs: flightMicros / 1000,
+      occurredAtUtc: DateTime.fromMicrosecondsSinceEpoch(
+        sessionStartedAtUtcMicros,
+        isUtc: true,
+      ),
+    );
+  }
+}
+
+/// Converts a raw [TypingSessionRow] into a [SessionActivitySample] for
+/// activity ranking.
+extension TypingSessionRowActivityMapper on TypingSessionRow {
+  /// Maps this row to a [SessionActivitySample].
+  SessionActivitySample toSessionActivitySample() {
+    return SessionActivitySample(
+      snippetId: SnippetId(snippetId),
+      category: ContentCategory.values.byName(category),
+      duration: Duration(microseconds: durationMicros),
+      netSpeedCpm: netSpeedCpm,
+      accuracyPct: accuracyPct,
+      occurredAtUtc: DateTime.fromMicrosecondsSinceEpoch(
+        startedAtUtcMicros,
+        isUtc: true,
+      ),
+    );
+  }
+}
+
 /// Converts a cached [MasteryStatusCacheRow] into its domain
 /// [MasteryStatus].
 extension MasteryStatusCacheRowMapper on MasteryStatusCacheRow {
@@ -139,6 +183,9 @@ extension ProgressSnapshotCacheRowMapper on ProgressSnapshotCacheRow {
       ),
       currentStreakDays: currentStreakDays,
       weaknessReport: decodeWeaknessReport(weaknessReportJson),
+      activityReport: activityReportJson == null
+          ? ActivityReport.empty
+          : decodeActivityReport(activityReportJson!),
       masteryStatuses: masteryStatuses,
       computedAt: DateTime.fromMicrosecondsSinceEpoch(
         computedAtUtcMicros,
@@ -160,6 +207,7 @@ extension ProgressSnapshotMapper on ProgressSnapshot {
       xpForNextLevel: xpSummary.xpForNextLevel,
       currentStreakDays: currentStreakDays,
       weaknessReportJson: encodeWeaknessReport(weaknessReport),
+      activityReportJson: Value(encodeActivityReport(activityReport)),
       computedAtUtcMicros: computedAt.toUtc().microsecondsSinceEpoch,
     );
   }
@@ -182,6 +230,15 @@ String encodeWeaknessReport(WeaknessReport report) {
     'weakNgrams': [
       for (final w in report.weakNgrams)
         {'text': w.text, 'score': w.score, 'trend': w.trend.name},
+    ],
+    'weakKeyTransitions': [
+      for (final w in report.weakKeyTransitions)
+        {
+          'fromKey': w.fromKey.name,
+          'toKey': w.toKey.name,
+          'score': w.score,
+          'trend': w.trend.name,
+        },
     ],
   });
 }
@@ -216,6 +273,122 @@ WeaknessReport decodeWeaknessReport(String json) {
           score: (e['score']! as num).toDouble(),
           trend: Trend.values.byName(e['trend']! as String),
         ),
+    ],
+    // Absent from any blob encoded before this field was added — an old
+    // cached snapshot simply has no key-transition ranking until the
+    // next recompute backfills one.
+    weakKeyTransitions: [
+      for (final e
+          in (map['weakKeyTransitions'] as List? ?? [])
+              .cast<Map<String, dynamic>>())
+        WeakKeyTransition(
+          fromKey: PhysicalKeyId.values.byName(e['fromKey']! as String),
+          toKey: PhysicalKeyId.values.byName(e['toKey']! as String),
+          score: (e['score']! as num).toDouble(),
+          trend: Trend.values.byName(e['trend']! as String),
+        ),
+    ],
+  );
+}
+
+/// Encodes [report] as JSON text for `progress_snapshot_cache`'s
+/// `activityReportJson` column — same JSON-blob reasoning as
+/// [encodeWeaknessReport].
+String encodeActivityReport(ActivityReport report) {
+  return jsonEncode({
+    'mostPracticedCategories': [
+      for (final c in report.mostPracticedCategories) _categoryStatJson(c),
+    ],
+    'lowestScoringCategories': [
+      for (final c in report.lowestScoringCategories) _categoryStatJson(c),
+    ],
+    'mostPracticedExercises': [
+      for (final e in report.mostPracticedExercises) _exerciseStatJson(e),
+    ],
+    'lowestScoringExercises': [
+      for (final e in report.lowestScoringExercises) _exerciseStatJson(e),
+    ],
+  });
+}
+
+Map<String, dynamic> _categoryStatJson(CategoryActivityStat stat) {
+  return {
+    'category': stat.category.name,
+    'sessionCount': stat.sessionCount,
+    'totalPracticeTimeMicros': stat.totalPracticeTime.inMicroseconds,
+    'avgAccuracyPct': stat.avgAccuracyPct,
+    'avgNetSpeedCpm': stat.avgNetSpeedCpm,
+    'performanceScore': stat.performanceScore,
+    'trend': stat.trend.name,
+  };
+}
+
+Map<String, dynamic> _exerciseStatJson(ExerciseActivityStat stat) {
+  return {
+    'snippetId': stat.snippetId.value,
+    'sessionCount': stat.sessionCount,
+    'totalPracticeTimeMicros': stat.totalPracticeTime.inMicroseconds,
+    'avgAccuracyPct': stat.avgAccuracyPct,
+    'avgNetSpeedCpm': stat.avgNetSpeedCpm,
+    'performanceScore': stat.performanceScore,
+  };
+}
+
+/// Decodes a JSON string produced by [encodeActivityReport] back into an
+/// [ActivityReport].
+ActivityReport decodeActivityReport(String json) {
+  final map = jsonDecode(json) as Map<String, dynamic>;
+  CategoryActivityStat categoryFromJson(Map<String, dynamic> e) {
+    return CategoryActivityStat(
+      category: ContentCategory.values.byName(e['category']! as String),
+      sessionCount: e['sessionCount']! as int,
+      totalPracticeTime: Duration(
+        microseconds: e['totalPracticeTimeMicros']! as int,
+      ),
+      avgAccuracyPct: (e['avgAccuracyPct']! as num).toDouble(),
+      avgNetSpeedCpm: (e['avgNetSpeedCpm']! as num).toDouble(),
+      performanceScore: (e['performanceScore']! as num).toDouble(),
+      trend: Trend.values.byName(e['trend']! as String),
+    );
+  }
+
+  ExerciseActivityStat exerciseFromJson(Map<String, dynamic> e) {
+    return ExerciseActivityStat(
+      snippetId: SnippetId(e['snippetId']! as String),
+      sessionCount: e['sessionCount']! as int,
+      totalPracticeTime: Duration(
+        microseconds: e['totalPracticeTimeMicros']! as int,
+      ),
+      avgAccuracyPct: (e['avgAccuracyPct']! as num).toDouble(),
+      avgNetSpeedCpm: (e['avgNetSpeedCpm']! as num).toDouble(),
+      performanceScore: (e['performanceScore']! as num).toDouble(),
+    );
+  }
+
+  return ActivityReport(
+    mostPracticedCategories: [
+      for (final e
+          in (map['mostPracticedCategories']! as List)
+              .cast<Map<String, dynamic>>())
+        categoryFromJson(e),
+    ],
+    lowestScoringCategories: [
+      for (final e
+          in (map['lowestScoringCategories']! as List)
+              .cast<Map<String, dynamic>>())
+        categoryFromJson(e),
+    ],
+    mostPracticedExercises: [
+      for (final e
+          in (map['mostPracticedExercises']! as List)
+              .cast<Map<String, dynamic>>())
+        exerciseFromJson(e),
+    ],
+    lowestScoringExercises: [
+      for (final e
+          in (map['lowestScoringExercises']! as List)
+              .cast<Map<String, dynamic>>())
+        exerciseFromJson(e),
     ],
   );
 }

@@ -36,6 +36,8 @@ extension LearningPathDtoMapper on LearningPathDto {
       titleEs: titleEs,
       descriptionEn: descriptionEn,
       descriptionEs: descriptionEs,
+      tagEn: tagEn,
+      tagEs: tagEs,
       lessons: domainLessons,
     );
   }

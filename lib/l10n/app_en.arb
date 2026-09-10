@@ -157,6 +157,33 @@
   "settingsAppLock": "App lock",
   "settingsAppLockSubtitle": "Require a PIN to open Just In Time",
   "settingsChangePin": "Change PIN",
+  "settingsSectionShortcuts": "Keyboard shortcuts",
+  "settingsShortcutsTitle": "Keyboard shortcuts",
+  "settingsShortcutsSubtitle": "View and customize how you navigate without a mouse",
+  "shortcutsScreenTitle": "Keyboard shortcuts",
+  "shortcutActionGoToPractice": "Go to Practice",
+  "shortcutActionGoToProgress": "Go to Progress",
+  "shortcutActionGoToFreePractice": "Go to Free Practice",
+  "shortcutActionGoToProfile": "Go to Profile",
+  "shortcutActionGoToSettings": "Go to Settings",
+  "shortcutActionCycleNextSection": "Next section",
+  "shortcutActionCyclePreviousSection": "Previous section",
+  "shortcutActionCycleNextTab": "Next tab",
+  "shortcutActionCyclePreviousTab": "Previous tab",
+  "shortcutsCaptureDialogTitle": "Press a key combination",
+  "shortcutsCaptureDialogHint": "Must include Ctrl or Alt",
+  "shortcutsCaptureDialogWaiting": "Waiting for input…",
+  "shortcutsCaptureDialogNeedsModifier": "Add Ctrl or Alt to this combination",
+  "shortcutsCaptureDialogConflict": "Already used by \"{action}\"",
+  "@shortcutsCaptureDialogConflict": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "shortcutsCaptureDialogSaved": "Shortcut updated",
+  "shortcutsCaptureCancel": "Cancel",
   "settingsSectionAbout": "About",
   "settingsAboutVersion": "Version {version}",
   "@settingsAboutVersion": {
@@ -242,6 +269,12 @@
   "categoryConcurrency": "Concurrency",
   "categoryGenerics": "Generics",
   "categoryIdiomaticFormatting": "Idiomatic formatting",
+  "categoryDomainModeling": "Domain modeling",
+  "categoryHexagonalPorts": "Hexagonal ports",
+  "categoryApplicationUseCases": "Application use cases",
+  "categoryPersistenceAdapters": "Persistence adapters",
+  "categoryRestAdapters": "REST adapters",
+  "categoryTestingWithFakes": "Testing with fakes",
 
   "languageGo": "Go",
 
@@ -316,6 +349,10 @@
 
   "progressTitle": "Progress",
   "progressEmptyState": "Finish a practice session to see your progress here.",
+  "progressTabOverview": "Overview",
+  "progressTabWeaknesses": "Weaknesses",
+  "progressTabActivity": "Activity",
+  "progressTabHistory": "History",
   "progressLevelLabel": "Level {level}",
   "@progressLevelLabel": {
     "placeholders": {
@@ -344,6 +381,7 @@
   "progressWeaknessCharacters": "Characters",
   "progressWeaknessFingers": "Fingers",
   "progressWeaknessNgrams": "Combinations",
+  "progressWeaknessKeyTransitions": "Key transitions",
   "progressWeaknessEmpty": "Not enough data yet",
   "progressHeatmapTitle": "Keyboard heatmap",
   "progressMasteryTitle": "Mastery",
@@ -377,6 +415,38 @@
   "progressTrendImproving": "Improving",
   "progressTrendWorsening": "Worsening",
   "progressTrendStable": "Stable",
+
+  "progressKeySpace": "Space",
+  "progressKeyTab": "Tab",
+  "progressKeyEnter": "Enter",
+  "progressKeyBackspace": "Backspace",
+  "progressKeyDelete": "Delete",
+  "progressKeyArrowLeft": "Left arrow",
+  "progressKeyArrowRight": "Right arrow",
+  "progressKeyShiftLeft": "Left shift",
+  "progressKeyShiftRight": "Right shift",
+
+  "progressActivityTitle": "Activity",
+  "progressActivityMostPracticedCategories": "Most practiced categories",
+  "progressActivityLowestScoringCategories": "Lowest-scoring categories",
+  "progressActivityMostPracticedExercises": "Most practiced exercises",
+  "progressActivityLowestScoringExercises": "Lowest-scoring exercises",
+  "progressActivitySessionCount": "{count} sessions",
+  "@progressActivitySessionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "progressActivityScoreLabel": "Score: {score}",
+  "@progressActivityScoreLabel": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
 
   "learningPathsTitle": "Learning paths",
   "learningPathsEmptyState": "No learning paths available yet.",

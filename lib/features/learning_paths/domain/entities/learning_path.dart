@@ -25,6 +25,12 @@ abstract class LearningPath with _$LearningPath {
     required String titleEs,
     required String descriptionEn,
     required String descriptionEs,
+
+    /// A single short topic label (e.g. "Backend", "Fundamentals") shown
+    /// as a chip on the path's card — never a replacement for the fuller
+    /// [descriptionEn]/[descriptionEs], just a skimmable identifier.
+    required String tagEn,
+    required String tagEs,
     required List<Lesson> lessons,
   }) = _LearningPath;
 }

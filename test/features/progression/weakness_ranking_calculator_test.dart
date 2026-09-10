@@ -7,6 +7,7 @@
 // trend comparison across two adjacent 14-day windows.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:just_in_time/features/practice/domain/entities/finger.dart';
+import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
 import 'package:just_in_time/features/progression/domain/entities/trend.dart';
 import 'package:just_in_time/features/progression/domain/services/weakness_ranking_calculator.dart';
 
@@ -74,6 +75,20 @@ void main() {
       ],
     });
     expect(ranked.first.key, Finger.leftPinky);
+    expect(ranked.first.score, greaterThan(ranked.last.score));
+  });
+
+  test('works generically over a record key type '
+      '(physical key-transition pair)', () {
+    final ranked = calculator.rank<(PhysicalKeyId, PhysicalKeyId)>({
+      (PhysicalKeyId.keyQ, PhysicalKeyId.keyP): [
+        const WeaknessSample(ageInDays: 0, isError: true, flightMs: 0),
+      ],
+      (PhysicalKeyId.keyA, PhysicalKeyId.keyS): [
+        const WeaknessSample(ageInDays: 0, isError: false, flightMs: 0),
+      ],
+    });
+    expect(ranked.first.key, (PhysicalKeyId.keyQ, PhysicalKeyId.keyP));
     expect(ranked.first.score, greaterThan(ranked.last.score));
   });
 

@@ -4,9 +4,11 @@ import 'package:just_in_time/features/settings/application/usecases/watch_settin
 import 'package:just_in_time/features/settings/domain/entities/app_corner_style.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_palette.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
+import 'package:just_in_time/features/settings/domain/entities/app_shortcut_action.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_sound_pack.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_theme_mode.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_window_border_width.dart';
+import 'package:just_in_time/features/settings/domain/entities/shortcut_binding.dart';
 import 'package:just_in_time/features/settings/domain/repositories/settings_repository.dart';
 import 'package:just_in_time/features/settings/infrastructure/settings_local_data_source.dart';
 import 'package:just_in_time/features/settings/infrastructure/settings_repository_impl.dart';
@@ -91,4 +93,14 @@ class SettingsController extends _$SettingsController {
   /// Marks the first-run onboarding flow as seen so it never shows again.
   Future<void> setOnboardingCompleted({required bool value}) =>
       _update((s) => s.copyWith(onboardingCompleted: value));
+
+  /// Rebinds [action] to [binding], leaving every other action's
+  /// shortcut untouched.
+  Future<void> setShortcutBinding(
+    AppShortcutAction action,
+    ShortcutBinding binding,
+  ) => _update(
+    (s) =>
+        s.copyWith(shortcutBindings: {...s.shortcutBindings, action: binding}),
+  );
 }

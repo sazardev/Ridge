@@ -452,6 +452,71 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsChangePin => 'Cambiar PIN';
 
   @override
+  String get settingsSectionShortcuts => 'Atajos de teclado';
+
+  @override
+  String get settingsShortcutsTitle => 'Atajos de teclado';
+
+  @override
+  String get settingsShortcutsSubtitle =>
+      'Ve y personaliza cómo navegar sin usar el mouse';
+
+  @override
+  String get shortcutsScreenTitle => 'Atajos de teclado';
+
+  @override
+  String get shortcutActionGoToPractice => 'Ir a Práctica';
+
+  @override
+  String get shortcutActionGoToProgress => 'Ir a Progreso';
+
+  @override
+  String get shortcutActionGoToFreePractice => 'Ir a Práctica libre';
+
+  @override
+  String get shortcutActionGoToProfile => 'Ir a Perfil';
+
+  @override
+  String get shortcutActionGoToSettings => 'Ir a Ajustes';
+
+  @override
+  String get shortcutActionCycleNextSection => 'Siguiente sección';
+
+  @override
+  String get shortcutActionCyclePreviousSection => 'Sección anterior';
+
+  @override
+  String get shortcutActionCycleNextTab => 'Siguiente pestaña';
+
+  @override
+  String get shortcutActionCyclePreviousTab => 'Pestaña anterior';
+
+  @override
+  String get shortcutsCaptureDialogTitle =>
+      'Presiona una combinación de teclas';
+
+  @override
+  String get shortcutsCaptureDialogHint => 'Debe incluir Ctrl o Alt';
+
+  @override
+  String get shortcutsCaptureDialogWaiting => 'Esperando una tecla…';
+
+  @override
+  String get shortcutsCaptureDialogNeedsModifier =>
+      'Agrega Ctrl o Alt a esta combinación';
+
+  @override
+  String shortcutsCaptureDialogConflict(String action) {
+    return 'Ya la usa \"$action\"';
+  }
+
+  @override
+  String get shortcutsCaptureDialogSaved => 'Atajo actualizado';
+
+  @override
+  String get shortcutsCaptureCancel => 'Cancelar';
+
+  @override
   String get settingsSectionAbout => 'Acerca de';
 
   @override
@@ -661,6 +726,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categoryIdiomaticFormatting => 'Formato idiomático';
 
   @override
+  String get categoryDomainModeling => 'Modelado de dominio';
+
+  @override
+  String get categoryHexagonalPorts => 'Puertos hexagonales';
+
+  @override
+  String get categoryApplicationUseCases => 'Casos de uso de aplicación';
+
+  @override
+  String get categoryPersistenceAdapters => 'Adaptadores de persistencia';
+
+  @override
+  String get categoryRestAdapters => 'Adaptadores REST';
+
+  @override
+  String get categoryTestingWithFakes => 'Pruebas con dobles falsos';
+
+  @override
   String get languageGo => 'Go';
 
   @override
@@ -797,6 +880,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Termina una sesión de práctica para ver tu progreso aquí.';
 
   @override
+  String get progressTabOverview => 'Resumen';
+
+  @override
+  String get progressTabWeaknesses => 'Debilidades';
+
+  @override
+  String get progressTabActivity => 'Actividad';
+
+  @override
+  String get progressTabHistory => 'Historial';
+
+  @override
   String progressLevelLabel(int level) {
     return 'Nivel $level';
   }
@@ -822,6 +917,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get progressWeaknessNgrams => 'Combinaciones';
+
+  @override
+  String get progressWeaknessKeyTransitions => 'Transiciones de teclas';
 
   @override
   String get progressWeaknessEmpty => 'Aún no hay suficientes datos';
@@ -888,6 +986,62 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get progressTrendStable => 'Estable';
+
+  @override
+  String get progressKeySpace => 'Espacio';
+
+  @override
+  String get progressKeyTab => 'Tab';
+
+  @override
+  String get progressKeyEnter => 'Intro';
+
+  @override
+  String get progressKeyBackspace => 'Retroceso';
+
+  @override
+  String get progressKeyDelete => 'Suprimir';
+
+  @override
+  String get progressKeyArrowLeft => 'Flecha izquierda';
+
+  @override
+  String get progressKeyArrowRight => 'Flecha derecha';
+
+  @override
+  String get progressKeyShiftLeft => 'Mayús izquierda';
+
+  @override
+  String get progressKeyShiftRight => 'Mayús derecha';
+
+  @override
+  String get progressActivityTitle => 'Actividad';
+
+  @override
+  String get progressActivityMostPracticedCategories =>
+      'Categorías más practicadas';
+
+  @override
+  String get progressActivityLowestScoringCategories =>
+      'Categorías con puntaje más bajo';
+
+  @override
+  String get progressActivityMostPracticedExercises =>
+      'Ejercicios más practicados';
+
+  @override
+  String get progressActivityLowestScoringExercises =>
+      'Ejercicios con puntaje más bajo';
+
+  @override
+  String progressActivitySessionCount(int count) {
+    return '$count sesiones';
+  }
+
+  @override
+  String progressActivityScoreLabel(int score) {
+    return 'Puntaje: $score';
+  }
 
   @override
   String get learningPathsTitle => 'Rutas de aprendizaje';

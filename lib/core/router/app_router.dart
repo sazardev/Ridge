@@ -24,6 +24,7 @@ import 'package:just_in_time/features/progression/presentation/screens/progress_
 import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
 import 'package:just_in_time/features/settings/presentation/screens/changelog_screen.dart';
 import 'package:just_in_time/features/settings/presentation/screens/settings_screen.dart';
+import 'package:just_in_time/features/settings/presentation/screens/shortcuts_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -128,6 +129,13 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: '/changelog',
         builder: (context, state) => const ChangelogScreen(),
+      ),
+      // Pushed as a non-shell route from Settings > "Atajos de teclado"
+      // (same shape as `/changelog`) — rebinding UI for
+      // `AppSettings.shortcutBindings`.
+      GoRoute(
+        path: '/shortcuts',
+        builder: (context, state) => const ShortcutsScreen(),
       ),
       // Pushed as a non-shell route from Profile's "Customize profile"
       // action, the current `GuestProfile` handed over as `extra` since

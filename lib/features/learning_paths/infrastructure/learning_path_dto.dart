@@ -34,6 +34,8 @@ abstract class LearningPathDto with _$LearningPathDto {
     required String titleEs,
     required String descriptionEn,
     required String descriptionEs,
+    required String tagEn,
+    required String tagEs,
     required List<LessonDto> lessons,
   }) = _LearningPathDto;
 

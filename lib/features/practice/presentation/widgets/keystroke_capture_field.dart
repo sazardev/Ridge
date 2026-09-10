@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:just_in_time/core/theme/app_motion.dart';
@@ -49,8 +49,44 @@ class KeystrokeCaptureField extends ConsumerStatefulWidget {
       _KeystrokeCaptureFieldState();
 }
 
-class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField> {
+class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
+    with SingleTickerProviderStateMixin {
   late final FocusNode _focusNode;
+
+  /// Drives the reject-shake manually (never via a `flutter_animate`
+  /// widget-key change) — replaying an animation by changing a widget's
+  /// key tears down and remounts its whole subtree, which previously
+  /// reset `_scrollController` back to the top on every single wrong
+  /// keystroke (then immediately jumped back down as the next
+  /// auto-scroll ran), a jarring, nausea-inducing double-jump. Driving
+  /// the same controller repeatedly keeps the scrollable subtree —
+  /// and its scroll position — mounted throughout.
+  late final AnimationController _shakeController;
+
+  /// The `rejectedTick` the shake last played for, so a rebuild for an
+  /// unrelated reason (e.g. a correct keystroke) never replays it.
+  int _lastRejectedTick = 0;
+
+  /// Backs the field's own internal scroll — a snippet long enough to
+  /// exceed the `Flexible` share `PracticeSessionScreen` gives this
+  /// widget scrolls in here instead of overflowing the column (SPEC.md's
+  /// longer DDD/hexagonal-architecture content routinely exceeds what
+  /// the earlier, syntax-fundamentals-only catalog ever needed).
+  final _scrollController = ScrollController();
+
+  /// The cursor index the last auto-scroll ran for — re-running it every
+  /// build (not just when this changes) would fight a user manually
+  /// scrolling to re-read earlier code while stopped, but a genuinely new
+  /// cursor position (the user typed or corrected something) should
+  /// always keep typing comfortably in view.
+  int? _lastAutoScrolledCursor;
+
+  /// The snippet id the field's scroll position was last settled for —
+  /// a Sprint mid-session advance (SPEC.md §5.2) swaps `state.snippet`
+  /// without recreating this widget (the provider key is the *original*
+  /// snippet/mode pair), so a plain "did the widget change" check
+  /// wouldn't catch it; this is checked by value every build instead.
+  String? _lastSnippetId;
 
   /// Keydown timestamp per currently-held physical key, for dwell.
   final Map<PhysicalKeyboardKey, Duration> _keyDownAt = {};
@@ -69,6 +105,10 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField> {
     super.initState();
     _focusNode = FocusNode(debugLabel: 'KeystrokeCaptureField')
       ..addListener(_onFocusChange);
+    _shakeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 260),
+    );
   }
 
   @override
@@ -76,7 +116,62 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField> {
     _focusNode
       ..removeListener(_onFocusChange)
       ..dispose();
+    _scrollController.dispose();
+    _shakeController.dispose();
     super.dispose();
+  }
+
+  /// Scrolls just enough to keep [cursorIndex] comfortably in view (a
+  /// couple of lines of margin above/below), never more than needed —
+  /// unlike centering on every keystroke, this only moves the viewport
+  /// when typing has actually reached its edge, which reads as "the code
+  /// follows me" rather than a constant jitter.
+  void _ensureCursorVisible(
+    int cursorIndex,
+    TextSpan textSpan,
+    double innerWidth,
+  ) {
+    if (!_scrollController.hasClients) return;
+    if (cursorIndex == _lastAutoScrolledCursor) return;
+    _lastAutoScrolledCursor = cursorIndex;
+
+    final painter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+    )..layout(maxWidth: innerWidth);
+    final caretOffset = painter.getOffsetForCaret(
+      TextPosition(offset: cursorIndex),
+      Rect.zero,
+    );
+    final lineHeight = painter.preferredLineHeight;
+
+    final position = _scrollController.position;
+    final viewportTop = position.pixels;
+    final viewportBottom = viewportTop + position.viewportDimension;
+    // 6 lines of context above/below the cursor — clamped to a fraction
+    // of the viewport so a short viewport (a small window, or a result
+    // area sharing the screen) can't make the margin exceed the space
+    // there is to scroll within.
+    final margin = math.min(lineHeight * 6, position.viewportDimension * 0.35);
+
+    double? target;
+    if (caretOffset.dy < viewportTop + margin) {
+      target = caretOffset.dy - margin;
+    } else if (caretOffset.dy + lineHeight > viewportBottom - margin) {
+      target =
+          caretOffset.dy + lineHeight - position.viewportDimension + margin;
+    }
+    if (target == null) return;
+
+    final clamped = target.clamp(
+      position.minScrollExtent,
+      position.maxScrollExtent,
+    );
+    _scrollController.animateTo(
+      clamped,
+      duration: AppMotion.spatialFast,
+      curve: AppMotion.spatial,
+    );
   }
 
   void _onFocusChange() {
@@ -280,51 +375,101 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField> {
         .classify(state.snippet.code);
     final rejectedTick = state.recorder.rejectedTick;
 
+    const containerPadding = EdgeInsets.all(20);
+    final textSpan = TextSpan(
+      style: baseStyle,
+      children: _buildSpans(
+        theme.colorScheme,
+        syntaxColors,
+        tokenTypes,
+        baseStyle,
+        state.snippet.code,
+        state.recorder.expectedCharStatuses,
+        state.recorder.expectedCursor,
+        state.recorder.reviewCursor,
+      ),
+    );
+
     final field = Focus(
       focusNode: _focusNode,
       autofocus: true,
       onKeyEvent: _handleKeyEvent,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        decoration: ShapeDecoration(
-          shape: AppShapes.of(context).largeShape,
-          color: theme.colorScheme.surfaceContainerHigh,
-        ),
-        // Keyed by the current snippet's id so a Sprint mid-session swap
-        // (SPEC.md §5.2) cross-fades instead of an abrupt cut; ordinary
-        // per-keystroke recoloring keeps the same key, so it never
-        // retriggers this transition.
-        child: AnimatedSwitcher(
-          duration: AppMotion.effectsDefault,
-          switchInCurve: AppMotion.enter,
-          switchOutCurve: AppMotion.exit,
-          child: RichText(
-            key: ValueKey(state.snippet.id),
-            text: TextSpan(
-              style: baseStyle,
-              children: _buildSpans(
-                theme.colorScheme,
-                syntaxColors,
-                tokenTypes,
-                baseStyle,
-                state.snippet.code,
-                state.recorder.expectedCharStatuses,
-                state.recorder.expectedCursor,
-                state.recorder.reviewCursor,
+      // A snippet tall enough to exceed the space `PracticeSessionScreen`
+      // gives this field (SPEC.md's longer DDD/hexagonal-architecture
+      // content routinely does) scrolls here instead of overflowing —
+      // `LayoutBuilder` supplies the exact inner width the auto-scroll
+      // calculation below needs to match the `RichText`'s real layout.
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final innerWidth = constraints.maxWidth - containerPadding.horizontal;
+          final snippetChanged = state.snippet.id.value != _lastSnippetId;
+          _lastSnippetId = state.snippet.id.value;
+
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted || !_scrollController.hasClients) return;
+            if (snippetChanged) {
+              _lastAutoScrolledCursor = null;
+              _scrollController.jumpTo(0);
+              return;
+            }
+            _ensureCursorVisible(
+              state.recorder.expectedCursor,
+              textSpan,
+              innerWidth,
+            );
+          });
+
+          return SingleChildScrollView(
+            controller: _scrollController,
+            child: Container(
+              width: double.infinity,
+              padding: containerPadding,
+              decoration: ShapeDecoration(
+                shape: AppShapes.of(context).largeShape,
+                color: theme.colorScheme.surfaceContainerHigh,
+              ),
+              // Keyed by the current snippet's id so a Sprint mid-session
+              // swap (SPEC.md §5.2) cross-fades instead of an abrupt cut;
+              // ordinary per-keystroke recoloring keeps the same key, so
+              // it never retriggers this transition.
+              child: AnimatedSwitcher(
+                duration: AppMotion.effectsDefault,
+                switchInCurve: AppMotion.enter,
+                switchOutCurve: AppMotion.exit,
+                child: RichText(
+                  key: ValueKey(state.snippet.id),
+                  text: textSpan,
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
 
     // A restrained shake on every rejected attempt — the hard-lock
     // equivalent of `PinDots`' wrong-PIN shake, so being rejected reads
-    // as a clear physical "no" rather than a silent no-op.
-    if (rejectedTick == 0) return field;
-    return field
-        .animate(key: ValueKey('capture-reject-$rejectedTick'))
-        .shakeX(amount: 6, hz: 8, duration: 260.ms);
+    // as a clear physical "no" rather than a silent no-op. Replayed by
+    // driving `_shakeController` again, never by changing a widget key
+    // (see its field doc for why that broke scrolling).
+    if (rejectedTick != _lastRejectedTick) {
+      _lastRejectedTick = rejectedTick;
+      if (rejectedTick != 0) _shakeController.forward(from: 0);
+    }
+
+    return AnimatedBuilder(
+      animation: _shakeController,
+      // `field`'s whole scrollable subtree is passed as `child` — an
+      // `AnimatedBuilder` never rebuilds `child` on its own animation
+      // ticks, only `builder`, so the shake repositions the field
+      // without ever remounting it.
+      child: field,
+      builder: (context, child) {
+        final t = _shakeController.value;
+        final decay = 1 - t;
+        final dx = 6.0 * math.sin(t * 4 * math.pi) * decay;
+        return Transform.translate(offset: Offset(dx, 0), child: child);
+      },
+    );
   }
 }

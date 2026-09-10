@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
+import 'package:just_in_time/core/widgets/app_navigation_shortcuts.dart';
 import 'package:just_in_time/core/window/window_bar.dart';
+import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
+import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
 
 /// Adaptive navigation frame: a rail on wide (Linux desktop) windows, a
 /// bottom bar on narrow (Android phone) ones — same destinations
 /// either way, driven by the same [StatefulNavigationShell].
-class AppShell extends StatelessWidget {
+class AppShell extends ConsumerWidget {
   /// Creates the shell around the given [navigationShell] branches.
   const new({required this.navigationShell, super.key});
 
@@ -30,8 +34,11 @@ class AppShell extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final shortcutBindings =
+        ref.watch(settingsControllerProvider).value?.shortcutBindings ??
+        AppSettings.initial.shortcutBindings;
     // Order matches `app_router.dart`'s `StatefulShellRoute` branches
     // exactly — this list is indexed positionally by
     // [StatefulNavigationShell.currentIndex].
@@ -63,58 +70,64 @@ class AppShell extends StatelessWidget {
       ),
     ];
 
-    return Column(
-      children: [
-        const WindowBar(),
-        Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              if (constraints.maxWidth >= _wideBreakpoint) {
+    return AppNavigationShortcuts(
+      currentIndex: navigationShell.currentIndex,
+      branchCount: destinations.length,
+      bindings: shortcutBindings,
+      onSelectBranch: _onSelect,
+      child: Column(
+        children: [
+          const WindowBar(),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                if (constraints.maxWidth >= _wideBreakpoint) {
+                  return Scaffold(
+                    body: Row(
+                      children: [
+                        NavigationRail(
+                          selectedIndex: navigationShell.currentIndex,
+                          onDestinationSelected: _onSelect,
+                          labelType: NavigationRailLabelType.all,
+                          destinations: [
+                            for (final d in destinations)
+                              NavigationRailDestination(
+                                icon: Icon(d.icon),
+                                selectedIcon: Icon(d.selectedIcon),
+                                label: Text(d.label),
+                              ),
+                          ],
+                        ),
+                        const VerticalDivider(width: 1),
+                        Expanded(child: navigationShell),
+                      ],
+                    ),
+                  );
+                }
+
                 return Scaffold(
-                  body: Row(
-                    children: [
-                      NavigationRail(
-                        selectedIndex: navigationShell.currentIndex,
-                        onDestinationSelected: _onSelect,
-                        labelType: NavigationRailLabelType.all,
-                        destinations: [
-                          for (final d in destinations)
-                            NavigationRailDestination(
-                              icon: Icon(d.icon),
-                              selectedIcon: Icon(d.selectedIcon),
-                              label: Text(d.label),
-                            ),
-                        ],
-                      ),
-                      const VerticalDivider(width: 1),
-                      Expanded(child: navigationShell),
+                  body: navigationShell,
+                  bottomNavigationBar: NavigationBar(
+                    selectedIndex: navigationShell.currentIndex,
+                    onDestinationSelected: _onSelect,
+                    labelBehavior: constraints.maxWidth < _compactBreakpoint
+                        ? NavigationDestinationLabelBehavior.alwaysHide
+                        : NavigationDestinationLabelBehavior.alwaysShow,
+                    destinations: [
+                      for (final d in destinations)
+                        NavigationDestination(
+                          icon: Icon(d.icon),
+                          selectedIcon: Icon(d.selectedIcon),
+                          label: d.label,
+                        ),
                     ],
                   ),
                 );
-              }
-
-              return Scaffold(
-                body: navigationShell,
-                bottomNavigationBar: NavigationBar(
-                  selectedIndex: navigationShell.currentIndex,
-                  onDestinationSelected: _onSelect,
-                  labelBehavior: constraints.maxWidth < _compactBreakpoint
-                      ? NavigationDestinationLabelBehavior.alwaysHide
-                      : NavigationDestinationLabelBehavior.alwaysShow,
-                  destinations: [
-                    for (final d in destinations)
-                      NavigationDestination(
-                        icon: Icon(d.icon),
-                        selectedIcon: Icon(d.selectedIcon),
-                        label: d.label,
-                      ),
-                  ],
-                ),
-              );
-            },
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

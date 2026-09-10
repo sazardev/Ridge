@@ -6,12 +6,14 @@ import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
 import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
 import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
 import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:just_in_time/features/progression/domain/entities/key_transition_sample.dart';
 import 'package:just_in_time/features/progression/domain/entities/keystroke_sample.dart';
 import 'package:just_in_time/features/progression/domain/entities/mastery_status.dart';
 import 'package:just_in_time/features/progression/domain/entities/ngram_sample.dart';
 import 'package:just_in_time/features/progression/domain/entities/personal_history_comparison.dart';
 import 'package:just_in_time/features/progression/domain/entities/precision_result.dart';
 import 'package:just_in_time/features/progression/domain/entities/progress_snapshot.dart';
+import 'package:just_in_time/features/progression/domain/entities/session_activity_sample.dart';
 import 'package:just_in_time/features/progression/domain/entities/unprocessed_session.dart';
 import 'package:just_in_time/features/progression/domain/repositories/progression_repository.dart';
 import 'package:just_in_time/features/progression/infrastructure/progression_dao.dart';
@@ -161,6 +163,38 @@ class ProgressionRepositoryImpl implements ProgressionRepository {
     } on Exception catch (e) {
       return Result.err(
         StorageFailure('Could not load n-gram samples', cause: e),
+      );
+    }
+  }
+
+  @override
+  Future<Result<List<KeyTransitionSample>, AppFailure>>
+  getKeyTransitionSamples({
+    required ProfileId profileId,
+    required DateTime since,
+  }) async {
+    try {
+      final rows = await _dao.getKeyTransitionSamplesRaw(
+        profileId: profileId.value,
+        sinceUtcMicros: since.toUtc().microsecondsSinceEpoch,
+      );
+      return Result.ok([for (final r in rows) r.toKeyTransitionSample()]);
+    } on Exception catch (e) {
+      return Result.err(
+        StorageFailure('Could not load key-transition samples', cause: e),
+      );
+    }
+  }
+
+  @override
+  Future<Result<List<SessionActivitySample>, AppFailure>>
+  getSessionActivitySamples(ProfileId profileId) async {
+    try {
+      final rows = await _dao.getSessionActivityRaw(profileId.value);
+      return Result.ok([for (final r in rows) r.toSessionActivitySample()]);
+    } on Exception catch (e) {
+      return Result.err(
+        StorageFailure('Could not load session activity samples', cause: e),
       );
     }
   }

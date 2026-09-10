@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
+import 'package:just_in_time/core/widgets/escape_to_pop.dart';
 import 'package:just_in_time/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:just_in_time/features/achievements/domain/entities/achievement_id.dart';
 import 'package:just_in_time/features/achievements/domain/entities/maratonista_tier.dart';
@@ -51,38 +52,40 @@ class _AchievementsScreenState extends ConsumerState<AchievementsScreen> {
     final l10n = AppLocalizations.of(context);
     final unlockedAsync = ref.watch(unlockedAchievementsControllerProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.achievementsTitle)),
-      body: unlockedAsync.when(
-        data: (unlocked) {
-          final unlockedById = {for (final a in unlocked) a.id.storageKey: a};
-          final catalog = _fullCatalog();
-          return KeyboardScrollShortcuts(
-            controller: _scrollController,
-            child: GridView.builder(
+    return EscapeToPop(
+      child: Scaffold(
+        appBar: AppBar(title: Text(l10n.achievementsTitle)),
+        body: unlockedAsync.when(
+          data: (unlocked) {
+            final unlockedById = {for (final a in unlocked) a.id.storageKey: a};
+            final catalog = _fullCatalog();
+            return KeyboardScrollShortcuts(
               controller: _scrollController,
-              padding: const EdgeInsets.all(16),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 12,
-                childAspectRatio: 0.85,
+              child: GridView.builder(
+                controller: _scrollController,
+                padding: const EdgeInsets.all(16),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: 0.85,
+                ),
+                itemCount: catalog.length,
+                itemBuilder: (context, index) {
+                  final id = catalog[index];
+                  final achievement = unlockedById[id.storageKey];
+                  return AchievementBadgeTile(
+                    id: id,
+                    unlockedAt: achievement?.unlockedAt,
+                  );
+                },
               ),
-              itemCount: catalog.length,
-              itemBuilder: (context, index) {
-                final id = catalog[index];
-                final achievement = unlockedById[id.storageKey];
-                return AchievementBadgeTile(
-                  id: id,
-                  unlockedAt: achievement?.unlockedAt,
-                );
-              },
-            ),
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) =>
-            Center(child: Text(l10n.commonSomethingWrong)),
+            );
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stackTrace) =>
+              Center(child: Text(l10n.commonSomethingWrong)),
+        ),
       ),
     );
   }

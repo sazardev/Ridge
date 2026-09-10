@@ -29,6 +29,23 @@ const Set<ContentCategory> _coreCategories = {
   ContentCategory.errorHandling,
 };
 
+// The 5 categories the go-ddd-hexagonal-notes Learning Route exercises —
+// these represent an ARCHITECTURE LAYER (DDD/hexagonal role), not a Go
+// language feature, so unlike every other category there's no meaningful
+// notion of a "beginner" domain entity or an "expert" repository port:
+// the whole route targets one intermediate/advanced backend audience.
+// Held to a looser bar than every other category (≥1 active entry across
+// ANY difficulty, not ≥1 per each of the 4 difficulty tiers) — see
+// `.claude/skills/content-curriculum/references/content-model.md`.
+const Set<ContentCategory> _architectureLayerCategories = {
+  ContentCategory.domainModeling,
+  ContentCategory.hexagonalPorts,
+  ContentCategory.applicationUseCases,
+  ContentCategory.persistenceAdapters,
+  ContentCategory.restAdapters,
+  ContentCategory.testingWithFakes,
+};
+
 Future<List<Snippet>> _loadCatalog() async {
   final raw = await rootBundle.loadString('assets/content/snippets/go_v1.json');
   final decoded = jsonDecode(raw) as List<Object?>;
@@ -38,12 +55,23 @@ Future<List<Snippet>> _loadCatalog() async {
   ];
 }
 
-Future<List<Map<String, Object?>>> _loadLearningPathLessons() async {
-  final raw = await rootBundle.loadString(
-    'assets/content/learning_paths/go_foundations_v1.json',
-  );
+// Every bundled Learning Path asset — a future third path just means
+// adding its filename here, not touching the tests below.
+const _learningPathAssetPaths = [
+  'assets/content/learning_paths/go_foundations_v1.json',
+  'assets/content/learning_paths/go_ddd_hexagonal_notes_v1.json',
+];
+
+Future<Map<String, Object?>> _loadLearningPath(String assetPath) async {
+  final raw = await rootBundle.loadString(assetPath);
   final decoded = jsonDecode(raw) as List<Object?>;
-  final path = decoded.single! as Map<String, Object?>;
+  return decoded.single! as Map<String, Object?>;
+}
+
+Future<List<Map<String, Object?>>> _loadLearningPathLessons(
+  String assetPath,
+) async {
+  final path = await _loadLearningPath(assetPath);
   return (path['lessons']! as List<Object?>)
       .cast<Map<String, Object?>>()
       .toList();
@@ -77,19 +105,29 @@ void main() {
   });
 
   test(
-    'no (category, difficulty) cell overall has zero active entries',
+    'no (category, difficulty) cell overall has zero active entries, '
+    'except architecture-layer categories which just need >=1 entry total',
     () async {
       final catalog = await _loadCatalog();
       final active = catalog.where((s) => s.isActive);
 
       final counts = <(ContentCategory, Difficulty), int>{};
+      final totalsByCategory = <ContentCategory, int>{};
       for (final snippet in active) {
         final key = (snippet.category, snippet.difficulty);
         counts[key] = (counts[key] ?? 0) + 1;
+        totalsByCategory[snippet.category] =
+            (totalsByCategory[snippet.category] ?? 0) + 1;
       }
 
       final empty = <String>[];
       for (final category in ContentCategory.values) {
+        if (_architectureLayerCategories.contains(category)) {
+          if ((totalsByCategory[category] ?? 0) == 0) {
+            empty.add('$category has zero active entries (any difficulty)');
+          }
+          continue;
+        }
         for (final difficulty in Difficulty.values) {
           if ((counts[(category, difficulty)] ?? 0) == 0) {
             empty.add('$category/$difficulty');
@@ -204,54 +242,57 @@ void main() {
     expect(problems, isEmpty, reason: problems.join('\n'));
   });
 
-  test('every snippet id referenced by the go-foundations learning path '
+  test('every snippet id referenced by every bundled learning path '
       'resolves to an active catalog entry', () async {
     final catalog = await _loadCatalog();
     final activeIds = catalog
         .where((s) => s.isActive)
         .map((s) => s.id.value)
         .toSet();
-    final lessons = await _loadLearningPathLessons();
 
     final unresolved = <String>[];
-    for (final lesson in lessons) {
-      final snippetId = lesson['snippetId']! as String;
-      if (!activeIds.contains(snippetId)) {
-        unresolved.add('${lesson['id']} -> $snippetId');
+    for (final assetPath in _learningPathAssetPaths) {
+      final lessons = await _loadLearningPathLessons(assetPath);
+      for (final lesson in lessons) {
+        final snippetId = lesson['snippetId']! as String;
+        if (!activeIds.contains(snippetId)) {
+          unresolved.add('${lesson['id']} -> $snippetId');
+        }
       }
     }
 
     expect(unresolved, isEmpty, reason: unresolved.join('\n'));
   });
 
-  test('the go-foundations learning path and every lesson in it has a '
+  test('every bundled learning path and every lesson in it has a '
       'non-empty bilingual title', () async {
-    final raw = await rootBundle.loadString(
-      'assets/content/learning_paths/go_foundations_v1.json',
-    );
-    final decoded = jsonDecode(raw) as List<Object?>;
-    final path = decoded.single! as Map<String, Object?>;
-
     final problems = <String>[];
-    for (final MapEntry(key: label, value: text) in {
-      'titleEn': path['titleEn'],
-      'titleEs': path['titleEs'],
-      'descriptionEn': path['descriptionEn'],
-      'descriptionEs': path['descriptionEs'],
-    }.entries) {
-      if ((text! as String).trim().isEmpty) {
-        problems.add('${path['id']}: $label is empty');
-      }
-    }
 
-    final lessons = await _loadLearningPathLessons();
-    for (final lesson in lessons) {
+    for (final assetPath in _learningPathAssetPaths) {
+      final path = await _loadLearningPath(assetPath);
+
       for (final MapEntry(key: label, value: text) in {
-        'titleEn': lesson['titleEn'],
-        'titleEs': lesson['titleEs'],
+        'titleEn': path['titleEn'],
+        'titleEs': path['titleEs'],
+        'descriptionEn': path['descriptionEn'],
+        'descriptionEs': path['descriptionEs'],
+        'tagEn': path['tagEn'],
+        'tagEs': path['tagEs'],
       }.entries) {
         if ((text! as String).trim().isEmpty) {
-          problems.add('${lesson['id']}: $label is empty');
+          problems.add('${path['id']}: $label is empty');
+        }
+      }
+
+      final lessons = await _loadLearningPathLessons(assetPath);
+      for (final lesson in lessons) {
+        for (final MapEntry(key: label, value: text) in {
+          'titleEn': lesson['titleEn'],
+          'titleEs': lesson['titleEs'],
+        }.entries) {
+          if ((text! as String).trim().isEmpty) {
+            problems.add('${lesson['id']}: $label is empty');
+          }
         }
       }
     }

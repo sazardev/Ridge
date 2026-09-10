@@ -3,15 +3,19 @@ import 'package:just_in_time/core/utils/result.dart';
 import 'package:just_in_time/features/content/domain/entities/content_category.dart';
 import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
 import 'package:just_in_time/features/practice/domain/entities/finger.dart';
+import 'package:just_in_time/features/practice/domain/value_objects/physical_key_id.dart';
 import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:just_in_time/features/progression/domain/entities/activity_report.dart';
 import 'package:just_in_time/features/progression/domain/entities/mastery_status.dart';
 import 'package:just_in_time/features/progression/domain/entities/progress_snapshot.dart';
 import 'package:just_in_time/features/progression/domain/entities/weak_character.dart';
 import 'package:just_in_time/features/progression/domain/entities/weak_finger.dart';
+import 'package:just_in_time/features/progression/domain/entities/weak_key_transition.dart';
 import 'package:just_in_time/features/progression/domain/entities/weak_ngram.dart';
 import 'package:just_in_time/features/progression/domain/entities/weakness_report.dart';
 import 'package:just_in_time/features/progression/domain/entities/xp_summary.dart';
 import 'package:just_in_time/features/progression/domain/repositories/progression_repository.dart';
+import 'package:just_in_time/features/progression/domain/services/activity_ranking_calculator.dart';
 import 'package:just_in_time/features/progression/domain/services/level_calculator.dart';
 import 'package:just_in_time/features/progression/domain/services/mastery_evaluator.dart';
 import 'package:just_in_time/features/progression/domain/services/streak_calculator.dart';
@@ -43,6 +47,7 @@ class RecomputeProgressSnapshotUseCase {
     this.levelCalculator = const LevelCalculator(),
     this.streakCalculator = const StreakCalculator(),
     this.weaknessRankingCalculator = const WeaknessRankingCalculator(),
+    this.activityRankingCalculator = const ActivityRankingCalculator(),
     this.masteryEvaluator = const MasteryEvaluator(),
   });
 
@@ -59,6 +64,10 @@ class RecomputeProgressSnapshotUseCase {
 
   /// The (pure, stateless) calculator used to rank weaknesses.
   final WeaknessRankingCalculator weaknessRankingCalculator;
+
+  /// The (pure, stateless) calculator used to rank activity (most
+  /// practiced/lowest scoring, per category and per exercise).
+  final ActivityRankingCalculator activityRankingCalculator;
 
   /// The (pure, stateless) evaluator used to certify/decay mastery.
   final MasteryEvaluator masteryEvaluator;
@@ -165,6 +174,14 @@ class RecomputeProgressSnapshotUseCase {
       return Result.err(weaknessReportResult.failureOrNull!);
     }
 
+    final activityReportResult = await _buildActivityReport(
+      profileId: profileId,
+      nowUtc: nowUtc,
+    );
+    if (activityReportResult.isErr) {
+      return Result.err(activityReportResult.failureOrNull!);
+    }
+
     final masteryStatuses = <MasteryStatus>[];
     for (final (category, difficulty) in touchedPairs) {
       final status = await _reevaluateMastery(
@@ -195,6 +212,7 @@ class RecomputeProgressSnapshotUseCase {
       xpSummary: xpSummary,
       currentStreakDays: currentStreakDays,
       weaknessReport: weaknessReportResult.valueOrNull!,
+      activityReport: activityReportResult.valueOrNull!,
       masteryStatuses: masteryStatuses,
       computedAt: nowUtc,
     );
@@ -225,6 +243,11 @@ class RecomputeProgressSnapshotUseCase {
     if (ngramSamplesResult.isErr) {
       return Result.err(ngramSamplesResult.failureOrNull!);
     }
+    final keyTransitionSamplesResult = await _repository
+        .getKeyTransitionSamples(profileId: profileId, since: since);
+    if (keyTransitionSamplesResult.isErr) {
+      return Result.err(keyTransitionSamplesResult.failureOrNull!);
+    }
 
     final charSamples = <String, List<WeaknessSample>>{};
     final fingerSamples = <Finger, List<WeaknessSample>>{};
@@ -251,9 +274,26 @@ class RecomputeProgressSnapshotUseCase {
           );
     }
 
+    final keyTransitionSamples =
+        <(PhysicalKeyId, PhysicalKeyId), List<WeaknessSample>>{};
+    for (final kt in keyTransitionSamplesResult.valueOrNull!) {
+      keyTransitionSamples
+          .putIfAbsent((kt.fromKey, kt.toKey), () => [])
+          .add(
+            WeaknessSample(
+              ageInDays: _ageInDays(nowUtc, kt.occurredAtUtc),
+              isError: kt.isError,
+              flightMs: kt.flightMs,
+            ),
+          );
+    }
+
     final charRanked = weaknessRankingCalculator.rank(charSamples);
     final fingerRanked = weaknessRankingCalculator.rank(fingerSamples);
     final ngramRanked = weaknessRankingCalculator.rank(ngramSamples);
+    final keyTransitionRanked = weaknessRankingCalculator.rank(
+      keyTransitionSamples,
+    );
 
     return Result.ok(
       WeaknessReport(
@@ -269,6 +309,32 @@ class RecomputeProgressSnapshotUseCase {
           for (final e in ngramRanked)
             WeakNgram(text: e.key, score: e.score, trend: e.trend),
         ],
+        weakKeyTransitions: [
+          for (final e in keyTransitionRanked)
+            WeakKeyTransition(
+              fromKey: e.key.$1,
+              toKey: e.key.$2,
+              score: e.score,
+              trend: e.trend,
+            ),
+        ],
+      ),
+    );
+  }
+
+  Future<Result<ActivityReport, AppFailure>> _buildActivityReport({
+    required ProfileId profileId,
+    required DateTime nowUtc,
+  }) async {
+    final samplesResult = await _repository.getSessionActivitySamples(
+      profileId,
+    );
+    if (samplesResult.isErr) return Result.err(samplesResult.failureOrNull!);
+
+    return Result.ok(
+      activityRankingCalculator.calculate(
+        samplesResult.valueOrNull!,
+        now: nowUtc,
       ),
     );
   }

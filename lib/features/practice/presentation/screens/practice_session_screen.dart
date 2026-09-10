@@ -196,6 +196,13 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
     final onShowInfoAction = explanation.isEmpty
         ? null
         : () => context.push('/practice/session/info', extra: state.snippet);
+    // Whether the result area below the code field has anything to show
+    // at all (finishing spinner, error, or the actual result panel) —
+    // while typing (idle/running) it doesn't, so the code field gets the
+    // full height instead of splitting it with reserved blank space.
+    final showResultArea =
+        state.status == PracticeSessionStatus.finished ||
+        state.status == PracticeSessionStatus.result;
 
     return CallbackShortcuts(
       bindings: {
@@ -250,36 +257,51 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
                   _LiveStatsRow(keystrokes: state.recorder.keystrokes),
                   const SizedBox(height: 8),
                 ],
-                KeystrokeCaptureField(snippet: snippet, mode: mode),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: AnimatedSwitcher(
-                    duration: AppMotion.spatialDefault,
-                    switchInCurve: AppMotion.enter,
-                    switchOutCurve: AppMotion.exit,
-                    child: switch (state.status) {
-                      PracticeSessionStatus.result when state.error == null =>
-                        SingleChildScrollView(
-                          key: const ValueKey('result'),
-                          controller: _resultScrollController,
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: SessionResultPanel(
-                            metrics: state.finishedSession!.metrics,
-                            passed: passed,
-                          ),
-                        ),
-                      PracticeSessionStatus.result => Center(
-                        key: const ValueKey('error'),
-                        child: Text(state.error ?? ''),
-                      ),
-                      PracticeSessionStatus.finished => const Center(
-                        key: ValueKey('finishing'),
-                        child: CircularProgressIndicator(),
-                      ),
-                      _ => const SizedBox.shrink(key: ValueKey('typing')),
-                    },
-                  ),
+                // While typing (idle/running), the result area below has
+                // nothing to show yet — omitting it from the column
+                // entirely (rather than reserving its flex share for an
+                // empty `SizedBox.shrink`) lets the code field's
+                // `Flexible` claim the *whole* remaining height instead
+                // of splitting it with blank space, which is what makes
+                // this a comfortable full-height editor rather than a
+                // cramped one (SPEC.md's longer DDD/hexagonal-
+                // architecture content needs every pixel it can get).
+                // Once a result actually exists, the field gives room
+                // back to it below.
+                Flexible(
+                  child: KeystrokeCaptureField(snippet: snippet, mode: mode),
                 ),
+                if (showResultArea) ...[
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: AnimatedSwitcher(
+                      duration: AppMotion.spatialDefault,
+                      switchInCurve: AppMotion.enter,
+                      switchOutCurve: AppMotion.exit,
+                      child: switch (state.status) {
+                        PracticeSessionStatus.result when state.error == null =>
+                          SingleChildScrollView(
+                            key: const ValueKey('result'),
+                            controller: _resultScrollController,
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: SessionResultPanel(
+                              metrics: state.finishedSession!.metrics,
+                              passed: passed,
+                            ),
+                          ),
+                        PracticeSessionStatus.result => Center(
+                          key: const ValueKey('error'),
+                          child: Text(state.error ?? ''),
+                        ),
+                        PracticeSessionStatus.finished => const Center(
+                          key: ValueKey('finishing'),
+                          child: CircularProgressIndicator(),
+                        ),
+                        _ => const SizedBox.shrink(key: ValueKey('typing')),
+                      },
+                    ),
+                  ),
+                ],
               ],
             ),
           ),

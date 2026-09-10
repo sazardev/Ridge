@@ -40,8 +40,9 @@ an array with one path object:
 {
   "id": "go-foundations-v1",
   "language": "go",
-  "titleEn": "...", "titleEs": "...",
-  "descriptionEn": "...", "descriptionEs": "...",
+  "titleEn": "...", "titleEs": "...",       // short — one line, no subtitle clause
+  "descriptionEn": "...", "descriptionEs": "...",  // ONE short sentence (~80-100 chars) — shown alongside chips, not instead of them
+  "tagEn": "...", "tagEs": "...",           // one short word/phrase for the card's topic chip, e.g. "Backend" / "Fundamentals"
   "lessons": [
     {
       "id": "go-foundations-v1-o2-step01",  // must match "order" (see lesson-ordering.md)
@@ -63,7 +64,7 @@ an array with one path object:
 | Drift table | `lib/features/content/infrastructure/tables/snippets_table.dart` | New optional columns use `.withDefault(const Constant(''))` |
 | Mapper | `lib/features/content/infrastructure/snippet_mapper.dart` | 4 directions: DTO↔domain, DTO↔drift row/companion |
 | Repository | `lib/features/content/infrastructure/snippet_repository_impl.dart` | `getById` queries the drift table directly — no in-memory cache to race against |
-| Learning Path repo | `lib/features/learning_paths/infrastructure/learning_path_repository_impl.dart` | Reads the JSON asset directly via `rootBundle` on every call — never seeded into drift (curriculum is tiny, read-only, never user-mutated) |
+| Learning Path repo | `lib/features/learning_paths/infrastructure/learning_path_repository_impl.dart` | Reads every bundled path asset directly via `rootBundle` on every call (one file per path, listed in `defaultAssetPaths`) — never seeded into drift (curriculum is tiny, read-only, never user-mutated). A new path means: add its JSON file, list it in both `defaultAssetPaths` and `pubspec.yaml`'s assets, add it to `_learningPathAssetPaths` in `snippet_catalog_completeness_test.dart` |
 
 `lesson_progress_cache` (drift table, IS persisted) is the only
 Learning-Path-adjacent state that's actually stored — keyed by

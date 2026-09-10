@@ -5,12 +5,14 @@ import 'package:just_in_time/features/content/domain/entities/difficulty.dart';
 import 'package:just_in_time/features/content/domain/value_objects/snippet_id.dart';
 import 'package:just_in_time/features/practice/domain/value_objects/typing_session_id.dart';
 import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
+import 'package:just_in_time/features/progression/domain/entities/key_transition_sample.dart';
 import 'package:just_in_time/features/progression/domain/entities/keystroke_sample.dart';
 import 'package:just_in_time/features/progression/domain/entities/mastery_status.dart';
 import 'package:just_in_time/features/progression/domain/entities/ngram_sample.dart';
 import 'package:just_in_time/features/progression/domain/entities/personal_history_comparison.dart';
 import 'package:just_in_time/features/progression/domain/entities/precision_result.dart';
 import 'package:just_in_time/features/progression/domain/entities/progress_snapshot.dart';
+import 'package:just_in_time/features/progression/domain/entities/session_activity_sample.dart';
 import 'package:just_in_time/features/progression/domain/entities/unprocessed_session.dart';
 
 /// Driven port: the application core depends on this abstraction only.
@@ -81,6 +83,23 @@ abstract interface class ProgressionRepository {
     required ProfileId profileId,
     required DateTime since,
   });
+
+  /// Raw physical key-transition samples for [profileId] since [since]
+  /// (adjacent forward keystrokes within the same session, keyed by
+  /// physical key pair rather than character), for key-transition
+  /// weakness ranking (SPEC.md §4.1).
+  Future<Result<List<KeyTransitionSample>, AppFailure>>
+  getKeyTransitionSamples({
+    required ProfileId profileId,
+    required DateTime since,
+  });
+
+  /// Every one of [profileId]'s finished sessions, reduced to exactly
+  /// what activity ranking needs — no `since` filter, since
+  /// `ActivityRankingCalculator` itself partitions "most practiced"
+  /// (lifetime) from "lowest scoring" (recency-windowed) internally.
+  Future<Result<List<SessionActivitySample>, AppFailure>>
+  getSessionActivitySamples(ProfileId profileId);
 
   /// The most recent Precision-mode results for [profileId] on
   /// [category]/[difficulty], newest first, capped at [limit] —

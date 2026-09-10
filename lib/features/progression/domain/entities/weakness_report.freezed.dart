@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$WeaknessReport {
 
- List<WeakCharacter> get weakCharacters; List<WeakFinger> get weakFingers; List<WeakNgram> get weakNgrams;
+ List<WeakCharacter> get weakCharacters; List<WeakFinger> get weakFingers; List<WeakNgram> get weakNgrams; List<WeakKeyTransition> get weakKeyTransitions;
 /// Create a copy of WeaknessReport
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,20 +27,20 @@ $WeaknessReportCopyWith<WeaknessReport> get copyWith => _$WeaknessReportCopyWith
 @override
 bool operator ==(Object other) {
   final _this = this as WeaknessReport;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WeaknessReport&&const DeepCollectionEquality().equals(other.weakCharacters, _this.weakCharacters)&&const DeepCollectionEquality().equals(other.weakFingers, _this.weakFingers)&&const DeepCollectionEquality().equals(other.weakNgrams, _this.weakNgrams));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WeaknessReport&&const DeepCollectionEquality().equals(other.weakCharacters, _this.weakCharacters)&&const DeepCollectionEquality().equals(other.weakFingers, _this.weakFingers)&&const DeepCollectionEquality().equals(other.weakNgrams, _this.weakNgrams)&&const DeepCollectionEquality().equals(other.weakKeyTransitions, _this.weakKeyTransitions));
 }
 
 
 @override
 int get hashCode {
   final _this = this as WeaknessReport;
-  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.weakCharacters),const DeepCollectionEquality().hash(_this.weakFingers),const DeepCollectionEquality().hash(_this.weakNgrams));
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.weakCharacters),const DeepCollectionEquality().hash(_this.weakFingers),const DeepCollectionEquality().hash(_this.weakNgrams),const DeepCollectionEquality().hash(_this.weakKeyTransitions));
 }
 
 @override
 String toString() {
   final _this = this as WeaknessReport;
-  return 'WeaknessReport(weakCharacters: ${_this.weakCharacters}, weakFingers: ${_this.weakFingers}, weakNgrams: ${_this.weakNgrams})';
+  return 'WeaknessReport(weakCharacters: ${_this.weakCharacters}, weakFingers: ${_this.weakFingers}, weakNgrams: ${_this.weakNgrams}, weakKeyTransitions: ${_this.weakKeyTransitions})';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $WeaknessReportCopyWith<$Res>  {
   factory $WeaknessReportCopyWith(WeaknessReport value, $Res Function(WeaknessReport) _then) = _$WeaknessReportCopyWithImpl;
 @useResult
 $Res call({
- List<WeakCharacter> weakCharacters, List<WeakFinger> weakFingers, List<WeakNgram> weakNgrams
+ List<WeakCharacter> weakCharacters, List<WeakFinger> weakFingers, List<WeakNgram> weakNgrams, List<WeakKeyTransition> weakKeyTransitions
 });
 
 
@@ -68,12 +68,13 @@ class _$WeaknessReportCopyWithImpl<$Res>
 
 /// Create a copy of WeaknessReport
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? weakCharacters = null,Object? weakFingers = null,Object? weakNgrams = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? weakCharacters = null,Object? weakFingers = null,Object? weakNgrams = null,Object? weakKeyTransitions = null,}) {
   return _then(WeaknessReport(
 weakCharacters: null == weakCharacters ? _self.weakCharacters : weakCharacters // ignore: cast_nullable_to_non_nullable
 as List<WeakCharacter>,weakFingers: null == weakFingers ? _self.weakFingers : weakFingers // ignore: cast_nullable_to_non_nullable
 as List<WeakFinger>,weakNgrams: null == weakNgrams ? _self.weakNgrams : weakNgrams // ignore: cast_nullable_to_non_nullable
-as List<WeakNgram>,
+as List<WeakNgram>,weakKeyTransitions: null == weakKeyTransitions ? _self.weakKeyTransitions : weakKeyTransitions // ignore: cast_nullable_to_non_nullable
+as List<WeakKeyTransition>,
   ));
 }
 
@@ -158,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<WeakCharacter> weakCharacters,  List<WeakFinger> weakFingers,  List<WeakNgram> weakNgrams)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<WeakCharacter> weakCharacters,  List<WeakFinger> weakFingers,  List<WeakNgram> weakNgrams,  List<WeakKeyTransition> weakKeyTransitions)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WeaknessReport() when $default != null:
-return $default(_that.weakCharacters,_that.weakFingers,_that.weakNgrams);case _:
+return $default(_that.weakCharacters,_that.weakFingers,_that.weakNgrams,_that.weakKeyTransitions);case _:
   return orElse();
 
 }
@@ -179,10 +180,10 @@ return $default(_that.weakCharacters,_that.weakFingers,_that.weakNgrams);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<WeakCharacter> weakCharacters,  List<WeakFinger> weakFingers,  List<WeakNgram> weakNgrams)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<WeakCharacter> weakCharacters,  List<WeakFinger> weakFingers,  List<WeakNgram> weakNgrams,  List<WeakKeyTransition> weakKeyTransitions)  $default,) {final _that = this;
 switch (_that) {
 case _WeaknessReport():
-return $default(_that.weakCharacters,_that.weakFingers,_that.weakNgrams);case _:
+return $default(_that.weakCharacters,_that.weakFingers,_that.weakNgrams,_that.weakKeyTransitions);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +200,10 @@ return $default(_that.weakCharacters,_that.weakFingers,_that.weakNgrams);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<WeakCharacter> weakCharacters,  List<WeakFinger> weakFingers,  List<WeakNgram> weakNgrams)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<WeakCharacter> weakCharacters,  List<WeakFinger> weakFingers,  List<WeakNgram> weakNgrams,  List<WeakKeyTransition> weakKeyTransitions)?  $default,) {final _that = this;
 switch (_that) {
 case _WeaknessReport() when $default != null:
-return $default(_that.weakCharacters,_that.weakFingers,_that.weakNgrams);case _:
+return $default(_that.weakCharacters,_that.weakFingers,_that.weakNgrams,_that.weakKeyTransitions);case _:
   return null;
 
 }
@@ -214,7 +215,7 @@ return $default(_that.weakCharacters,_that.weakFingers,_that.weakNgrams);case _:
 
 
 class _WeaknessReport implements WeaknessReport {
-  const _WeaknessReport({required  List<WeakCharacter> weakCharacters, required  List<WeakFinger> weakFingers, required  List<WeakNgram> weakNgrams}): _weakCharacters = weakCharacters,_weakFingers = weakFingers,_weakNgrams = weakNgrams;
+  const _WeaknessReport({required  List<WeakCharacter> weakCharacters, required  List<WeakFinger> weakFingers, required  List<WeakNgram> weakNgrams, required  List<WeakKeyTransition> weakKeyTransitions}): _weakCharacters = weakCharacters,_weakFingers = weakFingers,_weakNgrams = weakNgrams,_weakKeyTransitions = weakKeyTransitions;
   
 
  final  List<WeakCharacter> _weakCharacters;
@@ -238,6 +239,13 @@ class _WeaknessReport implements WeaknessReport {
   return EqualUnmodifiableListView(_weakNgrams);
 }
 
+ final  List<WeakKeyTransition> _weakKeyTransitions;
+@override List<WeakKeyTransition> get weakKeyTransitions {
+  if (_weakKeyTransitions is EqualUnmodifiableListView) return _weakKeyTransitions;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_weakKeyTransitions);
+}
+
 
 /// Create a copy of WeaknessReport
 /// with the given fields replaced by the non-null parameter values.
@@ -249,18 +257,18 @@ _$WeaknessReportCopyWith<_WeaknessReport> get copyWith => __$WeaknessReportCopyW
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WeaknessReport&&const DeepCollectionEquality().equals(other.weakCharacters, _weakCharacters)&&const DeepCollectionEquality().equals(other.weakFingers, _weakFingers)&&const DeepCollectionEquality().equals(other.weakNgrams, _weakNgrams));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WeaknessReport&&const DeepCollectionEquality().equals(other.weakCharacters, _weakCharacters)&&const DeepCollectionEquality().equals(other.weakFingers, _weakFingers)&&const DeepCollectionEquality().equals(other.weakNgrams, _weakNgrams)&&const DeepCollectionEquality().equals(other.weakKeyTransitions, _weakKeyTransitions));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_weakCharacters),const DeepCollectionEquality().hash(_weakFingers),const DeepCollectionEquality().hash(_weakNgrams));
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_weakCharacters),const DeepCollectionEquality().hash(_weakFingers),const DeepCollectionEquality().hash(_weakNgrams),const DeepCollectionEquality().hash(_weakKeyTransitions));
 }
 
 @override
 String toString() {
-    return 'WeaknessReport(weakCharacters: $weakCharacters, weakFingers: $weakFingers, weakNgrams: $weakNgrams)';
+    return 'WeaknessReport(weakCharacters: $weakCharacters, weakFingers: $weakFingers, weakNgrams: $weakNgrams, weakKeyTransitions: $weakKeyTransitions)';
 }
 
 
@@ -271,7 +279,7 @@ abstract mixin class _$WeaknessReportCopyWith<$Res> implements $WeaknessReportCo
   factory _$WeaknessReportCopyWith(_WeaknessReport value, $Res Function(_WeaknessReport) _then) = __$WeaknessReportCopyWithImpl;
 @override @useResult
 $Res call({
- List<WeakCharacter> weakCharacters, List<WeakFinger> weakFingers, List<WeakNgram> weakNgrams
+ List<WeakCharacter> weakCharacters, List<WeakFinger> weakFingers, List<WeakNgram> weakNgrams, List<WeakKeyTransition> weakKeyTransitions
 });
 
 
@@ -288,12 +296,13 @@ class __$WeaknessReportCopyWithImpl<$Res>
 
 /// Create a copy of WeaknessReport
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? weakCharacters = null,Object? weakFingers = null,Object? weakNgrams = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? weakCharacters = null,Object? weakFingers = null,Object? weakNgrams = null,Object? weakKeyTransitions = null,}) {
   return _then(_WeaknessReport(
 weakCharacters: null == weakCharacters ? _self._weakCharacters : weakCharacters // ignore: cast_nullable_to_non_nullable
 as List<WeakCharacter>,weakFingers: null == weakFingers ? _self._weakFingers : weakFingers // ignore: cast_nullable_to_non_nullable
 as List<WeakFinger>,weakNgrams: null == weakNgrams ? _self._weakNgrams : weakNgrams // ignore: cast_nullable_to_non_nullable
-as List<WeakNgram>,
+as List<WeakNgram>,weakKeyTransitions: null == weakKeyTransitions ? _self._weakKeyTransitions : weakKeyTransitions // ignore: cast_nullable_to_non_nullable
+as List<WeakKeyTransition>,
   ));
 }
 

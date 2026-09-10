@@ -363,7 +363,9 @@
     ],
     "titleEn": "Go syntax fundamentals",
     "titleEs": "Fundamentos de sintaxis Go",
-    "descriptionEn": "A guided, gradual path through Go's fundamentals: variables and types, slices, conditionals, loops, functions, and idiomatic error handling — with real variety at each step and a couple of realistic programs tying it all together. Especially useful for bootcamps and structured self-study.",
-    "descriptionEs": "Una ruta guiada y gradual por los fundamentos de Go: variables y tipos, slices, condicionales, ciclos, funciones y manejo de errores idiomático — con variedad real en cada paso y un par de programas realistas que atan todo junto. Pensada especialmente para bootcamps y autoestudio estructurado."
+    "descriptionEn": "Learn Go step by step: variables, conditionals, loops, functions, and error handling.",
+    "descriptionEs": "Aprende Go paso a paso: variables, condicionales, loops, funciones y manejo de errores.",
+    "tagEn": "Fundamentals",
+    "tagEs": "Fundamentos"
   }
 ]

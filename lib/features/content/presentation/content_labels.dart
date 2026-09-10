@@ -46,6 +46,12 @@ extension ContentCategoryLabel on ContentCategory {
     ContentCategory.concurrency => l10n.categoryConcurrency,
     ContentCategory.generics => l10n.categoryGenerics,
     ContentCategory.idiomaticFormatting => l10n.categoryIdiomaticFormatting,
+    ContentCategory.domainModeling => l10n.categoryDomainModeling,
+    ContentCategory.hexagonalPorts => l10n.categoryHexagonalPorts,
+    ContentCategory.applicationUseCases => l10n.categoryApplicationUseCases,
+    ContentCategory.persistenceAdapters => l10n.categoryPersistenceAdapters,
+    ContentCategory.restAdapters => l10n.categoryRestAdapters,
+    ContentCategory.testingWithFakes => l10n.categoryTestingWithFakes,
   };
 }
 

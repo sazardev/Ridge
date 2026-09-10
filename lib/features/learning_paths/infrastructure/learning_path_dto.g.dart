@@ -31,6 +31,8 @@ _LearningPathDto _$LearningPathDtoFromJson(Map<String, dynamic> json) =>
       titleEs: json['titleEs'] as String,
       descriptionEn: json['descriptionEn'] as String,
       descriptionEs: json['descriptionEs'] as String,
+      tagEn: json['tagEn'] as String,
+      tagEs: json['tagEs'] as String,
       lessons: (json['lessons'] as List<dynamic>)
           .map((e) => LessonDto.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -44,5 +46,7 @@ Map<String, dynamic> _$LearningPathDtoToJson(_LearningPathDto instance) =>
       'titleEs': instance.titleEs,
       'descriptionEn': instance.descriptionEn,
       'descriptionEs': instance.descriptionEs,
+      'tagEn': instance.tagEn,
+      'tagEs': instance.tagEs,
       'lessons': instance.lessons,
     };

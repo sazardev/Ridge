@@ -16,6 +16,11 @@ _SettingsDto _$SettingsDtoFromJson(Map<String, dynamic> json) => _SettingsDto(
   palette: json['palette'] as String? ?? 'ember',
   soundPack: json['soundPack'] as String? ?? 'mechanical',
   onboardingCompleted: json['onboardingCompleted'] as bool? ?? false,
+  shortcutBindings:
+      (json['shortcutBindings'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ) ??
+      const <String, String>{},
   languageCode: json['languageCode'] as String?,
 );
 
@@ -30,5 +35,6 @@ Map<String, dynamic> _$SettingsDtoToJson(_SettingsDto instance) =>
       'palette': instance.palette,
       'soundPack': instance.soundPack,
       'onboardingCompleted': instance.onboardingCompleted,
+      'shortcutBindings': instance.shortcutBindings,
       'languageCode': instance.languageCode,
     };
