@@ -266,10 +266,7 @@ void main() {
           container: container,
           child: const MaterialApp(
             home: Scaffold(
-              body: KeystrokeCaptureField(
-                snippet: _angleSnippet,
-                mode: _mode,
-              ),
+              body: KeystrokeCaptureField(snippet: _angleSnippet, mode: _mode),
             ),
           ),
         ),
@@ -305,7 +302,8 @@ void main() {
       expect(
         state.recorder.keystrokes.single.physicalKeyId,
         PhysicalKeyId.intlBackslash,
-        reason: 'metrics must record the real ISO physical position, '
+        reason:
+            'metrics must record the real ISO physical position, '
             'not a US-QWERTY stand-in',
       );
 

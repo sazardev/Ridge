@@ -19,6 +19,9 @@ void main() {
 
     expect(find.textContaining('Changelog'), findsWidgets);
     expect(find.textContaining('Unreleased'), findsOneWidget);
-    expect(find.textContaining('[1.0.0] - 2026-09-08'), findsOneWidget);
+    // The body is a lazy ListView, so only content visible without
+    // scrolling renders — this must stay the *latest* released version
+    // heading (the top-most one), never an older entry further down.
+    expect(find.textContaining('[1.1.0] - 2026-09-10'), findsOneWidget);
   });
 }
