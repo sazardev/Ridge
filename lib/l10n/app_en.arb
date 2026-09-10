@@ -40,6 +40,14 @@
   "profileKeyboardLayoutLabel": "Keyboard layout",
   "profileKeyboardBrandLabel": "Keyboard brand",
   "profileKeyboardModelLabel": "Keyboard model",
+  "profileKeyboardShapePreviewSemanticLabel": "Keyboard shape preview for {model}",
+  "@profileKeyboardShapePreviewSemanticLabel": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      }
+    }
+  },
   "profileFavoriteProgrammerLabel": "Favorite programmer or influence",
   "profileFavoriteQuoteLabel": "Favorite quote",
   "profileCustomizationInvalid": "Couldn't save — one of the fields is too long",
@@ -305,6 +313,7 @@
   "languageGo": "Go",
   "languageBash": "Bash",
   "languageSql": "SQL",
+  "languageRust": "Rust",
 
   "snippetPracticeAction": "Practice",
 

@@ -260,6 +260,12 @@ abstract class AppLocalizations {
   /// **'Keyboard model'**
   String get profileKeyboardModelLabel;
 
+  /// No description provided for @profileKeyboardShapePreviewSemanticLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Keyboard shape preview for {model}'**
+  String profileKeyboardShapePreviewSemanticLabel(String model);
+
   /// No description provided for @profileFavoriteProgrammerLabel.
   ///
   /// In en, this message translates to:
@@ -1669,6 +1675,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SQL'**
   String get languageSql;
+
+  /// No description provided for @languageRust.
+  ///
+  /// In en, this message translates to:
+  /// **'Rust'**
+  String get languageRust;
 
   /// No description provided for @snippetPracticeAction.
   ///

@@ -1,6 +1,6 @@
 ---
 name: content-curriculum
-description: Use when adding/editing snippets in assets/content/snippets/{go,bash,sql}_v1.json, editing a Learning Path's lesson order in assets/content/learning_paths/*.json, or adding a new bilingual content field (schema + domain + drift + presentation). Encodes hard-won rules from building the 51-lesson go-foundations path — two earlier automated ordering attempts both produced real beginner-incoherence bugs before a manual, adversarially-audited pass fixed them. Bash (Arch Linux) and SQL (PostgreSQL, shared library database) are course-only catalogs built the same way.
+description: Use when adding/editing snippets in assets/content/snippets/{go,bash,sql,rust}_v1.json, editing a Learning Path's lesson order in assets/content/learning_paths/*.json, or adding a new bilingual content field (schema + domain + drift + presentation). Encodes hard-won rules from building the 51-lesson go-foundations path — two earlier automated ordering attempts both produced real beginner-incoherence bugs before a manual, adversarially-audited pass fixed them. Bash (Arch Linux), SQL (PostgreSQL, shared library database), and Rust (beginner-only, reuses Go's generic categories) are course-only catalogs built the same way.
 metadata:
   domain: content
   scope: content-authoring, curriculum-design
@@ -14,7 +14,7 @@ metadata:
 Owns the bundled, versioned JSON assets that back this app's whole
 practice experience: the snippet catalogs (Go
 `assets/content/snippets/go_v1.json`, Bash `bash_v1.json`, SQL
-`sql_v1.json`, SPEC.md §3), and the curated Learning Path curriculum
+`sql_v1.json`, Rust `rust_v1.json`, SPEC.md §3), and the curated Learning Path curriculum
 (one file per route under `assets/content/learning_paths/`, SPEC.md §5.7).
 All are read-only at runtime; snippet catalogs are idempotently seeded
 into drift tables on launch, paths are read straight from the bundle.
@@ -42,11 +42,15 @@ into drift tables on launch, paths are read straight from the bundle.
 3. **Adding a new snippet?** — read `references/snippet-authoring.md`.
    Every new snippet's code MUST be executed for real before it goes in the
    catalog: `gofmt -l` + `go build`/`go run` for Go, a
-   `sqlite3`/Bash smoke run for Bash, and a real PostgreSQL 16 run for SQL
+   `sqlite3`/Bash smoke run for Bash, a real PostgreSQL 16 run for SQL
    (a disposable `podman run postgres:16-alpine` container works well —
    the SQL course builds a shared `library` database; its `sqlSchema`
    lessons verify cumulatively, every other snippet runs against a freshly
-   seeded copy). Never trust generated code unverified.
+   seeded copy), and `rustfmt --check` + `rustc`/run for Rust (wrap bare
+   statement fragments in a throwaway `fn main() { ... }` to compile-check
+   them; the catalog itself stores the fragment unindented, matching how
+   Go's own bare-statement categories are stored). Never trust generated
+   code unverified.
 4. **Adding a new schema field?** — read `references/migrations-and-tests.md`
    for the drift migration pattern and the exact test files/fixtures that
    need updating.
@@ -67,12 +71,13 @@ into drift tables on launch, paths are read straight from the bundle.
   field in sync with its actual array position after any reorder
 - Verify every new snippet by executing it: `gofmt -l` and
   `go build`/`go run` for Go, a real PostgreSQL 16 run for SQL, a shell
-  smoke run for Bash
+  smoke run for Bash, `rustfmt --check` and `rustc`+run for Rust
 - Keep every (category, difficulty) cell at ≥3 active entries for the 5
   "core" categories of each free-practice language (see
   `snippet_catalog_completeness_test.dart`) before reclassifying or
-  deactivating a snippet; course-only catalogs (Bash, SQL) instead require
-  every active snippet to be referenced by a bundled path — no orphans
+  deactivating a snippet; course-only catalogs (Bash, SQL, Rust) instead
+  require every active snippet to be referenced by a bundled path — no
+  orphans
 - Delegate large content-authoring batches (10+ entries) to a background
   `general-purpose` agent with a detailed style guide + few-shot examples;
   have it self-validate and write to `/tmp/*.json`; merge with your own

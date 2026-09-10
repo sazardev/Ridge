@@ -1,0 +1,98 @@
+[
+  {
+    "id": "rust-foundations-v1",
+    "language": "rust",
+    "titleEn": "Rust from scratch",
+    "titleEs": "Rust desde cero",
+    "descriptionEn": "Learn Rust step by step: bindings, mutability, control flow, and functions.",
+    "descriptionEs": "Aprende Rust paso a paso: bindings, mutabilidad, control de flujo y funciones.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "rust-foundations-v1-step01",
+        "snippetId": "rust-vars-001",
+        "order": 1,
+        "titleEn": "Your first binding: let",
+        "titleEs": "Tu primer binding: let"
+      },
+      {
+        "id": "rust-foundations-v1-step02",
+        "snippetId": "rust-vars-002",
+        "order": 2,
+        "titleEn": "Bindings are immutable unless you add mut",
+        "titleEs": "Los bindings son inmutables a menos que agregues mut"
+      },
+      {
+        "id": "rust-foundations-v1-step03",
+        "snippetId": "rust-vars-003",
+        "order": 3,
+        "titleEn": "Explicit type annotations",
+        "titleEs": "Anotaciones de tipo explícitas"
+      },
+      {
+        "id": "rust-foundations-v1-step04",
+        "snippetId": "rust-vars-004",
+        "order": 4,
+        "titleEn": "Shadowing: a new let, not a mutation",
+        "titleEs": "Shadowing: un let nuevo, no una mutación"
+      },
+      {
+        "id": "rust-foundations-v1-step05",
+        "snippetId": "rust-cond-001",
+        "order": 5,
+        "titleEn": "A basic if block",
+        "titleEs": "Un bloque if básico"
+      },
+      {
+        "id": "rust-foundations-v1-step06",
+        "snippetId": "rust-cond-003",
+        "order": 6,
+        "titleEn": "if/else as a statement",
+        "titleEs": "if/else como instrucción"
+      },
+      {
+        "id": "rust-foundations-v1-step07",
+        "snippetId": "rust-cond-002",
+        "order": 7,
+        "titleEn": "if/else as an expression",
+        "titleEs": "if/else como expresión"
+      },
+      {
+        "id": "rust-foundations-v1-step08",
+        "snippetId": "rust-loop-001",
+        "order": 8,
+        "titleEn": "A basic while loop",
+        "titleEs": "Un bucle while básico"
+      },
+      {
+        "id": "rust-foundations-v1-step09",
+        "snippetId": "rust-loop-002",
+        "order": 9,
+        "titleEn": "for over a range",
+        "titleEs": "for sobre un rango"
+      },
+      {
+        "id": "rust-foundations-v1-step10",
+        "snippetId": "rust-func-001",
+        "order": 10,
+        "titleEn": "A function with an explicit return",
+        "titleEs": "Una función con return explícito"
+      },
+      {
+        "id": "rust-foundations-v1-step11",
+        "snippetId": "rust-func-002",
+        "order": 11,
+        "titleEn": "Implicit return: the last expression",
+        "titleEs": "Retorno implícito: la última expresión"
+      },
+      {
+        "id": "rust-foundations-v1-step12",
+        "snippetId": "rust-func-003",
+        "order": 12,
+        "titleEn": "Put it together: count even numbers",
+        "titleEs": "Poniéndolo junto: contar números pares"
+      }
+    ]
+  }
+]

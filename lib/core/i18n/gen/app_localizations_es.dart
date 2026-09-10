@@ -96,6 +96,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profileKeyboardModelLabel => 'Modelo de teclado';
 
   @override
+  String profileKeyboardShapePreviewSemanticLabel(String model) {
+    return 'Vista previa de la forma del teclado para $model';
+  }
+
+  @override
   String get profileFavoriteProgrammerLabel =>
       'Programador o influencia favorita';
 
@@ -830,6 +835,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get languageSql => 'SQL';
+
+  @override
+  String get languageRust => 'Rust';
 
   @override
   String get snippetPracticeAction => 'Practicar';

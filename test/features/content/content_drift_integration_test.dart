@@ -5,7 +5,8 @@
 // `test/features/profile/profile_drift_integration_test.dart`: table
 // creation via the drift migration, the seed usecase actually parsing
 // every bundled catalog asset (`go_v1.json` + `bash_v1.json` +
-// `sql_v1.json`) and writing every row through SQL, and every read port
+// `sql_v1.json` + `rust_v1.json`) and writing every row through SQL, and
+// every read port
 // (`findByFilters`, `getById`, `findContainingSymbols`) queried back out
 // for real.
 import 'dart:async';
@@ -77,7 +78,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 268)
+        .firstWhere((snippets) => snippets.length == 280)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -91,7 +92,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(268));
+    expect(catalog, hasLength(280));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -103,7 +104,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(268));
+      expect(catalog, hasLength(280));
     },
   );
 
@@ -114,7 +115,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(268));
+    expect(result, hasLength(280));
   });
 
   test(
@@ -144,7 +145,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(75));
+    expect(beginnerSnippets, hasLength(87));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -198,6 +199,7 @@ void main() {
       'go-vars-009',
       'go-vars-011',
       'go-vars-012',
+      'rust-func-003',
       'sql-advanced-002',
       'sql-advanced-003',
       'sql-advanced-004',
@@ -268,6 +270,8 @@ void main() {
       'go-usecase-004',
       'go-vars-003',
       'go-vars-006',
+      'rust-cond-002',
+      'rust-func-003',
       'sql-filtering-008',
       'sql-filtering-009',
     });

@@ -127,6 +127,7 @@ void main() {
       'assets/content/snippets/go_v1.json',
       'assets/content/snippets/bash_v1.json',
       'assets/content/snippets/sql_v1.json',
+      'assets/content/snippets/rust_v1.json',
     ];
 
     final distinctChars = <String>{};

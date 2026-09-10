@@ -15,4 +15,8 @@ enum ProgrammingLanguage {
   /// SQL, taught against PostgreSQL by the library-themed
   /// `sql-foundations-v1` Learning Route — course-only, like Bash.
   sql,
+
+  /// The Rust programming language, taught by the beginner-focused
+  /// `rust-foundations-v1` Learning Route — course-only, like Bash/SQL.
+  rust,
 }

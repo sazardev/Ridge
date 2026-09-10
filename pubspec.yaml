@@ -81,11 +81,14 @@ flutter:
     - assets/content/snippets/go_v1.json
     - assets/content/snippets/bash_v1.json
     - assets/content/snippets/sql_v1.json
+    - assets/content/snippets/rust_v1.json
     - assets/content/learning_paths/go_foundations_v1.json
     - assets/content/learning_paths/go_ddd_hexagonal_notes_v1.json
+    - assets/content/learning_paths/go_intermediate_syntax_v1.json
     - assets/content/learning_paths/bash_foundations_v1.json
     - assets/content/learning_paths/bash_toolkit_v1.json
     - assets/content/learning_paths/sql_foundations_v1.json
+    - assets/content/learning_paths/rust_foundations_v1.json
     - assets/sounds/mechanical/key_click.wav
     - assets/sounds/mechanical/key_reject.wav
     - assets/sounds/soft/key_click.wav

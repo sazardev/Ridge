@@ -16,6 +16,7 @@ extension ProgrammingLanguageLabel on ProgrammingLanguage {
     ProgrammingLanguage.go => l10n.languageGo,
     ProgrammingLanguage.bash => l10n.languageBash,
     ProgrammingLanguage.sql => l10n.languageSql,
+    ProgrammingLanguage.rust => l10n.languageRust,
   };
 }
 

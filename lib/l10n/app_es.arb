@@ -37,6 +37,7 @@
   "profileKeyboardLayoutLabel": "Distribución de teclado",
   "profileKeyboardBrandLabel": "Marca de teclado",
   "profileKeyboardModelLabel": "Modelo de teclado",
+  "profileKeyboardShapePreviewSemanticLabel": "Vista previa de la forma del teclado para {model}",
   "profileFavoriteProgrammerLabel": "Programador o influencia favorita",
   "profileFavoriteQuoteLabel": "Frase favorita",
   "profileCustomizationInvalid": "No se pudo guardar — un campo es demasiado largo",
@@ -302,6 +303,7 @@
   "languageGo": "Go",
   "languageBash": "Bash",
   "languageSql": "SQL",
+  "languageRust": "Rust",
 
   "snippetPracticeAction": "Practicar",
 

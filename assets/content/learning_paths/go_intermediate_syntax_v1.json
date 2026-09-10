@@ -1,0 +1,63 @@
+[
+  {
+    "id": "go-intermediate-syntax-v1",
+    "language": "go",
+    "titleEn": "Go: Intermediate Syntax",
+    "titleEs": "Go: Sintaxis Intermedia",
+    "descriptionEn": "Structs, interfaces, pointers, concurrency, generics, and style — six more Go essentials.",
+    "descriptionEs": "Structs, interfaces, punteros, concurrencia, genéricos y estilo — seis esenciales más de Go.",
+    "tagEn": "Intermediate",
+    "tagEs": "Intermedio",
+    "lessons": [
+      {
+        "id": "go-intermediate-syntax-v1-step01",
+        "snippetId": "go-fmt-002",
+        "order": 1,
+        "titleEn": "Aligned var block",
+        "titleEs": "Bloque var alineado"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-step02",
+        "snippetId": "go-struct-002",
+        "order": 2,
+        "titleEn": "Struct embedding for composition",
+        "titleEs": "Incrustación de structs para composición"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-step03",
+        "snippetId": "go-iface-001",
+        "order": 3,
+        "titleEn": "Shape interface + Rectangle",
+        "titleEs": "Interfaz Shape + Rectangle"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-step04",
+        "snippetId": "go-ptr-001",
+        "order": 4,
+        "titleEn": "Increment through a pointer",
+        "titleEs": "Incrementar a través de un puntero"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-step05",
+        "snippetId": "go-concurrency-002",
+        "order": 5,
+        "titleEn": "Run a job in a goroutine",
+        "titleEs": "Ejecutar una tarea en una goroutine"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-step06",
+        "snippetId": "go-concurrency-003",
+        "order": 6,
+        "titleEn": "Mutex-protected counter",
+        "titleEs": "Contador protegido con mutex"
+      },
+      {
+        "id": "go-intermediate-syntax-v1-step07",
+        "snippetId": "go-generics-003",
+        "order": 7,
+        "titleEn": "Generic Contains with comparable",
+        "titleEs": "Contains genérico con comparable"
+      }
+    ]
+  }
+]

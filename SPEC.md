@@ -87,11 +87,11 @@ Segmentos concretos:
 
 ### 3.1 Naturaleza del contenido
 
-Todo el material de escritura es **código real, correcto y ejecutable en su contexto** (no fragmentos rotos ni pseudocódigo): Go para la ruta de fundamentos de Go, Bash (shell de Linux, con ejemplos de Arch Linux) para la ruta de Bash, y SQL (PostgreSQL, con una base de datos de biblioteca compartida) para la ruta de SQL. El contenido se organiza en **snippets**: bloques de código de longitud controlada, cada uno etiquetado con:
+Todo el material de escritura es **código real, correcto y ejecutable en su contexto** (no fragmentos rotos ni pseudocódigo): Go para la ruta de fundamentos de Go, Bash (shell de Linux, con ejemplos de Arch Linux) para la ruta de Bash, SQL (PostgreSQL, con una base de datos de biblioteca compartida) para la ruta de SQL, y Rust para la ruta de fundamentos de Rust. El contenido se organiza en **snippets**: bloques de código de longitud controlada, cada uno etiquetado con:
 
-- **Lenguaje**: Go, Bash y SQL hoy; el modelo de contenido está pensado para añadir otros lenguajes a futuro (ver §18).
+- **Lenguaje**: Go, Bash, SQL y Rust hoy; el modelo de contenido está pensado para añadir otros lenguajes a futuro (ver §18).
 - **Nivel de dificultad**: Principiante, Intermedio, Avanzado, Experto.
-- **Categoría temática / constructo**: para Go: variables y tipos, condicionales, ciclos, funciones, structs, interfaces, slices y maps, manejo de errores, punteros, concurrencia (goroutines/channels), genéricos, formato idiomático (`gofmt`). Para Bash: comandos de shell, variables y expansión, condicionales, ciclos, funciones, manejo de errores, pipes y redirección, procesamiento de texto, administración de sistema (Arch Linux: `pacman`, `systemd`, `journalctl`), y las del curso de herramientas: búsqueda e indexación (`find`, `fd`, `ripgrep`, `locate`), expresiones regulares, CRUD de archivos, SSH cliente, SSH servidor y perfiles del shell. Para SQL: fundamentos de `SELECT`, schema y setup (DDL, `psql`, datos de ejemplo), consultas, filtrado, agregación, joins, modificación de datos y consultas avanzadas (subconsultas, CTEs, `UNION`, `CASE`).
+- **Categoría temática / constructo**: para Go: variables y tipos, condicionales, ciclos, funciones, structs, interfaces, slices y maps, manejo de errores, punteros, concurrencia (goroutines/channels), genéricos, formato idiomático (`gofmt`). Para Bash: comandos de shell, variables y expansión, condicionales, ciclos, funciones, manejo de errores, pipes y redirección, procesamiento de texto, administración de sistema (Arch Linux: `pacman`, `systemd`, `journalctl`), y las del curso de herramientas: búsqueda e indexación (`find`, `fd`, `ripgrep`, `locate`), expresiones regulares, CRUD de archivos, SSH cliente, SSH servidor y perfiles del shell. Para SQL: fundamentos de `SELECT`, schema y setup (DDL, `psql`, datos de ejemplo), consultas, filtrado, agregación, joins, modificación de datos y consultas avanzadas (subconsultas, CTEs, `UNION`, `CASE`). Para Rust: reutiliza las categorías genéricas variables y tipos, condicionales, ciclos y funciones (bindings con `let`/`mut`, shadowing, `if`/`else` como expresión, `while`/`for`, retorno implícito) — sin categorías propias, a diferencia de Bash/SQL, porque sus conceptos de nivel principiante ya encajan en las categorías existentes.
 - **Foco de símbolos**: algunos snippets están diseñados específicamente para forzar la práctica de un símbolo o combinación difícil (llaves anidadas, `:=`, comillas backtick para tags de struct, operadores `&&`/`||`, punteros `*`/`&`, generics `[T any]`).
 - **Longitud**: Corto (una línea o firma de función), Medio (un bloque/función completa), Largo (un archivo pequeño o varias funciones relacionadas).
 
@@ -99,7 +99,7 @@ Todo el material de escritura es **código real, correcto y ejecutable en su con
 
 - El contenido inicial es **curado**, no generado al vuelo: proviene de código idiomático real (librería estándar de Go, proyectos open source reconocidos, o escrito por editores humanos que siguen las convenciones oficiales de estilo de Go).
 - Cada snippet pasa una validación de que es sintácticamente correcto en su contexto antes de entrar al catálogo.
-- El catálogo tiene dos niveles de exigencia. Los lenguajes de **práctica libre** (Go, disponible en Zen/Sprint/Precisión y navegable por categoría/dificultad) mantienen al menos 3 snippets activos por cada celda (categoría, dificultad) en sus categorías núcleo, además de 1 en el resto. Los lenguajes **solo-curso** (Bash y SQL, cuyos snippets existen únicamente para componer sus rutas guiadas) contienen exactamente los snippets que esa ruta usa: nada de material huérfano de práctica libre.
+- El catálogo tiene dos niveles de exigencia. Los lenguajes de **práctica libre** (Go, disponible en Zen/Sprint/Precisión y navegable por categoría/dificultad) mantienen al menos 3 snippets activos por cada celda (categoría, dificultad) en sus categorías núcleo, además de 1 en el resto. Los lenguajes **solo-curso** (Bash, SQL y Rust, cuyos snippets existen únicamente para componer sus rutas guiadas) contienen exactamente los snippets que esa ruta usa: nada de material huérfano de práctica libre.
 - El catálogo crece con el tiempo; nuevos snippets se pueden agregar sin afectar el progreso ya registrado de los usuarios (un snippet es una unidad de contenido versionada e inmutable una vez publicada — si se corrige, se publica como una revisión nueva).
 
 ### 3.3 Selección de snippet para una sesión
@@ -394,7 +394,7 @@ Dado que el corazón del producto es la comparación (contra uno mismo y contra 
 
 Explícitamente fuera del alcance inicial, para mantener el producto enfocado:
 
-- Lenguajes de programación distintos a Go, Bash y SQL (el modelo de contenido de §3 está diseñado para poder añadir Python, JavaScript, Rust, etc. más adelante).
+- Lenguajes de programación distintos a Go, Bash, SQL y Rust (el modelo de contenido de §3 está diseñado para poder añadir Python, JavaScript, etc. más adelante).
 - Contenido generado automáticamente/por IA como sustituto del código real curado (contradice el principio #1, §1).
 - Chat de voz o video dentro de Duelos o Escuadrones.
 - Torneos con premios en dinero real.

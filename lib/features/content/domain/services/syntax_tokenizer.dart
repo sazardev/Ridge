@@ -1,6 +1,7 @@
 import 'package:just_in_time/features/content/domain/entities/programming_language.dart';
 import 'package:just_in_time/features/content/domain/entities/syntax_token_type.dart';
 
+part 'rust_syntax_tokenizer.dart';
 part 'sql_syntax_tokenizer.dart';
 
 /// Classifies every character of a source-code string for syntax
@@ -22,6 +23,7 @@ abstract final class SyntaxTokenizers {
         ProgrammingLanguage.go => const GoSyntaxTokenizer(),
         ProgrammingLanguage.bash => const BashSyntaxTokenizer(),
         ProgrammingLanguage.sql => const SqlSyntaxTokenizer(),
+        ProgrammingLanguage.rust => const RustSyntaxTokenizer(),
       };
 }
 
