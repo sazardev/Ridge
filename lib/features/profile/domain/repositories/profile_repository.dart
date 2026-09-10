@@ -3,6 +3,7 @@ import 'package:just_in_time/core/utils/result.dart';
 import 'package:just_in_time/features/profile/domain/entities/favorite_language.dart';
 import 'package:just_in_time/features/profile/domain/entities/guest_profile.dart';
 import 'package:just_in_time/features/profile/domain/entities/keyboard_layout.dart';
+import 'package:just_in_time/features/profile/domain/repositories/device_info_source.dart';
 
 /// Driven port: the application core depends on this abstraction only.
 /// Infrastructure provides the adapter (currently a local drift table).
@@ -42,4 +43,9 @@ abstract interface class ProfileRepository {
     String? favoriteQuote,
     String? favoriteProgrammer,
   });
+
+  /// Overwrites the existing Guest Profile's auto-detected device info
+  /// (platform, OS version, device model) — separate from
+  /// [updateCustomization] since these are detected, never user-edited.
+  Future<Result<void, AppFailure>> updateDeviceInfo(DetectedDeviceInfo info);
 }

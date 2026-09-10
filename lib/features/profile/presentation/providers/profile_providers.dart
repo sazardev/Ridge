@@ -3,13 +3,16 @@ import 'package:just_in_time/core/persistence/drift/app_database.dart';
 import 'package:just_in_time/core/persistence/drift/database_provider.dart';
 import 'package:just_in_time/core/utils/result.dart';
 import 'package:just_in_time/features/profile/application/usecases/create_guest_profile_usecase.dart';
+import 'package:just_in_time/features/profile/application/usecases/ensure_device_info_usecase.dart';
 import 'package:just_in_time/features/profile/application/usecases/rename_profile_usecase.dart';
 import 'package:just_in_time/features/profile/application/usecases/update_profile_customization_usecase.dart';
 import 'package:just_in_time/features/profile/application/usecases/watch_active_profile_usecase.dart';
 import 'package:just_in_time/features/profile/domain/entities/favorite_language.dart';
 import 'package:just_in_time/features/profile/domain/entities/guest_profile.dart';
 import 'package:just_in_time/features/profile/domain/entities/keyboard_layout.dart';
+import 'package:just_in_time/features/profile/domain/repositories/device_info_source.dart';
 import 'package:just_in_time/features/profile/domain/repositories/profile_repository.dart';
+import 'package:just_in_time/features/profile/infrastructure/device_info_source_impl.dart';
 import 'package:just_in_time/features/profile/infrastructure/guest_profile_dao.dart';
 import 'package:just_in_time/features/profile/infrastructure/profile_repository_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -53,6 +56,31 @@ UpdateProfileCustomizationUseCase updateProfileCustomizationUseCase(Ref ref) {
   return UpdateProfileCustomizationUseCase(
     ref.watch(profileRepositoryProvider),
   );
+}
+
+/// Provides the [DeviceInfoSource] adapter.
+@Riverpod(keepAlive: true)
+DeviceInfoSource deviceInfoSource(Ref ref) => const DeviceInfoSourceImpl();
+
+/// Provides the [EnsureDeviceInfoUseCase] for auto-detecting device info.
+@riverpod
+EnsureDeviceInfoUseCase ensureDeviceInfoUseCase(Ref ref) {
+  return EnsureDeviceInfoUseCase(
+    ref.watch(profileRepositoryProvider),
+    ref.watch(deviceInfoSourceProvider),
+  );
+}
+
+/// Detects and persists device info onto the active Guest Profile,
+/// watched unconditionally from `app.dart` (same fire-and-forget-on-start
+/// shape as `content_providers.dart`'s `catalogSeed`). A no-op while no
+/// profile exists yet, and idempotent once one does — see
+/// [EnsureDeviceInfoUseCase] — so re-running on every subsequent profile
+/// update (rename, customization) is harmless.
+@Riverpod(keepAlive: true)
+Future<void> deviceInfoSync(Ref ref) async {
+  final profile = ref.watch(activeProfileControllerProvider).value;
+  await ref.watch(ensureDeviceInfoUseCaseProvider)(profile);
 }
 
 /// Exposes the current [GuestProfile] (or `null` before one exists) and

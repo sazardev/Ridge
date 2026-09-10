@@ -3,6 +3,7 @@ import 'package:just_in_time/core/utils/result.dart';
 import 'package:just_in_time/features/profile/domain/entities/favorite_language.dart';
 import 'package:just_in_time/features/profile/domain/entities/guest_profile.dart';
 import 'package:just_in_time/features/profile/domain/entities/keyboard_layout.dart';
+import 'package:just_in_time/features/profile/domain/repositories/device_info_source.dart';
 import 'package:just_in_time/features/profile/domain/repositories/profile_repository.dart';
 import 'package:just_in_time/features/profile/domain/value_objects/profile_id.dart';
 import 'package:just_in_time/features/profile/infrastructure/guest_profile_dao.dart';
@@ -95,6 +96,29 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return const Result.ok(null);
     } on Exception catch (e) {
       return Result.err(StorageFailure('Could not update profile', cause: e));
+    }
+  }
+
+  @override
+  Future<Result<void, AppFailure>> updateDeviceInfo(
+    DetectedDeviceInfo info,
+  ) async {
+    try {
+      final current = await _dao.getActiveProfile();
+      if (current == null) {
+        return const Result.err(NotFoundFailure('No guest profile to update'));
+      }
+      await _dao.updateDeviceInfo(
+        id: current.id,
+        platform: info.platform,
+        operatingSystemVersion: info.operatingSystemVersion,
+        deviceModel: info.deviceModel,
+      );
+      return const Result.ok(null);
+    } on Exception catch (e) {
+      return Result.err(
+        StorageFailure('Could not update device info', cause: e),
+      );
     }
   }
 }

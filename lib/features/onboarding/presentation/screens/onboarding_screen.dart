@@ -7,6 +7,7 @@ import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/core/theme/app_motion.dart';
 import 'package:just_in_time/core/window/window_bar.dart';
 import 'package:just_in_time/features/onboarding/presentation/widgets/onboarding_appearance_page.dart';
+import 'package:just_in_time/features/onboarding/presentation/widgets/onboarding_device_info_page.dart';
 import 'package:just_in_time/features/onboarding/presentation/widgets/onboarding_page.dart';
 import 'package:just_in_time/features/onboarding/presentation/widgets/onboarding_page_dots.dart';
 import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
@@ -40,7 +41,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   /// live, interactive step ([OnboardingAppearancePage]) for the
   /// app-wide look-and-feel settings, since those are `AppSettings`
   /// fields, not profile data — nothing here needs its own persistence
-  /// path beyond what `settingsControllerProvider` already offers.
+  /// path beyond what `settingsControllerProvider` already offers. The
+  /// device-info step is live too, but read-only: no Guest Profile
+  /// exists yet to persist it onto (see `OnboardingDeviceInfoPage`).
   List<Widget> _pages(AppLocalizations l10n) => [
     OnboardingPage(
       data: OnboardingPageData(
@@ -64,6 +67,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       ),
     ),
     const OnboardingAppearancePage(),
+    const OnboardingDeviceInfoPage(),
     OnboardingPage(
       data: OnboardingPageData(
         icon: Icons.rocket_launch_rounded,

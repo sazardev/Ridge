@@ -107,6 +107,39 @@ class $GuestProfilesTable extends GuestProfiles
         type: DriftSqlType.string,
         requiredDuringInsert: false,
       );
+  static const VerificationMeta _platformMeta = const VerificationMeta(
+    'platform',
+  );
+  @override
+  late final GeneratedColumn<String> platform = GeneratedColumn<String>(
+    'platform',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _operatingSystemVersionMeta =
+      const VerificationMeta('operatingSystemVersion');
+  @override
+  late final GeneratedColumn<String> operatingSystemVersion =
+      GeneratedColumn<String>(
+        'operating_system_version',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _deviceModelMeta = const VerificationMeta(
+    'deviceModel',
+  );
+  @override
+  late final GeneratedColumn<String> deviceModel = GeneratedColumn<String>(
+    'device_model',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -118,6 +151,9 @@ class $GuestProfilesTable extends GuestProfiles
     keyboardModel,
     favoriteQuote,
     favoriteProgrammer,
+    platform,
+    operatingSystemVersion,
+    deviceModel,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -206,6 +242,30 @@ class $GuestProfilesTable extends GuestProfiles
         ),
       );
     }
+    if (data.containsKey('platform')) {
+      context.handle(
+        _platformMeta,
+        platform.isAcceptableOrUnknown(data['platform']!, _platformMeta),
+      );
+    }
+    if (data.containsKey('operating_system_version')) {
+      context.handle(
+        _operatingSystemVersionMeta,
+        operatingSystemVersion.isAcceptableOrUnknown(
+          data['operating_system_version']!,
+          _operatingSystemVersionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('device_model')) {
+      context.handle(
+        _deviceModelMeta,
+        deviceModel.isAcceptableOrUnknown(
+          data['device_model']!,
+          _deviceModelMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -251,6 +311,18 @@ class $GuestProfilesTable extends GuestProfiles
         DriftSqlType.string,
         data['${effectivePrefix}favorite_programmer'],
       ),
+      platform: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}platform'],
+      ),
+      operatingSystemVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}operating_system_version'],
+      ),
+      deviceModel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_model'],
+      ),
     );
   }
 
@@ -293,6 +365,19 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
   /// The user's favorite programmer/tech influence, free text, or `null`
   /// if never set.
   final String? favoriteProgrammer;
+
+  /// Auto-detected platform name (e.g. `"Android"`, `"Linux"`), or `null`
+  /// if never detected. Never user-edited — see `EnsureDeviceInfoUseCase`.
+  final String? platform;
+
+  /// Auto-detected OS version string (e.g. `"Android 14"`,
+  /// `"Ubuntu 24.04.1 LTS"`), or `null` if never detected or unavailable.
+  final String? operatingSystemVersion;
+
+  /// Auto-detected hardware model (e.g. `"Google Pixel 8"`), or `null`
+  /// when never detected or the platform doesn't expose one (Linux,
+  /// Windows, Web).
+  final String? deviceModel;
   const GuestProfileRow({
     required this.id,
     required this.username,
@@ -303,6 +388,9 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     this.keyboardModel,
     this.favoriteQuote,
     this.favoriteProgrammer,
+    this.platform,
+    this.operatingSystemVersion,
+    this.deviceModel,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -327,6 +415,17 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     }
     if (!nullToAbsent || favoriteProgrammer != null) {
       map['favorite_programmer'] = Variable<String>(favoriteProgrammer);
+    }
+    if (!nullToAbsent || platform != null) {
+      map['platform'] = Variable<String>(platform);
+    }
+    if (!nullToAbsent || operatingSystemVersion != null) {
+      map['operating_system_version'] = Variable<String>(
+        operatingSystemVersion,
+      );
+    }
+    if (!nullToAbsent || deviceModel != null) {
+      map['device_model'] = Variable<String>(deviceModel);
     }
     return map;
   }
@@ -354,6 +453,15 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       favoriteProgrammer: favoriteProgrammer == null && nullToAbsent
           ? const Value.absent()
           : Value(favoriteProgrammer),
+      platform: platform == null && nullToAbsent
+          ? const Value.absent()
+          : Value(platform),
+      operatingSystemVersion: operatingSystemVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(operatingSystemVersion),
+      deviceModel: deviceModel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deviceModel),
     );
   }
 
@@ -376,6 +484,11 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       favoriteProgrammer: serializer.fromJson<String?>(
         json['favoriteProgrammer'],
       ),
+      platform: serializer.fromJson<String?>(json['platform']),
+      operatingSystemVersion: serializer.fromJson<String?>(
+        json['operatingSystemVersion'],
+      ),
+      deviceModel: serializer.fromJson<String?>(json['deviceModel']),
     );
   }
   @override
@@ -391,6 +504,11 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       'keyboardModel': serializer.toJson<String?>(keyboardModel),
       'favoriteQuote': serializer.toJson<String?>(favoriteQuote),
       'favoriteProgrammer': serializer.toJson<String?>(favoriteProgrammer),
+      'platform': serializer.toJson<String?>(platform),
+      'operatingSystemVersion': serializer.toJson<String?>(
+        operatingSystemVersion,
+      ),
+      'deviceModel': serializer.toJson<String?>(deviceModel),
     };
   }
 
@@ -404,6 +522,9 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     Value<String?> keyboardModel = const Value.absent(),
     Value<String?> favoriteQuote = const Value.absent(),
     Value<String?> favoriteProgrammer = const Value.absent(),
+    Value<String?> platform = const Value.absent(),
+    Value<String?> operatingSystemVersion = const Value.absent(),
+    Value<String?> deviceModel = const Value.absent(),
   }) => GuestProfileRow(
     id: id ?? this.id,
     username: username ?? this.username,
@@ -426,6 +547,11 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     favoriteProgrammer: favoriteProgrammer.present
         ? favoriteProgrammer.value
         : this.favoriteProgrammer,
+    platform: platform.present ? platform.value : this.platform,
+    operatingSystemVersion: operatingSystemVersion.present
+        ? operatingSystemVersion.value
+        : this.operatingSystemVersion,
+    deviceModel: deviceModel.present ? deviceModel.value : this.deviceModel,
   );
   GuestProfileRow copyWithCompanion(GuestProfilesCompanion data) {
     return GuestProfileRow(
@@ -450,6 +576,13 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       favoriteProgrammer: data.favoriteProgrammer.present
           ? data.favoriteProgrammer.value
           : this.favoriteProgrammer,
+      platform: data.platform.present ? data.platform.value : this.platform,
+      operatingSystemVersion: data.operatingSystemVersion.present
+          ? data.operatingSystemVersion.value
+          : this.operatingSystemVersion,
+      deviceModel: data.deviceModel.present
+          ? data.deviceModel.value
+          : this.deviceModel,
     );
   }
 
@@ -464,7 +597,10 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
           ..write('keyboardBrand: $keyboardBrand, ')
           ..write('keyboardModel: $keyboardModel, ')
           ..write('favoriteQuote: $favoriteQuote, ')
-          ..write('favoriteProgrammer: $favoriteProgrammer')
+          ..write('favoriteProgrammer: $favoriteProgrammer, ')
+          ..write('platform: $platform, ')
+          ..write('operatingSystemVersion: $operatingSystemVersion, ')
+          ..write('deviceModel: $deviceModel')
           ..write(')'))
         .toString();
   }
@@ -480,6 +616,9 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     keyboardModel,
     favoriteQuote,
     favoriteProgrammer,
+    platform,
+    operatingSystemVersion,
+    deviceModel,
   );
   @override
   bool operator ==(Object other) =>
@@ -493,7 +632,10 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
           other.keyboardBrand == this.keyboardBrand &&
           other.keyboardModel == this.keyboardModel &&
           other.favoriteQuote == this.favoriteQuote &&
-          other.favoriteProgrammer == this.favoriteProgrammer);
+          other.favoriteProgrammer == this.favoriteProgrammer &&
+          other.platform == this.platform &&
+          other.operatingSystemVersion == this.operatingSystemVersion &&
+          other.deviceModel == this.deviceModel);
 }
 
 class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
@@ -506,6 +648,9 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
   final Value<String?> keyboardModel;
   final Value<String?> favoriteQuote;
   final Value<String?> favoriteProgrammer;
+  final Value<String?> platform;
+  final Value<String?> operatingSystemVersion;
+  final Value<String?> deviceModel;
   final Value<int> rowid;
   const GuestProfilesCompanion({
     this.id = const Value.absent(),
@@ -517,6 +662,9 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     this.keyboardModel = const Value.absent(),
     this.favoriteQuote = const Value.absent(),
     this.favoriteProgrammer = const Value.absent(),
+    this.platform = const Value.absent(),
+    this.operatingSystemVersion = const Value.absent(),
+    this.deviceModel = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   GuestProfilesCompanion.insert({
@@ -529,6 +677,9 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     this.keyboardModel = const Value.absent(),
     this.favoriteQuote = const Value.absent(),
     this.favoriteProgrammer = const Value.absent(),
+    this.platform = const Value.absent(),
+    this.operatingSystemVersion = const Value.absent(),
+    this.deviceModel = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        username = Value(username),
@@ -543,6 +694,9 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     Expression<String>? keyboardModel,
     Expression<String>? favoriteQuote,
     Expression<String>? favoriteProgrammer,
+    Expression<String>? platform,
+    Expression<String>? operatingSystemVersion,
+    Expression<String>? deviceModel,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -555,6 +709,10 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
       if (keyboardModel != null) 'keyboard_model': keyboardModel,
       if (favoriteQuote != null) 'favorite_quote': favoriteQuote,
       if (favoriteProgrammer != null) 'favorite_programmer': favoriteProgrammer,
+      if (platform != null) 'platform': platform,
+      if (operatingSystemVersion != null)
+        'operating_system_version': operatingSystemVersion,
+      if (deviceModel != null) 'device_model': deviceModel,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -569,6 +727,9 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     Value<String?>? keyboardModel,
     Value<String?>? favoriteQuote,
     Value<String?>? favoriteProgrammer,
+    Value<String?>? platform,
+    Value<String?>? operatingSystemVersion,
+    Value<String?>? deviceModel,
     Value<int>? rowid,
   }) {
     return GuestProfilesCompanion(
@@ -581,6 +742,10 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
       keyboardModel: keyboardModel ?? this.keyboardModel,
       favoriteQuote: favoriteQuote ?? this.favoriteQuote,
       favoriteProgrammer: favoriteProgrammer ?? this.favoriteProgrammer,
+      platform: platform ?? this.platform,
+      operatingSystemVersion:
+          operatingSystemVersion ?? this.operatingSystemVersion,
+      deviceModel: deviceModel ?? this.deviceModel,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -615,6 +780,17 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     if (favoriteProgrammer.present) {
       map['favorite_programmer'] = Variable<String>(favoriteProgrammer.value);
     }
+    if (platform.present) {
+      map['platform'] = Variable<String>(platform.value);
+    }
+    if (operatingSystemVersion.present) {
+      map['operating_system_version'] = Variable<String>(
+        operatingSystemVersion.value,
+      );
+    }
+    if (deviceModel.present) {
+      map['device_model'] = Variable<String>(deviceModel.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -633,6 +809,9 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
           ..write('keyboardModel: $keyboardModel, ')
           ..write('favoriteQuote: $favoriteQuote, ')
           ..write('favoriteProgrammer: $favoriteProgrammer, ')
+          ..write('platform: $platform, ')
+          ..write('operatingSystemVersion: $operatingSystemVersion, ')
+          ..write('deviceModel: $deviceModel, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -6044,6 +6223,9 @@ typedef $$GuestProfilesTableCreateCompanionBuilder =
       Value<String?> keyboardModel,
       Value<String?> favoriteQuote,
       Value<String?> favoriteProgrammer,
+      Value<String?> platform,
+      Value<String?> operatingSystemVersion,
+      Value<String?> deviceModel,
       Value<int> rowid,
     });
 typedef $$GuestProfilesTableUpdateCompanionBuilder =
@@ -6057,6 +6239,9 @@ typedef $$GuestProfilesTableUpdateCompanionBuilder =
       Value<String?> keyboardModel,
       Value<String?> favoriteQuote,
       Value<String?> favoriteProgrammer,
+      Value<String?> platform,
+      Value<String?> operatingSystemVersion,
+      Value<String?> deviceModel,
       Value<int> rowid,
     });
 
@@ -6111,6 +6296,21 @@ class $$GuestProfilesTableFilterComposer
 
   ColumnFilters<String> get favoriteProgrammer => $composableBuilder(
     column: $table.favoriteProgrammer,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get platform => $composableBuilder(
+    column: $table.platform,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get operatingSystemVersion => $composableBuilder(
+    column: $table.operatingSystemVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceModel => $composableBuilder(
+    column: $table.deviceModel,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -6168,6 +6368,21 @@ class $$GuestProfilesTableOrderingComposer
     column: $table.favoriteProgrammer,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get platform => $composableBuilder(
+    column: $table.platform,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get operatingSystemVersion => $composableBuilder(
+    column: $table.operatingSystemVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceModel => $composableBuilder(
+    column: $table.deviceModel,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$GuestProfilesTableAnnotationComposer
@@ -6217,6 +6432,19 @@ class $$GuestProfilesTableAnnotationComposer
     column: $table.favoriteProgrammer,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get platform =>
+      $composableBuilder(column: $table.platform, builder: (column) => column);
+
+  GeneratedColumn<String> get operatingSystemVersion => $composableBuilder(
+    column: $table.operatingSystemVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get deviceModel => $composableBuilder(
+    column: $table.deviceModel,
+    builder: (column) => column,
+  );
 }
 
 class $$GuestProfilesTableTableManager
@@ -6259,6 +6487,9 @@ class $$GuestProfilesTableTableManager
                 Value<String?> keyboardModel = const Value.absent(),
                 Value<String?> favoriteQuote = const Value.absent(),
                 Value<String?> favoriteProgrammer = const Value.absent(),
+                Value<String?> platform = const Value.absent(),
+                Value<String?> operatingSystemVersion = const Value.absent(),
+                Value<String?> deviceModel = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => GuestProfilesCompanion(
                 id: id,
@@ -6270,6 +6501,9 @@ class $$GuestProfilesTableTableManager
                 keyboardModel: keyboardModel,
                 favoriteQuote: favoriteQuote,
                 favoriteProgrammer: favoriteProgrammer,
+                platform: platform,
+                operatingSystemVersion: operatingSystemVersion,
+                deviceModel: deviceModel,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -6283,6 +6517,9 @@ class $$GuestProfilesTableTableManager
                 Value<String?> keyboardModel = const Value.absent(),
                 Value<String?> favoriteQuote = const Value.absent(),
                 Value<String?> favoriteProgrammer = const Value.absent(),
+                Value<String?> platform = const Value.absent(),
+                Value<String?> operatingSystemVersion = const Value.absent(),
+                Value<String?> deviceModel = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => GuestProfilesCompanion.insert(
                 id: id,
@@ -6294,6 +6531,9 @@ class $$GuestProfilesTableTableManager
                 keyboardModel: keyboardModel,
                 favoriteQuote: favoriteQuote,
                 favoriteProgrammer: favoriteProgrammer,
+                platform: platform,
+                operatingSystemVersion: operatingSystemVersion,
+                deviceModel: deviceModel,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

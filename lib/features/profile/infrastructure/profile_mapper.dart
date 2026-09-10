@@ -29,6 +29,9 @@ extension ProfileDtoMapper on ProfileDto {
       keyboardModel: keyboardModel,
       favoriteQuote: favoriteQuote,
       favoriteProgrammer: favoriteProgrammer,
+      platform: platform,
+      operatingSystemVersion: operatingSystemVersion,
+      deviceModel: deviceModel,
     );
   }
 
@@ -44,6 +47,9 @@ extension ProfileDtoMapper on ProfileDto {
       keyboardModel: Value(keyboardModel),
       favoriteQuote: Value(favoriteQuote),
       favoriteProgrammer: Value(favoriteProgrammer),
+      platform: Value(platform),
+      operatingSystemVersion: Value(operatingSystemVersion),
+      deviceModel: Value(deviceModel),
     );
   }
 }
@@ -62,6 +68,9 @@ extension GuestProfileMapper on GuestProfile {
       keyboardModel: keyboardModel,
       favoriteQuote: favoriteQuote,
       favoriteProgrammer: favoriteProgrammer,
+      platform: platform,
+      operatingSystemVersion: operatingSystemVersion,
+      deviceModel: deviceModel,
     );
   }
 }
@@ -83,6 +92,9 @@ extension GuestProfileRowMapper on GuestProfileRow {
       keyboardModel: keyboardModel,
       favoriteQuote: favoriteQuote,
       favoriteProgrammer: favoriteProgrammer,
+      platform: platform,
+      operatingSystemVersion: operatingSystemVersion,
+      deviceModel: deviceModel,
     );
   }
 }

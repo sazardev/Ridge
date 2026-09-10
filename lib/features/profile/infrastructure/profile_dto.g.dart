@@ -18,6 +18,9 @@ _ProfileDto _$ProfileDtoFromJson(Map<String, dynamic> json) => _ProfileDto(
   keyboardModel: json['keyboardModel'] as String?,
   favoriteQuote: json['favoriteQuote'] as String?,
   favoriteProgrammer: json['favoriteProgrammer'] as String?,
+  platform: json['platform'] as String?,
+  operatingSystemVersion: json['operatingSystemVersion'] as String?,
+  deviceModel: json['deviceModel'] as String?,
 );
 
 Map<String, dynamic> _$ProfileDtoToJson(_ProfileDto instance) =>
@@ -31,4 +34,7 @@ Map<String, dynamic> _$ProfileDtoToJson(_ProfileDto instance) =>
       'keyboardModel': instance.keyboardModel,
       'favoriteQuote': instance.favoriteQuote,
       'favoriteProgrammer': instance.favoriteProgrammer,
+      'platform': instance.platform,
+      'operatingSystemVersion': instance.operatingSystemVersion,
+      'deviceModel': instance.deviceModel,
     };

@@ -90,7 +90,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? driftDatabase(name: 'jit.db'));
 
   @override
-  int get schemaVersion => 12;
+  int get schemaVersion => 13;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -209,6 +209,15 @@ class AppDatabase extends _$AppDatabase {
           progressSnapshotCache,
           progressSnapshotCache.activityReportJson,
         );
+      }
+      // v12 -> v13: added three nullable auto-detected columns (platform,
+      // operating_system_version, device_model) to guest_profiles.
+      // Existing rows get NULL until `EnsureDeviceInfoUseCase` runs once
+      // on the next app start and fills them in.
+      if (from < 13) {
+        await m.addColumn(guestProfiles, guestProfiles.platform);
+        await m.addColumn(guestProfiles, guestProfiles.operatingSystemVersion);
+        await m.addColumn(guestProfiles, guestProfiles.deviceModel);
       }
     },
   );

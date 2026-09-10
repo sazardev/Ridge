@@ -7,6 +7,7 @@ import 'package:just_in_time/core/theme/app_theme.dart';
 import 'package:just_in_time/core/window/app_window_frame.dart';
 import 'package:just_in_time/core/window/desktop_platform.dart';
 import 'package:just_in_time/features/content/presentation/providers/content_providers.dart';
+import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_settings.dart';
 import 'package:just_in_time/features/settings/domain/entities/app_theme_mode.dart';
 import 'package:just_in_time/features/settings/presentation/providers/settings_providers.dart';
@@ -27,7 +28,12 @@ class JustInTimeApp extends ConsumerWidget {
     // gated on anything: the browser screen's own reactive stream picks
     // up the seeded rows the moment they land, no splash screen needed
     // for a seed this small.
-    ref.watch(catalogSeedProvider);
+    ref
+      ..watch(catalogSeedProvider)
+      // Same idempotent, keepAlive, fire-on-start shape as the catalog
+      // seed above — detects and stores device info once a Guest
+      // Profile exists, then no-ops on every subsequent profile update.
+      ..watch(deviceInfoSyncProvider);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,

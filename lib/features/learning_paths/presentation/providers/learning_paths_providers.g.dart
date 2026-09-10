@@ -317,7 +317,7 @@ final class LearningPathsControllerProvider
 }
 
 String _$learningPathsControllerHash() =>
-    r'27097c1046af58b786b325bbe5741324fafeed6f';
+    r'fb232c4b77d9830c77e130fb3e0e13a5d71af810';
 
 /// Exposes every bundled path, joined against `content`, reactively.
 

@@ -46,6 +46,7 @@
   "profileSearchLanguageHint": "Search languages…",
   "profileSearchNoResults": "No languages match your search",
   "profileLanguageShowMore": "More…",
+  "profileDeviceTitle": "Device",
   "favoriteLanguageGo": "Go",
   "favoriteLanguagePython": "Python",
   "favoriteLanguageJavascript": "JavaScript",
@@ -157,6 +158,9 @@
   "settingsAppLock": "App lock",
   "settingsAppLockSubtitle": "Require a PIN to open Just In Time",
   "settingsChangePin": "Change PIN",
+  "settingsAppLockBiometric": "Use biometrics",
+  "settingsAppLockBiometricSubtitle": "Unlock with fingerprint or Face ID instead of typing your PIN",
+  "settingsLockNow": "Lock now",
   "settingsSectionShortcuts": "Keyboard shortcuts",
   "settingsShortcutsTitle": "Keyboard shortcuts",
   "settingsShortcutsSubtitle": "View and customize how you navigate without a mouse",
@@ -236,7 +240,11 @@
   "lockConfirmTitle": "Confirm your PIN",
   "lockError": "Incorrect PIN, try again",
   "lockMismatch": "PINs don't match",
+  "lockSaveError": "Couldn't save your PIN. Try again.",
   "lockUnlock": "Unlock",
+  "lockUseBiometrics": "Use biometrics",
+  "lockBiometricReason": "Unlock Just In Time",
+  "lockBiometricError": "Biometric authentication failed",
 
   "commonRetry": "Retry",
   "commonClose": "Close",
@@ -540,5 +548,7 @@
   "onboardingReadyTitle": "No friction, ever",
   "onboardingReadyDescription": "Just a username — no email, no password. Let's start typing.",
   "onboardingAppearanceTitle": "Make it yours",
-  "onboardingAppearanceDescription": "Pick a palette, corner style, and color mode — you can always change this later in Settings."
+  "onboardingAppearanceDescription": "Pick a palette, corner style, and color mode — you can always change this later in Settings.",
+  "onboardingDeviceTitle": "We already know your setup",
+  "onboardingDeviceDescription": "We detected your platform and device automatically — nothing to configure."
 }

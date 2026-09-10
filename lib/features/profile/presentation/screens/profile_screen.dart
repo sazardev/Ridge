@@ -7,6 +7,7 @@ import 'package:just_in_time/core/i18n/gen/app_localizations.dart';
 import 'package:just_in_time/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:just_in_time/features/profile/presentation/providers/profile_providers.dart';
 import 'package:just_in_time/features/profile/presentation/widgets/profile_about_card.dart';
+import 'package:just_in_time/features/profile/presentation/widgets/profile_device_card.dart';
 import 'package:just_in_time/features/profile/presentation/widgets/profile_stats_card.dart';
 import 'package:just_in_time/features/profile/presentation/widgets/rename_profile_sheet.dart';
 
@@ -131,6 +132,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   profile: profile,
                   onEdit: () => context.push('/profile/edit', extra: profile),
                 ),
+                const SizedBox(height: 16),
+                ProfileDeviceCard(profile: profile),
               ],
             ),
           );

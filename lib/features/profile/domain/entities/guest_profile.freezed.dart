@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$GuestProfile {
 
- ProfileId get id; String get username; DateTime get createdAt; List<FavoriteLanguage> get favoriteLanguages; KeyboardLayout? get keyboardLayout; String? get keyboardBrand; String? get keyboardModel; String? get favoriteQuote; String? get favoriteProgrammer;
+ ProfileId get id; String get username; DateTime get createdAt; List<FavoriteLanguage> get favoriteLanguages; KeyboardLayout? get keyboardLayout; String? get keyboardBrand; String? get keyboardModel; String? get favoriteQuote; String? get favoriteProgrammer; String? get platform; String? get operatingSystemVersion; String? get deviceModel;
 /// Create a copy of GuestProfile
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,20 +27,20 @@ $GuestProfileCopyWith<GuestProfile> get copyWith => _$GuestProfileCopyWithImpl<G
 @override
 bool operator ==(Object other) {
   final _this = this as GuestProfile;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GuestProfile&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.username, _this.username) || other.username == _this.username)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&const DeepCollectionEquality().equals(other.favoriteLanguages, _this.favoriteLanguages)&&(identical(other.keyboardLayout, _this.keyboardLayout) || other.keyboardLayout == _this.keyboardLayout)&&(identical(other.keyboardBrand, _this.keyboardBrand) || other.keyboardBrand == _this.keyboardBrand)&&(identical(other.keyboardModel, _this.keyboardModel) || other.keyboardModel == _this.keyboardModel)&&(identical(other.favoriteQuote, _this.favoriteQuote) || other.favoriteQuote == _this.favoriteQuote)&&(identical(other.favoriteProgrammer, _this.favoriteProgrammer) || other.favoriteProgrammer == _this.favoriteProgrammer));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GuestProfile&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.username, _this.username) || other.username == _this.username)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&const DeepCollectionEquality().equals(other.favoriteLanguages, _this.favoriteLanguages)&&(identical(other.keyboardLayout, _this.keyboardLayout) || other.keyboardLayout == _this.keyboardLayout)&&(identical(other.keyboardBrand, _this.keyboardBrand) || other.keyboardBrand == _this.keyboardBrand)&&(identical(other.keyboardModel, _this.keyboardModel) || other.keyboardModel == _this.keyboardModel)&&(identical(other.favoriteQuote, _this.favoriteQuote) || other.favoriteQuote == _this.favoriteQuote)&&(identical(other.favoriteProgrammer, _this.favoriteProgrammer) || other.favoriteProgrammer == _this.favoriteProgrammer)&&(identical(other.platform, _this.platform) || other.platform == _this.platform)&&(identical(other.operatingSystemVersion, _this.operatingSystemVersion) || other.operatingSystemVersion == _this.operatingSystemVersion)&&(identical(other.deviceModel, _this.deviceModel) || other.deviceModel == _this.deviceModel));
 }
 
 
 @override
 int get hashCode {
   final _this = this as GuestProfile;
-  return Object.hash(runtimeType,_this.id,_this.username,_this.createdAt,const DeepCollectionEquality().hash(_this.favoriteLanguages),_this.keyboardLayout,_this.keyboardBrand,_this.keyboardModel,_this.favoriteQuote,_this.favoriteProgrammer);
+  return Object.hash(runtimeType,_this.id,_this.username,_this.createdAt,const DeepCollectionEquality().hash(_this.favoriteLanguages),_this.keyboardLayout,_this.keyboardBrand,_this.keyboardModel,_this.favoriteQuote,_this.favoriteProgrammer,_this.platform,_this.operatingSystemVersion,_this.deviceModel);
 }
 
 @override
 String toString() {
   final _this = this as GuestProfile;
-  return 'GuestProfile(id: ${_this.id}, username: ${_this.username}, createdAt: ${_this.createdAt}, favoriteLanguages: ${_this.favoriteLanguages}, keyboardLayout: ${_this.keyboardLayout}, keyboardBrand: ${_this.keyboardBrand}, keyboardModel: ${_this.keyboardModel}, favoriteQuote: ${_this.favoriteQuote}, favoriteProgrammer: ${_this.favoriteProgrammer})';
+  return 'GuestProfile(id: ${_this.id}, username: ${_this.username}, createdAt: ${_this.createdAt}, favoriteLanguages: ${_this.favoriteLanguages}, keyboardLayout: ${_this.keyboardLayout}, keyboardBrand: ${_this.keyboardBrand}, keyboardModel: ${_this.keyboardModel}, favoriteQuote: ${_this.favoriteQuote}, favoriteProgrammer: ${_this.favoriteProgrammer}, platform: ${_this.platform}, operatingSystemVersion: ${_this.operatingSystemVersion}, deviceModel: ${_this.deviceModel})';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $GuestProfileCopyWith<$Res>  {
   factory $GuestProfileCopyWith(GuestProfile value, $Res Function(GuestProfile) _then) = _$GuestProfileCopyWithImpl;
 @useResult
 $Res call({
- ProfileId id, String username, DateTime createdAt, List<FavoriteLanguage> favoriteLanguages, KeyboardLayout? keyboardLayout, String? keyboardBrand, String? keyboardModel, String? favoriteQuote, String? favoriteProgrammer
+ ProfileId id, String username, DateTime createdAt, List<FavoriteLanguage> favoriteLanguages, KeyboardLayout? keyboardLayout, String? keyboardBrand, String? keyboardModel, String? favoriteQuote, String? favoriteProgrammer, String? platform, String? operatingSystemVersion, String? deviceModel
 });
 
 
@@ -68,7 +68,7 @@ class _$GuestProfileCopyWithImpl<$Res>
 
 /// Create a copy of GuestProfile
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? createdAt = null,Object? favoriteLanguages = null,Object? keyboardLayout = freezed,Object? keyboardBrand = freezed,Object? keyboardModel = freezed,Object? favoriteQuote = freezed,Object? favoriteProgrammer = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? createdAt = null,Object? favoriteLanguages = null,Object? keyboardLayout = freezed,Object? keyboardBrand = freezed,Object? keyboardModel = freezed,Object? favoriteQuote = freezed,Object? favoriteProgrammer = freezed,Object? platform = freezed,Object? operatingSystemVersion = freezed,Object? deviceModel = freezed,}) {
   return _then(GuestProfile(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as ProfileId,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
@@ -79,6 +79,9 @@ as KeyboardLayout?,keyboardBrand: freezed == keyboardBrand ? _self.keyboardBrand
 as String?,keyboardModel: freezed == keyboardModel ? _self.keyboardModel : keyboardModel // ignore: cast_nullable_to_non_nullable
 as String?,favoriteQuote: freezed == favoriteQuote ? _self.favoriteQuote : favoriteQuote // ignore: cast_nullable_to_non_nullable
 as String?,favoriteProgrammer: freezed == favoriteProgrammer ? _self.favoriteProgrammer : favoriteProgrammer // ignore: cast_nullable_to_non_nullable
+as String?,platform: freezed == platform ? _self.platform : platform // ignore: cast_nullable_to_non_nullable
+as String?,operatingSystemVersion: freezed == operatingSystemVersion ? _self.operatingSystemVersion : operatingSystemVersion // ignore: cast_nullable_to_non_nullable
+as String?,deviceModel: freezed == deviceModel ? _self.deviceModel : deviceModel // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -173,10 +176,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ProfileId id,  String username,  DateTime createdAt,  List<FavoriteLanguage> favoriteLanguages,  KeyboardLayout? keyboardLayout,  String? keyboardBrand,  String? keyboardModel,  String? favoriteQuote,  String? favoriteProgrammer)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ProfileId id,  String username,  DateTime createdAt,  List<FavoriteLanguage> favoriteLanguages,  KeyboardLayout? keyboardLayout,  String? keyboardBrand,  String? keyboardModel,  String? favoriteQuote,  String? favoriteProgrammer,  String? platform,  String? operatingSystemVersion,  String? deviceModel)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _GuestProfile() when $default != null:
-return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,_that.keyboardLayout,_that.keyboardBrand,_that.keyboardModel,_that.favoriteQuote,_that.favoriteProgrammer);case _:
+return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,_that.keyboardLayout,_that.keyboardBrand,_that.keyboardModel,_that.favoriteQuote,_that.favoriteProgrammer,_that.platform,_that.operatingSystemVersion,_that.deviceModel);case _:
   return orElse();
 
 }
@@ -194,10 +197,10 @@ return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ProfileId id,  String username,  DateTime createdAt,  List<FavoriteLanguage> favoriteLanguages,  KeyboardLayout? keyboardLayout,  String? keyboardBrand,  String? keyboardModel,  String? favoriteQuote,  String? favoriteProgrammer)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ProfileId id,  String username,  DateTime createdAt,  List<FavoriteLanguage> favoriteLanguages,  KeyboardLayout? keyboardLayout,  String? keyboardBrand,  String? keyboardModel,  String? favoriteQuote,  String? favoriteProgrammer,  String? platform,  String? operatingSystemVersion,  String? deviceModel)  $default,) {final _that = this;
 switch (_that) {
 case _GuestProfile():
-return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,_that.keyboardLayout,_that.keyboardBrand,_that.keyboardModel,_that.favoriteQuote,_that.favoriteProgrammer);case _:
+return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,_that.keyboardLayout,_that.keyboardBrand,_that.keyboardModel,_that.favoriteQuote,_that.favoriteProgrammer,_that.platform,_that.operatingSystemVersion,_that.deviceModel);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -214,10 +217,10 @@ return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ProfileId id,  String username,  DateTime createdAt,  List<FavoriteLanguage> favoriteLanguages,  KeyboardLayout? keyboardLayout,  String? keyboardBrand,  String? keyboardModel,  String? favoriteQuote,  String? favoriteProgrammer)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ProfileId id,  String username,  DateTime createdAt,  List<FavoriteLanguage> favoriteLanguages,  KeyboardLayout? keyboardLayout,  String? keyboardBrand,  String? keyboardModel,  String? favoriteQuote,  String? favoriteProgrammer,  String? platform,  String? operatingSystemVersion,  String? deviceModel)?  $default,) {final _that = this;
 switch (_that) {
 case _GuestProfile() when $default != null:
-return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,_that.keyboardLayout,_that.keyboardBrand,_that.keyboardModel,_that.favoriteQuote,_that.favoriteProgrammer);case _:
+return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,_that.keyboardLayout,_that.keyboardBrand,_that.keyboardModel,_that.favoriteQuote,_that.favoriteProgrammer,_that.platform,_that.operatingSystemVersion,_that.deviceModel);case _:
   return null;
 
 }
@@ -229,7 +232,7 @@ return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,
 
 
 class _GuestProfile implements GuestProfile {
-  const _GuestProfile({required this.id, required this.username, required this.createdAt,  List<FavoriteLanguage> favoriteLanguages = const <FavoriteLanguage>[], this.keyboardLayout, this.keyboardBrand, this.keyboardModel, this.favoriteQuote, this.favoriteProgrammer}): _favoriteLanguages = favoriteLanguages;
+  const _GuestProfile({required this.id, required this.username, required this.createdAt,  List<FavoriteLanguage> favoriteLanguages = const <FavoriteLanguage>[], this.keyboardLayout, this.keyboardBrand, this.keyboardModel, this.favoriteQuote, this.favoriteProgrammer, this.platform, this.operatingSystemVersion, this.deviceModel}): _favoriteLanguages = favoriteLanguages;
   
 
 @override final  ProfileId id;
@@ -247,6 +250,9 @@ class _GuestProfile implements GuestProfile {
 @override final  String? keyboardModel;
 @override final  String? favoriteQuote;
 @override final  String? favoriteProgrammer;
+@override final  String? platform;
+@override final  String? operatingSystemVersion;
+@override final  String? deviceModel;
 
 /// Create a copy of GuestProfile
 /// with the given fields replaced by the non-null parameter values.
@@ -258,18 +264,18 @@ _$GuestProfileCopyWith<_GuestProfile> get copyWith => __$GuestProfileCopyWithImp
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _GuestProfile&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.favoriteLanguages, _favoriteLanguages)&&(identical(other.keyboardLayout, keyboardLayout) || other.keyboardLayout == keyboardLayout)&&(identical(other.keyboardBrand, keyboardBrand) || other.keyboardBrand == keyboardBrand)&&(identical(other.keyboardModel, keyboardModel) || other.keyboardModel == keyboardModel)&&(identical(other.favoriteQuote, favoriteQuote) || other.favoriteQuote == favoriteQuote)&&(identical(other.favoriteProgrammer, favoriteProgrammer) || other.favoriteProgrammer == favoriteProgrammer));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _GuestProfile&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.favoriteLanguages, _favoriteLanguages)&&(identical(other.keyboardLayout, keyboardLayout) || other.keyboardLayout == keyboardLayout)&&(identical(other.keyboardBrand, keyboardBrand) || other.keyboardBrand == keyboardBrand)&&(identical(other.keyboardModel, keyboardModel) || other.keyboardModel == keyboardModel)&&(identical(other.favoriteQuote, favoriteQuote) || other.favoriteQuote == favoriteQuote)&&(identical(other.favoriteProgrammer, favoriteProgrammer) || other.favoriteProgrammer == favoriteProgrammer)&&(identical(other.platform, platform) || other.platform == platform)&&(identical(other.operatingSystemVersion, operatingSystemVersion) || other.operatingSystemVersion == operatingSystemVersion)&&(identical(other.deviceModel, deviceModel) || other.deviceModel == deviceModel));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,username,createdAt,const DeepCollectionEquality().hash(_favoriteLanguages),keyboardLayout,keyboardBrand,keyboardModel,favoriteQuote,favoriteProgrammer);
+    return Object.hash(runtimeType,id,username,createdAt,const DeepCollectionEquality().hash(_favoriteLanguages),keyboardLayout,keyboardBrand,keyboardModel,favoriteQuote,favoriteProgrammer,platform,operatingSystemVersion,deviceModel);
 }
 
 @override
 String toString() {
-    return 'GuestProfile(id: $id, username: $username, createdAt: $createdAt, favoriteLanguages: $favoriteLanguages, keyboardLayout: $keyboardLayout, keyboardBrand: $keyboardBrand, keyboardModel: $keyboardModel, favoriteQuote: $favoriteQuote, favoriteProgrammer: $favoriteProgrammer)';
+    return 'GuestProfile(id: $id, username: $username, createdAt: $createdAt, favoriteLanguages: $favoriteLanguages, keyboardLayout: $keyboardLayout, keyboardBrand: $keyboardBrand, keyboardModel: $keyboardModel, favoriteQuote: $favoriteQuote, favoriteProgrammer: $favoriteProgrammer, platform: $platform, operatingSystemVersion: $operatingSystemVersion, deviceModel: $deviceModel)';
 }
 
 
@@ -280,7 +286,7 @@ abstract mixin class _$GuestProfileCopyWith<$Res> implements $GuestProfileCopyWi
   factory _$GuestProfileCopyWith(_GuestProfile value, $Res Function(_GuestProfile) _then) = __$GuestProfileCopyWithImpl;
 @override @useResult
 $Res call({
- ProfileId id, String username, DateTime createdAt, List<FavoriteLanguage> favoriteLanguages, KeyboardLayout? keyboardLayout, String? keyboardBrand, String? keyboardModel, String? favoriteQuote, String? favoriteProgrammer
+ ProfileId id, String username, DateTime createdAt, List<FavoriteLanguage> favoriteLanguages, KeyboardLayout? keyboardLayout, String? keyboardBrand, String? keyboardModel, String? favoriteQuote, String? favoriteProgrammer, String? platform, String? operatingSystemVersion, String? deviceModel
 });
 
 
@@ -297,7 +303,7 @@ class __$GuestProfileCopyWithImpl<$Res>
 
 /// Create a copy of GuestProfile
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? createdAt = null,Object? favoriteLanguages = null,Object? keyboardLayout = freezed,Object? keyboardBrand = freezed,Object? keyboardModel = freezed,Object? favoriteQuote = freezed,Object? favoriteProgrammer = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? createdAt = null,Object? favoriteLanguages = null,Object? keyboardLayout = freezed,Object? keyboardBrand = freezed,Object? keyboardModel = freezed,Object? favoriteQuote = freezed,Object? favoriteProgrammer = freezed,Object? platform = freezed,Object? operatingSystemVersion = freezed,Object? deviceModel = freezed,}) {
   return _then(_GuestProfile(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as ProfileId,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
@@ -308,6 +314,9 @@ as KeyboardLayout?,keyboardBrand: freezed == keyboardBrand ? _self.keyboardBrand
 as String?,keyboardModel: freezed == keyboardModel ? _self.keyboardModel : keyboardModel // ignore: cast_nullable_to_non_nullable
 as String?,favoriteQuote: freezed == favoriteQuote ? _self.favoriteQuote : favoriteQuote // ignore: cast_nullable_to_non_nullable
 as String?,favoriteProgrammer: freezed == favoriteProgrammer ? _self.favoriteProgrammer : favoriteProgrammer // ignore: cast_nullable_to_non_nullable
+as String?,platform: freezed == platform ? _self.platform : platform // ignore: cast_nullable_to_non_nullable
+as String?,operatingSystemVersion: freezed == operatingSystemVersion ? _self.operatingSystemVersion : operatingSystemVersion // ignore: cast_nullable_to_non_nullable
+as String?,deviceModel: freezed == deviceModel ? _self.deviceModel : deviceModel // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

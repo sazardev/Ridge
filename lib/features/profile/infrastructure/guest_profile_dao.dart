@@ -59,4 +59,21 @@ class GuestProfileDao extends DatabaseAccessor<AppDatabase>
       ),
     );
   }
+
+  /// Overwrites the row identified by [id]'s auto-detected device info —
+  /// always all three together, mirroring [updateCustomization].
+  Future<void> updateDeviceInfo({
+    required String id,
+    required String? platform,
+    required String? operatingSystemVersion,
+    required String? deviceModel,
+  }) {
+    return (update(guestProfiles)..where((row) => row.id.equals(id))).write(
+      GuestProfilesCompanion(
+        platform: Value(platform),
+        operatingSystemVersion: Value(operatingSystemVersion),
+        deviceModel: Value(deviceModel),
+      ),
+    );
+  }
 }

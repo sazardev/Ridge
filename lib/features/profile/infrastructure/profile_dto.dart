@@ -19,6 +19,9 @@ abstract class ProfileDto with _$ProfileDto {
     String? keyboardModel,
     String? favoriteQuote,
     String? favoriteProgrammer,
+    String? platform,
+    String? operatingSystemVersion,
+    String? deviceModel,
   }) = _ProfileDto;
 
   /// Deserializes a DTO from decoded JSON.

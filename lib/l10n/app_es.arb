@@ -43,6 +43,7 @@
   "profileSearchLanguageHint": "Buscar lenguajes…",
   "profileSearchNoResults": "Ningún lenguaje coincide con tu búsqueda",
   "profileLanguageShowMore": "Más…",
+  "profileDeviceTitle": "Dispositivo",
   "favoriteLanguageGo": "Go",
   "favoriteLanguagePython": "Python",
   "favoriteLanguageJavascript": "JavaScript",
@@ -154,6 +155,9 @@
   "settingsAppLock": "Bloqueo de la app",
   "settingsAppLockSubtitle": "Pide un PIN para abrir Just In Time",
   "settingsChangePin": "Cambiar PIN",
+  "settingsAppLockBiometric": "Usar biometría",
+  "settingsAppLockBiometricSubtitle": "Desbloquea con huella o Face ID en lugar de escribir tu PIN",
+  "settingsLockNow": "Bloquear ahora",
   "settingsSectionShortcuts": "Atajos de teclado",
   "settingsShortcutsTitle": "Atajos de teclado",
   "settingsShortcutsSubtitle": "Ve y personaliza cómo navegar sin usar el mouse",
@@ -233,7 +237,11 @@
   "lockConfirmTitle": "Confirma tu PIN",
   "lockError": "PIN incorrecto, intenta de nuevo",
   "lockMismatch": "Los PIN no coinciden",
+  "lockSaveError": "No se pudo guardar tu PIN. Intenta de nuevo.",
   "lockUnlock": "Desbloquear",
+  "lockUseBiometrics": "Usar biometría",
+  "lockBiometricReason": "Desbloquea Just In Time",
+  "lockBiometricError": "No se pudo autenticar con biometría",
 
   "commonRetry": "Reintentar",
   "commonClose": "Cerrar",
@@ -458,5 +466,7 @@
   "onboardingReadyTitle": "Sin fricción, nunca",
   "onboardingReadyDescription": "Solo un nombre de usuario — sin correo, sin contraseña. Empecemos a escribir.",
   "onboardingAppearanceTitle": "Hazla tuya",
-  "onboardingAppearanceDescription": "Elige una paleta, el estilo de esquinas y el modo de color — puedes cambiar esto después en Ajustes."
+  "onboardingAppearanceDescription": "Elige una paleta, el estilo de esquinas y el modo de color — puedes cambiar esto después en Ajustes.",
+  "onboardingDeviceTitle": "Ya conocemos tu equipo",
+  "onboardingDeviceDescription": "Detectamos tu plataforma y dispositivo automáticamente — no hay nada que configurar."
 }

@@ -326,6 +326,163 @@ final class UpdateProfileCustomizationUseCaseProvider
 String _$updateProfileCustomizationUseCaseHash() =>
     r'14d0c39feecca4ef7bd06f4d1c69e623cff4526e';
 
+/// Provides the [DeviceInfoSource] adapter.
+
+@ProviderFor(deviceInfoSource)
+final deviceInfoSourceProvider = DeviceInfoSourceProvider._();
+
+/// Provides the [DeviceInfoSource] adapter.
+
+final class DeviceInfoSourceProvider
+    extends
+        $FunctionalProvider<
+          DeviceInfoSource,
+          DeviceInfoSource,
+          DeviceInfoSource
+        >
+    with $Provider<DeviceInfoSource> {
+  /// Provides the [DeviceInfoSource] adapter.
+  DeviceInfoSourceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'deviceInfoSourceProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$deviceInfoSourceHash();
+
+  @$internal
+  @override
+  $ProviderElement<DeviceInfoSource> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  DeviceInfoSource create(Ref ref) {
+    return deviceInfoSource(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DeviceInfoSource value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DeviceInfoSource>(value),
+    );
+  }
+}
+
+String _$deviceInfoSourceHash() => r'58e5d2e736ba7bc914dd4f90d5483caabc9bce20';
+
+/// Provides the [EnsureDeviceInfoUseCase] for auto-detecting device info.
+
+@ProviderFor(ensureDeviceInfoUseCase)
+final ensureDeviceInfoUseCaseProvider = EnsureDeviceInfoUseCaseProvider._();
+
+/// Provides the [EnsureDeviceInfoUseCase] for auto-detecting device info.
+
+final class EnsureDeviceInfoUseCaseProvider
+    extends
+        $FunctionalProvider<
+          EnsureDeviceInfoUseCase,
+          EnsureDeviceInfoUseCase,
+          EnsureDeviceInfoUseCase
+        >
+    with $Provider<EnsureDeviceInfoUseCase> {
+  /// Provides the [EnsureDeviceInfoUseCase] for auto-detecting device info.
+  EnsureDeviceInfoUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'ensureDeviceInfoUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$ensureDeviceInfoUseCaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<EnsureDeviceInfoUseCase> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  EnsureDeviceInfoUseCase create(Ref ref) {
+    return ensureDeviceInfoUseCase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(EnsureDeviceInfoUseCase value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<EnsureDeviceInfoUseCase>(value),
+    );
+  }
+}
+
+String _$ensureDeviceInfoUseCaseHash() =>
+    r'7ebd211e70a6093cd5afb2412dfbf0bc132fcbb5';
+
+/// Detects and persists device info onto the active Guest Profile,
+/// watched unconditionally from `app.dart` (same fire-and-forget-on-start
+/// shape as `content_providers.dart`'s `catalogSeed`). A no-op while no
+/// profile exists yet, and idempotent once one does — see
+/// [EnsureDeviceInfoUseCase] — so re-running on every subsequent profile
+/// update (rename, customization) is harmless.
+
+@ProviderFor(deviceInfoSync)
+final deviceInfoSyncProvider = DeviceInfoSyncProvider._();
+
+/// Detects and persists device info onto the active Guest Profile,
+/// watched unconditionally from `app.dart` (same fire-and-forget-on-start
+/// shape as `content_providers.dart`'s `catalogSeed`). A no-op while no
+/// profile exists yet, and idempotent once one does — see
+/// [EnsureDeviceInfoUseCase] — so re-running on every subsequent profile
+/// update (rename, customization) is harmless.
+
+final class DeviceInfoSyncProvider
+    extends $FunctionalProvider<AsyncValue<void>, void, FutureOr<void>>
+    with $FutureModifier<void>, $FutureProvider<void> {
+  /// Detects and persists device info onto the active Guest Profile,
+  /// watched unconditionally from `app.dart` (same fire-and-forget-on-start
+  /// shape as `content_providers.dart`'s `catalogSeed`). A no-op while no
+  /// profile exists yet, and idempotent once one does — see
+  /// [EnsureDeviceInfoUseCase] — so re-running on every subsequent profile
+  /// update (rename, customization) is harmless.
+  DeviceInfoSyncProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'deviceInfoSyncProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$deviceInfoSyncHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<void> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<void> create(Ref ref) {
+    return deviceInfoSync(ref);
+  }
+}
+
+String _$deviceInfoSyncHash() => r'4d2d68a65b1cb3789b8584fdc5a08f7b570bf557';
+
 /// Exposes the current [GuestProfile] (or `null` before one exists) and
 /// the mutations the UI can request.
 

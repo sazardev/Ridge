@@ -114,6 +114,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileLanguageShowMore => 'More…';
 
   @override
+  String get profileDeviceTitle => 'Device';
+
+  @override
   String get favoriteLanguageGo => 'Go';
 
   @override
@@ -449,6 +452,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsChangePin => 'Change PIN';
 
   @override
+  String get settingsAppLockBiometric => 'Use biometrics';
+
+  @override
+  String get settingsAppLockBiometricSubtitle =>
+      'Unlock with fingerprint or Face ID instead of typing your PIN';
+
+  @override
+  String get settingsLockNow => 'Lock now';
+
+  @override
   String get settingsSectionShortcuts => 'Keyboard shortcuts';
 
   @override
@@ -634,7 +647,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lockMismatch => 'PINs don\'t match';
 
   @override
+  String get lockSaveError => 'Couldn\'t save your PIN. Try again.';
+
+  @override
   String get lockUnlock => 'Unlock';
+
+  @override
+  String get lockUseBiometrics => 'Use biometrics';
+
+  @override
+  String get lockBiometricReason => 'Unlock Just In Time';
+
+  @override
+  String get lockBiometricError => 'Biometric authentication failed';
 
   @override
   String get commonRetry => 'Retry';
@@ -1162,4 +1187,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingAppearanceDescription =>
       'Pick a palette, corner style, and color mode — you can always change this later in Settings.';
+
+  @override
+  String get onboardingDeviceTitle => 'We already know your setup';
+
+  @override
+  String get onboardingDeviceDescription =>
+      'We detected your platform and device automatically — nothing to configure.';
 }

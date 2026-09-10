@@ -25,6 +25,10 @@ dependencies:
   # Infrastructure adapters (secondary/driven side of the hexagon).
   flutter_secure_storage: ^11.0.0
   shared_preferences: ^2.5.5
+  # Biometric unlock (fingerprint/Face ID) for the app-lock feature.
+  # Android + iOS/macOS + Windows (Windows Hello) — no Linux or Web
+  # implementation exists, see STACK.md §3.2.
+  local_auth: ^3.0.2
 
   # Immutable domain models + serialization.
   freezed_annotation: ^3.1.0
@@ -45,6 +49,10 @@ dependencies:
   package_info_plus: ^10.2.1
   path_provider: ^2.1.5
   path: ^1.9.0
+
+  # Auto-detects platform/OS/device model for the Guest Profile — never
+  # asked of the user, only read.
+  device_info_plus: ^13.2.0
 
 dev_dependencies:
   flutter_test:

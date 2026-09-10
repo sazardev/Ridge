@@ -296,6 +296,12 @@ abstract class AppLocalizations {
   /// **'More…'**
   String get profileLanguageShowMore;
 
+  /// No description provided for @profileDeviceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Device'**
+  String get profileDeviceTitle;
+
   /// No description provided for @favoriteLanguageGo.
   ///
   /// In en, this message translates to:
@@ -956,6 +962,24 @@ abstract class AppLocalizations {
   /// **'Change PIN'**
   String get settingsChangePin;
 
+  /// No description provided for @settingsAppLockBiometric.
+  ///
+  /// In en, this message translates to:
+  /// **'Use biometrics'**
+  String get settingsAppLockBiometric;
+
+  /// No description provided for @settingsAppLockBiometricSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with fingerprint or Face ID instead of typing your PIN'**
+  String get settingsAppLockBiometricSubtitle;
+
+  /// No description provided for @settingsLockNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock now'**
+  String get settingsLockNow;
+
   /// No description provided for @settingsSectionShortcuts.
   ///
   /// In en, this message translates to:
@@ -1292,11 +1316,35 @@ abstract class AppLocalizations {
   /// **'PINs don\'t match'**
   String get lockMismatch;
 
+  /// No description provided for @lockSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save your PIN. Try again.'**
+  String get lockSaveError;
+
   /// No description provided for @lockUnlock.
   ///
   /// In en, this message translates to:
   /// **'Unlock'**
   String get lockUnlock;
+
+  /// No description provided for @lockUseBiometrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Use biometrics'**
+  String get lockUseBiometrics;
+
+  /// No description provided for @lockBiometricReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Just In Time'**
+  String get lockBiometricReason;
+
+  /// No description provided for @lockBiometricError.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric authentication failed'**
+  String get lockBiometricError;
 
   /// No description provided for @commonRetry.
   ///
@@ -2245,6 +2293,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pick a palette, corner style, and color mode — you can always change this later in Settings.'**
   String get onboardingAppearanceDescription;
+
+  /// No description provided for @onboardingDeviceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We already know your setup'**
+  String get onboardingDeviceTitle;
+
+  /// No description provided for @onboardingDeviceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'We detected your platform and device automatically — nothing to configure.'**
+  String get onboardingDeviceDescription;
 }
 
 class _AppLocalizationsDelegate

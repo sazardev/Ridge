@@ -39,6 +39,19 @@ class GuestProfiles extends Table {
   /// if never set.
   TextColumn get favoriteProgrammer => text().nullable()();
 
+  /// Auto-detected platform name (e.g. `"Android"`, `"Linux"`), or `null`
+  /// if never detected. Never user-edited — see `EnsureDeviceInfoUseCase`.
+  TextColumn get platform => text().nullable()();
+
+  /// Auto-detected OS version string (e.g. `"Android 14"`,
+  /// `"Ubuntu 24.04.1 LTS"`), or `null` if never detected or unavailable.
+  TextColumn get operatingSystemVersion => text().nullable()();
+
+  /// Auto-detected hardware model (e.g. `"Google Pixel 8"`), or `null`
+  /// when never detected or the platform doesn't expose one (Linux,
+  /// Windows, Web).
+  TextColumn get deviceModel => text().nullable()();
+
   @override
   Set<Column> get primaryKey => {id};
 }
