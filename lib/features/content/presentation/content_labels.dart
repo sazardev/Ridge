@@ -48,6 +48,7 @@ extension ContentCategoryLabel on ContentCategory {
     ContentCategory.pointers => l10n.categoryPointers,
     ContentCategory.concurrency => l10n.categoryConcurrency,
     ContentCategory.generics => l10n.categoryGenerics,
+    ContentCategory.modernGo => l10n.categoryModernGo,
     ContentCategory.idiomaticFormatting => l10n.categoryIdiomaticFormatting,
     ContentCategory.shellCommands => l10n.categoryShellCommands,
     ContentCategory.pipesAndRedirection => l10n.categoryPipesAndRedirection,
@@ -73,6 +74,10 @@ extension ContentCategoryLabel on ContentCategory {
     ContentCategory.persistenceAdapters => l10n.categoryPersistenceAdapters,
     ContentCategory.restAdapters => l10n.categoryRestAdapters,
     ContentCategory.testingWithFakes => l10n.categoryTestingWithFakes,
+    ContentCategory.tuiArchitecture => l10n.categoryTuiArchitecture,
+    ContentCategory.tuiStyling => l10n.categoryTuiStyling,
+    ContentCategory.tuiComponents => l10n.categoryTuiComponents,
+    ContentCategory.tuiAdapter => l10n.categoryTuiAdapter,
   };
 }
 

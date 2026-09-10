@@ -747,6 +747,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categoryGenerics => 'Genéricos';
 
   @override
+  String get categoryModernGo => 'Go moderno';
+
+  @override
   String get categoryIdiomaticFormatting => 'Formato idiomático';
 
   @override
@@ -766,6 +769,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get categoryTestingWithFakes => 'Pruebas con dobles falsos';
+
+  @override
+  String get categoryTuiArchitecture => 'Arquitectura TUI';
+
+  @override
+  String get categoryTuiStyling => 'Estilos de terminal';
+
+  @override
+  String get categoryTuiComponents => 'Componentes TUI';
+
+  @override
+  String get categoryTuiAdapter => 'Adaptador TUI';
 
   @override
   String get categoryShellCommands => 'Comandos de shell';

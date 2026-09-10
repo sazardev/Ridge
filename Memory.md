@@ -29,7 +29,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
   | Lenguaje | Catálogo | Ruta | Tier |
   |---|---|---|---|
-  | Go | 113 snippets | `go-foundations-v1` (~51 lecciones) + notas DDD | práctica libre (grid denso) |
+  | Go | 148 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) | práctica libre (grid denso) |
   | Bash (Arch) | 50 snippets | `bash-foundations-v1` (50) | solo-curso |
   | SQL (PostgreSQL) | 60 snippets | `sql-foundations-v1` (60) | solo-curso |
 
@@ -39,14 +39,13 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `sqlAggregation` (7), `sqlJoins` (7), `sqlModifications` (5),
   `sqlAdvancedQueries` (6). Dificultad 30/22/7/1.
 - Gate de calidad: `bash tool/check.sh` (format + analyze + arquitectura +
-  tests). Última corrida: **314 tests verdes**, format/analyze limpios.
-  Arquitectura tiene **1 violación pre-existente** (no de esta sesión):
-  `syntax_tokenizer.dart` en 524 líneas (límite 500) por el WIP de Rust
-  sin commitear — pendiente de partir en part files.
+  tests). Última corrida (post-merge del rebranding con `origin/main`):
+  **315 tests verdes**, format/analyze limpios, sin violaciones duras de
+  arquitectura (solo warnings informativos de "varios tipos por archivo").
 - Set de íconos: **Lucide** (`lucide_icons_flutter`), no Material `Icons.*`
   — elegido por combinar con Geist (misma familia visual que usa Vercel/
   shadcn). `cupertino_icons` (vestigial, nunca usado) fue removido.
-- Último release: **v1.2.0** (CI, `df00321`). El siguiente push a `main`
+- Último release: **v1.6.0** (`9dfe43c`). El siguiente push a `main`
   genera release automático desde los Conventional Commits.
 
 ---
@@ -99,6 +98,78 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
     Linux sigue sin `.desktop`/ícono empaquetado (no existía antes tampoco).
 - Verificado de nuevo tras repo+carpeta+ícono: `bash tool/check.sh` limpio
   y `flutter build linux --debug` compila desde la ruta nueva.
+- **Merge con `origin/main`**: el remoto había avanzado con la ruta Go
+  1.27 y el curso TUI (v1.5.0/v1.6.0) mientras corría esta sesión de
+  rebranding; se integró sin `--force`, resolviendo conflicto solo en
+  este archivo (dos entradas de historial añadidas al mismo punto, y la
+  ruta de `jit.db.sqlite` → `ridge.db.sqlite` en "Progreso por
+  `lessonId`"). El resto (pubspec.yaml, l10n, content_labels.dart, etc.)
+  fusionó limpio porque los cambios cayeron en líneas distintas.
+
+### 2026-09-10 — Ruta Go intermedia v2 + contenido Go 1.27
+
+- **`go-intermediate-syntax-v1` reescrita de 7 a 25 lecciones** (working
+  tree, sin commitear aún): bloques contiguos `structs` (4) → `pointers`
+  (4) → `interfaces` (3) → `concurrency` (4) → `generics` (4) →
+  `modernGo` (6), ordenadas a mano por dependencia conceptual (no por tag
+  de dificultad ni longitud). La versión vieja era un muestreo aleatorio
+  que arrancaba con un bloque `var` alineado.
+- **6 snippets nuevos Go 1.27** (`go-modern-001..006`, catálogo Go
+  142→148): `strings.CutLast`, `uuid.NewV7/Parse`, claves de campo
+  promovido en struct literals, inferencia generalizada de tipos de
+  función (literales/conversiones/envíos), perfil `goroutineleak` de
+  pprof, y métodos genéricos. Cada `code` verificado con toolchain real
+  **go1.27.0** (`gofmt` + `go run`, salida esperada); el resto del
+  catálogo usa go1.26.5.
+- **Categoría nueva `modernGo`** (enum + ARB en/es + `content_labels` +
+  l10n regenerado) como bloque final "qué hay de nuevo" del que cuelgan
+  los 6 snippets.
+- **Bloqueo del agente adversarial**: la ruta original ya estaba en
+  v1.5.0, así que reutilizar `go-intermediate-syntax-v1-stepNN` para
+  otros snippets habría marcado mal progreso de usuarios reales. Los ids
+  pasaron al esquema `-o2-stepNN` (como `go-foundations-v1-o2`). La DB
+  local no tenía intentos, pero el tag publicado manda.
+- **Dos prosa corregidas en snippets existentes**: `go-concurrency-001`
+  explicaba el peligro de la variable de bucle como si Go 1.22 no
+  existiera; `go-concurrency-004` ES usaba "filtrada" (calco) ahora
+  "filtrarse".
+- **Integración**: `content_drift_integration_test` 309→315 y beginner
+  87→89; set de `findContainingSymbols` para `%` + `go-modern-004`.
+- **Verificado**: `audit_lesson_order.py` verde; **dos pasadas de
+  revisión adversarial** (la primera cazó el blocker de ids y 4 hallazgos
+  más, la segunda confirmó los fixes y dejó solo nits de estilo); `bash
+  tool/check.sh` verde (format, analyze, arquitectura, **314 tests**).
+- **Trade-off aceptado**: `go-struct-004` conserva su tag `expert` del
+  catálogo aunque en la ruta sea la lección 2; retaggearlo dejaría
+  `structs/expert` en 0 y la regla de grid exige ≥1 por celda.
+
+### 2026-09-10 — Curso Go: TUI con Bubble Tea (`go-tui-notes-v1`)
+
+- **Curso nuevo de 29 lecciones** que construye una TUI de notas con
+  **Bubble Tea + Lip Gloss + Bubbles** (v1.3.10 / v1.1.0 / v1.0.0) sobre un
+  núcleo DDD/hexagonal: dominio → puertos → casos de uso → adaptadores
+  (memoria, system, jsonfile) → TUI (estilos → componentes → `model`,
+  `Init`, mensajes, `tea.Cmd`, `Update`, `handleKey`, `renderList`, `View`)
+  → `main` → tests. Cuatro categorías nuevas de capa de arquitectura
+  (`tuiArchitecture`, `tuiStyling`, `tuiComponents`, `tuiAdapter`), exentas
+  del grid denso con la misma regla que las 6 de DDD.
+- **Contenido**: 29 snippets nuevos en `go_v1.json` (113→142), extraídos
+  **verbatim** de una app Go de referencia que pasa `gofmt` + `go build` +
+  `go vet` + `go test` (incluye un test headless del loop real con
+  `tea.WithInput`/`WithOutput`). Prosa bilingüe delegada a un agente y
+  fusionada con validación independiente del orquestador.
+- **Orden**: la revisión adversarial (agente fresco) detectó referencias
+  hacia adelante en el bloque TUI (estilos/componentes usados antes de su
+  lección) → se reordenó por dependencia real (estilos → componentes →
+  arquitectura), se renumeraron los snippets y una segunda pasada confirmó
+  el arreglo. `audit_lesson_order.py` verde (solo quedan flags de tamaño
+  informativos ya evaluados).
+- **Integración**: `pubspec`, `LearningPathRepositoryImpl`, test de
+  completitud; labels ARB en/es + `content_labels.dart`; conteos de
+  `content_drift_integration_test` 280→309 (beginner sigue 87); sets de
+  `findContainingSymbols` (`_`, `%`) actualizados.
+- **Verificado**: `bash tool/check.sh` verde (314 tests; format, analyze y
+  arquitectura limpios).
 
 ### 2026-09-10 — Migración de íconos: Material → Lucide
 
@@ -198,14 +269,17 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `scripts/audit_lesson_order.py` y **revisión adversarial** por un agente
   fresco (ver skill `content-curriculum`).
 - **Verificar todo contenido ejecutándolo**: Go `gofmt` + `go run`; SQL
-  PostgreSQL 16 real; Bash smoke run.
+  PostgreSQL 16 real; Bash smoke run; snippets de TUI con dependencias
+  externas, extraídos verbatim de una app de referencia compilada y con
+  test headless del loop (ver `references/snippet-authoring.md`).
 - **Progreso por `lessonId`**: antes de reasignar snippet a un id de lección
   con progreso real, consultar `~/Documents/ridge.db.sqlite`
-  (`lesson_progress_cache`).
+  (`lesson_progress_cache`). Si la ruta ya salió en un release, **bumpear
+  el sufijo de versión de los ids** (`...-o2-stepNN`) aunque la DB local
+  no tenga intentos: el release implica usuarios reales.
 
 ## Pendientes / próximos pasos
 
-- Confirmar que CI generó el release (v1.3.0 previsible) tras `42cfc2f`.
 - Todo lo online de `SPEC.md` §5/§9 y `STACK.md` §5–6 (Supabase, sync,
   duelos, escuadrones, leaderboards).
 - Scaffold de Windows/Web (`flutter create --platforms=windows,web .`).
@@ -218,7 +292,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ```sh
 bash tool/check.sh                         # gate completo
-flutter test                               # suite (305 tests)
+flutter test                               # suite (315 tests)
 python3 .claude/skills/content-curriculum/scripts/audit_lesson_order.py \
   assets/content/snippets/sql_v1.json \
   assets/content/learning_paths/sql_foundations_v1.json

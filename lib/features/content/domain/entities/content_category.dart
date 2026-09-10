@@ -33,6 +33,13 @@ enum ContentCategory {
   /// Generic type parameters and constraints.
   generics,
 
+  /// Features introduced by recent Go releases, showcased in the
+  /// `go-intermediate-syntax-v1` route's closing block: Go 1.27's
+  /// generic methods, promoted-field struct-literal keys, generalized
+  /// function type inference, the `uuid` package, `strings.CutLast`,
+  /// and the `goroutineleak` pprof profile.
+  modernGo,
+
   /// Idiomatic `gofmt` formatting conventions in general.
   idiomaticFormatting,
 
@@ -155,4 +162,23 @@ enum ContentCategory {
   /// a category must stay one contiguous block, so it can't share a tag
   /// with lessons earlier in the same route. Architecture-layer category.
   testingWithFakes,
+
+  /// Bubble Tea's Elm loop: the `Model`/`Init`/`Update`/`View` contract,
+  /// typed messages, and `tea.Cmd` values. Introduced by the
+  /// `go-tui-notes-v1` Learning Route. Architecture-layer category.
+  tuiArchitecture,
+
+  /// Terminal styling with Lip Gloss: fluent styles, colors, adaptive
+  /// colors, padding, borders, and layout helpers. Architecture-layer
+  /// category.
+  tuiStyling,
+
+  /// Bubbles widgets (text input, spinner) embedded inside a Bubble Tea
+  /// model. Architecture-layer category.
+  tuiComponents,
+
+  /// The TUI as a driving adapter: commands that call use cases, plus the
+  /// `main` composition root that wires every concrete adapter together.
+  /// Architecture-layer category.
+  tuiAdapter,
 }

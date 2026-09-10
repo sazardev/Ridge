@@ -33,8 +33,8 @@ CORE_CATEGORIES = {
 
 # Mirrors `_architectureLayerCategories` in
 # snippet_catalog_completeness_test.dart — these represent a DDD/hexagonal
-# ARCHITECTURE LAYER rather than a Go language feature, so there's no
-# meaningful "beginner"/"expert" tier for them; held to a looser bar
+# or TUI ARCHITECTURE LAYER rather than a Go language feature, so there's
+# no meaningful "beginner"/"expert" tier for them; held to a looser bar
 # (>=1 active entry across ANY difficulty) than every other category.
 ARCHITECTURE_LAYER_CATEGORIES = {
     "domainModeling",
@@ -43,6 +43,10 @@ ARCHITECTURE_LAYER_CATEGORIES = {
     "persistenceAdapters",
     "restAdapters",
     "testingWithFakes",
+    "tuiArchitecture",
+    "tuiStyling",
+    "tuiComponents",
+    "tuiAdapter",
 }
 
 # Languages whose catalog exists only to compose a Learning Path (never a

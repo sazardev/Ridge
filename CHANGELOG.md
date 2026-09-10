@@ -11,6 +11,17 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-09-10
+
+### Added
+- **content:** add the go-tui-notes-v1 Bubble Tea course (7481669)
+
+## [1.5.0] - 2026-09-10
+
+### Added
+- migrate icon set from Material Icons to Lucide (bf16b0f)
+- add Rust foundations course, Go intermediate syntax path, and keyboard shape preview (33c9d97)
+
 ## [1.4.0] - 2026-09-10
 
 ### Added

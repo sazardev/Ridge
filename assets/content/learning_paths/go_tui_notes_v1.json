@@ -1,0 +1,217 @@
+[
+  {
+    "id": "go-tui-notes-v1",
+    "language": "go",
+    "titleEn": "Go: Terminal UI with Bubble Tea",
+    "titleEs": "Go: interfaz de terminal con Bubble Tea",
+    "descriptionEn": "Build a notes terminal UI in Go, from the hexagonal core to a Bubble Tea adapter.",
+    "descriptionEs": "Construye una TUI de notas en Go, del núcleo hexagonal al adaptador Bubble Tea.",
+    "tagEn": "TUI",
+    "tagEs": "TUI",
+    "lessons": [
+      {
+        "id": "go-tui-notes-v1-step01",
+        "snippetId": "go-tui-001",
+        "order": 1,
+        "titleEn": "`Note` and `NoteID`: the entity every layer will pass around",
+        "titleEs": "`Note` y `NoteID`: la entidad que todas las capas van a pasar de mano en mano"
+      },
+      {
+        "id": "go-tui-notes-v1-step02",
+        "snippetId": "go-tui-002",
+        "order": 2,
+        "titleEn": "`NewNote` and `ErrEmptyTitle`: the only constructor, and it validates",
+        "titleEs": "`NewNote` y `ErrEmptyTitle`: el único constructor, y valida"
+      },
+      {
+        "id": "go-tui-notes-v1-step03",
+        "snippetId": "go-tui-003",
+        "order": 3,
+        "titleEn": "`NoteRepository`: the port that hides where notes live",
+        "titleEs": "`NoteRepository`: el puerto que oculta dónde viven las notas"
+      },
+      {
+        "id": "go-tui-notes-v1-step04",
+        "snippetId": "go-tui-004",
+        "order": 4,
+        "titleEn": "`Clock` and `IDGenerator`: ports for the parts Go can't make deterministic",
+        "titleEs": "`Clock` e `IDGenerator`: puertos para lo que Go no puede volver determinista"
+      },
+      {
+        "id": "go-tui-notes-v1-step05",
+        "snippetId": "go-tui-005",
+        "order": 5,
+        "titleEn": "`AddNote`: a use case that validates, saves, and wraps errors",
+        "titleEs": "`AddNote`: un caso de uso que valida, guarda y envuelve errores"
+      },
+      {
+        "id": "go-tui-notes-v1-step06",
+        "snippetId": "go-tui-006",
+        "order": 6,
+        "titleEn": "`ListNotes`: a read use case that guarantees a stable order",
+        "titleEs": "`ListNotes`: un caso de uso de lectura que garantiza un orden estable"
+      },
+      {
+        "id": "go-tui-notes-v1-step07",
+        "snippetId": "go-tui-007",
+        "order": 7,
+        "titleEn": "`DeleteNote`: the smallest use case, still full of context",
+        "titleEs": "`DeleteNote`: el caso de uso más pequeño, pero igual de lleno de contexto"
+      },
+      {
+        "id": "go-tui-notes-v1-step08",
+        "snippetId": "go-tui-008",
+        "order": 8,
+        "titleEn": "The memory adapter: first `NoteRepository` implementation",
+        "titleEs": "El adaptador en memoria: la primera implementación de `NoteRepository`"
+      },
+      {
+        "id": "go-tui-notes-v1-step09",
+        "snippetId": "go-tui-009",
+        "order": 9,
+        "titleEn": "The memory adapter's reads: `List` and `Delete` under an RWMutex",
+        "titleEs": "Las lecturas del adaptador en memoria: `List` y `Delete` bajo un RWMutex"
+      },
+      {
+        "id": "go-tui-notes-v1-step10",
+        "snippetId": "go-tui-010",
+        "order": 10,
+        "titleEn": "`system.Clock` and `system.IDGenerator`: the real adapters",
+        "titleEs": "`system.Clock` y `system.IDGenerator`: los adaptadores reales"
+      },
+      {
+        "id": "go-tui-notes-v1-step11",
+        "snippetId": "go-tui-011",
+        "order": 11,
+        "titleEn": "`jsonfile`'s `noteRecord`: a file-shaped translation of `Note`",
+        "titleEs": "`noteRecord` de `jsonfile`: una traducción de `Note` con forma de archivo"
+      },
+      {
+        "id": "go-tui-notes-v1-step12",
+        "snippetId": "go-tui-012",
+        "order": 12,
+        "titleEn": "The file store: `readAll`, `writeAll`, and one mutex",
+        "titleEs": "El store de archivo: `readAll`, `writeAll` y un solo mutex"
+      },
+      {
+        "id": "go-tui-notes-v1-step13",
+        "snippetId": "go-tui-013",
+        "order": 13,
+        "titleEn": "`jsonfile`'s CRUD: read-modify-write under one mutex",
+        "titleEs": "El CRUD de `jsonfile`: leer, modificar y escribir bajo un mutex"
+      },
+      {
+        "id": "go-tui-notes-v1-step14",
+        "snippetId": "go-tui-014",
+        "order": 14,
+        "titleEn": "Lip Gloss styles: building reusable styles with `Bold` and `Foreground`",
+        "titleEs": "Estilos de Lip Gloss: construir estilos reutilizables con `Bold` y `Foreground`"
+      },
+      {
+        "id": "go-tui-notes-v1-step15",
+        "snippetId": "go-tui-015",
+        "order": 15,
+        "titleEn": "Adaptive colors and a rounded-border panel",
+        "titleEs": "Colores adaptativos y un panel con borde redondeado"
+      },
+      {
+        "id": "go-tui-notes-v1-step16",
+        "snippetId": "go-tui-016",
+        "order": 16,
+        "titleEn": "`newInput`: configuring the Bubbles text input",
+        "titleEs": "`newInput`: configurar el input de texto de Bubbles"
+      },
+      {
+        "id": "go-tui-notes-v1-step17",
+        "snippetId": "go-tui-017",
+        "order": 17,
+        "titleEn": "`newSpinner`: a Bubbles spinner for the loading state",
+        "titleEs": "`newSpinner`: un spinner de Bubbles para el estado de carga"
+      },
+      {
+        "id": "go-tui-notes-v1-step18",
+        "snippetId": "go-tui-018",
+        "order": 18,
+        "titleEn": "The `model` struct: all the TUI state in one value",
+        "titleEs": "El struct `model`: todo el estado de la TUI en un solo valor"
+      },
+      {
+        "id": "go-tui-notes-v1-step19",
+        "snippetId": "go-tui-019",
+        "order": 19,
+        "titleEn": "`NewModel`: wiring use cases and widgets into the initial state",
+        "titleEs": "`NewModel`: conectar casos de uso y widgets en el estado inicial"
+      },
+      {
+        "id": "go-tui-notes-v1-step20",
+        "snippetId": "go-tui-020",
+        "order": 20,
+        "titleEn": "Typed messages: how async results find their way back to `Update`",
+        "titleEs": "Mensajes tipados: cómo los resultados asíncronos vuelven a `Update`"
+      },
+      {
+        "id": "go-tui-notes-v1-step21",
+        "snippetId": "go-tui-021",
+        "order": 21,
+        "titleEn": "`tea.Cmd`: closures that run use cases off the UI goroutine",
+        "titleEs": "`tea.Cmd`: closures que ejecutan casos de uso fuera de la goroutine de la UI"
+      },
+      {
+        "id": "go-tui-notes-v1-step22",
+        "snippetId": "go-tui-022",
+        "order": 22,
+        "titleEn": "`Init`: return the commands that should run at startup",
+        "titleEs": "`Init`: devolver los comandos que deben correr al arrancar"
+      },
+      {
+        "id": "go-tui-notes-v1-step23",
+        "snippetId": "go-tui-023",
+        "order": 23,
+        "titleEn": "`Update`: the reducer at the center of the Elm architecture",
+        "titleEs": "`Update`: el reducer en el centro de la arquitectura Elm"
+      },
+      {
+        "id": "go-tui-notes-v1-step24",
+        "snippetId": "go-tui-024",
+        "order": 24,
+        "titleEn": "`handleKey`: routing keystrokes by mode",
+        "titleEs": "`handleKey`: enrutar las pulsaciones según el modo"
+      },
+      {
+        "id": "go-tui-notes-v1-step25",
+        "snippetId": "go-tui-025",
+        "order": 25,
+        "titleEn": "`renderList`: drawing the cursor row with the selected style",
+        "titleEs": "`renderList`: dibujar la fila del cursor con el estilo seleccionado"
+      },
+      {
+        "id": "go-tui-notes-v1-step26",
+        "snippetId": "go-tui-026",
+        "order": 26,
+        "titleEn": "`View`: turning the model into the screen's string",
+        "titleEs": "`View`: convertir el modelo en el string de la pantalla"
+      },
+      {
+        "id": "go-tui-notes-v1-step27",
+        "snippetId": "go-tui-027",
+        "order": 27,
+        "titleEn": "`main`: the composition root that picks the adapters",
+        "titleEs": "`main`: la raíz de composición que elige los adaptadores"
+      },
+      {
+        "id": "go-tui-notes-v1-step28",
+        "snippetId": "go-tui-028",
+        "order": 28,
+        "titleEn": "Testing the core: a hand-written fake repository",
+        "titleEs": "Probar el núcleo: un repositorio falso escrito a mano"
+      },
+      {
+        "id": "go-tui-notes-v1-step29",
+        "snippetId": "go-tui-029",
+        "order": 29,
+        "titleEn": "Testing the UI: driving `Update` with key messages",
+        "titleEs": "Probar la interfaz: manejar `Update` con mensajes de tecla"
+      }
+    ]
+  }
+]

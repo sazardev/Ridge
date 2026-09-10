@@ -1496,6 +1496,12 @@ abstract class AppLocalizations {
   /// **'Generics'**
   String get categoryGenerics;
 
+  /// No description provided for @categoryModernGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Modern Go'**
+  String get categoryModernGo;
+
   /// No description provided for @categoryIdiomaticFormatting.
   ///
   /// In en, this message translates to:
@@ -1537,6 +1543,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Testing with fakes'**
   String get categoryTestingWithFakes;
+
+  /// No description provided for @categoryTuiArchitecture.
+  ///
+  /// In en, this message translates to:
+  /// **'TUI architecture'**
+  String get categoryTuiArchitecture;
+
+  /// No description provided for @categoryTuiStyling.
+  ///
+  /// In en, this message translates to:
+  /// **'Terminal styling'**
+  String get categoryTuiStyling;
+
+  /// No description provided for @categoryTuiComponents.
+  ///
+  /// In en, this message translates to:
+  /// **'TUI components'**
+  String get categoryTuiComponents;
+
+  /// No description provided for @categoryTuiAdapter.
+  ///
+  /// In en, this message translates to:
+  /// **'TUI adapter'**
+  String get categoryTuiAdapter;
 
   /// No description provided for @categoryShellCommands.
   ///
