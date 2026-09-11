@@ -104,6 +104,12 @@ abstract class AppLocalizations {
   /// **'Ridge'**
   String get appName;
 
+  /// Tagline shown under the logo and app name on the startup splash screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Type better, not just faster.'**
+  String get splashSlogan;
+
   /// No description provided for @navPractice.
   ///
   /// In en, this message translates to:
@@ -1970,6 +1976,30 @@ abstract class AppLocalizations {
   /// **'No snippets available yet.'**
   String get practiceHubNoSnippetsAvailable;
 
+  /// No description provided for @dailyChallengeCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Challenge'**
+  String get dailyChallengeCardTitle;
+
+  /// No description provided for @dailyChallengeCardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s shared snippet — everyone gets the same one.'**
+  String get dailyChallengeCardSubtitle;
+
+  /// No description provided for @dailyChallengeCardAlreadyPlayed.
+  ///
+  /// In en, this message translates to:
+  /// **'Played today — scored {score}/10'**
+  String dailyChallengeCardAlreadyPlayed(int score);
+
+  /// No description provided for @dailyChallengeCardStreakLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d'**
+  String dailyChallengeCardStreakLabel(int days);
+
   /// No description provided for @progressEmptyState.
   ///
   /// In en, this message translates to:
@@ -2101,6 +2131,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Average: {speed} cpm · {accuracy}% accuracy'**
   String progressHistoryAverage(int speed, int accuracy);
+
+  /// No description provided for @progressJsonEntryButton.
+  ///
+  /// In en, this message translates to:
+  /// **'View raw JSON'**
+  String get progressJsonEntryButton;
+
+  /// No description provided for @progressJsonScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stats (JSON)'**
+  String get progressJsonScreenTitle;
+
+  /// No description provided for @progressJsonCopyButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get progressJsonCopyButton;
+
+  /// No description provided for @progressJsonCopiedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard'**
+  String get progressJsonCopiedMessage;
+
+  /// No description provided for @progressJsonExportButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get progressJsonExportButton;
+
+  /// No description provided for @progressJsonExportedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to {path}'**
+  String progressJsonExportedMessage(String path);
+
+  /// No description provided for @progressJsonExportError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t export stats'**
+  String get progressJsonExportError;
 
   /// No description provided for @progressFingerLeftPinky.
   ///

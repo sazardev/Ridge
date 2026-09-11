@@ -2,6 +2,7 @@
   "@@locale": "es",
 
   "appName": "Ridge",
+  "splashSlogan": "Escribe mejor, no solo más rápido.",
 
   "navPractice": "Práctica",
   "navProgress": "Progreso",
@@ -413,6 +414,25 @@
   "practiceHubBrowseAllAction": "Explorar todos los snippets",
   "practiceHubNoSnippetsAvailable": "Aún no hay snippets disponibles.",
 
+  "dailyChallengeCardTitle": "Reto diario",
+  "dailyChallengeCardSubtitle": "El snippet compartido de hoy — todos reciben el mismo.",
+  "dailyChallengeCardAlreadyPlayed": "Ya jugado hoy — puntaje {score}/10",
+  "@dailyChallengeCardAlreadyPlayed": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "dailyChallengeCardStreakLabel": "{days}d",
+  "@dailyChallengeCardStreakLabel": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+
   "progressEmptyState": "Termina una sesión de práctica para ver tu progreso aquí.",
   "progressTabOverview": "Resumen",
   "progressTabWeaknesses": "Debilidades",
@@ -435,6 +455,13 @@
   "progressHistoryTitle": "Historial personal",
   "progressHistoryEmpty": "Aún no hay historial para esta categoría",
   "progressHistoryAverage": "Promedio: {speed} ppm · {accuracy}% de precisión",
+  "progressJsonEntryButton": "Ver JSON sin procesar",
+  "progressJsonScreenTitle": "Estadísticas (JSON)",
+  "progressJsonCopyButton": "Copiar",
+  "progressJsonCopiedMessage": "Copiado al portapapeles",
+  "progressJsonExportButton": "Exportar",
+  "progressJsonExportedMessage": "Guardado en {path}",
+  "progressJsonExportError": "No se pudieron exportar las estadísticas",
 
   "progressFingerLeftPinky": "Meñique izquierdo",
   "progressFingerLeftRing": "Anular izquierdo",

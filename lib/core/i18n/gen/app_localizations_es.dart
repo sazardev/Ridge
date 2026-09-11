@@ -13,6 +13,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appName => 'Ridge';
 
   @override
+  String get splashSlogan => 'Escribe mejor, no solo más rápido.';
+
+  @override
   String get navPractice => 'Práctica';
 
   @override
@@ -1008,6 +1011,23 @@ class AppLocalizationsEs extends AppLocalizations {
       'Aún no hay snippets disponibles.';
 
   @override
+  String get dailyChallengeCardTitle => 'Reto diario';
+
+  @override
+  String get dailyChallengeCardSubtitle =>
+      'El snippet compartido de hoy — todos reciben el mismo.';
+
+  @override
+  String dailyChallengeCardAlreadyPlayed(int score) {
+    return 'Ya jugado hoy — puntaje $score/10';
+  }
+
+  @override
+  String dailyChallengeCardStreakLabel(int days) {
+    return '${days}d';
+  }
+
+  @override
   String get progressEmptyState =>
       'Termina una sesión de práctica para ver tu progreso aquí.';
 
@@ -1082,6 +1102,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String progressHistoryAverage(int speed, int accuracy) {
     return 'Promedio: $speed ppm · $accuracy% de precisión';
   }
+
+  @override
+  String get progressJsonEntryButton => 'Ver JSON sin procesar';
+
+  @override
+  String get progressJsonScreenTitle => 'Estadísticas (JSON)';
+
+  @override
+  String get progressJsonCopyButton => 'Copiar';
+
+  @override
+  String get progressJsonCopiedMessage => 'Copiado al portapapeles';
+
+  @override
+  String get progressJsonExportButton => 'Exportar';
+
+  @override
+  String progressJsonExportedMessage(String path) {
+    return 'Guardado en $path';
+  }
+
+  @override
+  String get progressJsonExportError =>
+      'No se pudieron exportar las estadísticas';
 
   @override
   String get progressFingerLeftPinky => 'Meñique izquierdo';

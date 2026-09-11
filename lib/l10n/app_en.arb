@@ -5,6 +5,10 @@
   "@appName": {
     "description": "The application name, shown in the OS task switcher and window title."
   },
+  "splashSlogan": "Type better, not just faster.",
+  "@splashSlogan": {
+    "description": "Tagline shown under the logo and app name on the startup splash screen."
+  },
 
   "navPractice": "Practice",
   "navProgress": "Progress",
@@ -423,6 +427,25 @@
   "practiceHubBrowseAllAction": "Browse all snippets",
   "practiceHubNoSnippetsAvailable": "No snippets available yet.",
 
+  "dailyChallengeCardTitle": "Daily Challenge",
+  "dailyChallengeCardSubtitle": "Today's shared snippet — everyone gets the same one.",
+  "dailyChallengeCardAlreadyPlayed": "Played today — scored {score}/10",
+  "@dailyChallengeCardAlreadyPlayed": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "dailyChallengeCardStreakLabel": "{days}d",
+  "@dailyChallengeCardStreakLabel": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+
   "progressEmptyState": "Finish a practice session to see your progress here.",
   "progressTabOverview": "Overview",
   "progressTabWeaknesses": "Weaknesses",
@@ -476,6 +499,20 @@
       }
     }
   },
+  "progressJsonEntryButton": "View raw JSON",
+  "progressJsonScreenTitle": "Stats (JSON)",
+  "progressJsonCopyButton": "Copy",
+  "progressJsonCopiedMessage": "Copied to clipboard",
+  "progressJsonExportButton": "Export",
+  "progressJsonExportedMessage": "Saved to {path}",
+  "@progressJsonExportedMessage": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "progressJsonExportError": "Couldn't export stats",
 
   "progressFingerLeftPinky": "Left pinky",
   "progressFingerLeftRing": "Left ring finger",

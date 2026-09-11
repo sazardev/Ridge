@@ -13,6 +13,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'Ridge';
 
   @override
+  String get splashSlogan => 'Type better, not just faster.';
+
+  @override
   String get navPractice => 'Practice';
 
   @override
@@ -998,6 +1001,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get practiceHubNoSnippetsAvailable => 'No snippets available yet.';
 
   @override
+  String get dailyChallengeCardTitle => 'Daily Challenge';
+
+  @override
+  String get dailyChallengeCardSubtitle =>
+      'Today\'s shared snippet — everyone gets the same one.';
+
+  @override
+  String dailyChallengeCardAlreadyPlayed(int score) {
+    return 'Played today — scored $score/10';
+  }
+
+  @override
+  String dailyChallengeCardStreakLabel(int days) {
+    return '${days}d';
+  }
+
+  @override
   String get progressEmptyState =>
       'Finish a practice session to see your progress here.';
 
@@ -1072,6 +1092,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String progressHistoryAverage(int speed, int accuracy) {
     return 'Average: $speed cpm · $accuracy% accuracy';
   }
+
+  @override
+  String get progressJsonEntryButton => 'View raw JSON';
+
+  @override
+  String get progressJsonScreenTitle => 'Stats (JSON)';
+
+  @override
+  String get progressJsonCopyButton => 'Copy';
+
+  @override
+  String get progressJsonCopiedMessage => 'Copied to clipboard';
+
+  @override
+  String get progressJsonExportButton => 'Export';
+
+  @override
+  String progressJsonExportedMessage(String path) {
+    return 'Saved to $path';
+  }
+
+  @override
+  String get progressJsonExportError => 'Couldn\'t export stats';
 
   @override
   String get progressFingerLeftPinky => 'Left pinky';
