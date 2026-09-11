@@ -4,10 +4,37 @@ import 'package:ridge/app.dart';
 import 'package:ridge/core/window/desktop_platform.dart';
 import 'package:ridge/core/window/window_geometry_listener.dart';
 import 'package:ridge/core/window/window_geometry_store.dart';
+import 'package:ridge/features/settings/infrastructure/settings_repository_impl.dart';
+import 'package:ridge/features/settings/presentation/providers/settings_providers.dart';
 import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Reads persisted `AppSettings` (theme/palette/corner style/...) before
+  // `runApp` ever paints a frame, using one `ProviderContainer` that then
+  // gets handed straight to the widget tree below (`UncontrolledProviderScope`)
+  // instead of letting a plain `ProviderScope` create its own lazily.
+  // Without this, `RidgeApp`'s first frame — this includes
+  // `AppStartupSplash`'s `WindowBar`, which is on-screen for exactly this
+  // window — briefly renders with `AppSettings.initial`'s hardcoded
+  // defaults (Ember palette, system theme) instead of whatever the user
+  // actually picked, until the async `shared_preferences` read resolves a
+  // frame or two later and repaints with the real value.
+  //
+  // `settingsRepositoryProvider` is typed as the abstract
+  // `SettingsRepository` port everywhere else (so tests can swap in a
+  // fake), but `main.dart` is the composition root — the one place
+  // already wired to the concrete adapter — so it reads `.hydrated`
+  // directly off it rather than through `watch()`, whose broadcast
+  // stream deliberately still replays `AppSettings.initial` to every
+  // *other* new subscriber (`SettingsController`, at app startup)
+  // immediately, matching the un-warmed-up case tests rely on.
+  final container = ProviderContainer();
+  final settingsRepository = container.read(settingsRepositoryProvider);
+  if (settingsRepository is SettingsRepositoryImpl) {
+    await settingsRepository.hydrated;
+  }
 
   if (isDesktopPlatform) {
     await windowManager.ensureInitialized();
@@ -45,5 +72,7 @@ Future<void> main() async {
     windowManager.addListener(WindowGeometryListener(geometryStore));
   }
 
-  runApp(const ProviderScope(child: RidgeApp()));
+  runApp(
+    UncontrolledProviderScope(container: container, child: const RidgeApp()),
+  );
 }
