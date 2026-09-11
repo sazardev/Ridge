@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-09-10
+
+### Added
+- **settings:** render changelog with version headers and inline bold (d6d45c0)
+
 ## [1.8.0] - 2026-09-10
 
 ### Added
