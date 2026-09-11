@@ -933,6 +933,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get practiceResultRetry => 'Retry';
 
   @override
+  String get practiceResultRetrySave => 'Retry saving';
+
+  @override
   String get practiceResultContinue => 'Continue';
 
   @override

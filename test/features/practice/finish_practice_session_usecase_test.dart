@@ -74,12 +74,15 @@ List<Keystroke> _keystrokesWithAccuracy(int correctCount) {
 
 class _FakeSessionRepository implements SessionRepository {
   TypingSession? lastPersisted;
+  AppFailure? failureToReturn;
 
   @override
   Future<Result<void, AppFailure>> persistSession({
     required TypingSession session,
     required List<Keystroke> keystrokes,
   }) async {
+    final failure = failureToReturn;
+    if (failure != null) return Result.err(failure);
     lastPersisted = session;
     return const Result.ok(null);
   }
@@ -212,5 +215,29 @@ void main() {
         expect(session.passed, isNull);
       },
     );
+  });
+
+  group('a persistence failure propagates untouched', () {
+    test('StorageFailure from the repository is returned as-is', () async {
+      repository.failureToReturn = const StorageFailure(
+        'Could not persist practice session',
+      );
+      final result = await useCase(
+        id: TypingSessionId.generate(),
+        profileId: ProfileId.generate(),
+        mode: const PracticeMode.zen(),
+        snippet: _snippet,
+        startedAtUtc: DateTime.utc(2026),
+        duration: const Duration(seconds: 10),
+        keystrokes: _keystrokesWithAccuracy(5),
+      );
+      expect(result.isErr, isTrue);
+      expect(result.failureOrNull, isA<StorageFailure>());
+      expect(
+        result.failureOrNull?.message,
+        'Could not persist practice session',
+      );
+      expect(repository.lastPersisted, isNull);
+    });
   });
 }

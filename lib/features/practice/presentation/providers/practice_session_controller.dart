@@ -24,6 +24,7 @@ part 'practice_session_controller.g.dart';
 part 'practice_session_state.dart';
 part 'practice_lifecycle_observer.dart';
 part 'practice_session_downstream_effects.dart';
+part 'practice_session_persist_retry.dart';
 
 /// How long the app may sit backgrounded mid-session before the in-flight
 /// run is discarded rather than resumed (SPEC.md §8.1: only a genuinely
@@ -72,6 +73,7 @@ class PracticeSessionController extends _$PracticeSessionController {
   Timer? _countdownTimer;
   final Set<SnippetId> _usedSnippetIds = {};
   SurvivalRunTracker? _survival;
+  _PersistAttempt? _lastPersistAttempt;
 
   /// This mode's Sprint window, or `null` for every other mode.
   Duration? get _sprintWindow =>
@@ -253,6 +255,18 @@ class PracticeSessionController extends _$PracticeSessionController {
   /// its own.
   void retry() => _resetToIdle();
 
+  /// Whether a failed local write is pending [retryPersist].
+  bool get canRetryPersist => _lastPersistAttempt != null;
+
+  /// Re-submits the last failed persist attempt's exact inputs — no
+  /// retyping, just retrying a local write assumed transient (full disk,
+  /// momentarily locked database). No-op if nothing is pending.
+  Future<void> retryPersist() async {
+    final attempt = _lastPersistAttempt;
+    if (attempt == null) return;
+    await _attemptPersist(attempt);
+  }
+
   /// Called the instant the buffer reaches the *current* snippet's
   /// expected length. Zen/Precision finish outright; Sprint and Survival
   /// instead advance to a new same-difficulty snippet within the same
@@ -402,9 +416,7 @@ class PracticeSessionController extends _$PracticeSessionController {
       return;
     }
 
-    final duration = _elapsedSoFar();
-
-    final result = await ref.read(finishPracticeSessionUseCaseProvider)(
+    await _attemptPersist((
       id: TypingSessionId.generate(),
       profileId: profileId,
       mode: mode,
@@ -413,39 +425,27 @@ class PracticeSessionController extends _$PracticeSessionController {
       // `state.snippet` may have already advanced past it.
       snippet: snippet,
       startedAtUtc: (_runningSince ?? DateTime.now()).toUtc(),
-      duration: duration,
+      duration: _elapsedSoFar(),
       keystrokes: keystrokes,
-    );
+    ));
+  }
 
-    // Never block the finish -> result transition on any of these —
-    // see `_notifyDownstreamFeatures`'s class doc for what each call
-    // does and why they're all fire-and-forget.
-    if (result.isOk) {
-      _notifyDownstreamFeatures(
-        ref,
-        profileId: profileId,
-        finished: result.valueOrNull!,
-      );
-    }
-
-    state = result.fold(
-      (finished) => PracticeSessionState(
-        status: PracticeSessionStatus.result,
-        recorder: state.recorder,
-        snippet: state.snippet,
-        remaining: state.remaining,
-        finishedSession: finished,
-        survival: _survival,
-      ),
-      (failure) => PracticeSessionState(
-        status: PracticeSessionStatus.result,
-        recorder: state.recorder,
-        snippet: state.snippet,
-        remaining: state.remaining,
-        survival: _survival,
-        error: failure.message,
-      ),
+  /// Runs one persist attempt (the first try, or a [retryPersist] of a
+  /// previously failed one) and folds the outcome into [state] — keeping
+  /// [_lastPersistAttempt] around on failure so another [retryPersist]
+  /// can resubmit the exact same inputs, and clearing it on success.
+  Future<void> _attemptPersist(_PersistAttempt attempt) async {
+    _lastPersistAttempt = attempt;
+    final resolved = await _resolvePersistAttempt(
+      ref,
+      attempt,
+      recorder: state.recorder,
+      displaySnippet: state.snippet,
+      remaining: state.remaining,
+      survival: _survival,
     );
+    if (resolved.succeeded) _lastPersistAttempt = null;
+    state = resolved.state;
   }
 
   void _handleLifecycleChange(AppLifecycleState lifecycleState) {

@@ -180,22 +180,36 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
     final passed = state.finishedSession?.session.passed;
     final survival = state.survival;
 
+    final controllerNotifier = ref.read(
+      practiceSessionControllerProvider(snippet, mode).notifier,
+    );
     // Retry applies to modes with a pass/fail gate (Precision/
     // learning-route lessons) and to Survival (a run always worth
     // replaying); Zen and Sprint never set `passed` and have no gate to
     // retry against (SPEC.md §5.1/§5.2). Continue is only ever offered on
     // an actual pass — a failed lesson attempt should retry the same one,
-    // never skip ahead.
-    final onRetryAction = passed == null && survival == null
-        ? null
-        : ref
-              .read(practiceSessionControllerProvider(snippet, mode).notifier)
-              .retry;
+    // never skip ahead. Never while a persist failure is showing:
+    // `survival`/`passed` stay set on state independent of `error`, and a
+    // stray Enter/R press would otherwise silently restart typing and
+    // discard a session that's still recoverable via retryPersist below.
+    final onRetryAction =
+        state.error == null && (passed != null || survival != null)
+        ? controllerNotifier.retry
+        : null;
+    // Offered only once a persist attempt has actually failed and there's
+    // something queued to resubmit — not the separate, rarer "no guest
+    // profile" edge case, which has nothing to retry.
+    final onRetryPersistAction =
+        state.error != null && controllerNotifier.canRetryPersist
+        ? () => unawaited(controllerNotifier.retryPersist())
+        : null;
     final onContinueAction = passed == true ? widget.onContinue : null;
     // Enter presses whichever action is primary (Continue when offered,
-    // else Retry); Escape always backs out, in every session state, not
-    // just at the result — mirrors the AppBar's own back button.
-    final onPrimaryAction = onContinueAction ?? onRetryAction;
+    // else typing-retry, else persist-retry); Escape always backs out, in
+    // every session state, not just at the result — mirrors the AppBar's
+    // own back button.
+    final onPrimaryAction =
+        onContinueAction ?? onRetryAction ?? onRetryPersistAction;
     final explanation = state.snippet.explanationFor(context);
     final onShowInfoAction = explanation.isEmpty
         ? null
@@ -216,7 +230,8 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
           const SingleActivator(LogicalKeyboardKey.enter): ?onPrimaryAction,
           const SingleActivator(LogicalKeyboardKey.numpadEnter):
               ?onPrimaryAction,
-          const SingleActivator(LogicalKeyboardKey.keyR): ?onRetryAction,
+          const SingleActivator(LogicalKeyboardKey.keyR):
+              ?(onRetryAction ?? onRetryPersistAction),
           const SingleActivator(LogicalKeyboardKey.keyI): ?onShowInfoAction,
           const SingleActivator(LogicalKeyboardKey.home): () =>
               _animateResultScrollTo(double.negativeInfinity),
@@ -324,14 +339,20 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
         // Pinned outside the scrollable result panel above so Retry/
         // Continue/info are always reachable without scrolling, even on
         // a long result (many weak characters, a tall snippet).
-        bottomNavigationBar:
-            state.status == PracticeSessionStatus.result && state.error == null
-            ? SessionResultFooter(
-                onRetry: onRetryAction,
-                onContinue: onContinueAction,
-                onShowInfo: onShowInfoAction,
-              )
-            : null,
+        bottomNavigationBar: switch (state.status) {
+          PracticeSessionStatus.result when state.error == null =>
+            SessionResultFooter(
+              onRetry: onRetryAction,
+              onContinue: onContinueAction,
+              onShowInfo: onShowInfoAction,
+            ),
+          PracticeSessionStatus.result when onRetryPersistAction != null =>
+            SessionResultFooter(
+              onRetry: onRetryPersistAction,
+              retryLabel: l10n.practiceResultRetrySave,
+            ),
+          _ => null,
+        },
       ),
     );
   }

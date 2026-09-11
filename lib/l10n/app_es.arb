@@ -390,6 +390,7 @@
     }
   },
   "practiceResultRetry": "Reintentar",
+  "practiceResultRetrySave": "Reintentar guardado",
   "practiceResultContinue": "Continuar",
   "practiceResultLearnMoreTitle": "¿Qué acabas de escribir?",
   "compilerFlavorPerfect": "Build exitoso — 0 errores, 0 warnings.",

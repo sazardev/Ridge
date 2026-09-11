@@ -17,11 +17,23 @@ class SessionResultFooter extends StatelessWidget {
   /// Creates the footer. Renders nothing at all if both [onRetry] and
   /// [onContinue] are `null` (Zen/Sprint have no pass/fail gate, so
   /// there's nothing to pin here).
-  const new({this.onRetry, this.onContinue, this.onShowInfo, super.key});
+  const new({
+    this.onRetry,
+    this.retryLabel,
+    this.onContinue,
+    this.onShowInfo,
+    super.key,
+  });
 
   /// Callback for the "Retry" action — `null` for modes without a
   /// pass/fail gate.
   final VoidCallback? onRetry;
+
+  /// Overrides the Retry button's label — `null` uses
+  /// `l10n.practiceResultRetry` (retype). Set distinctly when [onRetry]
+  /// instead resubmits a failed local write, a different action from
+  /// restarting the typing run.
+  final String? retryLabel;
 
   /// Callback for "Continue to next lesson" — only ever non-`null` for a
   /// passing `learning_paths` lesson attempt with a next lesson to jump
@@ -77,14 +89,14 @@ class SessionResultFooter extends StatelessWidget {
                           ? OutlinedButton(
                               onPressed: onRetry,
                               child: _ButtonLabelWithKeyHint(
-                                label: l10n.practiceResultRetry,
+                                label: retryLabel ?? l10n.practiceResultRetry,
                                 keyHint: 'R',
                               ),
                             )
                           : FilledButton.tonal(
                               onPressed: onRetry,
                               child: _ButtonLabelWithKeyHint(
-                                label: l10n.practiceResultRetry,
+                                label: retryLabel ?? l10n.practiceResultRetry,
                                 keyHint: 'R',
                               ),
                             ),

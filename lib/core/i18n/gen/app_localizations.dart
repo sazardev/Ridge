@@ -1850,6 +1850,12 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get practiceResultRetry;
 
+  /// No description provided for @practiceResultRetrySave.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry saving'**
+  String get practiceResultRetrySave;
+
   /// No description provided for @practiceResultContinue.
   ///
   /// In en, this message translates to:

@@ -403,6 +403,7 @@
     }
   },
   "practiceResultRetry": "Retry",
+  "practiceResultRetrySave": "Retry saving",
   "practiceResultContinue": "Continue",
   "practiceResultLearnMoreTitle": "What did you just type?",
   "compilerFlavorPerfect": "Build succeeded — 0 errors, 0 warnings.",

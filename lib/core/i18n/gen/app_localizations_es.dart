@@ -942,6 +942,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get practiceResultRetry => 'Reintentar';
 
   @override
+  String get practiceResultRetrySave => 'Reintentar guardado';
+
+  @override
   String get practiceResultContinue => 'Continuar';
 
   @override
