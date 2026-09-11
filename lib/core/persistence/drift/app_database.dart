@@ -5,6 +5,8 @@ import 'package:ridge/features/achievements/infrastructure/achievement_dao.dart'
 import 'package:ridge/features/achievements/infrastructure/tables/achievements_unlocked_table.dart';
 import 'package:ridge/features/content/infrastructure/snippet_dao.dart';
 import 'package:ridge/features/content/infrastructure/tables/snippets_table.dart';
+import 'package:ridge/features/daily_challenge/infrastructure/daily_challenge_dao.dart';
+import 'package:ridge/features/daily_challenge/infrastructure/tables/daily_challenge_completions_table.dart';
 import 'package:ridge/features/data_management/infrastructure/data_reset_dao.dart';
 import 'package:ridge/features/learning_paths/infrastructure/lesson_progress_dao.dart';
 import 'package:ridge/features/learning_paths/infrastructure/tables/lesson_progress_cache_table.dart';
@@ -71,6 +73,7 @@ Future<void> _createPracticeIndices(Migrator m) async {
     ProcessedSessions,
     LessonProgressCache,
     AchievementsUnlocked,
+    DailyChallengeCompletions,
   ],
   daos: [
     GuestProfileDao,
@@ -80,6 +83,7 @@ Future<void> _createPracticeIndices(Migrator m) async {
     LessonProgressDao,
     AchievementDao,
     DataResetDao,
+    DailyChallengeDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -90,7 +94,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? driftDatabase(name: 'ridge.db'));
 
   @override
-  int get schemaVersion => 13;
+  int get schemaVersion => 14;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -218,6 +222,13 @@ class AppDatabase extends _$AppDatabase {
         await m.addColumn(guestProfiles, guestProfiles.platform);
         await m.addColumn(guestProfiles, guestProfiles.operatingSystemVersion);
         await m.addColumn(guestProfiles, guestProfiles.deviceModel);
+      }
+      // v13 -> v14: added the `daily_challenge` feature's
+      // daily_challenge_completions table (SPEC.md §5.4, offline Phase 0
+      // — see project plan). Nothing existing is touched, only the new
+      // table is created.
+      if (from < 14) {
+        await m.createTable(dailyChallengeCompletions);
       }
     },
   );

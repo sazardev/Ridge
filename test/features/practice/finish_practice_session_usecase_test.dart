@@ -162,6 +162,24 @@ void main() {
     });
   });
 
+  group('dailyChallenge pass/fail reuses the same evaluation', () {
+    test('accuracy at or above the score-8 bar passes', () async {
+      final session = await finish(
+        mode: PracticeMode.dailyChallenge(challengeDate: DateTime.utc(2026)),
+        correctCount: 9,
+      );
+      expect(session.passed, isTrue);
+    });
+
+    test('accuracy below the score-8 bar fails', () async {
+      final session = await finish(
+        mode: PracticeMode.dailyChallenge(challengeDate: DateTime.utc(2026)),
+        correctCount: 6,
+      );
+      expect(session.passed, isFalse);
+    });
+  });
+
   group('Zen, Sprint and Survival never gate on accuracy', () {
     test('Zen always persists passed: null, regardless of accuracy', () async {
       final session = await finish(

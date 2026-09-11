@@ -50,4 +50,15 @@ sealed class PracticeMode with _$PracticeMode {
   /// snippet seamlessly advances to the next one — the same stream queue
   /// Sprint uses.
   const factory survival() = _Survival;
+
+  /// The shared, date-locked snippet every profile in the world gets on
+  /// [challengeDate] (SPEC.md §5.4), scored the same way as
+  /// [PracticeMode.precision] via `PrecisionScoreCalculator`.
+  /// [challengeDate] is a plain `DateTime`, not `daily_challenge`'s own
+  /// `ChallengeDate` value object, for the same one-directional-
+  /// dependency reason [PracticeMode.learningRouteLesson] carries a raw
+  /// `String lessonId`: this domain type must not import from a feature
+  /// built on top of it.
+  const factory dailyChallenge({required DateTime challengeDate}) =
+      _DailyChallenge;
 }

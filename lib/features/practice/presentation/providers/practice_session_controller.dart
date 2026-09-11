@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:ridge/features/achievements/presentation/providers/achievements_providers.dart';
 import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/daily_challenge/presentation/providers/daily_challenge_providers.dart';
 import 'package:ridge/features/learning_paths/presentation/providers/learning_paths_providers.dart';
 import 'package:ridge/features/practice/application/usecases/finish_practice_session_usecase.dart';
 import 'package:ridge/features/practice/domain/entities/keystroke.dart';
@@ -14,6 +15,7 @@ import 'package:ridge/features/practice/domain/services/survival_run_tracker.dar
 import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
+import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:ridge/features/progression/presentation/providers/progression_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -21,6 +23,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'practice_session_controller.g.dart';
 part 'practice_session_state.dart';
 part 'practice_lifecycle_observer.dart';
+part 'practice_session_downstream_effects.dart';
 
 /// How long the app may sit backgrounded mid-session before the in-flight
 /// run is discarded rather than resumed (SPEC.md §8.1: only a genuinely
@@ -100,69 +103,80 @@ class PracticeSessionController extends _$PracticeSessionController {
     );
   }
 
-  /// Records a printable keydown, starting the clock (and, for Sprint,
-  /// the countdown) on the first character if the session was still
-  /// idle. Returns the (possibly provisional) classified keystroke, so
-  /// the caller can remember its `sequenceIndex` for a later [patchDwell]
-  /// call once the matching keyup arrives.
+  /// Records a printable keydown. Returns the classified keystroke, for
+  /// the caller to later [patchDwell] once the matching keyup arrives.
   Keystroke? ingestChar({
     required PhysicalKeyId physicalKeyId,
     required String char,
     Duration? dwell,
     Duration? flight,
   }) {
-    if (state.status != PracticeSessionStatus.idle &&
-        state.status != PracticeSessionStatus.running) {
-      return null;
-    }
-    if (state.status == PracticeSessionStatus.idle) {
-      _runningSince = DateTime.now();
-      _startCountdownIfSprint();
-    }
+    if (!_beginIfIdleOrRunning()) return null;
     final keystroke = state.recorder.ingestChar(
       physicalKeyId: physicalKeyId,
       char: char,
       dwell: dwell,
       flight: flight,
     );
-    if (keystroke != null &&
-        (_survival?.recordKeystroke(keystroke.result) ?? false)) {
-      unawaited(_finish());
-      return keystroke;
-    }
-    if (state.recorder.isComplete) {
-      unawaited(_handleSnippetComplete());
-    } else {
-      _refresh(status: PracticeSessionStatus.running);
-    }
+    _advanceAfterIngest(keystroke == null ? const [] : [keystroke]);
     return keystroke;
   }
 
   /// Records a Tab keydown — see `KeystrokeStreamRecorder.ingestTabKey`
-  /// for why this can commit more than one character (a `gofmt`
-  /// alignment-space run) from a single press.
+  /// for why one press can commit an entire gofmt alignment-space run.
   List<Keystroke> ingestTabKey({
     required PhysicalKeyId physicalKeyId,
     Duration? dwell,
     Duration? flight,
   }) {
-    if (state.status != PracticeSessionStatus.idle &&
-        state.status != PracticeSessionStatus.running) {
-      return const [];
-    }
-    if (state.status == PracticeSessionStatus.idle) {
-      _runningSince = DateTime.now();
-      _startCountdownIfSprint();
-    }
+    if (!_beginIfIdleOrRunning()) return const [];
     final keystrokes = state.recorder.ingestTabKey(
       physicalKeyId: physicalKeyId,
       dwell: dwell,
       flight: flight,
     );
+    _advanceAfterIngest(keystrokes);
+    return keystrokes;
+  }
+
+  /// Records an Enter keydown — see `KeystrokeStreamRecorder.ingestEnterKey`
+  /// for why one press can skip a whole run of blank lines at once.
+  List<Keystroke> ingestEnterKey({
+    required PhysicalKeyId physicalKeyId,
+    Duration? dwell,
+    Duration? flight,
+  }) {
+    if (!_beginIfIdleOrRunning()) return const [];
+    final keystrokes = state.recorder.ingestEnterKey(
+      physicalKeyId: physicalKeyId,
+      dwell: dwell,
+      flight: flight,
+    );
+    _advanceAfterIngest(keystrokes);
+    return keystrokes;
+  }
+
+  /// Shared guard: rejects anything outside `idle`/`running`, and starts
+  /// the clock (and, for Sprint, the countdown) on the first keydown.
+  bool _beginIfIdleOrRunning() {
+    if (state.status != PracticeSessionStatus.idle &&
+        state.status != PracticeSessionStatus.running) {
+      return false;
+    }
+    if (state.status == PracticeSessionStatus.idle) {
+      _runningSince = DateTime.now();
+      _startCountdownIfSprint();
+    }
+    return true;
+  }
+
+  /// Shared tail: a life lost mid-batch (Survival) finishes the run
+  /// outright; otherwise a completed buffer advances/finishes normally.
+  void _advanceAfterIngest(List<Keystroke> keystrokes) {
     for (final keystroke in keystrokes) {
       if (_survival?.recordKeystroke(keystroke.result) ?? false) {
         unawaited(_finish());
-        return keystrokes;
+        return;
       }
     }
     if (state.recorder.isComplete) {
@@ -170,7 +184,6 @@ class PracticeSessionController extends _$PracticeSessionController {
     } else {
       _refresh(status: PracticeSessionStatus.running);
     }
-    return keystrokes;
   }
 
   /// Records a backspace keydown. Returns the correction keystroke (or
@@ -404,27 +417,15 @@ class PracticeSessionController extends _$PracticeSessionController {
       keystrokes: keystrokes,
     );
 
-    // Fire-and-forget: never block the finish -> result transition on
-    // `progression`'s recompute (SPEC.md §6). Idempotent and cheap, so a
-    // failure here is silently caught by the Progress screen's own
-    // safety-net recompute on next load.
+    // Never block the finish -> result transition on any of these —
+    // see `_notifyDownstreamFeatures`'s class doc for what each call
+    // does and why they're all fire-and-forget.
     if (result.isOk) {
-      unawaited(
-        ref.read(recomputeProgressSnapshotUseCaseProvider)(
-          profileId: profileId,
-          now: DateTime.now(),
-        ),
+      _notifyDownstreamFeatures(
+        ref,
+        profileId: profileId,
+        finished: result.valueOrNull!,
       );
-      // Fire-and-forget, same rationale as the recompute above: a pass
-      // against a `learningRouteLesson`-tagged session should unlock the
-      // next lesson as soon as possible, but nothing here needs to block
-      // the finish -> result transition on it (SPEC.md §5.7).
-      unawaited(ref.read(recomputeLessonProgressUseCaseProvider)(profileId));
-      // Fire-and-forget, same rationale again: a just-finished session
-      // may have unlocked a SPEC.md §12 achievement. This call is
-      // self-sufficient regardless of the two calls above's own
-      // ordering/timing — see `EvaluateAchievementsUseCase`'s class doc.
-      unawaited(ref.read(evaluateAchievementsUseCaseProvider)(profileId));
     }
 
     state = result.fold(

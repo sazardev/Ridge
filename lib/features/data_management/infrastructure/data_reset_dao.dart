@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 
 import 'package:ridge/core/persistence/drift/app_database.dart';
 import 'package:ridge/features/achievements/infrastructure/tables/achievements_unlocked_table.dart';
+import 'package:ridge/features/daily_challenge/infrastructure/tables/daily_challenge_completions_table.dart';
 import 'package:ridge/features/learning_paths/infrastructure/tables/lesson_progress_cache_table.dart';
 import 'package:ridge/features/practice/infrastructure/tables/keystroke_events_table.dart';
 import 'package:ridge/features/practice/infrastructure/tables/typing_sessions_table.dart';
@@ -28,6 +29,7 @@ part 'data_reset_dao.g.dart';
     ProcessedSessions,
     LessonProgressCache,
     AchievementsUnlocked,
+    DailyChallengeCompletions,
   ],
 )
 class DataResetDao extends DatabaseAccessor<AppDatabase>
@@ -95,6 +97,7 @@ class DataResetDao extends DatabaseAccessor<AppDatabase>
       await delete(masteryStatusCache).go();
       await delete(lessonProgressCache).go();
       await delete(achievementsUnlocked).go();
+      await delete(dailyChallengeCompletions).go();
       await delete(guestProfiles).go();
     });
   }

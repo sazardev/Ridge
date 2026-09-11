@@ -17,6 +17,8 @@ mixin _$DataResetDaoMixin on DatabaseAccessor<AppDatabase> {
       attachedDatabase.lessonProgressCache;
   $AchievementsUnlockedTable get achievementsUnlocked =>
       attachedDatabase.achievementsUnlocked;
+  $DailyChallengeCompletionsTable get dailyChallengeCompletions =>
+      attachedDatabase.dailyChallengeCompletions;
   DataResetDaoManager get managers => DataResetDaoManager(this);
 }
 
@@ -59,5 +61,10 @@ class DataResetDaoManager {
       $$AchievementsUnlockedTableTableManager(
         _db.attachedDatabase,
         _db.achievementsUnlocked,
+      );
+  $$DailyChallengeCompletionsTableTableManager get dailyChallengeCompletions =>
+      $$DailyChallengeCompletionsTableTableManager(
+        _db.attachedDatabase,
+        _db.dailyChallengeCompletions,
       );
 }

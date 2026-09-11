@@ -21,13 +21,17 @@ import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 /// The `typing_sessions` schema only persists the mode name and
 /// [lessonId] — `sprint`'s window isn't a column, so that case round-trips
 /// with a placeholder value even though the mode is genuinely played (see
-/// `PracticeSessionController`). This is safe because nothing reads a
-/// persisted session back into a *live* `PracticeMode` for re-display:
-/// the Progress screen's personal-history comparison and mastery queries
-/// go through `ProgressionRepository`'s own SQL views instead, never
-/// through this mapper. Should a future feature need to re-hydrate a
-/// real `PracticeMode` from a row, it should extend the schema rather
-/// than rely on these placeholders.
+/// `PracticeSessionController`). `dailyChallenge`'s `challengeDate`
+/// round-trips the same way, with the epoch as its placeholder: the
+/// authoritative day↔snippet mapping lives in
+/// `daily_challenge_completions`, never reconstructed from this row.
+/// This is safe because nothing reads a persisted session back into a
+/// *live* `PracticeMode` for re-display: the Progress screen's personal-
+/// history comparison and mastery queries go through
+/// `ProgressionRepository`'s own SQL views instead, never through this
+/// mapper. Should a future feature need to re-hydrate a real
+/// `PracticeMode` from a row, it should extend the schema rather than
+/// rely on these placeholders.
 PracticeMode _practiceModeFromName(String mode, String? lessonId) {
   return switch (mode) {
     'zen' => const PracticeMode.zen(),
@@ -36,6 +40,9 @@ PracticeMode _practiceModeFromName(String mode, String? lessonId) {
     'survival' => const PracticeMode.survival(),
     'learningRouteLesson' => PracticeMode.learningRouteLesson(
       lessonId: lessonId ?? '',
+    ),
+    'dailyChallenge' => PracticeMode.dailyChallenge(
+      challengeDate: DateTime.fromMicrosecondsSinceEpoch(0, isUtc: true),
     ),
     _ => throw StateError('Unknown PracticeMode name: $mode'),
   };
@@ -52,6 +59,8 @@ extension PracticeModeMapper on PracticeMode {
       survival: () => (mode: 'survival', lessonId: null),
       learningRouteLesson: (lessonId) =>
           (mode: 'learningRouteLesson', lessonId: lessonId),
+      dailyChallenge: (challengeDate) =>
+          (mode: 'dailyChallenge', lessonId: null),
     );
   }
 }

@@ -56,7 +56,7 @@ extension PracticeModePatterns on PracticeMode {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Zen value)?  zen,TResult Function( _Sprint value)?  sprint,TResult Function( _Precision value)?  precision,TResult Function( _LearningRouteLesson value)?  learningRouteLesson,TResult Function( _Survival value)?  survival,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Zen value)?  zen,TResult Function( _Sprint value)?  sprint,TResult Function( _Precision value)?  precision,TResult Function( _LearningRouteLesson value)?  learningRouteLesson,TResult Function( _Survival value)?  survival,TResult Function( _DailyChallenge value)?  dailyChallenge,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Zen() when zen != null:
@@ -64,7 +64,8 @@ return zen(_that);case _Sprint() when sprint != null:
 return sprint(_that);case _Precision() when precision != null:
 return precision(_that);case _LearningRouteLesson() when learningRouteLesson != null:
 return learningRouteLesson(_that);case _Survival() when survival != null:
-return survival(_that);case _:
+return survival(_that);case _DailyChallenge() when dailyChallenge != null:
+return dailyChallenge(_that);case _:
   return orElse();
 
 }
@@ -82,7 +83,7 @@ return survival(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Zen value)  zen,required TResult Function( _Sprint value)  sprint,required TResult Function( _Precision value)  precision,required TResult Function( _LearningRouteLesson value)  learningRouteLesson,required TResult Function( _Survival value)  survival,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Zen value)  zen,required TResult Function( _Sprint value)  sprint,required TResult Function( _Precision value)  precision,required TResult Function( _LearningRouteLesson value)  learningRouteLesson,required TResult Function( _Survival value)  survival,required TResult Function( _DailyChallenge value)  dailyChallenge,}){
 final _that = this;
 switch (_that) {
 case _Zen():
@@ -90,7 +91,8 @@ return zen(_that);case _Sprint():
 return sprint(_that);case _Precision():
 return precision(_that);case _LearningRouteLesson():
 return learningRouteLesson(_that);case _Survival():
-return survival(_that);}
+return survival(_that);case _DailyChallenge():
+return dailyChallenge(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -104,7 +106,7 @@ return survival(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Zen value)?  zen,TResult? Function( _Sprint value)?  sprint,TResult? Function( _Precision value)?  precision,TResult? Function( _LearningRouteLesson value)?  learningRouteLesson,TResult? Function( _Survival value)?  survival,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Zen value)?  zen,TResult? Function( _Sprint value)?  sprint,TResult? Function( _Precision value)?  precision,TResult? Function( _LearningRouteLesson value)?  learningRouteLesson,TResult? Function( _Survival value)?  survival,TResult? Function( _DailyChallenge value)?  dailyChallenge,}){
 final _that = this;
 switch (_that) {
 case _Zen() when zen != null:
@@ -112,7 +114,8 @@ return zen(_that);case _Sprint() when sprint != null:
 return sprint(_that);case _Precision() when precision != null:
 return precision(_that);case _LearningRouteLesson() when learningRouteLesson != null:
 return learningRouteLesson(_that);case _Survival() when survival != null:
-return survival(_that);case _:
+return survival(_that);case _DailyChallenge() when dailyChallenge != null:
+return dailyChallenge(_that);case _:
   return null;
 
 }
@@ -129,14 +132,15 @@ return survival(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  zen,TResult Function( Duration window)?  sprint,TResult Function()?  precision,TResult Function( String lessonId)?  learningRouteLesson,TResult Function()?  survival,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  zen,TResult Function( Duration window)?  sprint,TResult Function()?  precision,TResult Function( String lessonId)?  learningRouteLesson,TResult Function()?  survival,TResult Function( DateTime challengeDate)?  dailyChallenge,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Zen() when zen != null:
 return zen();case _Sprint() when sprint != null:
 return sprint(_that.window);case _Precision() when precision != null:
 return precision();case _LearningRouteLesson() when learningRouteLesson != null:
 return learningRouteLesson(_that.lessonId);case _Survival() when survival != null:
-return survival();case _:
+return survival();case _DailyChallenge() when dailyChallenge != null:
+return dailyChallenge(_that.challengeDate);case _:
   return orElse();
 
 }
@@ -154,14 +158,15 @@ return survival();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  zen,required TResult Function( Duration window)  sprint,required TResult Function()  precision,required TResult Function( String lessonId)  learningRouteLesson,required TResult Function()  survival,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  zen,required TResult Function( Duration window)  sprint,required TResult Function()  precision,required TResult Function( String lessonId)  learningRouteLesson,required TResult Function()  survival,required TResult Function( DateTime challengeDate)  dailyChallenge,}) {final _that = this;
 switch (_that) {
 case _Zen():
 return zen();case _Sprint():
 return sprint(_that.window);case _Precision():
 return precision();case _LearningRouteLesson():
 return learningRouteLesson(_that.lessonId);case _Survival():
-return survival();}
+return survival();case _DailyChallenge():
+return dailyChallenge(_that.challengeDate);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -175,14 +180,15 @@ return survival();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  zen,TResult? Function( Duration window)?  sprint,TResult? Function()?  precision,TResult? Function( String lessonId)?  learningRouteLesson,TResult? Function()?  survival,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  zen,TResult? Function( Duration window)?  sprint,TResult? Function()?  precision,TResult? Function( String lessonId)?  learningRouteLesson,TResult? Function()?  survival,TResult? Function( DateTime challengeDate)?  dailyChallenge,}) {final _that = this;
 switch (_that) {
 case _Zen() when zen != null:
 return zen();case _Sprint() when sprint != null:
 return sprint(_that.window);case _Precision() when precision != null:
 return precision();case _LearningRouteLesson() when learningRouteLesson != null:
 return learningRouteLesson(_that.lessonId);case _Survival() when survival != null:
-return survival();case _:
+return survival();case _DailyChallenge() when dailyChallenge != null:
+return dailyChallenge(_that.challengeDate);case _:
   return null;
 
 }
@@ -421,5 +427,73 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _DailyChallenge implements PracticeMode {
+  const _DailyChallenge({required this.challengeDate});
+  
+
+ final  DateTime challengeDate;
+
+/// Create a copy of PracticeMode
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DailyChallengeCopyWith<_DailyChallenge> get copyWith => __$DailyChallengeCopyWithImpl<_DailyChallenge>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DailyChallenge&&(identical(other.challengeDate, challengeDate) || other.challengeDate == challengeDate));
+}
+
+
+@override
+int get hashCode {
+    return Object.hash(runtimeType,challengeDate);
+}
+
+@override
+String toString() {
+    return 'PracticeMode.dailyChallenge(challengeDate: $challengeDate)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DailyChallengeCopyWith<$Res> implements $PracticeModeCopyWith<$Res> {
+  factory _$DailyChallengeCopyWith(_DailyChallenge value, $Res Function(_DailyChallenge) _then) = __$DailyChallengeCopyWithImpl;
+@useResult
+$Res call({
+ DateTime challengeDate
+});
+
+
+
+
+}
+/// @nodoc
+class __$DailyChallengeCopyWithImpl<$Res>
+    implements _$DailyChallengeCopyWith<$Res> {
+  __$DailyChallengeCopyWithImpl(this._self, this._then);
+
+  final _DailyChallenge _self;
+  final $Res Function(_DailyChallenge) _then;
+
+/// Create a copy of PracticeMode
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? challengeDate = null,}) {
+  return _then(_DailyChallenge(
+challengeDate: null == challengeDate ? _self.challengeDate : challengeDate // ignore: cast_nullable_to_non_nullable
+as DateTime,
+  ));
+}
+
+
+}
 
 // dart format on

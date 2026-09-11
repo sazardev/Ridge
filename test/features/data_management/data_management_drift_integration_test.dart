@@ -25,6 +25,9 @@ import 'package:ridge/features/content/domain/entities/programming_language.dart
 import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/domain/entities/snippet_length.dart';
 import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
+import 'package:ridge/features/daily_challenge/domain/entities/daily_challenge_completion.dart';
+import 'package:ridge/features/daily_challenge/domain/value_objects/challenge_date.dart';
+import 'package:ridge/features/daily_challenge/presentation/providers/daily_challenge_providers.dart';
 import 'package:ridge/features/data_management/presentation/providers/data_management_providers.dart';
 import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
 import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
@@ -386,6 +389,20 @@ void main() {
         .read(settingsControllerProvider.notifier)
         .setAppLockEnabled(value: true);
     fakePinRepository.stored = true;
+    await container
+        .read(dailyChallengeRepositoryProvider)
+        .recordCompletion(
+          DailyChallengeCompletion(
+            profileId: profileId,
+            date: ChallengeDate(DateTime.utc(2026, 6, 15)),
+            snippetId: _lesson1Snippet.id,
+            snippetRevision: _lesson1Snippet.revision,
+            sessionId: TypingSessionId.generate(),
+            score: 9,
+            passed: true,
+            completedAtUtc: DateTime.utc(2026, 6, 15, 12),
+          ),
+        );
 
     final wipeResult = await container
         .read(dataManagementControllerProvider.notifier)
@@ -401,6 +418,10 @@ void main() {
     );
     expect(await database.select(database.lessonProgressCache).get(), isEmpty);
     expect(await database.select(database.processedSessions).get(), isEmpty);
+    expect(
+      await database.select(database.dailyChallengeCompletions).get(),
+      isEmpty,
+    );
 
     expect(fakePinRepository.stored, isFalse);
     final settings = await _settledSettings(container);

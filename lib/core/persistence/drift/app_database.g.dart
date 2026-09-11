@@ -6161,6 +6161,571 @@ class AchievementsUnlockedCompanion
   }
 }
 
+class $DailyChallengeCompletionsTable extends DailyChallengeCompletions
+    with
+        TableInfo<
+          $DailyChallengeCompletionsTable,
+          DailyChallengeCompletionRow
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DailyChallengeCompletionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _profileIdMeta = const VerificationMeta(
+    'profileId',
+  );
+  @override
+  late final GeneratedColumn<String> profileId = GeneratedColumn<String>(
+    'profile_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _challengeDateMeta = const VerificationMeta(
+    'challengeDate',
+  );
+  @override
+  late final GeneratedColumn<String> challengeDate = GeneratedColumn<String>(
+    'challenge_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _snippetIdMeta = const VerificationMeta(
+    'snippetId',
+  );
+  @override
+  late final GeneratedColumn<String> snippetId = GeneratedColumn<String>(
+    'snippet_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _snippetRevisionMeta = const VerificationMeta(
+    'snippetRevision',
+  );
+  @override
+  late final GeneratedColumn<int> snippetRevision = GeneratedColumn<int>(
+    'snippet_revision',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sessionIdMeta = const VerificationMeta(
+    'sessionId',
+  );
+  @override
+  late final GeneratedColumn<String> sessionId = GeneratedColumn<String>(
+    'session_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _scoreMeta = const VerificationMeta('score');
+  @override
+  late final GeneratedColumn<int> score = GeneratedColumn<int>(
+    'score',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _passedMeta = const VerificationMeta('passed');
+  @override
+  late final GeneratedColumn<bool> passed = GeneratedColumn<bool>(
+    'passed',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("passed" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _completedAtUtcMicrosMeta =
+      const VerificationMeta('completedAtUtcMicros');
+  @override
+  late final GeneratedColumn<int> completedAtUtcMicros = GeneratedColumn<int>(
+    'completed_at_utc_micros',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    profileId,
+    challengeDate,
+    snippetId,
+    snippetRevision,
+    sessionId,
+    score,
+    passed,
+    completedAtUtcMicros,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'daily_challenge_completions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DailyChallengeCompletionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('profile_id')) {
+      context.handle(
+        _profileIdMeta,
+        profileId.isAcceptableOrUnknown(data['profile_id']!, _profileIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_profileIdMeta);
+    }
+    if (data.containsKey('challenge_date')) {
+      context.handle(
+        _challengeDateMeta,
+        challengeDate.isAcceptableOrUnknown(
+          data['challenge_date']!,
+          _challengeDateMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_challengeDateMeta);
+    }
+    if (data.containsKey('snippet_id')) {
+      context.handle(
+        _snippetIdMeta,
+        snippetId.isAcceptableOrUnknown(data['snippet_id']!, _snippetIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_snippetIdMeta);
+    }
+    if (data.containsKey('snippet_revision')) {
+      context.handle(
+        _snippetRevisionMeta,
+        snippetRevision.isAcceptableOrUnknown(
+          data['snippet_revision']!,
+          _snippetRevisionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_snippetRevisionMeta);
+    }
+    if (data.containsKey('session_id')) {
+      context.handle(
+        _sessionIdMeta,
+        sessionId.isAcceptableOrUnknown(data['session_id']!, _sessionIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sessionIdMeta);
+    }
+    if (data.containsKey('score')) {
+      context.handle(
+        _scoreMeta,
+        score.isAcceptableOrUnknown(data['score']!, _scoreMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_scoreMeta);
+    }
+    if (data.containsKey('passed')) {
+      context.handle(
+        _passedMeta,
+        passed.isAcceptableOrUnknown(data['passed']!, _passedMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_passedMeta);
+    }
+    if (data.containsKey('completed_at_utc_micros')) {
+      context.handle(
+        _completedAtUtcMicrosMeta,
+        completedAtUtcMicros.isAcceptableOrUnknown(
+          data['completed_at_utc_micros']!,
+          _completedAtUtcMicrosMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_completedAtUtcMicrosMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {profileId, challengeDate};
+  @override
+  DailyChallengeCompletionRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DailyChallengeCompletionRow(
+      profileId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}profile_id'],
+      )!,
+      challengeDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}challenge_date'],
+      )!,
+      snippetId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}snippet_id'],
+      )!,
+      snippetRevision: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}snippet_revision'],
+      )!,
+      sessionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}session_id'],
+      )!,
+      score: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}score'],
+      )!,
+      passed: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}passed'],
+      )!,
+      completedAtUtcMicros: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}completed_at_utc_micros'],
+      )!,
+    );
+  }
+
+  @override
+  $DailyChallengeCompletionsTable createAlias(String alias) {
+    return $DailyChallengeCompletionsTable(attachedDatabase, alias);
+  }
+}
+
+class DailyChallengeCompletionRow extends DataClass
+    implements Insertable<DailyChallengeCompletionRow> {
+  /// The `ProfileId` this completion belongs to.
+  final String profileId;
+
+  /// `ChallengeDate.isoKey` (UTC, `yyyy-MM-dd`) — which day's shared
+  /// snippet this completion is for.
+  final String challengeDate;
+
+  /// The `SnippetId` played, frozen at the moment of completion.
+  final String snippetId;
+
+  /// The snippet's `revision` at the moment of completion — together
+  /// with [snippetId], this never changes even if the catalog entry is
+  /// later revised (SPEC.md §3.2).
+  final int snippetRevision;
+
+  /// The `TypingSessionId` of the session that produced this completion.
+  final String sessionId;
+
+  /// The 1-10 score `PrecisionScoreCalculator` derived from this
+  /// attempt's accuracy.
+  final int score;
+
+  /// Whether [score] cleared `PrecisionScoreCalculator.passingScore`.
+  final bool passed;
+
+  /// When this completion was recorded, as UTC microseconds since epoch.
+  final int completedAtUtcMicros;
+  const DailyChallengeCompletionRow({
+    required this.profileId,
+    required this.challengeDate,
+    required this.snippetId,
+    required this.snippetRevision,
+    required this.sessionId,
+    required this.score,
+    required this.passed,
+    required this.completedAtUtcMicros,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['profile_id'] = Variable<String>(profileId);
+    map['challenge_date'] = Variable<String>(challengeDate);
+    map['snippet_id'] = Variable<String>(snippetId);
+    map['snippet_revision'] = Variable<int>(snippetRevision);
+    map['session_id'] = Variable<String>(sessionId);
+    map['score'] = Variable<int>(score);
+    map['passed'] = Variable<bool>(passed);
+    map['completed_at_utc_micros'] = Variable<int>(completedAtUtcMicros);
+    return map;
+  }
+
+  DailyChallengeCompletionsCompanion toCompanion(bool nullToAbsent) {
+    return DailyChallengeCompletionsCompanion(
+      profileId: Value(profileId),
+      challengeDate: Value(challengeDate),
+      snippetId: Value(snippetId),
+      snippetRevision: Value(snippetRevision),
+      sessionId: Value(sessionId),
+      score: Value(score),
+      passed: Value(passed),
+      completedAtUtcMicros: Value(completedAtUtcMicros),
+    );
+  }
+
+  factory DailyChallengeCompletionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DailyChallengeCompletionRow(
+      profileId: serializer.fromJson<String>(json['profileId']),
+      challengeDate: serializer.fromJson<String>(json['challengeDate']),
+      snippetId: serializer.fromJson<String>(json['snippetId']),
+      snippetRevision: serializer.fromJson<int>(json['snippetRevision']),
+      sessionId: serializer.fromJson<String>(json['sessionId']),
+      score: serializer.fromJson<int>(json['score']),
+      passed: serializer.fromJson<bool>(json['passed']),
+      completedAtUtcMicros: serializer.fromJson<int>(
+        json['completedAtUtcMicros'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'profileId': serializer.toJson<String>(profileId),
+      'challengeDate': serializer.toJson<String>(challengeDate),
+      'snippetId': serializer.toJson<String>(snippetId),
+      'snippetRevision': serializer.toJson<int>(snippetRevision),
+      'sessionId': serializer.toJson<String>(sessionId),
+      'score': serializer.toJson<int>(score),
+      'passed': serializer.toJson<bool>(passed),
+      'completedAtUtcMicros': serializer.toJson<int>(completedAtUtcMicros),
+    };
+  }
+
+  DailyChallengeCompletionRow copyWith({
+    String? profileId,
+    String? challengeDate,
+    String? snippetId,
+    int? snippetRevision,
+    String? sessionId,
+    int? score,
+    bool? passed,
+    int? completedAtUtcMicros,
+  }) => DailyChallengeCompletionRow(
+    profileId: profileId ?? this.profileId,
+    challengeDate: challengeDate ?? this.challengeDate,
+    snippetId: snippetId ?? this.snippetId,
+    snippetRevision: snippetRevision ?? this.snippetRevision,
+    sessionId: sessionId ?? this.sessionId,
+    score: score ?? this.score,
+    passed: passed ?? this.passed,
+    completedAtUtcMicros: completedAtUtcMicros ?? this.completedAtUtcMicros,
+  );
+  DailyChallengeCompletionRow copyWithCompanion(
+    DailyChallengeCompletionsCompanion data,
+  ) {
+    return DailyChallengeCompletionRow(
+      profileId: data.profileId.present ? data.profileId.value : this.profileId,
+      challengeDate: data.challengeDate.present
+          ? data.challengeDate.value
+          : this.challengeDate,
+      snippetId: data.snippetId.present ? data.snippetId.value : this.snippetId,
+      snippetRevision: data.snippetRevision.present
+          ? data.snippetRevision.value
+          : this.snippetRevision,
+      sessionId: data.sessionId.present ? data.sessionId.value : this.sessionId,
+      score: data.score.present ? data.score.value : this.score,
+      passed: data.passed.present ? data.passed.value : this.passed,
+      completedAtUtcMicros: data.completedAtUtcMicros.present
+          ? data.completedAtUtcMicros.value
+          : this.completedAtUtcMicros,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DailyChallengeCompletionRow(')
+          ..write('profileId: $profileId, ')
+          ..write('challengeDate: $challengeDate, ')
+          ..write('snippetId: $snippetId, ')
+          ..write('snippetRevision: $snippetRevision, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('score: $score, ')
+          ..write('passed: $passed, ')
+          ..write('completedAtUtcMicros: $completedAtUtcMicros')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    profileId,
+    challengeDate,
+    snippetId,
+    snippetRevision,
+    sessionId,
+    score,
+    passed,
+    completedAtUtcMicros,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DailyChallengeCompletionRow &&
+          other.profileId == this.profileId &&
+          other.challengeDate == this.challengeDate &&
+          other.snippetId == this.snippetId &&
+          other.snippetRevision == this.snippetRevision &&
+          other.sessionId == this.sessionId &&
+          other.score == this.score &&
+          other.passed == this.passed &&
+          other.completedAtUtcMicros == this.completedAtUtcMicros);
+}
+
+class DailyChallengeCompletionsCompanion
+    extends UpdateCompanion<DailyChallengeCompletionRow> {
+  final Value<String> profileId;
+  final Value<String> challengeDate;
+  final Value<String> snippetId;
+  final Value<int> snippetRevision;
+  final Value<String> sessionId;
+  final Value<int> score;
+  final Value<bool> passed;
+  final Value<int> completedAtUtcMicros;
+  final Value<int> rowid;
+  const DailyChallengeCompletionsCompanion({
+    this.profileId = const Value.absent(),
+    this.challengeDate = const Value.absent(),
+    this.snippetId = const Value.absent(),
+    this.snippetRevision = const Value.absent(),
+    this.sessionId = const Value.absent(),
+    this.score = const Value.absent(),
+    this.passed = const Value.absent(),
+    this.completedAtUtcMicros = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DailyChallengeCompletionsCompanion.insert({
+    required String profileId,
+    required String challengeDate,
+    required String snippetId,
+    required int snippetRevision,
+    required String sessionId,
+    required int score,
+    required bool passed,
+    required int completedAtUtcMicros,
+    this.rowid = const Value.absent(),
+  }) : profileId = Value(profileId),
+       challengeDate = Value(challengeDate),
+       snippetId = Value(snippetId),
+       snippetRevision = Value(snippetRevision),
+       sessionId = Value(sessionId),
+       score = Value(score),
+       passed = Value(passed),
+       completedAtUtcMicros = Value(completedAtUtcMicros);
+  static Insertable<DailyChallengeCompletionRow> custom({
+    Expression<String>? profileId,
+    Expression<String>? challengeDate,
+    Expression<String>? snippetId,
+    Expression<int>? snippetRevision,
+    Expression<String>? sessionId,
+    Expression<int>? score,
+    Expression<bool>? passed,
+    Expression<int>? completedAtUtcMicros,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (profileId != null) 'profile_id': profileId,
+      if (challengeDate != null) 'challenge_date': challengeDate,
+      if (snippetId != null) 'snippet_id': snippetId,
+      if (snippetRevision != null) 'snippet_revision': snippetRevision,
+      if (sessionId != null) 'session_id': sessionId,
+      if (score != null) 'score': score,
+      if (passed != null) 'passed': passed,
+      if (completedAtUtcMicros != null)
+        'completed_at_utc_micros': completedAtUtcMicros,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DailyChallengeCompletionsCompanion copyWith({
+    Value<String>? profileId,
+    Value<String>? challengeDate,
+    Value<String>? snippetId,
+    Value<int>? snippetRevision,
+    Value<String>? sessionId,
+    Value<int>? score,
+    Value<bool>? passed,
+    Value<int>? completedAtUtcMicros,
+    Value<int>? rowid,
+  }) {
+    return DailyChallengeCompletionsCompanion(
+      profileId: profileId ?? this.profileId,
+      challengeDate: challengeDate ?? this.challengeDate,
+      snippetId: snippetId ?? this.snippetId,
+      snippetRevision: snippetRevision ?? this.snippetRevision,
+      sessionId: sessionId ?? this.sessionId,
+      score: score ?? this.score,
+      passed: passed ?? this.passed,
+      completedAtUtcMicros: completedAtUtcMicros ?? this.completedAtUtcMicros,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (profileId.present) {
+      map['profile_id'] = Variable<String>(profileId.value);
+    }
+    if (challengeDate.present) {
+      map['challenge_date'] = Variable<String>(challengeDate.value);
+    }
+    if (snippetId.present) {
+      map['snippet_id'] = Variable<String>(snippetId.value);
+    }
+    if (snippetRevision.present) {
+      map['snippet_revision'] = Variable<int>(snippetRevision.value);
+    }
+    if (sessionId.present) {
+      map['session_id'] = Variable<String>(sessionId.value);
+    }
+    if (score.present) {
+      map['score'] = Variable<int>(score.value);
+    }
+    if (passed.present) {
+      map['passed'] = Variable<bool>(passed.value);
+    }
+    if (completedAtUtcMicros.present) {
+      map['completed_at_utc_micros'] = Variable<int>(
+        completedAtUtcMicros.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DailyChallengeCompletionsCompanion(')
+          ..write('profileId: $profileId, ')
+          ..write('challengeDate: $challengeDate, ')
+          ..write('snippetId: $snippetId, ')
+          ..write('snippetRevision: $snippetRevision, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('score: $score, ')
+          ..write('passed: $passed, ')
+          ..write('completedAtUtcMicros: $completedAtUtcMicros, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -6180,6 +6745,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $LessonProgressCacheTable(this);
   late final $AchievementsUnlockedTable achievementsUnlocked =
       $AchievementsUnlockedTable(this);
+  late final $DailyChallengeCompletionsTable dailyChallengeCompletions =
+      $DailyChallengeCompletionsTable(this);
   late final GuestProfileDao guestProfileDao = GuestProfileDao(
     this as AppDatabase,
   );
@@ -6195,6 +6762,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     this as AppDatabase,
   );
   late final DataResetDao dataResetDao = DataResetDao(this as AppDatabase);
+  late final DailyChallengeDao dailyChallengeDao = DailyChallengeDao(
+    this as AppDatabase,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -6209,6 +6779,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     processedSessions,
     lessonProgressCache,
     achievementsUnlocked,
+    dailyChallengeCompletions,
   ];
 }
 
@@ -9185,6 +9756,300 @@ typedef $$AchievementsUnlockedTableProcessedTableManager =
       AchievementUnlockedRow,
       PrefetchHooks Function()
     >;
+typedef $$DailyChallengeCompletionsTableCreateCompanionBuilder =
+    DailyChallengeCompletionsCompanion Function({
+      required String profileId,
+      required String challengeDate,
+      required String snippetId,
+      required int snippetRevision,
+      required String sessionId,
+      required int score,
+      required bool passed,
+      required int completedAtUtcMicros,
+      Value<int> rowid,
+    });
+typedef $$DailyChallengeCompletionsTableUpdateCompanionBuilder =
+    DailyChallengeCompletionsCompanion Function({
+      Value<String> profileId,
+      Value<String> challengeDate,
+      Value<String> snippetId,
+      Value<int> snippetRevision,
+      Value<String> sessionId,
+      Value<int> score,
+      Value<bool> passed,
+      Value<int> completedAtUtcMicros,
+      Value<int> rowid,
+    });
+
+class $$DailyChallengeCompletionsTableFilterComposer
+    extends Composer<_$AppDatabase, $DailyChallengeCompletionsTable> {
+  $$DailyChallengeCompletionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get profileId => $composableBuilder(
+    column: $table.profileId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get challengeDate => $composableBuilder(
+    column: $table.challengeDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get snippetId => $composableBuilder(
+    column: $table.snippetId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get snippetRevision => $composableBuilder(
+    column: $table.snippetRevision,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get sessionId => $composableBuilder(
+    column: $table.sessionId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get score => $composableBuilder(
+    column: $table.score,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get passed => $composableBuilder(
+    column: $table.passed,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get completedAtUtcMicros => $composableBuilder(
+    column: $table.completedAtUtcMicros,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$DailyChallengeCompletionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $DailyChallengeCompletionsTable> {
+  $$DailyChallengeCompletionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get profileId => $composableBuilder(
+    column: $table.profileId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get challengeDate => $composableBuilder(
+    column: $table.challengeDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get snippetId => $composableBuilder(
+    column: $table.snippetId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get snippetRevision => $composableBuilder(
+    column: $table.snippetRevision,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get sessionId => $composableBuilder(
+    column: $table.sessionId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get score => $composableBuilder(
+    column: $table.score,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get passed => $composableBuilder(
+    column: $table.passed,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get completedAtUtcMicros => $composableBuilder(
+    column: $table.completedAtUtcMicros,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$DailyChallengeCompletionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DailyChallengeCompletionsTable> {
+  $$DailyChallengeCompletionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get profileId =>
+      $composableBuilder(column: $table.profileId, builder: (column) => column);
+
+  GeneratedColumn<String> get challengeDate => $composableBuilder(
+    column: $table.challengeDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get snippetId =>
+      $composableBuilder(column: $table.snippetId, builder: (column) => column);
+
+  GeneratedColumn<int> get snippetRevision => $composableBuilder(
+    column: $table.snippetRevision,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get sessionId =>
+      $composableBuilder(column: $table.sessionId, builder: (column) => column);
+
+  GeneratedColumn<int> get score =>
+      $composableBuilder(column: $table.score, builder: (column) => column);
+
+  GeneratedColumn<bool> get passed =>
+      $composableBuilder(column: $table.passed, builder: (column) => column);
+
+  GeneratedColumn<int> get completedAtUtcMicros => $composableBuilder(
+    column: $table.completedAtUtcMicros,
+    builder: (column) => column,
+  );
+}
+
+class $$DailyChallengeCompletionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DailyChallengeCompletionsTable,
+          DailyChallengeCompletionRow,
+          $$DailyChallengeCompletionsTableFilterComposer,
+          $$DailyChallengeCompletionsTableOrderingComposer,
+          $$DailyChallengeCompletionsTableAnnotationComposer,
+          $$DailyChallengeCompletionsTableCreateCompanionBuilder,
+          $$DailyChallengeCompletionsTableUpdateCompanionBuilder,
+          (
+            DailyChallengeCompletionRow,
+            BaseReferences<
+              _$AppDatabase,
+              $DailyChallengeCompletionsTable,
+              DailyChallengeCompletionRow
+            >,
+          ),
+          DailyChallengeCompletionRow,
+          PrefetchHooks Function()
+        > {
+  $$DailyChallengeCompletionsTableTableManager(
+    _$AppDatabase db,
+    $DailyChallengeCompletionsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DailyChallengeCompletionsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$DailyChallengeCompletionsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$DailyChallengeCompletionsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> profileId = const Value.absent(),
+                Value<String> challengeDate = const Value.absent(),
+                Value<String> snippetId = const Value.absent(),
+                Value<int> snippetRevision = const Value.absent(),
+                Value<String> sessionId = const Value.absent(),
+                Value<int> score = const Value.absent(),
+                Value<bool> passed = const Value.absent(),
+                Value<int> completedAtUtcMicros = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DailyChallengeCompletionsCompanion(
+                profileId: profileId,
+                challengeDate: challengeDate,
+                snippetId: snippetId,
+                snippetRevision: snippetRevision,
+                sessionId: sessionId,
+                score: score,
+                passed: passed,
+                completedAtUtcMicros: completedAtUtcMicros,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String profileId,
+                required String challengeDate,
+                required String snippetId,
+                required int snippetRevision,
+                required String sessionId,
+                required int score,
+                required bool passed,
+                required int completedAtUtcMicros,
+                Value<int> rowid = const Value.absent(),
+              }) => DailyChallengeCompletionsCompanion.insert(
+                profileId: profileId,
+                challengeDate: challengeDate,
+                snippetId: snippetId,
+                snippetRevision: snippetRevision,
+                sessionId: sessionId,
+                score: score,
+                passed: passed,
+                completedAtUtcMicros: completedAtUtcMicros,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $DailyChallengeCompletionsTable,
+                    DailyChallengeCompletionRow
+                  >(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $DailyChallengeCompletionsTable,
+                    DailyChallengeCompletionRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$DailyChallengeCompletionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DailyChallengeCompletionsTable,
+      DailyChallengeCompletionRow,
+      $$DailyChallengeCompletionsTableFilterComposer,
+      $$DailyChallengeCompletionsTableOrderingComposer,
+      $$DailyChallengeCompletionsTableAnnotationComposer,
+      $$DailyChallengeCompletionsTableCreateCompanionBuilder,
+      $$DailyChallengeCompletionsTableUpdateCompanionBuilder,
+      (
+        DailyChallengeCompletionRow,
+        BaseReferences<
+          _$AppDatabase,
+          $DailyChallengeCompletionsTable,
+          DailyChallengeCompletionRow
+        >,
+      ),
+      DailyChallengeCompletionRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -9207,4 +10072,9 @@ class $AppDatabaseManager {
       $$LessonProgressCacheTableTableManager(_db, _db.lessonProgressCache);
   $$AchievementsUnlockedTableTableManager get achievementsUnlocked =>
       $$AchievementsUnlockedTableTableManager(_db, _db.achievementsUnlocked);
+  $$DailyChallengeCompletionsTableTableManager get dailyChallengeCompletions =>
+      $$DailyChallengeCompletionsTableTableManager(
+        _db,
+        _db.dailyChallengeCompletions,
+      );
 }

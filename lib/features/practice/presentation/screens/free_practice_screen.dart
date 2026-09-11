@@ -12,6 +12,7 @@ import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/presentation/content_labels.dart';
 import 'package:ridge/features/content/presentation/providers/content_providers.dart';
 import 'package:ridge/features/content/presentation/widgets/practice_mode_picker_sheet.dart';
+import 'package:ridge/features/daily_challenge/presentation/widgets/daily_challenge_card.dart';
 import 'package:ridge/features/practice/presentation/widgets/quick_mode_tile.dart';
 
 /// Free-form practice (SPEC.md §5.1–5.3, §5.8) — Zen/Sprint/Precision/
@@ -93,6 +94,8 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
             controller: _scrollController,
             padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
             children: [
+              const DailyChallengeCard(),
+              const SizedBox(height: 20),
               if (languages.length > 1) ...[
                 Align(
                   alignment: Alignment.centerLeft,

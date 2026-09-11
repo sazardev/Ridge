@@ -29,12 +29,12 @@ typedef FinishedPracticeSession = ({
 /// project's one-directional dependency graph runs the other way);
 /// `progression`'s `RecomputeProgressSnapshotUseCase` backfills both
 /// columns on this same row right after computing them. `passed` is
-/// only ever non-`null` for
-/// [PracticeMode.precision]/[PracticeMode.learningRouteLesson], where it
-/// is [PrecisionScoreCalculator.passes] applied to the just-computed
-/// [SessionMetrics.accuracyPct] (SPEC.md §5.3); Zen, Sprint and Survival
-/// sessions always persist `passed: null` — pass/fail is meaningless
-/// without a score to evaluate.
+/// only ever non-`null` for [PracticeMode.precision]/
+/// [PracticeMode.learningRouteLesson]/[PracticeMode.dailyChallenge],
+/// where it is [PrecisionScoreCalculator.passes] applied to the
+/// just-computed [SessionMetrics.accuracyPct] (SPEC.md §5.3, §5.4); Zen,
+/// Sprint and Survival sessions always persist `passed: null` — pass/
+/// fail is meaningless without a score to evaluate.
 class FinishPracticeSessionUseCase {
   /// Creates the use case over the given [SessionRepository] port and
   /// optional injected calculators (both default to the real ones —
@@ -72,13 +72,15 @@ class FinishPracticeSessionUseCase {
       expectedSnippet: snippet.code,
       totalDuration: duration,
     );
-    // Only Precision (and its Learning Route lesson variant) ever has a
-    // pass/fail threshold to evaluate against; every other mode —
-    // including Survival, whose score is run-local flavor — leaves
-    // `passed` at its `null` default (SPEC.md §5.1/§5.2/§5.8).
+    // Only Precision-shaped modes (its Learning Route lesson variant, and
+    // the Daily Challenge, SPEC.md §5.4) ever have a pass/fail threshold
+    // to evaluate against; every other mode — including Survival, whose
+    // score is run-local flavor — leaves `passed` at its `null` default
+    // (SPEC.md §5.1/§5.2/§5.8).
     final passed = mode.maybeWhen(
       precision: () => scoreCalculator.passes(metrics.accuracyPct),
       learningRouteLesson: (_) => scoreCalculator.passes(metrics.accuracyPct),
+      dailyChallenge: (_) => scoreCalculator.passes(metrics.accuracyPct),
       orElse: () => null,
     );
     final session = TypingSession(
