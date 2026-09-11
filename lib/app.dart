@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/router/app_router.dart';
+import 'package:ridge/core/splash/app_startup_splash.dart';
 import 'package:ridge/core/theme/app_theme.dart';
 import 'package:ridge/core/window/app_window_frame.dart';
 import 'package:ridge/core/window/desktop_platform.dart';
@@ -25,9 +26,9 @@ class RidgeApp extends ConsumerWidget {
         ref.watch(settingsControllerProvider).value ?? AppSettings.initial;
     // Fire the (idempotent, keepAlive) catalog seed as soon as the app
     // starts, regardless of which route the router lands on first. Not
-    // gated on anything: the browser screen's own reactive stream picks
-    // up the seeded rows the moment they land, no splash screen needed
-    // for a seed this small.
+    // gated on the startup splash below or anything else: the browser
+    // screen's own reactive stream picks up the seeded rows the moment
+    // they land, seed too small to bother waiting for.
     ref
       ..watch(catalogSeedProvider)
       // Same idempotent, keepAlive, fire-on-start shape as the catalog
@@ -59,15 +60,17 @@ class RidgeApp extends ConsumerWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
-      builder: (isDesktopPlatform && settings.windowBorderEnabled)
-          ? (context, child) => AppWindowFrame(
-              radius: windowFrameRadiusFor(settings.cornerStyle),
-              borderWidth: windowFrameBorderWidthFor(
-                settings.windowBorderWidth,
-              ),
-              child: child!,
-            )
-          : null,
+      builder: (context, child) {
+        final splashed = AppStartupSplash(child: child!);
+        if (!isDesktopPlatform || !settings.windowBorderEnabled) {
+          return splashed;
+        }
+        return AppWindowFrame(
+          radius: windowFrameRadiusFor(settings.cornerStyle),
+          borderWidth: windowFrameBorderWidthFor(settings.windowBorderWidth),
+          child: splashed,
+        );
+      },
     );
   }
 }

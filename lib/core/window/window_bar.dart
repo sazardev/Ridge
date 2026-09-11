@@ -16,10 +16,23 @@ import 'package:window_manager/window_manager.dart';
 /// unconditionally anywhere in the widget tree.
 class WindowBar extends StatefulWidget {
   /// Creates the window bar, optionally driven by a shake [controller].
-  const new({super.key, this.controller});
+  const new({super.key, this.controller, this.showTooltips = true});
 
   /// Lets external code trigger the attention-shake animation.
   final WindowBarController? controller;
+
+  /// Whether the minimize/maximize/close buttons show a hover `Tooltip`.
+  /// Defaults to `true`; pass `false` for a caller with no ancestor
+  /// `Overlay` to pop the tooltip into (`AppStartupSplash`, which
+  /// renders inside `MaterialApp.router`'s `builder` slot, above the
+  /// `Router`/`Navigator` entirely) — that instance is on-screen so
+  /// briefly and non-interactively that skipping the tooltip is a
+  /// non-issue, and it's simpler and more robust than giving this
+  /// widget its own local `Overlay` just for that one caller (that was
+  /// tried and reverted — see git history/`Memory.md`: it broke live
+  /// theme updates once, then caused a real render-timing gap — a
+  /// visibly blank/white strip for a frame or two — the second time).
+  final bool showTooltips;
 
   /// The bar's fixed height, for callers that need to reserve space.
   static const height = 34.0;
@@ -84,7 +97,7 @@ class _WindowBarState extends State<WindowBar> with WindowListener {
                     width: 16,
                     height: 16,
                     child: SvgPicture.asset(
-                      'assets/icons/keycap_mark.svg',
+                      'assets/icons/r_mark.svg',
                       colorFilter: ColorFilter.mode(
                         colorScheme.primary,
                         BlendMode.srcIn,
@@ -99,17 +112,20 @@ class _WindowBarState extends State<WindowBar> with WindowListener {
             icon: LucideIcons.minus300,
             tooltip: l10n.windowMinimize,
             onPressed: windowManager.minimize,
+            showTooltip: widget.showTooltips,
           ),
           _WindowButton(
             icon: _isMaximized ? LucideIcons.copy300 : LucideIcons.maximize300,
             tooltip: _isMaximized ? l10n.windowRestore : l10n.windowMaximize,
             onPressed: _toggleMaximize,
+            showTooltip: widget.showTooltips,
           ),
           _WindowButton(
             icon: LucideIcons.x300,
             tooltip: l10n.windowClose,
             onPressed: windowManager.close,
             isClose: true,
+            showTooltip: widget.showTooltips,
           ),
         ],
       ),
@@ -137,12 +153,14 @@ class _WindowButton extends StatefulWidget {
     required this.tooltip,
     required this.onPressed,
     this.isClose = false,
+    this.showTooltip = true,
   });
 
   final IconData icon;
   final String tooltip;
   final VoidCallback onPressed;
   final bool isClose;
+  final bool showTooltip;
 
   @override
   State<_WindowButton> createState() => _WindowButtonState();
@@ -161,24 +179,28 @@ class _WindowButtonState extends State<_WindowButton> {
         ? colorScheme.onErrorContainer
         : colorScheme.onSurfaceVariant;
 
-    return Tooltip(
-      message: widget.tooltip,
-      waitDuration: const Duration(milliseconds: 500),
-      child: MouseRegion(
-        onEnter: (_) => setState(() => _hovered = true),
-        onExit: (_) => setState(() => _hovered = false),
-        child: SizedBox(
-          width: 40,
-          height: WindowBar.height,
-          child: Material(
-            color: _hovered ? hoverColor : Colors.transparent,
-            child: InkWell(
-              onTap: widget.onPressed,
-              child: Icon(widget.icon, size: 16, color: iconColor),
-            ),
+    final button = MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: SizedBox(
+        width: 40,
+        height: WindowBar.height,
+        child: Material(
+          color: _hovered ? hoverColor : Colors.transparent,
+          child: InkWell(
+            onTap: widget.onPressed,
+            child: Icon(widget.icon, size: 16, color: iconColor),
           ),
         ),
       ),
+    );
+
+    if (!widget.showTooltip) return button;
+
+    return Tooltip(
+      message: widget.tooltip,
+      waitDuration: const Duration(milliseconds: 500),
+      child: button,
     );
   }
 }
