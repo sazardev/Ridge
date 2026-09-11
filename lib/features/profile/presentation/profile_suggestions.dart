@@ -211,6 +211,7 @@ const kKeyboardModelSuggestions = <String>[
   'MCHOSE G68',
   'MCHOSE G75',
   'MCHOSE G96',
+  'MCHOSE GX87',
   'Monsgeek Fun60',
   'Monsgeek M1',
   'Monsgeek M3',

@@ -55,6 +55,18 @@ Future<void> main() async {
       title: 'Ridge',
     );
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
+      // `show()`/`focus()` run first, then bounds are (re-)applied — on
+      // Linux (GTK/Wayland), sizing an unmapped window is unreliable: the
+      // compositor's first `configure` can hand back a smaller size than
+      // requested (observed under WSLg/Weston, ~50px lost on both axes),
+      // and every subsequent launch would persist that already-shrunk
+      // size and lose a bit more, shrinking the window on every restart.
+      // Setting bounds again once the window is mapped applies exactly,
+      // with no loss — `windowOptions.size` above is still passed so the
+      // pre-show frame is already close to the restored size instead of
+      // flashing the 1280x800 default.
+      await windowManager.show();
+      await windowManager.focus();
       if (savedGeometry != null) {
         await windowManager.setBounds(
           Rect.fromLTWH(
@@ -66,8 +78,6 @@ Future<void> main() async {
         );
         if (savedGeometry.isMaximized) await windowManager.maximize();
       }
-      await windowManager.show();
-      await windowManager.focus();
     });
     windowManager.addListener(WindowGeometryListener(geometryStore));
   }

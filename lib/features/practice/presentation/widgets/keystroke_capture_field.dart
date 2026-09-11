@@ -9,7 +9,6 @@ import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/core/theme/app_typography.dart';
 import 'package:ridge/features/content/domain/entities/snippet.dart';
-import 'package:ridge/features/content/domain/entities/syntax_token_type.dart';
 import 'package:ridge/features/content/domain/services/syntax_tokenizer.dart';
 import 'package:ridge/features/content/presentation/syntax_colors.dart';
 import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
@@ -19,6 +18,8 @@ import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dar
 import 'package:ridge/features/practice/presentation/physical_key_id_mapper.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_session_controller.dart';
+import 'package:ridge/features/practice/presentation/widgets/keystroke_span_builder.dart';
+import 'package:ridge/features/practice/presentation/widgets/typing_progress_bar.dart';
 
 /// The capture engine itself: renders [snippet]'s code with live
 /// per-character green/red feedback and turns real physical keyboard
@@ -341,41 +342,6 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
     return KeyEventResult.handled;
   }
 
-  /// A char not yet reached is rendered in its real syntax color, just
-  /// dimmed — real syntax highlighting *and* an unambiguous "haven't
-  /// typed this yet" signal at once, without a second, competing color
-  /// scheme fighting the theme's own (SPEC.md §4.1's live feedback,
-  /// reworked to sit underneath syntax highlighting rather than replace
-  /// it). A char already committed (always correct — see this class's
-  /// hard-lock doc) renders at full strength.
-  static const _untypedOpacity = 0.38;
-
-  List<TextSpan> _buildSpans(
-    ColorScheme colors,
-    SyntaxColors syntaxColors,
-    List<SyntaxTokenType> tokenTypes,
-    TextStyle base,
-    String code,
-    List<bool?> statuses,
-    int liveCursorIndex,
-    int? reviewCursorIndex,
-  ) {
-    return [
-      for (var i = 0; i < code.length; i++)
-        TextSpan(
-          text: code[i],
-          style: base.copyWith(
-            color: syntaxColors
-                .forType(tokenTypes[i])
-                .withValues(alpha: statuses[i] == true ? 1 : _untypedOpacity),
-            backgroundColor: i == reviewCursorIndex
-                ? colors.secondaryContainer
-                : (i == liveCursorIndex ? colors.primaryContainer : null),
-          ),
-        ),
-    ];
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -395,17 +361,26 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
     const containerPadding = EdgeInsets.all(20);
     final textSpan = TextSpan(
       style: baseStyle,
-      children: _buildSpans(
-        theme.colorScheme,
-        syntaxColors,
-        tokenTypes,
-        baseStyle,
-        state.snippet.code,
-        state.recorder.expectedCharStatuses,
-        state.recorder.expectedCursor,
-        state.recorder.reviewCursor,
+      children: buildKeystrokeSpans(
+        colors: theme.colorScheme,
+        syntaxColors: syntaxColors,
+        tokenTypes: tokenTypes,
+        base: baseStyle,
+        code: state.snippet.code,
+        statuses: state.recorder.expectedCharStatuses,
+        liveCursorIndex: state.recorder.expectedCursor,
+        reviewCursorIndex: state.recorder.reviewCursor,
       ),
     );
+
+    final codeLength = state.snippet.code.length;
+    // Raw advance through the snippet, not accuracy — a rejected
+    // keystroke never moves `expectedCursor` (this field is hard-locked),
+    // so this is simply "how far in" the user has gotten.
+    final progress = codeLength == 0
+        ? 0.0
+        : (state.recorder.expectedCursor / codeLength).clamp(0.0, 1.0);
+    final cardShape = AppShapes.of(context).largeShape;
 
     final field = Focus(
       focusNode: _focusNode,
@@ -438,24 +413,57 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
 
           return SingleChildScrollView(
             controller: _scrollController,
-            child: Container(
-              width: double.infinity,
-              padding: containerPadding,
-              decoration: ShapeDecoration(
-                shape: AppShapes.of(context).largeShape,
-                color: theme.colorScheme.surfaceContainerHigh,
-              ),
-              // Keyed by the current snippet's id so a Sprint mid-session
-              // swap (SPEC.md §5.2) cross-fades instead of an abrupt cut;
-              // ordinary per-keystroke recoloring keeps the same key, so
-              // it never retriggers this transition.
-              child: AnimatedSwitcher(
-                duration: AppMotion.effectsDefault,
-                switchInCurve: AppMotion.enter,
-                switchOutCurve: AppMotion.exit,
-                child: RichText(
-                  key: ValueKey(state.snippet.id),
-                  text: textSpan,
+            child: ConstrainedBox(
+              // Floors the card at the full height `Expanded` gives it in
+              // `PracticeSessionScreen`'s column, so a short snippet still
+              // fills the available space instead of shrink-wrapping to
+              // its text (jarring size jumps between snippets); a snippet
+              // taller than this still grows past it and scrolls above.
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              // Clips the progress bar below to the card's own rounded
+              // shape, so it reads as that shape's bottom border rather
+              // than a separately-cornered strip overlaid on top of it.
+              child: ClipPath(
+                clipper: ShapeBorderClipper(shape: cardShape),
+                child: Stack(
+                  // `loose` (the default) would hand the `Container`
+                  // below loosened constraints, discarding the minHeight
+                  // floor this `ConstrainedBox` just set — `passthrough`
+                  // forwards the incoming constraints unchanged so the
+                  // card still fills the available space instead of
+                  // shrinking back to its text, with the progress bar
+                  // still free to position itself via `Positioned`.
+                  fit: StackFit.passthrough,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      padding: containerPadding,
+                      decoration: ShapeDecoration(
+                        shape: cardShape,
+                        color: theme.colorScheme.surfaceContainerHigh,
+                      ),
+                      // Keyed by the current snippet's id so a Sprint
+                      // mid-session swap (SPEC.md §5.2) cross-fades instead
+                      // of an abrupt cut; ordinary per-keystroke recoloring
+                      // keeps the same key, so it never retriggers this
+                      // transition.
+                      child: AnimatedSwitcher(
+                        duration: AppMotion.effectsDefault,
+                        switchInCurve: AppMotion.enter,
+                        switchOutCurve: AppMotion.exit,
+                        child: RichText(
+                          key: ValueKey(state.snippet.id),
+                          text: textSpan,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: TypingProgressBar(progress: progress),
+                    ),
+                  ],
                 ),
               ),
             ),

@@ -1718,24 +1718,6 @@ abstract class AppLocalizations {
   /// **'Zen practice'**
   String get practiceZenTitle;
 
-  /// No description provided for @practiceStartHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Start typing to begin — no timer, no pressure.'**
-  String get practiceStartHint;
-
-  /// No description provided for @practiceLiveCharsTyped.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} typed'**
-  String practiceLiveCharsTyped(int count);
-
-  /// No description provided for @practiceLiveAccuracy.
-  ///
-  /// In en, this message translates to:
-  /// **'{pct}% so far'**
-  String practiceLiveAccuracy(String pct);
-
   /// No description provided for @practiceLiveLives.
   ///
   /// In en, this message translates to:

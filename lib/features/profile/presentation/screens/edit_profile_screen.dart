@@ -7,9 +7,11 @@ import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
+import 'package:ridge/features/profile/presentation/keyboard_model_brand_matching.dart';
 import 'package:ridge/features/profile/presentation/profile_labels.dart';
 import 'package:ridge/features/profile/presentation/profile_suggestions.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_visual.dart';
 
 /// Full-screen editor for the Guest Profile's self-expression fields
 /// (favorite languages, keyboard layout/brand/model, favorite
@@ -236,7 +238,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 icon: LucideIcons.keyboard300,
                 initialValue: _brand,
                 suggestions: kKeyboardBrandSuggestions,
-                onChanged: (value) => _brand = value,
+                onChanged: (value) => setState(() => _brand = value),
               ),
               const SizedBox(height: 16),
               _SuggestionField(
@@ -244,8 +246,17 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 icon: LucideIcons.memoryStick300,
                 initialValue: _model,
                 suggestions: kKeyboardModelSuggestions,
-                onChanged: (value) => _model = value,
+                // Once a brand is chosen, its models are prioritized so
+                // the user isn't forced to type the brand name a second
+                // time here — see `_preferBrandMatches`'s doc comment
+                // for why this reorders rather than filters.
+                preferredPrefix: _brand,
+                onChanged: (value) => setState(() => _model = value),
               ),
+              if (_model.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                KeyboardVisual(model: _model),
+              ],
               const SizedBox(height: 16),
               _SuggestionField(
                 label: l10n.profileFavoriteProgrammerLabel,
@@ -284,6 +295,7 @@ class _SuggestionField extends StatelessWidget {
     required this.initialValue,
     required this.suggestions,
     required this.onChanged,
+    this.preferredPrefix,
   });
 
   final String label;
@@ -291,6 +303,13 @@ class _SuggestionField extends StatelessWidget {
   final String initialValue;
   final List<String> suggestions;
   final ValueChanged<String> onChanged;
+
+  /// When set (e.g. the keyboard brand the user already picked), matches
+  /// whose name starts with this — or one of its parenthesized aliases,
+  /// see `_brandTokens` — are shown ahead of the rest, so picking a brand
+  /// first means its models surface without retyping the brand name.
+  /// Never excludes anything: a query still searches every suggestion.
+  final String? preferredPrefix;
 
   /// The most matches shown at once — plenty to scroll through, but a
   /// hard ceiling so a broad query (e.g. a single common letter) against
@@ -305,11 +324,17 @@ class _SuggestionField extends StatelessWidget {
       optionsBuilder: (value) {
         if (value.text.isEmpty) return const Iterable<String>.empty();
         final query = value.text.toLowerCase();
+        final prefix = preferredPrefix;
+        final pool = (prefix == null || prefix.isEmpty)
+            ? suggestions
+            : preferBrandMatches(suggestions, prefix);
         // Single pass: prefix matches ("Key" -> "Keychron...") are the
-        // most relevant, so they're returned ahead of mid-string ones.
+        // most relevant, so they're returned ahead of mid-string ones —
+        // brand-preferred entries (see `pool` above) sort ahead within
+        // each of those two groups too.
         final startsWith = <String>[];
         final contains = <String>[];
-        for (final suggestion in suggestions) {
+        for (final suggestion in pool) {
           final lower = suggestion.toLowerCase();
           if (lower.startsWith(query)) {
             startsWith.add(suggestion);

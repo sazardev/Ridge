@@ -850,20 +850,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get practiceZenTitle => 'Zen practice';
 
   @override
-  String get practiceStartHint =>
-      'Start typing to begin — no timer, no pressure.';
-
-  @override
-  String practiceLiveCharsTyped(int count) {
-    return '$count typed';
-  }
-
-  @override
-  String practiceLiveAccuracy(String pct) {
-    return '$pct% so far';
-  }
-
-  @override
   String practiceLiveLives(int count) {
     return '$count lives left';
   }

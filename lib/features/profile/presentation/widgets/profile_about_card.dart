@@ -3,9 +3,8 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
-import 'package:ridge/features/profile/presentation/keyboard_shape_lookup.dart';
 import 'package:ridge/features/profile/presentation/profile_labels.dart';
-import 'package:ridge/features/profile/presentation/widgets/keyboard_shape_preview.dart';
+import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_visual.dart';
 
 /// A card of the active profile's self-expression flair — favorite
 /// language, keyboard layout/brand, and favorite quote/programmer — with
@@ -34,7 +33,6 @@ class ProfileAboutCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final shapeFamily = keyboardShapeFamilyFor(profile.keyboardModel);
 
     return Card(
       shape: AppShapes.of(context).largeShape,
@@ -107,12 +105,9 @@ class ProfileAboutCard extends StatelessWidget {
                     ),
                 ],
               ),
-              if (shapeFamily != null) ...[
+              if (profile.keyboardModel?.isNotEmpty ?? false) ...[
                 const SizedBox(height: 16),
-                KeyboardShapePreview(
-                  family: shapeFamily,
-                  modelLabel: profile.keyboardModel!,
-                ),
+                KeyboardVisual(model: profile.keyboardModel),
               ],
               if (profile.favoriteQuote?.isNotEmpty ?? false) ...[
                 const SizedBox(height: 16),

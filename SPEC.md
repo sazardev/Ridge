@@ -233,6 +233,7 @@ El principio de identidad del producto es: **la mínima fricción y la mínima i
 ### 7.3 Qué contiene un perfil (información visible)
 - Username, avatar/cosméticos elegidos, nivel y XP, rating de habilidad y liga actual, racha de días activos, insignias/logros obtenidos, resumen de estadísticas históricas (velocidad promedio, precisión promedio, total de caracteres escritos en la vida del usuario), escuadrón al que pertenece (si aplica).
 - No hay nombre real, correo, ni ningún identificador personal en ninguna parte del perfil.
+- Autoexpresión opcional, puramente decorativa (no afecta métricas ni clasificación de teclas): lenguaje de programación favorito, layout de teclado (QWERTY/AZERTY/Dvorak/...), marca/modelo de teclado físico, programador y cita favoritos. Cuando el modelo de teclado es uno reconocido, se muestra una vista 2D de su silueta física — fiel a la disposición real para un puñado de modelos curados con datos públicos verificables, o una silueta genérica por tamaño/familia para el resto.
 
 ---
 

@@ -325,23 +325,6 @@
   "snippetPracticeAction": "Practice",
 
   "practiceZenTitle": "Zen practice",
-  "practiceStartHint": "Start typing to begin — no timer, no pressure.",
-  "practiceLiveCharsTyped": "{count} typed",
-  "@practiceLiveCharsTyped": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "practiceLiveAccuracy": "{pct}% so far",
-  "@practiceLiveAccuracy": {
-    "placeholders": {
-      "pct": {
-        "type": "String"
-      }
-    }
-  },
   "practiceLiveLives": "{count} lives left",
   "@practiceLiveLives": {
     "placeholders": {

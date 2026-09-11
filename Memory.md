@@ -74,6 +74,123 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ## Historial de sesiones
 
+### 2026-09-11 — Vista 2D fiel del teclado en Profile + banco de layouts curado
+
+- **Pedido del usuario**: pulir el apartado visual del teclado en Profile
+  (aislar el componente) y el "banco de datos" de layouts — un catálogo
+  de JSON por teclado, sourced de GitHub/QMK, para un prototipo 2D fiel
+  estilo VIA (no solo la silueta genérica que ya existía).
+- **Hallazgo clave que reencuadró el alcance**: la mayoría de los ~150
+  modelos de `kKeyboardModelSuggestions` (Corsair, Razer, Logitech,
+  SteelSeries, ASUS ROG, MSI, marcas chinas económicas) son placas de
+  firmware cerrado sin datos públicos de layout en ningún repo —
+  inventar coordenadas para esos sería peor que la silueta genérica
+  honesta que ya había. Solo los teclados hackeables QMK/VIA (split
+  ergo y algunos boards custom) tienen datos verificables.
+- **Arquitectura nueva** (`lib/features/profile/{domain,infrastructure,
+  presentation}/`): `KeyboardKeySpec`/`KeyboardVisualLayout` (dominio,
+  vocabulario KLE: x,y,w,h,x2,y2,w2,h2,rotación) + puerto
+  `KeyboardVisualLayoutSource` + `KeyboardVisualLayoutLocalDataSource`
+  (JSON empaquetado, sin drift — mismo patrón que Learning Paths) +
+  `KeyboardLayoutPainter`/`keyboard_layout_geometry.dart` (un solo motor
+  de render con soporte de rotación, reemplaza los dos paths bespoke
+  `_paintRowBased`/`_paintSplitErgo` de `keyboard_shape_preview.dart`,
+  eliminado) + `standard_family_key_specs.dart` (fallback genérico por
+  familia, mismo grid visual de antes, re-expresado). `KeyboardVisual`
+  es el único punto de integración — usado en `ProfileAboutCard` y ahora
+  también en `EditProfileScreen` (preview en vivo mientras se escribe el
+  modelo).
+- **Banco curado** (`assets/content/keyboard_layouts/`): primera pasada,
+  8 modelos reales confirmados vía `qmk/qmk_firmware` (ErgoDox EZ, ZSA
+  Moonlander/Voyager, HHKB Professional Hybrid, Keychron Q1, Glorious
+  GMMK Pro, Drop ALT/CTRL) — GPL-2.0, atribución en
+  `THIRD_PARTY_SOURCES.md` + licencia vendorizada en
+  `LICENSES/GPL-2.0.txt` (mismo precedente que `assets/fonts/LICENSE.txt`
+  del Geist). Kinesis Advantage360 se descartó a propósito: corre ZMK,
+  sin `info.json`/`keyboard.json` público en ningún lado — documentado
+  para que no se re-investigue.
+- **Ampliación del banco (misma sesión, a pedido del usuario — tiene un
+  MCHOSE GX87 y quería "muchísimos más")**: **24 modelos** en total tras
+  un barrido sistemático de toda `kKeyboardModelSuggestions` contra
+  `the-via/keyboards` (~3500 defs, no aportó nada nuevo — son casi todas
+  boards indie/maker, no las marcas de esta lista) y `qmk/qmk_firmware`
+  (la fuente productiva: +15 modelos — Akko 5108B, Glorious GMMK
+  Numpad/2, Monsgeek M1/M3, Royal Kludge RK61, Skyloong GK61, Kinesis
+  Advantage2, Keychron Q2/Q3/Q10/V1/V3/V6/V10). **MCHOSE GX87** confirmado
+  vía un fork GPL-2.0 de `qmk_firmware` (`jonylee1986/qmk_firmware_master`,
+  rama `mchose_gx87`) al que el propio fabricante remite a los usuarios
+  de VIA — no está mergeado upstream, documentado como tal en el
+  `"source"` del JSON; se agregó como entrada nueva en
+  `kKeyboardModelSuggestions`/`keyboard_shape_lookup.dart` (no existía
+  antes). Confirmado por el mismo barrido: Corsair/Razer/Logitech/
+  SteelSeries/ASUS ROG/MSI/Wooting/Varmilo/Leopold/Topre-Realforce/
+  Vortex/Womier/Attack Shark/Epomaker/etc. **no tienen dato público en
+  ningún lado** — listado exacto de qué se buscó y no se encontró en
+  `THIRD_PARTY_SOURCES.md`, para no re-investigarlo después.
+- **Verificado (ampliación del banco)**: `bash tool/check.sh` verde
+  (**383 tests**, format/analyze/arquitectura limpios) — corrido dos
+  veces tras la ampliación para descartar flakiness (una corrida tuvo un
+  fallo aislado en `survival_controller_drift_integration_test.dart`, no
+  relacionado con este trabajo — pasó limpio tanto solo como en dos
+  corridas completas posteriores).
+- **UX: brand → model ya no se repite dos veces** (a pedido del usuario,
+  misma sesión): en `EditProfileScreen`, elegir una marca de teclado
+  ahora prioriza (sin excluir nada — sigue siendo texto libre) los
+  modelos de esa marca en el autocomplete del campo Modelo, en vez de
+  obligar a re-escribir el nombre de la marca ahí también. Lógica
+  extraída a `keyboard_model_brand_matching.dart` (`preferBrandMatches`/
+  `brandTokens`, testeada aparte) — maneja marcas con alias entre
+  paréntesis (`"ZSA (ErgoDox/Moonlander/Voyager)"` → también prioriza
+  "ErgoDox EZ" aunque el nombre del producto no diga "ZSA"). Nota técnica
+  real: `Autocomplete` de Flutter solo recalcula opciones cuando el
+  *texto* del campo cambia, no en cada rebuild del padre — por eso esto
+  actúa al escribir en el campo Modelo, no al sólo enfocarlo vacío tras
+  elegir marca (se evaluó y se descartó por no ser alcanzable sin pelear
+  contra el widget).
+- **Pendiente natural (no bloqueante)**: el patrón ya está armado para
+  seguir sumando modelos QMK/VIA al banco curado con el tiempo — es
+  trabajo de curación de datos, no de arquitectura. La lista de "buscado
+  y no encontrado" en `THIRD_PARTY_SOURCES.md` evita reabrir búsquedas ya
+  agotadas.
+
+### 2026-09-11 — Fix: el tamaño de ventana no persistía en Linux/WSLg
+
+- **Reportado por el usuario**: "no persiste mi preferencia en linux (wsl)
+  de como deje el tamaño de la ventana, se queda la default cada que
+  levanto el sistema" — la persistencia (`WindowGeometryStore`,
+  `WindowGeometryListener`, restauración en `main.dart`) ya existía desde
+  el commit inicial; el bug estaba en la restauración, no en el guardado.
+- **Causa real, verificada empíricamente** (`flutter run -d linux
+  --release` bajo WSLg/Weston, con prints de depuración temporales
+  leyendo `windowManager.getBounds()` en distintos puntos del arranque):
+  pedir un tamaño (`WindowOptions.size` o `setBounds()`) **antes** de que
+  la ventana esté mapeada (`show()`) pierde ~50px en ancho y alto de
+  forma constante — el primer `configure` del compositor devuelve un
+  tamaño menor al pedido. `WindowGeometryListener` guardaba ese tamaño ya
+  encogido, y el siguiente arranque encogía ~50px más: la ventana se
+  reducía en cada reinicio (982×482 → 930×430 → 878×378 → ... verificado
+  con capturas repetidas del archivo `shared_preferences.json` en
+  `~/.local/share/dev.omarcodes.ridge/`). Aplicar `setBounds()` en una
+  ventana **ya mapeada** (después de `show()`/`focus()`) no pierde nada —
+  confirmado reproduciendo el mismo arranque con el orden invertido y
+  comparando el tamaño pedido contra `getBounds()` tras ~700ms.
+- **Fix** en `lib/main.dart`: dentro del callback de
+  `waitUntilReadyToShow`, `show()`/`focus()` ahora corren primero, y
+  `setBounds()`/`maximize()` (la restauración de geometría guardada) se
+  aplican después — `windowOptions.size` se mantiene igual (evita el
+  flash al tamaño default 1280×800 antes de la corrección). Sin números
+  mágicos ni delays artificiales: el fix es el reordenamiento en sí.
+- **Limitación de plataforma, no bug nuestro**: la posición (x, y) nunca
+  se restaura bajo este WSLg/Weston — Wayland no permite a un cliente
+  consultar ni fijar su posición absoluta en pantalla (a diferencia de
+  X11). El usuario solo reportó problema con el *tamaño*; se le explicó
+  la limitación de posición aparte.
+- **Verificado**: dos arranques consecutivos con geometría guardada
+  1000×700 — el tamaño se mantuvo exacto en ambos, sin encogerse.
+  `bash tool/check.sh` verde (**366 tests**, format/analyze/arquitectura
+  limpios). Diff final: 12 líneas en `lib/main.dart` (reordenar +
+  comentario explicando el porqué).
+
 ### 2026-09-10 — Exports PNG del mark + `MARKETING.md` ampliado (design system completo)
 
 - **Pedido del usuario**: tener PNGs del mark a la mano en distintos
@@ -807,12 +924,15 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   le da uso real en recomendaciones.
 - Considerar versionar el harness de verificación de contenido SQL dentro
   de `tool/` (hoy efímero en `/tmp`).
+- Ampliar `assets/content/keyboard_layouts/` con más modelos QMK/VIA con
+  el tiempo (ver sesión 2026-09-11) — el patrón/arquitectura ya está
+  armado, es trabajo de curación de datos, no de código.
 
 ## Comandos clave
 
 ```sh
 bash tool/check.sh                         # gate completo
-flutter test                               # suite (315 tests)
+flutter test                               # suite (391 tests)
 python3 .claude/skills/content-curriculum/scripts/audit_lesson_order.py \
   assets/content/snippets/sql_v1.json \
   assets/content/learning_paths/sql_foundations_v1.json

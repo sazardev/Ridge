@@ -12,8 +12,6 @@ import 'package:ridge/features/achievements/presentation/providers/achievements_
 import 'package:ridge/features/achievements/presentation/widgets/achievement_unlocked_toast.dart';
 import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/presentation/content_labels.dart';
-import 'package:ridge/features/practice/domain/entities/keystroke.dart';
-import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
 import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
 import 'package:ridge/features/practice/domain/entities/practice_session_status.dart';
 import 'package:ridge/features/practice/domain/services/survival_run_tracker.dart';
@@ -272,32 +270,27 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (state.status == PracticeSessionStatus.idle) ...[
-                  Text(
-                    l10n.practiceStartHint,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(height: 12),
-                ],
-                if (state.status == PracticeSessionStatus.running) ...[
-                  _LiveStatsRow(
-                    keystrokes: state.recorder.keystrokes,
-                    survival: survival,
-                  ),
+                if (state.status == PracticeSessionStatus.running &&
+                    survival != null) ...[
+                  _LiveStatsRow(survival: survival),
                   const SizedBox(height: 8),
                 ],
                 // While typing (idle/running), the result area below has
                 // nothing to show yet — omitting it from the column
                 // entirely (rather than reserving its flex share for an
                 // empty `SizedBox.shrink`) lets the code field's
-                // `Flexible` claim the *whole* remaining height instead
+                // `Expanded` claim the *whole* remaining height instead
                 // of splitting it with blank space, which is what makes
                 // this a comfortable full-height editor rather than a
                 // cramped one (SPEC.md's longer DDD/hexagonal-
                 // architecture content needs every pixel it can get).
+                // `Expanded` (tight fit) rather than `Flexible` (loose
+                // fit) so the card always fills that height instead of
+                // shrinking to short snippets' content size — see the
+                // matching `ConstrainedBox` in `KeystrokeCaptureField`.
                 // Once a result actually exists, the field gives room
                 // back to it below.
-                Flexible(
+                Expanded(
                   child: KeystrokeCaptureField(snippet: snippet, mode: mode),
                 ),
                 if (showResultArea) ...[
@@ -358,26 +351,15 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
   }
 }
 
-/// Small live readout updated on every keystroke — shown only while a
-/// session is actually `running` (the screen already rebuilds then).
-///
-/// For most modes: characters typed and running accuracy, a cheap,
-/// deliberately simple companion to the capture field's live
-/// per-character coloring: a continuously-moving number is its own kind
-/// of feedback that "yes, this is working," distinct from (and
-/// complementary to) knowing whether any one character was right or
-/// wrong.
-///
-/// For Survival (§5.8): the run-local score, current combo multiplier,
-/// and snippets cleared, since lives/score are the mode's whole point and
-/// accuracy is already reflected in the capture field and result panel.
+/// Small live readout for Survival (§5.8) only — the run-local score,
+/// current combo multiplier, and snippets cleared, since lives/score are
+/// the mode's whole point. Every other mode's typing progress is carried
+/// entirely by `TypingProgressBar` now, with no numeric chars-typed/
+/// accuracy readout competing with it.
 class _LiveStatsRow extends StatelessWidget {
-  const new({required this.keystrokes, this.survival});
+  const new({required this.survival});
 
-  final List<Keystroke> keystrokes;
-
-  /// The live Survival run state, or `null` for every other mode.
-  final SurvivalRunTracker? survival;
+  final SurvivalRunTracker survival;
 
   @override
   Widget build(BuildContext context) {
@@ -387,42 +369,19 @@ class _LiveStatsRow extends StatelessWidget {
       color: theme.colorScheme.onSurfaceVariant,
     );
 
-    final survival = this.survival;
-    if (survival != null) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(l10n.practiceLiveScore(survival.score), style: subtleStyle),
-          Text(
-            l10n.practiceLiveMultiplier(survival.multiplier),
-            style: theme.textTheme.titleSmall?.copyWith(
-              color: theme.colorScheme.primary,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Text(
-            l10n.practiceLiveSnippets(survival.snippetsCleared),
-            style: subtleStyle,
-          ),
-        ],
-      );
-    }
-
-    var typed = 0;
-    var correct = 0;
-    for (final k in keystrokes) {
-      if (k.isCorrection) continue;
-      typed++;
-      if (k.result == KeystrokeResult.correct) correct++;
-    }
-    final accuracy = typed == 0 ? 100.0 : (correct / typed) * 100;
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(l10n.practiceLiveCharsTyped(typed), style: subtleStyle),
+        Text(l10n.practiceLiveScore(survival.score), style: subtleStyle),
         Text(
-          l10n.practiceLiveAccuracy(accuracy.toStringAsFixed(0)),
+          l10n.practiceLiveMultiplier(survival.multiplier),
+          style: theme.textTheme.titleSmall?.copyWith(
+            color: theme.colorScheme.primary,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        Text(
+          l10n.practiceLiveSnippets(survival.snippetsCleared),
           style: subtleStyle,
         ),
       ],

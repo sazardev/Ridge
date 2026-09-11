@@ -129,6 +129,15 @@ it). The app never writes to the pack directory itself — it's a
 drop-in extension point for externally supplied JSON in the same DTO
 shape, not a user-facing feature yet.
 
+The profile feature's `assets/content/keyboard_layouts/` (a `manifest.json`
+model→file map plus one curated JSON per model, real physical key
+geometry extracted from public open-source keyboard-firmware repos, with
+attribution/license in that directory's `THIRD_PARTY_SOURCES.md`) is
+another bundled-asset content bank, following Learning Paths' simpler
+variant of the pattern: no drift table, no external-pack seam, read
+straight from the bundle (`keyboard_visual_layout_local_data_source.dart`)
+since it's static, never user-mutated reference content.
+
 ### Riverpod
 
 State management is Riverpod 3 with `@riverpod`/`@Riverpod(keepAlive: true)`

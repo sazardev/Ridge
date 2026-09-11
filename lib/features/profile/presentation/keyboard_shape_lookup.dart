@@ -113,6 +113,7 @@ const Map<String, KeyboardShapeFamily> _keyboardShapeFamilyByModel = {
   'MCHOSE G68': KeyboardShapeFamily.sixtyFive,
   'MCHOSE G75': KeyboardShapeFamily.seventyFive,
   'MCHOSE G96': KeyboardShapeFamily.fullSize,
+  'MCHOSE GX87': KeyboardShapeFamily.tkl,
   'Monsgeek Fun60': KeyboardShapeFamily.sixty,
   'Monsgeek M1': KeyboardShapeFamily.seventyFive,
   'Monsgeek M3': KeyboardShapeFamily.tkl,

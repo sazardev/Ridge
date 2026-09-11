@@ -312,23 +312,6 @@
   "snippetPracticeAction": "Practicar",
 
   "practiceZenTitle": "Práctica Zen",
-  "practiceStartHint": "Empieza a escribir para comenzar — sin límite de tiempo, sin presión.",
-  "practiceLiveCharsTyped": "{count} escritos",
-  "@practiceLiveCharsTyped": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "practiceLiveAccuracy": "{pct}% hasta ahora",
-  "@practiceLiveAccuracy": {
-    "placeholders": {
-      "pct": {
-        "type": "String"
-      }
-    }
-  },
   "practiceLiveLives": "{count} vidas restantes",
   "@practiceLiveLives": {
     "placeholders": {

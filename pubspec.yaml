@@ -91,6 +91,33 @@ flutter:
     - assets/content/learning_paths/bash_toolkit_v1.json
     - assets/content/learning_paths/sql_foundations_v1.json
     - assets/content/learning_paths/rust_foundations_v1.json
+    - assets/content/keyboard_layouts/manifest.json
+    - assets/content/keyboard_layouts/ergodox_ez.json
+    - assets/content/keyboard_layouts/zsa_moonlander.json
+    - assets/content/keyboard_layouts/zsa_voyager.json
+    - assets/content/keyboard_layouts/hhkb_professional_hybrid.json
+    - assets/content/keyboard_layouts/keychron_q1.json
+    - assets/content/keyboard_layouts/glorious_gmmk_pro.json
+    - assets/content/keyboard_layouts/drop_alt.json
+    - assets/content/keyboard_layouts/drop_ctrl.json
+    - assets/content/keyboard_layouts/akko_5108.json
+    - assets/content/keyboard_layouts/glorious_gmmk_numpad.json
+    - assets/content/keyboard_layouts/glorious_gmmk_2.json
+    - assets/content/keyboard_layouts/monsgeek_m1.json
+    - assets/content/keyboard_layouts/monsgeek_m3.json
+    - assets/content/keyboard_layouts/royal_kludge_rk61.json
+    - assets/content/keyboard_layouts/skyloong_gk61.json
+    - assets/content/keyboard_layouts/kinesis_advantage2.json
+    - assets/content/keyboard_layouts/keychron_q2.json
+    - assets/content/keyboard_layouts/keychron_q3.json
+    - assets/content/keyboard_layouts/keychron_q10.json
+    - assets/content/keyboard_layouts/keychron_v1.json
+    - assets/content/keyboard_layouts/keychron_v3.json
+    - assets/content/keyboard_layouts/keychron_v6.json
+    - assets/content/keyboard_layouts/keychron_v10.json
+    - assets/content/keyboard_layouts/mchose_gx87.json
+    - assets/content/keyboard_layouts/THIRD_PARTY_SOURCES.md
+    - assets/content/keyboard_layouts/LICENSES/GPL-2.0.txt
     - assets/sounds/mechanical/key_click.wav
     - assets/sounds/mechanical/key_reject.wav
     - assets/sounds/soft/key_click.wav
