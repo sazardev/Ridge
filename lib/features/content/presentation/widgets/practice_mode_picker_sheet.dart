@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 
 /// Plain string identifiers for the practice-mode choices offered by
 /// [showPracticeModePickerSheet] — deliberately *not* `practice`'s own
@@ -44,8 +45,22 @@ Future<String?> showPracticeModePickerSheet(BuildContext context) {
 }
 
 /// Modal sheet content for [showPracticeModePickerSheet].
-class _PracticeModePickerSheet extends StatelessWidget {
+class _PracticeModePickerSheet extends StatefulWidget {
   const new();
+
+  @override
+  State<_PracticeModePickerSheet> createState() =>
+      _PracticeModePickerSheetState();
+}
+
+class _PracticeModePickerSheetState extends State<_PracticeModePickerSheet> {
+  final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,58 +72,70 @@ class _PracticeModePickerSheet extends StatelessWidget {
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 36,
-                height: 4,
-                margin: const EdgeInsets.only(bottom: 20),
-                decoration: BoxDecoration(
-                  color: colorScheme.outlineVariant,
-                  borderRadius: AppShapes.squircleRadius(
-                    AppShapes.of(context).full,
+      child: KeyboardScrollShortcuts(
+        controller: _scrollController,
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 36,
+                  height: 4,
+                  margin: const EdgeInsets.only(bottom: 20),
+                  decoration: BoxDecoration(
+                    color: colorScheme.outlineVariant,
+                    borderRadius: AppShapes.squircleRadius(
+                      AppShapes.of(context).full,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Text(l10n.practiceModePickerTitle, style: textTheme.headlineSmall),
-            const SizedBox(height: 8),
-            _ModeOption(
-              label: l10n.practiceModeZen,
-              subtitle: l10n.practiceModeZenSubtitle,
-              onTap: () => Navigator.of(context).pop(practiceModeKindZen),
-            ),
-            _ModeOption(
-              label: l10n.practiceModeSprint30,
-              subtitle: l10n.practiceModeSprintSubtitle,
-              onTap: () => Navigator.of(context).pop(practiceModeKindSprint30),
-            ),
-            _ModeOption(
-              label: l10n.practiceModeSprint60,
-              subtitle: l10n.practiceModeSprintSubtitle,
-              onTap: () => Navigator.of(context).pop(practiceModeKindSprint60),
-            ),
-            _ModeOption(
-              label: l10n.practiceModeSprint120,
-              subtitle: l10n.practiceModeSprintSubtitle,
-              onTap: () => Navigator.of(context).pop(practiceModeKindSprint120),
-            ),
-            _ModeOption(
-              label: l10n.practiceModePrecision,
-              subtitle: l10n.practiceModePrecisionSubtitle,
-              onTap: () => Navigator.of(context).pop(practiceModeKindPrecision),
-            ),
-            _ModeOption(
-              label: l10n.practiceModeSurvival,
-              subtitle: l10n.practiceModeSurvivalSubtitle,
-              onTap: () => Navigator.of(context).pop(practiceModeKindSurvival),
-            ),
-          ],
+              Text(
+                l10n.practiceModePickerTitle,
+                style: textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 8),
+              _ModeOption(
+                label: l10n.practiceModeZen,
+                subtitle: l10n.practiceModeZenSubtitle,
+                onTap: () => Navigator.of(context).pop(practiceModeKindZen),
+              ),
+              _ModeOption(
+                label: l10n.practiceModeSprint30,
+                subtitle: l10n.practiceModeSprintSubtitle,
+                onTap: () =>
+                    Navigator.of(context).pop(practiceModeKindSprint30),
+              ),
+              _ModeOption(
+                label: l10n.practiceModeSprint60,
+                subtitle: l10n.practiceModeSprintSubtitle,
+                onTap: () =>
+                    Navigator.of(context).pop(practiceModeKindSprint60),
+              ),
+              _ModeOption(
+                label: l10n.practiceModeSprint120,
+                subtitle: l10n.practiceModeSprintSubtitle,
+                onTap: () =>
+                    Navigator.of(context).pop(practiceModeKindSprint120),
+              ),
+              _ModeOption(
+                label: l10n.practiceModePrecision,
+                subtitle: l10n.practiceModePrecisionSubtitle,
+                onTap: () =>
+                    Navigator.of(context).pop(practiceModeKindPrecision),
+              ),
+              _ModeOption(
+                label: l10n.practiceModeSurvival,
+                subtitle: l10n.practiceModeSurvivalSubtitle,
+                onTap: () =>
+                    Navigator.of(context).pop(practiceModeKindSurvival),
+              ),
+            ],
+          ),
         ),
       ),
     );

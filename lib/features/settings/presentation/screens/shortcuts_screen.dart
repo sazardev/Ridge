@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/features/settings/domain/entities/app_settings.dart';
 import 'package:ridge/features/settings/domain/entities/app_shortcut_action.dart';
 import 'package:ridge/features/settings/domain/entities/shortcut_binding.dart';
@@ -16,12 +17,25 @@ import 'package:ridge/features/settings/presentation/widgets/settings_section.da
 /// Lists every customizable global keyboard shortcut and lets the user
 /// rebind each one (SPEC.md's keyboard-first requirement, STACK.md
 /// §2.5) — reached from Settings' "Atajos de teclado" row.
-class ShortcutsScreen extends ConsumerWidget {
+class ShortcutsScreen extends ConsumerStatefulWidget {
   /// Creates the shortcuts screen.
   const new({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ShortcutsScreen> createState() => _ShortcutsScreenState();
+}
+
+class _ShortcutsScreenState extends ConsumerState<ShortcutsScreen> {
+  final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final settings =
         ref.watch(settingsControllerProvider).value ?? AppSettings.initial;
@@ -29,37 +43,41 @@ class ShortcutsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.shortcutsScreenTitle)),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
-        children: [
-          SettingsSection(
-            title: l10n.settingsSectionShortcuts,
-            children: [
-              for (final action in AppShortcutAction.values) ...[
-                if (action != AppShortcutAction.values.first)
-                  const Divider(height: 1, indent: 16, endIndent: 16),
-                ListTile(
-                  title: Text(action.label(l10n)),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(bindings[action]?.displayLabel ?? '—'),
-                      const SizedBox(width: 8),
-                      const Icon(LucideIcons.squarePen300, size: 18),
-                    ],
+      body: KeyboardScrollShortcuts(
+        controller: _scrollController,
+        child: ListView(
+          controller: _scrollController,
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
+          children: [
+            SettingsSection(
+              title: l10n.settingsSectionShortcuts,
+              children: [
+                for (final action in AppShortcutAction.values) ...[
+                  if (action != AppShortcutAction.values.first)
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                  ListTile(
+                    title: Text(action.label(l10n)),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(bindings[action]?.displayLabel ?? '—'),
+                        const SizedBox(width: 8),
+                        const Icon(LucideIcons.squarePen300, size: 18),
+                      ],
+                    ),
+                    onTap: () => _showCaptureDialog(
+                      context: context,
+                      ref: ref,
+                      l10n: l10n,
+                      action: action,
+                      bindings: bindings,
+                    ),
                   ),
-                  onTap: () => _showCaptureDialog(
-                    context: context,
-                    ref: ref,
-                    l10n: l10n,
-                    action: action,
-                    bindings: bindings,
-                  ),
-                ),
+                ],
               ],
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

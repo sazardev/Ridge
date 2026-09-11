@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 
 /// Content for a single onboarding step: an icon, a title, and a
 /// supporting line. Plain data so the step list stays declarative and
@@ -28,7 +29,7 @@ class OnboardingPageData {
 /// restrained fade-and-rise entrance — the only motion here beyond the
 /// [PageView]'s own horizontal slide, since the design system reserves
 /// louder motion for genuine feedback (see `PinDots`), not for scenery.
-class OnboardingPage extends StatelessWidget {
+class OnboardingPage extends StatefulWidget {
   /// Creates the page for [data].
   const new({required this.data, super.key});
 
@@ -36,46 +37,64 @@ class OnboardingPage extends StatelessWidget {
   final OnboardingPageData data;
 
   @override
+  State<OnboardingPage> createState() => _OnboardingPageState();
+}
+
+class _OnboardingPageState extends State<OnboardingPage> {
+  final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final data = widget.data;
 
     return Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 360),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: colorScheme.primaryContainer,
+          child: KeyboardScrollShortcuts(
+            controller: _scrollController,
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 360),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: colorScheme.primaryContainer,
+                      ),
+                      child: Icon(
+                        data.icon,
+                        size: 56,
+                        color: colorScheme.onPrimaryContainer,
+                      ),
                     ),
-                    child: Icon(
-                      data.icon,
-                      size: 56,
-                      color: colorScheme.onPrimaryContainer,
+                    const SizedBox(height: 40),
+                    Text(
+                      data.title,
+                      style: textTheme.headlineSmall,
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                  const SizedBox(height: 40),
-                  Text(
-                    data.title,
-                    style: textTheme.headlineSmall,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    data.description,
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
+                    const SizedBox(height: 12),
+                    Text(
+                      data.description,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

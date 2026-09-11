@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/core/window/window_bar.dart';
 import 'package:ridge/features/lock/presentation/providers/lock_providers.dart';
 import 'package:ridge/features/lock/presentation/widgets/numeric_keypad.dart';
@@ -42,9 +43,16 @@ class _LockScreenState extends ConsumerState<LockScreen> {
   String? _firstEntry;
   int _errorTick = 0;
   bool _submitting = false;
+  final _scrollController = ScrollController();
 
   bool get _isSetup => widget.mode == LockScreenMode.setup;
   bool get _isConfirmStep => _isSetup && _firstEntry != null;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -189,59 +197,63 @@ class _LockScreenState extends ConsumerState<LockScreen> {
           Expanded(
             child: SafeArea(
               child: Center(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 32,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        LucideIcons.lock300,
-                        size: 40,
-                        color: colorScheme.primary,
-                      ),
-                      const SizedBox(height: 24),
-                      AnimatedSwitcher(
-                        duration: AppMotion.effectsDefault,
-                        child: Text(
-                          title,
-                          key: ValueKey(title),
-                          style: textTheme.headlineSmall,
+                child: KeyboardScrollShortcuts(
+                  controller: _scrollController,
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 32,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          LucideIcons.lock300,
+                          size: 40,
+                          color: colorScheme.primary,
+                        ),
+                        const SizedBox(height: 24),
+                        AnimatedSwitcher(
+                          duration: AppMotion.effectsDefault,
+                          child: Text(
+                            title,
+                            key: ValueKey(title),
+                            style: textTheme.headlineSmall,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          subtitle,
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                           textAlign: TextAlign.center,
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        subtitle,
-                        style: textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
+                        const SizedBox(height: 40),
+                        PinDots(
+                          length: _pinLength,
+                          filled: _buffer.length,
+                          errorTick: _errorTick,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 40),
-                      PinDots(
-                        length: _pinLength,
-                        filled: _buffer.length,
-                        errorTick: _errorTick,
-                      ),
-                      const SizedBox(height: 40),
-                      NumericKeypad(
-                        onDigit: _onDigit,
-                        onBackspace: _onBackspace,
-                      ),
-                      if (showBiometricButton) ...[
-                        const SizedBox(height: 24),
-                        TextButton.icon(
-                          onPressed: _submitting
-                              ? null
-                              : _authenticateWithBiometrics,
-                          icon: const Icon(LucideIcons.fingerprint300),
-                          label: Text(l10n.lockUseBiometrics),
+                        const SizedBox(height: 40),
+                        NumericKeypad(
+                          onDigit: _onDigit,
+                          onBackspace: _onBackspace,
                         ),
+                        if (showBiometricButton) ...[
+                          const SizedBox(height: 24),
+                          TextButton.icon(
+                            onPressed: _submitting
+                                ? null
+                                : _authenticateWithBiometrics,
+                            icon: const Icon(LucideIcons.fingerprint300),
+                            label: Text(l10n.lockUseBiometrics),
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
               ),

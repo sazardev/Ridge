@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/widgets/escape_to_pop.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
@@ -49,6 +50,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
   bool _submitting = false;
   String? _errorText;
+  final _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -71,6 +73,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   void dispose() {
     _quoteController.dispose();
     _languageSearchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -131,127 +134,139 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             ),
           ],
         ),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
-          children: [
-            if (_errorText != null) ...[
-              Text(
-                _errorText!,
-                style: textTheme.bodyMedium?.copyWith(color: colorScheme.error),
-              ),
-              const SizedBox(height: 16),
-            ],
-            Text(
-              l10n.profileFavoriteLanguageLabel,
-              style: textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _languageSearchController,
-              textInputAction: TextInputAction.search,
-              decoration: InputDecoration(
-                hintText: l10n.profileSearchLanguageHint,
-                prefixIcon: const Icon(LucideIcons.search300),
-                suffixIcon: _languageQuery.isEmpty
-                    ? null
-                    : IconButton(
-                        icon: const Icon(LucideIcons.x300),
-                        onPressed: _languageSearchController.clear,
-                      ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            if (filteredLanguages.isEmpty)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Text(
-                  l10n.profileSearchNoResults,
+        body: KeyboardScrollShortcuts(
+          controller: _scrollController,
+          child: ListView(
+            controller: _scrollController,
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+            children: [
+              if (_errorText != null) ...[
+                Text(
+                  _errorText!,
                   style: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
+                    color: colorScheme.error,
                   ),
                 ),
-              )
-            else
+                const SizedBox(height: 16),
+              ],
+              Text(
+                l10n.profileFavoriteLanguageLabel,
+                style: textTheme.titleMedium,
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _languageSearchController,
+                textInputAction: TextInputAction.search,
+                decoration: InputDecoration(
+                  hintText: l10n.profileSearchLanguageHint,
+                  prefixIcon: const Icon(LucideIcons.search300),
+                  suffixIcon: _languageQuery.isEmpty
+                      ? null
+                      : IconButton(
+                          icon: const Icon(LucideIcons.x300),
+                          onPressed: _languageSearchController.clear,
+                        ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              if (filteredLanguages.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Text(
+                    l10n.profileSearchNoResults,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                )
+              else
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final language in filteredLanguages.take(
+                      _visibleLanguageCount,
+                    ))
+                      FilterChip(
+                        label: Text(language.label(l10n)),
+                        selected: _languages.contains(language),
+                        onSelected: (selected) => setState(() {
+                          if (selected) {
+                            _languages.add(language);
+                          } else {
+                            _languages.remove(language);
+                          }
+                        }),
+                      ),
+                    if (filteredLanguages.length > _visibleLanguageCount)
+                      ActionChip(
+                        avatar: const Icon(
+                          LucideIcons.chevronDown300,
+                          size: 18,
+                        ),
+                        label: Text(l10n.profileLanguageShowMore),
+                        onPressed: () => setState(
+                          () => _visibleLanguageCount += _languageBatchSize,
+                        ),
+                      ),
+                  ],
+                ),
+              const SizedBox(height: 28),
+              Text(
+                l10n.profileKeyboardLayoutLabel,
+                style: textTheme.titleMedium,
+              ),
+              const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  for (final language in filteredLanguages.take(
-                    _visibleLanguageCount,
-                  ))
-                    FilterChip(
-                      label: Text(language.label(l10n)),
-                      selected: _languages.contains(language),
-                      onSelected: (selected) => setState(() {
-                        if (selected) {
-                          _languages.add(language);
-                        } else {
-                          _languages.remove(language);
-                        }
-                      }),
-                    ),
-                  if (filteredLanguages.length > _visibleLanguageCount)
-                    ActionChip(
-                      avatar: const Icon(LucideIcons.chevronDown300, size: 18),
-                      label: Text(l10n.profileLanguageShowMore),
-                      onPressed: () => setState(
-                        () => _visibleLanguageCount += _languageBatchSize,
-                      ),
+                  for (final layout in KeyboardLayout.values)
+                    ChoiceChip(
+                      label: Text(layout.label(l10n)),
+                      selected: _layout == layout,
+                      onSelected: (selected) =>
+                          setState(() => _layout = selected ? layout : null),
                     ),
                 ],
               ),
-            const SizedBox(height: 28),
-            Text(l10n.profileKeyboardLayoutLabel, style: textTheme.titleMedium),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                for (final layout in KeyboardLayout.values)
-                  ChoiceChip(
-                    label: Text(layout.label(l10n)),
-                    selected: _layout == layout,
-                    onSelected: (selected) =>
-                        setState(() => _layout = selected ? layout : null),
-                  ),
-              ],
-            ),
-            const SizedBox(height: 28),
-            _SuggestionField(
-              label: l10n.profileKeyboardBrandLabel,
-              icon: LucideIcons.keyboard300,
-              initialValue: _brand,
-              suggestions: kKeyboardBrandSuggestions,
-              onChanged: (value) => _brand = value,
-            ),
-            const SizedBox(height: 16),
-            _SuggestionField(
-              label: l10n.profileKeyboardModelLabel,
-              icon: LucideIcons.memoryStick300,
-              initialValue: _model,
-              suggestions: kKeyboardModelSuggestions,
-              onChanged: (value) => _model = value,
-            ),
-            const SizedBox(height: 16),
-            _SuggestionField(
-              label: l10n.profileFavoriteProgrammerLabel,
-              icon: LucideIcons.user300,
-              initialValue: _programmer,
-              suggestions: kFavoriteProgrammerSuggestions,
-              onChanged: (value) => _programmer = value,
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _quoteController,
-              maxLines: 3,
-              textInputAction: TextInputAction.done,
-              decoration: InputDecoration(
-                labelText: l10n.profileFavoriteQuoteLabel,
-                alignLabelWithHint: true,
-                prefixIcon: const Icon(LucideIcons.quote300),
+              const SizedBox(height: 28),
+              _SuggestionField(
+                label: l10n.profileKeyboardBrandLabel,
+                icon: LucideIcons.keyboard300,
+                initialValue: _brand,
+                suggestions: kKeyboardBrandSuggestions,
+                onChanged: (value) => _brand = value,
               ),
-            ),
-          ],
+              const SizedBox(height: 16),
+              _SuggestionField(
+                label: l10n.profileKeyboardModelLabel,
+                icon: LucideIcons.memoryStick300,
+                initialValue: _model,
+                suggestions: kKeyboardModelSuggestions,
+                onChanged: (value) => _model = value,
+              ),
+              const SizedBox(height: 16),
+              _SuggestionField(
+                label: l10n.profileFavoriteProgrammerLabel,
+                icon: LucideIcons.user300,
+                initialValue: _programmer,
+                suggestions: kFavoriteProgrammerSuggestions,
+                onChanged: (value) => _programmer = value,
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: _quoteController,
+                maxLines: 3,
+                textInputAction: TextInputAction.done,
+                decoration: InputDecoration(
+                  labelText: l10n.profileFavoriteQuoteLabel,
+                  alignLabelWithHint: true,
+                  prefixIcon: const Icon(LucideIcons.quote300),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

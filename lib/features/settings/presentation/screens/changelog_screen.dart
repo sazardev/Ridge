@@ -3,6 +3,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/widgets/escape_to_pop.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 
 /// Displays the project's `CHANGELOG.md`, bundled as a Flutter asset so the
 /// running app can show its own release history without anyone needing the
@@ -36,20 +37,37 @@ class ChangelogScreen extends StatelessWidget {
   }
 }
 
-class _ChangelogBody extends StatelessWidget {
+class _ChangelogBody extends StatefulWidget {
   const new({required this.markdown});
 
   final String markdown;
 
   @override
+  State<_ChangelogBody> createState() => _ChangelogBodyState();
+}
+
+class _ChangelogBodyState extends State<_ChangelogBody> {
+  final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final lines = _versionEntries(markdown);
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: lines.length,
-      itemBuilder: (context, index) =>
-          _lineWidget(lines[index], theme, isFirst: index == 0),
+    final lines = _versionEntries(widget.markdown);
+    return KeyboardScrollShortcuts(
+      controller: _scrollController,
+      child: ListView.builder(
+        controller: _scrollController,
+        padding: const EdgeInsets.all(16),
+        itemCount: lines.length,
+        itemBuilder: (context, index) =>
+            _lineWidget(lines[index], theme, isFirst: index == 0),
+      ),
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 
 /// Shows a modal sheet to rename the Guest Profile.
@@ -34,12 +35,14 @@ class _RenameProfileSheetState extends ConsumerState<RenameProfileSheet> {
   late final TextEditingController _controller = TextEditingController(
     text: widget.currentUsername,
   );
+  final _scrollController = ScrollController();
   bool _submitting = false;
   String? _errorText;
 
   @override
   void dispose() {
     _controller.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -73,52 +76,59 @@ class _RenameProfileSheetState extends ConsumerState<RenameProfileSheet> {
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 36,
-                height: 4,
-                margin: const EdgeInsets.only(bottom: 20),
-                decoration: BoxDecoration(
-                  color: colorScheme.outlineVariant,
-                  borderRadius: AppShapes.squircleRadius(
-                    AppShapes.of(context).full,
+      child: KeyboardScrollShortcuts(
+        controller: _scrollController,
+        // The username field below already autofocuses; let
+        // Home/End/PageUp/PageDown reach it and bubble up.
+        autofocus: false,
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 36,
+                  height: 4,
+                  margin: const EdgeInsets.only(bottom: 20),
+                  decoration: BoxDecoration(
+                    color: colorScheme.outlineVariant,
+                    borderRadius: AppShapes.squircleRadius(
+                      AppShapes.of(context).full,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Text(l10n.profileRenameTitle, style: textTheme.headlineSmall),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _controller,
-              autofocus: true,
-              textInputAction: TextInputAction.done,
-              decoration: InputDecoration(
-                labelText: l10n.profileUsernameLabel,
-                errorText: _errorText,
+              Text(l10n.profileRenameTitle, style: textTheme.headlineSmall),
+              const SizedBox(height: 16),
+              TextField(
+                controller: _controller,
+                autofocus: true,
+                textInputAction: TextInputAction.done,
+                decoration: InputDecoration(
+                  labelText: l10n.profileUsernameLabel,
+                  errorText: _errorText,
+                ),
+                onSubmitted: _submitting ? null : (_) => _submit(),
               ),
-              onSubmitted: _submitting ? null : (_) => _submit(),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: _submitting ? null : _submit,
-                child: _submitting
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : Text(l10n.profileSave),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: _submitting ? null : _submit,
+                  child: _submitting
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : Text(l10n.profileSave),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

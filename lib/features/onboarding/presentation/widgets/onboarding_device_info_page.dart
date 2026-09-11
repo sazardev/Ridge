@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/features/onboarding/presentation/providers/onboarding_providers.dart';
 
 /// Onboarding step previewing the platform/OS/device
@@ -11,12 +12,27 @@ import 'package:ridge/features/onboarding/presentation/providers/onboarding_prov
 /// Profile exists — purely informational here (see
 /// `onboardingDeviceInfoProvider`'s doc comment for why nothing is
 /// persisted from this page).
-class OnboardingDeviceInfoPage extends ConsumerWidget {
+class OnboardingDeviceInfoPage extends ConsumerStatefulWidget {
   /// Creates the device-info preview step.
   const new({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<OnboardingDeviceInfoPage> createState() =>
+      _OnboardingDeviceInfoPageState();
+}
+
+class _OnboardingDeviceInfoPageState
+    extends ConsumerState<OnboardingDeviceInfoPage> {
+  final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
@@ -41,50 +57,54 @@ class OnboardingDeviceInfoPage extends ConsumerWidget {
     ];
 
     return Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 360),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: colorScheme.primaryContainer,
+          child: KeyboardScrollShortcuts(
+            controller: _scrollController,
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 360),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: colorScheme.primaryContainer,
+                      ),
+                      child: Icon(
+                        LucideIcons.monitorSmartphone300,
+                        size: 56,
+                        color: colorScheme.onPrimaryContainer,
+                      ),
                     ),
-                    child: Icon(
-                      LucideIcons.monitorSmartphone300,
-                      size: 56,
-                      color: colorScheme.onPrimaryContainer,
+                    const SizedBox(height: 40),
+                    Text(
+                      l10n.onboardingDeviceTitle,
+                      style: textTheme.headlineSmall,
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                  const SizedBox(height: 40),
-                  Text(
-                    l10n.onboardingDeviceTitle,
-                    style: textTheme.headlineSmall,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    l10n.onboardingDeviceDescription,
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
+                    const SizedBox(height: 12),
+                    Text(
+                      l10n.onboardingDeviceDescription,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  if (chips.isNotEmpty) ...[
-                    const SizedBox(height: 24),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: chips,
-                    ),
+                    if (chips.isNotEmpty) ...[
+                      const SizedBox(height: 24),
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: chips,
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           ),

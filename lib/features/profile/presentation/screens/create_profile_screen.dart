@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/core/window/window_bar.dart';
 import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
 import 'package:ridge/features/profile/presentation/profile_labels.dart';
@@ -36,12 +37,14 @@ class _CreateProfileScreenState extends ConsumerState<CreateProfileScreen> {
 
   final _controller = TextEditingController();
   final _languages = <FavoriteLanguage>{};
+  final _scrollController = ScrollController();
   bool _submitting = false;
   String? _errorText;
 
   @override
   void dispose() {
     _controller.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -84,99 +87,107 @@ class _CreateProfileScreenState extends ConsumerState<CreateProfileScreen> {
           Expanded(
             child: SafeArea(
               child: Center(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 32,
-                  ),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 360),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          LucideIcons.user300,
-                          size: 40,
-                          color: colorScheme.primary,
-                        ),
-                        const SizedBox(height: 24),
-                        Text(
-                          l10n.profileCreateTitle,
-                          style: textTheme.headlineSmall,
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          l10n.profileCreateSubtitle,
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
+                child: KeyboardScrollShortcuts(
+                  controller: _scrollController,
+                  // The username field below already autofocuses; let
+                  // Home/End/PageUp/PageDown reach it and bubble up.
+                  autofocus: false,
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 32,
+                    ),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 360),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            LucideIcons.user300,
+                            size: 40,
+                            color: colorScheme.primary,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 32),
-                        TextField(
-                          controller: _controller,
-                          autofocus: true,
-                          textInputAction: TextInputAction.done,
-                          decoration: InputDecoration(
-                            labelText: l10n.profileUsernameLabel,
-                            errorText: _errorText,
+                          const SizedBox(height: 24),
+                          Text(
+                            l10n.profileCreateTitle,
+                            style: textTheme.headlineSmall,
+                            textAlign: TextAlign.center,
                           ),
-                          onSubmitted: _submitting ? null : (_) => _submit(),
-                        ),
-                        const SizedBox(height: 28),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            l10n.profileFavoriteLanguageLabel,
-                            style: textTheme.labelLarge,
+                          const SizedBox(height: 8),
+                          Text(
+                            l10n.profileCreateSubtitle,
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: [
-                            for (final language in FavoriteLanguage.values.take(
-                              _quickPickLanguages,
-                            ))
-                              FilterChip(
-                                label: Text(language.label(l10n)),
-                                selected: _languages.contains(language),
-                                onSelected: (selected) => setState(() {
-                                  if (selected) {
-                                    _languages.add(language);
-                                  } else {
-                                    _languages.remove(language);
-                                  }
-                                }),
-                              ),
-                          ],
-                        ),
-                        const SizedBox(height: 24),
-                        SizedBox(
-                          width: double.infinity,
-                          child: FilledButton(
-                            onPressed: _submitting ? null : _submit,
-                            child: AnimatedSwitcher(
-                              duration: AppMotion.effectsDefault,
-                              child: _submitting
-                                  ? const SizedBox(
-                                      key: ValueKey('loading'),
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                      ),
-                                    )
-                                  : Text(
-                                      l10n.profileCreateStart,
-                                      key: const ValueKey('label'),
-                                    ),
+                          const SizedBox(height: 32),
+                          TextField(
+                            controller: _controller,
+                            autofocus: true,
+                            textInputAction: TextInputAction.done,
+                            decoration: InputDecoration(
+                              labelText: l10n.profileUsernameLabel,
+                              errorText: _errorText,
+                            ),
+                            onSubmitted: _submitting ? null : (_) => _submit(),
+                          ),
+                          const SizedBox(height: 28),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              l10n.profileFavoriteLanguageLabel,
+                              style: textTheme.labelLarge,
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [
+                              for (final language
+                                  in FavoriteLanguage.values.take(
+                                    _quickPickLanguages,
+                                  ))
+                                FilterChip(
+                                  label: Text(language.label(l10n)),
+                                  selected: _languages.contains(language),
+                                  onSelected: (selected) => setState(() {
+                                    if (selected) {
+                                      _languages.add(language);
+                                    } else {
+                                      _languages.remove(language);
+                                    }
+                                  }),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          SizedBox(
+                            width: double.infinity,
+                            child: FilledButton(
+                              onPressed: _submitting ? null : _submit,
+                              child: AnimatedSwitcher(
+                                duration: AppMotion.effectsDefault,
+                                child: _submitting
+                                    ? const SizedBox(
+                                        key: ValueKey('loading'),
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                        ),
+                                      )
+                                    : Text(
+                                        l10n.profileCreateStart,
+                                        key: const ValueKey('label'),
+                                      ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
