@@ -26,7 +26,9 @@ part 'app_database.g.dart';
 /// `keystroke_events` schema calls for — not expressible inline on the
 /// `Table` classes in this drift version, so created here alongside the
 /// tables themselves, once, in the same migration step that creates
-/// them.
+/// them. All statements are `IF NOT EXISTS`, so re-running this against
+/// a database that already has some of them (e.g. the v14->v15 step
+/// below, which only needs the last one) is a safe no-op for the rest.
 Future<void> _createPracticeIndices(Migrator m) async {
   await m.database.customStatement(
     'CREATE INDEX IF NOT EXISTS idx_typing_sessions_category_difficulty '
@@ -39,6 +41,10 @@ Future<void> _createPracticeIndices(Migrator m) async {
   await m.database.customStatement(
     'CREATE INDEX IF NOT EXISTS idx_typing_sessions_started_at '
     'ON typing_sessions (started_at_utc_micros)',
+  );
+  await m.database.customStatement(
+    'CREATE INDEX IF NOT EXISTS idx_typing_sessions_profile_recency '
+    'ON typing_sessions (profile_id, started_at_utc_micros)',
   );
   await m.database.customStatement(
     'CREATE INDEX IF NOT EXISTS idx_keystroke_events_expected_char '
@@ -94,7 +100,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? driftDatabase(name: 'ridge.db'));
 
   @override
-  int get schemaVersion => 14;
+  int get schemaVersion => 15;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -229,6 +235,17 @@ class AppDatabase extends _$AppDatabase {
       // table is created.
       if (from < 14) {
         await m.createTable(dailyChallengeCompletions);
+      }
+      // v14 -> v15: added an index on
+      // typing_sessions(profile_id, started_at_utc_micros). Every device
+      // has exactly one guest profile today, so `watchSessionsForProfile`
+      // (practice_dao.dart) filtering by profile_id gains nothing yet —
+      // but it needs to be in place before multi-profile/sync (STACK.md
+      // §6) makes profile_id actually selective. Reruns
+      // `_createPracticeIndices`, whose other statements are already
+      // `IF NOT EXISTS` no-ops on an existing database.
+      if (from < 15) {
+        await _createPracticeIndices(m);
       }
     },
   );

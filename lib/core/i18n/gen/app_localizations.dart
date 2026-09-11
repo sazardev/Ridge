@@ -140,6 +140,18 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get navSettings;
 
+  /// No description provided for @navRailCollapse.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse navigation'**
+  String get navRailCollapse;
+
+  /// No description provided for @navRailExpand.
+  ///
+  /// In en, this message translates to:
+  /// **'Expand navigation'**
+  String get navRailExpand;
+
   /// No description provided for @profileCreateTitle.
   ///
   /// In en, this message translates to:
@@ -1514,6 +1526,24 @@ abstract class AppLocalizations {
   /// **'Idiomatic formatting'**
   String get categoryIdiomaticFormatting;
 
+  /// No description provided for @categorySearchingAlgorithms.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching algorithms'**
+  String get categorySearchingAlgorithms;
+
+  /// No description provided for @categorySortingAlgorithms.
+  ///
+  /// In en, this message translates to:
+  /// **'Sorting algorithms'**
+  String get categorySortingAlgorithms;
+
+  /// No description provided for @categoryGraphAlgorithms.
+  ///
+  /// In en, this message translates to:
+  /// **'Graph algorithms'**
+  String get categoryGraphAlgorithms;
+
   /// No description provided for @categoryDomainModeling.
   ///
   /// In en, this message translates to:
@@ -1705,6 +1735,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rust'**
   String get languageRust;
+
+  /// No description provided for @languagePython.
+  ///
+  /// In en, this message translates to:
+  /// **'Python'**
+  String get languagePython;
+
+  /// No description provided for @languageJavascript.
+  ///
+  /// In en, this message translates to:
+  /// **'JavaScript'**
+  String get languageJavascript;
 
   /// No description provided for @snippetPracticeAction.
   ///
@@ -2342,29 +2384,23 @@ abstract class AppLocalizations {
   /// **'No learning paths available yet.'**
   String get learningPathsEmptyState;
 
-  /// No description provided for @learningPathsProgress.
-  ///
-  /// In en, this message translates to:
-  /// **'{completed}/{total} lessons complete'**
-  String learningPathsProgress(int completed, int total);
-
   /// No description provided for @learningPathsLessonListTitle.
   ///
   /// In en, this message translates to:
   /// **'Lessons'**
   String get learningPathsLessonListTitle;
 
-  /// No description provided for @learningPathsContinueHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue: {lessonTitle}'**
-  String learningPathsContinueHint(String lessonTitle);
-
   /// No description provided for @learningPathsContinueAction.
   ///
   /// In en, this message translates to:
   /// **'Continue lesson'**
   String get learningPathsContinueAction;
+
+  /// No description provided for @learningPathsShareLessonAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Share this exercise'**
+  String get learningPathsShareLessonAction;
 
   /// No description provided for @learningLessonLocked.
   ///

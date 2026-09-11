@@ -140,27 +140,33 @@ class KeystrokeStreamRecorder {
     return keystroke;
   }
 
-  /// Records a Tab keydown, with one comfort accommodation on top of
-  /// plain [ingestChar]: `gofmt` pads struct/const/var blocks with a
-  /// *run* of literal spaces to align a later column (e.g. `Msg   string`
-  /// next to `Field string`) — nobody actually retypes each of those
-  /// alignment spaces by hand in real Go, so requiring exactly that here
-  /// would be the opposite of "real code, not filler". If the next
-  /// expected character is a space, this consumes the *entire* run of
-  /// consecutive expected spaces from here in one press (each still its
-  /// own committed [Keystroke], only the first carrying real dwell/
-  /// flight — mirrors [ingestDelete]'s batched-corrections pattern);
-  /// real leading-indentation tabs (`expectedSnippet` uses `'\t'` for
-  /// those, never a space) are untouched and still need a real Tab per
-  /// level, exactly as before. Anywhere else, this is just [ingestChar]
-  /// with `'\t'` — rejected like any other wrong key if it doesn't
-  /// match.
+  /// Records a Tab keydown, with two comfort accommodations on top of
+  /// plain [ingestChar]:
+  ///
+  /// - `gofmt` pads struct/const/var blocks with a *run* of literal
+  ///   spaces to align a later column (e.g. `Msg   string` next to
+  ///   `Field string`) — nobody actually retypes each of those alignment
+  ///   spaces by hand in real Go, so requiring exactly that here would be
+  ///   the opposite of "real code, not filler".
+  /// - Leading indentation is a *run* of literal `'\t'` characters, one
+  ///   per nesting level (`expectedSnippet` never uses spaces for this) —
+  ///   a real editor auto-indents to the enclosing block's depth, so a
+  ///   chain of nested `if`s shouldn't demand one physical Tab press per
+  ///   level just to reach where typing resumes.
+  ///
+  /// If the next expected character is a space or a tab, this consumes
+  /// the *entire* run of that same character from here in one press (each
+  /// still its own committed [Keystroke], only the first carrying real
+  /// dwell/flight — mirrors [ingestDelete]'s batched-corrections
+  /// pattern). Anywhere else, this is just [ingestChar] with `'\t'` —
+  /// rejected like any other wrong key if it doesn't match.
   List<Keystroke> ingestTabKey({
     required PhysicalKeyId physicalKeyId,
     Duration? dwell,
     Duration? flight,
   }) {
-    if (_expectedCharAt(_buffer.length) != ' ') {
+    final firstExpected = _expectedCharAt(_buffer.length);
+    if (firstExpected != ' ' && firstExpected != '\t') {
       final keystroke = ingestChar(
         physicalKeyId: physicalKeyId,
         char: '\t',
@@ -169,12 +175,13 @@ class KeystrokeStreamRecorder {
       );
       return keystroke == null ? const [] : [keystroke];
     }
+    final expected = firstExpected!;
 
     final committed = <Keystroke>[];
-    while (_expectedCharAt(_buffer.length) == ' ') {
+    while (_expectedCharAt(_buffer.length) == expected) {
       final keystroke = ingestChar(
         physicalKeyId: physicalKeyId,
-        char: ' ',
+        char: expected,
         dwell: committed.isEmpty ? dwell : null,
         flight: committed.isEmpty ? flight : null,
       );
@@ -191,13 +198,18 @@ class KeystrokeStreamRecorder {
   /// rejected like any other if this isn't actually where a newline is
   /// expected), this auto-consumes every immediately following line that
   /// has no non-whitespace character before its own `\n` (or the
-  /// snippet's end), landing on the first real character of the next
-  /// non-blank line in one press. Each auto-consumed character is still
-  /// its own committed [Keystroke] (only the first carries real dwell/
-  /// flight, exactly like [ingestTabKey]'s space-run). A line that
-  /// *starts* with whitespace but then has real code (ordinary leading
-  /// indentation) is left untouched — that's still typed one key at a
-  /// time (or via [ingestTabKey]), same as before.
+  /// snippet's end). Each auto-consumed character is still its own
+  /// committed [Keystroke] (only the first carries real dwell/flight,
+  /// exactly like [ingestTabKey]'s space-run).
+  ///
+  /// Once it lands on a real (non-blank) line, this also auto-consumes
+  /// that line's leading indentation run (space or tab, whichever
+  /// [expectedSnippet] actually uses at this position — Go's catalog
+  /// indents with tabs, every other language's with spaces), exactly as
+  /// [ingestTabKey] would — a real editor already auto-indents to the
+  /// enclosing block's depth on Enter, so landing on the first real
+  /// character of the next line in one press (rather than requiring a
+  /// separate Tab first) is what "real code, not filler" means here too.
   List<Keystroke> ingestEnterKey({
     required PhysicalKeyId physicalKeyId,
     Duration? dwell,
@@ -222,6 +234,18 @@ class KeystrokeStreamRecorder {
       );
       if (keystroke == null) break;
       committed.add(keystroke);
+    }
+    final firstIndentChar = _expectedCharAt(_buffer.length);
+    if (firstIndentChar == ' ' || firstIndentChar == '\t') {
+      final indentChar = firstIndentChar!;
+      while (_expectedCharAt(_buffer.length) == indentChar) {
+        final keystroke = ingestChar(
+          physicalKeyId: physicalKeyId,
+          char: indentChar,
+        );
+        if (keystroke == null) break;
+        committed.add(keystroke);
+      }
     }
     return committed;
   }

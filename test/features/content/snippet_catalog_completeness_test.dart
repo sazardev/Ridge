@@ -24,6 +24,8 @@ const Map<ProgrammingLanguage, String> _catalogAssetByLanguage = {
   ProgrammingLanguage.bash: 'assets/content/snippets/bash_v1.json',
   ProgrammingLanguage.sql: 'assets/content/snippets/sql_v1.json',
   ProgrammingLanguage.rust: 'assets/content/snippets/rust_v1.json',
+  ProgrammingLanguage.python: 'assets/content/snippets/python_v1.json',
+  ProgrammingLanguage.javascript: 'assets/content/snippets/javascript_v1.json',
 };
 
 /// Languages whose catalog backs free practice (Zen/Sprint/Precision).
@@ -35,8 +37,8 @@ const Map<ProgrammingLanguage, String> _catalogAssetByLanguage = {
 /// snippets exist to compose `bash-foundations-v1`, never a free-standing
 /// practice pool), so its catalog is held to the lighter rule that it
 /// contains exactly the snippets its bundled paths use — see the
-/// "course-only" test below. SQL (`sql-foundations-v1`) and Rust
-/// (`rust-foundations-v1`) follow the same course-only rule.
+/// "course-only" test below. SQL, Rust, Python, and JavaScript follow the
+/// same course-only rule.
 const Set<ProgrammingLanguage> _freePracticeLanguages = {
   ProgrammingLanguage.go,
 };
@@ -73,6 +75,19 @@ const Set<ContentCategory> _architectureLayerCategories = {
   ContentCategory.tuiAdapter,
 };
 
+/// The 2 algorithm-topic categories back the `go-algorithms-v1` /
+/// `rust-algorithms-v1` Learning Routes. Individual snippets in them DO
+/// carry a real difficulty (e.g. bubble sort is `beginner`, heap sort is
+/// `expert`) unlike an architecture-layer category, but the category
+/// itself isn't a dense (category, difficulty) grid the way a
+/// language-feature category is — held to the same looser total-count
+/// bar as `_architectureLayerCategories` for that reason.
+const Set<ContentCategory> _algorithmTopicCategories = {
+  ContentCategory.searchingAlgorithms,
+  ContentCategory.sortingAlgorithms,
+  ContentCategory.graphAlgorithms,
+};
+
 Future<List<Snippet>> _loadCatalog(ProgrammingLanguage language) async {
   final raw = await rootBundle.loadString(_catalogAssetByLanguage[language]!);
   final decoded = jsonDecode(raw) as List<Object?>;
@@ -97,10 +112,16 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/go_ddd_hexagonal_notes_v1.json',
   'assets/content/learning_paths/go_intermediate_syntax_v1.json',
   'assets/content/learning_paths/go_tui_notes_v1.json',
+  'assets/content/learning_paths/go_algorithms_v1.json',
   'assets/content/learning_paths/bash_foundations_v1.json',
   'assets/content/learning_paths/bash_toolkit_v1.json',
   'assets/content/learning_paths/sql_foundations_v1.json',
   'assets/content/learning_paths/rust_foundations_v1.json',
+  'assets/content/learning_paths/rust_algorithms_v1.json',
+  'assets/content/learning_paths/python_foundations_v1.json',
+  'assets/content/learning_paths/python_algorithms_v1.json',
+  'assets/content/learning_paths/javascript_foundations_v1.json',
+  'assets/content/learning_paths/javascript_algorithms_v1.json',
 ];
 
 Future<Map<String, Object?>> _loadLearningPath(String assetPath) async {
@@ -172,7 +193,8 @@ void main() {
         }
 
         for (final category in totalsByCategory.keys) {
-          if (_architectureLayerCategories.contains(category)) {
+          if (_architectureLayerCategories.contains(category) ||
+              _algorithmTopicCategories.contains(category)) {
             if ((totalsByCategory[category] ?? 0) == 0) {
               empty.add('$language/$category has zero active entries');
             }

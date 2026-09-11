@@ -149,6 +149,8 @@ dart run build_runner build --delete-conflicting-outputs   # freezed / json_seri
 
 flutter run -d linux
 flutter run -d android
+flutter run -d windows
+flutter run -d chrome
 ```
 
 Regenerate code after touching any `@freezed`, `@riverpod`, `@JsonSerializable`,
@@ -158,9 +160,9 @@ or `.arb` file:
 dart run build_runner watch --delete-conflicting-outputs
 ```
 
-Windows and Web aren't scaffolded yet — `flutter create --platforms=windows,web .`
-before the first `flutter run -d windows` / `-d chrome` (see
-[`STACK.md §1`](./STACK.md#1-plataformas-objetivo-y-matriz-de-soporte)).
+All four target platforms are scaffolded; release-build packaging
+(obfuscation, R8 minify/shrink, MSIX, Flatpak) runs per-platform in CI on a
+version tag — see [`STACK.md §12`](./STACK.md#12-despliegue-cicd-por-plataforma).
 
 ## Quality gates
 
@@ -191,9 +193,10 @@ before the first `flutter run -d windows` / `-d chrome` (see
   License — see `assets/fonts/LICENSE.txt`).
 - Android's launcher icon (`android/app/src/main/res/mipmap-*`) is the
   Ridge mark (flat squircle, brand ember orange, `assets/icons/
-  ridge_launcher_master.png` is the 1024×1024 source). Linux still has no
-  packaged `.desktop` file/icon yet — add one before shipping a Linux
-  build outside `flutter run`.
+  ridge_launcher_master.png` is the 1024×1024 source), reused as-is for
+  the MSIX logo and, at a single unscaled 256x256 install, for the Linux
+  Flatpak icon (`linux/packaging/`) — that one still needs proper
+  `hicolor`-size variants before a real Flathub submission.
 
 ## Status
 

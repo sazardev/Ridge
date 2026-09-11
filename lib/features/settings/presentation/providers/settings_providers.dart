@@ -114,4 +114,9 @@ class SettingsController extends _$SettingsController {
     (s) =>
         s.copyWith(shortcutBindings: {...s.shortcutBindings, action: binding}),
   );
+
+  /// Toggles the desktop/tablet `NavigationRail` between its labeled and
+  /// icon-only (collapsed) states.
+  Future<void> setNavigationRailExpanded({required bool value}) =>
+      _update((s) => s.copyWith(navigationRailExpanded: value));
 }

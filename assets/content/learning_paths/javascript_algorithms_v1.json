@@ -1,0 +1,98 @@
+[
+  {
+    "id": "javascript-algorithms-v1",
+    "language": "javascript",
+    "titleEn": "JavaScript: Algorithms",
+    "titleEs": "JavaScript: Algoritmos",
+    "descriptionEn": "Classic sorting, searching, and graph algorithms, implemented in idiomatic JavaScript.",
+    "descriptionEs": "Algoritmos clásicos de ordenamiento, búsqueda y grafos, implementados en JavaScript idiomático.",
+    "tagEn": "Algorithms",
+    "tagEs": "Algoritmos",
+    "lessons": [
+      {
+        "id": "javascript-algorithms-v1-step01",
+        "snippetId": "javascript-algo-001",
+        "order": 1,
+        "titleEn": "Linear Search",
+        "titleEs": "Búsqueda lineal"
+      },
+      {
+        "id": "javascript-algorithms-v1-step02",
+        "snippetId": "javascript-algo-002",
+        "order": 2,
+        "titleEn": "Binary Search",
+        "titleEs": "Búsqueda binaria"
+      },
+      {
+        "id": "javascript-algorithms-v1-step03",
+        "snippetId": "javascript-algo-003",
+        "order": 3,
+        "titleEn": "Bubble Sort",
+        "titleEs": "Ordenamiento burbuja"
+      },
+      {
+        "id": "javascript-algorithms-v1-step04",
+        "snippetId": "javascript-algo-004",
+        "order": 4,
+        "titleEn": "Selection Sort",
+        "titleEs": "Ordenamiento por selección"
+      },
+      {
+        "id": "javascript-algorithms-v1-step05",
+        "snippetId": "javascript-algo-005",
+        "order": 5,
+        "titleEn": "Insertion Sort",
+        "titleEs": "Ordenamiento por inserción"
+      },
+      {
+        "id": "javascript-algorithms-v1-step06",
+        "snippetId": "javascript-algo-006",
+        "order": 6,
+        "titleEn": "Merge Sort",
+        "titleEs": "Ordenamiento por mezcla (Merge Sort)"
+      },
+      {
+        "id": "javascript-algorithms-v1-step07",
+        "snippetId": "javascript-algo-007",
+        "order": 7,
+        "titleEn": "Quick Sort",
+        "titleEs": "Quicksort"
+      },
+      {
+        "id": "javascript-algorithms-v1-step08",
+        "snippetId": "javascript-algo-008",
+        "order": 8,
+        "titleEn": "Heap Sort",
+        "titleEs": "Heapsort"
+      },
+      {
+        "id": "javascript-algorithms-v1-step09",
+        "snippetId": "javascript-algo-009",
+        "order": 9,
+        "titleEn": "Graph as an Adjacency List",
+        "titleEs": "Grafo como lista de adyacencia"
+      },
+      {
+        "id": "javascript-algorithms-v1-step10",
+        "snippetId": "javascript-algo-010",
+        "order": 10,
+        "titleEn": "Breadth-First Search (BFS)",
+        "titleEs": "Búsqueda en anchura (BFS)"
+      },
+      {
+        "id": "javascript-algorithms-v1-step11",
+        "snippetId": "javascript-algo-011",
+        "order": 11,
+        "titleEn": "Depth-First Search (DFS)",
+        "titleEs": "Búsqueda en profundidad (DFS)"
+      },
+      {
+        "id": "javascript-algorithms-v1-step12",
+        "snippetId": "javascript-algo-012",
+        "order": 12,
+        "titleEn": "Dijkstra's Shortest Path",
+        "titleEs": "Camino más corto de Dijkstra"
+      }
+    ]
+  }
+]

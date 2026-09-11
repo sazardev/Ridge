@@ -27,6 +27,8 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - lib/core/i18n/gen/**
+    - web/**
+    - windows/**
 
 linter:
   rules:

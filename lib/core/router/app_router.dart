@@ -6,7 +6,9 @@ import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/presentation/screens/snippet_browser_screen.dart';
 import 'package:ridge/features/content/presentation/widgets/practice_mode_picker_sheet.dart';
 import 'package:ridge/features/learning_paths/domain/value_objects/learning_path_id.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
 import 'package:ridge/features/learning_paths/presentation/screens/learning_paths_screen.dart';
+import 'package:ridge/features/learning_paths/presentation/screens/lesson_deep_link_screen.dart';
 import 'package:ridge/features/learning_paths/presentation/screens/lesson_detail_screen.dart';
 import 'package:ridge/features/lock/presentation/providers/lock_providers.dart';
 import 'package:ridge/features/lock/presentation/screens/lock_screen.dart';
@@ -175,10 +177,11 @@ GoRouter appRouter(Ref ref) {
       // `practice` directly per the project plan's feature dependency
       // order) already has a real `PracticeMode.learningRouteLesson` to
       // hand over, plus an optional `onContinue` (the "Continue to next
-      // lesson" action, `null` on the path's last lesson) that
-      // `LessonDetailScreen` already builds with a real target to jump
-      // to. This route — already wired to every feature involved — is
-      // the one place that tells the two apart.
+      // lesson" action, `null` on the path's last lesson) and an
+      // `onShare` (shares a link to this lesson, shown once the result
+      // screen shows a pass) that `LessonNavigation` already builds with
+      // a real target. This route — already wired to every feature
+      // involved — is the one place that tells the two apart.
       GoRoute(
         path: '/practice/session',
         builder: (context, state) {
@@ -188,11 +191,13 @@ GoRouter appRouter(Ref ref) {
                 Snippet snippet,
                 PracticeMode mode,
                 VoidCallback? onContinue,
+                VoidCallback? onShare,
               })) {
             return PracticeSessionScreen(
               snippet: extra.snippet,
               mode: extra.mode,
               onContinue: extra.onContinue,
+              onShare: extra.onShare,
             );
           }
           final request = extra! as ({Snippet snippet, String modeKind});
@@ -235,6 +240,22 @@ GoRouter appRouter(Ref ref) {
                     builder: (context, state) => LessonDetailScreen(
                       pathId: LearningPathId(state.pathParameters['pathId']!),
                     ),
+                    routes: [
+                      // A URL-addressable single lesson — reachable from a
+                      // shared link or (once v2 push notifications exist,
+                      // STACK.md §14) a notification tap. Resolves and
+                      // forwards into `/practice/session`; never a
+                      // destination on its own (`LessonDeepLinkScreen`).
+                      GoRoute(
+                        path: 'lessons/:lessonId',
+                        builder: (context, state) => LessonDeepLinkScreen(
+                          pathId: LearningPathId(
+                            state.pathParameters['pathId']!,
+                          ),
+                          lessonId: LessonId(state.pathParameters['lessonId']!),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

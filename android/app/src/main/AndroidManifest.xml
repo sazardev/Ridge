@@ -26,6 +26,17 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- Custom-scheme deep link for a shared exercise
+                 (`ridge://app/practice/<pathId>/lessons/<lessonId>`), see
+                 `lib/core/router/deep_link_providers.dart`. A custom scheme
+                 needs no hosted domain/assetlinks.json verification, unlike
+                 HTTPS App Links (STACK.md). -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="ridge" android:host="app"/>
+            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

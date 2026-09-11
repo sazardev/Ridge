@@ -1,0 +1,13 @@
+# Copy this file to android/key.properties (gitignored — never commit the
+# real one) to sign release builds with a real key instead of the debug key.
+#
+# Generate a keystore once with:
+#   keytool -genkey -v -keystore ~/ridge-release.jks -keyalg RSA \
+#     -keysize 2048 -validity 10000 -alias ridge
+#
+# storeFile is resolved relative to android/app/ (Gradle's rootProject),
+# so an absolute path is usually simplest.
+storeFile=/absolute/path/to/ridge-release.jks
+storePassword=
+keyAlias=ridge
+keyPassword=

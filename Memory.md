@@ -33,9 +33,12 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
   | Lenguaje | Catálogo | Ruta | Tier |
   |---|---|---|---|
-  | Go | 148 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) | práctica libre (grid denso) |
-  | Bash (Arch) | 50 snippets | `bash-foundations-v1` (50) | solo-curso |
+  | Go | 160 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) + `go-algorithms-v1` (12, ver sesión de hoy) | práctica libre (grid denso) |
+  | Bash (Arch) | 95 snippets | `bash-foundations-v1` + `bash-toolkit-v1` | solo-curso |
   | SQL (PostgreSQL) | 60 snippets | `sql-foundations-v1` (60) | solo-curso |
+  | Rust | 24 snippets | `rust-foundations-v1` (12, solo principiante) + `rust-algorithms-v1` (12) | solo-curso |
+  | Python | 24 snippets | `python-foundations-v1` (12, solo principiante) + `python-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
+  | JavaScript | 24 snippets | `javascript-foundations-v1` (12, solo principiante) + `javascript-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
 
 - Curso SQL: base de datos de ejemplo compartida tipo biblioteca
   (`authors`, `books`, `members`, `loans`), 8 categorías contiguas:
@@ -69,10 +72,225 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   regeneración en `MARKETING.md` §6.
 - Último release: **v1.6.0** (`9dfe43c`). El siguiente push a `main`
   genera release automático desde los Conventional Commits.
+- **Deep link a una lección** (`/practice/:pathId/lessons/:lessonId`,
+  `LessonDeepLinkScreen`) + compartir enlace de una lección
+  (`share_plus`) — ver sesión de hoy. Esquema propio `ridge://app/...`
+  (`app_links`), solo Android por ahora. Notificaciones push siguen sin
+  implementar (v2, `STACK.md §14`); esto solo deja una lección
+  *direccionable* por URL para cuando lleguen.
 
 ---
 
 ## Historial de sesiones
+
+### 2026-09-11 — Python y JavaScript como lenguajes nuevos (4 cursos: fundamentos + Algorithms)
+
+- **Pedido del usuario**: tras la sesión de "Go: Algorithms"/"Rust: Algorithms", pidió un curso de "Python beginner" y otro de "Python algorithms", y luego lo mismo para JavaScript. A diferencia de la sesión anterior (que solo agregaba contenido a lenguajes ya soportados), esto significaba agregar **dos lenguajes enteramente nuevos** — algo que SPEC.md §18 listaba explícitamente como "fuera de alcance en v1" (aunque anticipado como roadmap futuro). Se procedió sin re-preguntar, siguiendo el mismo criterio que el usuario ya había dado la sesión anterior (cursos nuevos y acotados son su prerrogativa, no ambigüedad real), y se documentó el cambio de alcance en SPEC.md/CLAUDE.md en vez de bloquear el trabajo.
+- **Wiring de lenguaje nuevo** (no solo contenido, esta vez): `ProgrammingLanguage.python`/`.javascript` nuevos en el enum; dos tokenizers de sintaxis nuevos desde cero (`python_syntax_tokenizer.dart`, `javascript_syntax_tokenizer.dart`, como `part of syntax_tokenizer.dart` igual que Rust/SQL) — Python maneja prefijos de string (`f`/`r`/`b` antes de una comilla) y strings triple-comilladas; JavaScript colorea template literals completos (backtick a backtick) como un solo string, sin resaltar el `${}` interno. l10n (`languagePython`/`languageJavascript`), y wiring en 3 lugares que costó encontrar todos: `pubspec.yaml`, `learning_path_repository_impl.dart` — y **`snippet_local_data_source.dart`**, que casi se queda desactualizado porque tiene su propia lista de rutas de assets separada de la que usa el test de completeness (causó que la primera corrida de tests fallara con conteos raros hasta encontrarlo).
+- **Ambos cursos "Algorithms" (Python, JavaScript) reusan exactamente el mismo diseño de 12 lecciones** que ya se auditó la sesión pasada en Go/Rust (mismo orden: búsqueda → ordenamiento → grafos, mismas categorías `searchingAlgorithms`/`sortingAlgorithms`/`graphAlgorithms`, sin categorías nuevas esta vez). Los cursos "foundations" (beginner) son contenido original nuevo por lenguaje (12 lecciones cada uno: 4 `variablesAndTypes` + 3 `conditionals` + 2 `loops` + 3 `functions`, mismo reparto de categorías que ya usa `rust-foundations-v1`), reutilizando categorías genéricas — nada de categorías propias, igual que el resto de fundamentos.
+- **Verificación real de código otra vez, no solo por ojo**: los 48 snippets nuevos (24 Python + 24 JavaScript) se corrieron de verdad (`python3` + `black --check`; `node` + `prettier --check`) antes de entrar al catálogo. Autoría bilingüe delegada a 4 forks en paralelo (uno por curso) con el código ya verificado pegado literal — igual patrón que la sesión anterior.
+- **Revisión adversarial independiente** (2 agentes frescos en paralelo, uno por lenguaje, instruidos a cazar bugs activamente): esta vez **no encontraron ningún bug real** en código, tokenizers, orden de lecciones, ni calidad bilingüe — a diferencia de la sesión pasada (que sí encontró 2 problemas reales). Un hallazgo menor de estilo (una justificación de "overflow" un poco exagerada en la explicación de binary search) ya existía igual en el curso de Go, así que no es nuevo.
+- **Documentación actualizada**: SPEC.md §3.1/§3.2/§18 (Python y JavaScript ya no están "fuera de alcance"; sus fundamentos reusan categorías genéricas igual que Rust; sus cursos de Algorithms comparten las mismas 3 categorías temáticas que Go/Rust), CLAUDE.md (lista de archivos de snippets y de rutas actualizada), `content-model.md` de la skill (tabla de tiers).
+- **Chequeos**: `flutter test` completo, **403 tests verdes** (mismo número que la sesión anterior — no se agregaron categorías nuevas esta vez, así que la grilla de logros por categoría/dificultad no creció). `audit_lesson_order.py` verde para los 4 cursos nuevos (con un fix de paso: le faltaban `python`/`javascript` en `COURSE_ONLY_LANGUAGES`).
+- **Bug real encontrado y arreglado durante esta misma sesión**: el usuario reportó que el auto-indentado (al presionar Enter, saltar directo a la indentación de la siguiente línea real) no se sentía aplicado en los lenguajes nuevos. Investigado con un agente de exploración: `ingestEnterKey` en
+  `keystroke_stream_recorder.dart` traía un trabajo a medio terminar de una
+  sesión anterior (ya en el working tree, sin commitear) — `ingestTabKey` ya
+  se había generalizado para consumir una racha de `' '` *o* `'\t'`, pero el
+  bloque nuevo de auto-indent post-Enter que se agregó junto a eso solo
+  reconocía `'\t'`. Como Go es el único catálogo que indenta con tabs (todos
+  los demás — Bash, SQL, Rust, y ahora Python/JavaScript — usan espacios),
+  el auto-indent post-Enter simplemente nunca disparaba fuera de Go. Se
+  completó el generalize (mismo patrón que `ingestTabKey`: detecta si el
+  primer carácter esperado es `' '` o `'\t'` y consume la racha de ese
+  mismo carácter) + un test nuevo para el caso de espacios, espejando el
+  test existente de tabs. De paso quedaron limpios los 2 lints
+  preexistentes en este mismo archivo/test que traían roto
+  `flutter analyze --fatal-infos` — **`bash tool/check.sh` completo pasa
+  en verde de punta a punta** al cerrar esta sesión.
+
+### 2026-09-11 — Dos rutas nuevas "Algorithms" (Go y Rust): sorts, búsquedas y grafos
+
+- **Pedido del usuario**: una guía "Go: Algorithms" con los algoritmos más
+  famosos (burbuja, quicksort, Dijkstra, búsqueda, etc.) implementados de
+  forma idiomática, con el campo de explicación sin lecturas de teoría
+  CS; y la misma guía en Rust. Aclaración clave del usuario tras
+  preguntarle: son **dos cursos nuevos e independientes** de las rutas
+  base (`go-foundations-v1`, `rust-foundations-v1`), no una extensión de
+  ellas — eso resuelve la tensión con la regla de SPEC.md de que Rust es
+  "solo principiante, sin categorías propias" (esa regla sigue aplicando
+  a `rust-foundations-v1`; el curso de Algorithms es otro curso aparte,
+  documentado ahora en SPEC.md §3.1).
+- **Contenido**: 12 lecciones por lenguaje (mismo orden en ambos):
+  `searchingAlgorithms` (búsqueda lineal, binaria) →
+  `sortingAlgorithms` (burbuja, selección, inserción, mezcla, quicksort,
+  heapsort) → `graphAlgorithms` (grafo como lista de adyacencia, BFS,
+  DFS, Dijkstra O(V²) sin cola de prioridad). Tres categorías
+  (`ContentCategory`) nuevas, compartidas entre ambos lenguajes, con la
+  misma barra de completitud relajada que las categorías de
+  arquitectura DDD/TUI (`_algorithmTopicCategories` en
+  `snippet_catalog_completeness_test.dart` — a diferencia de esas,
+  aquí cada snippet sí tiene una dificultad real que refleja
+  complejidad algorítmica, no de capa arquitectónica).
+- **Verificación real de código, no solo por ojo**: cada uno de los 24
+  snippets se compiló y corrió de verdad (`gofmt`/`go run`,
+  `rustfmt --check`/`rustc`) antes de entrar al catálogo, siguiendo la
+  skill `content-curriculum`. Autoría delegada a dos forks en paralelo
+  (uno por lenguaje) con el código ya verificado pegado literal en el
+  prompt — el fork solo escribió bilingüe (tldr/explicación) y armó el
+  JSON, nunca tocó el código.
+- **Revisión adversarial independiente** (agente fresco, sin mi contexto,
+  instruido a buscar bugs activamente) encontró y se corrigieron 2
+  problemas reales antes de cerrar: (1) el DFS de Go usaba un closure
+  auto-referenciado (`var visit func(...); visit = func(...) {...}`) sin
+  motivo — no aparece en ningún otro lado del curso — se reescribió como
+  función recursiva plana (`visitDFS`, acumulador por puntero
+  `*[]string`), igual que su gemelo en Rust; (2) 4 funciones de
+  ordenamiento en Rust (bubble/selection/insertion/heap sort) recibían
+  `&mut Vec<i32>` en vez de `&mut [i32]` (`clippy::ptr_arg` real, ya que
+  ninguna necesita cambiar el tamaño) — corregido, recompilado y
+  re-verificado.
+- **Chequeos mecánicos**: `scripts/audit_lesson_order.py` (con un fix de
+  paso: el script no traía `rust` en `COURSE_ONLY_LANGUAGES` ni las 3
+  categorías nuevas en su set de "topic categories", desincronizado del
+  test real de Dart — corregido) da verde para ambas rutas.
+  `flutter test` completo: **403 tests verdes** (subió de ~366 al sumar
+  las 24 entradas × combinaciones de logro por categoría/dificultad).
+  `content_drift_integration_test.dart` actualizado (315→339 total,
+  89→97 beginner, ids `go-algo-010/011/012` y los 12 `rust-algo-*`
+  añadidos al set de `findContainingSymbols('_')` porque Go usa `_` de
+  blank identifier en los recorridos con `range` y Rust usa snake_case
+  en todos sus identificadores).
+- **Pendiente/nota**: `flutter analyze --fatal-infos --fatal-warnings`
+  (y por lo tanto `tool/check.sh` completo) sigue en rojo por 2 lints
+  preexistentes en `keystroke_stream_recorder.dart`/su test — **no
+  relacionado con esta sesión**, ya estaban modificados sin commitear
+  antes de empezar; no se tocaron.
+
+### 2026-09-11 — Build hardening de las 4 plataformas (compresión/ofuscación/firma/CI)
+
+- **Pedido del usuario**: auditoría de "¿el sistema de buildear por
+  plataforma se maneja bien — compresión, ofuscación, limpieza,
+  seguridad, eficiencia, rendimiento?". Respuesta corta: no — Android
+  seguía firmando `release` con la clave de debug y sin
+  `isMinifyEnabled`/ProGuard (el template de Flutter sin tocar), y no
+  existía ningún job de CI que compilara un artefacto por plataforma pese
+  a que `STACK.md §12` ya especifica esa tabla. Confirmado con el usuario
+  que quería las 4 plataformas (Web/Android/Windows/Linux)
+  **preconfiguradas ya, sin ejecutar build/publicación real todavía**, y
+  que sí corriera el scaffolding real de Windows/Web ahora (no solo
+  documentado).
+- **Scaffolding**: `flutter config --enable-windows-desktop` +
+  `flutter create --platforms=windows,web .`. `android/` y `linux/`
+  quedaron intactos. **Nota**: `flutter create` reescribió
+  `.metadata`'s `migration.platforms` reemplazando las entradas
+  `android`/`linux` por `web`/`windows` en vez de agregarlas — corregido a
+  mano (las 4 platforms deben estar listadas para que `flutter migrate`
+  seguido funcione bien).
+- **Android** (`android/app/build.gradle.kts`): `signingConfig` ahora lee
+  `android/key.properties` (gitignorado, patrón oficial de Flutter con
+  `Properties()`/`FileInputStream`; `key.properties.example` versionado
+  como plantilla) y cae a la clave de debug con `logger.warn(...)` si no
+  existe. `isMinifyEnabled`/`isShrinkResources = true` +
+  `android/app/proguard-rules.pro` (placeholder documentado — ninguna
+  dependencia actual necesita keep-rules propias, todas traen *consumer
+  rules* en su AAR).
+- **Linux**: `linux/packaging/dev.omarcodes.ridge.desktop` (README ya
+  señalaba que faltaba) + manifiesto Flatpak
+  (`dev.omarcodes.ridge.yml`) con `--share=network` y
+  `--talk-name=org.freedesktop.secrets` (`STACK.md §3.4`), empaquetando
+  el bundle ya compilado (`flutter build linux --release`) en vez de
+  compilar Dart dentro del sandbox sin red.
+- **Windows**: `msix` dev_dependency + bloque `msix_config:` en
+  `pubspec.yaml` (sin `certificate_path` — sin cert real cae a
+  autofirmado de prueba; `msix_version` deliberadamente omitido para que
+  se derive del `version:` de pubspec, un solo lugar de verdad,
+  `STACK.md §10.1`).
+- **Web**: `web/_headers` (COOP/COEP para que `drift`/OPFS rinda al
+  máximo, `STACK.md §3.2`) + `web/_redirects` (fallback SPA) en formato
+  Cloudflare Pages; `usePathUrlStrategy()` en `main.dart` tras `if
+  (kIsWeb)`. Sin flag de renderer — este Flutter (`3.47.2`) ya no tiene
+  `--web-renderer`/renderer HTML, compila a CanvasKit por defecto (cumple
+  el requisito de ancho de carácter predecible de GeistMono sin nada
+  adicional).
+- **CI**: `.github/workflows/release-builds.yml` nuevo, separado de
+  `ci.yml`, gatillado solo por tag `v*.*.*` — 4 jobs
+  (android/windows/linux/web), cada uno compila con
+  `--obfuscate --split-debug-info` (Web no soporta esa flag; dart2js ya
+  minifica en release) y sube el artefacto empaquetado como *build
+  artifact*, sin publicar a ninguna tienda/hosting real todavía (sin
+  credenciales). Linux usa la action comunitaria
+  `flatpak/flatpak-github-actions/flatpak-builder@v6` en vez de
+  hand-rollear `flatpak-builder` + remoto Flathub.
+- **Verificado en este sandbox**: `flutter analyze` limpio,
+  `dart run tool/check_architecture.dart` sin violaciones nuevas,
+  `flutter build web --release` y `flutter build linux --release
+  --obfuscate --split-debug-info=...` compilan bien (confirmado que
+  `_headers`/`_redirects` se copian a `build/web/` y que se genera
+  `app.linux-x64.symbols`), suite completa (398 tests) verde tras
+  `flutter clean` (un fallo intermitente de
+  `practice_session_controller_persist_retry_test.dart` resultó ser
+  caché de build viejo, no algo de esta sesión). **No verificado**:
+  Android (sin SDK de Android en este sandbox, igual que ya advertía
+  `README.md`) y Windows (requiere Visual Studio — solo se puede
+  scaffoldear/configurar aquí, se compila de verdad en el runner
+  `windows-latest` de CI).
+- Docs actualizados: `CLAUDE.md`, `README.md`, `STACK.md §1`/`§12`.
+  Pendientes reales (credenciales de firma, redimensionar el icono de
+  Linux) movidos a la sección de abajo.
+
+### 2026-09-11 — Deep link a una lección + compartir ejercicio
+
+- **Pedido del usuario**: si llega una notificación de "avanzaste al
+  ejercicio 4 de la guía 1", ¿un tap lleva justo ahí? ¿Se puede compartir
+  un ejercicio con un link? Respuesta: no, nada de eso existía (sin
+  `app_links`/`uni_links`, sin intent-filter más allá del launcher, sin
+  `ios/`; notificaciones push explícitamente diferidas a v2 en
+  `STACK.md:535`).
+- **Alcance implementado** (deliberadamente sin tocar notificaciones
+  push, que siguen fuera de alcance v1): ruta nueva
+  `/practice/:pathId/lessons/:lessonId` (`lib/core/router/app_router.dart`)
+  resuelta por `LessonDeepLinkScreen` (nuevo,
+  `lib/features/learning_paths/presentation/screens/`), que reenvía a
+  `/practice/session` vía `LessonNavigation.openLessonById` (nuevo método
+  en `lesson_navigation.dart`, junto a `shareableLessonUri`). Enlace
+  entrante manejado por `deepLinkListenerProvider`
+  (`lib/core/router/deep_link_providers.dart`, `app_links ^7.2.1`),
+  fireado igual que `catalogSeedProvider`/`deviceInfoSyncProvider` desde
+  `RidgeApp.build`. Validación con lista blanca (`isSupportedDeepLinkPath`)
+  antes de reenviar a `router.go` — necesario porque la mayoría de rutas
+  leen un `extra` obligatorio que un link crudo nunca trae (hubiera hecho
+  *null-assert crash* sin el filtro).
+- Botón de compartir (`share_plus ^13.3.0`) — **tres rondas de ajuste de
+  ubicación tras feedback del usuario en la misma sesión** antes de dar
+  con el lugar correcto: 1) ícono en toda fila de `LessonTreeTile` con
+  snippet cargado — "se ve muy feo", rechazado. 2) ícono solo cuando
+  `status == LessonStatus.completed`, igual en `LessonTreeTile` —
+  también rechazado ("quítalo también cuando está completed, no me
+  sirve, siento que estorba visualmente"). 3) junto al botón "info" en
+  `SessionResultFooter` — también rechazado ("no lo pongas al lado del
+  What did you just type..."); el usuario pidió expresamente que fuera
+  junto al título "Session complete". **Ubicación final**: ícono
+  pequeño y silenciado en la esquina derecha del título propio de
+  `SessionResultPanel` ("Sesión completa"/"Run over"), no en el footer
+  ni en la lista. `onShare` sigue siendo el mismo callback opaco
+  (mismo patrón que `onContinue`: `LessonNavigation` lo construye,
+  `PracticeSessionScreen` solo lo reenvía sin saber qué hace), solo
+  cuando la sesión pasa (`passed == true`). `LessonTreeTile` y
+  `SessionResultFooter` quedaron sin ningún botón de compartir. Ver
+  memoria `feedback_list_row_secondary_actions` (corregida para
+  reflejar esta ubicación final).
+- Esquema elegido: `ridge://app/...` (custom, no HTTPS App Links) — no
+  hay dominio propio todavía para `assetlinks.json`; revisar cuando exista
+  hosting web real (`STACK.md §3.4`). Solo Android (no hay `ios/`, ver
+  `STACK.md §14`); Linux/Windows sin registro de protocolo (no vale la
+  pena para un caso de uso mayormente teléfono-a-teléfono).
+- Docs actualizados: `STACK.md §2.3` (detalle técnico) y `SPEC.md §5.7`
+  (una línea, sin detalle técnico). `bash tool/check.sh` verde (397 tests).
+  Intento de verificación visual (`flutter run -d linux`) bloqueado por
+  este entorno WSL2: el driver Vulkan/Zink falla
+  (`VK_ERROR_INCOMPATIBLE_DRIVER`) y la ventana nunca llega a mostrarse
+  — verificado solo por análisis de código + suite de tests, no
+  visualmente, en este sandbox.
 
 ### 2026-09-11 — Vista 2D fiel del teclado en Profile + banco de layouts curado
 
@@ -919,7 +1137,14 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 - Todo lo online de `SPEC.md` §5/§9 y `STACK.md` §5–6 (Supabase, sync,
   duelos, escuadrones, leaderboards, y la Fase 1 del Reto Diario descrita
   arriba).
-- Scaffold de Windows/Web (`flutter create --platforms=windows,web .`).
+- Generar keystore/certificado de firma/cuentas reales de distribución
+  (Play Console, certificado de firma de código Windows, Cloudflare Pages)
+  antes del primer tag `v*.*.*` real — hoy `release-builds.yml` compila y
+  empaqueta pero cae a firma debug/certificado de prueba sin esos
+  secrets (ver sesión 2026-09-11 de build hardening).
+- Redimensionar `assets/icons/ridge_launcher_master.png` a los tamaños
+  `hicolor` estándar (128/256/512) antes de un submit real a Flathub —
+  hoy el manifiesto Flatpak instala un único tamaño sin escalar.
 - Evaluar si `symbolFocus` merece valores SQL (hoy `[]`, como Bash) si se
   le da uso real en recomendaciones.
 - Considerar versionar el harness de verificación de contenido SQL dentro

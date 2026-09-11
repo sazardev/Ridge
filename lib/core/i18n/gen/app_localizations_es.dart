@@ -31,6 +31,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navSettings => 'Ajustes';
 
   @override
+  String get navRailCollapse => 'Colapsar navegación';
+
+  @override
+  String get navRailExpand => 'Expandir navegación';
+
+  @override
   String get profileCreateTitle => 'Crea tu perfil';
 
   @override
@@ -756,6 +762,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categoryIdiomaticFormatting => 'Formato idiomático';
 
   @override
+  String get categorySearchingAlgorithms => 'Algoritmos de búsqueda';
+
+  @override
+  String get categorySortingAlgorithms => 'Algoritmos de ordenamiento';
+
+  @override
+  String get categoryGraphAlgorithms => 'Algoritmos de grafos';
+
+  @override
   String get categoryDomainModeling => 'Modelado de dominio';
 
   @override
@@ -850,6 +865,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get languageRust => 'Rust';
+
+  @override
+  String get languagePython => 'Python';
+
+  @override
+  String get languageJavascript => 'JavaScript';
 
   @override
   String get snippetPracticeAction => 'Practicar';
@@ -1216,20 +1237,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Aún no hay rutas de aprendizaje disponibles.';
 
   @override
-  String learningPathsProgress(int completed, int total) {
-    return '$completed/$total lecciones completadas';
-  }
-
-  @override
   String get learningPathsLessonListTitle => 'Lecciones';
 
   @override
-  String learningPathsContinueHint(String lessonTitle) {
-    return 'Continuar: $lessonTitle';
-  }
+  String get learningPathsContinueAction => 'Continuar lección';
 
   @override
-  String get learningPathsContinueAction => 'Continuar lección';
+  String get learningPathsShareLessonAction => 'Compartir este ejercicio';
 
   @override
   String get learningLessonLocked => 'Bloqueada';

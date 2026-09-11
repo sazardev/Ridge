@@ -47,6 +47,13 @@ ARCHITECTURE_LAYER_CATEGORIES = {
     "tuiStyling",
     "tuiComponents",
     "tuiAdapter",
+    # Mirrors `_algorithmTopicCategories` — topic categories for the
+    # go-algorithms-v1 / rust-algorithms-v1 Learning Routes. Individual
+    # snippets DO carry a real difficulty here, but the category itself
+    # gets the same looser total-count bar as the architecture-layer ones.
+    "searchingAlgorithms",
+    "sortingAlgorithms",
+    "graphAlgorithms",
 }
 
 # Languages whose catalog exists only to compose a Learning Path (never a
@@ -56,7 +63,7 @@ ARCHITECTURE_LAYER_CATEGORIES = {
 # `_freePracticeLanguages` in
 # `test/features/content/snippet_catalog_completeness_test.dart`; see
 # SPEC.md §3.2's two catalog tiers.
-COURSE_ONLY_LANGUAGES = {"bash", "sql"}
+COURSE_ONLY_LANGUAGES = {"bash", "sql", "rust", "python", "javascript"}
 
 
 def load(path: Path):

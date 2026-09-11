@@ -23,6 +23,8 @@ class SnippetLocalDataSource implements SnippetCatalogSource {
     'assets/content/snippets/bash_v1.json',
     'assets/content/snippets/sql_v1.json',
     'assets/content/snippets/rust_v1.json',
+    'assets/content/snippets/python_v1.json',
+    'assets/content/snippets/javascript_v1.json',
   ];
 
   final List<String> _assetPaths;

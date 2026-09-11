@@ -34,6 +34,7 @@ class PracticeSessionScreen extends ConsumerStatefulWidget {
     required this.snippet,
     required this.mode,
     this.onContinue,
+    this.onShare,
     super.key,
   });
 
@@ -49,6 +50,14 @@ class PracticeSessionScreen extends ConsumerStatefulWidget {
   /// screen's fixed footer alongside Retry once
   /// [PracticeSessionState.finishedSession]'s session passes.
   final VoidCallback? onContinue;
+
+  /// Shares a link to this lesson — only ever supplied by
+  /// `learning_paths` (`LessonNavigation`), opaque to this screen exactly
+  /// like [onContinue]. Shown as a small, muted icon in
+  /// `SessionResultPanel`'s own title row once the session passes, same
+  /// gating as [onContinue] but independent of whether there's a next
+  /// lesson to continue to.
+  final VoidCallback? onShare;
 
   @override
   ConsumerState<PracticeSessionScreen> createState() =>
@@ -71,6 +80,22 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
   /// rebuilt on every build anyway.
   final _resultScrollController = ScrollController();
 
+  /// Holds focus over the result/finishing area once `KeystrokeCaptureField`
+  /// (the only other focus claimant on this screen) unmounts — without
+  /// this, nothing in that subtree ever holds focus, so `CallbackShortcuts`
+  /// below (which only sees a key event by bubbling up from whichever node
+  /// is currently focused) would never get a chance to match Enter/R/I/
+  /// Home/End/PageUp/PageDown. Same fix `SnippetInfoScreen` already needed
+  /// for the same reason — see its class doc.
+  final _resultFocusNode = FocusNode(debugLabel: 'PracticeResultFocus');
+
+  /// Whether the result/finishing area was already showing as of the last
+  /// build — so focus is (re-)requested exactly once per genuine
+  /// idle/running -> finished transition, not on every rebuild while
+  /// already showing (which would fight a user tabbing to, or clicking,
+  /// a button inside the result panel).
+  bool _wasShowingResultArea = false;
+
   @override
   void initState() {
     super.initState();
@@ -80,6 +105,7 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
   @override
   void dispose() {
     _resultScrollController.dispose();
+    _resultFocusNode.dispose();
     super.dispose();
   }
 
@@ -155,6 +181,7 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
     final snippet = widget.snippet;
     final mode = widget.mode;
 
@@ -202,6 +229,7 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
         ? () => unawaited(controllerNotifier.retryPersist())
         : null;
     final onContinueAction = passed == true ? widget.onContinue : null;
+    final onShareAction = passed == true ? widget.onShare : null;
     // Enter presses whichever action is primary (Continue when offered,
     // else typing-retry, else persist-retry); Escape always backs out, in
     // every session state, not just at the result — mirrors the AppBar's
@@ -212,13 +240,24 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
     final onShowInfoAction = explanation.isEmpty
         ? null
         : () => context.push('/practice/session/info', extra: state.snippet);
-    // Whether the result area below the code field has anything to show
-    // at all (finishing spinner, error, or the actual result panel) —
-    // while typing (idle/running) it doesn't, so the code field gets the
-    // full height instead of splitting it with reserved blank space.
+    // Whether there's a result area to show at all (finishing spinner,
+    // error, or the actual result panel) — while typing (idle/running)
+    // there isn't, and the code card is shown full-height instead (see
+    // the body's outer `AnimatedSwitcher`, which shows exactly one of
+    // the two).
     final showResultArea =
         state.status == PracticeSessionStatus.finished ||
         state.status == PracticeSessionStatus.result;
+    if (showResultArea && !_wasShowingResultArea) {
+      // Deferred a frame: `KeystrokeCaptureField` needs to actually finish
+      // unmounting first — requesting focus here is still safe even before
+      // that, since an explicit `requestFocus()` always wins over whatever
+      // currently holds it, unlike passive `autofocus`.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _resultFocusNode.requestFocus();
+      });
+    }
+    _wasShowingResultArea = showResultArea;
 
     return CallbackShortcuts(
       bindings: {
@@ -242,7 +281,13 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
         },
       },
       child: Scaffold(
+        // Matches the code card's own tonal surface (see
+        // `KeystrokeCaptureField`) so the app bar and the card read as one
+        // continuous surface — no separate "card floating on the
+        // background" seam — letting the code itself be the page.
+        backgroundColor: theme.colorScheme.surfaceContainerHigh,
         appBar: AppBar(
+          backgroundColor: theme.colorScheme.surfaceContainerHigh,
           // The current snippet — for Sprint this may have already
           // advanced past the one this route was pushed with (SPEC.md
           // §5.2's seamless mid-session queue).
@@ -265,68 +310,78 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
           ],
         ),
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (state.status == PracticeSessionStatus.running &&
-                    survival != null) ...[
-                  _LiveStatsRow(survival: survival),
-                  const SizedBox(height: 8),
-                ],
-                // While typing (idle/running), the result area below has
-                // nothing to show yet — omitting it from the column
-                // entirely (rather than reserving its flex share for an
-                // empty `SizedBox.shrink`) lets the code field's
-                // `Expanded` claim the *whole* remaining height instead
-                // of splitting it with blank space, which is what makes
-                // this a comfortable full-height editor rather than a
-                // cramped one (SPEC.md's longer DDD/hexagonal-
-                // architecture content needs every pixel it can get).
-                // `Expanded` (tight fit) rather than `Flexible` (loose
-                // fit) so the card always fills that height instead of
-                // shrinking to short snippets' content size — see the
-                // matching `ConstrainedBox` in `KeystrokeCaptureField`.
-                // Once a result actually exists, the field gives room
-                // back to it below.
-                Expanded(
-                  child: KeystrokeCaptureField(snippet: snippet, mode: mode),
-                ),
-                if (showResultArea) ...[
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: AnimatedSwitcher(
-                      duration: AppMotion.spatialDefault,
-                      switchInCurve: AppMotion.enter,
-                      switchOutCurve: AppMotion.exit,
-                      child: switch (state.status) {
-                        PracticeSessionStatus.result when state.error == null =>
-                          SingleChildScrollView(
-                            key: const ValueKey('result'),
-                            controller: _resultScrollController,
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: SessionResultPanel(
-                              metrics: state.finishedSession!.metrics,
-                              passed: passed,
-                              survival: survival,
+          // The code card and the finished/result readout never need to be
+          // visible at once — showing both together (each squeezed into
+          // half the height) is what used to force scrolling just to read
+          // the result. Swapping the whole area instead of stacking both
+          // lets the result take the full screen once there's one to show.
+          //
+          // Only the result branch keeps its own padding — the typing
+          // branch is deliberately edge-to-edge (no margin around the code
+          // card) so, combined with the Scaffold/AppBar sharing the card's
+          // surface color above, the whole screen reads as one continuous
+          // card with the code as its sole focus.
+          child: AnimatedSwitcher(
+            duration: AppMotion.spatialDefault,
+            switchInCurve: AppMotion.enter,
+            switchOutCurve: AppMotion.exit,
+            child: showResultArea
+                ? Focus(
+                    focusNode: _resultFocusNode,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: AnimatedSwitcher(
+                        key: const ValueKey('result-area'),
+                        duration: AppMotion.spatialDefault,
+                        switchInCurve: AppMotion.enter,
+                        switchOutCurve: AppMotion.exit,
+                        child: switch (state.status) {
+                          PracticeSessionStatus.result
+                              when state.error == null =>
+                            SingleChildScrollView(
+                              key: const ValueKey('result'),
+                              controller: _resultScrollController,
+                              padding: const EdgeInsets.only(bottom: 16),
+                              child: SessionResultPanel(
+                                metrics: state.finishedSession!.metrics,
+                                passed: passed,
+                                survival: survival,
+                                onShare: onShareAction,
+                              ),
                             ),
+                          PracticeSessionStatus.result => Center(
+                            key: const ValueKey('error'),
+                            child: Text(state.error ?? ''),
                           ),
-                        PracticeSessionStatus.result => Center(
-                          key: const ValueKey('error'),
-                          child: Text(state.error ?? ''),
-                        ),
-                        PracticeSessionStatus.finished => const Center(
-                          key: ValueKey('finishing'),
-                          child: CircularProgressIndicator(),
-                        ),
-                        _ => const SizedBox.shrink(key: ValueKey('typing')),
-                      },
+                          // `showResultArea` already narrows this branch to
+                          // `finished`/`result`, so anything else here is
+                          // the brief finishing spinner between the two.
+                          _ => const Center(
+                            key: ValueKey('finishing'),
+                            child: CircularProgressIndicator(),
+                          ),
+                        },
+                      ),
                     ),
+                  )
+                : Column(
+                    key: const ValueKey('typing-area'),
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (state.status == PracticeSessionStatus.running &&
+                          survival != null)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                          child: _LiveStatsRow(survival: survival),
+                        ),
+                      Expanded(
+                        child: KeystrokeCaptureField(
+                          snippet: snippet,
+                          mode: mode,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ],
-            ),
           ),
         ),
         // Pinned outside the scrollable result panel above so Retry/

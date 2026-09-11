@@ -163,6 +163,30 @@ enum ContentCategory {
   /// with lessons earlier in the same route. Architecture-layer category.
   testingWithFakes,
 
+  /// Linear and binary search. Introduced by the `go-algorithms-v1` /
+  /// `rust-algorithms-v1` Learning Routes — a topic category (see
+  /// `sortingAlgorithms`'s doc comment for why it's held to a looser
+  /// completeness bar than a language-feature category).
+  searchingAlgorithms,
+
+  /// Classic in-place and divide-and-conquer sorts: bubble, selection,
+  /// insertion, merge, quick, and heap sort. Introduced by the
+  /// `go-algorithms-v1` / `rust-algorithms-v1` Learning Routes. Unlike a
+  /// language-feature category, there's no meaningful notion of a
+  /// "beginner" or "expert" TIER OF THE CATEGORY ITSELF (individual
+  /// snippets still carry a real difficulty, reflecting genuine algorithmic
+  /// complexity, e.g. heap sort is `expert` and bubble sort is `beginner`)
+  /// — held to the same looser total-count completeness bar as the
+  /// architecture-layer categories below; see
+  /// `snippet_catalog_completeness_test.dart`'s `_algorithmTopicCategories`.
+  sortingAlgorithms,
+
+  /// Graph representation (adjacency list) and traversal/shortest-path:
+  /// BFS, DFS, and Dijkstra. Introduced by the `go-algorithms-v1` /
+  /// `rust-algorithms-v1` Learning Routes. Topic category, same
+  /// looser-bar treatment as `sortingAlgorithms`.
+  graphAlgorithms,
+
   /// Bubble Tea's Elm loop: the `Model`/`Init`/`Update`/`View` contract,
   /// typed messages, and `tea.Cmd` values. Introduced by the
   /// `go-tui-notes-v1` Learning Route. Architecture-layer category.

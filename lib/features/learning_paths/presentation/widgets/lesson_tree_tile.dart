@@ -44,7 +44,7 @@ class LessonTreeTile extends StatelessWidget {
     final isLocked = status == LessonStatus.locked;
 
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       shape: AppShapes.of(context).mediumShape,
       // Without this, the ink splash from `ListTile`'s `onTap` paints
       // as a plain rectangle overflowing past the card's own rounded
@@ -53,8 +53,15 @@ class LessonTreeTile extends StatelessWidget {
       child: Opacity(
         opacity: isLocked ? 0.5 : 1,
         child: ListTile(
-          contentPadding: const EdgeInsets.all(16),
-          leading: Icon(status.icon, color: theme.colorScheme.primary),
+          dense: true,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 4,
+          ),
+          leading: Icon(
+            status.icon,
+            color: status.iconColor(theme.colorScheme),
+          ),
           title: Text(lesson.titleFor(context)),
           subtitle: snippet == null
               ? null

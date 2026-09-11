@@ -80,6 +80,20 @@ void main() {
     },
   );
 
+  testWidgets('the info action alone still renders even with neither retry nor '
+      'continue offered, e.g. Zen/Sprint (SPEC.md §5.1/§5.2 have no '
+      'pass/fail gate)', (tester) async {
+    var infoShown = false;
+    await _pumpFooter(tester, onShowInfo: () => infoShown = true);
+
+    expect(find.byType(OutlinedButton), findsNothing);
+    expect(find.byType(FilledButton), findsNothing);
+    expect(find.byIcon(LucideIcons.info300), findsOneWidget);
+
+    await tester.tap(find.byIcon(LucideIcons.info300));
+    expect(infoShown, isTrue);
+  });
+
   testWidgets('the info action only shows up when onShowInfo is supplied', (
     tester,
   ) async {

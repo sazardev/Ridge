@@ -45,6 +45,7 @@ extension SettingsDtoMapper on SettingsDto {
               _decodeBinding(shortcutBindings[action.name]) ??
               AppSettings.initial.shortcutBindings[action]!,
       },
+      navigationRailExpanded: navigationRailExpanded,
       languageCode: languageCode,
     );
   }
@@ -69,6 +70,7 @@ extension AppSettingsMapper on AppSettings {
         for (final entry in shortcutBindings.entries)
           entry.key.name: _encodeBinding(entry.value),
       },
+      navigationRailExpanded: navigationRailExpanded,
       languageCode: languageCode,
     );
   }

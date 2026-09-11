@@ -1,0 +1,54 @@
+# Flatpak manifest for Ridge (STACK.md §12). Not build-verified yet in this
+# environment (flatpak-builder + a GNOME runtime aren't available here) — the
+# `linux` job in `.github/workflows/release-builds.yml` is the first place
+# this actually runs, once a `v*.*.*` tag is pushed.
+#
+# Packages the *pre-built* release bundle (`flutter build linux --release`)
+# rather than compiling Flutter/Dart inside the sandbox — flatpak-builder
+# disables network access during the build by default, which would break
+# `pub get`/codegen if attempted from inside the sandbox.
+app-id: dev.omarcodes.ridge
+runtime: org.gnome.Platform
+# GNOME Platform version bundling a GTK3 compatible with the Flutter Linux
+# embedder (STACK.md §3.3) — confirm against `flutter doctor -v` / the
+# runtime's libgtk-3 version the first time this manifest actually builds.
+runtime-version: '46'
+sdk: org.gnome.Sdk
+command: ridge
+finish-args:
+  # Supabase sync (STACK.md §5) once the online backend lands.
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  # Required for flutter_secure_storage (libsecret/D-Bus Secret Service)
+  # inside the sandbox — without this the secure-storage read/write fails
+  # silently (STACK.md §3.2/§3.4).
+  - --talk-name=org.freedesktop.secrets
+modules:
+  - name: ridge
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 bundle/ridge /app/bin/ridge
+      - mkdir -p /app/bin/lib /app/bin/data
+      - cp -r bundle/lib/. /app/bin/lib/
+      - cp -r bundle/data/. /app/bin/data/
+      - install -Dm644 packaging/dev.omarcodes.ridge.desktop
+        /app/share/applications/dev.omarcodes.ridge.desktop
+      # TODO: resize assets/icons/ridge_launcher_master.png (1024x1024) to
+      # the standard hicolor sizes (128/256/512) before a real Flathub
+      # submission — for now the master PNG is installed at one size.
+      - install -Dm644 packaging/ridge_launcher_master.png
+        /app/share/icons/hicolor/256x256/apps/dev.omarcodes.ridge.png
+    sources:
+      - type: dir
+        # Populated by `flutter build linux --release` before
+        # flatpak-builder runs (see release-builds.yml).
+        path: ../../build/linux/x64/release/bundle
+        dest: bundle
+      - type: dir
+        path: .
+        dest: packaging
+      - type: file
+        path: ../../assets/icons/ridge_launcher_master.png
+        dest: packaging

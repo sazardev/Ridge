@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:ridge/core/theme/app_motion.dart';
-import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/core/theme/app_typography.dart';
 import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/domain/services/syntax_tokenizer.dart';
@@ -380,7 +379,6 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
     final progress = codeLength == 0
         ? 0.0
         : (state.recorder.expectedCursor / codeLength).clamp(0.0, 1.0);
-    final cardShape = AppShapes.of(context).largeShape;
 
     final field = Focus(
       focusNode: _focusNode,
@@ -420,51 +418,46 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
               // its text (jarring size jumps between snippets); a snippet
               // taller than this still grows past it and scrolls above.
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              // Clips the progress bar below to the card's own rounded
-              // shape, so it reads as that shape's bottom border rather
-              // than a separately-cornered strip overlaid on top of it.
-              child: ClipPath(
-                clipper: ShapeBorderClipper(shape: cardShape),
-                child: Stack(
-                  // `loose` (the default) would hand the `Container`
-                  // below loosened constraints, discarding the minHeight
-                  // floor this `ConstrainedBox` just set — `passthrough`
-                  // forwards the incoming constraints unchanged so the
-                  // card still fills the available space instead of
-                  // shrinking back to its text, with the progress bar
-                  // still free to position itself via `Positioned`.
-                  fit: StackFit.passthrough,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      padding: containerPadding,
-                      decoration: ShapeDecoration(
-                        shape: cardShape,
-                        color: theme.colorScheme.surfaceContainerHigh,
-                      ),
-                      // Keyed by the current snippet's id so a Sprint
-                      // mid-session swap (SPEC.md §5.2) cross-fades instead
-                      // of an abrupt cut; ordinary per-keystroke recoloring
-                      // keeps the same key, so it never retriggers this
-                      // transition.
-                      child: AnimatedSwitcher(
-                        duration: AppMotion.effectsDefault,
-                        switchInCurve: AppMotion.enter,
-                        switchOutCurve: AppMotion.exit,
-                        child: RichText(
-                          key: ValueKey(state.snippet.id),
-                          text: textSpan,
-                        ),
+              // No rounded shape/clip here — `PracticeSessionScreen` makes
+              // the app bar and Scaffold share this exact surface color and
+              // runs this field edge-to-edge, so the card *is* the screen
+              // rather than a distinct shape floating on it.
+              child: Stack(
+                // `loose` (the default) would hand the `Container` below
+                // loosened constraints, discarding the minHeight floor
+                // this `ConstrainedBox` just set — `passthrough` forwards
+                // the incoming constraints unchanged so the card still
+                // fills the available space instead of shrinking back to
+                // its text, with the progress bar still free to position
+                // itself via `Positioned`.
+                fit: StackFit.passthrough,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: containerPadding,
+                    color: theme.colorScheme.surfaceContainerHigh,
+                    // Keyed by the current snippet's id so a Sprint
+                    // mid-session swap (SPEC.md §5.2) cross-fades instead
+                    // of an abrupt cut; ordinary per-keystroke recoloring
+                    // keeps the same key, so it never retriggers this
+                    // transition.
+                    child: AnimatedSwitcher(
+                      duration: AppMotion.effectsDefault,
+                      switchInCurve: AppMotion.enter,
+                      switchOutCurve: AppMotion.exit,
+                      child: RichText(
+                        key: ValueKey(state.snippet.id),
+                        text: textSpan,
                       ),
                     ),
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      child: TypingProgressBar(progress: progress),
-                    ),
-                  ],
-                ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: TypingProgressBar(progress: progress),
+                  ),
+                ],
               ),
             ),
           );

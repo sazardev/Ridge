@@ -39,7 +39,7 @@ class ExternalSnippetPackSource implements SnippetCatalogSource {
     final snippets = <Snippet>[];
     for (final file in files) {
       try {
-        final raw = await file.readAsString();
+        final raw = await readContentPackFile(file);
         final decoded = jsonDecode(raw) as List<Object?>;
         for (final entry in decoded) {
           try {

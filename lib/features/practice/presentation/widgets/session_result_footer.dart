@@ -14,9 +14,10 @@ import 'package:ridge/core/theme/app_typography.dart';
 /// result (many weak characters, a tall snippet) the actions would
 /// otherwise scroll out of reach, forcing a scroll just to continue.
 class SessionResultFooter extends StatelessWidget {
-  /// Creates the footer. Renders nothing at all if both [onRetry] and
-  /// [onContinue] are `null` (Zen/Sprint have no pass/fail gate, so
-  /// there's nothing to pin here).
+  /// Creates the footer. Renders nothing at all if [onRetry], [onContinue],
+  /// and [onShowInfo] are all `null` — Zen/Sprint have no pass/fail gate
+  /// so the first two are always null there, but the info action still
+  /// stands on its own whenever the snippet has an explanation to show.
   const new({
     this.onRetry,
     this.retryLabel,
@@ -47,7 +48,9 @@ class SessionResultFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (onRetry == null && onContinue == null) return const SizedBox.shrink();
+    if (onRetry == null && onContinue == null && onShowInfo == null) {
+      return const SizedBox.shrink();
+    }
 
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);

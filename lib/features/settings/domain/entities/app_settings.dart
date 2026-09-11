@@ -91,6 +91,7 @@ abstract class AppSettings with _$AppSettings {
     required AppSoundPack soundPack,
     required bool onboardingCompleted,
     required Map<AppShortcutAction, ShortcutBinding> shortcutBindings,
+    required bool navigationRailExpanded,
     String? languageCode,
   }) = _AppSettings;
 
@@ -107,5 +108,6 @@ abstract class AppSettings with _$AppSettings {
     soundPack: AppSoundPack.mechanical,
     onboardingCompleted: false,
     shortcutBindings: _defaultShortcutBindings,
+    navigationRailExpanded: true,
   );
 }

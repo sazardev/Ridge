@@ -48,8 +48,8 @@ Estos principios traducen los principios de negocio de `SPEC.md §1` a decisione
 |---|---|---|---|
 | **Android** | **[Vigente]** (`android/` ya existe) | Teclado físico/Bluetooth (preferido) o táctil en pantalla | Ver `SPEC.md §13.2`: sesiones sin teclado físico se registran en categoría "Modo táctil", separada de leaderboards de teclado físico. |
 | **Linux (desktop)** | **[Vigente]** (`linux/` ya existe) | Teclado físico | Plataforma de desarrollo principal del equipo. |
-| **Windows (desktop)** | **[Nuevo]** — requiere `flutter create --platforms=windows .` | Teclado físico | |
-| **Web** | **[Nuevo]** — requiere `flutter create --platforms=web .` | Teclado físico | Ver nota de precisión de timestamps en §2.8 y consideraciones de runtime en §3.4. |
+| **Windows (desktop)** | **[Vigente]** (`windows/` ya existe) | Teclado físico | |
+| **Web** | **[Vigente]** (`web/` ya existe) | Teclado físico | Ver nota de precisión de timestamps en §2.8 y consideraciones de runtime en §3.4. |
 | iOS / macOS | Fuera de alcance v1 | — | No solicitado en `SPEC.md`; el código hexagonal no impide agregarlo después (`flutter create --platforms=ios,macos .`), pero no se prioriza. |
 
 **Regla de paridad** (`SPEC.md §13.1`): toda plataforma soportada implementa el 100% de los módulos de negocio. No hay "modo lite" por plataforma — la única diferenciación permitida es la ya definida por negocio (teclado físico vs. táctil).
@@ -70,6 +70,8 @@ Estos principios traducen los principios de negocio de `SPEC.md §1` a decisione
 - `go_router ^18.0.1`, rutas declarativas (`GoRoute`, sin codegen de rutas), `StatefulShellRoute.indexedStack` para la navegación principal con pestañas persistentes — patrón ya usado para `/tasks`, `/settings`.
 - Redirecciones centralizadas en un único `redirect` del router raíz, reactivas a providers vía `refreshListenable` (patrón `_RouterRefreshNotifier` ya existente) — así se integran los nuevos guards (p. ej. redirigir a `/auth` si una ruta requiere Cuenta Registrada y el usuario es Invitado, por `SPEC.md §7.1`).
 - En Web, `go_router` requiere una decisión explícita de estrategia de URL — ver §3.4.
+- **Deep link a una lección concreta** — `/practice/:pathId/lessons/:lessonId` (`LessonDeepLinkScreen`) resuelve y reenvía a `/practice/session`; es la única ruta pensada para llegar desde fuera de la app. Un enlace entrante (`app_links ^7.2.1`, esquema propio `ridge://app/...` — sin dominio propio todavía, así que no se usan App Links HTTPS/`assetlinks.json`; revisar esa opción cuando exista un dominio real de hosting web, §3.4) se valida contra una lista blanca de rutas (`isSupportedDeepLinkPath`, `lib/core/router/deep_link_providers.dart`) antes de reenviarse a `router.go` — la mayoría de las demás rutas leen un `extra` obligatorio que un enlace crudo nunca trae, así que reenviar una ruta arbitraria sin filtrar produciría un *null-assert crash* en vez de fallar de forma segura. Solo Android por ahora (no hay `ios/` en el repo, §1/§14).
+- **Compartir el enlace de una lección** (`share_plus ^13.3.0`) — un `onShare` opaco (mismo patrón ya establecido por `onContinue`: `learning_paths` lo construye vía `LessonNavigation`, `practice` solo lo invoca sin saber qué hace) que `PracticeSessionScreen` solo expone una vez la sesión pasa. Vive como ícono pequeño y silenciado en la esquina derecha del título propio de `SessionResultPanel` ("Sesión completa") — no en `SessionResultFooter` (junto a Retry/Continue/info) ni, mucho menos, en la lista de lecciones (un ícono por fila ahí se sintió intrusivo en revisión de diseño, incluso limitado a lecciones completadas).
 
 ### 2.4 Modelado de datos — freezed / json_serializable **[Vigente]**
 - Entidades de dominio inmutables con `freezed_annotation ^3.1.0` + `freezed`.
@@ -96,6 +98,8 @@ Estos principios traducen los principios de negocio de `SPEC.md §1` a decisione
 | Metadata detallada de tecleo, historial de sesiones, cola de sincronización | **`drift`** (SQLite tipado) — **[Nuevo]** | `shared_preferences` no escala a un histórico creciente de sesiones con desgloses por carácter/dedo/n-grama que se necesita **consultar** (top-10 debilidades, promedios por ventana de tiempo), no solo leer entero. `drift` da consultas SQL tipadas, streams reactivos (coherente con el patrón `Stream<List<Task>>` ya usado) y soporta **todas las plataformas objetivo**, incluida Web (vía `sqlite3.wasm` + OPFS). Detalle de salvedades por plataforma: ver §3.2. |
 
 Paquetes nuevos para persistencia local estructurada: `drift`, `drift_flutter` (apertura de base de datos multiplataforma), `sqlite3_flutter_libs` (nativo: Android/Windows/Linux), `sqlite3` (asset WASM para Web). Versión exacta a resolver con `flutter pub add` al momento de integrar (tomar siempre la última estable compatible con el Dart SDK del proyecto).
+
+**Paquetes de contenido de terceros** ("content packs" — ver `CLAUDE.md` §Content sourcing): un directorio plano de JSON bajo `getApplicationSupportDirectory()`, fuera de `drift`, leído por `ExternalSnippetPackSource`/`LearningPathRepositoryImpl`. Regla de protección: cada archivo se descarta (con log, sin abortar el resto del pack) si supera **5 MiB** antes de decodificarse — un pack legítimo pesa órdenes de magnitud menos; el límite evita cargar a memoria un archivo arbitrariamente grande solo para descubrir después que es inválido. Implementado en `content_packs_directory.dart` (`maxContentPackFileBytes` / `readContentPackFile`).
 
 ### 2.8 Captura de input de bajo nivel (motor de métricas) **[Nuevo]**
 - Se captura con los eventos de teclado físico de Flutter (`HardwareKeyboard` / `KeyDownEvent` / `KeyUpEvent` de `package:flutter/services.dart`), no con `TextField.onChanged` — un `TextField` normal no expone ni el *keydown* real, ni tiempos de permanencia, ni tecla física, que son la base de toda la metadata de `SPEC.md §4.1`.
@@ -497,7 +501,7 @@ Checklist que aplica a **todo** feature nuevo, sin excepción, para que el códi
 
 **Pipeline**: GitHub Actions (`.github/workflows/ci.yml`).
 - Job `quality-gate` (en cada PR y push a `main`): `bash tool/check.sh` (formato, `flutter analyze --fatal-infos --fatal-warnings`, `tool/check_architecture.dart`, `flutter test` — mismo script que corre `pre-push` en local, §10.4) más una verificación de que el código generado (`*.g.dart`/`*.freezed.dart`) sigue actualizado tras `build_runner`. Pendiente de sumar a este job: pruebas de integración contra Supabase CLI local (§11) una vez exista ese backend.
-- Jobs de build por plataforma, gatillados solo por tag `v*.*.*` (§10.4), cada uno con el toolchain de §3.3 ya resuelto por el runner correspondiente:
+- Jobs de build por plataforma, gatillados solo por tag `v*.*.*` (§10.4), cada uno con el toolchain de §3.3 ya resuelto por el runner correspondiente. **Implementado** en `.github/workflows/release-builds.yml` (dormido hasta el primer tag): cada job compila con ofuscación Dart (`--obfuscate --split-debug-info`, salvo Web, que no soporta esa flag — dart2js ya minifica/renombra en release) y sube el artefacto empaquetado como *artifact* de Actions; ninguno publica todavía a una tienda/hosting real (columna "Distribución" de la tabla de abajo — pendiente de credenciales reales, ver Memory.md):
 
 | Plataforma | Build | Empaquetado | Distribución | Auto-actualización |
 |---|---|---|---|---|
@@ -532,7 +536,7 @@ Tres entornos, cada uno con su propio proyecto de Supabase (o el stack local ví
 Coherente con `SPEC.md §18`, y agregando exclusiones puramente técnicas:
 
 - Servidor propio fuera de Supabase (VM, contenedor a medida) — mientras Supabase cubra la necesidad, no se introduce infraestructura adicional.
-- Notificaciones push nativas en v1 (p. ej. avisar "match encontrado" con la app en segundo plano) — candidato natural para v2 una vez validado el uso de Duelos.
+- Notificaciones push nativas en v1 (p. ej. avisar "match encontrado" con la app en segundo plano) — candidato natural para v2 una vez validado el uso de Duelos. Esto es independiente de que una lección ya sea *direccionable* por URL (§2.3): cuando llegue la notificación push de v2, su payload solo necesita llevar esa misma ruta — no hace falta trabajo de enrutamiento adicional entonces.
 - Multi-región en Supabase — una sola región es suficiente para el alcance y costo de v1.
 - iOS/macOS (§1) — la arquitectura no lo impide, simplemente no está priorizado; de agregarse, requeriría extender la matriz de §3 con sus propias salvedades (p. ej. Keychain de iOS/macOS para `flutter_secure_storage`, sin las salvedades de Linux).
 - Cualquier almacenamiento de archivos binarios (Supabase Storage) — sin necesidad de negocio que lo justifique hoy (§5.8).

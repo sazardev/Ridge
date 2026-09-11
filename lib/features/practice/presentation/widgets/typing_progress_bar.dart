@@ -7,11 +7,9 @@ import 'package:flutter/material.dart';
 /// derives it from `expectedCursor`, itself unaffected by rejected
 /// keystrokes).
 ///
-/// Rendered with no rounding of its own — `KeystrokeCaptureField`
-/// overlays it flush against the bottom edge of the code card and clips
-/// the pair together to the card's own shape, so it reads as that
-/// shape's bottom border rather than a separately-cornered strip on top
-/// of it.
+/// Rendered with no rounding of its own — `KeystrokeCaptureField` overlays
+/// it flush against the bottom edge of the (edge-to-edge, unrounded) code
+/// card, so it reads as that card's own bottom border.
 class TypingProgressBar extends StatelessWidget {
   /// Creates the bar at the given [progress] (clamped 0.0–1.0 by the
   /// caller).

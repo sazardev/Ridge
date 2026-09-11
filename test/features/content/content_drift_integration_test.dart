@@ -84,7 +84,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 315)
+        .firstWhere((snippets) => snippets.length == 387)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -98,7 +98,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(315));
+    expect(catalog, hasLength(387));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -110,7 +110,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(315));
+      expect(catalog, hasLength(387));
     },
   );
 
@@ -121,7 +121,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(315));
+    expect(result, hasLength(387));
   });
 
   test(
@@ -151,7 +151,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(89));
+    expect(beginnerSnippets, hasLength(117));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -177,6 +177,9 @@ void main() {
       'bash-sshserv-002',
       'bash-sshserv-003',
       'bash-sshserv-004',
+      'go-algo-010',
+      'go-algo-011',
+      'go-algo-012',
       'go-cond-007',
       'go-err-009',
       'go-err-010',
@@ -213,6 +216,32 @@ void main() {
       'go-vars-009',
       'go-vars-011',
       'go-vars-012',
+      'javascript-vars-002',
+      'python-algo-001',
+      'python-algo-002',
+      'python-algo-003',
+      'python-algo-004',
+      'python-algo-005',
+      'python-algo-006',
+      'python-algo-007',
+      'python-algo-008',
+      'python-algo-009',
+      'python-algo-011',
+      'python-algo-012',
+      'python-func-002',
+      'python-func-003',
+      'rust-algo-001',
+      'rust-algo-002',
+      'rust-algo-003',
+      'rust-algo-004',
+      'rust-algo-005',
+      'rust-algo-006',
+      'rust-algo-007',
+      'rust-algo-008',
+      'rust-algo-009',
+      'rust-algo-010',
+      'rust-algo-011',
+      'rust-algo-012',
       'rust-func-003',
       'sql-advanced-002',
       'sql-advanced-003',
@@ -293,6 +322,8 @@ void main() {
       'go-usecase-004',
       'go-vars-003',
       'go-vars-006',
+      'javascript-func-003',
+      'python-func-003',
       'rust-cond-002',
       'rust-func-003',
       'sql-filtering-008',

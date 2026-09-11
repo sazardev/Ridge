@@ -36,9 +36,10 @@ class AppShell extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final shortcutBindings =
-        ref.watch(settingsControllerProvider).value?.shortcutBindings ??
-        AppSettings.initial.shortcutBindings;
+    final settings =
+        ref.watch(settingsControllerProvider).value ?? AppSettings.initial;
+    final shortcutBindings = settings.shortcutBindings;
+    final railExpanded = settings.navigationRailExpanded;
     // Order matches `app_router.dart`'s `StatefulShellRoute` branches
     // exactly — this list is indexed positionally by
     // [StatefulNavigationShell.currentIndex].
@@ -88,17 +89,52 @@ class AppShell extends ConsumerWidget {
                         NavigationRail(
                           selectedIndex: navigationShell.currentIndex,
                           onDestinationSelected: _onSelect,
-                          labelType: NavigationRailLabelType.all,
+                          labelType: railExpanded
+                              ? NavigationRailLabelType.all
+                              : NavigationRailLabelType.none,
+                          minWidth: railExpanded ? 80 : 64,
                           destinations: [
                             for (final d in destinations)
                               NavigationRailDestination(
-                                icon: Icon(d.icon),
-                                selectedIcon: Icon(d.selectedIcon),
+                                icon: IconTheme.merge(
+                                  data: IconThemeData(
+                                    size: railExpanded ? 24 : 20,
+                                  ),
+                                  child: Icon(d.icon),
+                                ),
+                                selectedIcon: IconTheme.merge(
+                                  data: IconThemeData(
+                                    size: railExpanded ? 24 : 20,
+                                  ),
+                                  child: Icon(d.selectedIcon),
+                                ),
                                 label: Text(d.label),
                               ),
                           ],
+                          trailing: Expanded(
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: IconButton(
+                                  icon: Icon(
+                                    railExpanded
+                                        ? LucideIcons.panelLeftClose300
+                                        : LucideIcons.panelLeftOpen300,
+                                  ),
+                                  tooltip: railExpanded
+                                      ? l10n.navRailCollapse
+                                      : l10n.navRailExpand,
+                                  onPressed: () => ref
+                                      .read(settingsControllerProvider.notifier)
+                                      .setNavigationRailExpanded(
+                                        value: !railExpanded,
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                        const VerticalDivider(width: 1),
                         Expanded(child: navigationShell),
                       ],
                     ),

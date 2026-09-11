@@ -57,8 +57,15 @@ Regenerate code (`build_runner`) after touching any `@freezed`,
 `.arb` file — CI fails the build if generated output (`*.g.dart`,
 `*.freezed.dart`) is stale.
 
-Windows and Web aren't scaffolded yet (`flutter create
---platforms=windows,web .` before first run on those targets).
+All four target platforms (Android, Linux, Windows, Web) are scaffolded.
+Release-build hardening — Android R8 minify/shrink + release signing
+(`android/key.properties`, gitignored, see `key.properties.example`),
+Dart `--obfuscate --split-debug-info` on Android/Windows/Linux, Web
+COOP/COEP headers (`web/_headers`) for `drift`/OPFS, and per-platform
+packaging (AAB, MSIX, Flatpak) — is wired in
+`.github/workflows/release-builds.yml`, but that workflow only runs on a
+`v*.*.*` tag push (never on a PR or a plain push to `main`); it builds and
+uploads artifacts, it does not publish to any store yet.
 
 ## Architecture
 
@@ -178,16 +185,23 @@ writing new constructors instead of writing `const ClassName(...)`.
 
 ## Content / curriculum editing
 
-Editing snippets (`assets/content/snippets/{go,bash,sql,rust}_v1.json`), a
+Editing snippets (`assets/content/snippets/{go,bash,sql,rust,python,javascript}_v1.json`), a
 Learning Path's lesson order (`assets/content/learning_paths/*.json`), or
 adding a new bilingual (en/es) content field is covered by the
 `content-curriculum` skill — use it rather than hand-editing these JSON
 files, since lesson ordering has produced real beginner-incoherence bugs
 before. Note the two catalog tiers (SPEC.md §3.2): Go backs free practice
-and keeps a dense (category, difficulty) grid; Bash, SQL, and Rust are
-course-only and contain exactly the snippets their Learning Path(s) use
-(`bash-foundations-v1`, `sql-foundations-v1`, `rust-foundations-v1` —
-Rust is beginner-only and reuses Go's generic categories).
+and keeps a dense (category, difficulty) grid; Bash, SQL, Rust, Python,
+and JavaScript are course-only and contain exactly the snippets their
+Learning Path(s) use (`bash-foundations-v1`, `sql-foundations-v1`,
+`rust-foundations-v1`, `python-foundations-v1`,
+`javascript-foundations-v1` — each of these foundations routes is
+beginner-only and reuses Go's generic categories). Go, Rust, Python, and
+JavaScript additionally each have a standalone, non-beginner "Algorithms"
+course (`go-algorithms-v1`, `rust-algorithms-v1`, `python-algorithms-v1`,
+`javascript-algorithms-v1`) with its own three categories
+(searching/sorting/graph algorithms), separate from that language's
+foundations route.
 
 ## Design system
 

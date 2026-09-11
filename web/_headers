@@ -1,0 +1,19 @@
+# Cloudflare Pages headers file (STACK.md §12). COOP/COEP are required for
+# drift's OPFS-backed SQLite VFS to run at full performance on Web — without
+# them, drift silently falls back to a slower IndexedDB VFS (STACK.md §3.2).
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cache-Control: public, max-age=31536000, immutable
+
+# index.html and the service worker must always be revalidated — they're
+# what drives the app-update mechanism; caching them long-term would freeze
+# users on a stale build (Flutter's own PWA update flow relies on this).
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/flutter_service_worker.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/version.json
+  Cache-Control: public, max-age=0, must-revalidate

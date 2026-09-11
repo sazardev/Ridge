@@ -47,7 +47,6 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     final overviewsAsync = ref.watch(learningPathsControllerProvider);
     final progressAsync = ref.watch(lessonProgressControllerProvider);
 
@@ -126,9 +125,6 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
                                     overview.path.lessons,
                                     progress,
                                   );
-                              final nextLesson = nextIndex == null
-                                  ? null
-                                  : overview.path.lessons[nextIndex];
                               final totalLessons = overview.path.lessons.length;
                               final progressFraction = totalLessons == 0
                                   ? 0.0
@@ -150,7 +146,7 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
                               return Card(
                                 margin: const EdgeInsets.symmetric(
                                   horizontal: 16,
-                                  vertical: 6,
+                                  vertical: 4,
                                 ),
                                 shape: AppShapes.of(context).mediumShape,
                                 // `Card` defaults to `Clip.none`, so without
@@ -161,108 +157,64 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
                                 // whatever corner style (SPEC.md's Settings
                                 // "Corner style") the card itself is using.
                                 clipBehavior: Clip.antiAlias,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    LinearProgressIndicator(
-                                      value: progressFraction,
-                                      minHeight: 4,
-                                      semanticsLabel: l10n
-                                          .learningPathsProgress(
-                                            completedCount,
-                                            totalLessons,
-                                          ),
-                                    ),
-                                    ListTile(
-                                      contentPadding: const EdgeInsets.all(16),
-                                      title: Text(
-                                        overview.path.titleFor(context),
-                                      ),
-                                      subtitle: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.fromLTRB(
+                                    16,
+                                    8,
+                                    16,
+                                    8,
+                                  ),
+                                  title: Text(overview.path.titleFor(context)),
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const SizedBox(height: 2),
+                                      Wrap(
+                                        spacing: 6,
+                                        runSpacing: 4,
                                         children: [
-                                          const SizedBox(height: 4),
-                                          Wrap(
-                                            spacing: 6,
-                                            runSpacing: 6,
-                                            children: [
-                                              _MiniChip(
-                                                label: overview.path.language
-                                                    .label(l10n),
-                                              ),
-                                              _MiniChip(
-                                                label: overview.path.tagFor(
-                                                  context,
-                                                ),
-                                              ),
-                                              if (entryDifficulty != null)
-                                                _MiniChip(
-                                                  label: entryDifficulty.label(
-                                                    l10n,
-                                                  ),
-                                                ),
-                                            ],
+                                          _MiniChip(
+                                            label: overview.path.language.label(
+                                              l10n,
+                                            ),
                                           ),
-                                          const SizedBox(height: 6),
-                                          Text(
-                                            overview.path.descriptionFor(
+                                          _MiniChip(
+                                            label: overview.path.tagFor(
                                               context,
                                             ),
                                           ),
-                                          if (nextLesson != null) ...[
-                                            const SizedBox(height: 4),
-                                            Text(
-                                              l10n.learningPathsContinueHint(
-                                                nextLesson.titleFor(context),
+                                          if (entryDifficulty != null)
+                                            _MiniChip(
+                                              label: entryDifficulty.label(
+                                                l10n,
                                               ),
-                                              style: theme.textTheme.bodySmall
-                                                  ?.copyWith(
-                                                    color: theme
-                                                        .colorScheme
-                                                        .primary,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
                                             ),
-                                          ],
                                         ],
                                       ),
-                                      trailing: nextIndex == null
-                                          ? null
-                                          : IconButton.filled(
-                                              iconSize: 28,
-                                              constraints:
-                                                  const BoxConstraints.tightFor(
-                                                    width: 56,
-                                                    height: 56,
-                                                  ),
-                                              style: IconButton.styleFrom(
-                                                shape: const CircleBorder(),
-                                                backgroundColor:
-                                                    theme.colorScheme.primary,
-                                                foregroundColor:
-                                                    _accessibleForegroundFor(
-                                                      theme.colorScheme.primary,
-                                                    ),
-                                              ),
-                                              icon: const Icon(
-                                                LucideIcons.play300,
-                                              ),
-                                              tooltip: l10n
-                                                  .learningPathsContinueAction,
-                                              onPressed: () =>
-                                                  LessonNavigation.startLesson(
-                                                    context,
-                                                    overview,
-                                                    nextIndex,
-                                                  ),
-                                            ),
-                                      onTap: () => context.push(
-                                        '/practice/${overview.path.id.value}',
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        overview.path.descriptionFor(context),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
+                                  trailing: nextIndex == null
+                                      ? null
+                                      : _PlayProgressButton(
+                                          progress: progressFraction,
+                                          tooltip:
+                                              l10n.learningPathsContinueAction,
+                                          onPressed: () =>
+                                              LessonNavigation.startLesson(
+                                                context,
+                                                overview,
+                                                nextIndex,
+                                              ),
+                                        ),
+                                  onTap: () => context.push(
+                                    '/practice/${overview.path.id.value}',
+                                  ),
                                 ),
                               );
                             },
@@ -281,16 +233,64 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
   }
 }
 
-/// A guaranteed-legible foreground for content painted on top of
-/// [background] — computed from its actual luminance rather than
-/// trusting a fixed color, since this app's 20+ selectable palettes
-/// (SPEC.md Settings) each produce a different [ColorScheme.primary],
-/// and a hardcoded icon color that reads fine on one could disappear on
-/// another.
-Color _accessibleForegroundFor(Color background) =>
-    ThemeData.estimateBrightnessForColor(background) == Brightness.dark
-    ? Colors.white
-    : Colors.black;
+/// The roadmap card's Play affordance — a plain, unfilled icon button
+/// wrapped in a chunky progress ring, so the ring itself (not a separate
+/// bar or a filled button background) is what reads as the path's
+/// progress (lessons completed / total).
+class _PlayProgressButton extends StatelessWidget {
+  const new({
+    required this.progress,
+    required this.tooltip,
+    required this.onPressed,
+  });
+
+  final double progress;
+  final String tooltip;
+  final VoidCallback onPressed;
+
+  static const _diameter = 84.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return SizedBox(
+      width: _diameter,
+      height: _diameter,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          CircularProgressIndicator(
+            value: progress,
+            strokeWidth: 5,
+            backgroundColor: theme.colorScheme.surfaceContainerHighest,
+            valueColor: AlwaysStoppedAnimation(theme.colorScheme.primary),
+          ),
+          IconButton(
+            iconSize: 22,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints.tightFor(width: 72, height: 72),
+            style: IconButton.styleFrom(
+              shape: const CircleBorder(),
+              foregroundColor: theme.colorScheme.primary,
+              hoverColor: theme.colorScheme.primary.withValues(alpha: 0.14),
+              highlightColor: theme.colorScheme.primary.withValues(alpha: 0.2),
+            ),
+            // A right-pointing triangle's visual weight sits left of its
+            // bounding box's geometric center, so an unshifted play glyph
+            // reads as off-center inside a perfectly round button — this
+            // padding nudges it back to looking centered.
+            icon: const Padding(
+              padding: EdgeInsetsDirectional.only(start: 2),
+              child: Icon(LucideIcons.play300),
+            ),
+            tooltip: tooltip,
+            onPressed: onPressed,
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 /// A small, dense identifying badge (language / topic / entry level) —
 /// deliberately terser than a full [Chip] so 2-3 of these read as quick

@@ -315,71 +315,112 @@ void main() {
     });
   });
 
-  group('ingestTabKey (gofmt alignment-space comfort)', () {
-    test('a real leading-indentation tab still just satisfies one position, '
-        'exactly like ingestChar would', () {
-      final recorder = KeystrokeStreamRecorder(expectedSnippet: '\tx');
-      final committed = recorder.ingestTabKey(physicalKeyId: PhysicalKeyId.tab);
+  group(
+    'ingestTabKey (gofmt alignment-space / nested-indentation comfort)',
+    () {
+      test('a single leading-indentation tab still just satisfies one '
+          'position, exactly like ingestChar would', () {
+        final recorder = KeystrokeStreamRecorder(expectedSnippet: '\tx');
+        final committed = recorder.ingestTabKey(
+          physicalKeyId: PhysicalKeyId.tab,
+        );
 
-      expect(committed, hasLength(1));
-      expect(committed.single.result, KeystrokeResult.correct);
-      expect(committed.single.actualChar, '\t');
-      expect(recorder.expectedCursor, 1);
-    });
+        expect(committed, hasLength(1));
+        expect(committed.single.result, KeystrokeResult.correct);
+        expect(committed.single.actualChar, '\t');
+        expect(recorder.expectedCursor, 1);
+      });
 
-    test('one Tab press consumes an entire run of consecutive expected '
-        'alignment spaces, each as its own committed keystroke', () {
-      // Mirrors `Msg   string` gofmt-aligned next to `Field string`.
-      final recorder = KeystrokeStreamRecorder(expectedSnippet: '   x');
-      final committed = recorder.ingestTabKey(physicalKeyId: PhysicalKeyId.tab);
+      test('one Tab press consumes an entire run of consecutive expected '
+          'leading-indentation tabs, landing straight on a deeply nested '
+          "line's real code in one press", () {
+        // Mirrors a chain of nested `if`s three levels deep.
+        final recorder = KeystrokeStreamRecorder(expectedSnippet: '\t\t\tx');
+        final committed = recorder.ingestTabKey(
+          physicalKeyId: PhysicalKeyId.tab,
+        );
 
-      expect(committed, hasLength(3));
-      expect(
-        committed.every((k) => k.result == KeystrokeResult.correct),
-        isTrue,
-      );
-      expect(committed.every((k) => k.actualChar == ' '), isTrue);
-      expect(recorder.expectedCursor, 3);
-      expect(recorder.expectedCharStatuses, [true, true, true, null]);
-    });
+        expect(committed, hasLength(3));
+        expect(
+          committed.every((k) => k.result == KeystrokeResult.correct),
+          isTrue,
+        );
+        expect(committed.every((k) => k.actualChar == '\t'), isTrue);
+        expect(recorder.expectedCursor, 3);
+        expect(recorder.expectedCharStatuses, [true, true, true, null]);
+      });
 
-    test('only the first keystroke in a consumed space-run carries the real '
-        'dwell/flight; the rest are synthetic follow-ons', () {
-      final recorder = KeystrokeStreamRecorder(expectedSnippet: '  x');
-      final committed = recorder.ingestTabKey(
-        physicalKeyId: PhysicalKeyId.tab,
-        dwell: const Duration(milliseconds: 40),
-        flight: const Duration(milliseconds: 120),
-      );
+      test('a run of leading tabs stops consuming at the first non-tab '
+          'character, without spilling into the real code that follows', () {
+        final recorder = KeystrokeStreamRecorder(expectedSnippet: '\t\tif x {');
+        final committed = recorder.ingestTabKey(
+          physicalKeyId: PhysicalKeyId.tab,
+        );
 
-      expect(committed[0].dwell, const Duration(milliseconds: 40));
-      expect(committed[0].flight, const Duration(milliseconds: 120));
-      expect(committed[1].dwell, isNull);
-      expect(committed[1].flight, isNull);
-    });
+        expect(committed, hasLength(2));
+        expect(recorder.expectedCursor, 2);
+      });
 
-    test('a Tab pressed where neither a space nor a tab is expected is '
-        'rejected as a substitution, exactly like any other wrong key', () {
-      final recorder = KeystrokeStreamRecorder(expectedSnippet: 'x');
-      final committed = recorder.ingestTabKey(physicalKeyId: PhysicalKeyId.tab);
+      test('one Tab press consumes an entire run of consecutive expected '
+          'alignment spaces, each as its own committed keystroke', () {
+        // Mirrors `Msg   string` gofmt-aligned next to `Field string`.
+        final recorder = KeystrokeStreamRecorder(expectedSnippet: '   x');
+        final committed = recorder.ingestTabKey(
+          physicalKeyId: PhysicalKeyId.tab,
+        );
 
-      expect(committed, hasLength(1));
-      expect(committed.single.result, KeystrokeResult.substitution);
-      expect(recorder.expectedCursor, 0);
-      expect(recorder.rejectedTick, 1);
-    });
+        expect(committed, hasLength(3));
+        expect(
+          committed.every((k) => k.result == KeystrokeResult.correct),
+          isTrue,
+        );
+        expect(committed.every((k) => k.actualChar == ' '), isTrue);
+        expect(recorder.expectedCursor, 3);
+        expect(recorder.expectedCharStatuses, [true, true, true, null]);
+      });
 
-    test('stops consuming spaces at the end of the snippet, without '
-        'overrunning', () {
-      final recorder = KeystrokeStreamRecorder(expectedSnippet: '  ');
-      final committed = recorder.ingestTabKey(physicalKeyId: PhysicalKeyId.tab);
+      test('only the first keystroke in a consumed space-run carries the real '
+          'dwell/flight; the rest are synthetic follow-ons', () {
+        final recorder = KeystrokeStreamRecorder(expectedSnippet: '  x');
+        final committed = recorder.ingestTabKey(
+          physicalKeyId: PhysicalKeyId.tab,
+          dwell: const Duration(milliseconds: 40),
+          flight: const Duration(milliseconds: 120),
+        );
 
-      expect(committed, hasLength(2));
-      expect(recorder.isComplete, isTrue);
-    });
-  });
+        expect(committed[0].dwell, const Duration(milliseconds: 40));
+        expect(committed[0].flight, const Duration(milliseconds: 120));
+        expect(committed[1].dwell, isNull);
+        expect(committed[1].flight, isNull);
+      });
 
-  group('ingestEnterKey (blank-line skip comfort)', () {
+      test('a Tab pressed where neither a space nor a tab is expected is '
+          'rejected as a substitution, exactly like any other wrong key', () {
+        final recorder = KeystrokeStreamRecorder(expectedSnippet: 'x');
+        final committed = recorder.ingestTabKey(
+          physicalKeyId: PhysicalKeyId.tab,
+        );
+
+        expect(committed, hasLength(1));
+        expect(committed.single.result, KeystrokeResult.substitution);
+        expect(recorder.expectedCursor, 0);
+        expect(recorder.rejectedTick, 1);
+      });
+
+      test('stops consuming spaces at the end of the snippet, without '
+          'overrunning', () {
+        final recorder = KeystrokeStreamRecorder(expectedSnippet: '  ');
+        final committed = recorder.ingestTabKey(
+          physicalKeyId: PhysicalKeyId.tab,
+        );
+
+        expect(committed, hasLength(2));
+        expect(recorder.isComplete, isTrue);
+      });
+    },
+  );
+
+  group('ingestEnterKey (blank-line skip / auto-indent comfort)', () {
     test('a plain newline into a real code line just satisfies one '
         'position, exactly like ingestChar would', () {
       final recorder = KeystrokeStreamRecorder(expectedSnippet: 'a\nb')
@@ -438,8 +479,8 @@ void main() {
       ]);
     });
 
-    test('a line that starts with indentation but has real code after it '
-        'is left untouched — only a genuinely blank line auto-skips', () {
+    test("one Enter press also auto-indents past a real code line's "
+        'leading tab run, landing straight on its first real character', () {
       final recorder = KeystrokeStreamRecorder(expectedSnippet: 'a\n\tb')
         ..ingestChar(physicalKeyId: PhysicalKeyId.keyA, char: 'a');
 
@@ -447,8 +488,35 @@ void main() {
         physicalKeyId: PhysicalKeyId.enter,
       );
 
-      expect(committed, hasLength(1));
-      expect(recorder.expectedCursor, 2, reason: r'stops right before "\t"');
+      expect(committed, hasLength(2), reason: r'the "\n" plus the "\t"');
+      expect(recorder.expectedCursor, 3, reason: 'right at "b"');
+    });
+
+    test('one Enter press auto-indents past several levels of nested '
+        'leading tabs in one go', () {
+      final recorder = KeystrokeStreamRecorder(expectedSnippet: 'a\n\t\t\tb')
+        ..ingestChar(physicalKeyId: PhysicalKeyId.keyA, char: 'a');
+
+      final committed = recorder.ingestEnterKey(
+        physicalKeyId: PhysicalKeyId.enter,
+      );
+
+      expect(committed, hasLength(4), reason: r'the "\n" plus 3 tabs');
+      expect(recorder.expectedCursor, 5, reason: 'right at "b"');
+    });
+
+    test("one Enter press also auto-indents past a real code line's "
+        'leading space run, landing straight on its first real character '
+        '(every non-Go catalog indents with spaces, not tabs)', () {
+      final recorder = KeystrokeStreamRecorder(expectedSnippet: 'a\n    b')
+        ..ingestChar(physicalKeyId: PhysicalKeyId.keyA, char: 'a');
+
+      final committed = recorder.ingestEnterKey(
+        physicalKeyId: PhysicalKeyId.enter,
+      );
+
+      expect(committed, hasLength(5), reason: r'the "\n" plus 4 spaces');
+      expect(recorder.expectedCursor, 6, reason: 'right at "b"');
     });
 
     test('only the first keystroke in a skipped run carries real dwell/flight; '

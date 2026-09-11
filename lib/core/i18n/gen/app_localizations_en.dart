@@ -31,6 +31,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navSettings => 'Settings';
 
   @override
+  String get navRailCollapse => 'Collapse navigation';
+
+  @override
+  String get navRailExpand => 'Expand navigation';
+
+  @override
   String get profileCreateTitle => 'Create your profile';
 
   @override
@@ -748,6 +754,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryIdiomaticFormatting => 'Idiomatic formatting';
 
   @override
+  String get categorySearchingAlgorithms => 'Searching algorithms';
+
+  @override
+  String get categorySortingAlgorithms => 'Sorting algorithms';
+
+  @override
+  String get categoryGraphAlgorithms => 'Graph algorithms';
+
+  @override
   String get categoryDomainModeling => 'Domain modeling';
 
   @override
@@ -842,6 +857,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageRust => 'Rust';
+
+  @override
+  String get languagePython => 'Python';
+
+  @override
+  String get languageJavascript => 'JavaScript';
 
   @override
   String get snippetPracticeAction => 'Practice';
@@ -1204,20 +1225,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get learningPathsEmptyState => 'No learning paths available yet.';
 
   @override
-  String learningPathsProgress(int completed, int total) {
-    return '$completed/$total lessons complete';
-  }
-
-  @override
   String get learningPathsLessonListTitle => 'Lessons';
 
   @override
-  String learningPathsContinueHint(String lessonTitle) {
-    return 'Continue: $lessonTitle';
-  }
+  String get learningPathsContinueAction => 'Continue lesson';
 
   @override
-  String get learningPathsContinueAction => 'Continue lesson';
+  String get learningPathsShareLessonAction => 'Share this exercise';
 
   @override
   String get learningLessonLocked => 'Locked';

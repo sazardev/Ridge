@@ -125,7 +125,8 @@ class PracticeSessionController extends _$PracticeSessionController {
   }
 
   /// Records a Tab keydown — see `KeystrokeStreamRecorder.ingestTabKey`
-  /// for why one press can commit an entire gofmt alignment-space run.
+  /// for why one press can commit an entire gofmt alignment-space run or
+  /// a whole run of leading-indentation tabs at once.
   List<Keystroke> ingestTabKey({
     required PhysicalKeyId physicalKeyId,
     Duration? dwell,
@@ -142,7 +143,8 @@ class PracticeSessionController extends _$PracticeSessionController {
   }
 
   /// Records an Enter keydown — see `KeystrokeStreamRecorder.ingestEnterKey`
-  /// for why one press can skip a whole run of blank lines at once.
+  /// for why one press can skip a whole run of blank lines and then
+  /// auto-indent onto the next real line, at once.
   List<Keystroke> ingestEnterKey({
     required PhysicalKeyId physicalKeyId,
     Duration? dwell,

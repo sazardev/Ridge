@@ -125,6 +125,20 @@ void main() {
     expect(result.single.id.value, 'ext-still-loads');
   });
 
+  test('a file over the size limit is skipped without throwing, siblings still '
+      'load', () async {
+    File('${packsDir.path}/huge.json')
+        .writeAsBytesSync(List.filled(maxContentPackFileBytes + 1, 0x20));
+    File('${packsDir.path}/good.json')
+        .writeAsStringSync(_pack([_validPathMap('ext-still-loads')]));
+
+    final repo = LearningPathRepositoryImpl([]);
+    final result = await repo.watchPaths().first;
+
+    expect(result, hasLength(1));
+    expect(result.single.id.value, 'ext-still-loads');
+  });
+
   test(
     'an external path whose id collides with a bundled one is skipped',
     () async {

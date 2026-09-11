@@ -13,22 +13,48 @@ import 'package:ridge/core/window/window_bar.dart';
 /// router's redirect logic lands on first (onboarding, lock, practice) is
 /// already settled by the time the splash lifts, instead of flashing the
 /// wrong screen for a frame.
+///
+/// Also doubles as the app's startup loading gate: it won't lift until
+/// [ready] flips true, so the Learning Paths screen it lands on
+/// (`app.dart`'s composition of [ready]) never flashes its own
+/// `CircularProgressIndicator` right after the brand beat — the splash
+/// covers that load instead. A hard max-display cap (below) is the
+/// escape hatch: a stalled or errored load can't hold the splash up
+/// forever.
 class AppStartupSplash extends StatefulWidget {
   /// Creates the splash overlay above [child].
-  const new({required this.child, super.key});
+  const new({required this.child, required this.ready, super.key});
 
   /// The real app content, already building beneath the splash.
   final Widget child;
+
+  /// Whether the startup-critical data is loaded. The splash never lifts
+  /// before this is true, short of the max-display cap elapsing — see
+  /// the class doc.
+  final bool ready;
 
   @override
   State<AppStartupSplash> createState() => _AppStartupSplashState();
 }
 
 class _AppStartupSplashState extends State<AppStartupSplash> {
-  static const _minDisplay = Duration(milliseconds: 1400);
-  static const Duration _fadeOut = AppMotion.effectsSlow;
+  // Just past the slogan's animation end (300ms delay + 260ms slideY —
+  // see the staggered `.animate()` calls below), so every effect always
+  // finishes on screen instead of being cut mid-motion, with only a
+  // brief hold after. Measured startup (`flutter run --trace-startup
+  // --profile`) puts the real first frame at ~150ms, so this is what
+  // now dominates cold-start time — kept short on purpose.
+  static const _minDisplay = Duration(milliseconds: 650);
 
-  bool _dismissing = false;
+  /// Hard cap so a stalled/errored [AppStartupSplash.ready] can't trap
+  /// the user on the brand screen forever — past this, the splash lifts
+  /// regardless and whatever the real screen does (its own loading/error
+  /// state) takes over, same as before this data-gate existed.
+  static const _maxDisplay = Duration(milliseconds: 3000);
+  static const Duration _fadeOut = AppMotion.effectsDefault;
+
+  bool _minDisplayElapsed = false;
+  bool _maxDisplayElapsed = false;
   bool _dismissed = false;
 
   @override
@@ -36,7 +62,11 @@ class _AppStartupSplashState extends State<AppStartupSplash> {
     super.initState();
     Future.delayed(_minDisplay, () {
       if (!mounted) return;
-      setState(() => _dismissing = true);
+      setState(() => _minDisplayElapsed = true);
+    });
+    Future.delayed(_maxDisplay, () {
+      if (!mounted) return;
+      setState(() => _maxDisplayElapsed = true);
     });
   }
 
@@ -44,6 +74,8 @@ class _AppStartupSplashState extends State<AppStartupSplash> {
   Widget build(BuildContext context) {
     if (_dismissed) return widget.child;
 
+    final dismissing =
+        _maxDisplayElapsed || (_minDisplayElapsed && widget.ready);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final l10n = AppLocalizations.of(context);
@@ -53,13 +85,13 @@ class _AppStartupSplashState extends State<AppStartupSplash> {
         Positioned.fill(child: widget.child),
         Positioned.fill(
           child: IgnorePointer(
-            ignoring: _dismissing,
+            ignoring: dismissing,
             child: AnimatedOpacity(
-              opacity: _dismissing ? 0 : 1,
+              opacity: dismissing ? 0 : 1,
               duration: _fadeOut,
               curve: AppMotion.exit,
               onEnd: () {
-                if (_dismissing) setState(() => _dismissed = true);
+                if (dismissing) setState(() => _dismissed = true);
               },
               child: ColoredBox(
                 color: colorScheme.surface,

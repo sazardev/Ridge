@@ -192,7 +192,7 @@ abstract final class AppTheme {
 
       navigationRailTheme: NavigationRailThemeData(
         elevation: 0,
-        backgroundColor: colorScheme.surfaceContainer,
+        backgroundColor: colorScheme.surface,
         useIndicator: true,
         indicatorShape: shapes.mediumShape,
         indicatorColor: colorScheme.secondaryContainer,

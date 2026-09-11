@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:ridge/app.dart';
 import 'package:ridge/core/window/desktop_platform.dart';
 import 'package:ridge/core/window/window_geometry_listener.dart';
@@ -10,6 +12,13 @@ import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Clean Web URLs (`/tasks` instead of `/#/tasks`) — requires the hosting
+  // layer to serve index.html as a fallback for any route (STACK.md §3.4,
+  // web/_redirects). No-op on every non-Web platform.
+  if (kIsWeb) {
+    usePathUrlStrategy();
+  }
 
   // Reads persisted `AppSettings` (theme/palette/corner style/...) before
   // `runApp` ever paints a frame, using one `ProviderContainer` that then

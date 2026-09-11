@@ -3,6 +3,8 @@ import 'package:ridge/features/content/domain/entities/syntax_token_type.dart';
 
 part 'rust_syntax_tokenizer.dart';
 part 'sql_syntax_tokenizer.dart';
+part 'python_syntax_tokenizer.dart';
+part 'javascript_syntax_tokenizer.dart';
 
 /// Classifies every character of a source-code string for syntax
 /// highlighting (SPEC.md-adjacent presentation concern, not itself part
@@ -24,6 +26,8 @@ abstract final class SyntaxTokenizers {
         ProgrammingLanguage.bash => const BashSyntaxTokenizer(),
         ProgrammingLanguage.sql => const SqlSyntaxTokenizer(),
         ProgrammingLanguage.rust => const RustSyntaxTokenizer(),
+        ProgrammingLanguage.python => const PythonSyntaxTokenizer(),
+        ProgrammingLanguage.javascript => const JavaScriptSyntaxTokenizer(),
       };
 }
 

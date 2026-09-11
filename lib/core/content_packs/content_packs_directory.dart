@@ -27,3 +27,28 @@ Future<Directory> _resolve(List<String> segments) async {
   }
   return dir;
 }
+
+/// A legitimate content-pack file (a JSON array of snippets or Learning
+/// Paths) weighs, at most, a few hundred KiB — orders of magnitude under
+/// this. The limit exists so a mistakenly-huge or hostile file gets
+/// rejected by its size on disk, before being decoded fully into memory
+/// (STACK.md §2.7).
+const int maxContentPackFileBytes = 5 * 1024 * 1024;
+
+/// Reads [file] as a string for content-pack parsing, unless it exceeds
+/// [maxContentPackFileBytes] — in which case this throws a
+/// [FormatException], so callers' existing "skip this file and log a
+/// warning" broad catch (`ExternalSnippetPackSource`,
+/// `LearningPathRepositoryImpl`) handles an oversized file the same way
+/// it already handles a malformed one.
+Future<String> readContentPackFile(File file) async {
+  final size = await file.length();
+  if (size > maxContentPackFileBytes) {
+    throw FormatException(
+      'content pack file exceeds the $maxContentPackFileBytes byte '
+      'limit ($size bytes)',
+      file.path,
+    );
+  }
+  return await file.readAsString();
+}

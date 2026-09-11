@@ -1,0 +1,4 @@
+# SPA fallback for go_router's usePathUrlStrategy() (STACK.md §3.4) — without
+# this, reloading on a deep route (e.g. /squads/123) 404s at the hosting
+# layer instead of reaching index.html and letting go_router resolve it.
+/*    /index.html   200

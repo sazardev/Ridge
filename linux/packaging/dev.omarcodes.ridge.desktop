@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Ridge
+Comment=Typing practice for programmers
+Exec=ridge
+Icon=dev.omarcodes.ridge
+Terminal=false
+Categories=Development;Education;
+StartupWMClass=ridge

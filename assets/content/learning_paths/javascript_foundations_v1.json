@@ -1,0 +1,98 @@
+[
+  {
+    "id": "javascript-foundations-v1",
+    "language": "javascript",
+    "titleEn": "JavaScript from scratch",
+    "titleEs": "JavaScript desde cero",
+    "descriptionEn": "Learn JavaScript step by step: variables, control flow, and functions.",
+    "descriptionEs": "Aprende JavaScript paso a paso: variables, control de flujo y funciones.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "javascript-foundations-v1-step01",
+        "snippetId": "javascript-vars-001",
+        "order": 1,
+        "titleEn": "Your first binding: let",
+        "titleEs": "Tu primer binding: let"
+      },
+      {
+        "id": "javascript-foundations-v1-step02",
+        "snippetId": "javascript-vars-002",
+        "order": 2,
+        "titleEn": "const vs let",
+        "titleEs": "const vs let"
+      },
+      {
+        "id": "javascript-foundations-v1-step03",
+        "snippetId": "javascript-vars-003",
+        "order": 3,
+        "titleEn": "Template literals",
+        "titleEs": "Template literals (plantillas de texto)"
+      },
+      {
+        "id": "javascript-foundations-v1-step04",
+        "snippetId": "javascript-vars-004",
+        "order": 4,
+        "titleEn": "typeof: checking a value's type",
+        "titleEs": "typeof: revisar el tipo de un valor"
+      },
+      {
+        "id": "javascript-foundations-v1-step05",
+        "snippetId": "javascript-cond-001",
+        "order": 5,
+        "titleEn": "if / else if / else",
+        "titleEs": "if / else if / else"
+      },
+      {
+        "id": "javascript-foundations-v1-step06",
+        "snippetId": "javascript-cond-002",
+        "order": 6,
+        "titleEn": "The ternary operator",
+        "titleEs": "El operador ternario"
+      },
+      {
+        "id": "javascript-foundations-v1-step07",
+        "snippetId": "javascript-cond-003",
+        "order": 7,
+        "titleEn": "A switch statement",
+        "titleEs": "Una sentencia switch"
+      },
+      {
+        "id": "javascript-foundations-v1-step08",
+        "snippetId": "javascript-loop-001",
+        "order": 8,
+        "titleEn": "A classic for loop",
+        "titleEs": "Un bucle for clásico"
+      },
+      {
+        "id": "javascript-foundations-v1-step09",
+        "snippetId": "javascript-loop-002",
+        "order": 9,
+        "titleEn": "for...of over an array",
+        "titleEs": "for...of sobre un arreglo"
+      },
+      {
+        "id": "javascript-foundations-v1-step10",
+        "snippetId": "javascript-func-001",
+        "order": 10,
+        "titleEn": "A function with a default parameter",
+        "titleEs": "Una función con parámetro por defecto"
+      },
+      {
+        "id": "javascript-foundations-v1-step11",
+        "snippetId": "javascript-func-002",
+        "order": 11,
+        "titleEn": "Arrow functions",
+        "titleEs": "Funciones flecha"
+      },
+      {
+        "id": "javascript-foundations-v1-step12",
+        "snippetId": "javascript-func-003",
+        "order": 12,
+        "titleEn": "Put it together: countEvens",
+        "titleEs": "Júntalo todo: countEvens"
+      }
+    ]
+  }
+]

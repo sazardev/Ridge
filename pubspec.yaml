@@ -12,6 +12,10 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  # usePathUrlStrategy() for clean Web URLs (STACK.md §3.4) — no-op on
+  # every non-Web platform.
+  flutter_web_plugins:
+    sdk: flutter
 
   # Icon set — stroke-based, geometric, pairs with Geist's dev-tool aesthetic.
   lucide_icons_flutter: ^3.1.19
@@ -54,6 +58,8 @@ dependencies:
   # Auto-detects platform/OS/device model for the Guest Profile — never
   # asked of the user, only read.
   device_info_plus: ^13.2.0
+  app_links: ^7.2.1
+  share_plus: ^13.3.0
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +76,7 @@ dev_dependencies:
   shared_preferences_platform_interface: ^2.4.1
   path_provider_platform_interface: ^2.1.3
   plugin_platform_interface: ^2.1.8
+  msix: ^3.18.0
 
 flutter:
   uses-material-design: true
@@ -83,14 +90,22 @@ flutter:
     - assets/content/snippets/bash_v1.json
     - assets/content/snippets/sql_v1.json
     - assets/content/snippets/rust_v1.json
+    - assets/content/snippets/python_v1.json
+    - assets/content/snippets/javascript_v1.json
     - assets/content/learning_paths/go_foundations_v1.json
     - assets/content/learning_paths/go_ddd_hexagonal_notes_v1.json
     - assets/content/learning_paths/go_intermediate_syntax_v1.json
     - assets/content/learning_paths/go_tui_notes_v1.json
+    - assets/content/learning_paths/go_algorithms_v1.json
     - assets/content/learning_paths/bash_foundations_v1.json
     - assets/content/learning_paths/bash_toolkit_v1.json
     - assets/content/learning_paths/sql_foundations_v1.json
     - assets/content/learning_paths/rust_foundations_v1.json
+    - assets/content/learning_paths/rust_algorithms_v1.json
+    - assets/content/learning_paths/python_foundations_v1.json
+    - assets/content/learning_paths/python_algorithms_v1.json
+    - assets/content/learning_paths/javascript_foundations_v1.json
+    - assets/content/learning_paths/javascript_algorithms_v1.json
     - assets/content/keyboard_layouts/manifest.json
     - assets/content/keyboard_layouts/ergodox_ez.json
     - assets/content/keyboard_layouts/zsa_moonlander.json
@@ -170,3 +185,22 @@ flutter:
           weight: 800
         - asset: assets/fonts/GeistMono/GeistMono-UltraBlack.ttf
           weight: 900
+
+# Windows packaging (STACK.md §12), built via `dart run msix:create` after
+# `flutter build windows --release`. `certificate_path`/`certificate_password`
+# are intentionally omitted — without them `msix:create` self-signs with a
+# throwaway test certificate (fine for internal testing, triggers Windows
+# SmartScreen, not publishable). For a real release, either add those two
+# keys pointing at a CA-issued/Microsoft Store code-signing cert, or pass
+# `--store` if publishing straight to the Microsoft Store.
+msix_config:
+  display_name: Ridge
+  publisher_display_name: Ridge
+  identity_name: dev.omarcodes.ridge
+  # msix_version intentionally omitted — msix derives x.y.z.0 from the
+  # pubspec `version:` above by default, keeping the single shared build
+  # number (STACK.md §10.1) as the only place version bumps happen.
+  # Same 1024x1024 source used for the Android launcher icon (README.md);
+  # msix resizes it into the required Windows tile sizes itself.
+  logo_path: assets/icons/ridge_launcher_master.png
+  capabilities: internetClient

@@ -9,6 +9,8 @@
   "navFreePractice": "Libre",
   "navProfile": "Perfil",
   "navSettings": "Ajustes",
+  "navRailCollapse": "Colapsar navegación",
+  "navRailExpand": "Expandir navegación",
 
   "profileCreateTitle": "Crea tu perfil",
   "profileCreateSubtitle": "Elige un nombre de usuario para empezar a practicar",
@@ -275,6 +277,9 @@
   "categoryGenerics": "Genéricos",
   "categoryModernGo": "Go moderno",
   "categoryIdiomaticFormatting": "Formato idiomático",
+  "categorySearchingAlgorithms": "Algoritmos de búsqueda",
+  "categorySortingAlgorithms": "Algoritmos de ordenamiento",
+  "categoryGraphAlgorithms": "Algoritmos de grafos",
   "categoryDomainModeling": "Modelado de dominio",
   "categoryHexagonalPorts": "Puertos hexagonales",
   "categoryApplicationUseCases": "Casos de uso de aplicación",
@@ -308,6 +313,8 @@
   "languageBash": "Bash",
   "languageSql": "SQL",
   "languageRust": "Rust",
+  "languagePython": "Python",
+  "languageJavascript": "JavaScript",
 
   "snippetPracticeAction": "Practicar",
 
@@ -495,17 +502,9 @@
 
   "learningPathsTitle": "Rutas de aprendizaje",
   "learningPathsEmptyState": "Aún no hay rutas de aprendizaje disponibles.",
-  "learningPathsProgress": "{completed}/{total} lecciones completadas",
   "learningPathsLessonListTitle": "Lecciones",
-  "learningPathsContinueHint": "Continuar: {lessonTitle}",
-  "@learningPathsContinueHint": {
-    "placeholders": {
-      "lessonTitle": {
-        "type": "String"
-      }
-    }
-  },
   "learningPathsContinueAction": "Continuar lección",
+  "learningPathsShareLessonAction": "Compartir este ejercicio",
   "learningLessonLocked": "Bloqueada",
   "learningLessonUnlocked": "Desbloqueada",
   "learningLessonCompleted": "Completada",

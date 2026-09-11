@@ -155,6 +155,19 @@ void main() {
     expect(result.single.id.value, 'ext-still-loads');
   });
 
+  test('a file over the size limit is skipped without throwing, siblings still '
+      'load', () async {
+    File('${packsDir.path}/huge.json')
+        .writeAsBytesSync(List.filled(maxContentPackFileBytes + 1, 0x20));
+    File('${packsDir.path}/good.json')
+        .writeAsStringSync(_pack([_validSnippetMap('ext-still-loads')]));
+
+    final result = await const ExternalSnippetPackSource().loadBundledCatalog();
+
+    expect(result, hasLength(1));
+    expect(result.single.id.value, 'ext-still-loads');
+  });
+
   test('non-.json files in the directory are ignored', () async {
     File('${packsDir.path}/readme.txt').writeAsStringSync('not json at all');
 

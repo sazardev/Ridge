@@ -19,4 +19,13 @@ enum ProgrammingLanguage {
   /// The Rust programming language, taught by the beginner-focused
   /// `rust-foundations-v1` Learning Route — course-only, like Bash/SQL.
   rust,
+
+  /// The Python programming language, taught by `python-foundations-v1`
+  /// (beginner) and `python-algorithms-v1` — course-only, like Bash/SQL/
+  /// Rust.
+  python,
+
+  /// JavaScript, taught by `js-foundations-v1` (beginner) and
+  /// `js-algorithms-v1` — course-only, like Bash/SQL/Rust/Python.
+  javascript,
 }

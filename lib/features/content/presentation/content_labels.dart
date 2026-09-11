@@ -17,6 +17,8 @@ extension ProgrammingLanguageLabel on ProgrammingLanguage {
     ProgrammingLanguage.bash => l10n.languageBash,
     ProgrammingLanguage.sql => l10n.languageSql,
     ProgrammingLanguage.rust => l10n.languageRust,
+    ProgrammingLanguage.python => l10n.languagePython,
+    ProgrammingLanguage.javascript => l10n.languageJavascript,
   };
 }
 
@@ -68,6 +70,9 @@ extension ContentCategoryLabel on ContentCategory {
     ContentCategory.sshClient => l10n.categorySshClient,
     ContentCategory.sshServer => l10n.categorySshServer,
     ContentCategory.shellProfiles => l10n.categoryShellProfiles,
+    ContentCategory.searchingAlgorithms => l10n.categorySearchingAlgorithms,
+    ContentCategory.sortingAlgorithms => l10n.categorySortingAlgorithms,
+    ContentCategory.graphAlgorithms => l10n.categoryGraphAlgorithms,
     ContentCategory.domainModeling => l10n.categoryDomainModeling,
     ContentCategory.hexagonalPorts => l10n.categoryHexagonalPorts,
     ContentCategory.applicationUseCases => l10n.categoryApplicationUseCases,

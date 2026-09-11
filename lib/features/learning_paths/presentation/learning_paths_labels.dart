@@ -53,4 +53,13 @@ extension LessonStatusPresentation on LessonStatus {
     LessonStatus.unlocked => LucideIcons.circlePlay300,
     LessonStatus.completed => LucideIcons.circleCheck300,
   };
+
+  /// Returns this status's icon color, drawn from [colors] rather than a
+  /// single flat [ColorScheme.primary] so locked/available/completed read
+  /// as three distinct states, not just three icon shapes.
+  Color iconColor(ColorScheme colors) => switch (this) {
+    LessonStatus.locked => colors.outline,
+    LessonStatus.unlocked => colors.primary,
+    LessonStatus.completed => colors.tertiary,
+  };
 }

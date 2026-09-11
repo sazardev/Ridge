@@ -46,6 +46,10 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
+# Flatpak build cache/output (linux/packaging/dev.omarcodes.ridge.yml)
+.flatpak-builder/
+*.flatpak
+
 # Android Studio will place build artifacts here
 /android/app/debug
 /android/app/profile

@@ -249,7 +249,7 @@ final class SettingsControllerProvider
 }
 
 String _$settingsControllerHash() =>
-    r'5b93b027b0a107a96ca9f1eeebdd904fd46ff4d9';
+    r'958e011227eb84effb0c9fa337072682a14b987c';
 
 /// Exposes the current [AppSettings] and the mutations the UI can request.
 

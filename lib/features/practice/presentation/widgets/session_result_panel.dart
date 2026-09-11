@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
@@ -14,12 +15,19 @@ const _scoreCalculator = PrecisionScoreCalculator();
 /// `PracticeSessionStatus.result` (SPEC.md §4.2/§4.3): speed, accuracy,
 /// consistency, longest streak, and this session's weakest characters.
 ///
-/// Deliberately has no actions of its own (no Retry/Continue/info) —
-/// those live in `SessionResultFooter`, pinned outside this panel's
-/// scroll view, so a long result never buries them out of reach.
+/// Deliberately has no actions of its own besides the small "share this
+/// lesson" icon next to its own title — Retry/Continue/info live in
+/// `SessionResultFooter`, pinned outside this panel's scroll view, so a
+/// long result never buries them out of reach.
 class SessionResultPanel extends StatelessWidget {
   /// Creates the panel for the given computed [metrics].
-  const new({required this.metrics, this.passed, this.survival, super.key});
+  const new({
+    required this.metrics,
+    this.passed,
+    this.survival,
+    this.onShare,
+    super.key,
+  });
 
   /// The computed metrics for the just-finished session.
   final SessionMetrics metrics;
@@ -33,6 +41,13 @@ class SessionResultPanel extends StatelessWidget {
   /// for every other mode. When present, the panel leads with the run's
   /// own score/snippets/multiplier rows and titles itself "Run over".
   final SurvivalRunTracker? survival;
+
+  /// Shares a link to this lesson — only ever non-`null` for a passing
+  /// `learning_paths` lesson attempt (SPEC.md §5.7). Rendered as a small,
+  /// muted icon at the right edge of this panel's own title row (never
+  /// next to the footer's Retry/Continue/info, which are about the
+  /// session itself rather than the lesson it belongs to).
+  final VoidCallback? onShare;
 
   List<MapEntry<String, int>> _weakestCharacters() {
     final withErrors = [
@@ -59,11 +74,26 @@ class SessionResultPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            survival == null
-                ? l10n.practiceResultTitle
-                : l10n.practiceResultSurvivalTitle,
-            style: theme.textTheme.titleLarge,
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  survival == null
+                      ? l10n.practiceResultTitle
+                      : l10n.practiceResultSurvivalTitle,
+                  style: theme.textTheme.titleLarge,
+                ),
+              ),
+              if (onShare != null)
+                IconButton(
+                  icon: const Icon(LucideIcons.share300),
+                  iconSize: 20,
+                  visualDensity: VisualDensity.compact,
+                  color: theme.colorScheme.onSurfaceVariant,
+                  tooltip: l10n.learningPathsShareLessonAction,
+                  onPressed: onShare,
+                ),
+            ],
           ),
           if (passed != null) ...[
             const SizedBox(height: 12),
@@ -99,6 +129,7 @@ class SessionResultPanel extends StatelessWidget {
           _MetricRow(
             label: l10n.practiceResultNetSpeed,
             value: '${metrics.netSpeedCpm.toStringAsFixed(0)} cpm',
+            valueColor: theme.colorScheme.primary,
           ),
           _MetricRow(
             label: l10n.practiceResultRawSpeed,
@@ -107,6 +138,7 @@ class SessionResultPanel extends StatelessWidget {
           _MetricRow(
             label: l10n.practiceResultAccuracy,
             value: '${metrics.accuracyPct.toStringAsFixed(1)}%',
+            valueColor: theme.colorScheme.tertiary,
           ),
           _MetricRow(
             label: l10n.practiceResultConsistency,
@@ -175,10 +207,15 @@ class _PassFailBanner extends StatelessWidget {
 }
 
 class _MetricRow extends StatelessWidget {
-  const new({required this.label, required this.value});
+  const new({required this.label, required this.value, this.valueColor});
 
   final String label;
   final String value;
+
+  /// Accent color for [value], for the couple of metrics (net speed,
+  /// accuracy) worth visually standing out from the rest of this
+  /// otherwise-neutral list. `null` keeps the default text color.
+  final Color? valueColor;
 
   @override
   Widget build(BuildContext context) {
@@ -193,6 +230,7 @@ class _MetricRow extends StatelessWidget {
             value,
             style: theme.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
+              color: valueColor,
             ),
           ),
         ],

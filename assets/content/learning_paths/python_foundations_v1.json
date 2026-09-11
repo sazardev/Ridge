@@ -1,0 +1,98 @@
+[
+  {
+    "id": "python-foundations-v1",
+    "language": "python",
+    "titleEn": "Python from scratch",
+    "titleEs": "Python desde cero",
+    "descriptionEn": "Learn Python step by step: variables, control flow, and functions.",
+    "descriptionEs": "Aprende Python paso a paso: variables, control de flujo y funciones.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "python-foundations-v1-step01",
+        "snippetId": "python-vars-001",
+        "order": 1,
+        "titleEn": "Assigning a variable",
+        "titleEs": "Asignar una variable"
+      },
+      {
+        "id": "python-foundations-v1-step02",
+        "snippetId": "python-vars-002",
+        "order": 2,
+        "titleEn": "Reassigning a variable",
+        "titleEs": "Reasignar una variable"
+      },
+      {
+        "id": "python-foundations-v1-step03",
+        "snippetId": "python-vars-003",
+        "order": 3,
+        "titleEn": "Explicit type hints",
+        "titleEs": "Anotaciones de tipo explícitas"
+      },
+      {
+        "id": "python-foundations-v1-step04",
+        "snippetId": "python-vars-004",
+        "order": 4,
+        "titleEn": "Formatting with f-strings",
+        "titleEs": "Formatear con f-strings"
+      },
+      {
+        "id": "python-foundations-v1-step05",
+        "snippetId": "python-cond-001",
+        "order": 5,
+        "titleEn": "if/elif/else",
+        "titleEs": "if/elif/else"
+      },
+      {
+        "id": "python-foundations-v1-step06",
+        "snippetId": "python-cond-002",
+        "order": 6,
+        "titleEn": "Ternary conditional expression",
+        "titleEs": "Expresión condicional ternaria"
+      },
+      {
+        "id": "python-foundations-v1-step07",
+        "snippetId": "python-cond-003",
+        "order": 7,
+        "titleEn": "Truthy and falsy values",
+        "titleEs": "Valores truthy y falsy"
+      },
+      {
+        "id": "python-foundations-v1-step08",
+        "snippetId": "python-loop-001",
+        "order": 8,
+        "titleEn": "A for loop over range()",
+        "titleEs": "Un bucle for sobre range()"
+      },
+      {
+        "id": "python-foundations-v1-step09",
+        "snippetId": "python-loop-002",
+        "order": 9,
+        "titleEn": "for with enumerate()",
+        "titleEs": "for con enumerate()"
+      },
+      {
+        "id": "python-foundations-v1-step10",
+        "snippetId": "python-func-001",
+        "order": 10,
+        "titleEn": "A function with a default parameter",
+        "titleEs": "Una función con parámetro por defecto"
+      },
+      {
+        "id": "python-foundations-v1-step11",
+        "snippetId": "python-func-002",
+        "order": 11,
+        "titleEn": "Multiple return values",
+        "titleEs": "Múltiples valores de retorno"
+      },
+      {
+        "id": "python-foundations-v1-step12",
+        "snippetId": "python-func-003",
+        "order": 12,
+        "titleEn": "Put it together: count_evens",
+        "titleEs": "Júntalo todo: count_evens"
+      }
+    ]
+  }
+]

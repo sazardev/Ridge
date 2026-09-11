@@ -3,11 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/router/app_router.dart';
+import 'package:ridge/core/router/deep_link_providers.dart';
 import 'package:ridge/core/splash/app_startup_splash.dart';
 import 'package:ridge/core/theme/app_theme.dart';
 import 'package:ridge/core/window/app_window_frame.dart';
 import 'package:ridge/core/window/desktop_platform.dart';
 import 'package:ridge/features/content/presentation/providers/content_providers.dart';
+import 'package:ridge/features/learning_paths/presentation/providers/learning_paths_providers.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:ridge/features/settings/domain/entities/app_settings.dart';
 import 'package:ridge/features/settings/domain/entities/app_theme_mode.dart';
@@ -34,7 +36,24 @@ class RidgeApp extends ConsumerWidget {
       // Same idempotent, keepAlive, fire-on-start shape as the catalog
       // seed above — detects and stores device info once a Guest
       // Profile exists, then no-ops on every subsequent profile update.
-      ..watch(deviceInfoSyncProvider);
+      ..watch(deviceInfoSyncProvider)
+      // Same fire-on-start shape again — listens for incoming `ridge://`
+      // links for the app's lifetime.
+      ..watch(deepLinkListenerProvider);
+
+    // Drives `AppStartupSplash.ready` below: `/practice` (the initial
+    // route) is `LearningPathsScreen`, which shows its own
+    // `CircularProgressIndicator` while `learningPathsControllerProvider`
+    // is still loading. Gating the splash on this too (not just its own
+    // minimum display) means that spinner never gets a chance to flash
+    // right as the splash lifts — a non-empty overview list is the
+    // signal the bundled catalog has actually seeded and joined, since
+    // the controller otherwise reports an empty list while that seed is
+    // still in flight (see its own doc comment).
+    final learningPathsReady = ref.watch(learningPathsControllerProvider);
+    final coreContentReady =
+        learningPathsReady.hasError ||
+        (learningPathsReady.value?.isNotEmpty ?? false);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
@@ -61,7 +80,10 @@ class RidgeApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
       builder: (context, child) {
-        final splashed = AppStartupSplash(child: child!);
+        final splashed = AppStartupSplash(
+          ready: coreContentReady,
+          child: child!,
+        );
         if (!isDesktopPlatform || !settings.windowBorderEnabled) {
           return splashed;
         }

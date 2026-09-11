@@ -40,10 +40,16 @@ class LearningPathRepositoryImpl implements LearningPathRepository {
     'assets/content/learning_paths/go_ddd_hexagonal_notes_v1.json',
     'assets/content/learning_paths/go_intermediate_syntax_v1.json',
     'assets/content/learning_paths/go_tui_notes_v1.json',
+    'assets/content/learning_paths/go_algorithms_v1.json',
     'assets/content/learning_paths/bash_foundations_v1.json',
     'assets/content/learning_paths/bash_toolkit_v1.json',
     'assets/content/learning_paths/sql_foundations_v1.json',
     'assets/content/learning_paths/rust_foundations_v1.json',
+    'assets/content/learning_paths/rust_algorithms_v1.json',
+    'assets/content/learning_paths/python_foundations_v1.json',
+    'assets/content/learning_paths/python_algorithms_v1.json',
+    'assets/content/learning_paths/javascript_foundations_v1.json',
+    'assets/content/learning_paths/javascript_algorithms_v1.json',
   ];
 
   final List<String> _assetPaths;
@@ -93,7 +99,7 @@ class LearningPathRepositoryImpl implements LearningPathRepository {
 
     for (final file in files) {
       try {
-        final raw = await file.readAsString();
+        final raw = await readContentPackFile(file);
         final decoded = jsonDecode(raw) as List<Object?>;
         for (final entry in decoded) {
           try {
