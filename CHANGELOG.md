@@ -11,6 +11,22 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-09-11
+
+### Added
+- **docs:** new module (9437177)
+- **splash:** add branded startup splash screen (2c5a14a)
+- **branding:** redesign the app mark as a flat keycap with a Geist Mono "R" (0ece1dd)
+- **progression:** add raw JSON view/export for a profile's progress stats (a95d888)
+- **practice:** auto-skip blank lines on Enter, matching Tab's comfort rule (73bdd52)
+- **daily-challenge:** add offline Daily Challenge practice mode (Phase 0) (f163ab0)
+
+### Fixed
+- **practice:** make a failed local session write recoverable via retry (40026e9)
+- **settings:** eliminate default-theme flash on cold start (0c907a4)
+- **a11y:** keep keyboard scroll shortcuts working on every scrollable screen (21bfe6d)
+- **content:** stop guided lessons from requiring typed comments (3352946)
+
 ## [1.9.0] - 2026-09-10
 
 ### Added
