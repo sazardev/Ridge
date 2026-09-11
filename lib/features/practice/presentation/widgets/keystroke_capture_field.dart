@@ -188,9 +188,9 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
   }
 
   String? _resolveChar(KeyEvent event, PhysicalKeyId physicalKeyId) {
-    if (physicalKeyId == PhysicalKeyId.enter) return '\n';
-    // Tab is handled separately, before this is ever called — see
-    // `_handleKeyEvent`'s dedicated branch calling `ingestTabKey`.
+    // Tab and Enter are handled separately, before this is ever called —
+    // see `_handleKeyEvent`'s dedicated branches calling `ingestTabKey`/
+    // `ingestEnterKey`.
     final character = event.character;
     if (character != null && character.isNotEmpty) return character;
     return fallbackCharFor(
@@ -291,6 +291,23 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
 
     if (physicalKeyId == PhysicalKeyId.tab) {
       final keystrokes = notifier.ingestTabKey(
+        physicalKeyId: physicalKeyId,
+        flight: flight,
+      );
+      if (keystrokes.isNotEmpty) {
+        _sequenceIndexForKeyDown[event.physicalKey] =
+            keystrokes.first.sequenceIndex;
+        unawaited(
+          keystrokes.first.result == KeystrokeResult.correct
+              ? soundPlayer.playClick()
+              : soundPlayer.playReject(),
+        );
+      }
+      return KeyEventResult.handled;
+    }
+
+    if (physicalKeyId == PhysicalKeyId.enter) {
+      final keystrokes = notifier.ingestEnterKey(
         physicalKeyId: physicalKeyId,
         flight: flight,
       );

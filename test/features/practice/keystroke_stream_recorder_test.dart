@@ -379,6 +379,122 @@ void main() {
     });
   });
 
+  group('ingestEnterKey (blank-line skip comfort)', () {
+    test('a plain newline into a real code line just satisfies one '
+        'position, exactly like ingestChar would', () {
+      final recorder = KeystrokeStreamRecorder(expectedSnippet: 'a\nb')
+        ..ingestChar(physicalKeyId: PhysicalKeyId.keyA, char: 'a');
+      final committed = recorder.ingestEnterKey(
+        physicalKeyId: PhysicalKeyId.enter,
+      );
+
+      expect(committed, hasLength(1));
+      expect(committed.single.result, KeystrokeResult.correct);
+      expect(committed.single.actualChar, '\n');
+      expect(recorder.expectedCursor, 2);
+    });
+
+    test('one Enter press skips a run of several empty blank lines, '
+        'landing straight on the next real code line', () {
+      final recorder = KeystrokeStreamRecorder(expectedSnippet: 'foo\n\n\nbar')
+        ..ingestChar(physicalKeyId: PhysicalKeyId.keyF, char: 'f')
+        ..ingestChar(physicalKeyId: PhysicalKeyId.keyO, char: 'o')
+        ..ingestChar(physicalKeyId: PhysicalKeyId.keyO, char: 'o');
+
+      final committed = recorder.ingestEnterKey(
+        physicalKeyId: PhysicalKeyId.enter,
+      );
+
+      expect(committed, hasLength(3), reason: 'the 3 skipped newlines');
+      expect(
+        committed.every(
+          (k) => k.result == KeystrokeResult.correct && k.actualChar == '\n',
+        ),
+        isTrue,
+      );
+      expect(recorder.expectedCursor, 6, reason: 'right at "bar"');
+    });
+
+    test('one Enter press also skips a blank line that has leftover '
+        'indentation whitespace before its newline', () {
+      final recorder = KeystrokeStreamRecorder(expectedSnippet: 'a\n    \nb')
+        ..ingestChar(physicalKeyId: PhysicalKeyId.keyA, char: 'a');
+
+      final committed = recorder.ingestEnterKey(
+        physicalKeyId: PhysicalKeyId.enter,
+      );
+
+      expect(committed, hasLength(6), reason: '2 newlines + 4 spaces');
+      expect(recorder.expectedCursor, 7, reason: 'right at "b"');
+      expect(recorder.expectedCharStatuses, [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        null,
+      ]);
+    });
+
+    test('a line that starts with indentation but has real code after it '
+        'is left untouched — only a genuinely blank line auto-skips', () {
+      final recorder = KeystrokeStreamRecorder(expectedSnippet: 'a\n\tb')
+        ..ingestChar(physicalKeyId: PhysicalKeyId.keyA, char: 'a');
+
+      final committed = recorder.ingestEnterKey(
+        physicalKeyId: PhysicalKeyId.enter,
+      );
+
+      expect(committed, hasLength(1));
+      expect(recorder.expectedCursor, 2, reason: r'stops right before "\t"');
+    });
+
+    test('only the first keystroke in a skipped run carries real dwell/flight; '
+        'the rest are synthetic follow-ons', () {
+      final recorder = KeystrokeStreamRecorder(expectedSnippet: 'a\n\nb')
+        ..ingestChar(physicalKeyId: PhysicalKeyId.keyA, char: 'a');
+
+      final committed = recorder.ingestEnterKey(
+        physicalKeyId: PhysicalKeyId.enter,
+        dwell: const Duration(milliseconds: 40),
+        flight: const Duration(milliseconds: 120),
+      );
+
+      expect(committed[0].dwell, const Duration(milliseconds: 40));
+      expect(committed[0].flight, const Duration(milliseconds: 120));
+      expect(committed[1].dwell, isNull);
+      expect(committed[1].flight, isNull);
+    });
+
+    test('an Enter pressed where no newline is expected is rejected as a '
+        'substitution, exactly like any other wrong key', () {
+      final recorder = KeystrokeStreamRecorder(expectedSnippet: 'ab');
+      final committed = recorder.ingestEnterKey(
+        physicalKeyId: PhysicalKeyId.enter,
+      );
+
+      expect(committed, hasLength(1));
+      expect(committed.single.result, KeystrokeResult.substitution);
+      expect(recorder.expectedCursor, 0);
+      expect(recorder.rejectedTick, 1);
+    });
+
+    test('stops at the end of the snippet without overrunning when the '
+        'snippet ends in blank lines', () {
+      final recorder = KeystrokeStreamRecorder(expectedSnippet: 'a\n\n')
+        ..ingestChar(physicalKeyId: PhysicalKeyId.keyA, char: 'a');
+
+      final committed = recorder.ingestEnterKey(
+        physicalKeyId: PhysicalKeyId.enter,
+      );
+
+      expect(committed, hasLength(2));
+      expect(recorder.isComplete, isTrue);
+    });
+  });
+
   group('finish / forceFinishAtDeadline', () {
     test('both simply return the full log — hard lock leaves nothing '
         'ambiguous or in-flight to resolve', () {

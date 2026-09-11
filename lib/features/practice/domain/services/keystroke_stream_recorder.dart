@@ -184,6 +184,48 @@ class KeystrokeStreamRecorder {
     return committed;
   }
 
+  /// Records an Enter keydown, with the same kind of comfort accommodation
+  /// as [ingestTabKey]: a blank or whitespace-only line is pure vertical
+  /// spacing, not real code anyone deliberately retypes — after the real
+  /// `\n` itself is correctly typed (still its own hard-locked keystroke,
+  /// rejected like any other if this isn't actually where a newline is
+  /// expected), this auto-consumes every immediately following line that
+  /// has no non-whitespace character before its own `\n` (or the
+  /// snippet's end), landing on the first real character of the next
+  /// non-blank line in one press. Each auto-consumed character is still
+  /// its own committed [Keystroke] (only the first carries real dwell/
+  /// flight, exactly like [ingestTabKey]'s space-run). A line that
+  /// *starts* with whitespace but then has real code (ordinary leading
+  /// indentation) is left untouched — that's still typed one key at a
+  /// time (or via [ingestTabKey]), same as before.
+  List<Keystroke> ingestEnterKey({
+    required PhysicalKeyId physicalKeyId,
+    Duration? dwell,
+    Duration? flight,
+  }) {
+    final first = ingestChar(
+      physicalKeyId: physicalKeyId,
+      char: '\n',
+      dwell: dwell,
+      flight: flight,
+    );
+    if (first == null) return const [];
+    if (first.result != KeystrokeResult.correct) return [first];
+
+    final committed = [first];
+    while (_isAtBlankLine()) {
+      final expected = _expectedCharAt(_buffer.length);
+      if (expected == null) break;
+      final keystroke = ingestChar(
+        physicalKeyId: physicalKeyId,
+        char: expected,
+      );
+      if (keystroke == null) break;
+      committed.add(keystroke);
+    }
+    return committed;
+  }
+
   /// Records a backspace keydown, undoing the newest committed position.
   /// Returns the correction [Keystroke] (its own event, distinct from the
   /// keystroke it undoes — SPEC.md §4.1), or `null` if the buffer was
@@ -296,6 +338,21 @@ class KeystrokeStreamRecorder {
       index >= 0 && index < expectedSnippet.length
       ? expectedSnippet[index]
       : null;
+
+  /// Whether the cursor sits at the start of a line that has nothing but
+  /// spaces/tabs before its terminating `\n` (or the snippet's end) —
+  /// i.e. a blank line with no real code in it, for [ingestEnterKey].
+  bool _isAtBlankLine() {
+    var i = _buffer.length;
+    if (i >= expectedSnippet.length) return false;
+    while (i < expectedSnippet.length && expectedSnippet[i] != '\n') {
+      if (expectedSnippet[i] != ' ' && expectedSnippet[i] != '\t') {
+        return false;
+      }
+      i++;
+    }
+    return true;
+  }
 
   Keystroke? _removeLastCommitted({
     required PhysicalKeyId physicalKeyId,
