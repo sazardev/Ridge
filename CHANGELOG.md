@@ -11,6 +11,14 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.11.0] - 2026-09-11
+
+### Added
+- add Algorithms/foundations courses for Go/Rust/Python/JS, plus deep links, build hardening, and fixes (85412d9)
+
+### Changed
+- **profile:** move rename into the edit-profile form, expand favorite-language list (5fd378a)
+
 ## [1.10.0] - 2026-09-11
 
 ### Added
