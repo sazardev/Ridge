@@ -13,6 +13,11 @@ matrix, versioning/deployment). Any non-trivial code decision should trace
 to a rule written in one of these two docs. Both are in Spanish; code,
 identifiers, and comments are in English.
 
+Brand/marketing (positioning, tagline, voice, mark/logo rules) lives in
+**`MARKETING.md`** (repo root, Spanish) — any user-facing copy or visual
+brand asset should trace to it the same way a code decision traces to
+`SPEC.md`/`STACK.md`.
+
 Progress/status lives in **`Memory.md`** (repo root, Spanish): current
 state, dated session log, durable decisions, and next steps. Read it at the
 start of a work session and update it when you finish one — it exists so

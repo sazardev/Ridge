@@ -5,6 +5,8 @@ proyecto, qué se verificó y qué sigue**. No sustituye a los otros docs:
 
 - `SPEC.md` — lógica de negocio (qué hace el producto).
 - `STACK.md` — arquitectura técnica (cómo está construido).
+- `MARKETING.md` — posicionamiento, voz de marca e identidad visual
+  (nuevo, ver sesión de hoy).
 - `CHANGELOG.md` — historial de releases (autogenerado desde Conventional
   Commits; no editar a mano).
 - `CLAUDE.md` — guía operativa para agentes (comandos, convenciones).
@@ -22,9 +24,11 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   está especificado en `SPEC.md`/`STACK.md` pero **sin implementar**.
 - Features implementadas: `content`, `practice`, `progression`,
   `learning_paths`, `achievements`, `profile`, `settings`, `lock`,
-  `onboarding`, `data_management`.
-- Modos de práctica: Zen, Sprint, Precisión y **Survival** (SPEC.md §5.8:
-  vidas, combo, multiplicador).
+  `onboarding`, `data_management`, `daily_challenge`.
+- Modos de práctica: Zen, Sprint, Precisión, **Survival** (SPEC.md §5.8:
+  vidas, combo, multiplicador) y **Reto Diario** (SPEC.md §5.4, Fase 0
+  offline-only: mismo snippet para todo el mundo calculado
+  determinísticamente por fecha UTC, sin Supabase — ver sesión de hoy).
 - Catálogos y rutas (contenido bilingüe en/es):
 
   | Lenguaje | Catálogo | Ruta | Tier |
@@ -39,18 +43,486 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `sqlAggregation` (7), `sqlJoins` (7), `sqlModifications` (5),
   `sqlAdvancedQueries` (6). Dificultad 30/22/7/1.
 - Gate de calidad: `bash tool/check.sh` (format + analyze + arquitectura +
-  tests). Última corrida (post-merge del rebranding con `origin/main`):
-  **315 tests verdes**, format/analyze limpios, sin violaciones duras de
-  arquitectura (solo warnings informativos de "varios tipos por archivo").
+  tests). Última corrida (tras splash de arranque + debug JSON de
+  Progress): **366 tests verdes**, format/analyze limpios, sin
+  violaciones duras de arquitectura (solo warnings informativos de
+  "varios tipos por archivo").
 - Set de íconos: **Lucide** (`lucide_icons_flutter`), no Material `Icons.*`
   — elegido por combinar con Geist (misma familia visual que usa Vercel/
   shadcn). `cupertino_icons` (vestigial, nunca usado) fue removido.
+- Splash de arranque (`lib/core/splash/app_startup_splash.dart`): logo +
+  wordmark + eslogan (`splashSlogan` en/es) sobre `colorScheme.surface` al
+  abrir la app, ver sesión de hoy.
+- **Eslogan oficial**: "Type better, not just faster." / "Escribe mejor,
+  no solo más rápido." (`splashSlogan`) — ver `MARKETING.md` §3 para el
+  porqué (conecta directo con SPEC.md principio #2, "la métrica es el
+  producto").
+- Mark de marca (`assets/icons/r_mark.svg`, usado en `WindowBar` y el
+  splash): **cuadrado redondeado plano (radio 60, sin bisel/dish) con la
+  R recortada en negativo** — el trazo real de Geist Mono Bold, no
+  dibujada a mano. Pasó por 3 iteraciones con el usuario en la misma
+  tarde (keycap con bisel falso-3D → R sola sin fondo → este cuadrado
+  plano), ver sesión de hoy.
+- Exports PNG del mark (`marketing/logo/r-mark-{16..1024}.png`, fondo
+  transparente, Ember `#FF5A36` quemado) — material de referencia, **no**
+  listado en `pubspec.yaml` (no se empaqueta en la app). Comando de
+  regeneración en `MARKETING.md` §6.
 - Último release: **v1.6.0** (`9dfe43c`). El siguiente push a `main`
   genera release automático desde los Conventional Commits.
 
 ---
 
 ## Historial de sesiones
+
+### 2026-09-10 — Exports PNG del mark + `MARKETING.md` ampliado (design system completo)
+
+- **Pedido del usuario**: tener PNGs del mark a la mano en distintos
+  tamaños, y ampliar `MARKETING.md` para dejar explícito el design
+  system (tipografía, plataformas, íconos, layouts, botones, etc.).
+- **`marketing/logo/r-mark-{16,32,48,64,128,192,256,512,1024}.png`**:
+  generados con `rsvg-convert` desde `assets/icons/r_mark.svg` con
+  `currentColor` sustituido por el Ember de marca (`#FF5A36`), fondo
+  transparente real (verificado con Pillow/`identify`: `RGBA`, esquina
+  `(0,0,0,0)`). Carpeta nueva `marketing/` en la raíz, hermana de
+  `assets/` pero **no** referenciada en `pubspec.yaml` a propósito — son
+  artefactos de referencia (tienda de apps, redes, docs), no assets de
+  runtime; no hacía falta que viajaran en el bundle de la app.
+- **`MARKETING.md` §5 reescrita** de un resumen de 6 bullets a 8
+  subsecciones con valores concretos, todas trazadas a código real (no
+  inventadas): 5.1 Tipografía (Geist/Geist Mono, pesos), 5.2 Plataformas
+  (tabla de `STACK.md` §1: Android/Linux vigentes, Windows/Web
+  planeados sin scaffoldear, iOS/macOS fuera de alcance), 5.3 Color y
+  paletas (semilla Ember + las 25 paletas reales de
+  `app_palette_catalog.dart`), 5.4 Forma (escala de 8 radios × 4 estilos
+  de esquina, valores exactos de `app_shapes.dart`), 5.5 Iconografía
+  (convención de sufijo `300`/`600` de Lucide, confirmada leyendo
+  `app_shell.dart`), 5.6 Layout y navegación (breakpoints 640/360 de
+  `AppShell`, los 5 destinos en su orden real), 5.7 Componentes (tabla:
+  botones, cards, chips, inputs —sin borde nunca—, diálogos, sheets,
+  snackbar, switches, transiciones — todo leído de `app_theme.dart`),
+  5.8 Movimiento (los valores exactos de `AppMotion`).
+- **§6 (el mark) ampliada** con el comando exacto de regeneración de los
+  PNG nuevos, para que la próxima iteración del mark no tenga que
+  re-derivar el procedimiento.
+- **Disciplina seguida**: cero valores inventados — todo lo que entró a
+  §5 se leyó primero de `STACK.md`/`app_theme.dart`/`app_shapes.dart`/
+  `app_typography.dart`/`app_shell.dart`/`app_palette_catalog.dart`
+  (conteo de paletas verificado contra los `.arb`, no adivinado).
+- **CLAUDE.md**: ya referenciaba `MARKETING.md` desde la sesión
+  anterior, sin cambios adicionales esta vez.
+
+### 2026-09-10 — Eslogan definitivo + `MARKETING.md`
+
+- **Brainstorm de eslogans**: el usuario pidió alternativas al eslogan
+  original ("Real code. Real speed.", que no le convenció del todo),
+  mencionando "aprende haciendo, algo elegante, rápido, minimal" como
+  guía de tono. Se propusieron ~9 opciones agrupadas por ángulo (aprender
+  haciendo, código real, velocidad/precisión, metáfora de montaña/Ridge)
+  antes de tocar nada. **Eligió**: "Type better, not just faster."
+- **Eslogan actualizado en el código**: `splashSlogan` en `app_en.arb`
+  ("Type better, not just faster.") y `app_es.arb` ("Escribe mejor, no
+  solo más rápido."), regenerado con `flutter gen-l10n`. Único lugar del
+  código que usa el eslogan hoy es `AppStartupSplash` (§7 de
+  `MARKETING.md`) — no hizo falta tocar nada más.
+- **`MARKETING.md` nuevo** (repo root, mismo estilo/idioma que
+  `SPEC.md`/`STACK.md`): documenta el posicionamiento ("unir a
+  programadores y aficionados al teclado", pedido explícito del
+  usuario), con evidencia real ya implementada de ese puente (campos de
+  teclado en el perfil, sound packs `Mechanical`/`Typewriter`/etc., el
+  mark mismo), el eslogan y su porqué (conecta con SPEC.md principio #2),
+  voz/tono, un resumen del design system (`STACK.md` §2.5) orientado a
+  marketing, y las reglas aprendidas sobre el mark en esta misma sesión
+  (nunca bisel/dish falso-3D). Referenciado desde `CLAUDE.md` igual que
+  `SPEC.md`/`STACK.md`.
+- **Nota de entorno**: a mitad de esta sesión, `bash tool/check.sh` falló
+  en el paso de `dart format` por archivos de una sesión concurrente
+  (`practice_mode_picker_sheet.dart`, `lock_screen.dart`,
+  `onboarding_*_page.dart`, etc., no tocados por esta sesión) y
+  `flutter analyze` marcó un error de sintaxis transitorio en
+  `rename_profile_sheet.dart` (edición en curso de esa otra sesión). No
+  se tocaron esos archivos — no son responsabilidad de esta sesión. El
+  cambio de esta sesión (dos `.arb` + `MARKETING.md`, sin Dart nuevo más
+  allá de lo ya regenerado) no lo requiere: los `.arb` no pasan por
+  `dart format`/`flutter analyze`, y los `.dart` generados de `l10n/gen`
+  están exentos de todas las reglas manuales (`CLAUDE.md`).
+
+### 2026-09-10 — Tercera vuelta del mark: keycap plano de vuelta (sin bisel)
+
+- **El usuario vio la R sola y preguntó**: "me gusta pero y el keycap de
+  logo?" — releyendo la sesión anterior, lo que quería sacar no era el
+  **cuadrado** en sí (su pedido original siempre fue "un keycap 2D... con
+  la R"), sino específicamente el **bisel/dish falso-3D** que tenía el
+  primer intento. Se confirmó con `AskUserQuestion` (mostrando de nuevo
+  las dos opciones ya generadas) antes de tocar el archivo: eligió
+  recuperar el cuadrado plano.
+- **`assets/icons/r_mark.svg`** (mismo archivo, sin renombrar de nuevo —
+  el nombre no compromete a ninguna forma en particular): mismos 2
+  subpaths de la R sin cambios, con el path de cuadrado redondeado
+  reincorporado (radio 60, mucho más chico que el radio 160 original —
+  ese radio grande era justo lo que hacía leer "tecla física"; con radio
+  60 lee como ícono de app genérico) y `viewBox` de vuelta a `-465 -465
+  930 930` (el que corresponde al cuadrado, no al de la R sola).
+- **Verificado visualmente** (`rsvg-convert`, 16px/72px reales, tinte
+  `#FF5A36`): se ve bien en ambos tamaños de uso real.
+- **Verificado en el proyecto**: `bash tool/check.sh` verde (**366
+  tests**, format/analyze/arquitectura limpios).
+- **Lección de esta sesión completa**: cuando el feedback de diseño es
+  ambiguo ("quítale el efecto 3D" podía leerse como "quita la forma
+  entera" o "quita solo el bisel"), generar 2-3 variantes rasterizadas
+  reales y preguntar con `AskUserQuestion` antes de tocar código evitó ir
+  y viniendo a ciegas — aun así hizo falta una ronda extra porque la
+  primera lectura de la ambigüedad fue la equivocada.
+
+### 2026-09-10 — Fix: flash del tema por defecto al arrancar (`AppSettings.initial`)
+
+- **Pregunta del usuario**: "mientras carga el splash screen el window bar
+  se ve sin el theme aplicado, por?" — la causa real no era el
+  `WindowBar` en sí, sino que **toda la app** (el splash incluido, que
+  está garantizado visible durante exactamente esa ventana) brevemente
+  renderiza con `AppSettings.initial` (paleta Ember, tema `system`) en
+  vez de la paleta/tema real del usuario, hasta que el `Stream<AppSettings>`
+  de `SettingsController` resuelve su primer valor real desde
+  `shared_preferences` (async, se resuelve unos frames después).
+- **Fix**: `main.dart` ahora pre-calienta un `ProviderContainer` ANTES de
+  `runApp` — lee `settingsRepositoryProvider`, y si es la implementación
+  concreta (`SettingsRepositoryImpl`), espera su nuevo getter `hydrated`
+  (un `Future<AppSettings>` separado del stream de `watch()`, que resuelve
+  una sola vez con el valor real persistido) — y pasa ese MISMO container
+  ya "tibio" a `UncontrolledProviderScope` en vez de dejar que un
+  `ProviderScope` normal cree uno nuevo perezosamente. Así, el primer
+  frame que Flutter pinta ya tiene los ajustes reales.
+- **Intento fallido, revertido**: la primera versión intentó lograr esto
+  cambiando el `onListen` de `SettingsRepositoryImpl` para NO repetir
+  `_current` a un suscriptor que llega antes de hidratar — rompió
+  determinísticamente `data_management_drift_integration_test.dart`
+  ("wipeAllData... disarms the app lock"), un test sin relación alguna
+  con el splash. Diagnosticado con `print` temporales: la secuencia de
+  emisiones (`update(true)`, `update(false)`) llegaba en el orden
+  correcto al `StreamController`, pero el estado de
+  `SettingsController` (via `AsyncNotifier`) no llegaba a reflejar la
+  última emisión sincrónicamente al leerlo justo después de un
+  `await` — una sensibilidad de timing de microtasks de Riverpod de la
+  que otro código (este test) dependía implícitamente sin saberlo.
+  **Lección**: no toques la semántica de re-emisión de un stream
+  compartido para resolver un problema de "valor inicial" — usa un
+  mecanismo separado (`hydrated`) y deja `watch()`/`onListen` exactamente
+  como estaban.
+- **Verificado**: `bash tool/check.sh` verde — **366 tests**, format/
+  analyze limpios, arquitectura sin violaciones nuevas. En la app real
+  (`flutter run -d linux`), capturas en ráfaga (cada 100ms) del arranque
+  confirman que la paleta/acento correctos (no Ember) se ven desde el
+  primer frame del splash.
+- **Seguimiento — sí era un bug real** (el usuario lo confirmó en su
+  propia máquina, con GPU real: "aun sigue pasando, el window bar se
+  pinta blanco"): la franja clara/blanca no era ruido de la sandbox — la
+  causaba el fix anterior de esta misma sesión (ver "Fix: `WindowBar`
+  crasheaba sin `Overlay` ancestro"), que envolvía el `WindowBar` de
+  `AppStartupSplash` en un `Overlay(initialEntries: [...])` local para
+  darle al `Tooltip` de `_WindowButton` un ancestro. `Overlay` no
+  garantiza pintar su contenido en el mismo frame en que se inserta —
+  deja una franja en blanco/sin componer durante uno o dos frames antes
+  de que el `OverlayEntry` realmente pinte, visible como blanco porque
+  `WindowOptions(backgroundColor: Colors.transparent)` deja ver lo que
+  sea que haya detrás mientras tanto.
+- **Fix real** (reemplaza el de la entrada anterior por completo, ya no
+  hay `Overlay` en `window_bar.dart` en absoluto): en vez de darle a
+  `WindowBar` un `Overlay` propio para que su `Tooltip` funcione en
+  cualquier contexto, se le agregó un parámetro `showTooltips` (default
+  `true`) que `_WindowButton` usa para saltarse el `Tooltip` por
+  completo cuando es `false` — sin `Tooltip`, nunca hace falta un
+  `Overlay`. `AppStartupSplash` pasa `WindowBar(showTooltips: false)`:
+  esa instancia es no-interactiva y dura ~1.4s, perder el tooltip de
+  hover ahí es irrelevante. `AppShell`/`LockScreen` (con `Overlay` real
+  del `Navigator`) siguen con `showTooltips: true` por defecto, sin
+  cambios de comportamiento.
+- **Lección para la próxima**: cuando un widget necesita una capacidad
+  (`Overlay`, `Navigator`, etc.) que solo UN caller no tiene, primero
+  preguntar si esa capacidad es realmente necesaria para ESE caller —
+  quitar la característica que la exige (aquí, el tooltip) es más
+  simple y más robusto que fabricarle el ancestro que le falta.
+- **Verificado en la app real** (`flutter run -d linux`, capturas en
+  ráfaga cada 100ms cubriendo cold start + fade completo del splash):
+  el `WindowBar` se ve oscuro y consistente con el resto de la app en
+  TODOS los frames capturados, sin ninguna franja blanca/clara.
+- **Verificado**: `bash tool/check.sh` verde — **366 tests**, format/
+  analyze limpios, arquitectura sin violaciones nuevas.
+
+### 2026-09-10 — Segunda vuelta del mark: fuera el marco de keycap, solo la R
+
+- **Feedback del usuario** sobre el mark con keycap de la entrada
+  anterior: "no se ve mal, [pero quítale] ese efecto falso 3D de tecla
+  como logo" — el problema no era la R en sí, era el cuadrado/bezel
+  detrás leyendo como una tecla física (skeuomorfismo), no un mark plano.
+- **Se generaron 3 variantes** (rasterizadas con `rsvg-convert`, tinte
+  ember real `#FF5A36`, mostradas al usuario antes de tocar código): (a)
+  R sola sin fondo, (b) R recortada sobre cuadrado de radio chico, (c) R
+  recortada sobre círculo. **El usuario eligió (a)** vía
+  `AskUserQuestion`.
+- **Archivo renombrado** `assets/icons/keycap_mark.svg` →
+  `assets/icons/r_mark.svg` (con `git mv`, ya no es una keycap, el
+  nombre viejo habría quedado engañoso) y actualizadas las 3 referencias
+  (`pubspec.yaml`, `window_bar.dart`, `app_startup_splash.dart`).
+  Contenido: mismos 2 subpaths de la R (contorno + counter de la panza,
+  evenodd) que ya se habían extraído de Geist Mono Bold en la sesión
+  anterior, **sin** el path del cuadrado exterior. `viewBox` recalculado
+  ajustado al bounding box real de la R (`-230 -320 460 640`, antes
+  `-465 -465 930 930` pensado para el cuadrado) para que la letra llene
+  el ícono en vez de quedar con márgenes pensados para un fondo que ya
+  no existe.
+- **Verificado visualmente** (`rsvg-convert`, 16px/32px/72px reales, tinte
+  de marca): la R se ve nítida y bien proporcionada en los dos tamaños de
+  uso real (`WindowBar` 16px, splash 72px), sin el padding sobrante que
+  hubiera quedado de reusar el `viewBox` viejo.
+- **Verificado en el proyecto**: `bash tool/check.sh` verde (**366
+  tests**, format/analyze/arquitectura limpios) y `flutter build linux
+  --debug` compila con el asset renombrado.
+
+### 2026-09-10 — Rediseño del mark: keycap con "R" (Geist Mono) en negativo
+
+- **Feedback del usuario** sobre el mark del splash: "el logo no me
+  encanta" — el mark viejo (bezel + "dish" hueco, sin letra) se veía
+  como un blob vacío. Pedido: keycap 2D con la R en Geist Mono, minimal.
+- **`assets/icons/keycap_mark.svg` reescrito por completo** (mismo
+  archivo, mismo `viewBox`, cero cambios de código en
+  `window_bar.dart`/`app_startup_splash.dart` — siguen apuntando a la
+  misma ruta): ahora es un cuadrado redondeado **sólido** (mismo contorno
+  exterior que el mark viejo, radio 160) con la **R recortada como
+  hueco** (negative space, `fill-rule="evenodd"`), no una letra pintada
+  encima. Bajo el tinte monocromo `ColorFilter.mode(color,
+  BlendMode.srcIn)` que ya aplican ambos usos, solo importa la silueta
+  alfa — el hueco de la R deja ver el fondo detrás (superficie/toolbar),
+  igual que una tecla física con la letra grabada.
+- **La R es el contorno real de Geist Mono Bold**, no dibujada a mano:
+  extraída con `fontTools` (`SVGPathPen`) desde
+  `assets/fonts/GeistMono/GeistMono-Bold.ttf` (upm 1000, bounds del
+  glifo `R` x:[62,546] y:[0,710]), escalada ×0.8 y centrada en el
+  cuadrado de -400..400 con una transformación afín simple (sin rotar:
+  los comandos V/H/Q/L conservan su tipo, solo cambian los números). El
+  hueco propio de la panza de la R (el "counter") sale gratis del mismo
+  evenodd apilando los 3 subpaths (cuadrado, contorno de R, counter de
+  R) — no hizo falta lógica extra.
+- **Verificado visualmente** (este entorno no tiene servidor gráfico para
+  Flutter, pero sí `rsvg-convert`): rasterizado a 512px, 32px y **16px
+  real** (tamaño exacto de `WindowBar`) y con el color de marca real
+  (`0xFFFF5A36`) sobre superficie clara — la R se mantiene legible incluso
+  a 16px. Herramientas efímeras: venv de Python en `/tmp/logo_venv`
+  (`fonttools`), todo borrado al terminar.
+- **Verificado en el proyecto**: `bash tool/check.sh` verde (**366
+  tests**, format/analyze/arquitectura limpios) y `flutter build linux
+  --debug` compila con el asset nuevo (mismo path, sin tocar
+  `pubspec.yaml`).
+
+### 2026-09-10 — Fix: `WindowBar` crasheaba sin `Overlay` ancestro (splash)
+
+- **Reportado por el usuario**: pegó un log de `flutter run` con
+  `No Overlay widget found` (sobre un `RawTooltip` de `WindowButton`,
+  `window_bar.dart:164`) y un `RenderFlex overflowed by 298673 pixels`,
+  repetidos en ráfaga tanto al arranque en frío como tras un hot
+  restart. No tenía relación con la sesión de "Progress JSON" en curso
+  — pertenece al trabajo (de otra sesión concurrente) del splash de
+  arranque de más abajo.
+- **Causa real**: `AppStartupSplash` monta su propia copia de
+  `WindowBar()` dentro del slot `builder` de `MaterialApp.router`
+  (`app.dart`), que queda **por encima** del `Router`/`Navigator` — o
+  sea, fuera de cualquier `Overlay` que ese `Navigator` provea.
+  `_WindowButton` envuelve su ícono en un `Tooltip` (ahora `RawTooltip`
+  internamente), que exige un `Overlay` ancestro incluso solo para
+  construirse (no solo al mostrarse por hover) — así que esto no era una
+  carrera de arranque transitoria, crasheaba en cada frame mientras el
+  splash estuvo visible. `LockScreen` tiene su propio `WindowBar()`
+  también, pero **sí** funciona porque `/lock` es una `GoRoute` normal —
+  vive dentro del `Navigator` de go_router, con `Overlay` real.
+- **Fix** en `window_bar.dart` (no en el splash — `WindowBar` promete en
+  su propio doc "safe to mount unconditionally anywhere", así que se
+  corrigió ahí para que la promesa sea cierta para cualquier caller
+  futuro): el widget final se envuelve en un `Overlay` local
+  (`Overlay(initialEntries: [OverlayEntry(builder: ...)])`). Como
+  `Overlay` no se autodimensiona (a diferencia del `Container(height:
+  ...)` que reemplazó, que sí ignora las constraints entrantes), hubo
+  que envolverlo además en `SizedBox(height: WindowBar.height, ...)` —
+  si no, revienta con "Overlay was given infinite constraints" en
+  cuanto un padre (como el `Column` de `AppShell`) le da altura no
+  acotada.
+- **Regresión propia detectada por el usuario tras el fix de arriba**:
+  "el appbar (windowbar) tiene un color super fuera de todo del theme
+  original... no se adapta según el que elija en tiempo real". Causa:
+  `Overlay.initialEntries` **solo se consulta una vez**, al crear su
+  `OverlayState` — envolver todo en un `Overlay(initialEntries: [...])`
+  nuevo en cada `build()` (como quedó arriba) hace que Flutter descarte
+  el `OverlayEntry` nuevo y seguía usando el original congelado en el
+  primer frame, así que ningún cambio de tema/paleta/paleta en vivo
+  volvía a llegar a pantalla — quedaba pegado al color del primer
+  build. **Fix del fix**: solo envolver en un `Overlay` local cuando
+  `Overlay.maybeOf(context) == null` (el caso real del splash); cuando
+  ya hay uno ambiente (`AppShell`, `LockScreen` — el caso normal y el
+  único visible casi todo el tiempo), se retorna `content` directo,
+  igual que antes de tocar nada — cero riesgo de regresión ahí, y
+  reactivo al 100% otra vez.
+- **Verificado en la app real** (`flutter run -d linux`, dos veces):
+  arranque en frío limpio, cero exceptions en todo el log; y luego,
+  tras el fix del fix, cambiando la paleta en Ajustes en vivo
+  (Nord → Synthwave) con la app corriendo — el `WindowBar` (ícono,
+  botones minimizar/maximizar/cerrar, tooltip al hover) se re-pinta
+  instantáneamente con la paleta nueva, confirmado con capturas de
+  pantalla reales. No se probó un hot restart real (no hay tty
+  interactivo para mandar `R` a un proceso backgrounded en este
+  entorno), pero la causa del crash original es estructural (no
+  depende de cold-start vs. restart), así que el arranque limpio ya
+  cubre ese caso.
+- **Verificado**: `bash tool/check.sh` verde — **366 tests** (una
+  corrida marcó 1 test de `survival_controller_drift_integration_test.dart`
+  como fallido, pero pasó solo al re-correrlo aislado y de nuevo la
+  suite completa — flaky preexistente, no relacionado: ese archivo no
+  se tocó en esta sesión), format/analyze limpios, arquitectura sin
+  violaciones nuevas.
+
+### 2026-09-10 — Splash de arranque (marketing/branding)
+
+- **Pedido del usuario**: pantalla de carga al abrir la app con logo,
+  nombre "Ridge" y un eslogan, más una revisión de que el proyecto está
+  listo para arrancar.
+- **`AppStartupSplash`** (`lib/core/splash/app_startup_splash.dart`,
+  presentación pura, sin dominio/aplicación — mismo tipo de carpeta plana
+  que `lib/core/window/`): vive en el slot `builder` de `MaterialApp.router`
+  (`app.dart`), envuelto por `AppWindowFrame` cuando aplica. Muestra un
+  `Stack` con el `child` real (el árbol enrutado) construyéndose debajo
+  desde el primer frame y el splash como capa opaca encima
+  (`colorScheme.surface`) con el ícono `assets/icons/keycap_mark.svg`
+  (mismo mark que `window_bar.dart`, teñido con `colorScheme.primary`), el
+  wordmark `l10n.appName` y el eslogan `l10n.splashSlogan`, animados con
+  `flutter_animate` + los tokens de `AppMotion` (fade/slide de entrada,
+  nada de rebote — la única animación "loud" del proyecto sigue siendo el
+  shake del PIN). Tras 1400 ms hace fundido de salida
+  (`AppMotion.effectsSlow`) y luego se retira del árbol (deja de construir
+  el `Stack`, ya no hay overlay). Incluye su propio `WindowBar()` (igual
+  que hace `LockScreen` en su propio `Scaffold`) para que la ventana en
+  Linux siga siendo arrastrable/cerrable durante el splash.
+- **Efecto colateral deliberado**: como el `child` real ya se está
+  construyendo debajo del overlay opaco, cualquier redirect de
+  `app_router.dart` (onboarding/lock/practice) ya se resolvió para cuando
+  el splash se levanta — no hace falta acoplar el splash a
+  `hasGuestProfileProvider`/`settingsControllerProvider` ni tocar la
+  lógica de redirect existente.
+- **l10n**: clave nueva `splashSlogan` en `app_en.arb`/`app_es.arb`
+  ("Real code. Real speed." / "Código real. Velocidad real.", tono
+  consistente con `onboardingWelcomeTitle`: "Real code, not filler").
+  Regenerado con `flutter gen-l10n`.
+- **Verificado**: `bash tool/check.sh` verde (format, analyze
+  `--fatal-infos --fatal-warnings`, arquitectura sin violaciones nuevas,
+  **366 tests**) y `flutter build linux --debug` compila. No se pudo
+  verificar visualmente (WSL2 sin servidor gráfico, misma limitación de
+  siempre en este entorno).
+- **Pendiente opcional, no pedido explícitamente**: splash nativo (SO) vía
+  `flutter_native_splash` para tapar el hueco blanco antes de que Flutter
+  pinte el primer frame — hoy solo existe el splash in-app descrito arriba.
+
+### 2026-09-10 — Debug: ver/exportar stats de Progress como JSON
+
+- **Motivación**: SPEC.md §15 ("el usuario puede consultar y exportar su
+  propio historial y reporte de progreso en cualquier momento") no tenía
+  todavía una vía concreta en la app — se pidió para poder debugear datos
+  reales del perfil activo.
+- `progress_stats_json_codec.dart` (`presentation/`, Dart puro, sin
+  Flutter): serializa el `ProgressSnapshot` completo (xp, racha,
+  mastery, weakness report, activity report) + el
+  `PersonalHistoryComparison` de la categoría top (si ya resolvió) a un
+  `Map<String, Object?>` — enums/ids en crudo (`.name`/`.value`), no
+  labels localizados, porque es para depurar el dato, no para mostrarlo.
+- `StatsJsonScreen` (nueva ruta `/progress/stats-json`): JSON con formato
+  bonito, seleccionable, botón **Copiar** (`Clipboard`, sin dependencia
+  nueva) y botón **Exportar** (archivo `.json` con timestamp bajo
+  `getApplicationSupportDirectory()/exports/`, mismo patrón que
+  `content_packs_directory.dart`). Punto de entrada: botón "View raw
+  JSON" al final de la pestaña **History** de `ProgressScreen` (ya es
+  "tu historial/tus datos") — el primer intento lo puso como ícono `{}`
+  junto al `TabBar` en el app bar, pero el usuario lo rechazó por verse
+  mal ahí; se movió dentro de la pestaña.
+- `KeyboardScrollShortcuts` debe envolver **todo el body** (botones +
+  scroll), no solo el `SingleChildScrollView` — los botones son hermanos
+  del scrollable, y si quedan fuera, Home/End/PageUp/PageDown dejan de
+  funcionar en cuanto el foco pasa a un botón (el evento de teclado nunca
+  llega a ese `CallbackShortcuts` porque no es ancestro del foco actual).
+- **Verificado en la app real** (`flutter run -d linux`, conectado por
+  DTD/VM service), en ambas iteraciones (ícono en el app bar y luego el
+  botón dentro de History): navegación Progress → History → "View raw
+  JSON", JSON con datos reales del perfil, Copiar (confirmado leyendo el
+  clipboard del sistema) y Exportar (confirmado leyendo el archivo
+  `.json` resultante) funcionan. Nota de entorno: este contenedor corre
+  bajo WSLg/Weston sin `_NET_ACTIVE_WINDOW` — `xdotool` no logra dar foco
+  de teclado real a la ventana, así que el fix de
+  `KeyboardScrollShortcuts` se validó por lectura del código/semántica de
+  `Focus`, no visualmente.
+- Test nuevo: `progress_stats_json_codec_test.dart` (forma de cada
+  subsección + round-trip real por `jsonEncode`/`jsonDecode`).
+- **Verificado**: `bash tool/check.sh` verde — **366 tests**, format/
+  analyze (`--fatal-infos --fatal-warnings`) limpios, arquitectura sin
+  violaciones nuevas.
+
+### 2026-09-10 — Reto Diario (Fase 0, 100% offline)
+
+- **Decisión con el usuario** (ver plan `el-reto-diario-me-frolicking-turing.md`):
+  el Reto Diario de SPEC.md §5.4 tal cual está especificado depende de todo
+  el backend online (Supabase Auth, Postgres+RLS, cron) que STACK.md §5–6
+  describe pero que **aún no existe**. Se construyó primero una **Fase 0
+  offline-only**: mismo snippet para todo el mundo calculado
+  **determinísticamente por fecha UTC** (hash FNV-1a de 32 bits escrito a
+  mano sobre `ChallengeDate.isoKey`, nunca `String.hashCode` — no
+  garantizado estable entre plataformas/versiones de Dart), sin ningún
+  round-trip a servidor. Banda de dificultad fija **Go
+  Principiante/Intermedio** (decisión explícita del usuario: nada de rotar
+  por todas las dificultades, para que el hábito diario no se rompa con un
+  día "Experto" al azar). El puerto `DailyChallengeRepository` queda
+  diseñado para que una Fase 1 futura le agregue un data source remoto
+  detrás del mismo puerto (patrón adaptador dual, STACK.md §4.2) sin tocar
+  dominio/aplicación de esta fase.
+- **Nuevo feature `lib/features/daily_challenge/`** (hexagonal completo):
+  `ChallengeDate` (value object, UTC date-only), `DailyChallenge`/
+  `DailyChallengeCompletion` (entidades), `DailyChallengeSelector`
+  (servicio puro del hash determinístico), `DailyChallengeStreakCalculator`
+  (racha propia de este feature — **no** la racha general de actividad de
+  `progression`, son conceptos distintos: esta solo cuenta días en que se
+  jugó específicamente el Reto Diario), 4 usecases, tabla drift
+  `daily_challenge_completions` (clave primaria compuesta `(profileId,
+  challengeDate)` — un intento por día garantizado a nivel de esquema),
+  `schemaVersion` 13→14.
+- **`PracticeMode` ganó una variante nueva** `dailyChallenge({required
+  DateTime challengeDate})` — se auditaron y actualizaron todos los call
+  sites exhaustivos (`practice_mapper.dart` ×2,
+  `finish_practice_session_usecase.dart`'s cálculo de `passed`, que
+  reutiliza `PrecisionScoreCalculator` igual que Precisión/lección de
+  ruta). Certificación de dominio (mastery) sigue siendo solo-Precisión a
+  propósito: el Reto Diario no alimenta mastery en esta fase.
+- **Integración con la sesión de práctica existente**: la tarjeta vive en
+  `FreePracticeScreen` (`/free-practice`), arriba de los `QuickModeTile`;
+  al tocarla empuja `/practice/session` reusando la rama de record tipado
+  del router que ya usaba `learning_paths` (cero cambios de router). Al
+  terminar una sesión, `PracticeSessionController` graba la finalización
+  vía un usecase nuevo — la llamada es *fire-and-forget* e incondicional
+  (no gateada por modo en el controller, igual que las otras tres
+  llamadas ya existentes ahí); el usecase mismo decide que es un no-op si
+  el modo no era `dailyChallenge`.
+- **Refactor incidental**: mover las 4 llamadas fire-and-forget de
+  `_persistFinishedSession` a una función top-level nueva en
+  `practice_session_downstream_effects.dart` (part file) — no puede ser un
+  método de extensión porque `ref` es un miembro `@protected` del notifier
+  generado, solo accesible dentro del propio cuerpo de la clase; se
+  resolvió pasando `ref` como parámetro explícito. Esto fue necesario
+  porque agregar la 4ª llamada directamente dejaba
+  `practice_session_controller.dart` en 505 líneas (límite duro: 500).
+- **`data_reset_dao.dart`**: `wipeEverything()` ahora también borra
+  `daily_challenge_completions` — si no, un reset completo de perfil deja
+  huérfano el historial del Reto Diario.
+- **Verificado**: `bash tool/check.sh` verde — **356 tests** (315 + 41
+  nuevos: `ChallengeDate`, el selector con valores FNV-1a fijados a mano
+  como regresión, el streak calculator, los 4 usecases, integración drift
+  real, widget test de la tarjeta, extensión de
+  `finish_practice_session_usecase_test.dart`, y cobertura del reset en
+  `data_management_drift_integration_test.dart`), format/analyze
+  (`--fatal-infos --fatal-warnings`) limpios, arquitectura sin violaciones
+  nuevas.
+- **Pendiente explícito** (no se hizo en esta sesión, a propósito): el
+  leaderboard global y la racha a prueba de reinstalación (requieren
+  Supabase/Auth, ver "Pendientes" abajo).
 
 ### 2026-09-10 — Fix: comentarios colándose en el tipeo de `go-tui-notes-v1`
 
@@ -315,11 +787,21 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   (`lesson_progress_cache`). Si la ruta ya salió en un release, **bumpear
   el sufijo de versión de los ids** (`...-o2-stepNN`) aunque la DB local
   no tenga intentos: el release implica usuarios reales.
+- **Reto Diario en fases**: Fase 0 (hoy) es 100% offline — "mismo snippet
+  para todo el mundo" se logra con un hash determinístico por fecha UTC,
+  sin servidor. La racha del Reto Diario (`DailyChallengeStreakCalculator`)
+  es deliberadamente distinta de la racha general de actividad de
+  `progression` (`StreakCalculator`) — no reusar una para la otra. Fase 1
+  (leaderboard global, racha a prueba de reinstalación) requiere el
+  backend online completo (`auth` + Supabase) y se agrega como un data
+  source remoto detrás del mismo `DailyChallengeRepository`, sin tocar
+  dominio/aplicación de la Fase 0.
 
 ## Pendientes / próximos pasos
 
 - Todo lo online de `SPEC.md` §5/§9 y `STACK.md` §5–6 (Supabase, sync,
-  duelos, escuadrones, leaderboards).
+  duelos, escuadrones, leaderboards, y la Fase 1 del Reto Diario descrita
+  arriba).
 - Scaffold de Windows/Web (`flutter create --platforms=windows,web .`).
 - Evaluar si `symbolFocus` merece valores SQL (hoy `[]`, como Bash) si se
   le da uso real en recomendaciones.
