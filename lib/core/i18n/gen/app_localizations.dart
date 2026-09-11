@@ -188,29 +188,41 @@ abstract class AppLocalizations {
   /// **'Member since {date}'**
   String profileMemberSince(String date);
 
-  /// No description provided for @profileRenameAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Rename'**
-  String get profileRenameAction;
-
-  /// No description provided for @profileRenameTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Rename profile'**
-  String get profileRenameTitle;
-
   /// No description provided for @profileSave.
   ///
   /// In en, this message translates to:
   /// **'Save'**
   String get profileSave;
 
+  /// No description provided for @profileEditProfileAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get profileEditProfileAction;
+
+  /// No description provided for @profileEditProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get profileEditProfileTitle;
+
   /// No description provided for @profileAchievementsAction.
   ///
   /// In en, this message translates to:
   /// **'View achievements'**
   String get profileAchievementsAction;
+
+  /// No description provided for @profileAchievementsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get profileAchievementsTitle;
+
+  /// No description provided for @profileAchievementsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} unlocked'**
+  String profileAchievementsCount(int count);
 
   /// No description provided for @profileStatsTitle.
   ///
@@ -241,12 +253,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Customize profile'**
   String get profileEditCustomizationAction;
-
-  /// No description provided for @profileEditCustomizationTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Customize your profile'**
-  String get profileEditCustomizationTitle;
 
   /// No description provided for @profileFavoriteLanguageLabel.
   ///

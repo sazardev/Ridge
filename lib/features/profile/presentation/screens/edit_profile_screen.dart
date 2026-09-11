@@ -13,10 +13,10 @@ import 'package:ridge/features/profile/presentation/profile_suggestions.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_visual.dart';
 
-/// Full-screen editor for the Guest Profile's self-expression fields
-/// (favorite languages, keyboard layout/brand/model, favorite
-/// quote/programmer), pushed as `/profile/edit` with the current
-/// [GuestProfile] as `extra`.
+/// Full-screen editor for the Guest Profile — username plus every
+/// self-expression field (favorite languages, keyboard layout/brand/model,
+/// favorite quote/programmer) in one place, pushed as `/profile/edit`
+/// with the current [GuestProfile] as `extra`.
 class EditProfileScreen extends ConsumerStatefulWidget {
   /// Creates the screen pre-filled with [profile]'s current values.
   const new({required this.profile, super.key});
@@ -29,6 +29,9 @@ class EditProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
+  late final TextEditingController _usernameController = TextEditingController(
+    text: widget.profile.username,
+  );
   late final Set<FavoriteLanguage> _languages = {
     ...widget.profile.favoriteLanguages,
   };
@@ -73,6 +76,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
   @override
   void dispose() {
+    _usernameController.dispose();
     _quoteController.dispose();
     _languageSearchController.dispose();
     _scrollController.dispose();
@@ -85,18 +89,28 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       _submitting = true;
       _errorText = null;
     });
-    final result = await ref
-        .read(activeProfileControllerProvider.notifier)
-        .updateCustomization(
-          favoriteLanguages: _languages.toList(),
-          keyboardLayout: _layout,
-          keyboardBrand: _brand,
-          keyboardModel: _model,
-          favoriteQuote: _quoteController.text,
-          favoriteProgrammer: _programmer,
-        );
+    final notifier = ref.read(activeProfileControllerProvider.notifier);
+
+    final renameResult = await notifier.rename(_usernameController.text);
     if (!mounted) return;
-    if (result.isOk) {
+    if (renameResult.isErr) {
+      setState(() {
+        _submitting = false;
+        _errorText = l10n.profileUsernameInvalid;
+      });
+      return;
+    }
+
+    final customizationResult = await notifier.updateCustomization(
+      favoriteLanguages: _languages.toList(),
+      keyboardLayout: _layout,
+      keyboardBrand: _brand,
+      keyboardModel: _model,
+      favoriteQuote: _quoteController.text,
+      favoriteProgrammer: _programmer,
+    );
+    if (!mounted) return;
+    if (customizationResult.isOk) {
       Navigator.of(context).pop();
       return;
     }
@@ -121,7 +135,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     return EscapeToPop(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(l10n.profileEditCustomizationTitle),
+          title: Text(l10n.profileEditProfileTitle),
           actions: [
             IconButton(
               onPressed: _submitting ? null : _submit,
@@ -151,6 +165,15 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 ),
                 const SizedBox(height: 16),
               ],
+              TextField(
+                controller: _usernameController,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  labelText: l10n.profileUsernameLabel,
+                  prefixIcon: const Icon(LucideIcons.userRound300),
+                ),
+              ),
+              const SizedBox(height: 28),
               Text(
                 l10n.profileFavoriteLanguageLabel,
                 style: textTheme.titleMedium,

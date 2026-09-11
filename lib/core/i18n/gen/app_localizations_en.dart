@@ -57,16 +57,24 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get profileRenameAction => 'Rename';
-
-  @override
-  String get profileRenameTitle => 'Rename profile';
-
-  @override
   String get profileSave => 'Save';
 
   @override
+  String get profileEditProfileAction => 'Edit profile';
+
+  @override
+  String get profileEditProfileTitle => 'Edit profile';
+
+  @override
   String get profileAchievementsAction => 'View achievements';
+
+  @override
+  String get profileAchievementsTitle => 'Achievements';
+
+  @override
+  String profileAchievementsCount(int count) {
+    return '$count unlocked';
+  }
 
   @override
   String get profileStatsTitle => 'Your progress';
@@ -83,9 +91,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileEditCustomizationAction => 'Customize profile';
-
-  @override
-  String get profileEditCustomizationTitle => 'Customize your profile';
 
   @override
   String get profileFavoriteLanguageLabel => 'Favorite languages';

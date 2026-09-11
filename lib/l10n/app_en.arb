@@ -31,16 +31,24 @@
       }
     }
   },
-  "profileRenameAction": "Rename",
-  "profileRenameTitle": "Rename profile",
   "profileSave": "Save",
+  "profileEditProfileAction": "Edit profile",
+  "profileEditProfileTitle": "Edit profile",
   "profileAchievementsAction": "View achievements",
+  "profileAchievementsTitle": "Achievements",
+  "profileAchievementsCount": "{count} unlocked",
+  "@profileAchievementsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "profileStatsTitle": "Your progress",
   "profileViewProgressAction": "View full progress",
   "profileAboutTitle": "About me",
   "profileAboutEmptyState": "Add your favorite languages, keyboard, and more to personalize your profile",
   "profileEditCustomizationAction": "Customize profile",
-  "profileEditCustomizationTitle": "Customize your profile",
   "profileFavoriteLanguageLabel": "Favorite languages",
   "profileKeyboardLayoutLabel": "Keyboard layout",
   "profileKeyboardBrandLabel": "Keyboard brand",
