@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
@@ -283,6 +284,17 @@ class _HistoryTab extends StatelessWidget {
                 );
               },
             ),
+          const SizedBox(height: 24),
+          // The raw-JSON debug view's entry point (SPEC.md §15: the user
+          // can consult/export their own progress report at any time) —
+          // lives here rather than up in the app bar next to the tabs,
+          // since this tab is already "your history/data", the most
+          // natural home for it.
+          OutlinedButton.icon(
+            onPressed: () => context.push('/progress/stats-json'),
+            icon: const Icon(LucideIcons.braces300),
+            label: Text(l10n.progressJsonEntryButton),
+          ),
         ],
       ),
     );

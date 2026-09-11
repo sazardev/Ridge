@@ -21,6 +21,7 @@ import 'package:ridge/features/profile/presentation/screens/create_profile_scree
 import 'package:ridge/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:ridge/features/profile/presentation/screens/profile_screen.dart';
 import 'package:ridge/features/progression/presentation/screens/progress_screen.dart';
+import 'package:ridge/features/progression/presentation/screens/stats_json_screen.dart';
 import 'package:ridge/features/settings/presentation/providers/settings_providers.dart';
 import 'package:ridge/features/settings/presentation/screens/changelog_screen.dart';
 import 'package:ridge/features/settings/presentation/screens/settings_screen.dart';
@@ -137,6 +138,13 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: '/shortcuts',
         builder: (context, state) => const ShortcutsScreen(),
+      ),
+      // Pushed as a non-shell route from the Progress screen's app bar
+      // (same shape as `/changelog`) — the active profile's full
+      // `ProgressSnapshot` as raw, exportable JSON (SPEC.md §15).
+      GoRoute(
+        path: '/progress/stats-json',
+        builder: (context, state) => const StatsJsonScreen(),
       ),
       // Pushed as a non-shell route from Profile's "Customize profile"
       // action, the current `GuestProfile` handed over as `extra` since
