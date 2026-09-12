@@ -97,7 +97,7 @@ void main() {
   setUp(() async {
     supportDir = await Directory.systemTemp.createTemp('jit_test_support_');
     PathProviderPlatform.instance = _FakePathProviderPlatform(supportDir.path);
-    packsDir = await contentPacksSnippetsDir();
+    packsDir = (await contentPacksSnippetsDir())!;
   });
 
   tearDown(() async {

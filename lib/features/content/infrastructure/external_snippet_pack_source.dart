@@ -30,6 +30,7 @@ class ExternalSnippetPackSource implements SnippetCatalogSource {
   @override
   Future<List<Snippet>> loadBundledCatalog() async {
     final dir = await contentPacksSnippetsDir();
+    if (dir == null) return const [];
     final files = dir
         .listSync()
         .whereType<File>()

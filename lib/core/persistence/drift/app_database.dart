@@ -95,9 +95,22 @@ Future<void> _createPracticeIndices(Migrator m) async {
 class AppDatabase extends _$AppDatabase {
   /// Opens the database, optionally over a custom [executor] — tests pass
   /// `NativeDatabase.memory()`, production falls back to `drift_flutter`'s
-  /// cross-platform opener.
+  /// cross-platform opener. The [DriftWebOptions] are only read on web
+  /// builds (ignored on native) and point at the `sqlite3.wasm` +
+  /// `drift_worker.js` files shipped in `web/` — without them the opener
+  /// throws before any query runs, leaving every drift-backed screen
+  /// (guides, practice, progress) empty.
   new([QueryExecutor? executor])
-    : super(executor ?? driftDatabase(name: 'ridge.db'));
+    : super(
+        executor ??
+            driftDatabase(
+              name: 'ridge.db',
+              web: DriftWebOptions(
+                sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+                driftWorker: Uri.parse('drift_worker.js'),
+              ),
+            ),
+      );
 
   @override
   int get schemaVersion => 15;

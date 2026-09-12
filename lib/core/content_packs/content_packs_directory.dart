@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -10,14 +11,24 @@ import 'package:path_provider/path_provider.dart';
 /// `ExternalSnippetPackSource`; this app never writes to it itself —
 /// populating it (by hand today, or via a future in-app import feature)
 /// is left to whoever owns the pack.
-Future<Directory> contentPacksSnippetsDir() =>
-    _resolve(const ['content_packs', 'snippets']);
+///
+/// Returns `null` on web: there is no on-device directory a third party
+/// can drop files into (and `path_provider`'s
+/// `getApplicationSupportDirectory` throws `MissingPluginException`
+/// there), so external packs are a desktop/mobile-only seam.
+Future<Directory?> contentPacksSnippetsDir() {
+  if (kIsWeb) return Future<Directory?>.value();
+  return _resolve(const ['content_packs', 'snippets']);
+}
 
 /// Same as [contentPacksSnippetsDir], for Learning Path packs — each
 /// file a `List<LearningPathDto>` matching
-/// `assets/content/learning_paths/*.json`'s shape.
-Future<Directory> contentPacksLearningPathsDir() =>
-    _resolve(const ['content_packs', 'learning_paths']);
+/// `assets/content/learning_paths/*.json`'s shape. `null` on web, same
+/// as [contentPacksSnippetsDir].
+Future<Directory?> contentPacksLearningPathsDir() {
+  if (kIsWeb) return Future<Directory?>.value();
+  return _resolve(const ['content_packs', 'learning_paths']);
+}
 
 Future<Directory> _resolve(List<String> segments) async {
   final supportDir = await getApplicationSupportDirectory();
