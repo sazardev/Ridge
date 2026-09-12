@@ -230,6 +230,23 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 - **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
   `CLAUDE.md` (espejo byte a byte), skill `content-curriculum` (SKILL.md,
   content-model, snippet-authoring con la receta de Docker).
+- **Push y release (misma sesión, pedido del usuario)**: se commitearon
+  el asset/rutas finales + docs (`f4fae56`) y el código generado stale que
+  rompía la CI (`bf6fd90`, `practice_session_controller.g.dart`), y al
+  verificar la CI se arreglaron **dos bugs preexistentes**:
+  `fix(ci)` con `libasound2-dev` en el job `release` (sin eso
+  `dart run tool/version_bump.dart` moría compilando el hook nativo de
+  `flutter_soloud`) y el `secrets` inválido dentro de un `if:` en
+  `release-builds.yml` (contexto no permitido → workflow inválido, rojo en
+  cada push). Con eso CI quedó **quality-gate ✓ + release ✓** y publicó
+  **v1.12.0** (`657e6b6`, tag empujado).
+- **Pendiente detectado (no arreglado)**: el tag lo pushea el job
+  `release` usando `GITHUB_TOKEN`, y GitHub no dispara workflows desde
+  eventos de ese token, así que `release-builds.yml` nunca corre solo para
+  el tag recién creado (los artefactos por plataforma no se construyen).
+  Opciones: añadir `workflow_dispatch:` a `release-builds.yml` y
+  dispararlo a mano con `--ref vX.Y.Z`, o usar una App/PAT para el push
+  del tag.
 
 ### 2026-09-12 — GitHub Actions: Fundamentos + Pipelines + DevOps (lenguaje nuevo, 3 rutas, 74 snippets)
 
