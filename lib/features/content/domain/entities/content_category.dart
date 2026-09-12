@@ -1,490 +1,367 @@
 /// The thematic construct a Snippet exercises (SPEC.md §3.1).
 ///
-/// One concise line per value on purpose: `tool/check_architecture.dart`
-/// hard-fails any hand-written file over 500 lines, and this enum is the
-/// file that grows with every new language.
+/// One concise line per value on purpose, written as plain `//` comments and
+/// packed with no blank separators: `dart format`'s tall style forces a blank
+/// line around every `///`-documented enum constant, and
+/// `tool/check_architecture.dart` hard-fails this hand-written file over 500
+/// lines as every new language grows it.
+//
+// The category docs below are plain `//` comments rather than `///` on
+// purpose: the tall formatter forces a blank line around every documented
+// enum constant, which pushed this file to 532 lines (over the 500-line hard
+// limit). Keeping them as plain comments preserves every doc while letting
+// the formatter keep the values packed.
+// ignore_for_file: public_member_api_docs
 enum ContentCategory {
   /// Variable declarations, constants, and basic types.
   variablesAndTypes,
-
-  /// `if`/`else`/`switch` branching.
+  // `if`/`else`/`switch` branching.
   conditionals,
-
-  /// `for` loops, including range-based iteration.
+  // `for` loops, including range-based iteration.
   loops,
-
-  /// Function declarations, parameters, and return values.
+  // Function declarations, parameters, and return values.
   functions,
-
-  /// Struct declarations and field tags.
+  // Struct declarations and field tags.
   structs,
-
-  /// Interface declarations and implementations.
+  // Interface declarations and implementations.
   interfaces,
-
-  /// Slices and maps: literals, indexing, iteration.
+  // Slices and maps: literals, indexing, iteration.
   slicesAndMaps,
-
-  /// Idiomatic error handling and propagation.
+  // Idiomatic error handling and propagation.
   errorHandling,
-
-  /// Pointers: address-of/dereference and pointer receivers.
+  // Pointers: address-of/dereference and pointer receivers.
   pointers,
-
-  /// Goroutines and channels; Dart reuses it for isolates.
+  // Goroutines and channels; Dart reuses it for isolates.
   concurrency,
-
-  /// Generic type parameters and constraints.
+  // Generic type parameters and constraints.
   generics,
-
-  /// Go 1.27 features: generic methods, promoted struct keys, new stdlib.
+  // Go 1.27 features: generic methods, promoted struct keys, new stdlib.
   modernGo,
-
-  /// Idiomatic `gofmt` formatting conventions.
+  // Idiomatic `gofmt` formatting conventions.
   idiomaticFormatting,
-
-  /// Shell: commands, `echo`/`printf`, script arguments.
+  // Shell: commands, `echo`/`printf`, script arguments.
   shellCommands,
-
-  /// Shell: pipes, redirection, heredocs, process substitution.
+  // Shell: pipes, redirection, heredocs, process substitution.
   pipesAndRedirection,
-
-  /// Shell: filtering text with `grep`, `sort`, `cut`, `sed`.
+  // Shell: filtering text with `grep`, `sort`, `cut`, `sed`.
   textProcessing,
-
-  /// Arch: `pacman`, AUR helpers, systemd, journalctl.
+  // Arch: `pacman`, AUR helpers, systemd, journalctl.
   systemAdministration,
-
-  /// `SELECT` over literals, aliases, arithmetic, `||`.
+  // `SELECT` over literals, aliases, arithmetic, `||`.
   sqlBasics,
-
-  /// `psql` setup, `CREATE TABLE`/constraints, seed data.
+  // `psql` setup, `CREATE TABLE`/constraints, seed data.
   sqlSchema,
-
-  /// `SELECT` from tables, projection, `DISTINCT`, `ORDER BY`.
+  // `SELECT` from tables, projection, `DISTINCT`, `ORDER BY`.
   sqlQueries,
-
-  /// `WHERE`, comparisons, `AND`/`OR`, `IN`, `LIKE`, `IS NULL`.
+  // `WHERE`, comparisons, `AND`/`OR`, `IN`, `LIKE`, `IS NULL`.
   sqlFiltering,
-
-  /// `COUNT`/`SUM`/`AVG`/`MIN`/`MAX`, `GROUP BY`, `HAVING`.
+  // `COUNT`/`SUM`/`AVG`/`MIN`/`MAX`, `GROUP BY`, `HAVING`.
   sqlAggregation,
-
-  /// `INNER`/`LEFT JOIN`, aliases, multi-table joins.
+  // `INNER`/`LEFT JOIN`, aliases, multi-table joins.
   sqlJoins,
-
-  /// `INSERT`, `UPDATE`, `DELETE`, `RETURNING`.
+  // `INSERT`, `UPDATE`, `DELETE`, `RETURNING`.
   sqlModifications,
-
-  /// Subqueries, `EXISTS`, CTEs, `UNION`, `CASE`.
+  // Subqueries, `EXISTS`, CTEs, `UNION`, `CASE`.
   sqlAdvancedQueries,
-
-  /// Shell: `find`, `fd`, ripgrep, the `locate` index.
+  // Shell: `find`, `fd`, ripgrep, the `locate` index.
   searchAndIndexing,
-
-  /// Shell: extended regex with `grep -E`, `sed -E`, `rg`.
+  // Shell: extended regex with `grep -E`, `sed -E`, `rg`.
   regularExpressions,
-
-  /// Shell: file CRUD, metadata, `chmod`, `tar`.
+  // Shell: file CRUD, metadata, `chmod`, `tar`.
   fileOperations,
-
-  /// SSH client: connect, keys, `~/.ssh/config`, `scp`.
+  // SSH client: connect, keys, `~/.ssh/config`, `scp`.
   sshClient,
-
-  /// SSH server: permissions, `authorized_keys`, `sshd`.
+  // SSH server: permissions, `authorized_keys`, `sshd`.
   sshServer,
-
-  /// Shell startup files: `~/.bashrc`, `PATH`, aliases.
+  // Shell startup files: `~/.bashrc`, `PATH`, aliases.
   shellProfiles,
-
-  /// DDD entities, value objects, domain errors. Architecture layer.
+  // DDD entities, value objects, domain errors. Architecture layer.
   domainModeling,
-
-  /// Application-core interfaces implemented by adapters. Architecture.
+  // Application-core interfaces implemented by adapters. Architecture.
   hexagonalPorts,
-
-  /// Use cases and fake-port tests. Architecture layer.
+  // Use cases and fake-port tests. Architecture layer.
   applicationUseCases,
-
-  /// Repository-port adapters (in-memory, file-backed). Architecture.
+  // Repository-port adapters (in-memory, file-backed). Architecture.
   persistenceAdapters,
-
-  /// REST/HTTP DTOs, handlers, routing, status mapping. Architecture.
+  // REST/HTTP DTOs, handlers, routing, status mapping. Architecture.
   restAdapters,
-
-  /// Hand-written test doubles and their tests. Architecture layer.
+  // Hand-written test doubles and their tests. Architecture layer.
   testingWithFakes,
-
-  /// Linear and binary search. Topic category: real difficulty.
+  // Linear and binary search. Topic category: real difficulty.
   searchingAlgorithms,
-
-  /// Bubble, selection, insertion, merge, quick, heap sort. Topic.
+  // Bubble, selection, insertion, merge, quick, heap sort. Topic.
   sortingAlgorithms,
-
-  /// Adjacency-list graphs, BFS, DFS, Dijkstra. Topic category.
+  // Adjacency-list graphs, BFS, DFS, Dijkstra. Topic category.
   graphAlgorithms,
-
-  /// Bubble Tea's `Model`/`Init`/`Update`/`View` loop. Architecture.
+  // Bubble Tea's `Model`/`Init`/`Update`/`View` loop. Architecture.
   tuiArchitecture,
-
-  /// Lip Gloss styles, colors, borders, padding. Architecture.
+  // Lip Gloss styles, colors, borders, padding. Architecture.
   tuiStyling,
-
-  /// Bubbles widgets inside a Bubble Tea model. Architecture.
+  // Bubbles widgets inside a Bubble Tea model. Architecture.
   tuiComponents,
-
-  /// TUI commands calling use cases; the root. Architecture.
+  // TUI commands calling use cases; the root. Architecture.
   tuiAdapter,
-
-  /// Go handlers, `ServeMux`, middleware, lifecycle. Topic.
+  // Go handlers, `ServeMux`, middleware, lifecycle. Topic.
   httpServers,
-
-  /// HTTP with context/timeouts, transport, retries. Topic.
+  // HTTP with context/timeouts, transport, retries. Topic.
   httpClients,
-
-  /// Testing handlers and servers with `httptest`. Topic.
+  // Testing handlers and servers with `httptest`. Topic.
   httpTesting,
-
-  /// `database/sql` pools, DDL/DML, transactions. Topic.
+  // `database/sql` pools, DDL/DML, transactions. Topic.
   sqlPersistence,
-
-  /// Classes: typed fields, constructors, access modifiers.
+  // Classes: typed fields, constructors, access modifiers.
   classesAndObjects,
-
-  /// Exports/imports, including type-only exports.
+  // Exports/imports, including type-only exports.
   modules,
-
-  /// C arrays, NUL-terminated strings, `<string.h>`.
+  // C arrays, NUL-terminated strings, `<string.h>`.
   arraysAndStrings,
-
-  /// `malloc`/`calloc`/`realloc`/`free`, ownership, raw memory.
+  // `malloc`/`calloc`/`realloc`/`free`, ownership, raw memory.
   memoryManagement,
-
-  /// `#define` macros, `#include`, header guards, conditional builds.
+  // `#define` macros, `#include`, header guards, conditional builds.
   preprocessor,
-
-  /// `fopen`/`fclose`, `fprintf`/`fputs`, `fgets` until EOF.
+  // `fopen`/`fclose`, `fprintf`/`fputs`, `fgets` until EOF.
   fileIO,
-
-  /// C++ function/class templates and concept constraints.
+  // C++ function/class templates and concept constraints.
   templates,
-
-  /// `std::vector`/`map`/`set`, iterators, `std::optional`.
+  // `std::vector`/`map`/`set`, iterators, `std::optional`.
   stlContainers,
-
-  /// Crystal `yield`, block forms, `&` procs.
+  // Crystal `yield`, block forms, `&` procs.
   blocksAndProcs,
-
-  /// Crystal/C#/Kotlin arrays, maps, and iteration.
+  // Crystal/C#/Kotlin arrays, maps, and iteration.
   collections,
-
-  /// Crystal/C# nullable types, `try(&.x)`, `?.`, `??`.
+  // Crystal/C# nullable types, `try(&.x)`, `?.`, `??`.
   nilSafety,
-
-  /// Selectors, combinators, specificity, `:is()`, `@layer`.
+  // Selectors, combinators, specificity, `:is()`, `@layer`.
   cssSelectors,
-
-  /// `display`, sizing, padding, margin, border, `box-sizing`.
+  // `display`, sizing, padding, margin, border, `box-sizing`.
   cssBoxModel,
-
-  /// Colors, gradients, font stacks, text styles.
+  // Colors, gradients, font stacks, text styles.
   cssColorsAndTypography,
-
-  /// Flexbox and grid: alignment, placement, named areas.
+  // Flexbox and grid: alignment, placement, named areas.
   cssLayout,
-
-  /// `position`, offsets, `inset`, `z-index`, `overflow`.
+  // `position`, offsets, `inset`, `z-index`, `overflow`.
   cssPositioning,
-
-  /// `--name` variables, `var()` fallbacks, overrides, `calc()`.
+  // `--name` variables, `var()` fallbacks, overrides, `calc()`.
   cssCustomProperties,
-
-  /// Units, media queries, breakpoints, `clamp()` fluid type.
+  // Units, media queries, breakpoints, `clamp()` fluid type.
   cssResponsive,
-
-  /// Transitions, transforms, `@keyframes`, reduced motion.
+  // Transitions, transforms, `@keyframes`, reduced motion.
   cssTransitionsAndAnimations,
-
-  /// C# `is` patterns and `switch` expressions.
+  // C# `is` patterns and `switch` expressions.
   patternMatching,
-
-  /// C# delegates, lambdas, `event` subscription.
+  // C# delegates, lambdas, `event` subscription.
   delegatesAndEvents,
-
-  /// LINQ `Where`/`Select`/`OrderBy` and query syntax.
+  // LINQ `Where`/`Select`/`OrderBy` and query syntax.
   linq,
-
-  /// `async`/`await`, `Task`, `Future`, `Stream`, `Task.WhenAll`.
+  // `async`/`await`, `Task`, `Future`, `Stream`, `Task.WhenAll`.
   asyncProgramming,
-
-  /// Swift optionals: `nil`, `if let`, `guard let`, `??`.
+  // Swift optionals: `nil`, `if let`, `guard let`, `??`.
   optionals,
-
-  /// Swift closures: trailing syntax, `$0`, capturing, `@escaping`.
+  // Swift closures: trailing syntax, `$0`, capturing, `@escaping`.
   closures,
-
-  /// Swift enums, associated values, `switch`, `indirect`.
+  // Swift enums, associated values, `switch`, `indirect`.
   enumsAndPatternMatching,
-
-  /// Swift `Codable`, `CodingKeys`, JSON round-trips.
+  // Swift `Codable`, `CodingKeys`, JSON round-trips.
   codable,
-
-  /// Swift `@propertyWrapper` and `wrappedValue`.
+  // Swift `@propertyWrapper` and `wrappedValue`.
   propertyWrappers,
-
-  /// Kotlin/Dart `String?`, `?.`, `?:`, `!!`, `late`, flow promotion.
+  // Kotlin/Dart `String?`, `?.`, `?:`, `!!`, `late`, flow promotion.
   nullSafety,
-
-  /// Kotlin `data class` and destructuring declarations.
+  // Kotlin `data class` and destructuring declarations.
   dataClasses,
-
-  /// Kotlin lambdas, `it`, higher-order functions, scope functions.
+  // Kotlin lambdas, `it`, higher-order functions, scope functions.
   lambdas,
-
-  /// Kotlin extension functions and properties.
+  // Kotlin extension functions and properties.
   extensions,
-
-  /// Kotlin `suspend`, `launch`, `async`, `flow`, dispatchers.
+  // Kotlin `suspend`, `launch`, `async`, `flow`, dispatchers.
   coroutines,
-
-  /// Django scaffolding: `startproject`, `startapp`, `INSTALLED_APPS`.
+  // Django scaffolding: `startproject`, `startapp`, `INSTALLED_APPS`.
   djangoProject,
-
-  /// Django models: fields, `Meta`, model methods.
+  // Django models: fields, `Meta`, model methods.
   djangoModels,
-
-  /// Django views, `HttpResponse`, `path()` routing, `include()`.
+  // Django views, `HttpResponse`, `path()` routing, `include()`.
   djangoViews,
-
-  /// Django templates, `{% for %}`, `{% extends %}`, contexts.
+  // Django templates, `{% for %}`, `{% extends %}`, contexts.
   djangoTemplates,
-
-  /// Django `Form`/`ModelForm`, validation, POST with CSRF.
+  // Django `Form`/`ModelForm`, validation, POST with CSRF.
   djangoForms,
-
-  /// Django admin registration and `ModelAdmin` options.
+  // Django admin registration and `ModelAdmin` options.
   djangoAdmin,
-
-  /// Django `TestCase`, `setUpTestData`, request assertions.
+  // Django `TestCase`, `setUpTestData`, request assertions.
   djangoTesting,
-
-  /// `ForeignKey`, reverse accessors, M2M, cascade behavior.
+  // `ForeignKey`, reverse accessors, M2M, cascade behavior.
   djangoRelationships,
-
-  /// QuerySets, lookups, `Q`/`F`, aggregation, custom managers.
+  // QuerySets, lookups, `Q`/`F`, aggregation, custom managers.
   djangoOrm,
-
-  /// Migration anatomy, `RunPython`, management commands.
+  // Migration anatomy, `RunPython`, management commands.
   djangoMigrations,
-
-  /// Installing DRF and the first `@api_view` endpoint.
+  // Installing DRF and the first `@api_view` endpoint.
   djangoRestSetup,
-
-  /// DRF serializers, validation, nested fields.
+  // DRF serializers, validation, nested fields.
   djangoSerializers,
-
-  /// DRF views, viewsets, routers, custom actions.
+  // DRF views, viewsets, routers, custom actions.
   djangoRestViews,
-
-  /// DRF token auth, permissions, per-user querysets.
+  // DRF token auth, permissions, per-user querysets.
   djangoRestAuth,
-
-  /// DRF pagination, search, and ordering.
+  // DRF pagination, search, and ordering.
   djangoRestFiltering,
-
-  /// `APITestCase`/`APIClient` end-to-end CRUD tests.
+  // `APITestCase`/`APIClient` end-to-end CRUD tests.
   djangoRestTesting,
-
-  /// Dart records, destructuring, sealed-class pattern matching.
+  // Dart records, destructuring, sealed-class pattern matching.
   recordsAndPatterns,
-
-  /// PHP tags, `echo`, variables, scalar types, `??`.
+  // PHP tags, `echo`, variables, scalar types, `??`.
   phpBasics,
-
-  /// PHP string interpolation, heredoc/nowdoc, string functions.
+  // PHP string interpolation, heredoc/nowdoc, string functions.
   phpStrings,
-
-  /// PHP `if`/`elseif`/`else`, ternary, `match`.
+  // PHP `if`/`elseif`/`else`, ternary, `match`.
   phpConditionals,
-
-  /// PHP `for`, `while`, `break`, `continue`.
+  // PHP `for`, `while`, `break`, `continue`.
   phpLoops,
-
-  /// PHP indexed/associative arrays, `array_*`, `foreach`.
+  // PHP indexed/associative arrays, `array_*`, `foreach`.
   phpArrays,
-
-  /// PHP typed functions, arrow functions, closures with `use`.
+  // PHP typed functions, arrow functions, closures with `use`.
   phpFunctions,
-
-  /// PHP classes, constructor promotion, interfaces, traits.
+  // PHP classes, constructor promotion, interfaces, traits.
   phpClasses,
-
-  /// PHP enum cases and `from`/`tryFrom`.
+  // PHP enum cases and `from`/`tryFrom`.
   phpEnums,
-
-  /// PHP `throw`, `try`/`catch`/`finally`, custom exceptions.
+  // PHP `throw`, `try`/`catch`/`finally`, custom exceptions.
   phpErrorHandling,
-
-  /// PHP namespaces, `use`, autoload boundaries.
+  // PHP namespaces, `use`, autoload boundaries.
   phpNamespaces,
-
-  /// PHP `$_GET`, `$_POST`, `$_SERVER` while handling a request.
+  // PHP `$_GET`, `$_POST`, `$_SERVER` while handling a request.
   phpSuperglobals,
-
-  /// Form validation, escaping, `filter_var`, password hashing.
+  // Form validation, escaping, `filter_var`, password hashing.
   phpForms,
-
-  /// `session_start`, `$_SESSION`, cookies.
+  // `session_start`, `$_SESSION`, cookies.
   phpSessions,
-
-  /// PDO connections, prepared statements, transactions.
+  // PDO connections, prepared statements, transactions.
   phpDatabase,
-
-  /// `json_encode`/`json_decode` and JSON responses.
+  // `json_encode`/`json_decode` and JSON responses.
   phpJson,
-
-  /// Server-side file reads, writes, and `unlink`.
+  // Server-side file reads, writes, and `unlink`.
   phpFiles,
-
-  /// Linear and binary search in PHP.
+  // Linear and binary search in PHP.
   phpSearching,
-
-  /// PHP bubble, selection, insertion, merge, quick, and heap sort.
+  // PHP bubble, selection, insertion, merge, quick, and heap sort.
   phpSorting,
-
-  /// PHP weighted adjacency list, BFS, DFS, Dijkstra.
+  // PHP weighted adjacency list, BFS, DFS, Dijkstra.
   phpGraphs,
-
-  /// Git repo setup, staging, `.gitignore`, diffs, file surgery.
+  // Git repo setup, staging, `.gitignore`, diffs, file surgery.
   gitBasics,
-
-  /// Committing: messages, history reading, amending the last commit.
+  // Committing: messages, history reading, amending the last commit.
   gitCommits,
-
-  /// Branch create/switch/delete, fast-forward and merge commits,
-  /// conflict resolution. Introduced by `git-foundations-v1`.
+  // Branch create/switch/delete, fast-forward and merge commits,
+  // conflict resolution. Introduced by `git-foundations-v1`.
   gitBranching,
-
-  /// Clone, remote setup, fetch, pull, push, tracking branches.
+  // Clone, remote setup, fetch, pull, push, tracking branches.
   gitRemotes,
-
-  /// Log formats, pickaxe, blame, and `git bisect`.
+  // Log formats, pickaxe, blame, and `git bisect`.
   gitHistory,
-
-  /// `restore`, the three `reset` modes, `revert`, `clean`, `stash`.
+  // `restore`, the three `reset` modes, `revert`, `clean`, `stash`.
   gitUndo,
-
-  /// Rebase, force-with-lease, cherry-pick, autosquash, tags, hooks.
+  // Rebase, force-with-lease, cherry-pick, autosquash, tags, hooks.
   gitCollaboration,
-
-  /// Blobs, trees, commits, and `cat-file`/`hash-object`/`ls-tree`.
+  // Blobs, trees, commits, and `cat-file`/`hash-object`/`ls-tree`.
   gitObjects,
-
-  /// `HEAD`, detached state, `show-ref`, `update-ref`, reflog.
+  // `HEAD`, detached state, `show-ref`, `update-ref`, reflog.
   gitRefs,
-
-  /// Index internals, object counts, `git gc`, linked worktrees.
+  // Index internals, object counts, `git gc`, linked worktrees.
   gitMaintenance,
-
-  /// Distro identity, kernel, hostname, help, environment variables.
+  // Distro identity, kernel, hostname, help, environment variables.
   linuxBasics,
-
-  /// Paths, navigation, file CRUD, symlinks, viewing files.
+  // Paths, navigation, file CRUD, symlinks, viewing files.
   linuxFiles,
-
-  /// Mode bits, `chmod`/`chown`/`umask`, sticky/setgid, ACLs.
+  // Mode bits, `chmod`/`chown`/`umask`, sticky/setgid, ACLs.
   permissions,
-
-  /// Accounts, groups, `sudo`, password locks.
+  // Accounts, groups, `sudo`, password locks.
   usersAndGroups,
-
-  /// Listing, signals, and scheduling priority.
+  // Listing, signals, and scheduling priority.
   processes,
-
-  /// `pacman` queries, installs, removals, file ownership.
+  // `pacman` queries, installs, removals, file ownership.
   packages,
-
-  /// `systemctl` units: status, lifecycle, enablement.
+  // `systemctl` units: status, lifecycle, enablement.
   services,
-
-  /// `journalctl` filtering and disk usage.
+  // `journalctl` filtering and disk usage.
   logs,
-
-  /// Block devices, disk space, directory usage.
+  // Block devices, disk space, directory usage.
   storage,
-
-  /// Interfaces, routes, DNS, sockets, HTTP, firewalls.
+  // Interfaces, routes, DNS, sockets, HTTP, firewalls.
   networking,
-
-  /// `systemd-analyze calendar`, timers, transient units.
+  // `systemd-analyze calendar`, timers, transient units.
   scheduling,
-
-  /// `tar` create/list/extract and compression.
+  // `tar` create/list/extract and compression.
   backupAndArchives,
-
-  /// Docker CLI basics: images vs containers, run, ps, info.
+  // Docker CLI basics: images vs containers, run, ps, info.
   dockerBasics,
-
-  /// Building, tagging, pulling, and inspecting images.
+  // Building, tagging, pulling, and inspecting images.
   dockerImages,
-
-  /// Dockerfile instructions: FROM, RUN, COPY, CMD, ENV.
+  // Dockerfile instructions: FROM, RUN, COPY, CMD, ENV.
   dockerFiles,
-
-  /// Container lifecycle, logs, exec, inspect, and cleanup.
+  // Container lifecycle, logs, exec, inspect, and cleanup.
   dockerContainers,
-
-  /// Named volumes and bind mounts for persistent data.
+  // Named volumes and bind mounts for persistent data.
   dockerVolumes,
-
-  /// Port publishing and user-defined networks with DNS.
+  // Port publishing and user-defined networks with DNS.
   dockerNetworking,
-
-  /// Pushing and pulling registries, digests, and login.
+  // Pushing and pulling registries, digests, and login.
   dockerRegistries,
-
-  /// compose.yaml: services, networks, volumes, healthchecks.
+  // compose.yaml: services, networks, volumes, healthchecks.
   dockerCompose,
-
-  /// Disk usage, stats, top, and diff for debugging.
+  // Disk usage, stats, top, and diff for debugging.
   dockerMaintenance,
-
-  /// Workflow anatomy: `name`, `on`, `jobs`, `runs-on`, first steps.
+  // Workflow anatomy: `name`, `on`, `jobs`, `runs-on`, first steps.
   workflowBasics,
-
-  /// Events: `push`, `pull_request`, `schedule`, `workflow_dispatch`.
+  // Events: `push`, `pull_request`, `schedule`, `workflow_dispatch`.
   workflowTriggers,
-
-  /// Jobs, `steps`, `needs`, `if`, timeouts, `GITHUB_OUTPUT`.
+  // Jobs, `steps`, `needs`, `if`, timeouts, `GITHUB_OUTPUT`.
   jobsAndSteps,
-
-  /// `${{ }}` contexts, functions, status checks, operators.
+  // `${{ }}` contexts, functions, status checks, operators.
   expressionsAndContexts,
-
-  /// `runs-on`, `strategy.matrix`, include/exclude, dynamic matrices.
+  // `runs-on`, `strategy.matrix`, include/exclude, dynamic matrices.
   runnersAndMatrix,
-
-  /// `env`, `vars`, `secrets`, `GITHUB_TOKEN`, `permissions`.
+  // `env`, `vars`, `secrets`, `GITHUB_TOKEN`, `permissions`.
   secretsAndVariables,
-
-  /// `actions/cache`, `upload-artifact`, `download-artifact`.
+  // `actions/cache`, `upload-artifact`, `download-artifact`.
   cachingAndArtifacts,
-
-  /// Composite actions and `workflow_call` reusable workflows.
+  // Composite actions and `workflow_call` reusable workflows.
   reusableAndComposite,
-
-  /// `services`, container jobs, `docker/build-push-action`.
+  // `services`, container jobs, `docker/build-push-action`.
   containersAndDocker,
-
-  /// `concurrency`, path filters, step summaries, workflow chaining.
+  // `concurrency`, path filters, step summaries, workflow chaining.
   pipelinePatterns,
-
-  /// Least privilege, SHA pinning, OIDC, CodeQL, Dependabot.
+  // Least privilege, SHA pinning, OIDC, CodeQL, Dependabot.
   securityHardening,
-
-  /// Environments, Pages, GitHub Releases, provenance, registries.
+  // Environments, Pages, GitHub Releases, provenance, registries.
   deploymentsAndReleases,
-
-  /// Inspecting and driving runs with the `gh` CLI.
+  // Inspecting and driving runs with the `gh` CLI.
   ciOperations,
+  // Go 1.26/1.27 language changes: `new(expr)`, promoted literal keys.
+  languageEvolution,
+  // Modern idioms: `min`/`max`, `SplitSeq`, `CutPrefix`, typed atomics.
+  modernIdioms,
+  // Go 1.27 methods with their own type parameters.
+  genericMethods,
+  // `iter.Seq`/`Seq2`, range-over-func, adapter composition.
+  iterators,
+  // `encoding/json/v2` and `jsontext` streaming, tags, options.
+  jsonV2,
+  // Recent stdlib: `uuid`, `url.Clone`, `rand/v2`, `mldsa`, `os.Root`.
+  modernStdlib,
+  // Constructors, functional options, consumer-side interfaces.
+  apiDesign,
+  // `errors.Join`/`AsType`, custom `Unwrap` and `Is`.
+  errorPatterns,
+  // `WaitGroup.Go`, context causes, worker pools, pipelines.
+  concurrencyPatterns,
+  // Leaked goroutines and the GA `goroutineleak` profile.
+  goroutineLeaks,
+  // Subtests, fuzzing, `synctest`, artifacts, golden files.
+  advancedTesting,
+  // Benchmarks, allocation, pprof CPU, runtime metrics.
+  performanceProfiling,
+  // `log/slog` structured logging and multi-handler fan-out.
+  observability,
+  // `//go:embed`, build info, `//go:generate`, `go fix`.
+  goTooling,
 }

@@ -1,0 +1,182 @@
+[
+  {
+    "id": "go-production-v1",
+    "language": "go",
+    "titleEn": "Go: Production Patterns",
+    "titleEs": "Go: Patrones de Producción",
+    "descriptionEn": "Concurrency, testing, profiling, and observability for Go services in production.",
+    "descriptionEs": "Concurrencia, testing, perfilado y observabilidad para servicios Go en producción.",
+    "tagEn": "Production",
+    "tagEs": "Producción",
+    "lessons": [
+      {
+        "id": "go-production-v1-step01",
+        "snippetId": "go-concpat-001",
+        "order": 1,
+        "titleEn": "Start goroutines with `WaitGroup.Go`",
+        "titleEs": "Lanzar goroutines con `WaitGroup.Go`"
+      },
+      {
+        "id": "go-production-v1-step02",
+        "snippetId": "go-concpat-002",
+        "order": 2,
+        "titleEn": "Record why a context was canceled",
+        "titleEs": "Registrar por qué se canceló un contexto"
+      },
+      {
+        "id": "go-production-v1-step03",
+        "snippetId": "go-concpat-003",
+        "order": 3,
+        "titleEn": "Run once, reuse forever with `sync.OnceValue`",
+        "titleEs": "Ejecutar una vez y reutilizar con `sync.OnceValue`"
+      },
+      {
+        "id": "go-production-v1-step04",
+        "snippetId": "go-concpat-004",
+        "order": 4,
+        "titleEn": "A worker pool with channels and `WaitGroup.Go`",
+        "titleEs": "Un pool de workers con canales y `WaitGroup.Go`"
+      },
+      {
+        "id": "go-production-v1-step05",
+        "snippetId": "go-concpat-005",
+        "order": 5,
+        "titleEn": "A cancelable pipeline of channels",
+        "titleEs": "Un pipeline cancelable de canales"
+      },
+      {
+        "id": "go-production-v1-step06",
+        "snippetId": "go-leak-001",
+        "order": 6,
+        "titleEn": "The early return that leaks goroutines",
+        "titleEs": "El return temprano que provoca fugas de goroutines"
+      },
+      {
+        "id": "go-production-v1-step07",
+        "snippetId": "go-leak-002",
+        "order": 7,
+        "titleEn": "Fix a leak with a buffered channel",
+        "titleEs": "Arreglar una fuga con un canal con buffer"
+      },
+      {
+        "id": "go-production-v1-step08",
+        "snippetId": "go-leak-003",
+        "order": 8,
+        "titleEn": "Assert no goroutine leaks in a test (Go 1.27)",
+        "titleEs": "Afirmar que no hay fugas de goroutines en un test (Go 1.27)"
+      },
+      {
+        "id": "go-production-v1-step09",
+        "snippetId": "go-testadv-001",
+        "order": 9,
+        "titleEn": "Table-driven subtests with `t.Parallel`",
+        "titleEs": "Subtests con tabla y `t.Parallel`"
+      },
+      {
+        "id": "go-production-v1-step10",
+        "snippetId": "go-testadv-002",
+        "order": 10,
+        "titleEn": "`t.Helper`, `t.TempDir`, and `t.Context`",
+        "titleEs": "`t.Helper`, `t.TempDir` y `t.Context`"
+      },
+      {
+        "id": "go-production-v1-step11",
+        "snippetId": "go-testadv-003",
+        "order": 11,
+        "titleEn": "Fuzz your invariants with `testing.F`",
+        "titleEs": "Hacer fuzzing de tus invariantes con `testing.F`"
+      },
+      {
+        "id": "go-production-v1-step12",
+        "snippetId": "go-testadv-004",
+        "order": 12,
+        "titleEn": "Deterministic time with `synctest` and `httptest.NewTestServer`",
+        "titleEs": "Tiempo determinista con `synctest` y `httptest.NewTestServer`"
+      },
+      {
+        "id": "go-production-v1-step13",
+        "snippetId": "go-testadv-005",
+        "order": 13,
+        "titleEn": "Golden files with `t.ArtifactDir`",
+        "titleEs": "Archivos golden con `t.ArtifactDir`"
+      },
+      {
+        "id": "go-production-v1-step14",
+        "snippetId": "go-perf-001",
+        "order": 14,
+        "titleEn": "Benchmark with `B.Loop`",
+        "titleEs": "Benchmark con `B.Loop`"
+      },
+      {
+        "id": "go-production-v1-step15",
+        "snippetId": "go-perf-002",
+        "order": 15,
+        "titleEn": "Preallocate slices when the length is known",
+        "titleEs": "Preasignar slices cuando se conoce la longitud"
+      },
+      {
+        "id": "go-production-v1-step16",
+        "snippetId": "go-perf-003",
+        "order": 16,
+        "titleEn": "Capture a CPU profile from the running process",
+        "titleEs": "Capturar un perfil de CPU del proceso en ejecución"
+      },
+      {
+        "id": "go-production-v1-step17",
+        "snippetId": "go-perf-004",
+        "order": 17,
+        "titleEn": "Scheduler metrics with `runtime/metrics`",
+        "titleEs": "Métricas del planificador con `runtime/metrics`"
+      },
+      {
+        "id": "go-production-v1-step18",
+        "snippetId": "go-obs-001",
+        "order": 18,
+        "titleEn": "Structured logging with `log/slog`",
+        "titleEs": "Logging estructurado con `log/slog`"
+      },
+      {
+        "id": "go-production-v1-step19",
+        "snippetId": "go-obs-002",
+        "order": 19,
+        "titleEn": "Attributes, groups, and levels in `slog`",
+        "titleEs": "Atributos, grupos y niveles en `slog`"
+      },
+      {
+        "id": "go-production-v1-step20",
+        "snippetId": "go-obs-003",
+        "order": 20,
+        "titleEn": "Fan out logs with `slog.NewMultiHandler` (Go 1.26)",
+        "titleEs": "Repartir logs con `slog.NewMultiHandler` (Go 1.26)"
+      },
+      {
+        "id": "go-production-v1-step21",
+        "snippetId": "go-tool-001",
+        "order": 21,
+        "titleEn": "Embed files with `//go:embed`",
+        "titleEs": "Incrustar archivos con `//go:embed`"
+      },
+      {
+        "id": "go-production-v1-step22",
+        "snippetId": "go-tool-002",
+        "order": 22,
+        "titleEn": "Read build information at runtime",
+        "titleEs": "Leer información de build en runtime"
+      },
+      {
+        "id": "go-production-v1-step23",
+        "snippetId": "go-tool-003",
+        "order": 23,
+        "titleEn": "Generate code with `//go:generate`",
+        "titleEs": "Generar código con `//go:generate`"
+      },
+      {
+        "id": "go-production-v1-step24",
+        "snippetId": "go-tool-004",
+        "order": 24,
+        "titleEn": "Migrate APIs with `//go:fix inline`",
+        "titleEs": "Migrar APIs con `//go:fix inline`"
+      }
+    ]
+  }
+]

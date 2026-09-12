@@ -94,14 +94,15 @@ const Set<ContentCategory> _architectureLayerCategories = {
 };
 
 /// Topic categories that aren't a language-feature grid: the algorithm
-/// topics back `go-algorithms-v1` / `rust-algorithms-v1`, and the HTTP/SQL
-/// topics back `go-rest-http-v1`. Individual snippets in them DO carry a
-/// real difficulty (e.g. bubble sort is `beginner`, heap sort is
-/// `expert`; a minimal server is `beginner`, the SQL capstone is `expert`)
-/// unlike an architecture-layer category, but the category itself isn't a
-/// dense (category, difficulty) grid the way a language-feature category
-/// is — held to the same looser total-count bar as
-/// `_architectureLayerCategories` for that reason.
+/// topics back `go-algorithms-v1` / `rust-algorithms-v1`, the HTTP/SQL
+/// topics back `go-rest-http-v1`, and the modern-language/production
+/// topics back `go-modern-idioms-v1` / `go-production-v1`. Individual
+/// snippets in them DO carry a real difficulty (e.g. bubble sort is
+/// `beginner`, heap sort is `expert`; a minimal server is `beginner`, the
+/// SQL capstone is `expert`) unlike an architecture-layer category, but
+/// the category itself isn't a dense (category, difficulty) grid the way
+/// a language-feature category is — held to the same looser total-count
+/// bar as `_architectureLayerCategories` for that reason.
 const Set<ContentCategory> _topicCategories = {
   ContentCategory.searchingAlgorithms,
   ContentCategory.sortingAlgorithms,
@@ -110,6 +111,20 @@ const Set<ContentCategory> _topicCategories = {
   ContentCategory.httpClients,
   ContentCategory.httpTesting,
   ContentCategory.sqlPersistence,
+  ContentCategory.languageEvolution,
+  ContentCategory.modernIdioms,
+  ContentCategory.genericMethods,
+  ContentCategory.iterators,
+  ContentCategory.jsonV2,
+  ContentCategory.modernStdlib,
+  ContentCategory.apiDesign,
+  ContentCategory.errorPatterns,
+  ContentCategory.concurrencyPatterns,
+  ContentCategory.goroutineLeaks,
+  ContentCategory.advancedTesting,
+  ContentCategory.performanceProfiling,
+  ContentCategory.observability,
+  ContentCategory.goTooling,
 };
 
 Future<List<Snippet>> _loadCatalog(ProgrammingLanguage language) async {
@@ -139,6 +154,8 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/go_algorithms_v1.json',
   'assets/content/learning_paths/go_interfaces_v1.json',
   'assets/content/learning_paths/go_rest_http_v1.json',
+  'assets/content/learning_paths/go_modern_idioms_v1.json',
+  'assets/content/learning_paths/go_production_v1.json',
   'assets/content/learning_paths/bash_foundations_v1.json',
   'assets/content/learning_paths/bash_toolkit_v1.json',
   'assets/content/learning_paths/sql_foundations_v1.json',

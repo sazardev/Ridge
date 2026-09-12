@@ -87,7 +87,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 1289)
+        .firstWhere((snippets) => snippets.length == 1347)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -101,7 +101,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(1289));
+    expect(catalog, hasLength(1347));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -113,7 +113,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(1289));
+      expect(catalog, hasLength(1347));
     },
   );
 
@@ -124,7 +124,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(1289));
+    expect(result, hasLength(1347));
   });
 
   test(
@@ -154,7 +154,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(476));
+    expect(beginnerSnippets, hasLength(489));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -305,25 +305,43 @@ void main() {
       'go-algo-010',
       'go-algo-011',
       'go-algo-012',
+      'go-apidesign-002',
+      'go-concpat-001',
+      'go-concpat-003',
+      'go-concpat-004',
+      'go-concpat-005',
       'go-cond-007',
       'go-err-009',
       'go-err-010',
       'go-err-012',
+      'go-errpat-002',
+      'go-evol-004',
       'go-func-002',
       'go-func-006',
       'go-func-010',
       'go-func-012',
       'go-generics-003',
+      'go-genmeth-002',
+      'go-genmeth-004',
       'go-http-007',
       'go-http-009',
       'go-http-010',
       'go-httptest-003',
+      'go-idiom-003',
       'go-iface-010',
       'go-iface-027',
+      'go-jsonv2-004',
+      'go-leak-001',
+      'go-leak-002',
       'go-loop-002',
       'go-loop-007',
       'go-loop-011',
       'go-loop-013',
+      'go-obs-001',
+      'go-obs-003',
+      'go-perf-001',
+      'go-perf-002',
+      'go-perf-003',
       'go-persist-001',
       'go-persist-002',
       'go-persist-003',
@@ -337,8 +355,11 @@ void main() {
       'go-sqlite-004',
       'go-sqlite-005',
       'go-sqlite-006',
+      'go-stdlib-005',
       'go-struct-001',
       'go-struct-004',
+      'go-testadv-001',
+      'go-testadv-004',
       'go-testfakes-001',
       'go-testfakes-002',
       'go-tui-008',
@@ -597,6 +618,8 @@ void main() {
       'go-err-003',
       'go-err-008',
       'go-err-010',
+      'go-errpat-002',
+      'go-evol-003',
       'go-func-004',
       'go-func-008',
       'go-http-003',
@@ -617,6 +640,8 @@ void main() {
       'go-iface-016',
       'go-iface-021',
       'go-iface-022',
+      'go-iter-003',
+      'go-leak-003',
       'go-loop-004',
       'go-loop-011',
       'go-loop-013',
@@ -626,6 +651,10 @@ void main() {
       'go-rest-002',
       'go-rest-008',
       'go-sqlite-006',
+      'go-testadv-001',
+      'go-testadv-002',
+      'go-testadv-003',
+      'go-testadv-005',
       'go-testfakes-002',
       'go-tui-005',
       'go-tui-006',

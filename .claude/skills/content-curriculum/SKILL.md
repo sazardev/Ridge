@@ -47,7 +47,9 @@ into drift tables on launch, paths are read straight from the bundle.
    before treating it as done.
 3. **Adding a new snippet?** — read `references/snippet-authoring.md`.
    Every new snippet's code MUST be executed for real before it goes in the
-   catalog: `gofmt -l` + `go build`/`go run` for Go, a
+   catalog: `gofmt -l` + `go build`/`go run` for Go (for the Go 1.26/1.27
+   advanced catalogs force `GOTOOLCHAIN=go1.27.0` and the toolchain's own
+   `gofmt` — see `references/snippet-authoring.md`), a
    `sqlite3`/Bash smoke run for Bash, a real PostgreSQL 16 run for SQL
    (a disposable `podman run postgres:16-alpine` container works well —
    the SQL course builds a shared `library` database; its `sqlSchema`

@@ -2456,6 +2456,90 @@ abstract class AppLocalizations {
   /// **'CI operations'**
   String get categoryCiOperations;
 
+  /// No description provided for @categoryLanguageEvolution.
+  ///
+  /// In en, this message translates to:
+  /// **'Language evolution'**
+  String get categoryLanguageEvolution;
+
+  /// No description provided for @categoryModernIdioms.
+  ///
+  /// In en, this message translates to:
+  /// **'Modern idioms'**
+  String get categoryModernIdioms;
+
+  /// No description provided for @categoryGenericMethods.
+  ///
+  /// In en, this message translates to:
+  /// **'Generic methods'**
+  String get categoryGenericMethods;
+
+  /// No description provided for @categoryIterators.
+  ///
+  /// In en, this message translates to:
+  /// **'Iterators'**
+  String get categoryIterators;
+
+  /// No description provided for @categoryJsonV2.
+  ///
+  /// In en, this message translates to:
+  /// **'JSON v2'**
+  String get categoryJsonV2;
+
+  /// No description provided for @categoryModernStdlib.
+  ///
+  /// In en, this message translates to:
+  /// **'Modern stdlib'**
+  String get categoryModernStdlib;
+
+  /// No description provided for @categoryApiDesign.
+  ///
+  /// In en, this message translates to:
+  /// **'API design'**
+  String get categoryApiDesign;
+
+  /// No description provided for @categoryErrorPatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'Error patterns'**
+  String get categoryErrorPatterns;
+
+  /// No description provided for @categoryConcurrencyPatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'Concurrency patterns'**
+  String get categoryConcurrencyPatterns;
+
+  /// No description provided for @categoryGoroutineLeaks.
+  ///
+  /// In en, this message translates to:
+  /// **'Goroutine leaks'**
+  String get categoryGoroutineLeaks;
+
+  /// No description provided for @categoryAdvancedTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced testing'**
+  String get categoryAdvancedTesting;
+
+  /// No description provided for @categoryPerformanceProfiling.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance & profiling'**
+  String get categoryPerformanceProfiling;
+
+  /// No description provided for @categoryObservability.
+  ///
+  /// In en, this message translates to:
+  /// **'Observability'**
+  String get categoryObservability;
+
+  /// No description provided for @categoryGoTooling.
+  ///
+  /// In en, this message translates to:
+  /// **'Go tooling'**
+  String get categoryGoTooling;
+
   /// No description provided for @languageGo.
   ///
   /// In en, this message translates to:

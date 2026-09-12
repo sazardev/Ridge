@@ -253,6 +253,20 @@ extension ContentCategoryLabel on ContentCategory {
     ContentCategory.deploymentsAndReleases =>
       l10n.categoryDeploymentsAndReleases,
     ContentCategory.ciOperations => l10n.categoryCiOperations,
+    ContentCategory.languageEvolution => l10n.categoryLanguageEvolution,
+    ContentCategory.modernIdioms => l10n.categoryModernIdioms,
+    ContentCategory.genericMethods => l10n.categoryGenericMethods,
+    ContentCategory.iterators => l10n.categoryIterators,
+    ContentCategory.jsonV2 => l10n.categoryJsonV2,
+    ContentCategory.modernStdlib => l10n.categoryModernStdlib,
+    ContentCategory.apiDesign => l10n.categoryApiDesign,
+    ContentCategory.errorPatterns => l10n.categoryErrorPatterns,
+    ContentCategory.concurrencyPatterns => l10n.categoryConcurrencyPatterns,
+    ContentCategory.goroutineLeaks => l10n.categoryGoroutineLeaks,
+    ContentCategory.advancedTesting => l10n.categoryAdvancedTesting,
+    ContentCategory.performanceProfiling => l10n.categoryPerformanceProfiling,
+    ContentCategory.observability => l10n.categoryObservability,
+    ContentCategory.goTooling => l10n.categoryGoTooling,
   };
 }
 

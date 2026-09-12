@@ -61,6 +61,11 @@ bash tool/format.sh                # auto-format the whole repo (check.sh only v
 dart run tool/check_architecture.dart   # just the layering + 500-line-file rules
 ```
 
+On Linux, `flutter test` and any `dart run tool/*` resolve the package and
+therefore compile flutter_soloud's native build hook, which links ALSA —
+install `libasound2-dev` (Debian/Ubuntu) / `alsa-lib` (Arch) first or those
+commands fail. CI installs it in both jobs for this reason.
+
 Regenerate code (`build_runner`) after touching any `@freezed`,
 `@riverpod`/`@Riverpod`, `@JsonSerializable`/DTO, drift `Table`/DAO, or
 `.arb` file — CI fails the build if generated output (`*.g.dart`,
@@ -74,7 +79,10 @@ COOP/COEP headers (`web/_headers`) for `drift`/OPFS, and per-platform
 packaging (AAB, MSIX, Flatpak) — is wired in
 `.github/workflows/release-builds.yml`, but that workflow only runs on a
 `v*.*.*` tag push (never on a PR or a plain push to `main`); it builds and
-uploads artifacts, it does not publish to any store yet.
+uploads artifacts, it does not publish to any store yet. Known gap: the
+release tag is pushed by CI with `GITHUB_TOKEN`, and GitHub does not
+trigger workflows from that token, so release-builds currently does not
+run automatically after a release — see `Memory.md`.
 
 ## Architecture
 
@@ -108,7 +116,11 @@ Cross-cutting code lives under `lib/core/`: design system (`theme/`),
 (`persistence/drift/`), the custom desktop titlebar/window-frame chrome on
 Linux/Windows via `window_manager` (`window/`), and the on-device
 directory for user-supplied "content pack" JSON (`content_packs/` — see
-below).
+below). Keystroke SFX live in `audio/` on `flutter_soloud` (PCM WAV only:
+`mechanical` is hand-recorded, the rest regenerate with
+`dart run tool/generate_sound_packs.dart`; pubspec's
+`flutter_soloud.no_xiph_libs: true` hook deliberately skips the Xiph
+codecs).
 
 ### Error handling
 
@@ -125,12 +137,17 @@ Each feature owns its own `Table`/DAO under its own `infrastructure/`
 (`infrastructure/tables/*.dart` + a DAO), but they're all registered on the
 single `AppDatabase` — schema and migrations are centralized in that one
 file. Any schema change bumps `schemaVersion` and adds an `if (from < N)`
-block to the `onUpgrade` migration (see the existing v1→v12 history there
+block to the `onUpgrade` migration (see the existing v1→v16 history there
 for the pattern: additive `addColumn`/`createTable`, comments explaining
 what changed and why existing rows are unaffected). Custom indices that
 drift's `Table` class can't express inline are created via a helper
 (`_createPracticeIndices`-style) called from both `onCreate` and the
 migration step that introduces the table.
+
+On Web the DB opener loads `web/sqlite3.wasm` + `web/drift_worker.js`,
+checked-in copies of the drift release matching `pubspec.lock` (currently
+2.35.0) — bumping `drift` requires re-copying both from that same drift
+release or Web silently loses its database.
 
 ### Content sourcing
 
@@ -197,105 +214,29 @@ writing new constructors instead of writing `const ClassName(...)`.
 
 ## Content / curriculum editing
 
-Editing snippets (`assets/content/snippets/{go,bash,sql,rust,python,javascript,typescript,haskell,c,cpp,java,crystal,swift,css,csharp,dart,kotlin,php,git,linux,github_actions,docker}_v1.json`), a
-Learning Path's lesson order (`assets/content/learning_paths/*.json`), or
-adding a new bilingual (en/es) content field is covered by the
-`content-curriculum` skill — use it rather than hand-editing these JSON
-files, since lesson ordering has produced real beginner-incoherence bugs
-before. Note the two catalog tiers (SPEC.md §3.2): Go backs free practice
-and keeps a dense (category, difficulty) grid; Bash, SQL, Rust, Python,
-JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#, Dart,
-Kotlin, PHP, Git, Linux, GitHub Actions, and Docker are course-only and contain exactly the snippets their
-Learning Path(s) use
-(`bash-foundations-v1`, `sql-foundations-v1`, `rust-foundations-v1`,
-`python-foundations-v1`, `javascript-foundations-v1`,
-`typescript-foundations-v1`, `haskell-foundations-v1`,
-`c-foundations-v1`, `c-systems-v1`, `cpp-foundations-v1`,
-`cpp-advanced-v1`, `java-foundations-v1`, `crystal-foundations-v1`,
-`swift-foundations-v1`, `csharp-foundations-v1`, `css-foundations-v1`,
-`dart-foundations-v1`, `kotlin-foundations-v1`, `php-foundations-v1` — each
-of these foundations routes targets beginners and reuses Go's generic
-categories; Haskell's has no loops block, presenting recursion as the
-functional substitute for iteration, TypeScript's broader tour adds
-`classesAndObjects` and `modules` as its own two categories, C's
-routes add `arraysAndStrings`, `memoryManagement`, `preprocessor`, and
-`fileIO`, with `c-systems-v1` as a separate non-beginner course, C++'s
-routes add `templates` and `stlContainers`, with
-`cpp-advanced-v1` as a separate non-beginner course, Java's adds no
-categories of its own, Crystal's adds `blocksAndProcs`,
-`collections`, and `nilSafety`, Swift's adds `optionals`, `closures`,
-and `enumsAndPatternMatching` (with `swift-advanced-v1` as a separate
-non-beginner course that adds `codable` and `propertyWrappers`), C#'s
-three routes add `patternMatching`, `delegatesAndEvents`, `linq`, and
-`asyncProgramming` (with `csharp-advanced-v1` as a separate non-beginner
-course), and
-CSS is a full exception: none of Go's
-categories represent a CSS concept, so its routes add eight of their own
-(`cssSelectors`, `cssBoxModel`, `cssColorsAndTypography`, `cssLayout`,
-`cssPositioning`, `cssCustomProperties`, `cssResponsive`, and
-`cssTransitionsAndAnimations`), with `css-layout-v1` and
-`css-advanced-v1` as separate courses, and Dart's adds `recordsAndPatterns`
-(reusing `collections`, `nullSafety`, and `asyncProgramming`) with
-`dart-advanced-v1` as a separate non-beginner course, and Kotlin's adds
-`nullSafety`, `dataClasses`, `lambdas`, `extensions`, and `coroutines`
-(reusing `collections`) with `kotlin-advanced-v1` as a separate
-non-beginner course, and PHP is a full exception like CSS: neither its
-language concepts nor its web focus map onto Go's categories, so its
-routes add nineteen of their own (`phpBasics`, `phpStrings`,
-`phpConditionals`, `phpLoops`, `phpArrays`, `phpFunctions`, `phpClasses`,
-`phpEnums`, `phpErrorHandling`, `phpNamespaces`, `phpSuperglobals`,
-`phpForms`, `phpSessions`, `phpDatabase`, `phpJson`, `phpFiles`,
-`phpSearching`, `phpSorting`, `phpGraphs`), with `php-web-v1` and
-`php-algorithms-v1` as separate courses). Git is another full exception: none of Go's categories
-represent version control, so its three routes (`git-foundations-v1`,
-`git-workflows-v1`, `git-internals-v1`) add ten of their own (`gitBasics`,
-`gitCommits`, `gitBranching`, `gitRemotes`, `gitHistory`, `gitUndo`,
-`gitCollaboration`, `gitObjects`, `gitRefs`, `gitMaintenance`). Linux is another
-full exception: an operating system shares no concept with Go's categories, so
-its three routes (`linux-foundations-v1`, `linux-admin-v1`,
-`linux-networking-v1`) add twelve of their own (`linuxBasics`, `linuxFiles`,
-`permissions`, `usersAndGroups`, `processes`, `packages`, `services`, `logs`,
-`storage`, `networking`, `scheduling`, `backupAndArchives`), authored as real
-command lines and verified in disposable Arch Linux containers (plain,
-privileged, and systemd-enabled). GitHub Actions is another full exception:
-YAML CI/CD pipelines share no concept with Go's categories, so its three
-routes (`github-actions-foundations-v1`, `github-actions-pipelines-v1`,
-`github-actions-devops-v1`) add thirteen of their own (`workflowBasics`,
-`workflowTriggers`, `jobsAndSteps`, `expressionsAndContexts`,
-`runnersAndMatrix`, `secretsAndVariables`, `cachingAndArtifacts`,
-`reusableAndComposite`, `containersAndDocker`, `pipelinePatterns`,
-`securityHardening`, `deploymentsAndReleases`, `ciOperations`), verified
-with `actionlint` + ShellCheck, `action-validator`, the Dependabot schema,
-and 33 workflows actually executed with `act`. Docker is another full
-exception: containers share no concept with Go's categories, so its three
-routes (`docker-foundations-v1`, `docker-compose-v1`,
-`docker-advanced-v1`) add nine of their own (`dockerBasics`,
-`dockerImages`, `dockerFiles`, `dockerContainers`, `dockerVolumes`,
-`dockerNetworking`, `dockerRegistries`, `dockerCompose`,
-`dockerMaintenance`), verified by executing every snippet (commands,
-Dockerfiles, `.dockerignore` and `compose.yaml`) against real Docker.
-Python also
-adds three Django courses —
-`python-django-foundations-v1`, `python-django-orm-v1`, and
-`python-django-rest-v1` — whose sixteen own categories (`djangoProject`,
-`djangoModels`, `djangoViews`, `djangoTemplates`, `djangoForms`,
-`djangoAdmin`, `djangoTesting`, `djangoRelationships`, `djangoOrm`,
-`djangoMigrations`, `djangoRestSetup`, `djangoSerializers`,
-`djangoRestViews`, `djangoRestAuth`, `djangoRestFiltering`,
-`djangoRestTesting`) take a bookmarks app from `django-admin
-startproject` to a DRF REST API with token auth. Go,
-Rust, Python, JavaScript, TypeScript, Haskell, C, C++, Java, Crystal,
-Swift, C#, Dart, Kotlin, and PHP additionally
-each have a standalone, non-beginner "Algorithms" course
-(`go-algorithms-v1`, `rust-algorithms-v1`,
-`python-algorithms-v1`, `javascript-algorithms-v1`,
-`typescript-algorithms-v1`, `haskell-algorithms-v1`,
-`c-algorithms-v1`, `cpp-algorithms-v1`, `java-algorithms-v1`,
-`crystal-algorithms-v1`, `swift-algorithms-v1`,
-`csharp-algorithms-v1`, `dart-algorithms-v1`,
-`kotlin-algorithms-v1`, `php-algorithms-v1`) with its own three
-categories (searching/sorting/graph algorithms), separate from that
-language's foundations route.
+Snippet catalogs (`assets/content/snippets/*_v1.json`) and Learning Path
+lesson order (`assets/content/learning_paths/*.json`) are versioned JSON
+assets, not code. Two catalog tiers (SPEC.md §3.2): Go backs free practice
+with a dense (category, difficulty) grid; every other language is
+course-only — its catalog contains exactly the snippets its bundled
+Learning Path(s) reference, no orphans (Bash, SQL, Rust, Python — including
+the three Django courses — JavaScript, TypeScript, Haskell, C, C++, Java,
+Crystal, Swift, CSS, C#, Dart, Kotlin, PHP, Git, Linux, GitHub Actions, and
+Docker). Foundations routes target beginners and mostly reuse Go's generic
+categories; CSS and PHP are full exceptions with categories of their own.
+Per-route details (categories, snippet counts, special cases) live in
+`Memory.md` and the skill below — trust those over any summary.
+
+Use the `content-curriculum` skill (`.claude/skills/`) before editing
+either JSON: it encodes the DTO/domain/drift mapping, the two failed
+automated lesson-ordering approaches (strict difficulty blocks and pure
+code-length sort — both produced real beginner-incoherence bugs), and the
+rule that every new snippet must be executed for real in its toolchain (Go,
+PostgreSQL 16, Docker, disposable Arch containers, etc.) before merge.
+Adding a new bilingual field means touching schema + domain + drift +
+presentation in lockstep. `dart run tool/validate_content_pack.dart
+--type=<snippets|learning-path> <file.json>` validates external content-pack
+JSON against the real DTOs.
 
 ## Design system
 

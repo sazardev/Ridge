@@ -37,7 +37,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
   | Lenguaje | Catálogo | Ruta | Tier |
   |---|---|---|---|
-  | Go | 215 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) + `go-algorithms-v1` (12) + `go-interfaces-v1` (24, interfaces/type/struct → JSON y diseño testeable) + `go-rest-http-v1` (33, API REST/HTTP/CRUD, cliente y SQLite; 32 snippets nuevos, ver sesión de hoy) | práctica libre (grid denso) |
+  | Go | 273 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) + `go-algorithms-v1` (12) + `go-interfaces-v1` (24, interfaces/type/struct → JSON y diseño testeable) + `go-rest-http-v1` (33, API REST/HTTP/CRUD, cliente y SQLite) + `go-modern-idioms-v1` (34, lenguaje/stdlib 1.26-1.27, iteradores, JSON v2, diseño de API y errores) + `go-production-v1` (24, concurrencia, fugas, testing, perfilado, observabilidad y tooling; 58 snippets nuevos, ver sesión de hoy) | práctica libre (grid denso) |
   | Bash (Arch) | 95 snippets | `bash-foundations-v1` + `bash-toolkit-v1` | solo-curso |
   | SQL (PostgreSQL) | 60 snippets | `sql-foundations-v1` (60) | solo-curso |
   | Rust | 24 snippets | `rust-foundations-v1` (12, solo principiante) + `rust-algorithms-v1` (12) | solo-curso |
@@ -66,11 +66,14 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `sqlAggregation` (7), `sqlJoins` (7), `sqlModifications` (5),
   `sqlAdvancedQueries` (6). Dificultad 30/22/7/1.
 - Gate de calidad: `bash tool/check.sh` (format + analyze + arquitectura +
-  tests). Última corrida (2026-09-12, cierre de GitHub Actions): **verde de
+  tests). Última corrida (2026-09-12, cierre de Go avanzado): **verde de
   punta a punta — 731 tests**, format/analyze/arquitectura limpios (incluye
-  C#, Swift, Kotlin, Dart, Django, PHP, Git, Linux, Docker y GitHub Actions,
-  todas las sesiones del día). `content_category.dart` quedó en **490 líneas**
-  (límite duro 500) con las categorías de Linux, Docker y GitHub Actions.
+  C#, Swift, Kotlin, Dart, Django, PHP, Git, Linux, Docker, GitHub Actions y
+  las dos rutas avanzadas de Go). `content_category.dart` quedó en **358
+  líneas** (límite duro 500): el formatter tall obliga línea en blanco
+  alrededor de cada constante documentada con `///` (llevaba el archivo a
+  532), así que los docs por-valor son `//` empaquetados con
+  `ignore_for_file: public_member_api_docs` justificado.
 - Set de íconos: **Lucide** (`lucide_icons_flutter`), no Material `Icons.*`
   — elegido por combinar con Geist (misma familia visual que usa Vercel/
   shadcn). `cupertino_icons` (vestigial, nunca usado) fue removido.
@@ -157,6 +160,81 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 ---
 
 ## Historial de sesiones
+
+### 2026-09-12 — Go: Modern & Idiomatic + Production Patterns (2 rutas nuevas, 58 snippets, 14 categorías)
+
+- **Pedido del usuario**: curso de Go de nivel avanzado bilingüe (en/es) con
+  "todo lo más top moderno de Go 1.27" y mejores prácticas idiomáticas para
+  pros. Tras preguntarle eligió **dos rutas**, **categorías propias
+  dedicadas**, **solo stdlib + tooling oficial** y el título **"Go: Modern &
+  Idiomatic" / "Go: Moderno e Idiomático"** (tag Advanced/Avanzado); la ruta
+  B quedó como **"Go: Production Patterns" / "Go: Patrones de Producción"**
+  (tag Production/Producción).
+- **Contenido**: 58 snippets solo-curso (dificultad 13/20/16/9; longitud
+  17/36/5), 34+24 lecciones. `go-modern-idioms-v1`: evolución del lenguaje
+  1.26/1.27 (`new(expr)`, claves de campos promovidos en literales,
+  inferencia generalizada de tipos de función, constraints autorreferenciales),
+  iteradores (`iter.Seq`/`Seq2`, adaptadores, `iter.Pull`, iteradores de
+  `reflect`), modismos modernos (`min`/`max`, `range` sobre enteros,
+  `SplitSeq`, `CutPrefix`, `slices.Backward`, atómicos tipados), métodos
+  genéricos, `encoding/json/v2` + `jsontext`, stdlib moderna (`uuid`,
+  `url.Clone`, `rand/v2.N`, `crypto/mldsa`, `os.Root`), diseño de API
+  (constructores, functional options, interfaces del consumidor, composición
+  `io`) y patrones de error (`Join`, `AsType`, `Unwrap`, `Is`).
+  `go-production-v1`: patrones de concurrencia (`WaitGroup.Go`, causa de
+  cancelación, `OnceValue`, worker pool, pipeline cancelable), fugas de
+  goroutines y perfil `goroutineleak` GA, testing avanzado (tabla +
+  `t.Parallel`, helpers + `t.Context`, fuzzing, `synctest` +
+  `httptest.NewTestServer`, `t.ArtifactDir`), rendimiento (benchmarks
+  `B.Loop`, preasignación, CPU profile, `runtime/metrics`), observabilidad
+  (`slog`, grupos, `NewMultiHandler`) y tooling (`//go:embed`,
+  `ReadBuildInfo`, `//go:generate`, `//go:fix inline` + modernizers de
+  `go fix`).
+- **Verificación real, no por ojo**: harness propio
+  (`/tmp/opencode/go-adv-course/verify.py`) que extrae cada `code` del
+  asset, lo envuelve (body/decls/test), lo pasa por el **gofmt del
+  toolchain** y lo ejecuta con **go1.27.0** cacheado
+  (`GOTOOLCHAIN=go1.27.0`; el gofmt del host 1.26 rechaza métodos
+  genéricos): aserciones de stdout exactas y casos con `go generate` y
+  `go fix` reales. **58/58 en verde**, y re-corrida `--against` contra el
+  `go_v1.json` mergeado. Gotchas documentados en la skill: los tokens de
+  `jsontext` se invalidan con la siguiente lectura, los builtins
+  `min`/`max` no aceptan spread de slice, las claves promovidas son el
+  nombre del campo (nunca `Point.X`), `//go:embed` a `string` necesita
+  `import _ "embed"`, y la detección de `goroutineleak` es asíncrona (el
+  test asevera cero fugas en código limpio, nunca `Count() > 0`).
+- **Revisión adversarial fresca** (2 agentes sin contexto, ejecución
+  independiente + currícula/prosa): 0 blockers de ejecución; 58/58
+  compilados con el harness propio del revisor y sets/conteos del drift
+  verificados exactos. Fixes reales aplicados: `go-genmeth-004` (título y
+  prosa contradecían el código; ahora el snippet incluye
+  `var _ Transformer = Box[int]{}` y enseña la restricción real de métodos
+  genéricos vs. interfaces), `go-jsonv2-002` (v2 **ignora** miembros
+  desconocidos por defecto; el título ahora dice opt-in y el código
+  marshalea un `map` para demostrar `Deterministic`), `go-perf-004` (solo
+  `goroutines-created` es 1.26; la métrica viva existe desde 1.16),
+  `go-stdlib-004` (imprime `2420 <nil>`, no `true`), orden de `errors.Is`
+  corregido, mito del constructor en `go-apidesign-001`, `Sorter[T any]`
+  sin constraint sobrante, guard `!ok` en `ReadBuildInfo`, loop de
+  `go-perf-003` ya no es código muerto (`runtime.KeepAlive`),
+  `go-obs-001` ahora declara `dropTime`/`newLogger`, 11 re-etiquetados de
+  longitud/dificultad, ~30 prosas ES pulidas y la ruta A **reordenada**
+  (iteradores antes de modismos modernos) para eliminar los forward
+  references de range-over-func.
+- **Wiring**: 14 `ContentCategory` nuevas + labels en/es + `gen-l10n`;
+  `content_category.dart` bajó a **358 líneas** porque el formatter tall
+  obliga línea en blanco alrededor de cada constante documentada con `///`
+  (llevaba el archivo a 532, sobre el límite de 500) — docs por-valor como
+  `//` empaquetados con `ignore_for_file: public_member_api_docs`
+  justificado; sets `_topicCategories` (test + audit script), 2 rutas en
+  `pubspec.yaml`/`defaultAssetPaths`/`_learningPathAssetPaths`, y drift
+  test 1289→**1347** activos y 476→**489** beginner (sets de `_` 384 y
+  `%` 126 recalculados del catálogo real).
+- **Docs**: `SPEC.md` §3.1 (categorías Go), skill `content-curriculum`
+  (SKILL.md + receta "Go 1.26/1.27 snippets" en `snippet-authoring.md`).
+- **Verificado**: `bash tool/check.sh` completo en verde — **731 tests**,
+  format/analyze/arquitectura limpios; `audit_lesson_order.py` verde para
+  las dos rutas.
 
 ### 2026-09-12 — Docker: Fundamentos + Compose + Avanzado (lenguaje nuevo, 3 rutas, 58 snippets)
 

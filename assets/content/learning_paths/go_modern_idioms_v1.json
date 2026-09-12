@@ -1,0 +1,252 @@
+[
+  {
+    "id": "go-modern-idioms-v1",
+    "language": "go",
+    "titleEn": "Go: Modern & Idiomatic",
+    "titleEs": "Go: Moderno e Idiomático",
+    "descriptionEn": "Generic methods, iterators, JSON v2, newer standard-library APIs, and API/error idioms.",
+    "descriptionEs": "Métodos genéricos, iteradores, JSON v2, biblioteca estándar moderna y modismos de API y errores.",
+    "tagEn": "Advanced",
+    "tagEs": "Avanzado",
+    "lessons": [
+      {
+        "id": "go-modern-idioms-v1-step01",
+        "snippetId": "go-evol-001",
+        "order": 1,
+        "titleEn": "Optional pointer fields with `new(expr)`",
+        "titleEs": "Campos puntero opcionales con `new(expr)`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step02",
+        "snippetId": "go-evol-002",
+        "order": 2,
+        "titleEn": "Set embedded fields directly in a struct literal (Go 1.27)",
+        "titleEs": "Inicializar campos embebidos directamente en un literal (Go 1.27)"
+      },
+      {
+        "id": "go-modern-idioms-v1-step03",
+        "snippetId": "go-evol-003",
+        "order": 3,
+        "titleEn": "Generalized function type inference in maps and slices (Go 1.27)",
+        "titleEs": "Inferencia generalizada de tipos de función en mapas y slices (Go 1.27)"
+      },
+      {
+        "id": "go-modern-idioms-v1-step04",
+        "snippetId": "go-evol-004",
+        "order": 4,
+        "titleEn": "Self-referential generic constraints (Go 1.26)",
+        "titleEs": "Constraints genéricos autorreferenciales (Go 1.26)"
+      },
+      {
+        "id": "go-modern-idioms-v1-step05",
+        "snippetId": "go-iter-001",
+        "order": 5,
+        "titleEn": "`range` over a `slices.Values` iterator",
+        "titleEs": "`range` sobre un iterador `slices.Values`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step06",
+        "snippetId": "go-iter-002",
+        "order": 6,
+        "titleEn": "A custom `iter.Seq2` with early stop",
+        "titleEs": "Un `iter.Seq2` propio con parada temprana"
+      },
+      {
+        "id": "go-modern-idioms-v1-step07",
+        "snippetId": "go-iter-003",
+        "order": 7,
+        "titleEn": "Composing iterator adapters: `evens` and `take`",
+        "titleEs": "Componer adaptadores de iteradores: `evens` y `take`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step08",
+        "snippetId": "go-iter-004",
+        "order": 8,
+        "titleEn": "`reflect` field iterators (Go 1.26)",
+        "titleEs": "Iteradores de campos de `reflect` (Go 1.26)"
+      },
+      {
+        "id": "go-modern-idioms-v1-step09",
+        "snippetId": "go-idiom-001",
+        "order": 9,
+        "titleEn": "`min`, `max`, and `range` over ints",
+        "titleEs": "`min`, `max` y `range` sobre enteros"
+      },
+      {
+        "id": "go-modern-idioms-v1-step10",
+        "snippetId": "go-idiom-002",
+        "order": 10,
+        "titleEn": "`strings.SplitSeq` and `strings.Cut`",
+        "titleEs": "`strings.SplitSeq` y `strings.Cut`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step11",
+        "snippetId": "go-idiom-003",
+        "order": 11,
+        "titleEn": "`CutPrefix`, `slices.Backward`, and friends",
+        "titleEs": "`CutPrefix`, `slices.Backward` y compañia"
+      },
+      {
+        "id": "go-modern-idioms-v1-step12",
+        "snippetId": "go-idiom-004",
+        "order": 12,
+        "titleEn": "Typed atomics instead of raw `sync/atomic` calls",
+        "titleEs": "Atómicos tipados en lugar de llamadas crudas a `sync/atomic`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step13",
+        "snippetId": "go-genmeth-001",
+        "order": 13,
+        "titleEn": "`Box[T].Map[U]`: a method with its own type parameter (Go 1.27)",
+        "titleEs": "`Box[T].Map[U]`: un método con su propio parámetro de tipo (Go 1.27)"
+      },
+      {
+        "id": "go-modern-idioms-v1-step14",
+        "snippetId": "go-genmeth-002",
+        "order": 14,
+        "titleEn": "Constrained type parameters on a method (Go 1.27)",
+        "titleEs": "Parámetros de tipo con constraints en un método (Go 1.27)"
+      },
+      {
+        "id": "go-modern-idioms-v1-step15",
+        "snippetId": "go-genmeth-003",
+        "order": 15,
+        "titleEn": "A method that returns its own generic zero value (Go 1.27)",
+        "titleEs": "Un método que devuelve su propio valor cero genérico (Go 1.27)"
+      },
+      {
+        "id": "go-modern-idioms-v1-step16",
+        "snippetId": "go-genmeth-004",
+        "order": 16,
+        "titleEn": "A method on a generic type can satisfy an interface",
+        "titleEs": "Un método sobre un tipo genérico puede satisfacer una interfaz"
+      },
+      {
+        "id": "go-modern-idioms-v1-step17",
+        "snippetId": "go-jsonv2-001",
+        "order": 17,
+        "titleEn": "Marshal and unmarshal with `encoding/json/v2`",
+        "titleEs": "Marshal y unmarshal con `encoding/json/v2`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step18",
+        "snippetId": "go-jsonv2-002",
+        "order": 18,
+        "titleEn": "Opt-in strictness: reject unknown members with `RejectUnknownMembers`",
+        "titleEs": "Estrictez opcional: rechazar miembros desconocidos con `RejectUnknownMembers`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step19",
+        "snippetId": "go-jsonv2-003",
+        "order": 19,
+        "titleEn": "Struct tags in v2: `omitzero`, `string`, and `-`",
+        "titleEs": "Etiquetas de struct en v2: `omitzero`, `string` y `-`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step20",
+        "snippetId": "go-jsonv2-004",
+        "order": 20,
+        "titleEn": "Token-level JSON with `encoding/json/jsontext`",
+        "titleEs": "JSON a nivel de tokens con `encoding/json/jsontext`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step21",
+        "snippetId": "go-jsonv2-005",
+        "order": 21,
+        "titleEn": "Custom JSON with `MarshalJSONTo` and `jsontext`",
+        "titleEs": "JSON personalizado con `MarshalJSONTo` y `jsontext`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step22",
+        "snippetId": "go-stdlib-001",
+        "order": 22,
+        "titleEn": "Generate and parse UUIDs with the standard library (Go 1.27)",
+        "titleEs": "Generar y parsear UUIDs con la biblioteca estándar (Go 1.27)"
+      },
+      {
+        "id": "go-modern-idioms-v1-step23",
+        "snippetId": "go-stdlib-002",
+        "order": 23,
+        "titleEn": "Deep-copy URLs and values with `Clone` (Go 1.27)",
+        "titleEs": "Copiar en profundidad URLs y valores con `Clone` (Go 1.27)"
+      },
+      {
+        "id": "go-modern-idioms-v1-step24",
+        "snippetId": "go-stdlib-003",
+        "order": 24,
+        "titleEn": "`math/rand/v2`: seeded generators and the generic `N` method (Go 1.27)",
+        "titleEs": "`math/rand/v2`: generadores con semilla y el método genérico `N` (Go 1.27)"
+      },
+      {
+        "id": "go-modern-idioms-v1-step25",
+        "snippetId": "go-stdlib-004",
+        "order": 25,
+        "titleEn": "Post-quantum signatures with `crypto/mldsa` (Go 1.27)",
+        "titleEs": "Firmas post-cuánticas con `crypto/mldsa` (Go 1.27)"
+      },
+      {
+        "id": "go-modern-idioms-v1-step26",
+        "snippetId": "go-stdlib-005",
+        "order": 26,
+        "titleEn": "Sandbox file access with `os.Root`",
+        "titleEs": "Acceso a archivos en sandbox con `os.Root`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step27",
+        "snippetId": "go-apidesign-001",
+        "order": 27,
+        "titleEn": "Unexported fields behind a constructor",
+        "titleEs": "Campos no exportados detrás de un constructor"
+      },
+      {
+        "id": "go-modern-idioms-v1-step28",
+        "snippetId": "go-apidesign-002",
+        "order": 28,
+        "titleEn": "Functional options for backward-compatible APIs",
+        "titleEs": "Functional options para APIs compatibles hacia atrás"
+      },
+      {
+        "id": "go-modern-idioms-v1-step29",
+        "snippetId": "go-apidesign-003",
+        "order": 29,
+        "titleEn": "Define the interface where you consume it",
+        "titleEs": "Define la interfaz donde la consumes"
+      },
+      {
+        "id": "go-modern-idioms-v1-step30",
+        "snippetId": "go-apidesign-004",
+        "order": 30,
+        "titleEn": "Compose streams with `io.MultiWriter`, `TeeReader`, and `LimitReader`",
+        "titleEs": "Componer streams con `io.MultiWriter`, `TeeReader` y `LimitReader`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step31",
+        "snippetId": "go-errpat-001",
+        "order": 31,
+        "titleEn": "Collect errors with `errors.Join`",
+        "titleEs": "Recolectar errores con `errors.Join`"
+      },
+      {
+        "id": "go-modern-idioms-v1-step32",
+        "snippetId": "go-errpat-002",
+        "order": 32,
+        "titleEn": "Type-safe error matching with `errors.AsType` (Go 1.26)",
+        "titleEs": "Coincidencia de errores con tipos seguros usando `errors.AsType` (Go 1.26)"
+      },
+      {
+        "id": "go-modern-idioms-v1-step33",
+        "snippetId": "go-errpat-003",
+        "order": 33,
+        "titleEn": "Wrap the cause with a custom `Unwrap`",
+        "titleEs": "Encapsular la causa con un `Unwrap` propio"
+      },
+      {
+        "id": "go-modern-idioms-v1-step34",
+        "snippetId": "go-errpat-004",
+        "order": 34,
+        "titleEn": "Semantic matching with a custom `Is` method",
+        "titleEs": "Coincidencia semántica con un método `Is` propio"
+      }
+    ]
+  }
+]

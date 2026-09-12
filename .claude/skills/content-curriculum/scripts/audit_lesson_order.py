@@ -48,8 +48,10 @@ ARCHITECTURE_LAYER_CATEGORIES = {
     "tuiComponents",
     "tuiAdapter",
     # Mirrors `_topicCategories` — topic categories for the
-    # go-algorithms-v1 / rust-algorithms-v1 Learning Routes, plus the
-    # HTTP/SQL topic categories of go-rest-http-v1. Individual snippets
+    # go-algorithms-v1 / rust-algorithms-v1 Learning Routes, the
+    # HTTP/SQL topic categories of go-rest-http-v1, and the
+    # modern-language/production topic categories of
+    # go-modern-idioms-v1 / go-production-v1. Individual snippets
     # DO carry a real difficulty here, but the category itself gets the
     # same looser total-count bar as the architecture-layer ones.
     "searchingAlgorithms",
@@ -59,6 +61,20 @@ ARCHITECTURE_LAYER_CATEGORIES = {
     "httpClients",
     "httpTesting",
     "sqlPersistence",
+    "languageEvolution",
+    "modernIdioms",
+    "genericMethods",
+    "iterators",
+    "jsonV2",
+    "modernStdlib",
+    "apiDesign",
+    "errorPatterns",
+    "concurrencyPatterns",
+    "goroutineLeaks",
+    "advancedTesting",
+    "performanceProfiling",
+    "observability",
+    "goTooling",
 }
 
 # Languages whose catalog exists only to compose a Learning Path (never a

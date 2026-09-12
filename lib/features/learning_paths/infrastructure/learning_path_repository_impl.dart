@@ -43,6 +43,8 @@ class LearningPathRepositoryImpl implements LearningPathRepository {
     'assets/content/learning_paths/go_algorithms_v1.json',
     'assets/content/learning_paths/go_interfaces_v1.json',
     'assets/content/learning_paths/go_rest_http_v1.json',
+    'assets/content/learning_paths/go_modern_idioms_v1.json',
+    'assets/content/learning_paths/go_production_v1.json',
     'assets/content/learning_paths/bash_foundations_v1.json',
     'assets/content/learning_paths/bash_toolkit_v1.json',
     'assets/content/learning_paths/sql_foundations_v1.json',

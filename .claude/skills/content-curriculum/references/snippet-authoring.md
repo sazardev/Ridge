@@ -16,6 +16,50 @@ looked fine by eye but didn't actually gofmt-format cleanly, or wouldn't
 compile once wrapped in a runnable `main`). Do this for every new entry,
 not just "complex-looking" ones.
 
+## Go 1.26/1.27 snippets (the advanced catalogs): force the toolchain
+
+For snippets that only exist on Go 1.26/1.27 — `go-modern-idioms-v1`
+(`go-evol-`, `go-idiom-`, `go-genmeth-`, `go-iter-`, `go-jsonv2-`,
+`go-stdlib-`, `go-apidesign-`, `go-errpat-`) and `go-production-v1`
+(`go-concpat-`, `go-leak-`, `go-testadv-`, `go-perf-`, `go-obs-`,
+`go-tool-`) — the host toolchain (1.26.5 here) is not enough:
+
+- Run everything with `GOTOOLCHAIN=go1.27.0` and a scratch module whose
+  `go.mod` says `go 1.27`. The toolchain is cached in the module cache, so
+  no download is needed.
+- `gofmt` on `PATH` belongs to the host toolchain and rejects 1.27 syntax
+  ("method must have no type parameters"); use `$(GOTOOLCHAIN=go1.27.0 go
+  env GOROOT)/bin/gofmt`, or `go fmt`.
+- Features verified to fail on 1.26.6 and compile on 1.27.0: generic
+  methods, promoted field keys in struct literals, generalized function
+  type inference, `encoding/json/v2` + `jsontext`, stdlib `uuid`,
+  `crypto/mldsa`, GA `goroutineleak`, `net/url` Clone, `rand/v2` generic
+  method `N`, `synctest.Sleep`, `httptest.NewTestServer`. The 1.26 group
+  (`new(expr)`, self-referential constraints, `errors.AsType`, `reflect`
+  iterators, `t.ArtifactDir`, `slog.NewMultiHandler`, scheduler metrics)
+  compiles under both, so don't attribute it to 1.27.
+- The reusable harness lives at
+  `/tmp/opencode/go-adv-course/verify.py` (body/decls/test modes, exact
+  stdout assertions, `go fix`/`go generate` cases, and `--against
+  <catalog.json>` to re-run the shipped asset). Gotchas it encodes:
+  `jsontext` tokens are invalidated by the next read (copy
+  `name.String()` before `ReadValue`); `min`/`max` builtins reject slice
+  spread (use `slices.Min`/`slices.Max`); a promoted literal key is the
+  bare field name (`X:`), never `Point.X`; `//go:embed` into a `string`
+  still needs `import _ "embed"` in the compiling file; `go generate`
+  cases need a real generator package; `//go:fix inline` is verified by
+  running `go fix ./...` and asserting the call site was rewritten (use
+  an `int` constant for a clean diff — inlining a typed expression adds a
+  conversion); `goroutineleak` detection is asynchronous via the GC, so
+  tests assert zero leaks on clean code, never `Count() > 0`
+  synchronously.
+- Version facts the prose must respect: the `go fix` overhaul and
+  `//go:fix inline` are Go 1.26 (1.27 only added more modernizers);
+  `/sched/goroutines:goroutines` predates Go 1.16 — only
+  `/sched/goroutines-created:goroutines` is new in 1.26; methods on
+  generic types have satisfied interfaces since 1.18, only methods with
+  their own type parameters can never implement one.
+
 ## New SQL code: always run it against PostgreSQL
 
 For the `sql-foundations-v1` catalog, the equivalent of `go run` is

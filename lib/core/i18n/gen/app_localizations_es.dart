@@ -1230,6 +1230,48 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categoryCiOperations => 'Operación de CI';
 
   @override
+  String get categoryLanguageEvolution => 'Evolución del lenguaje';
+
+  @override
+  String get categoryModernIdioms => 'Modismos modernos';
+
+  @override
+  String get categoryGenericMethods => 'Métodos genéricos';
+
+  @override
+  String get categoryIterators => 'Iteradores';
+
+  @override
+  String get categoryJsonV2 => 'JSON v2';
+
+  @override
+  String get categoryModernStdlib => 'Stdlib moderna';
+
+  @override
+  String get categoryApiDesign => 'Diseño de API';
+
+  @override
+  String get categoryErrorPatterns => 'Patrones de error';
+
+  @override
+  String get categoryConcurrencyPatterns => 'Patrones de concurrencia';
+
+  @override
+  String get categoryGoroutineLeaks => 'Fugas de goroutines';
+
+  @override
+  String get categoryAdvancedTesting => 'Testing avanzado';
+
+  @override
+  String get categoryPerformanceProfiling => 'Rendimiento y perfilado';
+
+  @override
+  String get categoryObservability => 'Observabilidad';
+
+  @override
+  String get categoryGoTooling => 'Tooling de Go';
+
+  @override
   String get languageGo => 'Go';
 
   @override

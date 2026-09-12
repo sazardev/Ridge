@@ -1221,6 +1221,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryCiOperations => 'CI operations';
 
   @override
+  String get categoryLanguageEvolution => 'Language evolution';
+
+  @override
+  String get categoryModernIdioms => 'Modern idioms';
+
+  @override
+  String get categoryGenericMethods => 'Generic methods';
+
+  @override
+  String get categoryIterators => 'Iterators';
+
+  @override
+  String get categoryJsonV2 => 'JSON v2';
+
+  @override
+  String get categoryModernStdlib => 'Modern stdlib';
+
+  @override
+  String get categoryApiDesign => 'API design';
+
+  @override
+  String get categoryErrorPatterns => 'Error patterns';
+
+  @override
+  String get categoryConcurrencyPatterns => 'Concurrency patterns';
+
+  @override
+  String get categoryGoroutineLeaks => 'Goroutine leaks';
+
+  @override
+  String get categoryAdvancedTesting => 'Advanced testing';
+
+  @override
+  String get categoryPerformanceProfiling => 'Performance & profiling';
+
+  @override
+  String get categoryObservability => 'Observability';
+
+  @override
+  String get categoryGoTooling => 'Go tooling';
+
+  @override
   String get languageGo => 'Go';
 
   @override
