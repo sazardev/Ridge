@@ -34,6 +34,7 @@ extension ProgrammingLanguageLabel on ProgrammingLanguage {
     ProgrammingLanguage.git => l10n.languageGit,
     ProgrammingLanguage.linux => l10n.languageLinux,
     ProgrammingLanguage.docker => l10n.languageDocker,
+    ProgrammingLanguage.githubActions => l10n.languageGithubActions,
   };
 }
 
@@ -65,6 +66,7 @@ extension ProgrammingLanguageBlurb on ProgrammingLanguage {
     ProgrammingLanguage.git => l10n.languageGitBlurb,
     ProgrammingLanguage.linux => l10n.languageLinuxBlurb,
     ProgrammingLanguage.docker => l10n.languageDockerBlurb,
+    ProgrammingLanguage.githubActions => l10n.languageGithubActionsBlurb,
   };
 }
 
@@ -236,6 +238,21 @@ extension ContentCategoryLabel on ContentCategory {
     ContentCategory.dockerRegistries => l10n.categoryDockerRegistries,
     ContentCategory.dockerCompose => l10n.categoryDockerCompose,
     ContentCategory.dockerMaintenance => l10n.categoryDockerMaintenance,
+    ContentCategory.workflowBasics => l10n.categoryWorkflowBasics,
+    ContentCategory.workflowTriggers => l10n.categoryWorkflowTriggers,
+    ContentCategory.jobsAndSteps => l10n.categoryJobsAndSteps,
+    ContentCategory.expressionsAndContexts =>
+      l10n.categoryExpressionsAndContexts,
+    ContentCategory.runnersAndMatrix => l10n.categoryRunnersAndMatrix,
+    ContentCategory.secretsAndVariables => l10n.categorySecretsAndVariables,
+    ContentCategory.cachingAndArtifacts => l10n.categoryCachingAndArtifacts,
+    ContentCategory.reusableAndComposite => l10n.categoryReusableAndComposite,
+    ContentCategory.containersAndDocker => l10n.categoryContainersAndDocker,
+    ContentCategory.pipelinePatterns => l10n.categoryPipelinePatterns,
+    ContentCategory.securityHardening => l10n.categorySecurityHardening,
+    ContentCategory.deploymentsAndReleases =>
+      l10n.categoryDeploymentsAndReleases,
+    ContentCategory.ciOperations => l10n.categoryCiOperations,
   };
 }
 

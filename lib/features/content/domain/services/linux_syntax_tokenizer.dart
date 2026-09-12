@@ -4,21 +4,22 @@ part of 'syntax_tokenizer.dart';
 /// [GitSyntaxTokenizer]: just enough to color `#` comments, quoted
 /// strings, the commands and `systemd`/`nft` verbs this catalog uses,
 /// numbers, and punctuation; it never builds an AST and makes no attempt
-/// to tell a path component from a flag argument.
+/// to tell a path component from a flag argument beyond keeping a word
+/// that follows `/` or `.` plain (`/dev/null` is a path, not a verb).
 class LinuxSyntaxTokenizer implements SyntaxTokenizer {
   /// Creates the (stateless) tokenizer.
   const new();
 
   static const _keywords = {
     // Core commands and tools used by the learning routes.
-    'cat', 'chmod', 'chown', 'cp', 'curl', 'df', 'du', 'export', 'find',
-    'getent', 'getfacl', 'gpasswd', 'groupadd', 'head', 'id', 'ip',
-    'journalctl', 'kill', 'ln', 'ls', 'lsblk', 'mkdir', 'mv', 'nft',
-    'nice', 'pacman', 'passwd', 'pgrep', 'ping', 'printenv', 'printf',
-    'ps', 'pwd', 'resolvectl', 'rm', 'setfacl', 'sleep', 'ss', 'stat',
-    'sudo', 'systemctl', 'systemd-analyze', 'systemd-run', 'tar',
-    'touch', 'umask', 'uname', 'uptime', 'useradd', 'userdel', 'visudo',
-    'whoami',
+    'cat', 'cd', 'chmod', 'chown', 'cp', 'curl', 'df', 'du', 'echo',
+    'export', 'find', 'getent', 'getfacl', 'gpasswd', 'groupadd', 'head',
+    'id', 'ip', 'journalctl', 'kill', 'ln', 'ls', 'lsblk', 'mkdir', 'mv',
+    'nft', 'nice', 'pacman', 'passwd', 'pgrep', 'ping', 'printenv',
+    'printf', 'ps', 'pwd', 'resolvectl', 'rm', 'setfacl', 'sleep', 'ss',
+    'stat', 'sudo', 'systemctl', 'systemd-analyze', 'systemd-run', 'tail',
+    'tar', 'tee', 'touch', 'tree', 'umask', 'uname', 'uptime', 'useradd',
+    'userdel', 'visudo', 'whoami',
     // Subcommands and verbs (`systemctl`, `ip`, `nft`, `getent`).
     'accept', 'add', 'address', 'brief', 'chain', 'delete', 'dev', 'dport',
     'drop', 'enable', 'filter', 'get', 'hook', 'hosts', 'inet', 'input',
@@ -98,11 +99,16 @@ class LinuxSyntaxTokenizer implements SyntaxTokenizer {
           i++;
         }
         final word = code.substring(start, i);
+        // A word that follows a path separator or a dot is a file name
+        // or path component (`/dev/null`, `/etc/passwd`, `demo.service`),
+        // never a verb — even when it collides with a command name.
+        final isPathComponent =
+            start > 0 && (code[start - 1] == '/' || code[start - 1] == '.');
         _fill(
           types,
           start,
           i,
-          _keywords.contains(word)
+          _keywords.contains(word) && !isPathComponent
               ? SyntaxTokenType.keyword
               : SyntaxTokenType.identifier,
         );

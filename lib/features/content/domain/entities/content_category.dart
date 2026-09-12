@@ -97,72 +97,55 @@ enum ContentCategory {
   /// Shell startup files: `~/.bashrc`, `PATH`, aliases.
   shellProfiles,
 
-  /// DDD entities, value objects, domain errors.
-  /// Architecture-layer category: held to a looser completeness bar.
+  /// DDD entities, value objects, domain errors. Architecture layer.
   domainModeling,
 
-  /// Application-core interfaces implemented by adapters.
-  /// Architecture-layer category: held to a looser completeness bar.
+  /// Application-core interfaces implemented by adapters. Architecture.
   hexagonalPorts,
 
-  /// Use cases orchestrating domain + ports, and their fake-port tests.
-  /// Architecture-layer category: held to a looser completeness bar.
+  /// Use cases and fake-port tests. Architecture layer.
   applicationUseCases,
 
-  /// Repository-port adapters (in-memory, file-backed).
-  /// Architecture-layer category: held to a looser completeness bar.
+  /// Repository-port adapters (in-memory, file-backed). Architecture.
   persistenceAdapters,
 
-  /// REST/HTTP DTOs, handlers, routing, error-to-status mapping.
-  /// Architecture-layer category: held to a looser completeness bar.
+  /// REST/HTTP DTOs, handlers, routing, status mapping. Architecture.
   restAdapters,
 
-  /// Hand-written test doubles and the tests using them.
-  /// Architecture-layer category: held to a looser completeness bar.
+  /// Hand-written test doubles and their tests. Architecture layer.
   testingWithFakes,
 
-  /// Linear and binary search.
-  /// Topic category: snippets carry a real difficulty.
+  /// Linear and binary search. Topic category: real difficulty.
   searchingAlgorithms,
 
-  /// Bubble, selection, insertion, merge, quick, and heap sort.
-  /// Topic category: snippets carry a real difficulty.
+  /// Bubble, selection, insertion, merge, quick, heap sort. Topic.
   sortingAlgorithms,
 
-  /// Adjacency-list graphs, BFS, DFS, Dijkstra.
-  /// Topic category: snippets carry a real difficulty.
+  /// Adjacency-list graphs, BFS, DFS, Dijkstra. Topic category.
   graphAlgorithms,
 
-  /// Bubble Tea's `Model`/`Init`/`Update`/`View` loop.
-  /// Architecture-layer category: held to a looser completeness bar.
+  /// Bubble Tea's `Model`/`Init`/`Update`/`View` loop. Architecture.
   tuiArchitecture,
 
-  /// Lip Gloss styles, colors, borders, padding.
-  /// Architecture-layer category: held to a looser completeness bar.
+  /// Lip Gloss styles, colors, borders, padding. Architecture.
   tuiStyling,
 
-  /// Bubbles widgets inside a Bubble Tea model.
-  /// Architecture-layer category: held to a looser completeness bar.
+  /// Bubbles widgets inside a Bubble Tea model. Architecture.
   tuiComponents,
 
-  /// TUI commands calling use cases; the composition root.
-  /// Architecture-layer category: held to a looser completeness bar.
+  /// TUI commands calling use cases; the root. Architecture.
   tuiAdapter,
 
-  /// Go handlers, `ServeMux`, middleware, server lifecycle.
-  /// Topic category: snippets carry a real difficulty.
+  /// Go handlers, `ServeMux`, middleware, lifecycle. Topic.
   httpServers,
 
-  /// HTTP requests with context/timeouts, transport, retries.
-  /// Topic category: snippets carry a real difficulty.
+  /// HTTP with context/timeouts, transport, retries. Topic.
   httpClients,
 
-  /// Testing handlers and servers with `net/http/httptest`.
-  /// Topic category: snippets carry a real difficulty.
+  /// Testing handlers and servers with `httptest`. Topic.
   httpTesting,
 
-  /// `database/sql` pools, DDL/DML, transactions, SQLite.
-  /// Topic category: snippets carry a real difficulty.
+  /// `database/sql` pools, DDL/DML, transactions. Topic.
   sqlPersistence,
 
   /// Classes: typed fields, constructors, access modifiers.
@@ -373,11 +356,9 @@ enum ContentCategory {
   phpGraphs,
 
   /// Git repo setup, staging, `.gitignore`, diffs, file surgery.
-  /// Introduced by the `git-foundations-v1` Learning Route.
   gitBasics,
 
   /// Committing: messages, history reading, amending the last commit.
-  /// Introduced by the `git-foundations-v1` Learning Route.
   gitCommits,
 
   /// Branch create/switch/delete, fast-forward and merge commits,
@@ -385,79 +366,60 @@ enum ContentCategory {
   gitBranching,
 
   /// Clone, remote setup, fetch, pull, push, tracking branches.
-  /// Introduced by the `git-foundations-v1` Learning Route.
   gitRemotes,
 
   /// Log formats, pickaxe, blame, and `git bisect`.
-  /// Introduced by the `git-workflows-v1` Learning Route.
   gitHistory,
 
   /// `restore`, the three `reset` modes, `revert`, `clean`, `stash`.
-  /// Introduced by the `git-workflows-v1` Learning Route.
   gitUndo,
 
   /// Rebase, force-with-lease, cherry-pick, autosquash, tags, hooks.
-  /// Introduced by the `git-workflows-v1` Learning Route.
   gitCollaboration,
 
   /// Blobs, trees, commits, and `cat-file`/`hash-object`/`ls-tree`.
-  /// Introduced by the `git-internals-v1` Learning Route.
   gitObjects,
 
   /// `HEAD`, detached state, `show-ref`, `update-ref`, reflog.
-  /// Introduced by the `git-internals-v1` Learning Route.
   gitRefs,
 
   /// Index internals, object counts, `git gc`, linked worktrees.
-  /// Introduced by the `git-internals-v1` Learning Route.
   gitMaintenance,
 
   /// Distro identity, kernel, hostname, help, environment variables.
-  /// Introduced by the `linux-foundations-v1` Learning Route.
   linuxBasics,
 
   /// Paths, navigation, file CRUD, symlinks, viewing files.
-  /// Introduced by the `linux-foundations-v1` Learning Route.
   linuxFiles,
 
   /// Mode bits, `chmod`/`chown`/`umask`, sticky/setgid, ACLs.
-  /// Introduced by the `linux-foundations-v1` Learning Route.
   permissions,
 
   /// Accounts, groups, `sudo`, password locks.
-  /// Introduced by the `linux-foundations-v1` Learning Route.
   usersAndGroups,
 
   /// Listing, signals, and scheduling priority.
-  /// Introduced by the `linux-foundations-v1` Learning Route.
   processes,
 
   /// `pacman` queries, installs, removals, file ownership.
-  /// Introduced by the `linux-foundations-v1` Learning Route.
   packages,
 
   /// `systemctl` units: status, lifecycle, enablement.
-  /// Introduced by the `linux-foundations-v1` Learning Route.
   services,
 
   /// `journalctl` filtering and disk usage.
-  /// Introduced by the `linux-foundations-v1` Learning Route.
   logs,
 
   /// Block devices, disk space, directory usage.
-  /// Introduced by the `linux-admin-v1` Learning Route.
   storage,
 
   /// Interfaces, routes, DNS, sockets, HTTP, firewalls.
-  /// Introduced by the `linux-networking-v1` Learning Route.
   networking,
 
   /// `systemd-analyze calendar`, timers, transient units.
-  /// Introduced by the `linux-admin-v1` Learning Route.
   scheduling,
 
   /// `tar` create/list/extract and compression.
-  /// Introduced by the `linux-admin-v1` Learning Route.
   backupAndArchives,
 
   /// Docker CLI basics: images vs containers, run, ps, info.
@@ -486,4 +448,43 @@ enum ContentCategory {
 
   /// Disk usage, stats, top, and diff for debugging.
   dockerMaintenance,
+
+  /// Workflow anatomy: `name`, `on`, `jobs`, `runs-on`, first steps.
+  workflowBasics,
+
+  /// Events: `push`, `pull_request`, `schedule`, `workflow_dispatch`.
+  workflowTriggers,
+
+  /// Jobs, `steps`, `needs`, `if`, timeouts, `GITHUB_OUTPUT`.
+  jobsAndSteps,
+
+  /// `${{ }}` contexts, functions, status checks, operators.
+  expressionsAndContexts,
+
+  /// `runs-on`, `strategy.matrix`, include/exclude, dynamic matrices.
+  runnersAndMatrix,
+
+  /// `env`, `vars`, `secrets`, `GITHUB_TOKEN`, `permissions`.
+  secretsAndVariables,
+
+  /// `actions/cache`, `upload-artifact`, `download-artifact`.
+  cachingAndArtifacts,
+
+  /// Composite actions and `workflow_call` reusable workflows.
+  reusableAndComposite,
+
+  /// `services`, container jobs, `docker/build-push-action`.
+  containersAndDocker,
+
+  /// `concurrency`, path filters, step summaries, workflow chaining.
+  pipelinePatterns,
+
+  /// Least privilege, SHA pinning, OIDC, CodeQL, Dependabot.
+  securityHardening,
+
+  /// Environments, Pages, GitHub Releases, provenance, registries.
+  deploymentsAndReleases,
+
+  /// Inspecting and driving runs with the `gh` CLI.
+  ciOperations,
 }

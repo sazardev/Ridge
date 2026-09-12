@@ -193,4 +193,19 @@ enum ProgrammingLanguage {
   /// `dockerRegistries`, `dockerCompose`, `dockerMaintenance`), because
   /// container concepts don't map onto a programming-language category.
   docker,
+
+  /// GitHub Actions, GitHub's CI/CD platform — taught by
+  /// `github-actions-foundations-v1` (workflow anatomy, triggers, jobs),
+  /// `github-actions-pipelines-v1` (caching, artifacts, composite and
+  /// reusable workflows, containers, pipeline patterns), and
+  /// `github-actions-devops-v1` (environments, releases, OIDC, security
+  /// hardening, `gh` operations) — course-only, like the languages
+  /// above. Its routes use thirteen categories of their own
+  /// (`workflowBasics`, `workflowTriggers`, `jobsAndSteps`,
+  /// `expressionsAndContexts`, `runnersAndMatrix`, `secretsAndVariables`,
+  /// `cachingAndArtifacts`, `reusableAndComposite`, `containersAndDocker`,
+  /// `pipelinePatterns`, `securityHardening`, `deploymentsAndReleases`,
+  /// `ciOperations`), because YAML CI/CD pipelines have no concept that
+  /// maps onto a programming-language category.
+  githubActions,
 }

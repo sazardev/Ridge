@@ -1,0 +1,182 @@
+[
+  {
+    "id": "github-actions-pipelines-v1",
+    "language": "githubActions",
+    "titleEn": "Pipelines in practice",
+    "titleEs": "Pipelines en la práctica",
+    "descriptionEn": "Cache, artifacts, matrices, containers, and reusable workflows for real CI.",
+    "descriptionEs": "Caché, artefactos, matrices, contenedores y workflows reutilizables para CI real.",
+    "tagEn": "Pipelines",
+    "tagEs": "Pipelines",
+    "lessons": [
+      {
+        "id": "github-actions-pipelines-v1-step01",
+        "snippetId": "gha-cache-002",
+        "order": 1,
+        "titleEn": "Node CI with built-in cache",
+        "titleEs": "CI de Node con caché integrada"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step02",
+        "snippetId": "gha-cache-001",
+        "order": 2,
+        "titleEn": "Cache npm dependencies",
+        "titleEs": "Caché de dependencias npm"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step03",
+        "snippetId": "gha-cache-003",
+        "order": 3,
+        "titleEn": "Manual cache restore and save",
+        "titleEs": "Restauración y guardado manual de caché"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step04",
+        "snippetId": "gha-artifact-001",
+        "order": 4,
+        "titleEn": "Upload the build output",
+        "titleEs": "Sube la salida del build"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step05",
+        "snippetId": "gha-artifact-003",
+        "order": 5,
+        "titleEn": "Warn when artifacts are missing",
+        "titleEs": "Avisa si faltan los artefactos"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step06",
+        "snippetId": "gha-artifact-002",
+        "order": 6,
+        "titleEn": "Pass artifacts between jobs",
+        "titleEs": "Pasa artefactos entre jobs"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step07",
+        "snippetId": "gha-composite-001",
+        "order": 7,
+        "titleEn": "Composite action for project setup",
+        "titleEs": "Acción compuesta para preparar el proyecto"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step08",
+        "snippetId": "gha-composite-002",
+        "order": 8,
+        "titleEn": "Call a local composite action",
+        "titleEs": "Llama a una acción compuesta local"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step09",
+        "snippetId": "gha-composite-003",
+        "order": 9,
+        "titleEn": "Composite action that runs lint",
+        "titleEs": "Acción compuesta que ejecuta el linter"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step10",
+        "snippetId": "gha-reusable-003",
+        "order": 10,
+        "titleEn": "Call workflows from the same repository",
+        "titleEs": "Llama a workflows del mismo repositorio"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step11",
+        "snippetId": "gha-reusable-001",
+        "order": 11,
+        "titleEn": "Define a reusable workflow",
+        "titleEs": "Define un workflow reutilizable"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step12",
+        "snippetId": "gha-reusable-004",
+        "order": 12,
+        "titleEn": "Matrix over a reusable workflow",
+        "titleEs": "Matriz sobre un workflow reutilizable"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step13",
+        "snippetId": "gha-reusable-002",
+        "order": 13,
+        "titleEn": "Call a remote reusable workflow",
+        "titleEs": "Llama a un workflow reutilizable remoto"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step14",
+        "snippetId": "gha-container-001",
+        "order": 14,
+        "titleEn": "Run jobs inside a container",
+        "titleEs": "Ejecuta jobs dentro de un contenedor"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step15",
+        "snippetId": "gha-docker-003",
+        "order": 15,
+        "titleEn": "Smoke test a Docker image",
+        "titleEs": "Prueba de humo de imagen Docker"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step16",
+        "snippetId": "gha-service-001",
+        "order": 16,
+        "titleEn": "Postgres service container",
+        "titleEs": "Contenedor de servicio PostgreSQL"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step17",
+        "snippetId": "gha-docker-001",
+        "order": 17,
+        "titleEn": "Build and push to GHCR",
+        "titleEs": "Construye y publica en GHCR"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step18",
+        "snippetId": "gha-docker-002",
+        "order": 18,
+        "titleEn": "Multi-platform image build",
+        "titleEs": "Build de imagen multiplataforma"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step19",
+        "snippetId": "gha-pattern-003",
+        "order": 19,
+        "titleEn": "Skip tests for draft pull requests",
+        "titleEs": "Omite tests en pull requests borrador"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step20",
+        "snippetId": "gha-pattern-001",
+        "order": 20,
+        "titleEn": "Cancel superseded deploys",
+        "titleEs": "Cancela despliegues superados"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step21",
+        "snippetId": "gha-pattern-004",
+        "order": 21,
+        "titleEn": "Write a step summary",
+        "titleEs": "Escribe un resumen del paso"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step22",
+        "snippetId": "gha-pattern-002",
+        "order": 22,
+        "titleEn": "Run tests only for changed paths",
+        "titleEs": "Ejecuta tests solo para rutas cambiadas"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step23",
+        "snippetId": "gha-pattern-006",
+        "order": 23,
+        "titleEn": "Experimental matrix entry",
+        "titleEs": "Entrada experimental en la matriz"
+      },
+      {
+        "id": "github-actions-pipelines-v1-step24",
+        "snippetId": "gha-pattern-005",
+        "order": 24,
+        "titleEn": "React to a finished workflow",
+        "titleEs": "Reacciona a un workflow terminado"
+      }
+    ]
+  }
+]

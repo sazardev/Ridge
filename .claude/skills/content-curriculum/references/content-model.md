@@ -43,7 +43,7 @@ A language is either **free-practice** or **course-only**:
 | Tier | Example | Catalog role | Completeness bar |
 |---|---|---|---|
 | Free-practice | Go | backs Zen/Sprint/Precision and the browser | dense grid: ≥3 per (category, difficulty) cell in core categories, ≥1 elsewhere |
-| Course-only | Bash, SQL, Rust, Python, JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#, Dart, Kotlin, PHP, Git | exists only to compose its Learning Route(s) | every active snippet must be used by a bundled path; no orphans |
+| Course-only | Bash, SQL, Rust, Python, JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#, Dart, Kotlin, PHP, Git, Linux, GitHub Actions | exists only to compose its Learning Route(s) | every active snippet must be used by a bundled path; no orphans |
 
 Practical consequences:
 - A course-only language's snippet set is authored together with its path —

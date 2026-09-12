@@ -1182,6 +1182,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryDockerMaintenance => 'Debug & maintenance';
 
   @override
+  String get categoryWorkflowBasics => 'Workflow basics';
+
+  @override
+  String get categoryWorkflowTriggers => 'Triggers & events';
+
+  @override
+  String get categoryJobsAndSteps => 'Jobs & steps';
+
+  @override
+  String get categoryExpressionsAndContexts => 'Expressions & contexts';
+
+  @override
+  String get categoryRunnersAndMatrix => 'Runners & matrix';
+
+  @override
+  String get categorySecretsAndVariables => 'Secrets & variables';
+
+  @override
+  String get categoryCachingAndArtifacts => 'Caching & artifacts';
+
+  @override
+  String get categoryReusableAndComposite => 'Reusable & composite';
+
+  @override
+  String get categoryContainersAndDocker => 'Containers & Docker';
+
+  @override
+  String get categoryPipelinePatterns => 'Pipeline patterns';
+
+  @override
+  String get categorySecurityHardening => 'Security hardening';
+
+  @override
+  String get categoryDeploymentsAndReleases => 'Deploys & releases';
+
+  @override
+  String get categoryCiOperations => 'CI operations';
+
+  @override
   String get languageGo => 'Go';
 
   @override
@@ -1243,6 +1282,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageDocker => 'Docker';
+
+  @override
+  String get languageGithubActions => 'GitHub Actions';
 
   @override
   String get languageGoBlurb =>
@@ -1326,6 +1368,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageDockerBlurb => 'Package it once, run it anywhere.';
+
+  @override
+  String get languageGithubActionsBlurb =>
+      'The CI/CD engine of GitHub — YAML workflows that build, test, and ship your code.';
 
   @override
   String get snippetPracticeAction => 'Practice';

@@ -145,6 +145,7 @@ void main() {
       'assets/content/snippets/git_v1.json',
       'assets/content/snippets/linux_v1.json',
       'assets/content/snippets/docker_v1.json',
+      'assets/content/snippets/github_actions_v1.json',
     ];
 
     final distinctChars = <String>{};

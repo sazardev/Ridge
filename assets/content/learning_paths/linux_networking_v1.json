@@ -46,87 +46,87 @@
       },
       {
         "id": "linux-networking-v1-step06",
-        "snippetId": "linux-net-006",
-        "order": 6,
-        "titleEn": "Take an interface down and up",
-        "titleEs": "Baja y sube una interfaz"
-      },
-      {
-        "id": "linux-networking-v1-step07",
         "snippetId": "linux-net-007",
-        "order": 7,
+        "order": 6,
         "titleEn": "Resolve names through /etc/hosts",
         "titleEs": "Resuelve nombres con /etc/hosts"
       },
       {
-        "id": "linux-networking-v1-step08",
+        "id": "linux-networking-v1-step07",
         "snippetId": "linux-net-008",
-        "order": 8,
+        "order": 7,
         "titleEn": "Read the DNS resolver configuration",
         "titleEs": "Revisa la configuración de DNS"
       },
       {
-        "id": "linux-networking-v1-step09",
+        "id": "linux-networking-v1-step08",
         "snippetId": "linux-net-009",
-        "order": 9,
+        "order": 8,
         "titleEn": "Ping the loopback address",
         "titleEs": "Haz ping a la dirección loopback"
       },
       {
-        "id": "linux-networking-v1-step10",
+        "id": "linux-networking-v1-step09",
         "snippetId": "linux-net-010",
-        "order": 10,
+        "order": 9,
         "titleEn": "Ping a host by name",
-        "titleEs": "Haz ping a un host por nombre"
+        "titleEs": "Haz ping a un host"
       },
       {
-        "id": "linux-networking-v1-step11",
+        "id": "linux-networking-v1-step10",
         "snippetId": "linux-net-011",
-        "order": 11,
+        "order": 10,
         "titleEn": "Print only the HTTP status",
         "titleEs": "Imprime solo el estado HTTP"
       },
       {
-        "id": "linux-networking-v1-step12",
+        "id": "linux-networking-v1-step11",
         "snippetId": "linux-net-012",
-        "order": 12,
+        "order": 11,
         "titleEn": "Download a page to a file",
         "titleEs": "Descarga una página a un archivo"
       },
       {
-        "id": "linux-networking-v1-step13",
+        "id": "linux-networking-v1-step12",
         "snippetId": "linux-net-013",
-        "order": 13,
+        "order": 12,
         "titleEn": "Cap a request with a timeout",
-        "titleEs": "Limita una petición con un tiempo máximo"
+        "titleEs": "Limita el tiempo de una petición"
       },
       {
-        "id": "linux-networking-v1-step14",
+        "id": "linux-networking-v1-step13",
         "snippetId": "linux-net-014",
-        "order": 14,
+        "order": 13,
         "titleEn": "Verify the TLS certificate",
         "titleEs": "Verifica el certificado TLS"
       },
       {
-        "id": "linux-networking-v1-step15",
+        "id": "linux-networking-v1-step14",
         "snippetId": "linux-net-015",
-        "order": 15,
+        "order": 14,
         "titleEn": "Check listening TCP ports",
-        "titleEs": "Enumera los puertos TCP a la escucha"
+        "titleEs": "Enumera los puertos TCP"
       },
       {
-        "id": "linux-networking-v1-step16",
+        "id": "linux-networking-v1-step15",
         "snippetId": "linux-net-016",
-        "order": 16,
+        "order": 15,
         "titleEn": "Find the process behind a port",
         "titleEs": "Encuentra el proceso tras un puerto"
       },
       {
-        "id": "linux-networking-v1-step17",
+        "id": "linux-networking-v1-step16",
         "snippetId": "linux-net-017",
-        "order": 17,
+        "order": 16,
         "titleEn": "Summarize socket counts",
         "titleEs": "Resume el conteo de sockets"
+      },
+      {
+        "id": "linux-networking-v1-step17",
+        "snippetId": "linux-net-006",
+        "order": 17,
+        "titleEn": "Take an interface down and up",
+        "titleEs": "Baja y sube una interfaz"
       },
       {
         "id": "linux-networking-v1-step18",

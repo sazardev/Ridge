@@ -160,6 +160,45 @@ void main() {
     expect(types[code.indexOf('300')], SyntaxTokenType.number);
   });
 
+  test('every command used by the routes is a keyword', () {
+    for (final code in const [
+      'cd /etc',
+      'tail -n 2 /etc/passwd',
+      'echo hello',
+      'tree --version',
+    ]) {
+      final types = tokenizer.classify(code);
+      expect(types[0], SyntaxTokenType.keyword, reason: code);
+    }
+  });
+
+  test('path components stay identifiers even when they read as commands', () {
+    const code = 'curl -sS -o /dev/null https://archlinux.org';
+    final types = tokenizer.classify(code);
+    final dev = code.indexOf('dev');
+    expect(
+      types.sublist(dev, dev + 'dev'.length),
+      everyElement(SyntaxTokenType.identifier),
+    );
+    const passwd = 'stat -c "%a" /etc/passwd';
+    final passwdTypes = tokenizer.classify(passwd);
+    final name = passwd.indexOf('passwd');
+    expect(
+      passwdTypes.sublist(name, name + 'passwd'.length),
+      everyElement(SyntaxTokenType.identifier),
+    );
+  });
+
+  test('an absolute command path is a path, not the command keyword', () {
+    const code = '/usr/bin/tree --version';
+    final types = tokenizer.classify(code);
+    final tree = code.indexOf('tree');
+    expect(
+      types.sublist(tree, tree + 'tree'.length),
+      everyElement(SyntaxTokenType.identifier),
+    );
+  });
+
   test('SyntaxTokenizers.forLanguage resolves Linux', () {
     expect(
       SyntaxTokenizers.forLanguage(ProgrammingLanguage.linux),

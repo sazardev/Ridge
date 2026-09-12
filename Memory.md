@@ -56,6 +56,8 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 | Kotlin | 53 snippets | `kotlin-foundations-v1` (22, introducción) + `kotlin-algorithms-v1` (12) + `kotlin-advanced-v1` (19, selladas/`object`/delegación/genéricos y varianza/`lateinit`/extensiones/lambdas/`Result`/corrutinas) — los tres nuevos, ver sesión de hoy | solo-curso |
   | PHP | 48 snippets | `php-foundations-v1` (24, tour: tipos/null-coalescing/strings/condicionales/arreglos/ciclos/funciones/POO/enums/excepciones/namespaces) + `php-web-v1` (12, superglobales/formularios/sesiones/PDO/JSON/archivos) + `php-algorithms-v1` (12) — los tres nuevos, ver sesión de hoy | solo-curso |
   | Git | 70 snippets | `git-foundations-v1` (33, de `git init` a remotos) + `git-workflows-v1` (24, historial/deshacer/rebase/tags/hooks) + `git-internals-v1` (15, objetos/referencias/mantenimiento) — los tres nuevos, ver sesión de hoy | solo-curso |
+  | Linux (Arch) | 85 snippets | `linux-foundations-v1` (35, distro/kernel/FHS/archivos/permisos/usuarios/procesos/paquetes/servicios/logs) + `linux-admin-v1` (30, cuentas+sudo/ACL/señales/discos/systemd/journald/pacman/timers/tar) + `linux-networking-v1` (20, `ip`/rutas/DNS/`curl`/`ss`/nftables/resolved) — los tres nuevos, ver sesión de hoy | solo-curso |
+  | GitHub Actions | 74 snippets | `github-actions-foundations-v1` (25, anatomía del workflow/expresiones/triggers/jobs/matrices/secretos) + `github-actions-pipelines-v1` (24, caché/artefactos/compuestas/reutilizables/contenedores/patrones) + `github-actions-devops-v1` (25, seguridad/OIDC/CodeQL/releases/entornos/`gh`) — los tres nuevos, ver sesión de hoy | solo-curso |
 
 - Curso SQL: base de datos de ejemplo compartida tipo biblioteca
   (`authors`, `books`, `members`, `loans`), 8 categorías contiguas:
@@ -63,11 +65,11 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `sqlAggregation` (7), `sqlJoins` (7), `sqlModifications` (5),
   `sqlAdvancedQueries` (6). Dificultad 30/22/7/1.
 - Gate de calidad: `bash tool/check.sh` (format + analyze + arquitectura +
-  tests). Última corrida (2026-09-12, cierre de Git): **verde de punta a
-  punta — 680 tests**, format/analyze/arquitectura limpios (incluye C#,
-  Swift, Kotlin, Dart, Django, PHP y Git, todas las sesiones concurrentes
-  del día). `content_category.dart` quedó en **414 líneas** (límite duro
-  500) tras reescribir sus doc comments y añadir las 10 categorías de Git.
+  tests). Última corrida (2026-09-12, cierre de GitHub Actions): **verde de
+  punta a punta — 731 tests**, format/analyze/arquitectura limpios (incluye
+  C#, Swift, Kotlin, Dart, Django, PHP, Git, Linux, Docker y GitHub Actions,
+  todas las sesiones del día). `content_category.dart` quedó en **490 líneas**
+  (límite duro 500) con las categorías de Linux, Docker y GitHub Actions.
 - Set de íconos: **Lucide** (`lucide_icons_flutter`), no Material `Icons.*`
   — elegido por combinar con Geist (misma familia visual que usa Vercel/
   shadcn). `cupertino_icons` (vestigial, nunca usado) fue removido.
@@ -136,10 +138,133 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `gitMaintenance`). Cada comando se ejecutó de verdad con `git` 2.55 en
   repos desechables deterministas (HOME aislado, autor/fecha fijos) —
   ver sesión de hoy.
+- **Linux es el vigésimo lenguaje** (sesión de hoy): tres rutas
+  (`linux-foundations-v1` 35, `linux-admin-v1` 30, `linux-networking-v1` 20),
+  85 snippets solo-curso y doce categorías propias (`linuxBasics` …
+  `backupAndArchives`). Cada comando se ejecutó de verdad en contenedores
+  desechables de Arch (`--privileged` para `ip`/`nft`, `--systemd=always`
+  con `/sbin/init` para systemd/journal) — ver sesión de hoy.
 
 ---
 
 ## Historial de sesiones
+
+### 2026-09-12 — GitHub Actions: Fundamentos + Pipelines + DevOps (lenguaje nuevo, 3 rutas, 74 snippets)
+
+- **Pedido del usuario**: un curso/guía de introducción a GitHub Actions
+  (YAML/CI/DevOps) bilingüe (en/es, mismos estándares que las otras guías).
+  Tras preguntarle eligió **tres rutas**, el título **"CI/CD with GitHub
+  Actions" / "CI/CD con GitHub Actions"** y el enfoque **GitHub Actions +
+  DevOps real**.
+- **Contenido**: 74 snippets solo-curso, dificultad 29/28/17/0, en tres rutas —
+  `github-actions-foundations-v1` (25: anatomía del workflow, expresiones y
+  contextos, disparadores, jobs/pasos, runners y matrices, secretos y
+  variables) + `github-actions-pipelines-v1` (24: caché y artefactos,
+  acciones compuestas y workflows reutilizables, contenedores/servicios/Docker,
+  patrones de pipeline) + `github-actions-devops-v1` (25: permisos/pinning/OIDC/
+  CodeQL/Dependabot, entornos/releases/Pages/atestaciones/registros, y 7
+  comandos `gh`).
+- **13 categorías propias** (`workflowBasics`, `workflowTriggers`,
+  `jobsAndSteps`, `expressionsAndContexts`, `runnersAndMatrix`,
+  `secretsAndVariables`, `cachingAndArtifacts`, `reusableAndComposite`,
+  `containersAndDocker`, `pipelinePatterns`, `securityHardening`,
+  `deploymentsAndReleases`, `ciOperations`): enum comprimido a **490 líneas**
+  para respetar el límite de 500 + `.arb` en/es + `gen-l10n` +
+  `content_labels.dart`.
+- **Verificación real, no por ojo**: harness propio
+  (`/tmp/opencode/gha-course/`) con **actionlint 1.7.12 + ShellCheck 0.11**,
+  `action-validator` 0.6.0, `check-jsonschema` (esquema de Dependabot),
+  `gh 2.100.0 <cmd> --help` para los comandos, y **33 de los 74 snippets
+  ejecutados de verdad** con `act 0.2.89` + podman sobre
+  `catthehacker/ubuntu:act-latest` (los artefactos v7 y los healthchecks de
+  servicios fallan por limitaciones de act/podman, así que se validaron
+  aparte). Versiones de acciones contrastadas contra la API de GitHub
+  (checkout@v7, setup-node@v7, cache@v6, upload-artifact@v7,
+  download-artifact@v8, build-push-action@v7, codeql-action@v4,
+  action-gh-release@v3…).
+- **Revisión adversarial fresca** (2 agentes sin contexto: código y
+  currícula/prosa) con hallazgos reales corregidos: `npm publish` sin
+  `registry-url` (no autenticaba), `az webapp deploy` sin `--resource-group`,
+  `gcloud run deploy` sin `--region`, inyección de datos de evento en `run:`
+  (`github.ref_name`, `release.tag_name`, `workflow_run.head_branch` → `env:`),
+  `dorny/paths-filter` sin `pull-requests: read`, tag GHCR con mayúsculas
+  (ahora `docker/metadata-action`), guard de `cache-hit` muerto, `types:` sin
+  `ready_for_review` (el título prometía ejecutar al marcar listo), prosa con
+  el default amplio de `GITHUB_TOKEN` desactualizada, `@v1` mutable y alcance
+  real de `secrets: inherit`, y ~15 precisiones más (títulos, calcos, ES).
+- **Wiring**: `ProgrammingLanguage.githubActions` +
+  `GithubActionsSyntaxTokenizer` (YAML: claves GHA, `${{ }}` keyword incluso
+  dentro de strings y block scalars, comentarios `#` solo a inicio de palabra,
+  vocabulario `gh`) con **17 tests**; l10n (`languageGithubActions`/blurb +
+  13 categorías en ambos `.arb`); assets en `pubspec.yaml` + ambos data
+  sources; completeness/key-layout; `audit_lesson_order.py` (`githubActions`
+  en `COURSE_ONLY_LANGUAGES`); drift test (1215→**1289** activos, 447→**476**
+  beginner, 39 ids con `_` añadidos).
+- **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` + `CLAUDE.md`
+  (espejo byte a byte), skill `content-curriculum` (SKILL.md, content-model,
+  snippet-authoring con la receta de actionlint/action-validator/act).
+- **Verificado**: `bash tool/check.sh` completo en verde — **731 tests**,
+  format/analyze/arquitectura limpios (incluye las sesiones concurrentes de
+  Linux y Docker del mismo working tree).
+
+### 2026-09-12 — Linux: Essentials + Administración + Redes (lenguaje nuevo, 3 rutas, 85 snippets)
+
+- **Pedido del usuario**: un curso/guía de introducción a Linux bilingüe
+  (en/es, mismos estándares que las otras guías). Tras preguntarle eligió
+  **tres rutas**, temario **autocontenido con enfoque de SO** (asumiendo un
+  solape mínimo con Bash), **Arch Linux real** como base de verificación y
+  el título **"Linux essentials" / "Linux esencial"**.
+- **Contenido**: 85 snippets solo-curso, dificultad 37/36/11/1, en tres
+  rutas — `linux-foundations-v1` (35: distro/kernel, FHS, navegación,
+  archivos, permisos, usuarios, procesos, paquetes, servicios y logs),
+  `linux-admin-v1` (30: cuentas y `sudo`, sticky/setgid/ACL, señales y
+  prioridad, discos, unidades systemd, journald, pacman, timers y tar) y
+  `linux-networking-v1` (20: `ip`, rutas, DNS, `ping`/`curl`, `ss`,
+  nftables y systemd-resolved) — con **12 categorías propias**
+  (`linuxBasics`, `linuxFiles`, `permissions`, `usersAndGroups`,
+  `processes`, `packages`, `services`, `logs`, `storage`, `networking`,
+  `scheduling`, `backupAndArchives`).
+- **Verificación real, no por ojo**: harness propio
+  (`/tmp/opencode/linux-course/verify.py`) que ejecuta **cada snippet con
+  `archlinux:latest`** en contenedor desechable (plano, `--privileged`, o
+  `--systemd=always --privileged` + `/sbin/init`), con setup por caso,
+  `code` leído del asset final (verbatim) y aserciones de stdout/stderr/
+  exit + estado resultante. **85/85 en verde**, re-corrido tras los
+  arreglos del review. Casos de fallo incluidos a propósito:
+  `systemctl is-enabled` deshabilitado, `pacman -Q` tras `-Rns`, `pgrep`
+  sin coincidencia, `ip link` down.
+- **Revisión adversarial fresca** (2 agentes sin contexto: código/ejecución
+  y currícula/prosa) con hallazgos reales corregidos antes de cerrar:
+  **blockers de reproducibilidad** (un `demo.service` que ningún snippet
+  creaba, `chmod`/`chown` sobre `/tmp/demo/notes.txt` inexistente, `dev01`
+  borrado y luego suplantado en la ruta de admin), `dev02` con `chpasswd`
+  para que el lock no fuera no-op, `sudo` faltante en `passwd -S`,
+  `ss -tulpn` y `nft list tables`, contradicción `pacman -Sy` vs `-Syu`
+  (ahora una sola lección `pacman -Syu --needed`), `getent hosts` →
+  `getent ahosts` (devuelve `::1` y `127.0.0.1`),
+  `--timer-property=AccuracySec=100ms` tras descubrir que los timers
+  pueden dispararse hasta 1 min tarde, tokenizer sin `cd`/`tail`/`tree`/
+  `echo` y con `/dev/null` pintado como keyword (ahora las rutas tras `/`
+  son identificadores), y ~20 precisiones de prosa (EN/ES) incluidos
+  calcos, títulos largos y el `cache state` inexistente de `resolvectl`.
+- **Wiring**: `ProgrammingLanguage.linux` + 12 `ContentCategory` nuevas,
+  `LinuxSyntaxTokenizer` (comandos y verbos systemd/nft, flags como token,
+  rutas como identificadores) con 17 tests; l10n (`languageLinux` +
+  `languageLinuxBlurb` + 12 categorías en ambos `.arb`) + `gen-l10n`;
+  assets en `pubspec.yaml` + ambos data sources; completeness/key-layout/
+  drift (1215 activos / 447 beginner tras integrar la sesión concurrente
+  de Docker, sets de `_`/`%` regenerados); `audit_lesson_order.py`
+  (`linux` en `COURSE_ONLY_LANGUAGES`).
+- **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
+  `CLAUDE.md` (espejo byte a byte), skill `content-curriculum` (SKILL.md,
+  content-model y la receta de verificación de Linux en snippet-authoring).
+- **Nota de concurrencia**: el mismo working tree traía una sesión activa
+  de Docker (58 snippets, 3 rutas) que se fue integrando en paralelo; los
+  conteos del drift test se recalcularon contra el catálogo asentado final
+  y el gate se corrió con ambas sesiones verdes.
+- **Verificado**: `bash tool/check.sh` completo en verde — **714 tests**,
+  format/analyze/arquitectura limpios; `audit_lesson_order.py` verde para
+  las 3 rutas y harness de ejecución 85/85.
 
 ### 2026-09-12 — Git: Fundamentos + Flujos + Internals (lenguaje nuevo, 3 rutas, 70 snippets)
 

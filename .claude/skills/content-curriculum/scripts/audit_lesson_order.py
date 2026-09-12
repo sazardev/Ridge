@@ -89,6 +89,7 @@ COURSE_ONLY_LANGUAGES = {
     "git",
     "linux",
     "docker",
+    "githubActions",
 }
 
 

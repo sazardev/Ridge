@@ -2378,6 +2378,84 @@ abstract class AppLocalizations {
   /// **'Debug & maintenance'**
   String get categoryDockerMaintenance;
 
+  /// No description provided for @categoryWorkflowBasics.
+  ///
+  /// In en, this message translates to:
+  /// **'Workflow basics'**
+  String get categoryWorkflowBasics;
+
+  /// No description provided for @categoryWorkflowTriggers.
+  ///
+  /// In en, this message translates to:
+  /// **'Triggers & events'**
+  String get categoryWorkflowTriggers;
+
+  /// No description provided for @categoryJobsAndSteps.
+  ///
+  /// In en, this message translates to:
+  /// **'Jobs & steps'**
+  String get categoryJobsAndSteps;
+
+  /// No description provided for @categoryExpressionsAndContexts.
+  ///
+  /// In en, this message translates to:
+  /// **'Expressions & contexts'**
+  String get categoryExpressionsAndContexts;
+
+  /// No description provided for @categoryRunnersAndMatrix.
+  ///
+  /// In en, this message translates to:
+  /// **'Runners & matrix'**
+  String get categoryRunnersAndMatrix;
+
+  /// No description provided for @categorySecretsAndVariables.
+  ///
+  /// In en, this message translates to:
+  /// **'Secrets & variables'**
+  String get categorySecretsAndVariables;
+
+  /// No description provided for @categoryCachingAndArtifacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Caching & artifacts'**
+  String get categoryCachingAndArtifacts;
+
+  /// No description provided for @categoryReusableAndComposite.
+  ///
+  /// In en, this message translates to:
+  /// **'Reusable & composite'**
+  String get categoryReusableAndComposite;
+
+  /// No description provided for @categoryContainersAndDocker.
+  ///
+  /// In en, this message translates to:
+  /// **'Containers & Docker'**
+  String get categoryContainersAndDocker;
+
+  /// No description provided for @categoryPipelinePatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'Pipeline patterns'**
+  String get categoryPipelinePatterns;
+
+  /// No description provided for @categorySecurityHardening.
+  ///
+  /// In en, this message translates to:
+  /// **'Security hardening'**
+  String get categorySecurityHardening;
+
+  /// No description provided for @categoryDeploymentsAndReleases.
+  ///
+  /// In en, this message translates to:
+  /// **'Deploys & releases'**
+  String get categoryDeploymentsAndReleases;
+
+  /// No description provided for @categoryCiOperations.
+  ///
+  /// In en, this message translates to:
+  /// **'CI operations'**
+  String get categoryCiOperations;
+
   /// No description provided for @languageGo.
   ///
   /// In en, this message translates to:
@@ -2504,6 +2582,12 @@ abstract class AppLocalizations {
   /// **'Docker'**
   String get languageDocker;
 
+  /// No description provided for @languageGithubActions.
+  ///
+  /// In en, this message translates to:
+  /// **'GitHub Actions'**
+  String get languageGithubActions;
+
   /// No description provided for @languageGoBlurb.
   ///
   /// In en, this message translates to:
@@ -2629,6 +2713,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Package it once, run it anywhere.'**
   String get languageDockerBlurb;
+
+  /// No description provided for @languageGithubActionsBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'The CI/CD engine of GitHub — YAML workflows that build, test, and ship your code.'**
+  String get languageGithubActionsBlurb;
 
   /// No description provided for @snippetPracticeAction.
   ///

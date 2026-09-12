@@ -87,7 +87,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 1215)
+        .firstWhere((snippets) => snippets.length == 1289)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -101,7 +101,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(1215));
+    expect(catalog, hasLength(1289));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -113,7 +113,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(1215));
+      expect(catalog, hasLength(1289));
     },
   );
 
@@ -124,7 +124,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(1215));
+    expect(result, hasLength(1289));
   });
 
   test(
@@ -154,7 +154,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(447));
+    expect(beginnerSnippets, hasLength(476));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -262,6 +262,45 @@ void main() {
       'docker-compose-012',
       'docker-compose-016',
       'docker-file-004',
+      'gha-container-001',
+      'gha-deploy-001',
+      'gha-deploy-002',
+      'gha-deploy-003',
+      'gha-deploy-004',
+      'gha-docker-001',
+      'gha-docker-002',
+      'gha-expr-001',
+      'gha-expr-002',
+      'gha-expr-003',
+      'gha-job-001',
+      'gha-job-002',
+      'gha-job-004',
+      'gha-job-006',
+      'gha-matrix-004',
+      'gha-pattern-002',
+      'gha-pattern-003',
+      'gha-pattern-004',
+      'gha-pattern-005',
+      'gha-release-001',
+      'gha-release-004',
+      'gha-reusable-001',
+      'gha-secret-001',
+      'gha-secret-002',
+      'gha-secret-003',
+      'gha-security-003',
+      'gha-security-004',
+      'gha-security-005',
+      'gha-security-006',
+      'gha-security-007',
+      'gha-security-008',
+      'gha-service-001',
+      'gha-trigger-001',
+      'gha-trigger-002',
+      'gha-trigger-003',
+      'gha-trigger-004',
+      'gha-trigger-005',
+      'gha-workflow-003',
+      'gha-workflow-004',
       'git-collab-009',
       'go-algo-010',
       'go-algo-011',

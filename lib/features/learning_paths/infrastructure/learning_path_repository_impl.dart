@@ -96,6 +96,9 @@ class LearningPathRepositoryImpl implements LearningPathRepository {
     'assets/content/learning_paths/docker_foundations_v1.json',
     'assets/content/learning_paths/docker_compose_v1.json',
     'assets/content/learning_paths/docker_advanced_v1.json',
+    'assets/content/learning_paths/github_actions_foundations_v1.json',
+    'assets/content/learning_paths/github_actions_pipelines_v1.json',
+    'assets/content/learning_paths/github_actions_devops_v1.json',
   ];
 
   final List<String> _assetPaths;

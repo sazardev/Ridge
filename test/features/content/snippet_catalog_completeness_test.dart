@@ -41,6 +41,8 @@ const Map<ProgrammingLanguage, String> _catalogAssetByLanguage = {
   ProgrammingLanguage.git: 'assets/content/snippets/git_v1.json',
   ProgrammingLanguage.linux: 'assets/content/snippets/linux_v1.json',
   ProgrammingLanguage.docker: 'assets/content/snippets/docker_v1.json',
+  ProgrammingLanguage.githubActions:
+      'assets/content/snippets/github_actions_v1.json',
 };
 
 /// Languages whose catalog backs free practice (Zen/Sprint/Precision).
@@ -190,6 +192,9 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/docker_foundations_v1.json',
   'assets/content/learning_paths/docker_compose_v1.json',
   'assets/content/learning_paths/docker_advanced_v1.json',
+  'assets/content/learning_paths/github_actions_foundations_v1.json',
+  'assets/content/learning_paths/github_actions_pipelines_v1.json',
+  'assets/content/learning_paths/github_actions_devops_v1.json',
 ];
 
 Future<Map<String, Object?>> _loadLearningPath(String assetPath) async {

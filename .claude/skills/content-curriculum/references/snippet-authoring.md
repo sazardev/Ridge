@@ -461,6 +461,87 @@ against a disposable repository:
   lesson that never reached a verdict, and a `--fixup` snippet missing its
   own `git add`.
 
+## New Linux code: one disposable Arch container per snippet, output asserted
+
+Linux snippets are command lines (not programs), so the equivalent of
+`go run` is executing each one for real inside
+`podman run docker.io/library/archlinux:latest`:
+
+- One fresh container per snippet, with the snippet's own setup (create
+  the file/user/unit it operates on) and an empty stdin; only the
+  `pacman -S`/`-Rns` lessons pipe stdin from `yes` so the confirmation
+  prompt never blocks. Assert both streams and the exit code, plus any
+  resulting state the lesson implies (`test -f`, `stat -c`,
+  `systemctl is-enabled`, `nft list tables`).
+- Privilege-sensitive lessons run with `--privileged` (`ip link set`,
+  `nft add/list/delete`); systemd lessons need a real manager:
+  `podman run -d --rm --systemd=always --privileged <image> /sbin/init`,
+  then poll `systemctl is-system-running` and run the snippet through
+  `podman exec` — `systemctl status/start/stop/enable`, `journalctl` and
+  `systemd-run --on-active` all behave normally there.
+- Time-based units need an explicit accuracy budget: `systemd-run
+  --on-active=2` may legally fire up to a minute late (timers default to
+  `AccuracySec=1min`), so the catalog sets
+  `--timer-property=AccuracySec=100ms` before a short `sleep` plus a
+  `journalctl -u` assertion. Piping stdin with `yes |` silently breaks
+  the journal attribution of `systemd-run`'s transient unit — keep its
+  stdin empty.
+- The catalog `code` must be a verbatim substring of what the harness
+  executed (read it from the final JSON, never retype it) and must stay
+  ASCII-only — `key_layout_map_test.dart` maps every character to a
+  physical US-QWERTY key.
+- Network lessons (`curl`/`ping` against `archlinux.org`, `pacman -Sy`)
+  need internet; assert on environment-independent strings (`200`,
+  `2 received`, `tree v`) and keep a stable remote host.
+- Make each state-changing lesson self-contained (create the file, user
+  or unit it acts on) or explicitly sequential within its route (e.g.
+  lesson N installs a package that lesson N+1 removes), because the
+  learner's machine only carries what earlier lessons created — the
+  harness's per-case setup must mirror that chain, never invent it.
+
+## New GitHub Actions YAML: actionlint + shellcheck, action-validator, act
+
+GitHub Actions snippets are workflow YAML (plus two composite
+`action.yml` files, one `.github/dependabot.yml`, and seven `gh` CLI
+commands), so the equivalent of `go run` is a stack of real validators
+plus selected execution:
+
+- Every workflow goes through `actionlint` (1.7.12 here) with
+  `shellcheck` (0.11) on `PATH` — actionlint checks the workflow schema,
+  contexts, expressions, `needs` graphs and event payload typing, and
+  delegates each `run:` script to ShellCheck. Keep the run scripts clean
+  under both tools: a `#` inside an unquoted YAML scalar silently starts a
+  YAML comment (use `|` block scalars or drop the `#`), and ShellCheck's
+  style findings (SC2129) are still actionlint failures.
+- `action-validator` (0.6.0 via `npx`) validates every workflow and every
+  `action.yml` against the official JSON schemas. Its schema can lag GA
+  features (it rejects the real `attestations: write` permission); keep a
+  narrow, documented allowlist instead of changing correct YAML.
+- `check-jsonschema --builtin-schema vendor.dependabot` validates the
+  Dependabot config; `gh <subcommand> --help` proves every flag used by
+  the CLI lessons exists, and ShellCheck the command line too.
+- Execute a representative subset for real with `act` (0.2.89) against
+  podman (`podman system service` socket + `DOCKER_HOST`), mapping
+  `ubuntu-latest` to `ghcr.io/catthehacker/ubuntu:act-latest` and enabling
+  `--artifact-server-path`/`--cache-server-path`. `act` limits what is
+  runnable: JS artifacts v7 currently fail on its artifact server
+  protocol, service-container health polling is unreliable under
+  rootless podman, and cloud-registry steps need credentials — validate
+  those statically and check the semantics manually (for service health,
+  the same container/options map cleanly to a plain `podman run` and a
+  `psql` query).
+- Never interpolate event data straight into a `run:` shell command when
+  it can carry attacker-controlled text (branch/tag names, PR titles):
+  put it in `env:` and read `$VAR` in the script. The catalog teaches
+  this for `github.ref_name`/`release.tag_name`/`workflow_run.head_branch`.
+- Action majors move fast: verify each one against
+  `curl -s https://api.github.com/repos/<owner>/<repo>/releases/latest`
+  before shipping (the 2026 baseline is checkout@v7, setup-node@v7,
+  cache@v6, upload-artifact@v7, download-artifact@v8,
+  build-push-action@v7, codeql-action@v4, action-gh-release@v3).
+- Keep `code` ASCII-only — `key_layout_map_test.dart` maps every
+  character to a physical US-QWERTY key.
+
 ## Large batch authoring/rewrites (10+ entries): delegate, then validate twice
 
 When rewriting or extending a large slice of the catalog (e.g. adding

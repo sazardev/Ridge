@@ -1,0 +1,189 @@
+[
+  {
+    "id": "github-actions-devops-v1",
+    "language": "githubActions",
+    "titleEn": "DevOps and security",
+    "titleEs": "DevOps y seguridad",
+    "descriptionEn": "Deploy safely with environments, OIDC, releases, attestations, and secure defaults.",
+    "descriptionEs": "Despliega con seguridad: entornos, OIDC, releases, atestaciones y ajustes seguros.",
+    "tagEn": "DevOps",
+    "tagEs": "DevOps",
+    "lessons": [
+      {
+        "id": "github-actions-devops-v1-step01",
+        "snippetId": "gha-security-001",
+        "order": 1,
+        "titleEn": "Least privilege permissions",
+        "titleEs": "Permisos de mínimo privilegio"
+      },
+      {
+        "id": "github-actions-devops-v1-step02",
+        "snippetId": "gha-security-007",
+        "order": 2,
+        "titleEn": "Dependency review on pull requests",
+        "titleEs": "Revisión de dependencias en pull requests"
+      },
+      {
+        "id": "github-actions-devops-v1-step03",
+        "snippetId": "gha-security-009",
+        "order": 3,
+        "titleEn": "Schedule Dependabot updates",
+        "titleEs": "Programa las actualizaciones de Dependabot"
+      },
+      {
+        "id": "github-actions-devops-v1-step04",
+        "snippetId": "gha-security-002",
+        "order": 4,
+        "titleEn": "Pin actions to a commit SHA",
+        "titleEs": "Fija actions a un SHA"
+      },
+      {
+        "id": "github-actions-devops-v1-step05",
+        "snippetId": "gha-security-008",
+        "order": 5,
+        "titleEn": "CodeQL security scanning",
+        "titleEs": "Análisis de seguridad con CodeQL"
+      },
+      {
+        "id": "github-actions-devops-v1-step06",
+        "snippetId": "gha-secret-002",
+        "order": 6,
+        "titleEn": "Comment on a pull request",
+        "titleEs": "Comenta en un pull request"
+      },
+      {
+        "id": "github-actions-devops-v1-step07",
+        "snippetId": "gha-security-003",
+        "order": 7,
+        "titleEn": "OIDC deploy to AWS",
+        "titleEs": "Despliegue a AWS con OIDC"
+      },
+      {
+        "id": "github-actions-devops-v1-step08",
+        "snippetId": "gha-security-004",
+        "order": 8,
+        "titleEn": "OIDC deploy to Google Cloud",
+        "titleEs": "Despliegue a Google Cloud con OIDC"
+      },
+      {
+        "id": "github-actions-devops-v1-step09",
+        "snippetId": "gha-security-005",
+        "order": 9,
+        "titleEn": "OIDC deploy to Azure",
+        "titleEs": "Despliegue a Azure con OIDC"
+      },
+      {
+        "id": "github-actions-devops-v1-step10",
+        "snippetId": "gha-security-006",
+        "order": 10,
+        "titleEn": "GitHub App cross-repo token",
+        "titleEs": "Token de GitHub App entre repos"
+      },
+      {
+        "id": "github-actions-devops-v1-step11",
+        "snippetId": "gha-deploy-001",
+        "order": 11,
+        "titleEn": "Target a deployment environment",
+        "titleEs": "Apunta a un entorno de despliegue"
+      },
+      {
+        "id": "github-actions-devops-v1-step12",
+        "snippetId": "gha-deploy-004",
+        "order": 12,
+        "titleEn": "Deploy one job per region",
+        "titleEs": "Despliega un job por región"
+      },
+      {
+        "id": "github-actions-devops-v1-step13",
+        "snippetId": "gha-release-004",
+        "order": 13,
+        "titleEn": "Create a release with `gh`",
+        "titleEs": "Crea un release con `gh`"
+      },
+      {
+        "id": "github-actions-devops-v1-step14",
+        "snippetId": "gha-release-001",
+        "order": 14,
+        "titleEn": "Release on version tags",
+        "titleEs": "Publica releases desde tags de versión"
+      },
+      {
+        "id": "github-actions-devops-v1-step15",
+        "snippetId": "gha-release-002",
+        "order": 15,
+        "titleEn": "Release with build provenance",
+        "titleEs": "Release con procedencia de compilación"
+      },
+      {
+        "id": "github-actions-devops-v1-step16",
+        "snippetId": "gha-release-003",
+        "order": 16,
+        "titleEn": "Publish to npm with provenance",
+        "titleEs": "Publica en npm con procedencia"
+      },
+      {
+        "id": "github-actions-devops-v1-step17",
+        "snippetId": "gha-deploy-003",
+        "order": 17,
+        "titleEn": "Publish a container to GHCR",
+        "titleEs": "Publica un contenedor en GHCR"
+      },
+      {
+        "id": "github-actions-devops-v1-step18",
+        "snippetId": "gha-deploy-002",
+        "order": 18,
+        "titleEn": "Publish a site to GitHub Pages",
+        "titleEs": "Publica un sitio en GitHub Pages"
+      },
+      {
+        "id": "github-actions-devops-v1-step19",
+        "snippetId": "gha-ops-001",
+        "order": 19,
+        "titleEn": "List recent workflow runs",
+        "titleEs": "Lista las ejecuciones recientes"
+      },
+      {
+        "id": "github-actions-devops-v1-step20",
+        "snippetId": "gha-ops-002",
+        "order": 20,
+        "titleEn": "List failed workflow runs",
+        "titleEs": "Lista las ejecuciones fallidas"
+      },
+      {
+        "id": "github-actions-devops-v1-step21",
+        "snippetId": "gha-ops-003",
+        "order": 21,
+        "titleEn": "Show only failed step logs",
+        "titleEs": "Muestra solo logs de pasos fallidos"
+      },
+      {
+        "id": "github-actions-devops-v1-step22",
+        "snippetId": "gha-ops-004",
+        "order": 22,
+        "titleEn": "Manually dispatch a workflow",
+        "titleEs": "Lanza un workflow manualmente"
+      },
+      {
+        "id": "github-actions-devops-v1-step23",
+        "snippetId": "gha-ops-005",
+        "order": 23,
+        "titleEn": "Download a run artifact",
+        "titleEs": "Descarga un artefacto de una ejecución"
+      },
+      {
+        "id": "github-actions-devops-v1-step24",
+        "snippetId": "gha-ops-007",
+        "order": 24,
+        "titleEn": "Rerun only failed jobs",
+        "titleEs": "Relanza solo los jobs fallidos"
+      },
+      {
+        "id": "github-actions-devops-v1-step25",
+        "snippetId": "gha-ops-006",
+        "order": 25,
+        "titleEn": "Audit Actions cache entries",
+        "titleEs": "Audita la caché de Actions"
+      }
+    ]
+  }
+]

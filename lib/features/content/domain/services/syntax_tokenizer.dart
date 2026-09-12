@@ -20,6 +20,7 @@ part 'php_syntax_tokenizer.dart';
 part 'git_syntax_tokenizer.dart';
 part 'linux_syntax_tokenizer.dart';
 part 'docker_syntax_tokenizer.dart';
+part 'github_actions_syntax_tokenizer.dart';
 
 /// Classifies every character of a source-code string for syntax
 /// highlighting (SPEC.md-adjacent presentation concern, not itself part
@@ -58,6 +59,8 @@ abstract final class SyntaxTokenizers {
         ProgrammingLanguage.git => const GitSyntaxTokenizer(),
         ProgrammingLanguage.linux => const LinuxSyntaxTokenizer(),
         ProgrammingLanguage.docker => const DockerSyntaxTokenizer(),
+        ProgrammingLanguage.githubActions =>
+          const GithubActionsSyntaxTokenizer(),
       };
 }
 

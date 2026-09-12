@@ -1,0 +1,189 @@
+[
+  {
+    "id": "github-actions-foundations-v1",
+    "language": "githubActions",
+    "titleEn": "CI/CD with GitHub Actions",
+    "titleEs": "CI/CD con GitHub Actions",
+    "descriptionEn": "Build, test, and ship code with YAML workflows, from a single echo to a full pipeline.",
+    "descriptionEs": "Construye, prueba y publica código con flujos YAML, de un solo echo a un pipeline completo.",
+    "tagEn": "Fundamentals",
+    "tagEs": "Fundamentos",
+    "lessons": [
+      {
+        "id": "github-actions-foundations-v1-step01",
+        "snippetId": "gha-workflow-001",
+        "order": 1,
+        "titleEn": "Your first workflow",
+        "titleEs": "Tu primer flujo de trabajo"
+      },
+      {
+        "id": "github-actions-foundations-v1-step02",
+        "snippetId": "gha-workflow-002",
+        "order": 2,
+        "titleEn": "Build then test with `needs`",
+        "titleEs": "Compila y prueba con `needs`"
+      },
+      {
+        "id": "github-actions-foundations-v1-step03",
+        "snippetId": "gha-workflow-003",
+        "order": 3,
+        "titleEn": "Node CI with cached dependencies",
+        "titleEs": "Node CI con caché de dependencias"
+      },
+      {
+        "id": "github-actions-foundations-v1-step04",
+        "snippetId": "gha-workflow-004",
+        "order": 4,
+        "titleEn": "Environment variables at three levels",
+        "titleEs": "Variables de entorno en tres niveles"
+      },
+      {
+        "id": "github-actions-foundations-v1-step05",
+        "snippetId": "gha-workflow-005",
+        "order": 5,
+        "titleEn": "Monorepo build with `defaults`",
+        "titleEs": "Compilación de monorepo con `defaults`"
+      },
+      {
+        "id": "github-actions-foundations-v1-step06",
+        "snippetId": "gha-expr-001",
+        "order": 6,
+        "titleEn": "Inspect built-in contexts",
+        "titleEs": "Inspecciona los contextos integrados"
+      },
+      {
+        "id": "github-actions-foundations-v1-step07",
+        "snippetId": "gha-expr-003",
+        "order": 7,
+        "titleEn": "Default values with logical operators",
+        "titleEs": "Valores por defecto con operadores lógicos"
+      },
+      {
+        "id": "github-actions-foundations-v1-step08",
+        "snippetId": "gha-expr-002",
+        "order": 8,
+        "titleEn": "Functions in expressions",
+        "titleEs": "Funciones en las expresiones"
+      },
+      {
+        "id": "github-actions-foundations-v1-step09",
+        "snippetId": "gha-trigger-001",
+        "order": 9,
+        "titleEn": "Filter pushes by branch and path",
+        "titleEs": "Filtra pushes por rama y ruta"
+      },
+      {
+        "id": "github-actions-foundations-v1-step10",
+        "snippetId": "gha-trigger-002",
+        "order": 10,
+        "titleEn": "Pull request activity types",
+        "titleEs": "Tipos de actividad de pull request"
+      },
+      {
+        "id": "github-actions-foundations-v1-step11",
+        "snippetId": "gha-trigger-003",
+        "order": 11,
+        "titleEn": "Weekly audit on a schedule",
+        "titleEs": "Auditoría semanal programada"
+      },
+      {
+        "id": "github-actions-foundations-v1-step12",
+        "snippetId": "gha-trigger-005",
+        "order": 12,
+        "titleEn": "Run on published releases",
+        "titleEs": "Ejecutar al publicar un release"
+      },
+      {
+        "id": "github-actions-foundations-v1-step13",
+        "snippetId": "gha-trigger-004",
+        "order": 13,
+        "titleEn": "Manual deploy with typed inputs",
+        "titleEs": "Despliegue manual con entradas tipadas"
+      },
+      {
+        "id": "github-actions-foundations-v1-step14",
+        "snippetId": "gha-job-003",
+        "order": 14,
+        "titleEn": "Tolerate a failing audit step",
+        "titleEs": "Tolera un paso de auditoría fallido"
+      },
+      {
+        "id": "github-actions-foundations-v1-step15",
+        "snippetId": "gha-job-006",
+        "order": 15,
+        "titleEn": "Run steps in different shells",
+        "titleEs": "Ejecuta pasos en distintos shells"
+      },
+      {
+        "id": "github-actions-foundations-v1-step16",
+        "snippetId": "gha-job-001",
+        "order": 16,
+        "titleEn": "Pass data between jobs",
+        "titleEs": "Pasa datos entre jobs"
+      },
+      {
+        "id": "github-actions-foundations-v1-step17",
+        "snippetId": "gha-job-004",
+        "order": 17,
+        "titleEn": "Capture a step output",
+        "titleEs": "Captura la salida de un paso"
+      },
+      {
+        "id": "github-actions-foundations-v1-step18",
+        "snippetId": "gha-job-002",
+        "order": 18,
+        "titleEn": "Deploy only from main",
+        "titleEs": "Despliega solo desde main"
+      },
+      {
+        "id": "github-actions-foundations-v1-step19",
+        "snippetId": "gha-job-005",
+        "order": 19,
+        "titleEn": "Fan in with a final report",
+        "titleEs": "Consolidación con un informe final"
+      },
+      {
+        "id": "github-actions-foundations-v1-step20",
+        "snippetId": "gha-matrix-001",
+        "order": 20,
+        "titleEn": "Cross-platform test matrix",
+        "titleEs": "Matriz de pruebas multiplataforma"
+      },
+      {
+        "id": "github-actions-foundations-v1-step21",
+        "snippetId": "gha-matrix-003",
+        "order": 21,
+        "titleEn": "Pinned x64 and ARM runners",
+        "titleEs": "Runners x64 y ARM fijados"
+      },
+      {
+        "id": "github-actions-foundations-v1-step22",
+        "snippetId": "gha-matrix-002",
+        "order": 22,
+        "titleEn": "Matrix include and exclude",
+        "titleEs": "Matriz con include y exclude"
+      },
+      {
+        "id": "github-actions-foundations-v1-step23",
+        "snippetId": "gha-matrix-004",
+        "order": 23,
+        "titleEn": "Build a matrix from JSON output",
+        "titleEs": "Matriz construida desde una salida JSON"
+      },
+      {
+        "id": "github-actions-foundations-v1-step24",
+        "snippetId": "gha-secret-003",
+        "order": 24,
+        "titleEn": "Use repository variables",
+        "titleEs": "Usa variables de repositorio"
+      },
+      {
+        "id": "github-actions-foundations-v1-step25",
+        "snippetId": "gha-secret-001",
+        "order": 25,
+        "titleEn": "Publish with a secret token",
+        "titleEs": "Publica con un token secreto"
+      }
+    ]
+  }
+]

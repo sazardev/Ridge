@@ -125,7 +125,7 @@
         "id": "linux-foundations-v1-step17",
         "snippetId": "linux-files-011",
         "order": 17,
-        "titleEn": "Read file starts and ends",
+        "titleEn": "Read the start and end of a file",
         "titleEs": "Mira el inicio y el final"
       },
       {

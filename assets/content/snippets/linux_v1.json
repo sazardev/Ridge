@@ -48,8 +48,8 @@
     "isActive": true,
     "titleEn": "Show hostname and uptime",
     "titleEs": "Muestra hostname y uptime",
-    "tldrEn": "Show the machine name and how long it has been up",
-    "tldrEs": "Muestra el nombre del equipo y cuánto lleva encendido",
+    "tldrEn": "Read the name and uptime with `uptime -p`",
+    "tldrEs": "Lee el nombre y el uptime con `uptime -p`",
     "explanationEn": "`cat /etc/hostname` prints the static name stored for this machine, and `uptime -p` reports how long the system has been running in a readable phrase such as `up 3 hours`. The hostname lives in a plain file that is read early at boot, while the uptime comes from elapsed kernel time, and `-p` only changes its formatting to words instead of clock values. Check both after a reboot to confirm which host you are on and whether a maintenance window actually restarted the machine.",
     "explanationEs": "`cat /etc/hostname` imprime el nombre estático guardado para esta máquina, y `uptime -p` indica cuánto lleva encendido el sistema con una frase legible como `up 3 hours`. El nombre del equipo vive en un archivo de texto que se lee al arrancar, mientras que el tiempo activo proviene de la cuenta del kernel y `-p` solo cambia el formato a palabras en lugar de valores de reloj. Comprueba ambos tras un reinicio para confirmar en qué equipo estás y si una ventana de mantenimiento reinició la máquina de verdad."
   },
@@ -105,7 +105,7 @@
     "tldrEn": "Make `EDITOR` visible with `export`",
     "tldrEs": "Haz visible `EDITOR` con `export`",
     "explanationEn": "`export EDITOR=nano` defines the variable and marks it for export, so the second command, `printenv EDITOR`, prints `nano` from the environment. Without `export`, the assignment would exist only inside the current shell and would not reach child processes, which is exactly what programs like `visudo`, `git` and `crontab` read to decide which editor to launch. Set it in your shell startup file for a permanent choice, or run it once in a session when you only need the change now.",
-    "explanationEs": "`export EDITOR=nano` define la variable y la marca para exportarla, así que el segundo comando, `printenv EDITOR`, muestra `nano` desde el entorno. Sin `export`, la asignación existiría solo dentro del shell actual y no llegaría a los procesos hijos, que es justo lo que leen programas como `visudo`, `git` y `crontab` para decidir qué editor abrir. Defínela en el archivo de arranque de tu shell si quieres conservarla, o ejecútala una vez por sesión cuando solo necesites el cambio ahora."
+    "explanationEs": "`export EDITOR=nano` define la variable y la marca para exportarla, así que el segundo comando, `printenv EDITOR`, muestra `nano` desde el entorno. Sin `export`, la asignación existiría solo dentro del shell actual y no llegaría a los procesos hijos, que es justo lo que leen programas como `visudo`, `git` y `crontab` para decidir qué editor abrir. Defínela en el archivo de inicio de tu shell si quieres conservarla, o ejecútala una vez por sesión cuando solo necesites el cambio ahora."
   },
   {
     "id": "linux-files-001",
@@ -267,7 +267,7 @@
     "tldrEn": "Remove a file and a tree with `rm -r`",
     "tldrEs": "Elimina un archivo y un árbol con `rm -r`",
     "explanationEn": "`rm /tmp/demo/archive.txt` removes the file, and `rm -r /tmp/demo/notes` descends into the directory, deletes its contents and then the directory itself. Removing means unlinking a name from the filesystem with no trash step, and plain `rm` refuses directories, which is the guard that `-r` disables in order to walk the tree. Use it for genuine cleanup, and type the paths slowly or test them with `ls` first, because there is no undo and `-r` will happily erase a whole tree.",
-    "explanationEs": "`rm /tmp/demo/archive.txt` elimina el archivo, y `rm -r /tmp/demo/notes` entra en el directorio, borra su contenido y después el propio directorio. Eliminar significa desvincular un nombre del sistema de archivos sin paso por la papelera, y `rm` sin opciones rechaza los directorios, que es la protección que `-r` desactiva para recorrer el árbol. Úsalo para limpiezas reales y escribe las rutas con calma o compruébalas antes con `ls`, porque no hay deshacer y `-r` borrará un árbol entero sin dudar."
+    "explanationEs": "`rm /tmp/demo/archive.txt` elimina el archivo, y `rm -r /tmp/demo/notes` entra en el directorio, borra su contenido y después el propio directorio. Eliminar significa desvincular un nombre del sistema de archivos sin paso por la papelera, y `rm` sin opciones rechaza los directorios, que es la protección que `-r` desactiva para recorrer el árbol. Úsalo para limpiezas reales y escribe las rutas con calma o compruébalas antes con `ls`, porque no se puede deshacer y `-r` borrará un árbol entero sin dudar."
   },
   {
     "id": "linux-files-010",
@@ -298,7 +298,7 @@
     "code": "head -n 3 /etc/passwd\ntail -n 2 /etc/passwd",
     "sourceAttribution": "hand-authored for the linux-foundations-v1 Learning Route",
     "isActive": true,
-    "titleEn": "Read file starts and ends",
+    "titleEn": "Read the start and end of a file",
     "titleEs": "Mira el inicio y el final",
     "tldrEn": "Inspect a file with `head` and `tail`",
     "tldrEs": "Inspecciona un archivo con `head` y `tail`",
@@ -338,8 +338,8 @@
     "titleEs": "Lee los bits de permisos",
     "tldrEn": "Compare modes with `ls -l` and `stat`",
     "tldrEs": "Compara modos con `ls -l` y `stat`",
-    "explanationEn": "`ls -l` shows both files in long format, and `stat -c '%A %a %U:%G' /etc/passwd` prints that file's symbolic mode, octal mode and owner, which for `passwd` is `-rw-r--r--` and `644 root:root`. Each mode is three triads of read, write and execute bits for user, group and other, and `/etc/shadow` is deliberately more restricted because it holds password hashes. Check these bits when a program cannot read a file it should, or before sharing data, so you know exactly who can access it.",
-    "explanationEs": "`ls -l` muestra ambos archivos en formato largo, y `stat -c '%A %a %U:%G' /etc/passwd` imprime el modo simbólico, el modo octal y el dueño de ese archivo, que para `passwd` es `-rw-r--r--` y `644 root:root`. Cada modo son tres tríadas de bits de lectura, escritura y ejecución para usuario, grupo y otros, y `/etc/shadow` está a propósito más restringido porque guarda los hashes de contraseñas. Revisa estos bits cuando un programa no pueda leer un archivo que debería, o antes de compartir datos, para saber con exactitud quién puede acceder."
+    "explanationEn": "`ls -l` shows both files in long format, and `stat -c '%A %a %U:%G' /etc/passwd` prints that file's symbolic mode, octal mode and owner, which for `passwd` is typically `-rw-r--r--` and `644 root:root`. Each mode is three triads of read, write and execute bits for user, group and other, and `/etc/shadow` is deliberately more restricted because it holds password hashes. Check these bits when a program cannot read a file it should, or before sharing data, so you know exactly who can access it.",
+    "explanationEs": "`ls -l` muestra ambos archivos en formato largo, y `stat -c '%A %a %U:%G' /etc/passwd` imprime el modo simbólico, el modo octal y el dueño de ese archivo, que para `passwd` suele ser `-rw-r--r--` y `644 root:root`. Cada modo consta de tres tríadas de bits de lectura, escritura y ejecución para usuario, grupo y otros, y `/etc/shadow` está a propósito más restringido porque guarda los hashes de contraseñas. Revisa estos bits cuando un programa no pueda leer un archivo que debería, o antes de compartir datos, para saber con exactitud quién puede acceder."
   },
   {
     "id": "linux-perm-002",
@@ -349,15 +349,15 @@
     "category": "permissions",
     "symbolFocus": [],
     "length": "medium",
-    "code": "printf '#!/bin/sh\\necho hello\\n' > /tmp/demo/hello.sh\nchmod u+x /tmp/demo/hello.sh\n/tmp/demo/hello.sh",
+    "code": "printf '#!/bin/sh\\necho hello\\n' > /tmp/hello.sh\nchmod u+x /tmp/hello.sh\n/tmp/hello.sh",
     "sourceAttribution": "hand-authored for the linux-foundations-v1 Learning Route",
     "isActive": true,
     "titleEn": "Make a script executable",
     "titleEs": "Haz ejecutable un script",
     "tldrEn": "Add execute permission with `chmod u+x`",
     "tldrEs": "Añade permiso de ejecución con `chmod u+x`",
-    "explanationEn": "The `printf` writes a two-line script whose first line is the `#!/bin/sh` interpreter directive, `chmod u+x /tmp/demo/hello.sh` grants the owner the execute bit, and running the path executes the script. The kernel only runs a file directly when the execute bit is set for the user asking, and with the directive present it hands the file to `/bin/sh`. Make a script executable this way when you intend to run it often, and remember that without the bit you can still run it by passing it as an argument to an interpreter.",
-    "explanationEs": "El `printf` escribe un script de dos líneas cuya primera línea es la directiva de intérprete `#!/bin/sh`, `chmod u+x /tmp/demo/hello.sh` concede al dueño el bit de ejecución y ejecutar la ruta lanza el script. El kernel solo ejecuta un archivo directamente si el bit de ejecución está activo para quien lo invoca, y con la directiva presente se lo entrega a `/bin/sh`. Haz ejecutable un script así cuando vayas a lanzarlo a menudo, y recuerda que sin ese bit aún puedes ejecutarlo pasándolo como argumento a un intérprete."
+    "explanationEn": "The `printf` writes a two-line script whose first line is the `#!/bin/sh` interpreter directive, `chmod u+x /tmp/hello.sh` grants the owner the execute bit, and running the path executes the script. The kernel only runs a file directly when the execute bit is set for the user asking, and with the directive present it hands the file to `/bin/sh`. Make a script executable this way when you intend to run it often, and remember that without the bit you can still run it by passing it as an argument to an interpreter.",
+    "explanationEs": "El `printf` escribe un script de dos líneas cuya primera línea es la directiva de intérprete `#!/bin/sh`, `chmod u+x /tmp/hello.sh` concede al dueño el bit de ejecución y ejecutar la ruta lanza el script. El kernel solo ejecuta un archivo directamente si el bit de ejecución está activo para quien lo invoca, y con la directiva presente se lo entrega a `/bin/sh`. Haz ejecutable un script así cuando vayas a lanzarlo a menudo, y recuerda que sin ese bit aún puedes ejecutarlo pasándolo como argumento a un intérprete."
   },
   {
     "id": "linux-perm-003",
@@ -367,15 +367,15 @@
     "category": "permissions",
     "symbolFocus": [],
     "length": "medium",
-    "code": "chmod 640 /tmp/demo/notes.txt\nstat -c '%a %n' /tmp/demo/notes.txt",
+    "code": "printf 'team notes\\n' > /tmp/notes.txt\nchmod 640 /tmp/notes.txt\nstat -c '%a %n' /tmp/notes.txt",
     "sourceAttribution": "hand-authored for the linux-foundations-v1 Learning Route",
     "isActive": true,
     "titleEn": "Set an exact octal mode",
     "titleEs": "Define un modo octal exacto",
     "tldrEn": "Apply `chmod 640` for owner-write group-read",
     "tldrEs": "Aplica `chmod 640`: dueño escribe, grupo lee",
-    "explanationEn": "`chmod 640 /tmp/demo/notes.txt` sets the mode to `rw-` for the owner, `r--` for the group and no permissions for everyone else, and `stat -c '%a %n'` prints the result as `640`. In octal notation each digit adds the read bit as 4, write as 2 and execute as 1, so `640` is a compact way to name an exact mode and the remaining classes get nothing. Use explicit modes like this for configuration files that hold secrets, where the owning group may read but other accounts must not.",
-    "explanationEs": "`chmod 640 /tmp/demo/notes.txt` fija el modo en `rw-` para el dueño, `r--` para el grupo y sin permisos para los demás, y `stat -c '%a %n'` imprime el resultado como `640`. En notación octal cada dígito suma el bit de lectura como 4, el de escritura como 2 y el de ejecución como 1, así que `640` es una forma compacta de nombrar un modo exacto y las clases restantes se quedan sin nada. Usa modos explícitos como este para archivos de configuración con secretos, donde el grupo propietario puede leer pero otras cuentas no deben."
+    "explanationEn": "the `printf` writes a one-line file, and `chmod 640 /tmp/notes.txt` sets its mode to `rw-` for the owner, `r--` for the group and no permissions for everyone else, and `stat -c '%a %n'` prints the result as `640`. In octal notation each digit adds the read bit as 4, write as 2 and execute as 1, so `640` is a compact way to name an exact mode and the remaining classes get nothing. Use explicit modes like this for configuration files that hold secrets, where the owning group may read but other accounts must not.",
+    "explanationEs": "el `printf` escribe un archivo de una línea y `chmod 640 /tmp/notes.txt` fija su modo en `rw-` para el dueño, `r--` para el grupo y sin permisos para los demás, y `stat -c '%a %n'` imprime el resultado como `640`. En notación octal cada dígito suma el bit de lectura como 4, el de escritura como 2 y el de ejecución como 1, así que `640` es una forma compacta de nombrar un modo exacto y las clases restantes se quedan sin nada. Usa modos explícitos como este para archivos de configuración con secretos, donde el grupo propietario puede leer pero otras cuentas no deben."
   },
   {
     "id": "linux-perm-004",
@@ -385,15 +385,15 @@
     "category": "permissions",
     "symbolFocus": [],
     "length": "medium",
-    "code": "sudo chown nobody:nobody /tmp/demo/notes.txt\nstat -c '%U:%G' /tmp/demo/notes.txt",
+    "code": "printf 'team notes\\n' > /tmp/notes.txt\nsudo chown nobody:nobody /tmp/notes.txt\nstat -c '%U:%G' /tmp/notes.txt",
     "sourceAttribution": "hand-authored for the linux-foundations-v1 Learning Route",
     "isActive": true,
     "titleEn": "Change file ownership",
     "titleEs": "Cambia el dueño de un archivo",
     "tldrEn": "Hand a file to another owner with `chown`",
     "tldrEs": "Cambia dueño y grupo con `sudo chown`",
-    "explanationEn": "`sudo chown nobody:nobody /tmp/demo/notes.txt` sets both the owning user and group of the file, and `stat -c '%U:%G'` confirms `nobody:nobody`. Changing ownership is a privileged operation because the kernel only lets a process give a file away if it holds the `CAP_CHOWN` capability or is root, since otherwise a user could pin files on another account or evade quotas; that is why `sudo` is required. Use it after copying data under the wrong account, or when a service must own the files it reads.",
-    "explanationEs": "`sudo chown nobody:nobody /tmp/demo/notes.txt` fija a la vez el usuario y el grupo propietarios del archivo, y `stat -c '%U:%G'` confirma `nobody:nobody`. Cambiar el dueño es una operación privilegiada porque el kernel solo deja ceder un archivo a quien tiene la capacidad `CAP_CHOWN` o es root, ya que de otro modo un usuario podría cargar archivos a otra cuenta o eludir cuotas; por eso hace falta `sudo`. Úsalo tras copiar datos bajo la cuenta equivocada, o cuando un servicio deba ser dueño de los archivos que lee."
+    "explanationEn": "after the `printf` creates the file, `sudo chown nobody:nobody /tmp/notes.txt` sets both the owning user and group of the file, and `stat -c '%U:%G'` confirms `nobody:nobody`. Changing ownership is a privileged operation because the kernel only lets a process give a file away if it holds the `CAP_CHOWN` capability or is root, since otherwise a user could hand files to another account or evade quotas; that is why `sudo` is required. Use it after copying data under the wrong account, or when a service must own the files it reads.",
+    "explanationEs": "tras crear el archivo con `printf`, `sudo chown nobody:nobody /tmp/notes.txt` fija a la vez el usuario y el grupo propietarios del archivo, y `stat -c '%U:%G'` confirma `nobody:nobody`. Cambiar el dueño es una operación privilegiada porque el kernel solo deja ceder un archivo a quien tiene la capacidad `CAP_CHOWN` o es root, ya que de otro modo un usuario podría atribuir archivos a otra cuenta o eludir cuotas; por eso hace falta `sudo`. Úsalo tras copiar datos bajo la cuenta equivocada, o cuando un servicio deba ser dueño de los archivos que lee."
   },
   {
     "id": "linux-perm-005",
@@ -403,15 +403,15 @@
     "category": "permissions",
     "symbolFocus": [],
     "length": "medium",
-    "code": "umask 027\ntouch /tmp/demo/report.txt\nstat -c '%a' /tmp/demo/report.txt",
+    "code": "umask 027\ntouch /tmp/report.txt\nstat -c '%a' /tmp/report.txt",
     "sourceAttribution": "hand-authored for the linux-foundations-v1 Learning Route",
     "isActive": true,
     "titleEn": "Control default permissions",
     "titleEs": "Controla los permisos por defecto",
     "tldrEn": "Set `umask 027` before creating files",
     "tldrEs": "Define `umask 027` antes de crear archivos",
-    "explanationEn": "`umask 027` sets the mask that will be subtracted from the default permissions of every file this shell creates, and `touch /tmp/demo/report.txt` then produces a file whose mode `stat` reports as `640`. New files start from `666` and new directories from `777`, and the umask clears the bits set in it, so `027` removes group write and all permission for others. Set it early in a session or startup file when the machine is shared and fresh files should stay private by default.",
-    "explanationEs": "`umask 027` fija la máscara que se restará de los permisos predeterminados de cada archivo que cree este shell, y `touch /tmp/demo/report.txt` genera entonces un archivo cuyo modo `stat` informa como `640`. Los archivos nuevos parten de `666` y los directorios nuevos de `777`, y la umask borra los bits activos en ella, así que `027` quita la escritura del grupo y todo permiso para los demás. Defínela al inicio de una sesión o en un archivo de arranque cuando la máquina sea compartida y los archivos nuevos deban ser privados por defecto."
+    "explanationEn": "`umask 027` sets the mask that will be subtracted from the default permissions of every file this shell creates, and `touch /tmp/report.txt` then produces a file whose mode `stat` reports as `640`. New files start from `666` and new directories from `777`, and the umask clears the bits set in it, so `027` removes group write and all permission for others. Set it early in a session or startup file when the machine is shared and fresh files should stay private by default.",
+    "explanationEs": "`umask 027` fija la máscara que se restará de los permisos predeterminados de cada archivo que cree este shell, y `touch /tmp/report.txt` genera entonces un archivo cuyo modo `stat` informa como `640`. Los archivos nuevos parten de `666` y los directorios nuevos de `777`, y la umask borra los bits activos en ella, así que `027` quita la escritura del grupo y todo permiso para los demás. Defínela al inicio de una sesión o en un archivo de inicio cuando la máquina sea compartida y los archivos nuevos deban ser privados por defecto."
   },
   {
     "id": "linux-users-001",
@@ -482,8 +482,8 @@
     "titleEs": "Crea un grupo y añade miembros",
     "tldrEn": "Add `dev01` to a new group with `gpasswd -a`",
     "tldrEs": "Añade `dev01` a un grupo nuevo con `gpasswd -a`",
-    "explanationEn": "`sudo groupadd project` registers the new group and `sudo gpasswd -a dev01 project` appends the existing user to its member list, which `id dev01` then shows. The `-a` in `gpasswd` means append: without it, the command would replace the group's whole member list, and root is required because `/etc/group` and `/etc/gshadow` belong to root. Use groups to grant shared access to directories or devices, and remember that a user who is already logged in may need a new session before the membership applies everywhere.",
-    "explanationEs": "`sudo groupadd project` registra el grupo nuevo y `sudo gpasswd -a dev01 project` añade el usuario existente a su lista de miembros, algo que después muestra `id dev01`. La `-a` de `gpasswd` significa añadir: sin ella, el comando reemplazaría toda la lista de miembros del grupo, y root es necesario porque `/etc/group` y `/etc/gshadow` pertenecen a root. Usa grupos para conceder acceso compartido a directorios o dispositivos, y recuerda que un usuario ya conectado puede necesitar una sesión nueva antes de que la pertenencia se aplique en todas partes."
+    "explanationEn": "`sudo groupadd project` registers the new group and `sudo gpasswd -a dev01 project` appends the existing user to its member list, which `id dev01` then shows. The `-a` in `gpasswd` means append: the `-M` option is the one that replaces the group's whole member list, and root is required because `/etc/group` and `/etc/gshadow` belong to root. Use groups to grant shared access to directories or devices, and remember that a user who is already logged in may need a new session before the membership applies everywhere.",
+    "explanationEs": "`sudo groupadd project` registra el grupo nuevo y `sudo gpasswd -a dev01 project` añade el usuario existente a su lista de miembros, algo que después muestra `id dev01`. La `-a` de `gpasswd` significa añadir: mientras que `-M` es la opción que reemplaza toda la lista de miembros del grupo, y root es necesario porque `/etc/group` y `/etc/gshadow` pertenecen a root. Usa grupos para conceder acceso compartido a directorios o dispositivos, y recuerda que un usuario ya conectado puede necesitar una sesión nueva antes de que la pertenencia se aplique en todas partes."
   },
   {
     "id": "linux-proc-001",
@@ -536,8 +536,8 @@
     "titleEs": "Detén un proceso por su PID",
     "tldrEn": "Track `$!` and stop the job with `kill`",
     "tldrEs": "Sigue `$!` y detén el trabajo con `kill`",
-    "explanationEn": "`sleep 300 &` runs the command in the background and the shell stores its process id in `$!`, so `pgrep -a sleep` finds it and `kill $!` sends it the default SIGTERM, after which the final `pgrep` returns no match. The `&` gives the prompt back immediately, and SIGTERM asks the process to terminate gracefully, which is the polite signal to try first. Use this pattern to clean up a job you started yourself, or whenever you have a PID and want to stop it without forcing the kernel to destroy it.",
-    "explanationEs": "`sleep 300 &` ejecuta el comando en segundo plano y el shell guarda su identificador de proceso en `$!`, así que `pgrep -a sleep` lo encuentra y `kill $!` le envía SIGTERM por defecto, tras lo cual el `pgrep` final no devuelve ninguna coincidencia. El `&` devuelve el prompt de inmediato, y SIGTERM pide al proceso que termine con calma, que es la señal cortés que conviene probar primero. Usa este patrón para limpiar un trabajo que iniciaste tú, o siempre que tengas un PID y quieras detenerlo sin que el kernel lo destruya a la fuerza."
+    "explanationEn": "`sleep 300 &` runs the command in the background and the shell stores its process id in `$!`, so `pgrep -a sleep` finds it and `kill $!` sends it the default SIGTERM, after which the final `pgrep` returns no match and leaves a non-zero exit status. The `&` gives the prompt back immediately, and SIGTERM asks the process to terminate gracefully, which is the polite signal to try first. Use this pattern to clean up a job you started yourself, or whenever you have a PID and want to stop it without forcing the kernel to destroy it.",
+    "explanationEs": "`sleep 300 &` ejecuta el comando en segundo plano y el shell guarda su identificador de proceso en `$!`, así que `pgrep -a sleep` lo encuentra y `kill $!` le envía SIGTERM por defecto, tras lo cual el `pgrep` final no devuelve ninguna coincidencia y termina con un estado distinto de cero. El `&` devuelve el prompt de inmediato, y SIGTERM pide al proceso que termine con calma, que es la señal cortés que conviene probar primero. Usa este patrón para limpiar un trabajo que iniciaste tú, o siempre que tengas un PID y quieras detenerlo sin que el kernel lo destruya a la fuerza."
   },
   {
     "id": "linux-pkg-001",
@@ -637,15 +637,15 @@
     "category": "usersAndGroups",
     "symbolFocus": [],
     "length": "medium",
-    "code": "sudo passwd -l dev01\npasswd -S dev01",
+    "code": "sudo useradd -m dev02\nprintf 'dev02:changeme\\n' | sudo chpasswd\nsudo passwd -l dev02\nsudo passwd -S dev02",
     "sourceAttribution": "hand-authored for the linux-admin-v1 Learning Route",
     "isActive": true,
     "titleEn": "Lock a user account",
     "titleEs": "Bloquea una cuenta de usuario",
     "tldrEn": "Suspend a login with `passwd -l` and check its status",
     "tldrEs": "Suspende un acceso con `passwd -l` y consulta su estado",
-    "explanationEn": "`sudo passwd -l dev01` locks the account by putting a `!` in front of the stored password hash, and `passwd -S dev01` then reports its status with an `L` for locked. The lock works because login programs compare against `/etc/shadow` and any string that is not a valid hash can never match, so the account stops authenticating while its files and home directory stay untouched; `sudo` is needed because only root may write that file. Use it to suspend an account immediately, for example after a compromised login, without deleting data you may still need.",
-    "explanationEs": "`sudo passwd -l dev01` bloquea la cuenta anteponiendo un `!` al hash de la contraseña guardado, y `passwd -S dev01` informa después de su estado con una `L` de bloqueada. El bloqueo funciona porque los programas de inicio de sesión comparan contra `/etc/shadow` y cualquier cadena que no sea un hash válido nunca podrá coincidir, así que la cuenta deja de autenticarse mientras sus archivos y su directorio personal permanecen intactos; `sudo` hace falta porque solo root puede escribir en ese archivo. Úsalo para suspender una cuenta de inmediato, por ejemplo tras detectar un acceso comprometido, sin borrar datos que aún puedas necesitar."
+    "explanationEn": "`sudo useradd -m dev02` creates the account with a home directory, `printf 'dev02:changeme\\n' | sudo chpasswd` gives it a throwaway password without prompting, and `sudo passwd -l dev02` locks it before `sudo passwd -S dev02` reports `L` for locked. The lock works because login programs compare against `/etc/shadow` and a hash prefixed with `!` can never match, while `useradd` and `passwd` need root because that file belongs to it. Use this to suspend an account immediately, for example after a compromised login, without deleting data you may still need.",
+    "explanationEs": "`sudo useradd -m dev02` crea la cuenta con su directorio personal, `printf 'dev02:changeme\\n' | sudo chpasswd` le pone una contraseña desechable sin preguntar, y `sudo passwd -l dev02` la bloquea antes de que `sudo passwd -S dev02` informe `L` de bloqueada. El bloqueo funciona porque los programas de inicio de sesión comparan contra `/etc/shadow` y un hash precedido de `!` nunca podrá coincidir, mientras que `useradd` y `passwd` necesitan root porque ese archivo es suyo. Úsalo para suspender una cuenta de inmediato, por ejemplo tras detectar un acceso comprometido, sin borrar datos que aún puedas necesitar."
   },
   {
     "id": "linux-users-006",
@@ -655,15 +655,15 @@
     "category": "usersAndGroups",
     "symbolFocus": [],
     "length": "medium",
-    "code": "sudo userdel -r dev01\nid dev01",
+    "code": "sudo userdel -r dev02\nid dev02",
     "sourceAttribution": "hand-authored for the linux-admin-v1 Learning Route",
     "isActive": true,
     "titleEn": "Remove a user with their home",
     "titleEs": "Elimina un usuario y su carpeta",
     "tldrEn": "Delete an account and its files with `userdel -r`",
     "tldrEs": "Borra la cuenta y sus archivos con `userdel -r`",
-    "explanationEn": "`sudo userdel -r dev01` removes the user's entry from the account databases and deletes the home directory and mail spool that `-r` tells it to clean up; the following `id dev01` then fails because no such user exists. Deleting a user requires root since `/etc/passwd`, `/etc/shadow` and `/etc/group` are system files, and `-r` is what separates a full removal from the safer default that leaves `/home/dev01` on disk. Use it when the account is truly finished and its files should disappear too; otherwise drop `-r` and archive the home directory first.",
-    "explanationEs": "`sudo userdel -r dev01` elimina la entrada del usuario de las bases de datos de cuentas y borra el directorio personal y el buzón de correo que `-r` le indica limpiar; el posterior `id dev01` falla porque ese usuario ya no existe. Borrar un usuario requiere root porque `/etc/passwd`, `/etc/shadow` y `/etc/group` son archivos del sistema, y `-r` es lo que distingue un borrado completo del comportamiento predeterminado más prudente, que deja `/home/dev01` en disco. Úsalo cuando la cuenta haya terminado de verdad y sus archivos deban desaparecer también; si no, omite `-r` y archiva antes el directorio personal."
+    "explanationEn": "`sudo userdel -r dev02` removes the user's entry from the account databases and deletes the home directory and mail spool that `-r` tells it to clean up; the following `id dev02` then fails because no such user exists. Deleting a user requires root since `/etc/passwd`, `/etc/shadow` and `/etc/group` are system files, and `-r` is what separates a full removal from the safer default that leaves `/home/dev02` on disk. Use it when the account is truly finished and its files should disappear too; otherwise drop `-r` and archive the home directory first.",
+    "explanationEs": "`sudo userdel -r dev02` elimina la entrada del usuario de las bases de datos de cuentas y borra el directorio personal y el buzón de correo que `-r` le indica limpiar; el posterior `id dev02` falla porque ese usuario ya no existe. Borrar un usuario requiere root porque `/etc/passwd`, `/etc/shadow` y `/etc/group` son archivos del sistema, y `-r` es lo que distingue un borrado completo del comportamiento predeterminado más prudente, que deja `/home/dev02` en disco. Úsalo cuando la cuenta haya terminado de verdad y sus archivos deban desaparecer también; si no, omite `-r` y archiva antes el directorio personal."
   },
   {
     "id": "linux-users-007",
@@ -673,15 +673,15 @@
     "category": "usersAndGroups",
     "symbolFocus": [],
     "length": "short",
-    "code": "sudo -u dev01 whoami",
+    "code": "sudo -u dev02 whoami",
     "sourceAttribution": "hand-authored for the linux-admin-v1 Learning Route",
     "isActive": true,
     "titleEn": "Run a command as another user",
     "titleEs": "Ejecuta un comando como otro usuario",
-    "tldrEn": "Run one command as `dev01` with `sudo -u`",
-    "tldrEs": "Ejecuta un comando como `dev01` con `sudo -u`",
-    "explanationEn": "`sudo -u dev01 whoami` runs `whoami` as `dev01` instead of root, so the output shows which user the command actually ran as. `sudo` consults `/etc/sudoers` to decide who may impersonate whom and `-u` selects the target account, so the caller needs an entry in that file that permits acting as others; without `-u`, `sudo` would default to root. Use it to test what another user can see or do, such as their permissions or access to a file, without switching sessions with `su` or logging out.",
-    "explanationEs": "`sudo -u dev01 whoami` ejecuta `whoami` como `dev01` en lugar de como root, así que la salida muestra con qué usuario corrió realmente el comando. `sudo` consulta `/etc/sudoers` para decidir quién puede suplantar a quién y `-u` elige la cuenta de destino, de modo que quien lo invoca necesita una regla en ese archivo que le permita actuar como otros; sin esa bandera, `sudo` usaría root de forma predeterminada. Úsalo para comprobar qué puede ver o hacer otro usuario, como sus permisos o su acceso a un archivo, sin cambiar de sesión con `su` ni cerrar la tuya."
+    "tldrEn": "Run one command as `dev02` with `sudo -u`",
+    "tldrEs": "Ejecuta un comando como `dev02` con `sudo -u`",
+    "explanationEn": "`sudo -u dev02 whoami` runs `whoami` as `dev02` instead of root, so the output shows which user the command actually ran as. `sudo` consults `/etc/sudoers` to decide who may impersonate whom and `-u` selects the target account, so the caller needs an entry in that file that permits acting as others; without `-u`, `sudo` would default to root. Use it to test what another user can see or do, such as their permissions or access to a file, without switching sessions with `su` or logging out.",
+    "explanationEs": "`sudo -u dev02 whoami` ejecuta `whoami` como `dev02` en lugar de como root, así que la salida muestra con qué usuario corrió realmente el comando. `sudo` consulta `/etc/sudoers` para decidir quién puede suplantar a quién y `-u` elige la cuenta de destino, de modo que quien lo invoca necesita una regla en ese archivo que le permita actuar como otros; sin esa opción, `sudo` usaría root de forma predeterminada. Úsalo para comprobar qué puede ver o hacer otro usuario, como sus permisos o su acceso a un archivo, sin cambiar de sesión con `su` ni cerrar la tuya."
   },
   {
     "id": "linux-users-008",
@@ -745,15 +745,15 @@
     "category": "permissions",
     "symbolFocus": [],
     "length": "medium",
-    "code": "setfacl -m u:nobody:rw /tmp/demo/report.txt\ngetfacl -c /tmp/demo/report.txt",
+    "code": "touch /tmp/acl-demo.txt\nsetfacl -m u:nobody:rw /tmp/acl-demo.txt\ngetfacl -c /tmp/acl-demo.txt",
     "sourceAttribution": "hand-authored for the linux-admin-v1 Learning Route",
     "isActive": true,
     "titleEn": "Grant access with an ACL",
     "titleEs": "Concede acceso con una ACL",
     "tldrEn": "Give one user extra access with `setfacl -m`",
     "tldrEs": "Da acceso extra a un usuario con `setfacl -m`",
-    "explanationEn": "`setfacl -m u:nobody:rw /tmp/demo/report.txt` adds an access control list entry that grants the user `nobody` read and write on that file, and `getfacl -c` prints the rules without the comment header. ACLs extend the classic owner, group and other bits with per-user entries stored as extended attributes, so the nine mode characters can stay the same while a trailing `+` in `ls -l` warns that extra rules exist. Reach for this when you need to grant one extra person or service access to a single file and creating a new group for it would be overkill.",
-    "explanationEs": "`setfacl -m u:nobody:rw /tmp/demo/report.txt` añade una entrada en la lista de control de acceso que concede al usuario `nobody` lectura y escritura sobre ese archivo, y `getfacl -c` imprime las reglas sin la cabecera de comentarios. Las ACL amplían los bits clásicos de propietario, grupo y otros con entradas por usuario guardadas como atributos extendidos, así que los nueve caracteres de modo pueden seguir iguales mientras un `+` final en `ls -l` avisa de que existen reglas adicionales. Recurre a esto cuando necesites dar acceso a una persona o servicio extra a un solo archivo y crear un grupo nuevo sería excesivo."
+    "explanationEn": "`touch /tmp/acl-demo.txt` creates the file and `setfacl -m u:nobody:rw /tmp/acl-demo.txt` adds an access control list entry that grants the user `nobody` read and write on that file, and `getfacl -c` prints the rules without the comment header. ACLs extend the classic owner, group and other bits with per-user entries stored as extended attributes, so the nine mode characters can stay the same while a trailing `+` in `ls -l` warns that extra rules exist. Reach for this when you need to grant one extra person or service access to a single file and creating a new group for it would be overkill.",
+    "explanationEs": "`touch /tmp/acl-demo.txt` crea el archivo y `setfacl -m u:nobody:rw /tmp/acl-demo.txt` añade una entrada en la lista de control de acceso que concede al usuario `nobody` lectura y escritura sobre ese archivo, y `getfacl -c` imprime las reglas sin la cabecera de comentarios. Las ACL amplían los bits clásicos de propietario, grupo y otros con entradas por usuario guardadas como atributos extendidos, así que los nueve caracteres de modo pueden seguir iguales mientras un `+` final en `ls -l` avisa de que existen reglas adicionales. Recurre a esto cuando necesites dar acceso a una persona o servicio extra a un solo archivo y crear un grupo nuevo sería excesivo."
   },
   {
     "id": "linux-proc-004",
@@ -771,7 +771,7 @@
     "tldrEn": "Send SIGTERM by name with `kill -s TERM`",
     "tldrEs": "Envía SIGTERM por nombre con `kill -s TERM`",
     "explanationEn": "`sleep 300 &` starts the process in the background, `$!` expands to its PID, and `kill -s TERM $!` sends it the SIGTERM signal, while `kill -l TERM` translates that name to the number 15. `kill` is really a signal sender: the kernel delivers the signal to the process, and SIGTERM is the default request for a graceful shutdown, so programs may catch it and clean up before exiting. Ask for SIGTERM first when stopping a process, because it requests an orderly stop; move to `-KILL` only when the program ignores it.",
-    "explanationEs": "`sleep 300 &` inicia el proceso en segundo plano, `$!` se expande a su PID y `kill -s TERM $!` le envía la señal SIGTERM, mientras que `kill -l TERM` traduce ese nombre al número 15. `kill` en realidad envía señales: el núcleo entrega la señal al proceso, y SIGTERM es la petición de apagado ordenado predeterminada, así que los programas pueden capturarla y limpiar antes de salir. Pide primero SIGTERM al detener un proceso, porque solicita un cierre ordenado; pasa a `-KILL` solo cuando el programa la ignore."
+    "explanationEs": "`sleep 300 &` inicia el proceso en segundo plano, `$!` se expande a su PID y `kill -s TERM $!` le envía la señal SIGTERM, mientras que `kill -l TERM` traduce ese nombre al número 15. `kill` en realidad envía señales: el kernel entrega la señal al proceso, y SIGTERM es la petición de apagado ordenado predeterminada, así que los programas pueden capturarla y limpiar antes de salir. Pide primero SIGTERM al detener un proceso, porque solicita un cierre ordenado; pasa a `-KILL` solo cuando el programa la ignore."
   },
   {
     "id": "linux-proc-005",
@@ -789,7 +789,7 @@
     "tldrEn": "Send the unblockable `kill -KILL` signal",
     "tldrEs": "Envía la señal `kill -KILL`, imposible de capturar",
     "explanationEn": "`sleep 300 &` runs the process in the background, `kill -KILL $!` sends it SIGKILL, and `kill -l KILL` confirms that this signal is number 9. SIGKILL cannot be caught, blocked or ignored, so the kernel terminates the process immediately, which is why it is the guaranteed last resort when a program is stuck. Use it only after SIGTERM fails, because the process gets no chance to save data or release resources in an orderly way.",
-    "explanationEs": "`sleep 300 &` ejecuta el proceso en segundo plano, `kill -KILL $!` le envía SIGKILL y `kill -l KILL` confirma que esta señal es la número 9. SIGKILL no se puede capturar, bloquear ni ignorar, así que el núcleo termina el proceso de inmediato, y por eso es el último recurso garantizado cuando un programa se queda colgado. Úsala solo después de que falle SIGTERM, porque el proceso no tiene ocasión de guardar datos ni de liberar recursos con orden."
+    "explanationEs": "`sleep 300 &` ejecuta el proceso en segundo plano, `kill -KILL $!` le envía SIGKILL y `kill -l KILL` confirma que esta señal es la número 9. SIGKILL no se puede capturar, bloquear ni ignorar, así que el kernel termina el proceso de inmediato, y por eso es el último recurso garantizado cuando un programa se queda colgado. Úsala solo después de que falle SIGTERM, porque el proceso no tiene ocasión de guardar datos ni de liberar recursos con orden."
   },
   {
     "id": "linux-proc-006",
@@ -825,7 +825,7 @@
     "tldrEn": "List disks with `lsblk`",
     "tldrEs": "Lista los discos con `lsblk`",
     "explanationEn": "`lsblk` lists the block devices the kernel knows about as a tree, showing each disk, its partitions, their sizes and where they are mounted. It reads that information from `/sys` rather than probing the hardware, so it needs no root privileges and reflects exactly what the running kernel sees, including removable drives and LVM or encrypted layers. Run it when you plug in a disk, plan a partition layout, or need the device name before mounting or formatting it.",
-    "explanationEs": "`lsblk` lista como un árbol los dispositivos de bloque que conoce el núcleo, mostrando cada disco, sus particiones, sus tamaños y dónde están montados. Lee esa información de `/sys` en vez de sondear el hardware, así que no necesita privilegios de root y refleja exactamente lo que ve el núcleo en ejecución, incluidos discos extraíbles y capas LVM o cifradas. Ejecútalo cuando conectes un disco, planifiques un esquema de particiones o necesites el nombre del dispositivo antes de montarlo o formatearlo."
+    "explanationEs": "`lsblk` lista como un árbol los dispositivos de bloque que conoce el kernel, mostrando cada disco, sus particiones, sus tamaños y dónde están montados. Lee esa información de `/sys` en vez de sondear el hardware, así que no necesita privilegios de root y refleja exactamente lo que ve el kernel en ejecución, incluidos discos extraíbles y capas LVM o cifradas. Ejecútalo cuando conectes un disco, planifiques un esquema de particiones o necesites el nombre del dispositivo antes de montarlo o formatearlo."
   },
   {
     "id": "linux-storage-002",
@@ -843,7 +843,7 @@
     "tldrEn": "See root filesystem usage with `df -h`",
     "tldrEs": "Mira el uso del sistema raíz con `df -h`",
     "explanationEn": "`df -h /` reports the disk usage of the filesystem that holds the root directory, with `-h` printing sizes in powers of 1024 as readable units. `df` asks the kernel for filesystem statistics and a path resolves to the filesystem mounted there, so it measures the whole root filesystem rather than the contents of that directory, which is why it answers instantly even on a huge tree. Check it when writes fail, before installing large packages, or to see how much space snapshots or logs have consumed.",
-    "explanationEs": "`df -h /` informa del uso de disco del sistema de archivos que contiene el directorio raíz, con `-h` mostrando los tamaños en potencias de 1024 como unidades legibles. `df` pide al núcleo las estadísticas del sistema de archivos y una ruta se resuelve al sistema montado allí, así que mide todo el sistema raíz y no el contenido de ese directorio, y por eso responde al instante incluso en un árbol enorme. Compruébalo cuando fallen las escrituras, antes de instalar paquetes grandes o para ver cuánto espacio han consumido las instantáneas o los registros."
+    "explanationEs": "`df -h /` informa del uso de disco del sistema de archivos que contiene el directorio raíz, con `-h` mostrando los tamaños en potencias de 1024 como unidades legibles. `df` pide al kernel las estadísticas del sistema de archivos y una ruta se resuelve al sistema montado allí, así que mide todo el sistema raíz y no el contenido de ese directorio, y por eso responde al instante incluso en un árbol enorme. Compruébalo cuando fallen las escrituras, antes de instalar paquetes grandes o para ver cuánto espacio han consumido las instantáneas o los registros."
   },
   {
     "id": "linux-storage-003",
@@ -912,10 +912,10 @@
     "isActive": true,
     "titleEn": "Inspect a unit's definition",
     "titleEs": "Inspecciona la definición de una unidad",
-    "tldrEn": "Show the unit file and its drop-ins",
-    "tldrEs": "Muestra la unidad y sus drop-ins",
-    "explanationEn": "`systemctl cat dbus-broker` prints the unit file systemd resolves for that service, including drop-in overrides, in the order they are applied. Unit files can be layered, with the vendor copy under `/usr/lib/systemd/system` plus administrator overrides in `/etc/systemd/system/*.d`, and `cat` shows the merged result without making you hunt for each fragment. Use it before editing a unit to see what the package ships and which drop-ins already exist, so your change does not fight someone else's.",
-    "explanationEs": "`systemctl cat dbus-broker` imprime el archivo de unidad que systemd resuelve para ese servicio, incluidas las anulaciones de tipo drop-in, en el orden en que se aplican. Los archivos de unidad pueden apilarse, con la copia del paquete en `/usr/lib/systemd/system` más las anulaciones del administrador en `/etc/systemd/system/*.d`, y `cat` muestra el resultado combinado sin que tengas que buscar cada fragmento. Úsalo antes de editar una unidad para ver qué trae el paquete y qué drop-ins existen ya, y que tu cambio no pise el de otra persona."
+    "tldrEn": "Show a unit file with `systemctl cat`",
+    "tldrEs": "Muestra una unidad con `systemctl cat`",
+    "explanationEn": "`systemctl cat dbus-broker` prints the unit file systemd resolves for that service, including drop-in overrides, in the order they are applied. Unit files can be layered, with the vendor copy under `/usr/lib/systemd/system` plus administrator overrides in `/etc/systemd/system/<unit>.d/`, and `cat` shows the merged result without making you hunt for each fragment. Use it before editing a unit to see what the package ships and which drop-ins already exist, so your change does not fight someone else's.",
+    "explanationEs": "`systemctl cat dbus-broker` imprime el archivo de unidad que systemd resuelve para ese servicio, incluidas las anulaciones de tipo drop-in, en el orden en que se aplican. Los archivos de unidad pueden apilarse, con la copia del paquete en `/usr/lib/systemd/system` más las anulaciones del administrador en `/etc/systemd/system/<unit>.d/`, y `cat` muestra el resultado combinado sin que tengas que buscar cada fragmento. Úsalo antes de editar una unidad para ver qué trae el paquete y qué drop-ins existen ya, y que tu cambio no pise el de otra persona."
   },
   {
     "id": "linux-svc-005",
@@ -925,15 +925,15 @@
     "category": "services",
     "symbolFocus": [],
     "length": "long",
-    "code": "sudo systemctl start demo.service\nsystemctl is-active demo.service\nsudo systemctl stop demo.service\nsystemctl status demo.service --no-pager | head -n 3",
+    "code": "printf '[Unit]\\nDescription=Demo service\\n\\n[Service]\\nExecStart=/usr/bin/sleep infinity\\n\\n[Install]\\nWantedBy=multi-user.target\\n' | sudo tee /etc/systemd/system/demo.service > /dev/null\nsudo systemctl daemon-reload\nsudo systemctl start demo.service\nsystemctl is-active demo.service\nsudo systemctl stop demo.service\nsystemctl status demo.service --no-pager | head -n 3",
     "sourceAttribution": "hand-authored for the linux-admin-v1 Learning Route",
     "isActive": true,
     "titleEn": "Start and stop a service",
     "titleEs": "Arranca y detén un servicio",
     "tldrEn": "Control runtime state with `systemctl start/stop`",
     "tldrEs": "Controla el estado con `systemctl start` y `stop`",
-    "explanationEn": "`sudo systemctl start demo.service` activates the service, `is-active` confirms it is running, then `sudo systemctl stop demo.service` deactivates it and `status` shows it as inactive. `systemctl start` and `stop` change runtime state only, while `enable` controls what happens at boot, and root is required because starting a system service changes what runs on the whole machine; the demo unit here just runs `sleep infinity` until it is stopped. This is the daily cycle for services you configured but do not want enabled yet, and `status` is how you verify each transition actually happened.",
-    "explanationEs": "`sudo systemctl start demo.service` activa el servicio, `is-active` confirma que corre, después `sudo systemctl stop demo.service` lo desactiva y `status` lo muestra inactivo. `systemctl start` y `stop` solo cambian el estado en ejecución, mientras que `enable` controla el arranque, y root hace falta porque arrancar un servicio del sistema cambia lo que corre en toda la máquina; la unidad de ejemplo solo ejecuta `sleep infinity` hasta que la detienes. Este es el ciclo diario de los servicios que configuras pero aún no quieres habilitar, y `status` es la forma de comprobar que cada transición ocurrió de verdad."
+    "explanationEn": "The `printf` writes a minimal `demo.service` unit whose `ExecStart` runs `sleep infinity`, `sudo systemctl daemon-reload` makes systemd read the new file, `sudo systemctl start demo.service` activates it and `is-active` confirms it runs, then `sudo systemctl stop demo.service` deactivates it and `status` shows it as inactive. `start` and `stop` change runtime state only, while `enable` controls what happens at boot, and root is required because starting a system service changes what runs on the whole machine. This is the daily cycle for services you configured but do not want enabled yet, and `status` is how you verify each transition actually happened.",
+    "explanationEs": "El `printf` escribe una unidad mínima `demo.service` cuyo `ExecStart` ejecuta `sleep infinity`, `sudo systemctl daemon-reload` hace que systemd lea el archivo nuevo, `sudo systemctl start demo.service` la activa y `is-active` confirma que corre, después `sudo systemctl stop demo.service` la desactiva y `status` la muestra inactiva. `start` y `stop` solo cambian el estado en ejecución, mientras que `enable` controla el arranque, y root hace falta porque arrancar un servicio del sistema cambia lo que corre en toda la máquina. Este es el ciclo diario de los servicios que configuras pero aún no quieres habilitar, y `status` es la forma de comprobar que cada transición ocurrió de verdad."
   },
   {
     "id": "linux-svc-006",
@@ -943,15 +943,15 @@
     "category": "services",
     "symbolFocus": [],
     "length": "medium",
-    "code": "sudo systemctl enable demo.service\nsystemctl is-enabled demo.service",
+    "code": "printf '[Unit]\\nDescription=Demo service\\n\\n[Service]\\nExecStart=/usr/bin/sleep infinity\\n\\n[Install]\\nWantedBy=multi-user.target\\n' | sudo tee /etc/systemd/system/demo.service > /dev/null\nsudo systemctl daemon-reload\nsudo systemctl enable demo.service\nsystemctl is-enabled demo.service",
     "sourceAttribution": "hand-authored for the linux-admin-v1 Learning Route",
     "isActive": true,
     "titleEn": "Enable a service at boot",
     "titleEs": "Habilita un servicio al arrancar",
     "tldrEn": "Start a unit at boot with `systemctl enable`",
     "tldrEs": "Haz que una unidad arranque con `systemctl enable`",
-    "explanationEn": "`sudo systemctl enable demo.service` registers the unit for boot by creating the symlink its `[Install]` section prescribes, and `is-enabled` then reports `enabled`. Enabling does not start the service right away: it wires the unit into `multi-user.target.wants` under `/etc/systemd/system`, which systemd reads at the next boot, and root is needed because that directory is system-managed. Enable the services that should always be available, and add `--now` when you also want them running immediately.",
-    "explanationEs": "`sudo systemctl enable demo.service` registra la unidad para el arranque creando el enlace simbólico que indica su sección `[Install]`, y `is-enabled` pasa a informar `enabled`. Habilitar no arranca el servicio de inmediato: enlaza la unidad dentro de `multi-user.target.wants`, bajo `/etc/systemd/system`, que systemd lee en el próximo inicio, y root es necesario porque ese directorio lo gestiona el sistema. Habilita los servicios que deban estar siempre disponibles y añade `--now` cuando quieras además arrancarlos en el acto."
+    "explanationEn": "after the `printf` writes a minimal unit and `sudo systemctl daemon-reload` registers it, `sudo systemctl enable demo.service` wires it for boot by creating the symlink its `[Install]` section prescribes, and `is-enabled` then reports `enabled`. Enabling does not start the service right away: it wires the unit into `multi-user.target.wants` under `/etc/systemd/system`, which systemd reads at the next boot, and root is needed because that directory is system-managed. Enable the services that should always be available, and add `--now` when you also want them running immediately.",
+    "explanationEs": "después de que el `printf` escriba una unidad mínima y `sudo systemctl daemon-reload` la registre, `sudo systemctl enable demo.service` la enlaza para el arranque creando el enlace simbólico que indica su sección `[Install]`, y `is-enabled` pasa a informar `enabled`. Habilitar no arranca el servicio de inmediato: enlaza la unidad dentro de `multi-user.target.wants`, bajo `/etc/systemd/system`, que systemd lee en el próximo inicio, y root es necesario porque ese directorio lo gestiona el sistema. Habilita los servicios que deban estar siempre disponibles y añade `--now` cuando quieras además arrancarlos en el acto."
   },
   {
     "id": "linux-log-002",
@@ -1015,15 +1015,15 @@
     "category": "packages",
     "symbolFocus": [],
     "length": "medium",
-    "code": "sudo pacman -Sy\nsudo pacman -S --needed tree\ntree --version | head -n 1",
+    "code": "sudo pacman -Syu --needed tree\ntree --version | head -n 1",
     "sourceAttribution": "hand-authored for the linux-admin-v1 Learning Route",
     "isActive": true,
     "titleEn": "Install a package safely",
     "titleEs": "Instala un paquete sin reinstalar",
     "tldrEn": "Install `tree` only if missing with `--needed`",
     "tldrEs": "Instala `tree` solo si falta con `--needed`",
-    "explanationEn": "`sudo pacman -Sy` refreshes the databases, `sudo pacman -S --needed tree` installs the `tree` package only if it is missing or outdated, and `tree --version` runs it to show the installation worked. `-S` handles installation and `--needed` makes the command idempotent by skipping packages already at the repository version, while root is required because packages are written into `/usr` and recorded in the system database. Install small utilities this way when setting up a machine or scripting a toolchain, since re-running the sequence costs nothing.",
-    "explanationEs": "`sudo pacman -Sy` refresca las bases de datos, `sudo pacman -S --needed tree` instala el paquete `tree` solo si falta o está desactualizado, y `tree --version` lo ejecuta para mostrar que la instalación funcionó. `-S` se encarga de la instalación y `--needed` vuelve idempotente el comando al omitir los paquetes que ya están en la versión del repositorio, mientras que root es necesario porque los paquetes se escriben en `/usr` y se registran en la base de datos del sistema. Instala así las utilidades pequeñas al preparar una máquina o al automatizar un conjunto de herramientas, porque repetir la secuencia no cuesta nada."
+    "explanationEn": "`sudo pacman -Syu --needed tree` upgrades the system and installs the `tree` package only if it is missing or outdated, then `tree --version` runs it to show the installation worked. `-S` handles installation, `-y` refreshes the databases, `-u` upgrades what is already installed and `--needed` skips packages already at the repository version, so this is the full-upgrade flow Arch recommends instead of a partial sync; root is required because packages are written into `/usr`. Install small utilities this way when setting up a machine or scripting a toolchain, since re-running the sequence costs nothing.",
+    "explanationEs": "`sudo pacman -Syu --needed tree` actualiza el sistema e instala el paquete `tree` solo si falta o está desactualizado, y después `tree --version` lo ejecuta para mostrar que la instalación funcionó. `-S` se encarga de la instalación, `-y` refresca las bases de datos, `-u` actualiza lo ya instalado y `--needed` omite los paquetes que ya están en la versión del repositorio, así que este es el flujo de actualización completa que Arch recomienda en lugar de una sincronización parcial; root es necesario porque los paquetes se escriben en `/usr`. Instala así las utilidades pequeñas al preparar una máquina o al automatizar un conjunto de herramientas, porque repetir la secuencia no cuesta nada."
   },
   {
     "id": "linux-pkg-006",
@@ -1076,8 +1076,8 @@
     "titleEs": "Valida el calendario de un timer",
     "tldrEn": "Parse an `OnCalendar` expression safely",
     "tldrEs": "Analiza una expresión de `OnCalendar` sin riesgo",
-    "explanationEn": "`systemd-analyze calendar 'Mon *-*-* 09:00:00'` parses a calendar expression and prints its normalized form along with the next times it will run. Systemd timers use this calendar syntax in `OnCalendar=` and validating the string this way catches a malformed expression before you write it into a unit; the syntax reads like a date, where `*` means any value and `Mon` restricts it to Mondays. Run it while authoring a timer so you know that the expression is valid and when the job will actually fire, instead of guessing, which is what cron's five-field syntax often invites.",
-    "explanationEs": "`systemd-analyze calendar 'Mon *-*-* 09:00:00'` analiza una expresión de calendario e imprime su forma normalizada junto con las próximas fechas en que se activará. Los timers de systemd usan esta sintaxis de calendario en `OnCalendar=`, y validar la cadena así detecta una expresión malformada antes de escribirla en una unidad; la sintaxis se lee como una fecha, donde `*` significa cualquier valor y `Mon` la restringe a los lunes. Ejecútalo mientras redactas un timer para saber que la expresión es válida y cuándo se lanzará de verdad la tarea, en lugar de adivinar, algo que la sintaxis de cinco campos de cron suele propiciar."
+    "explanationEn": "`systemd-analyze calendar 'Mon *-*-* 09:00:00'` parses a calendar expression and prints its normalized form along with the next time it will run. Systemd timers use this calendar syntax in `OnCalendar=` and validating the string this way catches a malformed expression before you write it into a unit; the syntax reads like a date, where `*` means any value and `Mon` restricts it to Mondays. Run it while authoring a timer so you know that the expression is valid and when the job will actually fire, instead of guessing, which is what cron's five-field syntax often invites.",
+    "explanationEs": "`systemd-analyze calendar 'Mon *-*-* 09:00:00'` analiza una expresión de calendario e imprime su forma normalizada junto con la próxima vez que se activará. Los timers de systemd usan esta sintaxis de calendario en `OnCalendar=`, y validar la cadena así detecta una expresión malformada antes de escribirla en una unidad; la sintaxis se lee como una fecha, donde `*` significa cualquier valor y `Mon` la restringe a los lunes. Ejecútalo mientras redactas un timer para saber que la expresión es válida y cuándo se lanzará de verdad la tarea, en lugar de adivinar, algo que la sintaxis de cinco campos de cron suele propiciar."
   },
   {
     "id": "linux-sched-002",
@@ -1123,15 +1123,15 @@
     "category": "backupAndArchives",
     "symbolFocus": [],
     "length": "medium",
-    "code": "tar -czf /tmp/demo.tar.gz /tmp/demo\nls -lh /tmp/demo.tar.gz",
+    "code": "mkdir -p /tmp/demo/notes\nprintf 'hello\\n' > /tmp/demo/notes/a.txt\ntar -czf /tmp/demo.tar.gz /tmp/demo\nls -lh /tmp/demo.tar.gz",
     "sourceAttribution": "hand-authored for the linux-admin-v1 Learning Route",
     "isActive": true,
     "titleEn": "Create a compressed tarball",
     "titleEs": "Crea un archivo tar comprimido",
     "tldrEn": "Pack a folder into a `.tar.gz` with `tar -czf`",
     "tldrEs": "Empaqueta una carpeta en `.tar.gz` con `tar -czf`",
-    "explanationEn": "`tar -czf /tmp/demo.tar.gz /tmp/demo` packs the `/tmp/demo` tree into a gzip-compressed archive, and `ls -lh` then shows that the file exists and how much it occupies. Tar's flags act on position: `-c` creates an archive, `-z` filters it through gzip and `-f` names the output file, which is why that letter must come just before the path; tar preserves directory structure and file metadata, which is what makes it the standard backup format. Make an archive like this before a risky change or to move a directory tree between machines.",
-    "explanationEs": "`tar -czf /tmp/demo.tar.gz /tmp/demo` empaqueta el árbol `/tmp/demo` en un archivo comprimido con gzip, y `ls -lh` muestra después que el archivo existe y cuánto ocupa. Las banderas de tar actúan según su posición: `-c` crea el archivo, `-z` lo filtra por gzip y `-f` nombra el archivo de salida, por eso esa letra debe ir justo antes de la ruta; tar conserva la estructura de directorios y los metadatos, y eso lo convierte en el formato de copia de seguridad estándar. Crea un archivo así antes de un cambio arriesgado o para trasladar un árbol de directorios entre máquinas."
+    "explanationEn": "The `mkdir` and `printf` first build a small `/tmp/demo` tree, `tar -czf /tmp/demo.tar.gz /tmp/demo` packs it into a gzip-compressed archive, and `ls -lh` shows the file exists and how much it occupies. `-c` creates an archive, `-z` filters it through gzip and `-f` takes the next argument as the output file name, and tar preserves directory structure and file metadata, which is what makes it the standard backup format; the `Removing leading /` line means tar stored members by relative path. Make an archive like this before a risky change or to move a directory tree between machines.",
+    "explanationEs": "`mkdir` y `printf` construyen primero un pequeño árbol en `/tmp/demo`, `tar -czf /tmp/demo.tar.gz /tmp/demo` lo empaqueta en un archivo comprimido con gzip y `ls -lh` muestra que el archivo existe y cuánto ocupa. `-c` crea el archivo, `-z` lo filtra por gzip y `-f` toma el siguiente argumento como nombre del archivo de salida, y tar conserva la estructura de directorios y los metadatos, y eso lo convierte en el formato de copia de seguridad estándar; la línea `Removing leading /` significa que tar guardó los miembros con rutas relativas. Crea un archivo así antes de un cambio arriesgado o para trasladar un árbol de directorios entre máquinas."
   },
   {
     "id": "linux-backup-002",
@@ -1260,24 +1260,6 @@
     "explanationEs": "`ip -s link show lo` muestra los datos de la interfaz y luego dos bloques de contadores, `RX:` y `TX:`, con bytes, paquetes, errores y descartes en cada dirección. El kernel mantiene esas cifras en estructuras de estadísticas por interfaz, así que se acumulan con cada trama que pasa por el dispositivo desde su creación. Úsalas para detectar un enlace defectuoso: errores o descartes crecientes apuntan a problemas de hardware, controlador o dúplex, no a un fallo de enrutamiento."
   },
   {
-    "id": "linux-net-006",
-    "revision": 1,
-    "language": "linux",
-    "difficulty": "advanced",
-    "category": "networking",
-    "symbolFocus": [],
-    "length": "medium",
-    "code": "sudo ip link set lo down\nip -brief link show lo\nsudo ip link set lo up",
-    "sourceAttribution": "hand-authored for the linux-networking-v1 Learning Route",
-    "isActive": true,
-    "titleEn": "Take an interface down and up",
-    "titleEs": "Baja y sube una interfaz",
-    "tldrEn": "Toggle a link with `ip link set lo down` and `up`",
-    "tldrEs": "Alterna un enlace con `ip link set lo down` y `up`",
-    "explanationEn": "`sudo ip link set lo down` clears the interface's administrative up flag, and the same command with `up` restores it; the `ip -brief link show lo` in between confirms the `DOWN` state. Root is required because that flag lives in the kernel's network device state, shared by every process, so changing it is a privileged operation. This is how you reset a stuck link or apply new settings without rebooting, though taking `lo` down briefly breaks anything that relies on `127.0.0.1`.",
-    "explanationEs": "`sudo ip link set lo down` borra el indicador administrativo de interfaz activa, y el mismo comando con `up` lo restaura; el `ip -brief link show lo` intermedio confirma el estado `DOWN`. Se necesita root porque ese indicador vive en el estado de los dispositivos de red del kernel y lo comparten todos los procesos, de modo que modificarlo es una operación privilegiada. Así se reinicia un enlace atascado o se aplican ajustes sin reiniciar, aunque bajar `lo` rompe por un momento todo lo que dependa de `127.0.0.1`."
-  },
-  {
     "id": "linux-net-007",
     "revision": 1,
     "language": "linux",
@@ -1285,15 +1267,15 @@
     "category": "networking",
     "symbolFocus": [],
     "length": "medium",
-    "code": "cat /etc/hosts\ngetent hosts localhost",
+    "code": "cat /etc/hosts\ngetent ahosts localhost",
     "sourceAttribution": "hand-authored for the linux-networking-v1 Learning Route",
     "isActive": true,
     "titleEn": "Resolve names through /etc/hosts",
     "titleEs": "Resuelve nombres con /etc/hosts",
-    "tldrEn": "Static host table plus `getent hosts localhost`",
-    "tldrEs": "Tabla estática de hosts y `getent hosts localhost`",
-    "explanationEn": "`cat /etc/hosts` prints the local static table of IP-to-name pairs, and `getent hosts localhost` resolves that name through the same lookup path applications use, returning `127.0.0.1` and `::1`. Before touching DNS, the C library consults this file according to the `hosts:` line in `/etc/nsswitch.conf`, so entries here win over any server reply. Check both when a name must point somewhere specific, such as a staging host or a locally blocked domain.",
-    "explanationEs": "`cat /etc/hosts` muestra la tabla estática local de pares IP-nombre, y `getent hosts localhost` resuelve ese nombre por la misma ruta de consulta que usan las aplicaciones, devolviendo `127.0.0.1` y `::1`. Antes de tocar el DNS, la biblioteca C consulta este archivo según la línea `hosts:` de `/etc/nsswitch.conf`, por lo que sus entradas ganan a cualquier respuesta de un servidor. Revisa ambos cuando un nombre deba apuntar a un sitio concreto, como un host de pruebas o un dominio bloqueado localmente."
+    "tldrEn": "Static host table plus `getent ahosts localhost`",
+    "tldrEs": "Tabla estática de hosts y `getent ahosts localhost`",
+    "explanationEn": "`cat /etc/hosts` prints the local static table of IP-to-name pairs, and `getent ahosts localhost` resolves that name through the same lookup path applications use, returning both `::1` and `127.0.0.1`. Before touching DNS, the C library consults this file according to the `hosts:` line in `/etc/nsswitch.conf`, so entries here win over any server reply. Check both when a name must point somewhere specific, such as a staging host or a locally blocked domain.",
+    "explanationEs": "`cat /etc/hosts` muestra la tabla estática local de pares IP-nombre, y `getent ahosts localhost` resuelve ese nombre por la misma ruta de consulta que usan las aplicaciones, devolviendo tanto `::1` como `127.0.0.1`. Antes de tocar el DNS, la biblioteca C consulta este archivo según la línea `hosts:` de `/etc/nsswitch.conf`, por lo que sus entradas ganan a cualquier respuesta de un servidor. Revisa ambos cuando un nombre deba apuntar a un sitio concreto, como un host de pruebas o un dominio bloqueado localmente."
   },
   {
     "id": "linux-net-008",
@@ -1343,7 +1325,7 @@
     "sourceAttribution": "hand-authored for the linux-networking-v1 Learning Route",
     "isActive": true,
     "titleEn": "Ping a host by name",
-    "titleEs": "Haz ping a un host por nombre",
+    "titleEs": "Haz ping a un host",
     "tldrEn": "Resolve and ping with `ping -c 2 -W 3 archlinux.org`",
     "tldrEs": "Resuelve y haz ping con `ping -c 2 -W 3 archlinux.org`",
     "explanationEn": "`ping -c 2 -W 3 archlinux.org` first turns the name into an address and then sends two echo requests, waiting at most three seconds for each reply; `tail -n 2` keeps just the summary lines. The name step goes through the resolver, so a success proves both DNS and IP reachability, while a failure leaves you guessing which half broke. Some hosts filter ICMP even when their web service is fine, so treat silence as a hint, not a verdict.",
@@ -1364,8 +1346,8 @@
     "titleEs": "Imprime solo el estado HTTP",
     "tldrEn": "Fetch status code with `curl -w '%{http_code}'`",
     "tldrEs": "Obtén el código de estado con `curl -w '%{http_code}'`",
-    "explanationEn": "`curl -sS -o /dev/null -w '%{http_code}\\n'` fetches the page, discards the body, and prints only the numeric HTTP status. curl completes the whole TCP, TLS, and HTTP exchange before filling in the `http_code` write-out variable, so the number is the real response the server sent, not an inference from the output text. This is the standard one-liner for health checks and scripts that just need to know whether a service answered `200`.",
-    "explanationEs": "`curl -sS -o /dev/null -w '%{http_code}\\n'` descarga la página, descarta el cuerpo e imprime únicamente el estado HTTP numérico. curl completa todo el intercambio TCP, TLS y HTTP antes de rellenar la variable `http_code` de `-w`, así que el número es la respuesta real del servidor y no una deducción a partir del texto. Es la orden clásica para comprobaciones de estado y scripts que solo necesitan saber si un servicio respondió `200`."
+    "explanationEn": "`curl -sS -o /dev/null -w '%{http_code}\\n'` fetches the page, discards the body (`-o /dev/null`), hides the progress meter while keeping error messages (`-sS`), and prints only the numeric HTTP status. curl completes the whole TCP, TLS, and HTTP exchange before filling in the `http_code` write-out variable, so the number is the real response the server sent, not an inference from the output text. This is the standard one-liner for health checks and scripts that just need to know whether a service answered `200`.",
+    "explanationEs": "`curl -sS -o /dev/null -w '%{http_code}\\n'` descarga la página, descarta el cuerpo (`-o /dev/null`), oculta la barra de progreso pero conserva los mensajes de error (`-sS`) e imprime únicamente el estado HTTP numérico. curl completa todo el intercambio TCP, TLS y HTTP antes de rellenar la variable `http_code` de `-w`, así que el número es la respuesta real del servidor y no una deducción a partir del texto. Es la orden clásica para comprobaciones de estado y scripts que solo necesitan saber si un servicio respondió `200`."
   },
   {
     "id": "linux-net-012",
@@ -1397,7 +1379,7 @@
     "sourceAttribution": "hand-authored for the linux-networking-v1 Learning Route",
     "isActive": true,
     "titleEn": "Cap a request with a timeout",
-    "titleEs": "Limita una petición con un tiempo máximo",
+    "titleEs": "Limita el tiempo de una petición",
     "tldrEn": "Never hang: `curl --max-time 5`",
     "tldrEs": "Que no se cuelgue: `curl --max-time 5`",
     "explanationEn": "`curl -sS --max-time 5 ...` aborts the whole operation if it has not finished within five seconds and exits with a non-zero status. The flag sets a wall-clock deadline covering name resolution, connection, TLS handshake, and transfer, so curl cannot wait forever on a dead server that accepts the socket but never answers. Always bound automated or interactive checks with it, because a hang inside a script stalls everything that follows.",
@@ -1433,7 +1415,7 @@
     "sourceAttribution": "hand-authored for the linux-networking-v1 Learning Route",
     "isActive": true,
     "titleEn": "Check listening TCP ports",
-    "titleEs": "Enumera los puertos TCP a la escucha",
+    "titleEs": "Enumera los puertos TCP",
     "tldrEn": "Numeric listening TCP sockets with `ss -ltn`",
     "tldrEs": "Sockets TCP a la escucha con `ss -ltn`",
     "explanationEn": "`ss -ltn` lists TCP sockets in the listening state with ports shown as numbers: `-l` filters to listeners, `-t` to TCP, and `-n` skips service-name lookups. `ss` reads the kernel's socket tables directly over netlink, which is why it replaced the older `netstat` and stays fast even with many connections. Read it to learn what a machine exposes; an address like `127.0.0.1:8080` is local-only while `0.0.0.0:22` accepts connections from any network.",
@@ -1447,7 +1429,7 @@
     "category": "networking",
     "symbolFocus": [],
     "length": "medium",
-    "code": "ss -tulpn | head -n 5",
+    "code": "sudo ss -tulpn | head -n 5",
     "sourceAttribution": "hand-authored for the linux-networking-v1 Learning Route",
     "isActive": true,
     "titleEn": "Find the process behind a port",
@@ -1476,6 +1458,24 @@
     "explanationEs": "`ss -s` imprime totales agregados de sockets agrupados por protocolo y estado, como conexiones TCP establecidas, en `time-wait` o huérfanas, sin enumerar socket por socket. Las cifras provienen de los contadores globales del kernel, los mismos que alimentan `/proc/net/sockstat`, así que describen el sistema completo y no una interfaz o un proceso concreto. Consúltalos cuando una máquina maneje muchas conexiones y sospeches agotamiento de descriptores o una acumulación de sockets en `TIME_WAIT`."
   },
   {
+    "id": "linux-net-006",
+    "revision": 1,
+    "language": "linux",
+    "difficulty": "advanced",
+    "category": "networking",
+    "symbolFocus": [],
+    "length": "medium",
+    "code": "sudo ip link set lo down\nip -brief link show lo\nsudo ip link set lo up",
+    "sourceAttribution": "hand-authored for the linux-networking-v1 Learning Route",
+    "isActive": true,
+    "titleEn": "Take an interface down and up",
+    "titleEs": "Baja y sube una interfaz",
+    "tldrEn": "Toggle a link with `ip link set lo down` and `up`",
+    "tldrEs": "Alterna un enlace con `ip link set lo down` y `up`",
+    "explanationEn": "`sudo ip link set lo down` clears the interface's administrative up flag, and the same command with `up` restores it; the `ip -brief link show lo` in between confirms the `DOWN` state. Root is required because that flag lives in the kernel's network device state, shared by every process, so changing it is a privileged operation. This is how you reset a stuck link or apply new settings without rebooting, though taking `lo` down briefly breaks anything that relies on `127.0.0.1`.",
+    "explanationEs": "`sudo ip link set lo down` borra el indicador administrativo de interfaz activa, y el mismo comando con `up` lo restaura; el `ip -brief link show lo` intermedio confirma el estado `DOWN`. Se necesita root porque ese indicador vive en el estado de los dispositivos de red del kernel y lo comparten todos los procesos, de modo que modificarlo es una operación privilegiada. Así se reinicia un enlace atascado o se aplican ajustes sin reiniciar, aunque bajar `lo` rompe por un momento todo lo que dependa de `127.0.0.1`."
+  },
+  {
     "id": "linux-net-018",
     "revision": 1,
     "language": "linux",
@@ -1501,15 +1501,15 @@
     "category": "networking",
     "symbolFocus": [],
     "length": "medium",
-    "code": "sudo nft list table inet demo\nsudo nft delete table inet demo\nnft list tables",
+    "code": "sudo nft list table inet demo\nsudo nft delete table inet demo\nsudo nft list tables",
     "sourceAttribution": "hand-authored for the linux-networking-v1 Learning Route",
     "isActive": true,
     "titleEn": "Delete an nftables table",
     "titleEs": "Elimina una tabla de nftables",
     "tldrEn": "Remove table and rules with `nft delete table`",
     "tldrEs": "Borra tabla y reglas con `nft delete table`",
-    "explanationEn": "`sudo nft list table inet demo` prints the table, `sudo nft delete table inet demo` removes it, and `nft list tables` confirms that nothing is left. Tables own chains and chains own rules, so deleting the table drops all of its contents in one step, which is why it is the clean way to undo experiments. Root is needed for the deletion because it mutates the kernel ruleset, and cleaning up matters: a leftover drop rule can silently block traffic later.",
-    "explanationEs": "`sudo nft list table inet demo` imprime la tabla, `sudo nft delete table inet demo` la elimina y `nft list tables` confirma que no queda ninguna. Las tablas contienen cadenas y las cadenas contienen reglas, así que borrar la tabla se lleva todo su contenido de una vez, y por eso es la forma limpia de deshacer experimentos. Se necesita root para borrarla porque modifica el conjunto de reglas del kernel, y limpiar importa: una regla de descarte olvidada puede bloquear tráfico más tarde sin previo aviso."
+    "explanationEn": "`sudo nft list table inet demo` prints the table, `sudo nft delete table inet demo` removes it, and `sudo nft list tables` confirms that nothing is left. Tables own chains and chains own rules, so deleting the table drops all of its contents in one step, which is why it is the clean way to undo experiments. Root is needed for the deletion because it mutates the kernel ruleset, and cleaning up matters: a leftover drop rule can silently block traffic later.",
+    "explanationEs": "`sudo nft list table inet demo` imprime la tabla, `sudo nft delete table inet demo` la elimina y `sudo nft list tables` confirma que no queda ninguna. Las tablas contienen cadenas y las cadenas contienen reglas, así que borrar la tabla se lleva todo su contenido de una vez, y por eso es la forma limpia de deshacer experimentos. Se necesita root para borrarla porque modifica el conjunto de reglas del kernel, y limpiar importa: una regla de descarte olvidada puede bloquear tráfico más tarde sin previo aviso."
   },
   {
     "id": "linux-net-020",
@@ -1526,7 +1526,7 @@
     "titleEs": "Consulta DNS con systemd-resolved",
     "tldrEn": "Resolve and inspect with `resolvectl`",
     "tldrEs": "Resuelve e inspecciona con `resolvectl`",
-    "explanationEn": "`resolvectl query localhost` asks systemd-resolved to resolve a name and print the addresses, while `resolvectl status | head -n 8` shows the global and per-link DNS configuration, DNSSEC, and cache state. The query travels through the systemd-resolved service rather than reading `/etc/resolv.conf` directly, so it reflects exactly what the daemon would answer for applications. On Arch you start and enable `systemd-resolved` yourself, and this is the tool to inspect its view when resolution behaves differently from what the files suggest.",
-    "explanationEs": "`resolvectl query localhost` le pide a systemd-resolved que resuelva un nombre e imprima las direcciones, mientras que `resolvectl status | head -n 8` muestra la configuración DNS global y por enlace, el estado de DNSSEC y la caché. La consulta pasa por el servicio systemd-resolved en lugar de leer `/etc/resolv.conf` directamente, así que refleja exactamente lo que el demonio respondería a las aplicaciones. En Arch eres tú quien activa y habilita `systemd-resolved`, y esta es la herramienta para inspeccionar su visión cuando la resolución no coincide con lo que sugieren los archivos."
+    "explanationEn": "`resolvectl query localhost` asks systemd-resolved to resolve a name and print the addresses, while `resolvectl status | head -n 8` shows the global and per-link DNS configuration, and DNSSEC state. The query travels through the systemd-resolved service rather than reading `/etc/resolv.conf` directly, so it reflects exactly what the daemon would answer for applications. On Arch you start and enable `systemd-resolved` yourself, and this is the tool to inspect its view when resolution behaves differently from what the files suggest.",
+    "explanationEs": "`resolvectl query localhost` le pide a systemd-resolved que resuelva un nombre e imprima las direcciones, mientras que `resolvectl status | head -n 8` muestra la configuración DNS global y por enlace, y el estado de DNSSEC. La consulta pasa por el servicio systemd-resolved en lugar de leer `/etc/resolv.conf` directamente, así que refleja exactamente lo que el demonio respondería a las aplicaciones. En Arch eres tú quien activa y habilita `systemd-resolved`, y esta es la herramienta para inspeccionar su visión cuando la resolución no coincide con lo que sugieren los archivos."
   }
 ]
