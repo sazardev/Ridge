@@ -19,7 +19,7 @@ backs the three Django routes `python-django-foundations-v1`/
 `python-django-orm-v1`/`python-django-rest-v1`), JavaScript
 `javascript_v1.json`, TypeScript `typescript_v1.json`, Haskell
 `haskell_v1.json`, C `c_v1.json`, C++ `cpp_v1.json`, Java
-`java_v1.json`, Crystal `crystal_v1.json`, Swift `swift_v1.json`, CSS `css_v1.json`, C# `csharp_v1.json`, Dart `dart_v1.json`, Kotlin `kotlin_v1.json`, PHP `php_v1.json`, Git `git_v1.json`, Linux `linux_v1.json`, GitHub Actions `github_actions_v1.json`, SPEC.md §3), and the
+`java_v1.json`, Crystal `crystal_v1.json`, Swift `swift_v1.json`, CSS `css_v1.json`, C# `csharp_v1.json`, Dart `dart_v1.json`, Kotlin `kotlin_v1.json`, PHP `php_v1.json`, Git `git_v1.json`, Linux `linux_v1.json`, GitHub Actions `github_actions_v1.json`, Docker `docker_v1.json`, SPEC.md §3), and the
 curated Learning Path curriculum
 (one file per route under `assets/content/learning_paths/`, SPEC.md §5.7).
 All are read-only at runtime; snippet catalogs are idempotently seeded
@@ -127,6 +127,12 @@ into drift tables on launch, paths are read straight from the bundle.
     `check-jsonschema --builtin-schema vendor.dependabot`, `gh <cmd>
     --help` for the CLI lessons, and a representative subset actually
     executed with `act` + podman — see `references/snippet-authoring.md`.
+    Docker (`docker_v1.json`) runs every snippet against a real engine
+    (Docker 29 + Compose 5.5): command lines line by line, and
+    Dockerfile/`.dockerignore`/`compose.yaml` fragments written verbatim
+    to their target filename and driven with `docker build`/`docker run`/
+    `docker compose up -d`, asserting output and post-state — see
+    `references/snippet-authoring.md`.
     Never trust generated code unverified.
 4. **Adding a new schema field?** — read `references/migrations-and-tests.md`
    for the drift migration pattern and the exact test files/fixtures that
@@ -175,13 +181,16 @@ into drift tables on launch, paths are read straight from the bundle.
    disposable container per snippet with its own setup, asserting
    stdout/stderr/exit code and post-state, and `actionlint` + ShellCheck,
    `action-validator`, `check-jsonschema` and `act` + podman for GitHub
-   Actions (33 workflows executed) with the event-data-in-`env` rule
+   Actions (33 workflows executed) with the event-data-in-`env` rule,
+   and a real Docker 29 + Compose 5.5 engine for Docker (commands run
+   line by line, Dockerfiles/`.dockerignore`/`compose.yaml` driven with
+   real `docker build`/`compose up` and asserted on output and state)
 - Keep every (category, difficulty) cell at ≥3 active entries for the 5
   "core" categories of each free-practice language (see
   `snippet_catalog_completeness_test.dart`) before reclassifying or
   deactivating a snippet; course-only catalogs (Bash, SQL, Rust, Python,
   JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#,
-  Dart, Kotlin, PHP, Git, Linux, GitHub Actions) instead require
+   Dart, Kotlin, PHP, Git, Linux, GitHub Actions, Docker) instead require
   every active snippet to be referenced by a bundled path — no orphans
 - Delegate large content-authoring batches (10+ entries) to a background
   `general-purpose` agent with a detailed style guide + few-shot examples;

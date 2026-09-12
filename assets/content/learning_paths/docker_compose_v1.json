@@ -91,7 +91,7 @@
         "snippetId": "docker-compose-012",
         "order": 12,
         "titleEn": "Wait for a healthy service",
-        "titleEs": "Espera a que un servicio esté sano"
+        "titleEs": "Espera a que un servicio esté saludable"
       },
       {
         "id": "docker-compose-v1-step13",

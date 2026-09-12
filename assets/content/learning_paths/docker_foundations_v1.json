@@ -140,7 +140,7 @@
         "snippetId": "docker-cont-005",
         "order": 19,
         "titleEn": "Auto-remove containers with `--rm`",
-        "titleEs": "Autodestruye contenedores con `--rm`"
+        "titleEs": "Elimina contenedores automáticamente con `--rm`"
       },
       {
         "id": "docker-foundations-v1-step20",

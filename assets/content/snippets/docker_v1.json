@@ -43,15 +43,15 @@
     "category": "dockerBasics",
     "symbolFocus": [],
     "length": "short",
-    "code": "docker run --rm alpine:3.22 echo \"Hello from a container\"",
+    "code": "docker run alpine:3.22 echo \"Hello from a container\"",
     "sourceAttribution": "hand-authored for the docker-foundations-v1 Learning Route",
     "isActive": true,
     "titleEn": "Run a command in a fresh container",
     "titleEs": "Ejecuta un comando en un contenedor nuevo",
-    "tldrEn": "Run a one-off command in a throwaway container",
-    "tldrEs": "Ejecuta un comando puntual en un contenedor desechable",
-    "explanationEn": "This `docker run --rm alpine:3.22 echo` starts a container from the Alpine image, runs `echo` inside it, and removes the container as soon as the command finishes. A container lives only as long as its main process, so a one-shot command like `echo` makes it exit immediately, and `--rm` tells Docker to delete that stopped container instead of leaving it behind. Use this pattern for quick, disposable tasks where you only care about the command result.",
-    "explanationEs": "Este `docker run --rm alpine:3.22 echo` arranca un contenedor desde la imagen Alpine, ejecuta `echo` dentro y elimina el contenedor en cuanto el comando termina. Un contenedor vive solo mientras dura su proceso principal, así que un comando puntual como `echo` lo hace salir de inmediato, y `--rm` le dice a Docker que borre ese contenedor detenido en lugar de dejarlo atrás. Usa este patrón para tareas rápidas y desechables en las que solo te interesa el resultado del comando."
+    "tldrEn": "Run a one-off command in a fresh container",
+    "tldrEs": "Ejecuta un comando puntual en un contenedor nuevo",
+    "explanationEn": "This `docker run alpine:3.22 echo` starts a container from the Alpine image, runs `echo` inside it, and leaves the container behind once the command finishes. A container lives only as long as its main process, so a one-shot command like `echo` makes it exit immediately, and Docker keeps the stopped container until you remove it. Use this pattern for quick tasks where you only care about the command result.",
+    "explanationEs": "Este `docker run alpine:3.22 echo` arranca un contenedor desde la imagen Alpine, ejecuta `echo` dentro y deja el contenedor detenido en cuanto el comando termina. Un contenedor vive solo mientras dura su proceso principal, así que un comando puntual como `echo` lo hace salir de inmediato, y Docker conserva el contenedor detenido hasta que lo elimines. Usa este patrón para tareas rápidas en las que solo te interesa el resultado del comando."
   },
   {
     "id": "docker-basic-004",
@@ -230,8 +230,8 @@
     "titleEs": "Lee el historial de capas",
     "tldrEn": "See the layers and instructions that built an image",
     "tldrEs": "Mira las capas e instrucciones que formaron una imagen",
-    "explanationEn": "`docker history hello` lists the layers of the `hello` image along with the instruction that created each one. Every build step such as `FROM`, `RUN`, or `COPY` adds a layer, and the image is the stack of those layers, so the history is effectively the recipe that produced it. Check it when an image is larger than expected or when you want to understand how a `Dockerfile` you did not write was assembled.",
-    "explanationEs": "`docker history hello` lista las capas de la imagen `hello` junto con la instrucción que creó cada una. Cada paso del build, como `FROM`, `RUN` o `COPY`, añade una capa, y la imagen es la pila de esas capas, así que el historial es en la práctica la receta que la produjo. Consúltalo cuando una imagen ocupe más de lo esperado o cuando quieras entender cómo se armó un `Dockerfile` que no escribiste tú."
+    "explanationEn": "`docker history hello` lists the layers of the `hello` image along with the instruction that created each one. Every instruction that changes the filesystem, such as `RUN`, `COPY`, or `ADD`, creates a layer, and the image is the base image plus the stack of layers it added, so the history is effectively the recipe that produced it. Check it when an image is larger than expected or when you want to understand how a `Dockerfile` you did not write was assembled.",
+    "explanationEs": "`docker history hello` lista las capas de la imagen `hello` junto con la instrucción que creó cada una. Cada instrucción que cambia el sistema de archivos, como `RUN`, `COPY` o `ADD`, crea una capa, y la imagen es la imagen base más la pila de capas que añadió, así que el historial es en la práctica la receta que la produjo. Consúltalo cuando una imagen ocupe más de lo esperado o cuando quieras entender cómo se armó un `Dockerfile` que no escribiste tú."
   },
   {
     "id": "docker-image-004",
@@ -285,7 +285,7 @@
     "tldrEn": "`docker logs` shows output from a detached container",
     "tldrEs": "`docker logs` muestra la salida de un contenedor desacoplado",
     "explanationEn": "`docker run -d --name talker alpine:3.22 sh -c \"echo hello from the logs; sleep 60\"` starts a container that writes a line and then sleeps, `docker logs talker` prints what the container wrote to its standard output, and `docker rm -f talker` removes it. A detached container keeps running in the background without a terminal attached, and Docker captures its output so `logs` can replay it later, which is why you do not lose the message printed at startup. Read logs whenever a background service misbehaves, because that captured output is usually the fastest way to see what it did.",
-    "explanationEs": "`docker run -d --name talker alpine:3.22 sh -c \"echo hello from the logs; sleep 60\"` arranca un contenedor que escribe una línea y después duerme, `docker logs talker` imprime lo que el contenedor escribió en su salida estándar y `docker rm -f talker` lo elimina. Un contenedor desacoplado sigue corriendo en segundo plano sin terminal conectada, y Docker captura su salida para que `logs` pueda mostrarla después, por eso no se pierde el mensaje impreso al arrancar. Lee los logs siempre que un servicio en segundo plano falle, porque esa salida capturada suele ser la forma más rápida de ver qué hizo."
+    "explanationEs": "`docker run -d --name talker alpine:3.22 sh -c \"echo hello from the logs; sleep 60\"` arranca un contenedor que escribe una línea y después duerme, `docker logs talker` imprime lo que el contenedor escribió en su salida estándar y `docker rm -f talker` lo elimina. Un contenedor desacoplado sigue corriendo en segundo plano sin terminal conectada, y Docker captura su salida para que `logs` pueda mostrarla después, por eso no se pierde el mensaje impreso al arrancar. Lee los registros siempre que un servicio en segundo plano falle, porque esa salida capturada suele ser la forma más rápida de ver qué hizo."
   },
   {
     "id": "docker-cont-003",
@@ -335,7 +335,7 @@
     "sourceAttribution": "hand-authored for the docker-foundations-v1 Learning Route",
     "isActive": true,
     "titleEn": "Auto-remove containers with `--rm`",
-    "titleEs": "Autodestruye contenedores con `--rm`",
+    "titleEs": "Elimina contenedores automáticamente con `--rm`",
     "tldrEn": "`--rm` deletes the container as soon as it exits",
     "tldrEs": "`--rm` borra el contenedor en cuanto termina",
     "explanationEn": "The first `docker run --name leftover alpine:3.22 true` leaves a stopped container behind because it has no cleanup flag, while the second with `--rm` removes its container the moment the `true` command exits. By default Docker keeps a stopped container, including its writable layer and logs, until you remove it, and `--rm` changes that behavior for a single run, which `docker ps -a --filter name=leftover` confirms by still showing only the first one. Add `--rm` to throwaway runs such as tests or one-off commands, and clean up lingering containers with `docker rm` when you did not.",
@@ -391,9 +391,9 @@
     "titleEn": "Mount a host folder",
     "titleEs": "Monta una carpeta del host",
     "tldrEn": "A bind mount shares a host folder with the container",
-    "tldrEs": "Un bind mount comparte una carpeta del host con el contenedor",
+    "tldrEs": "Un montaje de enlace comparte una carpeta del host con el contenedor",
     "explanationEn": "The first two commands create a `site` folder on the host with an `index.html`, and the `docker run --rm -v \"$PWD/site:/site:ro\"` command mounts that host folder at `/site` inside the container and reads the file. A bind mount uses a path from the host instead of a Docker-managed volume, so edits on the host appear in the container immediately, and the `:ro` suffix makes the mount read-only so the container cannot modify your files. Reach for a bind mount during development when you want the container to see live host content without rebuilding the image.",
-    "explanationEs": "Los dos primeros comandos crean en el host una carpeta `site` con un `index.html`, y el comando `docker run --rm -v \"$PWD/site:/site:ro\"` monta esa carpeta del host en `/site` dentro del contenedor y lee el archivo. Un bind mount usa una ruta del host en lugar de un volumen gestionado por Docker, así que los cambios en el host aparecen de inmediato en el contenedor, y el sufijo `:ro` hace que el montaje sea de solo lectura para que el contenedor no modifique tus archivos. Recurre a un bind mount durante el desarrollo cuando quieras que el contenedor vea contenido vivo del host sin reconstruir la imagen."
+    "explanationEs": "Los dos primeros comandos crean en el host una carpeta `site` con un `index.html`, y el comando `docker run --rm -v \"$PWD/site:/site:ro\"` monta esa carpeta del host en `/site` dentro del contenedor y lee el archivo. Un montaje de enlace usa una ruta del host en lugar de un volumen gestionado por Docker, así que los cambios en el host aparecen de inmediato en el contenedor, y el sufijo `:ro` hace que el montaje sea de solo lectura para que el contenedor no modifique tus archivos. Recurre a un montaje de enlace durante el desarrollo cuando quieras que el contenedor vea contenido vivo del host sin reconstruir la imagen."
   },
   {
     "id": "docker-net-001",
@@ -411,7 +411,7 @@
     "tldrEn": "`-p 8080:80` maps a host port to a port inside the container",
     "tldrEs": "`-p 8080:80` conecta un puerto del host con otro del contenedor",
     "explanationEn": "`docker run -d --name web -p 8080:80 nginx:alpine` starts Nginx in the background and publishes port `80` of the container on port `8080` of the host, so `curl -s http://localhost:8080` reaches the web server and `docker rm -f web` stops and removes it. Containers sit on a private network, so a service inside one is unreachable from your machine unless you publish a port, and the `-p host:container` order decides which side gets which number. Publish ports when you want to open a service to your host or your local network, and omit the mapping when containers only need to talk to each other.",
-    "explanationEs": "`docker run -d --name web -p 8080:80 nginx:alpine` arranca Nginx en segundo plano y publica el puerto `80` del contenedor en el puerto `8080` del host, así que `curl -s http://localhost:8080` llega al servidor web y `docker rm -f web` lo detiene y lo elimina. Los contenedores viven en una red privada, por lo que un servicio dentro de uno no es accesible desde tu máquina a menos que publiques un puerto, y el orden `-p host:contenedor` decide qué número va en cada lado. Publica puertos cuando quieras abrir un servicio a tu host o tu red local, y omite la publicación cuando los contenedores solo necesiten hablar entre ellos."
+    "explanationEs": "`docker run -d --name web -p 8080:80 nginx:alpine` arranca Nginx en segundo plano y publica el puerto `80` del contenedor en el puerto `8080` del host, así que `curl -s http://localhost:8080` llega al servidor web y `docker rm -f web` lo detiene y lo elimina. Los contenedores viven en una red privada, por lo que un servicio dentro de uno no es accesible desde tu máquina a menos que publiques un puerto, y el orden `-p host:container` decide qué número va en cada lado. Publica puertos cuando quieras abrir un servicio a tu host o tu red local, y omite la publicación cuando los contenedores solo necesiten hablar entre ellos."
   },
   {
     "id": "docker-net-002",
@@ -518,8 +518,8 @@
     "titleEs": "Construye un servicio desde el código",
     "tldrEn": "Build the image from a local `Dockerfile` with `build: .`",
     "tldrEs": "Construye la imagen desde un `Dockerfile` local con `build: .`",
-    "explanationEn": "Instead of pulling an existing image, `build: .` tells Compose to build the service image from the `Dockerfile` in the current folder. Compose supports both `image` and `build`, but `build` makes the service reproducible from source, so anyone with the repository can rebuild exactly what you run. Choose it while developing your own application, and switch to a published image when the build output is already distributed through a registry.",
-    "explanationEs": "En lugar de descargar una imagen existente, `build: .` indica a Compose que construya la imagen del servicio a partir del `Dockerfile` de la carpeta actual. Compose admite tanto `image` como `build`, pero `build` hace que el servicio sea reproducible desde el código fuente, de modo que cualquiera con el repositorio pueda reconstruir exactamente lo que ejecutas. Elígelo mientras desarrollas tu propia aplicación y cambia a una imagen publicada cuando el resultado de la compilación ya se distribuya a través de un registro."
+    "explanationEn": "Instead of pulling an existing image, `build: .` tells Compose to build the service image from the `Dockerfile` in the current folder. Compose supports both `image` and `build`, but `build` makes the service reproducible from source, so anyone with the repository can rebuild the service from the same source. Choose it while developing your own application, and switch to a published image when the build output is already distributed through a registry.",
+    "explanationEs": "En lugar de descargar una imagen existente, `build: .` indica a Compose que construya la imagen del servicio a partir del `Dockerfile` de la carpeta actual. Compose admite tanto `image` como `build`, pero `build` hace que el servicio sea reproducible desde el código fuente, de modo que cualquiera con el repositorio pueda reconstruir el servicio a partir del mismo código. Elígelo mientras desarrollas tu propia aplicación y cambia a una imagen publicada cuando el resultado de la compilación ya se distribuya a través de un registro."
   },
   {
     "id": "docker-compose-005",
@@ -644,8 +644,8 @@
     "titleEs": "Controla el orden de arranque",
     "tldrEn": "`depends_on` orders startups but does not wait for readiness",
     "tldrEs": "`depends_on` ordena el arranque, pero no espera a que esté listo",
-    "explanationEn": "The `depends_on` list makes Compose start `db` before `api` when the stack comes up. Compose only guarantees that order of container startup, not that the process inside `db` is ready to accept connections, so `api` can still run too early. Use it when the dependency is purely about order, such as a one-shot job that must not overlap with another container.",
-    "explanationEs": "La lista `depends_on` hace que Compose arranque `db` antes que `api` cuando se levanta el stack. Compose solo garantiza ese orden de arranque de contenedores, no que el proceso dentro de `db` esté listo para aceptar conexiones, así que `api` puede ejecutarse demasiado pronto. Úsalo cuando la dependencia sea puramente de orden, por ejemplo en una tarea puntual que no deba solaparse con otro contenedor."
+    "explanationEn": "The `depends_on` list makes Compose start `db` before `api` when the stack comes up. Compose only guarantees that order of container startup, not that the process inside `db` is ready to accept connections, so `api` can still run too early. Use it when only the startup order matters, such as a migration job that must begin after the database container starts.",
+    "explanationEs": "La lista `depends_on` hace que Compose arranque `db` antes que `api` cuando se levanta el stack. Compose solo garantiza ese orden de arranque de contenedores, no que el proceso dentro de `db` esté listo para aceptar conexiones, así que `api` puede ejecutarse demasiado pronto. Úsalo cuando solo importe el orden de arranque, por ejemplo una migración que deba comenzar después de que arranque el contenedor de base de datos."
   },
   {
     "id": "docker-compose-012",
@@ -659,7 +659,7 @@
     "sourceAttribution": "hand-authored for the docker-compose-v1 Learning Route",
     "isActive": true,
     "titleEn": "Wait for a healthy service",
-    "titleEs": "Espera a que un servicio esté sano",
+    "titleEs": "Espera a que un servicio esté saludable",
     "tldrEn": "`service_healthy` waits for the healthcheck to pass before starting",
     "tldrEs": "`service_healthy` espera a que pase el healthcheck antes de arrancar",
     "explanationEn": "The `healthcheck` runs `test -f /ready` inside `db` every second, and the `api` service declares `condition: service_healthy`, so Compose holds `api` back until that command succeeds. A healthcheck turns container state into a signal Compose can wait on, which is stricter than plain `depends_on` because it reflects whether the service is actually ready. Use this pattern for databases and caches, where the process exists long before it can accept traffic.",
@@ -680,8 +680,8 @@
     "titleEs": "Gestiona un stack en ejecución",
     "tldrEn": "Inspect, pause and resume individual services; `down` removes all",
     "tldrEs": "Inspecciona, pausa y reanuda servicios; `down` elimina todo",
-    "explanationEn": "With the stack from the first lesson running, `docker compose ps` shows the containers, `docker compose logs web` prints the logs of `web`, and `stop` followed by `start` cycles that one service without removing it. Compose tracks the stack as a project, so those commands locate `web` by service name and act only on the matching container, which is why `down` can still remove the whole project at the end. Keep this set handy while debugging, when you need to read logs or restart a single service instead of rebuilding the stack.",
-    "explanationEs": "Con el stack de la primera lección en ejecución, `docker compose ps` muestra los contenedores y `docker compose logs web` imprime los registros de `web`, mientras que `stop` seguido de `start` reinicia ese único servicio sin eliminarlo. Compose trata el stack como un proyecto, así que esos comandos localizan `web` por su nombre de servicio y actúan solo sobre el contenedor correspondiente; por eso `down` todavía puede eliminar el proyecto entero al final. Ten a mano este conjunto mientras depuras, cuando necesites leer registros o reiniciar un servicio sin rehacer el stack."
+    "explanationEn": "With a stack like the first lesson's `compose.yaml` running after `docker compose up -d`, `docker compose ps` shows the containers, `docker compose logs web` prints the logs of `web`, and `stop` followed by `start` cycles that one service without removing it. Compose tracks the stack as a project, so those commands locate `web` by service name and act only on the matching container, which is why `down` can still remove the whole project at the end. Keep this set handy while debugging, when you need to read logs or restart a single service instead of rebuilding the stack.",
+    "explanationEs": "Con un stack como el `compose.yaml` de la primera lección ya levantado con `docker compose up -d`, `docker compose ps` muestra los contenedores y `docker compose logs web` imprime los registros de `web`, mientras que `stop` seguido de `start` reinicia ese único servicio sin eliminarlo. Compose trata el stack como un proyecto, así que esos comandos localizan `web` por su nombre de servicio y actúan solo sobre el contenedor correspondiente; por eso `down` todavía puede eliminar el proyecto entero al final. Ten a mano este conjunto mientras depuras, cuando necesites leer registros o reiniciar un servicio sin rehacer el stack."
   },
   {
     "id": "docker-compose-014",
@@ -749,7 +749,7 @@
     "sourceAttribution": "hand-authored for the docker-advanced-v1 Learning Route",
     "isActive": true,
     "titleEn": "Multi-stage builds",
-    "titleEs": "Builds multi-etapa",
+    "titleEs": "Compilaciones multietapa",
     "tldrEn": "Copy only built artifacts into the final image with `--from`",
     "tldrEs": "Copia solo lo compilado a la imagen final con `--from`",
     "explanationEn": "A multi-stage build declares several `FROM` stages, so the `builder` stage only creates the `/build/app` script and the final stage copies it alone with `COPY --from=builder`, because the builder's filesystem (including `/build`) never ships in the final image. The `COPY --from=builder` instruction reads files from an earlier stage instead of the build context, which is why the second `FROM` can be a clean base image and still receive the compiled artifact. Reach for this pattern to keep compilers, dependencies and temporary files out of what you deploy.",
@@ -767,11 +767,11 @@
     "sourceAttribution": "hand-authored for the docker-advanced-v1 Learning Route",
     "isActive": true,
     "titleEn": "Health checks in the Dockerfile",
-    "titleEs": "Health checks en el Dockerfile",
+    "titleEs": "Comprobaciones de estado en el Dockerfile",
     "tldrEn": "Mark a container `healthy` when a check command exits 0",
-    "tldrEs": "Marca el contenedor como `healthy` cuando el check sale con 0",
+    "tldrEs": "Marca el contenedor como `healthy` cuando la comprobación sale con 0",
     "explanationEn": "`HEALTHCHECK` tells Docker to run `test -f /ready` inside the container on an interval, and the container is only reported as `healthy` once that command exits 0, which is why the `RUN touch /ready` above makes it pass immediately. Docker keeps the health status separate from the process itself, so a container can be running while `unhealthy` if the check keeps failing after the declared `--retries`. Use it when something else depends on the container being actually ready, not merely started.",
-    "explanationEs": "`HEALTHCHECK` le pide a Docker ejecutar `test -f /ready` dentro del contenedor cada cierto intervalo, y el contenedor solo se reporta como `healthy` cuando ese comando sale con 0; por eso el `RUN touch /ready` de arriba hace que pase de inmediato. Docker mantiene el estado de salud aparte del proceso, así que un contenedor puede estar en ejecución y a la vez `unhealthy` si el chequeo falla tras los `--retries` indicados. Úsalo cuando algo más dependa de que el contenedor esté realmente listo, no solo iniciado."
+    "explanationEs": "`HEALTHCHECK` le pide a Docker ejecutar `test -f /ready` dentro del contenedor cada cierto intervalo, y el contenedor solo se reporta como `healthy` cuando ese comando sale con 0; por eso el `RUN touch /ready` de arriba hace que pase de inmediato. Docker mantiene el estado de salud aparte del proceso, así que un contenedor puede estar en ejecución y a la vez `unhealthy` si la comprobación falla tras los `--retries` indicados. Úsalo cuando algo más dependa de que el contenedor esté realmente listo, no solo iniciado."
   },
   {
     "id": "docker-adv-003",
@@ -842,8 +842,8 @@
     "titleEs": "Reconstruye y aprovecha la caché",
     "tldrEn": "Rebuild the same image and watch layers come from cache",
     "tldrEs": "Reconstruye la misma imagen y mira las capas en caché",
-    "explanationEn": "The second `docker build -t cached .` repeats the first one, and this time Docker finds the layers already built and reports the `RUN` as cached instead of executing it again. Docker keys each cache entry by the parent layer, the instruction text and the copied or generated content, so an identical rebuild reuses everything and only changes when one of those inputs changes. Run a rebuild like this to confirm your Dockerfile is deterministic and to see exactly which layer a recent edit breaks.",
-    "explanationEs": "El segundo `docker build -t cached .` repite el primero y esta vez Docker encuentra las capas ya construidas, así que muestra la capa `RUN` como cacheada en lugar de ejecutarla de nuevo. Docker identifica cada entrada de caché por la capa padre, el texto de la instrucción y el contenido copiado o generado, de modo que una reconstrucción idéntica reutiliza todo y solo cambia cuando cambia uno de esos insumos. Haz una reconstrucción así para confirmar que tu Dockerfile es determinista y ver qué capa rompe una edición reciente."
+    "explanationEn": "The second `docker build -t cached .` repeats the first one, and this time Docker finds the layers already built and reports the `RUN` as cached instead of executing it again. Docker keys each cache entry by the parent layer and the instruction itself, plus the hashed content for instructions like `COPY` or `ADD`, so an identical rebuild reuses everything and only changes when one of those inputs changes. Run a rebuild like this to confirm your Dockerfile is deterministic and to see exactly which layer a recent edit breaks.",
+    "explanationEs": "El segundo `docker build -t cached .` repite el primero y esta vez Docker encuentra las capas ya construidas, así que muestra la capa `RUN` como cacheada en lugar de ejecutarla de nuevo. Docker identifica cada entrada de caché por la capa padre y la propia instrucción, más el contenido con hash en instrucciones como `COPY` o `ADD`, de modo que una reconstrucción idéntica reutiliza todo y solo cambia cuando cambia uno de esos insumos. Haz una reconstrucción así para confirmar que tu Dockerfile es determinista y ver qué capa rompe una edición reciente."
   },
   {
     "id": "docker-adv-007",
@@ -853,15 +853,15 @@
     "category": "dockerImages",
     "symbolFocus": [],
     "length": "medium",
-    "code": "docker save -o hello.tar hello\ndocker load -i hello.tar",
+    "code": "docker save -o alpine.tar alpine:3.22\ndocker load -i alpine.tar",
     "sourceAttribution": "hand-authored for the docker-advanced-v1 Learning Route",
     "isActive": true,
     "titleEn": "Save and load image tarballs",
     "titleEs": "Guarda y carga imágenes en tar",
-    "tldrEn": "Move the `hello` image as a tar file between machines",
-    "tldrEs": "Mueve la imagen `hello` como archivo tar entre máquinas",
-    "explanationEn": "`docker save -o hello.tar hello` writes the complete image, layers and metadata into `hello.tar`, and `docker load -i hello.tar` reads that file back into the local image store. Unlike a registry transfer, the tar carries everything needed, so it works on air-gapped machines with no network access. Use it to hand an image to a machine that cannot pull from a registry, or to archive a build you need to keep exactly as it was.",
-    "explanationEs": "`docker save -o hello.tar hello` escribe la imagen completa, capas y metadatos, en `hello.tar`, y `docker load -i hello.tar` vuelve a meter ese archivo en el almacén local de imágenes. A diferencia de una transferencia por registro, el tar lleva todo lo necesario, así que funciona en máquinas aisladas sin acceso a la red. Úsalo para entregar una imagen a un equipo que no puede descargar desde un registro, o para archivar una compilación que quieres conservar tal cual."
+    "tldrEn": "Move an image as a tar file between machines",
+    "tldrEs": "Mueve una imagen como archivo tar entre máquinas",
+    "explanationEn": "`docker save -o alpine.tar alpine:3.22` writes the complete image, layers and metadata into `alpine.tar`, and `docker load -i alpine.tar` reads that file back into the local image store. Unlike a registry transfer, the tar carries everything needed, so it works on air-gapped machines with no network access. Use it to hand an image to a machine that cannot pull from a registry, or to archive a build you need to keep exactly as it was.",
+    "explanationEs": "`docker save -o alpine.tar alpine:3.22` escribe la imagen completa, capas y metadatos, en `alpine.tar`, y `docker load -i alpine.tar` vuelve a meter ese archivo en el almacén local de imágenes. A diferencia de una transferencia por registro, el tar lleva todo lo necesario, así que funciona en máquinas aisladas sin acceso a la red. Úsalo para entregar una imagen a un equipo que no puede descargar desde un registro, o para archivar una compilación que quieres conservar tal cual."
   },
   {
     "id": "docker-adv-008",
@@ -889,15 +889,15 @@
     "category": "dockerRegistries",
     "symbolFocus": [],
     "length": "medium",
-    "code": "docker run -d -p 5050:5000 --name registry registry:2\ndocker tag hello localhost:5050/hello\ndocker push localhost:5050/hello\ndocker rm -f registry",
+    "code": "docker run -d -p 5050:5000 --name registry registry:2\ndocker tag alpine:3.22 localhost:5050/alpine:3.22\ndocker push localhost:5050/alpine:3.22\ndocker rm -f registry",
     "sourceAttribution": "hand-authored for the docker-advanced-v1 Learning Route",
     "isActive": true,
     "titleEn": "Push to a local registry",
     "titleEs": "Publica en un registro local",
-    "tldrEn": "Push `hello` to a registry running on localhost:5050",
-    "tldrEs": "Publica `hello` en un registro en localhost:5050",
-    "explanationEn": "This starts the `registry:2` image on port 5050, retags the local `hello` image as `localhost:5050/hello` and pushes it, because a tag that begins with a host tells Docker where to send the image. Docker treats `localhost` registries as trusted and lets them use plain HTTP, while any other registry requires HTTPS unless you configure it explicitly. Spin one up like this to test push and pull flows, CI pipelines or image distribution without touching a remote service.",
-    "explanationEs": "Esto arranca la imagen `registry:2` en el puerto 5050, reetiqueta la imagen local `hello` como `localhost:5050/hello` y la publica, porque un tag que empieza por un host le dice a Docker a dónde enviar la imagen. Docker considera los registros en `localhost` de confianza y les permite usar HTTP sin cifrado, mientras que cualquier otro registro exige HTTPS salvo que lo configures de forma explícita. Levanta uno así para probar flujos de push y pull, pipelines de CI o distribución de imágenes sin tocar un servicio remoto."
+    "tldrEn": "Push an image to a registry running on localhost:5050",
+    "tldrEs": "Publica una imagen en un registro en localhost:5050",
+    "explanationEn": "This starts the `registry:2` image on port 5050, retags the local `alpine:3.22` image as `localhost:5050/alpine:3.22` and pushes it, because a tag that begins with a host tells Docker where to send the image. Docker treats `localhost` registries as trusted and lets them use plain HTTP, while any other registry requires HTTPS unless you configure it explicitly. Spin one up like this to test push and pull flows, CI pipelines or image distribution without touching a remote service.",
+    "explanationEs": "Esto arranca la imagen `registry:2` en el puerto 5050, reetiqueta la imagen local `alpine:3.22` como `localhost:5050/alpine:3.22` y la publica, porque un tag que empieza por un host le dice a Docker a dónde enviar la imagen. Docker considera los registros en `localhost` de confianza y les permite usar HTTP sin cifrado, mientras que cualquier otro registro exige HTTPS salvo que lo configures de forma explícita. Levanta uno así para probar flujos de push y pull, pipelines de CI o distribución de imágenes sin tocar un servicio remoto."
   },
   {
     "id": "docker-adv-010",
@@ -932,8 +932,8 @@
     "titleEs": "Inicia sesión en un registro",
     "tldrEn": "Log in and out of a registry and store the credentials",
     "tldrEs": "Inicia y cierra sesión en un registro y guarda las credenciales",
-    "explanationEn": "`docker login localhost:5050 -u demo -p demo1234` authenticates against the local registry and stores the credentials in the Docker CLI configuration, while `docker logout` removes them again. The `-p` flag sends the password on the command line, which is convenient in scripts but visible in the history; the safer default is to let `docker login` prompt for it. Use login before pushing to a private registry and logout afterwards on shared machines, so the stored token does not outlive the session.",
-    "explanationEs": "`docker login localhost:5050 -u demo -p demo1234` se autentica contra el registro local y guarda las credenciales en la configuración de la CLI de Docker, mientras que `docker logout` las elimina. La opción `-p` envía la contraseña en la línea de comandos, cómoda para scripts pero visible en el historial; lo más seguro es dejar que `docker login` la pida. Inicia sesión antes de publicar en un registro privado y cierra sesión después en máquinas compartidas, para que la credencial guardada no sobreviva a la sesión."
+    "explanationEn": "`docker login localhost:5050 -u demo -p demo1234` authenticates against the local registry and stores the credentials in the Docker CLI configuration, while `docker logout` removes them again; a plain `registry:2` accepts any credentials, so authentication only means something once the registry is configured to require it. The `-p` flag sends the password on the command line, which is convenient in scripts but visible in the history; the safer default is to let `docker login` prompt for it. Use login before pushing to a private registry and logout afterwards on shared machines, so the stored token does not outlive the session.",
+    "explanationEs": "`docker login localhost:5050 -u demo -p demo1234` se autentica contra el registro local y guarda las credenciales en la configuración de la CLI de Docker, mientras que `docker logout` las elimina; un `registry:2` sin configurar acepta cualquier credencial, así que la autenticación solo significa algo cuando el registro la exige. La opción `-p` envía la contraseña en la línea de comandos, cómoda para scripts pero visible en el historial; lo más seguro es dejar que `docker login` la pida. Inicia sesión antes de publicar en un registro privado y cierra sesión después en máquinas compartidas, para que la credencial guardada no sobreviva a la sesión."
   },
   {
     "id": "docker-adv-012",
@@ -983,7 +983,7 @@
     "sourceAttribution": "hand-authored for the docker-advanced-v1 Learning Route",
     "isActive": true,
     "titleEn": "Run with a read-only filesystem",
-    "titleEs": "Ejecuta con sistema de solo lectura",
+    "titleEs": "Ejecuta con un sistema de archivos de solo lectura",
     "tldrEn": "Mount the root filesystem read-only and add a writable `/tmp`",
     "tldrEs": "Monta la raíz en solo lectura y añade un `/tmp` escribible",
     "explanationEn": "`--read-only` mounts the container's root filesystem read-only, so the first command writes `note.txt` into the in-memory `/tmp` provided by `--tmpfs /tmp`, while the second one fails on purpose because it tries to write `/note.txt` at the root. Making the root immutable stops a compromised process from modifying the image contents, and `--tmpfs` gives back the scratch space most programs still expect without persisting anything to disk. Combine both when running an untrusted workload or when you want a container that leaves no trace on the host.",

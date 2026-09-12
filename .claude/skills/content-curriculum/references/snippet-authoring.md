@@ -542,6 +542,34 @@ plus selected execution:
 - Keep `code` ASCII-only — `key_layout_map_test.dart` maps every
   character to a physical US-QWERTY key.
 
+## New Docker code: real Docker, one scratch directory per snippet
+
+Docker snippets are shell command lines, Dockerfile fragments,
+`.dockerignore` contents, or `compose.yaml` fragments (they never mix two
+kinds), so the equivalent of `go run` is a real engine — Docker 29 with
+Compose 5.5 here:
+
+- Script snippets run line by line as bash commands (asserting output and
+  resulting state between lines); Dockerfile/`.dockerignore`/`compose.yaml`
+  snippets are written byte-for-byte to their target filename and driven
+  with `docker build` / `docker run` / `docker compose up -d` inside a
+  scratch directory, with the context files the lesson names
+  (`greeting.txt`, `deps.txt`, `app.txt`, `site/index.html`, `app.env`).
+- Use small public images (`alpine:3.22`, `busybox:1.37`, `nginx:alpine`,
+  `redis:7-alpine`, `registry:2`) and name every resource; the harness
+  must never prune or remove anything it did not create (check
+  containers/networks/volumes/images for conflicts before starting).
+- Assert state, not just exit 0: `docker inspect --format` for lifecycle,
+  health, labels and limits; `docker ps -a --filter`; volume contents
+  across `down`/`up`; container DNS by service name on a user-defined
+  network; cache hits in a second `docker build` output.
+- Failure paths that are the lesson (the write that must fail on a
+  `--read-only` root) assert the non-zero exit and the message.
+- Keep `code` ASCII-only and comment-free — `key_layout_map_test.dart`
+  maps every character to a physical US-QWERTY key.
+- Run the whole harness again against the final merged asset, not the
+  pre-prose draft.
+
 ## Large batch authoring/rewrites (10+ entries): delegate, then validate twice
 
 When rewriting or extending a large slice of the catalog (e.g. adding

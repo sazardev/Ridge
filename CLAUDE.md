@@ -197,7 +197,7 @@ writing new constructors instead of writing `const ClassName(...)`.
 
 ## Content / curriculum editing
 
-Editing snippets (`assets/content/snippets/{go,bash,sql,rust,python,javascript,typescript,haskell,c,cpp,java,crystal,swift,css,csharp,dart,kotlin,php,git,linux,github_actions}_v1.json`), a
+Editing snippets (`assets/content/snippets/{go,bash,sql,rust,python,javascript,typescript,haskell,c,cpp,java,crystal,swift,css,csharp,dart,kotlin,php,git,linux,github_actions,docker}_v1.json`), a
 Learning Path's lesson order (`assets/content/learning_paths/*.json`), or
 adding a new bilingual (en/es) content field is covered by the
 `content-curriculum` skill — use it rather than hand-editing these JSON
@@ -205,7 +205,7 @@ files, since lesson ordering has produced real beginner-incoherence bugs
 before. Note the two catalog tiers (SPEC.md §3.2): Go backs free practice
 and keeps a dense (category, difficulty) grid; Bash, SQL, Rust, Python,
 JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#, Dart,
-Kotlin, PHP, Git, Linux, and GitHub Actions are course-only and contain exactly the snippets their
+Kotlin, PHP, Git, Linux, GitHub Actions, and Docker are course-only and contain exactly the snippets their
 Learning Path(s) use
 (`bash-foundations-v1`, `sql-foundations-v1`, `rust-foundations-v1`,
 `python-foundations-v1`, `javascript-foundations-v1`,
@@ -266,7 +266,15 @@ routes (`github-actions-foundations-v1`, `github-actions-pipelines-v1`,
 `reusableAndComposite`, `containersAndDocker`, `pipelinePatterns`,
 `securityHardening`, `deploymentsAndReleases`, `ciOperations`), verified
 with `actionlint` + ShellCheck, `action-validator`, the Dependabot schema,
-and 33 workflows actually executed with `act`. Python also
+and 33 workflows actually executed with `act`. Docker is another full
+exception: containers share no concept with Go's categories, so its three
+routes (`docker-foundations-v1`, `docker-compose-v1`,
+`docker-advanced-v1`) add nine of their own (`dockerBasics`,
+`dockerImages`, `dockerFiles`, `dockerContainers`, `dockerVolumes`,
+`dockerNetworking`, `dockerRegistries`, `dockerCompose`,
+`dockerMaintenance`), verified by executing every snippet (commands,
+Dockerfiles, `.dockerignore` and `compose.yaml`) against real Docker.
+Python also
 adds three Django courses —
 `python-django-foundations-v1`, `python-django-orm-v1`, and
 `python-django-rest-v1` — whose sixteen own categories (`djangoProject`,

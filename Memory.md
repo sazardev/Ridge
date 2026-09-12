@@ -58,6 +58,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   | Git | 70 snippets | `git-foundations-v1` (33, de `git init` a remotos) + `git-workflows-v1` (24, historial/deshacer/rebase/tags/hooks) + `git-internals-v1` (15, objetos/referencias/mantenimiento) — los tres nuevos, ver sesión de hoy | solo-curso |
   | Linux (Arch) | 85 snippets | `linux-foundations-v1` (35, distro/kernel/FHS/archivos/permisos/usuarios/procesos/paquetes/servicios/logs) + `linux-admin-v1` (30, cuentas+sudo/ACL/señales/discos/systemd/journald/pacman/timers/tar) + `linux-networking-v1` (20, `ip`/rutas/DNS/`curl`/`ss`/nftables/resolved) — los tres nuevos, ver sesión de hoy | solo-curso |
   | GitHub Actions | 74 snippets | `github-actions-foundations-v1` (25, anatomía del workflow/expresiones/triggers/jobs/matrices/secretos) + `github-actions-pipelines-v1` (24, caché/artefactos/compuestas/reutilizables/contenedores/patrones) + `github-actions-devops-v1` (25, seguridad/OIDC/CodeQL/releases/entornos/`gh`) — los tres nuevos, ver sesión de hoy | solo-curso |
+  | Docker | 58 snippets | `docker-foundations-v1` (25, CLI/Dockerfiles/imágenes/contenedores/volúmenes/redes) + `docker-compose-v1` (16, servicios/healthchecks/redes/réplicas/capstone) + `docker-advanced-v1` (17, multi-stage/caché/registry/digest/límites/debug) — los tres nuevos, ver sesión de hoy | solo-curso |
 
 - Curso SQL: base de datos de ejemplo compartida tipo biblioteca
   (`authors`, `books`, `members`, `loans`), 8 categorías contiguas:
@@ -144,10 +145,91 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `backupAndArchives`). Cada comando se ejecutó de verdad en contenedores
   desechables de Arch (`--privileged` para `ip`/`nft`, `--systemd=always`
   con `/sbin/init` para systemd/journal) — ver sesión de hoy.
+- **Docker es el vigésimo primer lenguaje** (sesión de hoy): tres rutas
+  (`docker-foundations-v1` 25, `docker-compose-v1` 16,
+  `docker-advanced-v1` 17), 58 snippets solo-curso y nueve categorías
+  propias (`dockerBasics` … `dockerMaintenance`). Cada snippet se ejecutó
+  de verdad contra Docker 29 + Compose 5.5 (comandos, Dockerfiles,
+  `.dockerignore`, `compose.yaml`, registry local) — ver sesión de hoy.
+  Incluye la reparación documentada del árbol de módulos del kernel
+  `7.2.2` que tenía roto el bridge de Docker en esta máquina.
 
 ---
 
 ## Historial de sesiones
+
+### 2026-09-12 — Docker: Fundamentos + Compose + Avanzado (lenguaje nuevo, 3 rutas, 58 snippets)
+
+- **Pedido del usuario**: un curso/guía de introducción a Docker bilingüe
+  (en/es, mismos estándares). Tras preguntarle eligió **tres rutas**,
+  **snippets autocontenidos** (comando, Dockerfile, `.dockerignore` o
+  `compose.yaml`, uno por lección), **nueve categorías propias** y el copy
+  "Docker from scratch" / "Docker desde cero" (tag Fundamentals/Fundamentos,
+  blurb "Package it once, run it anywhere." / "Empaquétalo una vez,
+  ejecútalo donde sea.").
+- **Contenido**: 58 snippets solo-curso, dificultad 19/20/19, en tres rutas
+  — `docker-foundations-v1` (25: CLI básica, Dockerfiles, imágenes,
+  contenedores, volúmenes, redes), `docker-compose-v1` (16: servicios,
+  puertos, build, env/env_file, volúmenes, redes, `depends_on`,
+  healthcheck, config, réplicas, capstone nginx+redis) y
+  `docker-advanced-v1` (17: multi-stage, `HEALTHCHECK`, usuario no root,
+  caché de capas, ARG global, save/load, export/import, registry local,
+  digest, login, límites, restart, read-only, `system df`/`stats`/`top`/
+  `diff`).
+- **Bug de entorno real y reparación**: el daemon Docker no podía crear
+  veth ("operation not supported") porque el kernel en ejecución
+  (`7.2.2-1-cachyos`) se había quedado sin su árbol de módulos al
+  actualizar a `7.2.4` sin reiniciar. Se restauró
+  `/usr/lib/modules/7.2.2-1-cachyos` desde el paquete oficial cacheado
+  (`/var/cache/pacman/pkg/linux-cachyos-7.2.2-1-x86_64_v3.pkg.tar.zst`),
+  `depmod 7.2.2-1-cachyos` y `modprobe` de `veth`/`xt_nat`/`nft_compat`/
+  `br_netfilter`: bridge, DNAT, DNS interno y Compose quedaron 100%
+  funcionales (antes solo funcionaban `--network host`/`none`). La
+  restauración es aditiva y reversible (`rmmod` + borrar ese directorio).
+- **Verificación real, no por ojo**: harness propio
+  (`/tmp/opencode/docker-course/verify.py`) que lee el `code` del asset
+  final y lo ejecuta verbatim contra Docker 29.8 + Compose 5.5: comandos
+  línea por línea con asserts de salida y estado (`docker inspect
+  --format`, `ps -a --filter`, puertos, ficheros, DNS por nombre),
+  Dockerfiles/`.dockerignore`/`compose.yaml` escritos byte a byte y
+  construidos/levantados de verdad (healthchecks, réplicas, persistencia
+  de volúmenes entre `down`/`up`, push a `registry:2` local, fallo
+  esperado del root `--read-only`). **58/58 en verde**, re-corrido contra
+  el asset del repo (md5 idéntico). El review adversarial de código
+  escribió su propio harness independiente: 58/58 y 732 asserts, 0 bugs.
+- **Revisión adversarial de currícula** (agente fresco) + fixes aplicados:
+  modelo de capas de `docker-image-003` (FROM no añade capa), `--rm`
+  aparecía en la lección 3 y otra vez en la 19 (se quitó de la 3),
+  `compose-013` decía "el stack de la primera lección en ejecución" cuando
+  la 2 lo apaga, consejo falso de solapamiento en `compose-011`, clave de
+  caché imprecisa en `adv-006`, `adv-007`/`adv-009` dependían de la imagen
+  `hello` de otra ruta (ahora usan `alpine:3.22`), matiz de que
+  `registry:2` sin configurar acepta cualquier credencial en `adv-011`, y
+  pulido de títulos/prosa ES (multietapa, comprobación de estado, montaje
+  de enlace, registros, `host:container`).
+- **Wiring**: `ProgrammingLanguage.docker` + 9 `ContentCategory`
+  (`dockerBasics` … `dockerMaintenance`, doc de una línea por valor para
+  no romper el límite de 500: `content_category.dart` quedó en **490**),
+  `DockerSyntaxTokenizer` (instrucciones de Dockerfile, subcomandos,
+  claves de Compose, `$VAR`, flags con `=`, listas YAML, `#`) con 17
+  tests, l10n (`languageDocker`/`languageDockerBlurb` + 9 categorías en
+  ambos `.arb` + `gen-l10n`), assets en `pubspec.yaml` + ambos data
+  sources, completeness/key-layout/`audit_lesson_order.py` (`docker` en
+  `COURSE_ONLY_LANGUAGES`).
+- **Drift test**: 1215 activos / 447 beginner con Linux+Docker en ese
+  momento; los sets de `_`/`%` ya venían actualizados por la sesión de
+  Linux (verificado exacto contra los assets reales: 363/118).
+- **Nota de concurrencia**: el mismo working tree traía sesiones activas
+  de Linux y GitHub Actions (mismos archivos compartidos: enum, l10n,
+  data sources, tests compartidos); el wiring de Docker se hizo después
+  del de Linux y se verificó en conjunto. `AGENTS.md` + `CLAUDE.md`
+  re-espejados tras la edición. `bash tool/check.sh` **completo en verde —
+  731 tests**, format/analyze/arquitectura limpios (una corrida previa vio
+  un flaky de `survival_controller` por carga, ajeno: pasa aislado y en la
+  suite completa).
+- **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
+  `CLAUDE.md` (espejo byte a byte), skill `content-curriculum` (SKILL.md,
+  content-model, snippet-authoring con la receta de Docker).
 
 ### 2026-09-12 — GitHub Actions: Fundamentos + Pipelines + DevOps (lenguaje nuevo, 3 rutas, 74 snippets)
 

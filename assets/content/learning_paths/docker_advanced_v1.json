@@ -5,7 +5,7 @@
     "titleEn": "Docker: Advanced",
     "titleEs": "Docker: Avanzado",
     "descriptionEn": "Multi-stage builds, registries, resource limits, and container debugging.",
-    "descriptionEs": "Builds multi-etapa, registros, límites de recursos y depuración de contenedores.",
+    "descriptionEs": "Compilaciones multietapa, registros, límites de recursos y depuración de contenedores.",
     "tagEn": "Advanced",
     "tagEs": "Avanzado",
     "lessons": [
@@ -14,14 +14,14 @@
         "snippetId": "docker-adv-001",
         "order": 1,
         "titleEn": "Multi-stage builds",
-        "titleEs": "Builds multi-etapa"
+        "titleEs": "Compilaciones multietapa"
       },
       {
         "id": "docker-advanced-v1-step02",
         "snippetId": "docker-adv-002",
         "order": 2,
         "titleEn": "Health checks in the Dockerfile",
-        "titleEs": "Health checks en el Dockerfile"
+        "titleEs": "Comprobaciones de estado en el Dockerfile"
       },
       {
         "id": "docker-advanced-v1-step03",
@@ -105,7 +105,7 @@
         "snippetId": "docker-adv-014",
         "order": 14,
         "titleEn": "Run with a read-only filesystem",
-        "titleEs": "Ejecuta con sistema de solo lectura"
+        "titleEs": "Ejecuta con un sistema de archivos de solo lectura"
       },
       {
         "id": "docker-advanced-v1-step15",
