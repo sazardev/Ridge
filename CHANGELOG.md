@@ -11,6 +11,21 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.12.0] - 2026-09-12
+
+### Added
+- **content:** finalize Docker foundations, compose, and advanced routes (f4fae56)
+- **scope:** ready (d8350a2)
+- **scope:** ready (dac8ab9)
+- **content:** add Haskell and TypeScript language wiring (fd1c61e)
+- **scope:** ready (f3da766)
+- **docs:** new module (32332db)
+
+### Fixed
+- **ci:** use a job env var for the keystore condition (0d1a8e2)
+- **ci:** install ALSA headers in the release job (30996a7)
+- **content:** bundle drift web assets and harden content-pack loading (edefeec)
+
 ## [1.11.0] - 2026-09-11
 
 ### Added
