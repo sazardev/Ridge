@@ -50,7 +50,10 @@ dependencies:
   drift_flutter: ^0.3.1
   sqlite3_flutter_libs: ^0.6.0+eol
   sqlite3: ^3.5.2
-  audioplayers: ^6.8.1
+  # Keystroke SFX — polyphonic voices + ~11 ms keypress-to-sound latency
+  # (see `KeystrokeSoundPlayer`). Replaced audioplayers, whose pool created
+  # and leaked one native player per keystroke under `lowLatency`.
+  flutter_soloud: ^5.0.2
   package_info_plus: ^10.2.1
   path_provider: ^2.1.5
   path: ^1.9.0
@@ -185,6 +188,14 @@ flutter:
           weight: 800
         - asset: assets/fonts/GeistMono/GeistMono-UltraBlack.ttf
           weight: 900
+
+# Ridge only ships PCM WAV keystroke clips, so the bundled Ogg/Vorbis/Opus/
+# FLAC codecs are dead weight — skipping them keeps native builds faster and
+# avoids cloning/building the Xiph libraries in CI (STACK.md §12).
+hooks:
+  user_defines:
+    flutter_soloud:
+      no_xiph_libs: true
 
 # Windows packaging (STACK.md §12), built via `dart run msix:create` after
 # `flutter build windows --release`. `certificate_path`/`certificate_password`

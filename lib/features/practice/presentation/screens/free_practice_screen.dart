@@ -11,8 +11,10 @@ import 'package:ridge/features/content/domain/entities/programming_language.dart
 import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/presentation/content_labels.dart';
 import 'package:ridge/features/content/presentation/providers/content_providers.dart';
+import 'package:ridge/features/content/presentation/widgets/language_picker_sheet.dart';
 import 'package:ridge/features/content/presentation/widgets/practice_mode_picker_sheet.dart';
 import 'package:ridge/features/daily_challenge/presentation/widgets/daily_challenge_card.dart';
+import 'package:ridge/features/learning_paths/presentation/providers/active_language_providers.dart';
 import 'package:ridge/features/practice/presentation/widgets/quick_mode_tile.dart';
 
 /// Free-form practice (SPEC.md §5.1–5.3, §5.8) — Zen/Sprint/Precision/
@@ -31,10 +33,11 @@ class FreePracticeScreen extends ConsumerStatefulWidget {
 class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
   final _scrollController = ScrollController();
 
-  /// The language quick modes draw from — defaults to Go; Bash is
-  /// course-only (see `bash_foundations_v1.json`), so it's only picked
-  /// here once the user explicitly selects it.
-  ProgrammingLanguage _language = ProgrammingLanguage.go;
+  /// The language quick modes draw from, or `null` to follow the language
+  /// activated in Practice (falling back to Go / the first present one).
+  /// Bash is course-only (see `bash_foundations_v1.json`), so it's only
+  /// picked here once the user explicitly selects it.
+  ProgrammingLanguage? _language;
 
   @override
   void dispose() {
@@ -60,15 +63,19 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
 
     final catalogAsync = ref.watch(snippetCatalogControllerProvider);
     final catalog = catalogAsync.value ?? const <Snippet>[];
+    final activeLanguage = ref.watch(activeLanguageControllerProvider).value;
     // Languages actually present in the catalog, in enum declaration
-    // order; fall back to Go (or the first present) if the remembered
-    // selection no longer exists.
+    // order. The remembered free-practice pick wins; otherwise this
+    // follows the language activated in Practice, then falls back to Go
+    // (or the first present) when nothing else applies.
     final languages = [
       for (final language in ProgrammingLanguage.values)
         if (catalog.any((snippet) => snippet.language == language)) language,
     ];
     final selectedLanguage = languages.contains(_language)
         ? _language
+        : languages.contains(activeLanguage)
+        ? activeLanguage
         : (languages.isEmpty ? null : languages.first);
     final pool = selectedLanguage == null
         ? catalog
@@ -96,21 +103,23 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
             children: [
               const DailyChallengeCard(),
               const SizedBox(height: 20),
-              if (languages.length > 1) ...[
+              if (selectedLanguage != null) ...[
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: SegmentedButton<ProgrammingLanguage>(
-                    segments: [
-                      for (final language in languages)
-                        ButtonSegment(
-                          value: language,
-                          label: Text(language.label(l10n)),
-                        ),
-                    ],
-                    selected: {selectedLanguage!},
-                    showSelectedIcon: false,
-                    onSelectionChanged: (values) =>
-                        setState(() => _language = values.first),
+                  child: ActionChip(
+                    avatar: const Icon(LucideIcons.languages300, size: 18),
+                    label: Text(selectedLanguage.label(l10n)),
+                    onPressed: languages.length > 1
+                        ? () async {
+                            final picked = await showLanguagePickerSheet(
+                              context,
+                              languages: languages,
+                              selected: selectedLanguage,
+                            );
+                            if (!mounted || picked == null) return;
+                            setState(() => _language = picked);
+                          }
+                        : null,
                   ),
                 ),
                 const SizedBox(height: 20),

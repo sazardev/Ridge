@@ -870,6 +870,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageJavascript => 'JavaScript';
 
   @override
+  String get languageGoBlurb =>
+      'Simple and fast — ideal for backend and cloud.';
+
+  @override
+  String get languageBashBlurb =>
+      'Automate your workflow and master the Linux terminal.';
+
+  @override
+  String get languageSqlBlurb =>
+      'Query and model data — the language of every database.';
+
+  @override
+  String get languageRustBlurb =>
+      'Memory-safe systems programming, without a garbage collector.';
+
+  @override
+  String get languagePythonBlurb =>
+      'Clear syntax — the choice for data, AI, and scripting.';
+
+  @override
+  String get languageJavascriptBlurb =>
+      'The language of the web, from frontend to backend.';
+
+  @override
   String get snippetPracticeAction => 'Practice';
 
   @override
@@ -1246,6 +1270,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get learningLessonCompleted => 'Completed';
+
+  @override
+  String get practiceLanguageChangeAction => 'Change language';
 
   @override
   String get achievementsTitle => 'Achievements';

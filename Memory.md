@@ -21,7 +21,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ---
 
-## Estado actual (2026-09-10)
+## Estado actual (2026-09-11)
 
 - App **offline-only** (drift/SQLite + secure storage + shared_preferences).
   Todo lo online (auth, duelos, escuadrones, leaderboards, sync Supabase)
@@ -50,9 +50,10 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `sqlAggregation` (7), `sqlJoins` (7), `sqlModifications` (5),
   `sqlAdvancedQueries` (6). Dificultad 30/22/7/1.
 - Gate de calidad: `bash tool/check.sh` (format + analyze + arquitectura +
-  tests). Última corrida (2026-09-11, cierre de `AGENTS.md`/`CODE_STANDARDS.md`):
-  **404 tests verdes**, format/analyze limpios, sin violaciones duras de
-  arquitectura (solo warnings informativos de "varios tipos por archivo").
+  tests). Última corrida (2026-09-11, cierre de la migración del sonido de
+  tecleo a flutter_soloud): **430 tests verdes**, format/analyze limpios, sin
+  violaciones duras de arquitectura (solo warnings informativos de "varios
+  tipos por archivo").
 - Set de íconos: **Lucide** (`lucide_icons_flutter`), no Material `Icons.*`
   — elegido por combinar con Geist (misma familia visual que usa Vercel/
   shadcn). `cupertino_icons` (vestigial, nunca usado) fue removido.
@@ -73,6 +74,14 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   transparente, Ember `#FF5A36` quemado) — material de referencia, **no**
   listado en `pubspec.yaml` (no se empaqueta en la app). Comando de
   regeneración en `MARKETING.md` §6.
+- **Lenguaje activo** (SPEC.md §5.7, sesión de hoy): Practice arranca en un
+  catálogo de lenguajes con el progreso de cada uno; al activar uno muestra
+  su guía y se puede cambiar en cualquier momento ("Cambiar lenguaje").
+  Sin candados: todos los lenguajes están disponibles desde el inicio.
+- **Sonido de tecleo** sobre `flutter_soloud` (motor SoLoud): cada tecla es
+  una voz polifónica independiente (~11 ms tecla→sonido vía render-ahead ring
+  en nativo), sin pools de players que reciclar — reemplaza al fix
+  pool+breaker de `audioplayers` (sesión de hoy).
 - Último release: **v1.11.0** (`5cf284a`). El siguiente push a `main`
   genera release automático desde los Conventional Commits.
 - **Deep link a una lección** (`/practice/:pathId/lessons/:lessonId`,
@@ -85,6 +94,99 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 ---
 
 ## Historial de sesiones
+
+### 2026-09-11 — Sonido de tecleo migrado a flutter_soloud (fin del pool de audioplayers)
+
+- **Contexto**: el fix anterior (pool reciclado + breaker, entrada siguiente)
+  cerró la fuga de file descriptors de `audioplayers`, pero seguía siendo un
+  pool de players que hay que pre-crear y reciclar a mano (y en lowLatency el
+  pool no recicla solo). El usuario eligió migrar a **`flutter_soloud`** para
+  que cada tecla sea una voz independiente y no exista nada que reciclar.
+- **`pubspec.yaml`**: `+ flutter_soloud ^5.0.2`, `− audioplayers`, `− fake_async`
+  (solo servía al test del pool). Bloque
+  `hooks.user_defines.flutter_soloud.no_xiph_libs: true` — la app solo usa WAV,
+  así que los builds nativos no clonan ni compilan Ogg/Vorbis/Opus/FLAC.
+- **`lib/core/audio/sound_engine.dart`** (nuevo): `ensureSoundEngineInitialized()`
+  cachea el `init` del motor (llamarlo dos veces lo reinicia y descarga todos
+  los sonidos) con `devicePeriodFrames: 512` + `renderAheadFrames: 1536` — el
+  render-ahead ring lleva la latencia tecla→sonido al periodo del dispositivo
+  (~11 ms) sin bajar el buffer de mezcla (2048). Cualquier fallo de audio
+  resuelve en silencio.
+- **`keystroke_sound_player.dart`** reescrito: carga los 2 WAV del pack una
+  vez con `loadAsset` y dispara `play()` por tecla (voces polifónicas);
+  `dispose()` libera solo las sources (el motor vive a nivel app). Seam
+  inyectable (`KeystrokeSoundLoader`/`Play`/`Dispose` + `KeystrokeSoundClip`)
+  y `KeystrokeSoundPlayer.silent()` para tests de widgets sin audio nativo.
+- **UI y plataforma**: preview del picker con `playSource` (se autolibera);
+  `main.dart` arranca el motor en paralelo al startup; `web/index.html` carga
+  `init_soloud.js`; CI instala `libasound2-dev` (el hook nativo compila
+  también en `flutter test`, y el release Linux lo necesita).
+- **Tests**: 6 casos nuevos del player (una voz por tecla, cola de carga,
+  fallo parcial, dispose durante carga, errores tragados, variante silent); el
+  test del campo de captura overridea el provider con `.silent()`.
+- **Verificado**: `bash tool/check.sh` completo — **430 tests verdes**,
+  format/analyze/arquitectura limpios. La prueba manual de escucha
+  (`flutter run -d linux`, teclear rápido y cambiar de pack) queda para el
+  usuario: este agente no puede oír el resultado.
+
+### 2026-09-11 — Fix crítico: la app moría por fuga de file descriptors en los sonidos de tecleo
+
+- **Síntoma**: tras ~15 min tecleando, `flutter run` perdía la conexión con
+  la app; el log mostraba un `AudioPlayers Exception` por tecla y terminaba
+  en `[ALSOFT] ... errno: 24` + assert de PulseAudio
+  (`pa_threaded_mainloop_start`) que abortaba el proceso.
+- **Causa raíz** (audioplayers 6.8.1 / audioplayers_linux 4.3.0): el
+  `AudioPool` de `keystroke_sound_player.dart` corría en
+  `PlayerMode.lowLatency` **sin `minPlayers`** (default 1) y descartaba el
+  `StopFunction` que devuelve `AudioPool.start()`. En lowLatency el pool no
+  recicla solo (no se suscribe a `onPlayerComplete`), así que cada tecla
+  creaba un `AudioPlayer` nuevo — pipeline GStreamer + stream de audio +
+  FDs — que nunca se liberaba (provider keepAlive). Con el backend de audio
+  ya fallando, cada `start()` fallido tampoco quedaba trackeado por el pool:
+  los FDs se agotaron y libpulse llamó `abort()`.
+- **Fix** (`keystroke_sound_player.dart`): `minPlayers` real (4/8 click,
+  2/4 reject), reciclado explícito a los 200 ms de cada `stop()` devuelto
+  por el pool (clips de 28/90 ms), **circuit breaker** que apaga el audio de
+  la instancia tras 3 fallos consecutivos, y carga por pool independiente
+  (si uno falla, el otro se conserva y ninguno se filtra). Seam
+  `SoundEffectPool`/`SoundEffectPoolFactory` para testear sin backend.
+- **Tests**: `test/features/practice/keystroke_sound_player_test.dart`
+  (5 casos: reciclado, breaker, reset de racha, carga parcial, dispose
+  durante carga) con `fake_async` (nueva dev dependency).
+- **Verificado**: `bash tool/check.sh` completo — **427 tests verdes**,
+  format/analyze limpios, arquitectura sin violaciones duras.
+
+### 2026-09-11 — Lenguaje activo estilo SoloLearn (catálogo + guía, sin candados)
+
+- **Pedido del usuario**: el `SegmentedButton` de lenguajes (Practice y Free)
+  recortaba "JavaScript" al existir 6 idiomas; pidió la experiencia SoloLearn
+  — elegir un lenguaje al entrar a Practice, activarlo y caer en su guía,
+  pudiendo volver a cambiarlo. Tras preguntarle el diseño, eligió: **unidad =
+  lenguaje** (no curso/ruta), **sin candados** (todo abierto; gamificación
+  solo visual con progreso) y **catálogo como estado inicial del tab
+  Practice** (sin tocar onboarding, que SPEC.md §7 pide sin fricción).
+- **Nuevo estado "lenguaje activo"** (SPEC.md §5.7): puerto
+  `ActiveLanguageRepository` + `Get/SetActiveLanguageUseCase` + adapter
+  `shared_preferences` (`learning_paths.active_language.v1`, nombre del enum;
+  un nombre desconocido lee `null`) + `ActiveLanguageController` (keepAlive).
+  `LanguageProgressCalculator` (domain puro) agrega lecciones
+  completadas/total por lenguaje sobre todas sus rutas.
+- **UI**: `LanguageCatalog` (tarjeta por lenguaje con nombre, blurb corto
+  "para qué sirve" y barra de progreso; feedback del usuario: sin etiquetas
+  Empezar/Continuar ni header "Choose your language") es el contenido del
+  propio tab `/practice`: se muestra cuando no hay lenguaje activo y también
+  al tocar "Cambiar lenguaje" en la guía (modo transitorio del mismo tab, sin
+  ruta ni `AppBar` — feedback del usuario: la selección no debe abrir otra
+  pantalla; el back de Android regresa a la guía vía `PopScope`).
+  `FreePracticeScreen` pasó de `SegmentedButton` a `ActionChip` +
+  `showLanguagePickerSheet` (bottom sheet en `content`, mismo patrón del mode
+  picker) y por defecto sigue el lenguaje activo.
+- **Sin candados** por decisión explícita del usuario: ningún lenguaje ni
+  ruta se bloquea; la gamificación es el progreso visible por lenguaje.
+- **Chequeos**: 5 tests nuevos (calculadora, repositorio con
+  `InMemorySharedPreferencesAsync`, catálogo, `LearningPathsScreen`, picker de
+  Free) y `bash tool/check.sh` completo en verde — **427 tests**, format/
+  analyze/arquitectura limpios.
 
 ### 2026-09-11 — `AGENTS.md` (espejo) + `CODE_STANDARDS.md` + fix de formato del harness visual
 
@@ -1160,6 +1262,13 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   backend online completo (`auth` + Supabase) y se agrega como un data
   source remoto detrás del mismo `DailyChallengeRepository`, sin tocar
   dominio/aplicación de la Fase 0.
+- **Audio de tecleo con presupuesto de recursos**: los pools de
+  `KeystrokeSoundPlayer` en `PlayerMode.lowLatency` **deben** reciclar sus
+  players (invocar el `stop()` que devuelve el pool, agendado ~200 ms) y
+  llevar un circuit breaker. En lowLatency `AudioPool` no recicla solo, y
+  cualquier path que cree jugadores nativos por tecla agota los file
+  descriptors del proceso y termina en `abort()` de libpulse — no es
+  catchable desde Dart (ver sesión del fix de sonido de tecleo).
 
 ## Pendientes / próximos pasos
 

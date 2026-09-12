@@ -1,8 +1,7 @@
-import 'dart:async';
-
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_soloud/flutter_soloud.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/audio/sound_engine.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/features/settings/domain/entities/app_sound_pack.dart';
 
@@ -24,19 +23,16 @@ class SoundPackPicker extends StatefulWidget {
 }
 
 class _SoundPackPickerState extends State<SoundPackPicker> {
-  final AudioPlayer _previewPlayer = AudioPlayer();
-
-  @override
-  void dispose() {
-    unawaited(_previewPlayer.dispose());
-    super.dispose();
-  }
-
   Future<void> _preview(AppSoundPack pack) async {
     try {
-      await _previewPlayer.stop();
-      await _previewPlayer.play(
-        AssetSource('sounds/${pack.name}/key_click.wav'),
+      await ensureSoundEngineInitialized();
+      final soloud = SoLoud.instance;
+      if (!soloud.isInitialized) return;
+      // `playSource` loads, plays and then auto-disposes the clip once the
+      // voice finishes, so a preview needs no lifecycle bookkeeping of its
+      // own (and replays stay overlap-friendly if the user taps quickly).
+      await soloud.playSource(
+        asset: 'assets/sounds/${pack.name}/key_click.wav',
       );
     } on Exception {
       // Best-effort, same reasoning as KeystrokeSoundPlayer's doc — a

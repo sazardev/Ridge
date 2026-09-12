@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:ridge/app.dart';
+import 'package:ridge/core/audio/sound_engine.dart';
 import 'package:ridge/core/window/desktop_platform.dart';
 import 'package:ridge/core/window/window_geometry_listener.dart';
 import 'package:ridge/core/window/window_geometry_store.dart';
@@ -19,6 +22,13 @@ Future<void> main() async {
   if (kIsWeb) {
     usePathUrlStrategy();
   }
+
+  // Warms the keystroke-sound engine in parallel with the rest of startup
+  // (the first keystroke awaits this same future, see
+  // `core/audio/sound_engine.dart`) so its click isn't delayed by engine
+  // startup. Failures are swallowed there — sound is decorative, so this
+  // can never block or break the app.
+  unawaited(ensureSoundEngineInitialized());
 
   // Reads persisted `AppSettings` (theme/palette/corner style/...) before
   // `runApp` ever paints a frame, using one `ProviderContainer` that then

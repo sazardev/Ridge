@@ -1754,6 +1754,42 @@ abstract class AppLocalizations {
   /// **'JavaScript'**
   String get languageJavascript;
 
+  /// No description provided for @languageGoBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple and fast — ideal for backend and cloud.'**
+  String get languageGoBlurb;
+
+  /// No description provided for @languageBashBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Automate your workflow and master the Linux terminal.'**
+  String get languageBashBlurb;
+
+  /// No description provided for @languageSqlBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Query and model data — the language of every database.'**
+  String get languageSqlBlurb;
+
+  /// No description provided for @languageRustBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory-safe systems programming, without a garbage collector.'**
+  String get languageRustBlurb;
+
+  /// No description provided for @languagePythonBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear syntax — the choice for data, AI, and scripting.'**
+  String get languagePythonBlurb;
+
+  /// No description provided for @languageJavascriptBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'The language of the web, from frontend to backend.'**
+  String get languageJavascriptBlurb;
+
   /// No description provided for @snippetPracticeAction.
   ///
   /// In en, this message translates to:
@@ -2425,6 +2461,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Completed'**
   String get learningLessonCompleted;
+
+  /// No description provided for @practiceLanguageChangeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Change language'**
+  String get practiceLanguageChangeAction;
 
   /// No description provided for @achievementsTitle.
   ///

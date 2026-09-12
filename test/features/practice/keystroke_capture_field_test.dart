@@ -19,8 +19,11 @@ import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
 import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
 import 'package:ridge/features/practice/domain/entities/practice_session_status.dart';
 import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_session_controller.dart';
+import 'package:ridge/features/practice/presentation/services/keystroke_sound_player.dart';
 import 'package:ridge/features/practice/presentation/widgets/keystroke_capture_field.dart';
+import 'package:ridge/features/settings/domain/entities/app_sound_pack.dart';
 
 const _snippet = Snippet(
   id: SnippetId('test-snippet-001'),
@@ -41,6 +44,18 @@ const _snippet = Snippet(
   explanationEs: 'Explicación de prueba.',
 );
 const _mode = PracticeMode.zen();
+
+/// Builds the container the capture field tests run in, with the keystroke
+/// sound player overridden by its silent variant — the field reads it on
+/// every key event, and these tests must never initialize native audio
+/// (sound is not what's under test here).
+ProviderContainer _createContainer() => ProviderContainer(
+  overrides: [
+    keystrokeSoundPlayerProvider.overrideWithValue(
+      KeystrokeSoundPlayer.silent(AppSoundPack.mechanical),
+    ),
+  ],
+);
 
 /// Dispatches a raw key event through the exact same `KeyEventManager`
 /// path `tester.sendKeyDownEvent` uses, but with a hand-built `KeyData`
@@ -100,7 +115,7 @@ void main() {
     'real key down/up events advance the buffer and produce classified '
     'keystrokes with plausible dwell/flight timing',
     (tester) async {
-      final container = ProviderContainer();
+      final container = _createContainer();
       addTearDown(container.dispose);
 
       await tester.pumpWidget(
@@ -225,7 +240,7 @@ void main() {
   );
 
   testWidgets('OS auto-repeat does not advance the buffer', (tester) async {
-    final container = ProviderContainer();
+    final container = _createContainer();
     addTearDown(container.dispose);
 
     await tester.pumpWidget(
@@ -258,7 +273,7 @@ void main() {
     'the ISO intlBackslash key types < > (the Spanish-layout path, where '
     'those characters live between Left Shift and Z, not on ,/. keys)',
     (tester) async {
-      final container = ProviderContainer();
+      final container = _createContainer();
       addTearDown(container.dispose);
 
       await tester.pumpWidget(

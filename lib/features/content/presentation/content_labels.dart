@@ -22,6 +22,22 @@ extension ProgrammingLanguageLabel on ProgrammingLanguage {
   };
 }
 
+/// Localized one-line pitch for a [ProgrammingLanguage] — what it is
+/// especially good for, shown under its name in the language catalog (and
+/// its picker sheet) so a newcomer can tell the languages apart at a
+/// glance. Deliberately one short sentence, never a paragraph.
+extension ProgrammingLanguageBlurb on ProgrammingLanguage {
+  /// Returns this language's short "why learn it" blurb.
+  String blurb(AppLocalizations l10n) => switch (this) {
+    ProgrammingLanguage.go => l10n.languageGoBlurb,
+    ProgrammingLanguage.bash => l10n.languageBashBlurb,
+    ProgrammingLanguage.sql => l10n.languageSqlBlurb,
+    ProgrammingLanguage.rust => l10n.languageRustBlurb,
+    ProgrammingLanguage.python => l10n.languagePythonBlurb,
+    ProgrammingLanguage.javascript => l10n.languageJavascriptBlurb,
+  };
+}
+
 /// Localized display label for a [Difficulty], shared by every widget
 /// that renders one so the mapping lives in exactly one place.
 extension DifficultyLabel on Difficulty {

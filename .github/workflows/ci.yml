@@ -16,6 +16,11 @@ jobs:
           flutter-version: "3.47.2"
           channel: stable
 
+      # `flutter test` compiles flutter_soloud's native build hook for the
+      # host, which links ALSA on Linux.
+      - name: Install Linux audio headers
+        run: sudo apt-get update && sudo apt-get install -y libasound2-dev
+
       - run: flutter pub get
 
       - name: Format, analyze, architecture rules, tests

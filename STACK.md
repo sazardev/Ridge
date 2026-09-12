@@ -117,6 +117,7 @@ Paquetes nuevos para persistencia local estructurada: `drift`, `drift_flutter` (
 | `flutter_secure_storage` | Vigente/extendido | Secretos (PIN, sesión Supabase) |
 | `shared_preferences` | Vigente | Preferencias simples |
 | `flutter_animate` | Vigente | Motion |
+| `flutter_soloud` | Vigente | SFX de tecleo: voces polifónicas de baja latencia (motor SoLoud; reemplazó a `audioplayers`, §3.2) |
 | `crypto` | Vigente/extendido | Hash de PIN local; hoy también candidato para verificación local de integridad de datos sincronizados |
 | `intl`, `flutter_localizations` | Vigente | i18n |
 | `build_runner`, `flutter_lints` | Vigente (dev) | Codegen y lint |
@@ -154,6 +155,7 @@ Leyenda: ✅ soportado nativamente sin salvedades · ⚠️ soportado con una sa
 | `connectivity_plus` | ✅ | ✅ | ✅ | ⚠️ | Estado real de red del SO en nativo; heurística de navegador en Web (§3.2). |
 | `supabase_flutter` | ✅ | ✅ | ✅ | ⚠️ | HTTP + WebSocket puro. En Web, Realtime puede degradarse por proxies/ad-blockers (§3.2). |
 | `drift` + `drift_flutter` + `sqlite3_flutter_libs` + `sqlite3` | ✅ | ✅ | ✅ | ⚠️ | Binario nativo de SQLite en Android/Linux/Windows; `sqlite3.wasm` + OPFS (con salvedad de cabeceras) en Web (§3.2). |
+| `flutter_soloud` | ✅ | ✅ | ✅ | ⚠️ | Motor SoLoud + miniaudio nativo (AAudio en Android, ALSA en Linux, WASAPI en Windows), compilado con Dart build hooks; WASM + `init_soloud.js` en Web (§3.2). |
 | `msix` | ❌ | ❌ | ✅ | ❌ | Empaquetador exclusivo de Windows, solo `dev_dependency`. |
 | `integration_test` | ✅ | ✅ | ✅ | ⚠️ | En Web se ejecuta vía `flutter drive` + ChromeDriver, mecanismo distinto al de nativo (§3.3). |
 | `build_runner`, `flutter_lints` | — | — | — | — | Herramientas de build-time/dev-time; no producen artefacto de runtime, no aplica matriz. |
@@ -189,6 +191,8 @@ Leyenda: ✅ soportado nativamente sin salvedades · ⚠️ soportado con una sa
 
 **`go_router` en Web** — ver estrategia de URL en §3.4.
 
+**`flutter_soloud`** — motor de audio (SoLoud + miniaudio) para los SFX de tecleo, elegido sobre `audioplayers` porque reproduce cada tecla como una **voz independiente y polifónica** (sin pool de players que reciclar ni handles nativos que liberar a mano) y, con el *render-ahead ring* nativo, la latencia tecla→sonido baja al periodo del dispositivo (~11 ms) en vez de esperar al bloque de mezcla (~46 ms). Salvedades: en **Linux** la máquina de build necesita `libasound2-dev` (§3.3); en **Web** requiere el script `assets/packages/flutter_soloud/web/init_soloud.js` en `web/index.html` y el *render-ahead ring* no existe (la latencia queda cuantizada al buffer); los builds nativos no compilan los códecs Xiph porque `pubspec.yaml` fija `hooks.user_defines.flutter_soloud.no_xiph_libs: true` (solo se usan WAV). El audio es **decorativo**: toda la ruta de carga/reproducción va en `try/catch` y un backend ausente nunca interrumpe el tecleo.
+
 **`msix`** — `dev_dependency` exclusiva de Windows; no se instala ni afecta el árbol de dependencias de ninguna otra plataforma. Requiere un certificado de firma de código: autofirmado para desarrollo/pruebas internas, o firmado por una CA reconocida (o por el propio proceso de certificación de Microsoft Store) para distribución pública — sin certificado válido, Windows SmartScreen advierte al usuario al instalar.
 
 **`integration_test`** — en Android/Windows/Linux corre contra el binario real de la plataforma vía `flutter test integration_test/` o `flutter drive`. En **Web** requiere Chrome/Chromium y ChromeDriver instalados en la máquina que ejecuta las pruebas, y se invoca como `flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart -d web-server` — un mecanismo de ejecución distinto que debe declararse como su propio job de CI (§3.3, §11).
@@ -201,7 +205,7 @@ Lo que necesita **la máquina que compila** (local o CI) — no confundir con lo
 |---|---|---|
 | **Android** | JDK 17, Android SDK (`cmdline-tools`, `platform-tools`, la *platform* correspondiente al `compileSdkVersion` que use la versión de Flutter del proyecto), Android NDK (versión fijada en `android/app/build.gradle` para reproducibilidad — la exige `sqlite3_flutter_libs`), Gradle (gestionado por el wrapper del propio proyecto, no se instala aparte) | `ubuntu-latest` (trae JDK y Android SDK preinstalados; NDK se instala/fija con `sdkmanager` en el propio workflow) |
 | **Windows** | Visual Studio 2022 o superior, con el *workload* **"Desarrollo para el escritorio con C++"** (incluye el Windows SDK) — requisito no opcional del *embedder* de Flutter Windows | `windows-latest` (ya trae Visual Studio con ese *workload* preinstalado) |
-| **Linux** | Toolchain de compilación C/C++: `clang`, `cmake`, `ninja-build`, `pkg-config`; bibliotecas de desarrollo `libgtk-3-dev` (el *embedder* de Flutter Linux está construido sobre GTK3), `liblzma-dev`, y **`libsecret-1-dev`** (requerido por `flutter_secure_storage`, ver §3.2) | `ubuntu-latest`, instalando el toolchain vía `apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libsecret-1-dev` como paso previo al build |
+| **Linux** | Toolchain de compilación C/C++: `clang`, `cmake`, `ninja-build`, `pkg-config`; bibliotecas de desarrollo `libgtk-3-dev` (el *embedder* de Flutter Linux está construido sobre GTK3), `liblzma-dev`, **`libsecret-1-dev`** (requerido por `flutter_secure_storage`, ver §3.2) y **`libasound2-dev`** (requerido por `flutter_soloud`, ver §3.2) | `ubuntu-latest`, instalando el toolchain vía `apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libsecret-1-dev libasound2-dev` como paso previo al build |
 | **Web** | Ninguno adicional al SDK de Flutter/Dart. Para **pruebas** de integración en Web sí se necesita Chrome/Chromium + ChromeDriver (§3.2) | `ubuntu-latest` (Chrome viene preinstalado en los runners estándar de GitHub Actions) |
 
 ### 3.4 Consideraciones de runtime por plataforma

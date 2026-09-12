@@ -1,79 +1,107 @@
 import 'dart:async';
 
-import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_soloud/flutter_soloud.dart';
+import 'package:ridge/core/audio/sound_engine.dart';
 import 'package:ridge/features/settings/domain/entities/app_sound_pack.dart';
 
-/// Plays short, low-latency sound effects for the capture engine — a
-/// distinct "click" for every committed keystroke (forward or
-/// correction) and a duller "thud" for a rejected attempt, so typing
-/// feels tactile the way a real mechanical keyboard does.
+/// Handle to one loaded keystroke clip.
 ///
-/// Backed by [AudioPool] (not a single [AudioPlayer]) specifically
-/// because typing fires sounds far faster than a normal player can
-/// restart cleanly — the pool keeps several pre-loaded players ready so
-/// two rapid keystrokes never cut each other off.
+/// The engine's concrete source type is hidden behind this thin interface —
+/// just like [KeystrokeSoundLoader]/[KeystrokeSoundPlay]/
+/// [KeystrokeSoundDispose] below — so tests can exercise loading, playback
+/// and cleanup without touching a real audio backend.
+abstract interface class KeystrokeSoundClip;
+
+/// Loads one clip from an asset path. Resolves `null` when the audio backend
+/// is unavailable — sound is decorative and must never break typing, so
+/// production errors are swallowed by [KeystrokeSoundPlayer].
+typedef KeystrokeSoundLoader = Future<KeystrokeSoundClip?> Function(
+  String asset,
+);
+
+/// Fires one independent voice for an already-loaded [clip].
+typedef KeystrokeSoundPlay = void Function(KeystrokeSoundClip clip);
+
+/// Releases a loaded [clip].
+typedef KeystrokeSoundDispose = Future<void> Function(KeystrokeSoundClip clip);
+
+class _SoLoudClip implements KeystrokeSoundClip {
+  new(this.source);
+
+  final AudioSource source;
+}
+
+Future<KeystrokeSoundClip?> _loadSoLoudClip(String asset) async {
+  await ensureSoundEngineInitialized();
+  final soloud = SoLoud.instance;
+  if (!soloud.isInitialized) return null;
+  return _SoLoudClip(await soloud.loadAsset(asset));
+}
+
+void _playSoLoudClip(KeystrokeSoundClip clip) {
+  SoLoud.instance.play((clip as _SoLoudClip).source);
+}
+
+Future<void> _disposeSoLoudClip(KeystrokeSoundClip clip) {
+  return SoLoud.instance.disposeSource((clip as _SoLoudClip).source);
+}
+
+/// Plays short, low-latency sound effects for the capture engine — a
+/// distinct "click" for every committed keystroke (forward or correction)
+/// and a duller "thud" for a rejected attempt, so typing feels tactile the
+/// way a real mechanical keyboard does.
+///
+/// Backed by SoLoud, whose `play()` is synchronous and mixes one
+/// independent voice per call: five keystrokes in a second are five
+/// overlapping voices, not a player being restarted between them. This
+/// replaced `audioplayers`, whose `AudioPool` under `PlayerMode.lowLatency`
+/// never recycled its players, so every keystroke loaded and leaked a
+/// brand-new native player until the sounds trailed seconds behind the
+/// typing rhythm (and the process eventually ran out of audio handles).
 ///
 /// The constructor's [AppSoundPack] selects which `assets/sounds/<pack>/`
-/// folder to load from — the instance is tied to one pack for its
-/// lifetime; switching packs means creating a new instance (see
+/// folder to load from — the instance is tied to one pack for its lifetime;
+/// switching packs means creating a new instance (see
 /// `practice_providers.dart`'s `keystrokeSoundPlayerProvider`, which
 /// rebuilds on a settings change).
 class KeystrokeSoundPlayer {
-  /// Starts loading both sound pools for [pack] immediately; playback
-  /// calls made before loading finishes are silently queued behind
-  /// [_ready].
-  new(AppSoundPack pack) : _pack = pack {
-    _ready = _load();
+  /// Loads both clips for this player's [AppSoundPack] immediately;
+  /// playback calls made before loading finishes are silently queued behind
+  /// [_ready]. The engine operations are injectable seams defaulting to the
+  /// real SoLoud ones.
+  new(
+    this._pack, {
+    this._load = _loadSoLoudClip,
+    this._play = _playSoLoudClip,
+    this._disposeClip = _disposeSoLoudClip,
+  }) {
+    _ready = _loadClips();
+  }
+
+  /// A player wired to no backend at all — for widget tests that exercise
+  /// the capture field without initializing native audio.
+  new silent(this._pack)
+    : _load = _loadNothing,
+      _play = _playNothing,
+      _disposeClip = _disposeNothing {
+    _ready = Future<void>.value();
   }
 
   final AppSoundPack _pack;
+  final KeystrokeSoundLoader _load;
+  final KeystrokeSoundPlay _play;
+  final KeystrokeSoundDispose _disposeClip;
   late final Future<void> _ready;
-  AudioPool? _clickPool;
-  AudioPool? _rejectPool;
+  KeystrokeSoundClip? _clickClip;
+  KeystrokeSoundClip? _rejectClip;
   bool _disposed = false;
 
-  /// Sound is a feel-good extra, never a functional requirement — a
-  /// missing audio backend (no plugin registered under test, no sound
-  /// device on some Linux setups, a platform quirk) must never disrupt
-  /// actual typing, so every platform call in this class is defensive:
-  /// failures leave the pools `null` (or a no-op play) instead of
-  /// throwing back into the capture field.
-  Future<void> _load() async {
-    try {
-      final results = await Future.wait([
-        AudioPool.createFromAsset(
-          path: 'sounds/${_pack.name}/key_click.wav',
-          maxPlayers: 8,
-          playerMode: PlayerMode.lowLatency,
-        ),
-        AudioPool.createFromAsset(
-          path: 'sounds/${_pack.name}/key_reject.wav',
-          maxPlayers: 4,
-          playerMode: PlayerMode.lowLatency,
-        ),
-      ]);
-      if (_disposed) {
-        // Disposed while loading (e.g. the session screen was popped
-        // almost immediately) — release what just finished loading
-        // rather than leaking two live audio pools.
-        for (final pool in results) {
-          unawaited(pool.dispose());
-        }
-        return;
-      }
-      _clickPool = results[0];
-      _rejectPool = results[1];
-    } on Exception {
-      // No audio backend available — typing continues silently.
-    }
-  }
-
-  /// Plays the click sound — every committed forward keystroke and
-  /// every correction (backspace/Delete).
+  /// Plays the click sound — every committed forward keystroke and every
+  /// correction (backspace/Delete).
   Future<void> playClick() async {
     await _ready;
     if (_disposed) return;
-    unawaited(_safeStart(_clickPool));
+    _fire(_clickClip);
   }
 
   /// Plays the reject sound — a keystroke that didn't match and was
@@ -81,27 +109,73 @@ class KeystrokeSoundPlayer {
   Future<void> playReject() async {
     await _ready;
     if (_disposed) return;
-    unawaited(_safeStart(_rejectPool));
+    _fire(_rejectClip);
   }
 
-  /// Starts [pool] and swallows any failure — see this class's doc for
-  /// why playback errors must never surface. A real `try`/`await` here
-  /// (not a bare `unawaited(pool?.start())`) is what actually catches an
-  /// error the *asynchronous* platform call raises, since the call
-  /// itself returns a `Future` successfully before that error occurs.
-  Future<void> _safeStart(AudioPool? pool) async {
+  /// Loads both clips. Each load is independent, so a failure in one still
+  /// keeps the other (clicks without rejects beats silence), and every
+  /// backend call stays defensive: sound is a feel-good extra, never a
+  /// functional requirement, so a missing audio backend must leave typing
+  /// untouched.
+  Future<void> _loadClips() async {
+    final click = await _tryLoad('assets/sounds/${_pack.name}/key_click.wav');
+    final reject = await _tryLoad('assets/sounds/${_pack.name}/key_reject.wav');
+    if (_disposed) {
+      // Disposed while loading (e.g. the session screen was popped almost
+      // immediately, or the pack changed mid-load) — release what just
+      // finished loading rather than leaking two live clips.
+      await _disposeQuietly(click);
+      await _disposeQuietly(reject);
+      return;
+    }
+    _clickClip = click;
+    _rejectClip = reject;
+  }
+
+  Future<KeystrokeSoundClip?> _tryLoad(String asset) async {
     try {
-      await pool?.start();
+      return await _load(asset);
     } on Exception {
-      // See [_load]'s doc — playback failures are silent, not fatal.
+      // No audio backend available — typing continues silently.
+      return null;
     }
   }
 
-  /// Releases both audio pools. Safe to call even if [_load] hasn't
-  /// finished yet.
+  /// Fires [clip] as its own voice. A play failure can only ever be the
+  /// backend's, never the caller's — playback errors never surface.
+  void _fire(KeystrokeSoundClip? clip) {
+    if (clip == null) return;
+    try {
+      _play(clip);
+    } on Exception {
+      // See [_tryLoad]'s doc.
+    }
+  }
+
+  Future<void> _disposeQuietly(KeystrokeSoundClip? clip) async {
+    if (clip == null) return;
+    try {
+      await _disposeClip(clip);
+    } on Exception {
+      // See [_tryLoad]'s doc.
+    }
+  }
+
+  /// Releases both clips. Safe to call even if [_loadClips] hasn't finished
+  /// yet, and safe to call twice.
   void dispose() {
     _disposed = true;
-    unawaited(_clickPool?.dispose());
-    unawaited(_rejectPool?.dispose());
+    final click = _clickClip;
+    final reject = _rejectClip;
+    _clickClip = null;
+    _rejectClip = null;
+    unawaited(_disposeQuietly(click));
+    unawaited(_disposeQuietly(reject));
   }
 }
+
+Future<KeystrokeSoundClip?> _loadNothing(String asset) async => null;
+
+void _playNothing(KeystrokeSoundClip clip) {}
+
+Future<void> _disposeNothing(KeystrokeSoundClip clip) async {}

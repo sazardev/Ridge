@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -11,18 +13,24 @@ import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart
 import 'package:ridge/features/learning_paths/domain/services/lesson_status_resolver.dart';
 import 'package:ridge/features/learning_paths/presentation/learning_paths_labels.dart';
 import 'package:ridge/features/learning_paths/presentation/lesson_navigation.dart';
+import 'package:ridge/features/learning_paths/presentation/providers/active_language_providers.dart';
 import 'package:ridge/features/learning_paths/presentation/providers/learning_paths_providers.dart';
+import 'package:ridge/features/learning_paths/presentation/widgets/language_catalog.dart';
 
-/// The Practice tab's default, structured home (SPEC.md §5.7): a
-/// language-scoped roadmap of curated lessons — start with the basics,
-/// unlock the next one only once the previous is passed. This is the
-/// smart, deliberate ordering the catalog's curator already authored
+/// The Practice tab's default, structured home (SPEC.md §5.7): the active
+/// language's curated roadmap — start with the basics, unlock the next
+/// lesson only once the previous is passed. This is the smart, deliberate
+/// ordering the catalog's curator already authored
 /// (`RecomputeLessonProgressUseCase`'s unlock-gating), never a random
 /// pick — free-form Zen/Sprint/Precision practice lives on its own,
 /// separate tab (see `FreePracticeScreen`).
 ///
-/// The language selector only ever shows the languages that actually
-/// have at least one bundled path (SPEC.md §18 — only Go exists in v1),
+/// While no language is active yet (first run), this screen shows the
+/// language catalog instead — picking one activates it and turns this
+/// screen into that language's guide. The guide header's "Change
+/// language" action switches this same tab back into catalog mode (no
+/// separate screen, no app bar; Android's back gesture returns to the
+/// guide). Only languages with at least one bundled path are ever offered,
 /// so adding a second language's curriculum later is purely a content
 /// change: this screen never needs a new case.
 class LearningPathsScreen extends ConsumerStatefulWidget {
@@ -35,8 +43,13 @@ class LearningPathsScreen extends ConsumerStatefulWidget {
 }
 
 class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
-  ProgrammingLanguage? _selectedLanguage;
   final _scrollController = ScrollController();
+
+  /// Whether the user explicitly tapped "Change language" on the guide.
+  /// Transient in-tab mode, never persisted: it makes the catalog show
+  /// even though a language is already active, with no separate route or
+  /// app bar.
+  bool _isChoosingLanguage = false;
 
   @override
   void dispose() {
@@ -49,6 +62,7 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
     final l10n = AppLocalizations.of(context);
     final overviewsAsync = ref.watch(learningPathsControllerProvider);
     final progressAsync = ref.watch(lessonProgressControllerProvider);
+    final activeLanguageAsync = ref.watch(activeLanguageControllerProvider);
 
     // No `AppBar` title here: the nav rail/bar destination already reads
     // "Practice" right next to this screen, so repeating it would just be
@@ -56,177 +70,208 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
     // would otherwise have handled).
     return Scaffold(
       body: SafeArea(
-        child: overviewsAsync.when(
-          data: (overviews) {
-            if (overviews.isEmpty) {
-              return Center(child: Text(l10n.learningPathsEmptyState));
-            }
+        child: PopScope(
+          // While the catalog is showing on purpose (guide -> "Change
+          // language"), Android's back gesture returns to the guide
+          // instead of leaving the tab — there is no app bar back button
+          // anymore.
+          canPop: !_isChoosingLanguage,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) return;
+            setState(() => _isChoosingLanguage = false);
+          },
+          child: activeLanguageAsync.when(
+            data: (persistedLanguage) => overviewsAsync.when(
+              data: (overviews) {
+                if (overviews.isEmpty) {
+                  return Center(child: Text(l10n.learningPathsEmptyState));
+                }
 
-            // Enum declaration order (Go first), not alphabetical — the
-            // selector's default is the first present language, and that
-            // should be the primary free-practice language, matching
-            // `FreePracticeScreen`/`SnippetBrowserScreen`.
-            final present = {for (final o in overviews) o.path.language};
-            final languages = [
-              for (final language in ProgrammingLanguage.values)
-                if (present.contains(language)) language,
-            ];
-            _selectedLanguage ??= languages.first;
-            final selected = languages.contains(_selectedLanguage)
-                ? _selectedLanguage!
-                : languages.first;
-
-            final visible = [
-              for (final overview in overviews)
-                if (overview.path.language == selected) overview,
-            ];
-            final progress = progressAsync.value ?? const {};
-
-            return Column(
-              children: [
-                if (languages.length > 1)
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                    child: _LanguageSelector(
-                      languages: languages,
-                      selected: selected,
-                      onSelected: (language) =>
-                          setState(() => _selectedLanguage = language),
+                // Enum declaration order (Go first), not alphabetical — the
+                // language catalog's order, matching how a new language is
+                // just a new `ProgrammingLanguage` case plus content.
+                final languages = [
+                  for (final language in ProgrammingLanguage.values)
+                    if (overviews.any((o) => o.path.language == language))
+                      language,
+                ];
+                // A persisted language whose paths no longer exist (content
+                // edit) falls back to the catalog instead of a dead end.
+                final selected = languages.contains(persistedLanguage)
+                    ? persistedLanguage
+                    : null;
+                if (_isChoosingLanguage || selected == null) {
+                  return KeyboardScrollShortcuts(
+                    controller: _scrollController,
+                    child: LanguageCatalog(
+                      scrollController: _scrollController,
+                      overviews: overviews,
+                      progress: progressAsync.value ?? const {},
+                      activeLanguage: selected,
+                      onLanguageSelected: (language) {
+                        if (_isChoosingLanguage) {
+                          setState(() => _isChoosingLanguage = false);
+                        }
+                        unawaited(
+                          ref
+                              .read(activeLanguageControllerProvider.notifier)
+                              .activate(language),
+                        );
+                      },
                     ),
-                  )
-                else
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Chip(label: Text(selected.label(l10n))),
+                  );
+                }
+
+                final visible = [
+                  for (final overview in overviews)
+                    if (overview.path.language == selected) overview,
+                ];
+                final progress = progressAsync.value ?? const {};
+
+                return Column(
+                  children: [
+                    _GuideHeader(
+                      language: selected,
+                      onChangeLanguage: () =>
+                          setState(() => _isChoosingLanguage = true),
                     ),
-                  ),
-                Expanded(
-                  child: visible.isEmpty
-                      ? Center(child: Text(l10n.learningPathsEmptyState))
-                      : KeyboardScrollShortcuts(
-                          controller: _scrollController,
-                          child: ListView.builder(
-                            controller: _scrollController,
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            itemCount: visible.length,
-                            itemBuilder: (context, index) {
-                              final overview = visible[index];
-                              final completedCount = overview.path.lessons
-                                  .where(
-                                    (lesson) =>
-                                        progress[lesson.id] ==
-                                        LessonStatus.completed,
-                                  )
-                                  .length;
-                              final nextIndex =
-                                  LessonStatusResolver.findNextIndex(
-                                    overview.path.lessons,
-                                    progress,
-                                  );
-                              final totalLessons = overview.path.lessons.length;
-                              final progressFraction = totalLessons == 0
-                                  ? 0.0
-                                  : completedCount / totalLessons;
-                              // The entry-point difficulty (first lesson's
-                              // snippet) — a quick "how hard is this to
-                              // start" signal, shown as a chip instead of
-                              // making the learner open the path to find
-                              // out.
-                              final entryDifficulty = totalLessons == 0
-                                  ? null
-                                  : overview
-                                        .snippetsById[overview
-                                            .path
-                                            .lessons
-                                            .first
-                                            .snippetId]
-                                        ?.difficulty;
-                              return Card(
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 4,
+                    Expanded(
+                      child: visible.isEmpty
+                          ? Center(child: Text(l10n.learningPathsEmptyState))
+                          : KeyboardScrollShortcuts(
+                              controller: _scrollController,
+                              child: ListView.builder(
+                                controller: _scrollController,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
                                 ),
-                                shape: AppShapes.of(context).mediumShape,
-                                // `Card` defaults to `Clip.none`, so without
-                                // this its child `ListTile`'s ink splash
-                                // paints as a plain rectangle overflowing
-                                // past the card's own rounded corners —
-                                // this makes the ripple actually respect
-                                // whatever corner style (SPEC.md's Settings
-                                // "Corner style") the card itself is using.
-                                clipBehavior: Clip.antiAlias,
-                                child: ListTile(
-                                  contentPadding: const EdgeInsets.fromLTRB(
-                                    16,
-                                    8,
-                                    16,
-                                    8,
-                                  ),
-                                  title: Text(overview.path.titleFor(context)),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const SizedBox(height: 2),
-                                      Wrap(
-                                        spacing: 6,
-                                        runSpacing: 4,
+                                itemCount: visible.length,
+                                itemBuilder: (context, index) {
+                                  final overview = visible[index];
+                                  final completedCount = overview.path.lessons
+                                      .where(
+                                        (lesson) =>
+                                            progress[lesson.id] ==
+                                            LessonStatus.completed,
+                                      )
+                                      .length;
+                                  final nextIndex =
+                                      LessonStatusResolver.findNextIndex(
+                                        overview.path.lessons,
+                                        progress,
+                                      );
+                                  final totalLessons =
+                                      overview.path.lessons.length;
+                                  final progressFraction = totalLessons == 0
+                                      ? 0.0
+                                      : completedCount / totalLessons;
+                                  // The entry-point difficulty (first lesson's
+                                  // snippet) — a quick "how hard is this to
+                                  // start" signal, shown as a chip instead of
+                                  // making the learner open the path to find
+                                  // out.
+                                  final entryDifficulty = totalLessons == 0
+                                      ? null
+                                      : overview
+                                            .snippetsById[overview
+                                                .path
+                                                .lessons
+                                                .first
+                                                .snippetId]
+                                            ?.difficulty;
+                                  return Card(
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 4,
+                                    ),
+                                    shape: AppShapes.of(context).mediumShape,
+                                    // `Card` defaults to `Clip.none`, so
+                                    // without this its child `ListTile`'s ink
+                                    // splash paints as a plain rectangle
+                                    // overflowing past the card's own rounded
+                                    // corners — this makes the ripple actually
+                                    // respect whatever corner style
+                                    // (SPEC.md's Settings "Corner style") the
+                                    // card itself is using.
+                                    clipBehavior: Clip.antiAlias,
+                                    child: ListTile(
+                                      contentPadding: const EdgeInsets.fromLTRB(
+                                        16,
+                                        8,
+                                        16,
+                                        8,
+                                      ),
+                                      title: Text(
+                                        overview.path.titleFor(context),
+                                      ),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          _MiniChip(
-                                            label: overview.path.language.label(
-                                              l10n,
-                                            ),
+                                          const SizedBox(height: 2),
+                                          Wrap(
+                                            spacing: 6,
+                                            runSpacing: 4,
+                                            children: [
+                                              _MiniChip(
+                                                label: overview.path.language
+                                                    .label(l10n),
+                                              ),
+                                              _MiniChip(
+                                                label: overview.path.tagFor(
+                                                  context,
+                                                ),
+                                              ),
+                                              if (entryDifficulty != null)
+                                                _MiniChip(
+                                                  label: entryDifficulty.label(
+                                                    l10n,
+                                                  ),
+                                                ),
+                                            ],
                                           ),
-                                          _MiniChip(
-                                            label: overview.path.tagFor(
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            overview.path.descriptionFor(
                                               context,
                                             ),
                                           ),
-                                          if (entryDifficulty != null)
-                                            _MiniChip(
-                                              label: entryDifficulty.label(
-                                                l10n,
-                                              ),
-                                            ),
                                         ],
                                       ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        overview.path.descriptionFor(context),
+                                      trailing: nextIndex == null
+                                          ? null
+                                          : _PlayProgressButton(
+                                              progress: progressFraction,
+                                              tooltip: l10n
+                                                  .learningPathsContinueAction,
+                                              onPressed: () =>
+                                                  LessonNavigation.startLesson(
+                                                    context,
+                                                    overview,
+                                                    nextIndex,
+                                                  ),
+                                            ),
+                                      onTap: () => context.push(
+                                        '/practice/${overview.path.id.value}',
                                       ),
-                                    ],
-                                  ),
-                                  trailing: nextIndex == null
-                                      ? null
-                                      : _PlayProgressButton(
-                                          progress: progressFraction,
-                                          tooltip:
-                                              l10n.learningPathsContinueAction,
-                                          onPressed: () =>
-                                              LessonNavigation.startLesson(
-                                                context,
-                                                overview,
-                                                nextIndex,
-                                              ),
-                                        ),
-                                  onTap: () => context.push(
-                                    '/practice/${overview.path.id.value}',
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                ),
-              ],
-            );
-          },
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, stackTrace) =>
-              Center(child: Text(l10n.commonSomethingWrong)),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                    ),
+                  ],
+                );
+              },
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stackTrace) =>
+                  Center(child: Text(l10n.commonSomethingWrong)),
+            ),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, stackTrace) =>
+                Center(child: Text(l10n.commonSomethingWrong)),
+          ),
         ),
       ),
     );
@@ -319,28 +364,34 @@ class _MiniChip extends StatelessWidget {
   }
 }
 
-class _LanguageSelector extends StatelessWidget {
-  const new({
-    required this.languages,
-    required this.selected,
-    required this.onSelected,
-  });
+/// The active language's guide header — its name plus the action that
+/// switches the tab back into catalog mode (SPEC.md §5.7).
+class _GuideHeader extends StatelessWidget {
+  const new({required this.language, required this.onChangeLanguage});
 
-  final List<ProgrammingLanguage> languages;
-  final ProgrammingLanguage selected;
-  final ValueChanged<ProgrammingLanguage> onSelected;
+  final ProgrammingLanguage language;
+  final VoidCallback onChangeLanguage;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return SegmentedButton<ProgrammingLanguage>(
-      segments: [
-        for (final language in languages)
-          ButtonSegment(value: language, label: Text(language.label(l10n))),
-      ],
-      selected: {selected},
-      showSelectedIcon: false,
-      onSelectionChanged: (values) => onSelected(values.first),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 8, 4),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              language.label(l10n),
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+          ),
+          IconButton(
+            onPressed: onChangeLanguage,
+            icon: const Icon(LucideIcons.arrowLeftRight300),
+            tooltip: l10n.practiceLanguageChangeAction,
+          ),
+        ],
+      ),
     );
   }
 }

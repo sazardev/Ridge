@@ -316,6 +316,12 @@
   "languageRust": "Rust",
   "languagePython": "Python",
   "languageJavascript": "JavaScript",
+  "languageGoBlurb": "Simple y rápido — ideal para backend y nube.",
+  "languageBashBlurb": "Automatiza tu flujo y domina la terminal de Linux.",
+  "languageSqlBlurb": "Consulta y modela datos — el idioma de toda base de datos.",
+  "languageRustBlurb": "Programación de sistemas segura, sin recolector de basura.",
+  "languagePythonBlurb": "Sintaxis clara — la reina de datos, IA y scripting.",
+  "languageJavascriptBlurb": "El lenguaje de la web, del frontend al backend.",
 
   "snippetPracticeAction": "Practicar",
 
@@ -509,6 +515,7 @@
   "learningLessonLocked": "Bloqueada",
   "learningLessonUnlocked": "Desbloqueada",
   "learningLessonCompleted": "Completada",
+  "practiceLanguageChangeAction": "Cambiar lenguaje",
 
   "achievementsTitle": "Logros",
   "achievementUnlockedToast": "Logro desbloqueado: {title}",
