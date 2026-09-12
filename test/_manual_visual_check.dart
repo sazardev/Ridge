@@ -40,9 +40,9 @@ Future<void> _capture(
   );
   await tester.pumpAndSettle();
 
-  final boundary =
-      tester.renderObject(find.byKey(const Key('capture')))
-          as RenderRepaintBoundary;
+  final boundary = tester.renderObject(
+    find.byKey(const Key('capture')),
+  ) as RenderRepaintBoundary;
   final image = await boundary.toImage(pixelRatio: 2);
   final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
   File(filename).writeAsBytesSync(bytes!.buffer.asUint8List());
