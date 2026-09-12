@@ -41,6 +41,33 @@ install.
   and re-run the PostgreSQL harness on the merged asset, not just on the
   pre-merge draft.
 
+## New TypeScript code: compile strict and run it
+
+The equivalent of `go run` for a TypeScript snippet is a real compiler plus
+a real execution:
+
+- Compile every snippet with `tsc --strict --target ES2022 --module
+  commonjs --outDir <scratch> <file>` (TypeScript 7's native `tsc` works;
+  `npx -p typescript tsc` if it isn't installed). `--strict` is the bar
+  the catalog is authored against.
+- Execute the emitted JS with `node`. Definitions-only snippets (the
+  `typescript-algo-*` course: searches, sorts, graphs) must be *driven*:
+  concatenate the snippet with a throwaway driver that calls each function
+  with edge cases (empty array, one element, target absent, already/never
+  sorted), then compile and run the combined file. Never ship an algorithm
+  snippet that was never actually executed.
+- Titles/prose may reference a type declared in an earlier lesson of the
+  same course (e.g. `Graph` from the adjacency-list lesson, exactly like
+  `rust-algorithms-v1`'s `fn bfs(graph: &Graph, ...)`) — keep the driver's
+  copy of that declaration in the scratch harness so the snippet still
+  compiles there.
+- Beware `lib.dom`'s globals when a snippet compiles standalone as a
+  script: `let name` / `let status` collide with `window.name` /
+  `window.status` (`TS2451`). Rename the binding (the JS catalog's `name2`
+  dodge is the same workaround).
+- Keep `code` ASCII-only — `key_layout_map_test.dart` maps every character
+  to a physical US-QWERTY key.
+
 ## Go code with third-party deps (TUI/Bubble Tea): extract from a compiled app
 
 For snippets that import external packages (`bubbletea`, `lipgloss`,

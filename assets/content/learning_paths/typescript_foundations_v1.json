@@ -1,0 +1,133 @@
+[
+  {
+    "id": "typescript-foundations-v1",
+    "language": "typescript",
+    "titleEn": "TypeScript from scratch",
+    "titleEs": "TypeScript desde cero",
+    "descriptionEn": "Learn TypeScript step by step: types, classes, and functions.",
+    "descriptionEs": "Aprende TypeScript paso a paso: tipos, clases y funciones.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "typescript-foundations-v1-step01",
+        "snippetId": "typescript-vars-001",
+        "order": 1,
+        "titleEn": "Typed let and inferred const",
+        "titleEs": "let tipado y const inferido"
+      },
+      {
+        "id": "typescript-foundations-v1-step02",
+        "snippetId": "typescript-vars-002",
+        "order": 2,
+        "titleEn": "Union types: string | number",
+        "titleEs": "Tipos unión: string | number"
+      },
+      {
+        "id": "typescript-foundations-v1-step03",
+        "snippetId": "typescript-vars-003",
+        "order": 3,
+        "titleEn": "type aliases and interface",
+        "titleEs": "Alias type e interface"
+      },
+      {
+        "id": "typescript-foundations-v1-step04",
+        "snippetId": "typescript-vars-004",
+        "order": 4,
+        "titleEn": "String enums",
+        "titleEs": "Enums de cadena"
+      },
+      {
+        "id": "typescript-foundations-v1-step05",
+        "snippetId": "typescript-cond-001",
+        "order": 5,
+        "titleEn": "if / else if / else on a number",
+        "titleEs": "if / else if / else sobre un número"
+      },
+      {
+        "id": "typescript-foundations-v1-step06",
+        "snippetId": "typescript-cond-002",
+        "order": 6,
+        "titleEn": "Optional properties and `?.`",
+        "titleEs": "Propiedades opcionales y `?.`"
+      },
+      {
+        "id": "typescript-foundations-v1-step07",
+        "snippetId": "typescript-cond-003",
+        "order": 7,
+        "titleEn": "Discriminated unions with switch",
+        "titleEs": "Uniones discriminadas con switch"
+      },
+      {
+        "id": "typescript-foundations-v1-step08",
+        "snippetId": "typescript-loop-001",
+        "order": 8,
+        "titleEn": "Classic `for` over a `number[]`",
+        "titleEs": "`for` clásico sobre un `number[]`"
+      },
+      {
+        "id": "typescript-foundations-v1-step09",
+        "snippetId": "typescript-loop-002",
+        "order": 9,
+        "titleEn": "for...of vs for...in",
+        "titleEs": "for...of vs for...in"
+      },
+      {
+        "id": "typescript-foundations-v1-step10",
+        "snippetId": "typescript-oop-001",
+        "order": 10,
+        "titleEn": "A class with a typed field",
+        "titleEs": "Una clase con un campo tipado"
+      },
+      {
+        "id": "typescript-foundations-v1-step11",
+        "snippetId": "typescript-oop-002",
+        "order": 11,
+        "titleEn": "private and readonly members",
+        "titleEs": "Miembros private y readonly"
+      },
+      {
+        "id": "typescript-foundations-v1-step12",
+        "snippetId": "typescript-oop-003",
+        "order": 12,
+        "titleEn": "A class implements an interface",
+        "titleEs": "Una clase implementa una interfaz"
+      },
+      {
+        "id": "typescript-foundations-v1-step13",
+        "snippetId": "typescript-func-001",
+        "order": 13,
+        "titleEn": "Typed params and a default",
+        "titleEs": "Parámetros tipados y un valor por defecto"
+      },
+      {
+        "id": "typescript-foundations-v1-step14",
+        "snippetId": "typescript-func-002",
+        "order": 14,
+        "titleEn": "Arrow functions with annotations",
+        "titleEs": "Funciones flecha con anotaciones"
+      },
+      {
+        "id": "typescript-foundations-v1-step15",
+        "snippetId": "typescript-func-003",
+        "order": 15,
+        "titleEn": "A generic first<T>",
+        "titleEs": "Función genérica first<T>"
+      },
+      {
+        "id": "typescript-foundations-v1-step16",
+        "snippetId": "typescript-func-004",
+        "order": 16,
+        "titleEn": "Put it together: countEvens",
+        "titleEs": "Júntalo todo: countEvens"
+      },
+      {
+        "id": "typescript-foundations-v1-step17",
+        "snippetId": "typescript-mod-001",
+        "order": 17,
+        "titleEn": "export type and export function",
+        "titleEs": "export type y export function"
+      }
+    ]
+  }
+]
