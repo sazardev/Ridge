@@ -9,7 +9,11 @@ proyecto, qué se verificó y qué sigue**. No sustituye a los otros docs:
   (nuevo, ver sesión de hoy).
 - `CHANGELOG.md` — historial de releases (autogenerado desde Conventional
   Commits; no editar a mano).
-- `CLAUDE.md` — guía operativa para agentes (comandos, convenciones).
+- `CLAUDE.md` / `AGENTS.md` — guía operativa para agentes (comandos,
+  convenciones), espejo byte a byte entre ambos.
+- `CODE_STANDARDS.md` — por qué existe cada gate de calidad (referenciado
+  por `tool/check.sh`, `analysis_options.yaml`, `tool/check_architecture.dart`
+  y el hook `pre-commit`).
 
 **Cómo actualizarlo:** al cerrar una sesión de trabajo, añade una entrada
 fechada al historial, actualiza "Estado actual" si cambió, y ajusta
@@ -46,10 +50,9 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `sqlAggregation` (7), `sqlJoins` (7), `sqlModifications` (5),
   `sqlAdvancedQueries` (6). Dificultad 30/22/7/1.
 - Gate de calidad: `bash tool/check.sh` (format + analyze + arquitectura +
-  tests). Última corrida (tras splash de arranque + debug JSON de
-  Progress): **366 tests verdes**, format/analyze limpios, sin
-  violaciones duras de arquitectura (solo warnings informativos de
-  "varios tipos por archivo").
+  tests). Última corrida (2026-09-11, cierre de `AGENTS.md`/`CODE_STANDARDS.md`):
+  **404 tests verdes**, format/analyze limpios, sin violaciones duras de
+  arquitectura (solo warnings informativos de "varios tipos por archivo").
 - Set de íconos: **Lucide** (`lucide_icons_flutter`), no Material `Icons.*`
   — elegido por combinar con Geist (misma familia visual que usa Vercel/
   shadcn). `cupertino_icons` (vestigial, nunca usado) fue removido.
@@ -70,7 +73,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   transparente, Ember `#FF5A36` quemado) — material de referencia, **no**
   listado en `pubspec.yaml` (no se empaqueta en la app). Comando de
   regeneración en `MARKETING.md` §6.
-- Último release: **v1.6.0** (`9dfe43c`). El siguiente push a `main`
+- Último release: **v1.11.0** (`5cf284a`). El siguiente push a `main`
   genera release automático desde los Conventional Commits.
 - **Deep link a una lección** (`/practice/:pathId/lessons/:lessonId`,
   `LessonDeepLinkScreen`) + compartir enlace de una lección
@@ -82,6 +85,32 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 ---
 
 ## Historial de sesiones
+
+### 2026-09-11 — `AGENTS.md` (espejo) + `CODE_STANDARDS.md` + fix de formato del harness visual
+
+- **`AGENTS.md` nuevo, espejo byte a byte de `CLAUDE.md`** (`diff` vacío,
+  nota anti-drift al inicio de ambos). OpenCode ignora `CLAUDE.md` cuando
+  existe `AGENTS.md`, así que el espejo evita que cualquier herramienta
+  pierda la guía.
+- **Reconciliación en la guía** (en ambos archivos): `daily_challenge`
+  faltaba en la lista de features implementadas; se documentó
+  `bash tool/format.sh`; CI fija Flutter 3.47.2; se anotó que `README.md`
+  está desactualizado (describe un scaffold "Tasks" ya eliminado) y que la
+  fuente viva es `lib/features/` + `Memory.md`.
+- **`CODE_STANDARDS.md` creado** (español, como README/Memory/SPEC/STACK):
+  era referenciado por `tool/check.sh`, `analysis_options.yaml`,
+  `tool/check_architecture.dart` y `tool/git-hooks/pre-commit` pero no
+  existía en el repo ni en el historial de git. Explica los 4 gates, el
+  split pre-commit/pre-push (por qué cada commit es barato) y el contrato
+  Conventional Commits → `version_bump.dart`/`release.sh` → tag.
+- **Fix de formato encontrado por el gate**: el commit `32332db` agregó
+  `test/_manual_visual_check.dart` sin pasar por el formatter (el harness
+  visual desechable), y `tool/check.sh` fallaba en el primer gate. Se
+  formateó (solo un rewrap del cast a `RenderRepaintBoundary`) y ahora el
+  gate pasa completo. Sin cambios de comportamiento.
+- **Chequeos**: `diff CLAUDE.md AGENTS.md` vacío; `bash tool/check.sh` en
+  verde de punta a punta — **404 tests verdes**, format/analyze/arquitectura
+  limpios.
 
 ### 2026-09-11 — Python y JavaScript como lenguajes nuevos (4 cursos: fundamentos + Algorithms)
 
@@ -1157,7 +1186,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ```sh
 bash tool/check.sh                         # gate completo
-flutter test                               # suite (391 tests)
+flutter test                               # suite (404 tests)
 python3 .claude/skills/content-curriculum/scripts/audit_lesson_order.py \
   assets/content/snippets/sql_v1.json \
   assets/content/learning_paths/sql_foundations_v1.json
