@@ -4,7 +4,6 @@ import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
 import 'package:ridge/features/profile/presentation/profile_labels.dart';
-import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_visual.dart';
 
 /// A card of the active profile's self-expression flair — favorite
 /// language, keyboard layout/brand, and favorite quote/programmer — with
@@ -105,10 +104,6 @@ class ProfileAboutCard extends StatelessWidget {
                     ),
                 ],
               ),
-              if (profile.keyboardModel?.isNotEmpty ?? false) ...[
-                const SizedBox(height: 16),
-                KeyboardVisual(model: profile.keyboardModel),
-              ],
               if (profile.favoriteQuote?.isNotEmpty ?? false) ...[
                 const SizedBox(height: 16),
                 DecoratedBox(

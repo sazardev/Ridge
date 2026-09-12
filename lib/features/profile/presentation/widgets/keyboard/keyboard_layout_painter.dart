@@ -18,7 +18,9 @@ class KeyboardLayoutPainter extends CustomPainter {
   new({
     required this.keys,
     required this.keyColor,
+    required this.accentKeyColor,
     required this.caseColor,
+    required this.plateColor,
     required this.borderColor,
     required this.keyCornerRadius,
     required this.caseCornerRadius,
@@ -27,13 +29,25 @@ class KeyboardLayoutPainter extends CustomPainter {
   /// The keys to draw, in key-units.
   final List<KeyboardKeySpec> keys;
 
-  /// Fill color for every keycap.
+  /// Fill color for a standard 1u alpha keycap.
   final Color keyColor;
 
-  /// Fill color for the surrounding case/body.
+  /// Fill color for a non-alpha keycap (modifiers, spacebar, Enter, ...) —
+  /// any key wider or taller than [_accentSizeThreshold] key-units, the
+  /// same visual cue real keyboards use to set the alpha block apart from
+  /// the surrounding modifier/function keys.
+  final Color accentKeyColor;
+
+  /// Fill color for the outer case/body.
   final Color caseColor;
 
-  /// Stroke color for both keycap and case outlines.
+  /// Fill color for the inner plate the keys sit on, inset from
+  /// [caseColor]'s outer edge — a second flat tone (never a gradient/
+  /// shadow, per the design system) that reads as the case's rim vs. its
+  /// top plate.
+  final Color plateColor;
+
+  /// Stroke color for keycap, plate, and case outlines.
   final Color borderColor;
 
   /// Corner radius applied to every keycap.
@@ -43,22 +57,39 @@ class KeyboardLayoutPainter extends CustomPainter {
   final double caseCornerRadius;
 
   /// The gap between adjacent keycaps, as a fraction of one key-unit.
-  static const _keyGapFraction = 0.12;
+  static const _keyGapFraction = 0.14;
 
-  /// How far the case extends past the outermost keys on every side, in
-  /// logical pixels — the "bezel" that makes this read as a keyboard body
-  /// rather than a loose grid of keycaps.
-  static const _bezel = 8.0;
+  /// How far the case extends past the outermost keys on every side, as a
+  /// fraction of one key-unit — the "bezel" that makes this read as a
+  /// keyboard body rather than a loose grid of keycaps. Expressed relative
+  /// to [_unitFor]'s key-unit (rather than a fixed logical-pixel value) so
+  /// the proportions stay correct whether this paints a small inline
+  /// preview or a large hero visual.
+  static const _bezelFraction = 0.45;
+
+  /// How far the inner plate is inset from the outer case edge, as a
+  /// fraction of [_bezelFraction]'s bezel — the remainder reads as the
+  /// case's outer rim.
+  static const _plateInsetFraction = 0.55;
+
+  /// A key wider or taller than this (in key-units) is drawn with
+  /// [accentKeyColor] instead of [keyColor].
+  static const _accentSizeThreshold = 1.05;
+
+  /// The key-unit scale fitting [bounds] into [size], accounting for the
+  /// proportional bezel on every side (see [_bezelFraction]).
+  double _unitFor(Size size, Rect bounds) => math.min(
+    size.width / (bounds.width + _bezelFraction * 2),
+    size.height / (bounds.height + _bezelFraction * 2),
+  );
 
   @override
   void paint(Canvas canvas, Size size) {
     if (keys.isEmpty) return;
 
     final bounds = contentBoundsOf(keys);
-    final unit = math.min(
-      (size.width - _bezel * 2) / bounds.width,
-      (size.height - _bezel * 2) / bounds.height,
-    );
+    final unit = _unitFor(size, bounds);
+    final bezel = unit * _bezelFraction;
     final gridWidth = unit * bounds.width;
     final gridHeight = unit * bounds.height;
     // The screen position of key-space origin (0, 0) — every key's
@@ -66,17 +97,17 @@ class KeyboardLayoutPainter extends CustomPainter {
     final originX = (size.width - gridWidth) / 2 - bounds.left * unit;
     final originY = (size.height - gridHeight) / 2 - bounds.top * unit;
 
-    _drawCase(
-      canvas,
-      Rect.fromLTWH(
-        (size.width - gridWidth) / 2 - _bezel,
-        (size.height - gridHeight) / 2 - _bezel,
-        gridWidth + _bezel * 2,
-        gridHeight + _bezel * 2,
-      ),
+    final caseRect = Rect.fromLTWH(
+      (size.width - gridWidth) / 2 - bezel,
+      (size.height - gridHeight) / 2 - bezel,
+      gridWidth + bezel * 2,
+      gridHeight + bezel * 2,
     );
+    _drawCase(canvas, caseRect);
+    _drawPlate(canvas, caseRect.deflate(bezel * _plateInsetFraction));
 
-    final fill = Paint()..color = keyColor;
+    final keyFill = Paint()..color = keyColor;
+    final accentFill = Paint()..color = accentKeyColor;
     final border = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1
@@ -96,6 +127,7 @@ class KeyboardLayoutPainter extends CustomPainter {
           ..translate(-pivot.dx, -pivot.dy);
       }
 
+      final fill = _isAccentKey(key) ? accentFill : keyFill;
       _drawKeycap(
         canvas,
         fill,
@@ -127,6 +159,9 @@ class KeyboardLayoutPainter extends CustomPainter {
     }
   }
 
+  bool _isAccentKey(KeyboardKeySpec key) =>
+      key.w > _accentSizeThreshold || key.h > _accentSizeThreshold;
+
   void _drawKeycap(Canvas canvas, Paint fill, Paint border, Rect rect) {
     final rrect = RRect.fromRectAndRadius(
       rect,
@@ -152,11 +187,28 @@ class KeyboardLayoutPainter extends CustomPainter {
       ..drawRRect(rrect, border);
   }
 
+  void _drawPlate(Canvas canvas, Rect rect) {
+    final fill = Paint()..color = plateColor;
+    final border = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1
+      ..color = borderColor;
+    final rrect = RRect.fromRectAndRadius(
+      rect,
+      Radius.circular(caseCornerRadius * 0.7),
+    );
+    canvas
+      ..drawRRect(rrect, fill)
+      ..drawRRect(rrect, border);
+  }
+
   @override
   bool shouldRepaint(covariant KeyboardLayoutPainter oldDelegate) =>
       !listEquals(keys, oldDelegate.keys) ||
       keyColor != oldDelegate.keyColor ||
+      accentKeyColor != oldDelegate.accentKeyColor ||
       caseColor != oldDelegate.caseColor ||
+      plateColor != oldDelegate.plateColor ||
       borderColor != oldDelegate.borderColor ||
       keyCornerRadius != oldDelegate.keyCornerRadius ||
       caseCornerRadius != oldDelegate.caseCornerRadius;

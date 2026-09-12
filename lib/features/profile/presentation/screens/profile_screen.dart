@@ -9,6 +9,7 @@ import 'package:ridge/features/profile/presentation/providers/profile_providers.
 import 'package:ridge/features/profile/presentation/widgets/profile_about_card.dart';
 import 'package:ridge/features/profile/presentation/widgets/profile_achievements_card.dart';
 import 'package:ridge/features/profile/presentation/widgets/profile_device_card.dart';
+import 'package:ridge/features/profile/presentation/widgets/profile_keyboard_hero_card.dart';
 import 'package:ridge/features/profile/presentation/widgets/profile_stats_card.dart';
 
 /// The Profile screen: the Guest Profile's identity (SPEC.md §7.1), a
@@ -122,6 +123,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),
+                  if (profile.keyboardModel?.isNotEmpty ?? false) ...[
+                    const SizedBox(height: 20),
+                    ProfileKeyboardHeroCard(profile: profile),
+                  ],
                   const SizedBox(height: 24),
                   const ProfileStatsCard(),
                   const SizedBox(height: 16),
