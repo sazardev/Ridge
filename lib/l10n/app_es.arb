@@ -309,6 +309,8 @@
   "categorySshClient": "Cliente SSH",
   "categorySshServer": "Servidor SSH",
   "categoryShellProfiles": "Perfiles del shell",
+  "categoryClassesAndObjects": "Clases y objetos",
+  "categoryModules": "Módulos",
 
   "languageGo": "Go",
   "languageBash": "Bash",
@@ -316,12 +318,16 @@
   "languageRust": "Rust",
   "languagePython": "Python",
   "languageJavascript": "JavaScript",
+  "languageTypescript": "TypeScript",
+  "languageHaskell": "Haskell",
   "languageGoBlurb": "Simple y rápido — ideal para backend y nube.",
   "languageBashBlurb": "Automatiza tu flujo y domina la terminal de Linux.",
   "languageSqlBlurb": "Consulta y modela datos — el idioma de toda base de datos.",
   "languageRustBlurb": "Programación de sistemas segura, sin recolector de basura.",
   "languagePythonBlurb": "Sintaxis clara — la reina de datos, IA y scripting.",
   "languageJavascriptBlurb": "El lenguaje de la web, del frontend al backend.",
+  "languageTypescriptBlurb": "JavaScript con tipos estáticos — código más seguro y autodocumentado.",
+  "languageHaskellBlurb": "Funcional y puro — valores, tipos y sin efectos secundarios.",
 
   "snippetPracticeAction": "Practicar",
 

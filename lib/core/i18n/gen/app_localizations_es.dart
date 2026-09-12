@@ -860,6 +860,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categoryShellProfiles => 'Perfiles del shell';
 
   @override
+  String get categoryClassesAndObjects => 'Clases y objetos';
+
+  @override
+  String get categoryModules => 'Módulos';
+
+  @override
   String get languageGo => 'Go';
 
   @override
@@ -876,6 +882,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get languageJavascript => 'JavaScript';
+
+  @override
+  String get languageTypescript => 'TypeScript';
+
+  @override
+  String get languageHaskell => 'Haskell';
 
   @override
   String get languageGoBlurb => 'Simple y rápido — ideal para backend y nube.';
@@ -899,6 +911,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get languageJavascriptBlurb =>
       'El lenguaje de la web, del frontend al backend.';
+
+  @override
+  String get languageTypescriptBlurb =>
+      'JavaScript con tipos estáticos — código más seguro y autodocumentado.';
+
+  @override
+  String get languageHaskellBlurb =>
+      'Funcional y puro — valores, tipos y sin efectos secundarios.';
 
   @override
   String get snippetPracticeAction => 'Practicar';

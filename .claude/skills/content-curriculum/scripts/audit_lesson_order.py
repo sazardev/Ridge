@@ -63,7 +63,15 @@ ARCHITECTURE_LAYER_CATEGORIES = {
 # `_freePracticeLanguages` in
 # `test/features/content/snippet_catalog_completeness_test.dart`; see
 # SPEC.md §3.2's two catalog tiers.
-COURSE_ONLY_LANGUAGES = {"bash", "sql", "rust", "python", "javascript"}
+COURSE_ONLY_LANGUAGES = {
+    "bash",
+    "sql",
+    "rust",
+    "python",
+    "javascript",
+    "typescript",
+    "haskell",
+}
 
 
 def load(path: Path):

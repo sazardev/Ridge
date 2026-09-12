@@ -4,8 +4,9 @@
 // repository, not fabricated in-test data). Mirrors
 // `test/features/profile/profile_drift_integration_test.dart`: table
 // creation via the drift migration, the seed usecase actually parsing
-// every bundled catalog asset (`go_v1.json` + `bash_v1.json` +
-// `sql_v1.json` + `rust_v1.json`) and writing every row through SQL, and
+// every bundled catalog asset (`go_v1.json`, `bash_v1.json`,
+// `sql_v1.json`, `rust_v1.json`, `python_v1.json`, `javascript_v1.json`,
+// and `haskell_v1.json`) and writing every row through SQL, and
 // every read port
 // (`findByFilters`, `getById`, `findContainingSymbols`) queried back out
 // for real.
@@ -84,7 +85,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 387)
+        .firstWhere((snippets) => snippets.length == 440)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -98,7 +99,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(387));
+    expect(catalog, hasLength(440));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -110,7 +111,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(387));
+      expect(catalog, hasLength(440));
     },
   );
 
@@ -121,7 +122,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(387));
+    expect(result, hasLength(440));
   });
 
   test(
@@ -151,7 +152,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(117));
+    expect(beginnerSnippets, hasLength(142));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -216,6 +217,14 @@ void main() {
       'go-vars-009',
       'go-vars-011',
       'go-vars-012',
+      'haskell-algo-001',
+      'haskell-algo-002',
+      'haskell-algo-004',
+      'haskell-algo-008',
+      'haskell-algo-010',
+      'haskell-algo-011',
+      'haskell-algo-012',
+      'haskell-cond-003',
       'javascript-vars-002',
       'python-algo-001',
       'python-algo-002',
@@ -328,6 +337,7 @@ void main() {
       'rust-func-003',
       'sql-filtering-008',
       'sql-filtering-009',
+      'typescript-func-004',
     });
   });
 

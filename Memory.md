@@ -21,7 +21,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ---
 
-## Estado actual (2026-09-11)
+## Estado actual (2026-09-12)
 
 - App **offline-only** (drift/SQLite + secure storage + shared_preferences).
   Todo lo online (auth, duelos, escuadrones, leaderboards, sync Supabase)
@@ -43,6 +43,8 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   | Rust | 24 snippets | `rust-foundations-v1` (12, solo principiante) + `rust-algorithms-v1` (12) | solo-curso |
   | Python | 24 snippets | `python-foundations-v1` (12, solo principiante) + `python-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
   | JavaScript | 24 snippets | `javascript-foundations-v1` (12, solo principiante) + `javascript-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
+  | TypeScript | 29 snippets | `typescript-foundations-v1` (17, tour amplio) + `typescript-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
+  | Haskell | 24 snippets | `haskell-foundations-v1` (12, solo principiante) + `haskell-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
 
 - Curso SQL: base de datos de ejemplo compartida tipo biblioteca
   (`authors`, `books`, `members`, `loans`), 8 categorías contiguas:
@@ -50,8 +52,8 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `sqlAggregation` (7), `sqlJoins` (7), `sqlModifications` (5),
   `sqlAdvancedQueries` (6). Dificultad 30/22/7/1.
 - Gate de calidad: `bash tool/check.sh` (format + analyze + arquitectura +
-  tests). Última corrida (2026-09-11, cierre de la migración del sonido de
-  tecleo a flutter_soloud): **430 tests verdes**, format/analyze limpios, sin
+  tests). Última corrida (2026-09-12, cierre de Haskell + TypeScript):
+  **456 tests verdes**, format/analyze limpios, sin
   violaciones duras de arquitectura (solo warnings informativos de "varios
   tipos por archivo").
 - Set de íconos: **Lucide** (`lucide_icons_flutter`), no Material `Icons.*`
@@ -90,10 +92,164 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   (`app_links`), solo Android por ahora. Notificaciones push siguen sin
   implementar (v2, `STACK.md §14`); esto solo deja una lección
   *direccionable* por URL para cuando lleguen.
+- **Web ya abre drift** (sesión de hoy): `web/sqlite3.wasm` +
+  `web/drift_worker.js` (release `drift-2.35.0`, el mismo del
+  `pubspec.lock`) versionados y `DriftWebOptions` en `AppDatabase` — sin
+  esto la DB nunca abría en web y las guías/progreso quedaban vacíos.
+- **TypeScript es el séptimo lenguaje** (sesión de hoy): curso doble
+  `typescript-foundations-v1` (17 lecciones, tour amplio) +
+  `typescript-algorithms-v1` (12), 29 snippets solo-curso con dos
+  categorías propias (`classesAndObjects`, `modules`).
 
 ---
 
 ## Historial de sesiones
+
+### 2026-09-12 — TypeScript: Fundamentos + Algoritmos (lenguaje nuevo, 2 rutas, 29 snippets)
+
+- **Pedido del usuario**: un curso de introducción a TypeScript bilingüe
+  (en/es, mismos estándares que las otras guías). Tras preguntarle el
+  alcance eligió **dos cursos** y el **tour amplio**:
+  `typescript-foundations-v1` (17 lecciones: anotaciones e inferencia,
+  uniones y tipos literales, `interface`/`type`, `enum`, condicionales,
+  `?.`/`??`, unión discriminada con `switch`, ciclos
+  (`for`/`for...of`/`for...in`), clases con modificadores de acceso,
+  funciones tipadas, flecha y genéricos, capstone `countEvens`, y
+  módulos) + `typescript-algorithms-v1` (12, misma secuencia canónica de
+  Go/Rust/Python/JS/Haskell). TS entra como lenguaje **solo-curso** con
+  **dos categorías propias** — `classesAndObjects` y `modules` — porque
+  el tour cubre clases y módulos que las categorías genéricas no
+  representan; el resto reutiliza `variablesAndTypes`, `conditionals`,
+  `loops` y `functions`.
+- **Wiring**: `ProgrammingLanguage.typescript` + labels/blurb
+  (`languageTypescript`/`languageTypescriptBlurb` + las 2 categorías en
+  ambos `.arb`), `typescript_syntax_tokenizer.dart` nuevo (keywords de JS
+  + modificadores/tipos primitivos/operadores de tipo; de paso reconoce el
+  prefijo `0x`, que el tokenizer de JS no cubría), assets en `pubspec.yaml`
+  + ambos data sources, y `typescript_syntax_tokenizer_test.dart`
+  (13 casos).
+- **Verificación real, no por ojo**: los 29 snippets se compilaron uno a
+  uno con `tsc --strict` (TypeScript 7) y se ejecutaron con `node`; los 12
+  de algoritmos (solo definiciones) con drivers descartables que los
+  llaman con casos borde (arreglo vacío, un elemento, objetivo ausente).
+  Dos colisiones con globales del DOM (`name`, `status`, `TS2451`)
+  obligaron a renombrar bindings en `vars-001`/`vars-004`.
+- **Revisión adversarial fresca** (agente sin contexto que recompiló los
+  29 y fuzzeó los 12 algoritmos contra referencias, con Bellman-Ford
+  independiente para Dijkstra): 3 hallazgos reales corregidos — el título
+  de `oop-002` prometía un getter inexistente, 4 snippets mal etiquetados
+  `short` (pasaron a `medium`) y 3 frases en español mejoradas. El uso de
+  `Graph`/`WeightedGraph` definidos en la lección 9 se mantuvo a
+  propósito: es el mismo patrón que `rust-algorithms-v1`
+  (`fn bfs(graph: &Graph, ...)`).
+- **Chequeos**: `bash tool/check.sh` en verde — **456 tests**,
+  format/analyze/arquitectura limpios; `audit_lesson_order.py` verde para
+  ambas rutas (course-only, sin huérfanos); catálogo total 411→440
+  snippets. Docs actualizados: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
+  `CLAUDE.md` (espejo), la skill `content-curriculum` (SKILL.md,
+  content-model, snippet-authoring).
+
+### 2026-09-12 — Haskell: Fundamentos + Algoritmos (lenguaje nuevo, 2 rutas, 24 snippets)
+
+- **Pedido del usuario**: un curso de introducción a Haskell (bilingüe
+  en/es, mismos estándares que las otras guías). Tras preguntarle el
+  alcance eligió **dos cursos**: `haskell-foundations-v1` (12 lecciones
+  solo-principiante) + `haskell-algorithms-v1` (12, misma secuencia
+  canónica de Go/Rust/Python/JS). Haskell entra como lenguaje
+  **solo-curso** (`haskell_v1.json`), sin categorías nuevas: los
+  fundamentos reutilizan `variablesAndTypes`, `conditionals` y `functions`
+  (sin bloque `loops`: la recursión se presenta como el sustituto
+  funcional de la iteración), y Algoritmos reutiliza las 3 categorías de
+  búsqueda/ordenamiento/grafos ya existentes. Copy aprobado por el
+  usuario: "Haskell from scratch" / "Haskell desde cero", tag
+  Beginner/Principiante, blurb "Purely functional — ..." /
+  "Funcional y puro — ...".
+- **Wiring**: `ProgrammingLanguage.haskell` + labels/blurb
+  (`languageHaskell`/`languageHaskellBlurb` en ambos `.arb`),
+  `haskell_syntax_tokenizer.dart` nuevo (comentarios `--` que no son
+  comentario si siguen siendo operador (`-->`, `---`), `{- -}` anidados,
+  char literal vs apóstrofe en identificadores `sum'`), assets en
+  `pubspec.yaml` + ambos data sources, y
+  `haskell_syntax_tokenizer_test.dart`.
+- **Verificación real, no por ojo**: los 24 snippets se typechequearon con
+  `ghc -fno-code` y los runnables (13, con `main` o harness) se
+  ejecutaron con `runghc` en un contenedor descartable
+  `haskell:9.8-slim` (GHC 9.8.4) — igual que el curso SQL usó
+  postgres:16-alpine. Tres bugs reales atrapados antes de entrar al
+  catálogo: heapify con `foldr` en vez de `foldl'` (heap inválido),
+  heapsort devolvía descendente (faltaba `reverse`), y el harness de
+  Dijkstra con indentación inválida. Prosa bilingüe (tldr + explicación
+  3 frases) delegada a un agente de fondo y validada aparte (id-set,
+  longitudes, conteo de frases).
+- **Revisión adversarial fresca** (agente sin contexto, que además
+  ejecutó GHC y fuzzeó los sorts/Dijkstra contra referencias): encontró 7
+  problemas reales, todos corregidos — afirmación falsa sobre el scope de
+  guards; complejidad engañosa de `binarySearch` (cada paso re-recorre la
+  lista: O(n) real); claim de `O(n log n)` de heapsort con `//` (copia
+  O(n) por update) + término "copy-on-write" incorrecto + `foldl` →
+  `foldl'`; `factorial` parcial con negativos → guards `n <= 0`;
+  `insert` del grafo prepend vs append (consistencia de recorridos con
+  Rust/Python/JS); prosa de quicksort ("compara una vez"); tokenizer
+  (`-->`/`---` ya no son comentario y faltaban builtins usados por el
+  catálogo: `maybe`, `lookup`, `splitAt`, `minimum`, `id`, `foldl'`…).
+  Nits aplicados: firmas `::` presentadas en las lecciones 3-4,
+  terminología "helper", rango `[1 .. 5]` explicado en el capstone.
+- **Tests/docs actualizados**: `content_drift_integration_test` (387→411
+  snippets, beginner 117→133, ids con `_`), `snippet_catalog_completeness_test`
+  (catálogo + 2 rutas), `key_layout_map_test`, `audit_lesson_order.py`
+  (`haskell` en `COURSE_ONLY_LANGUAGES`); `SPEC.md` §3.1/§3.2/§18;
+  `AGENTS.md`/`CLAUDE.md` (espejo byte a byte); skill
+  `content-curriculum` (SKILL.md, content-model.md y la verificación de
+  Haskell).
+- **Verificado**: `bash tool/check.sh` completo en verde — **456 tests**,
+  format/analyze/arquitectura limpios; `audit_lesson_order.py` verde para
+  ambas rutas.
+
+### 2026-09-12 — Fix: web no abría drift y los content packs tumbaban las guías
+
+- **Síntoma reportado por el usuario**: en `flutter run -d chrome` la app
+  arrancaba pero las guías (Learning Paths) no cargaban. Los warnings de
+  consola (`webGLVersion is -1` → CPU-only rendering; `AudioContext was not
+  allowed to start`) eran ruido ambiental, no la causa. Eran **dos bugs
+  encadenados** de web.
+- **Causa raíz 1 — drift nunca abría**: `AppDatabase` llamaba
+  `driftDatabase(name: 'ridge.db')` **sin** `web:` — en `drift_flutter`
+  0.3.1 la rama web lanza `ArgumentError` ("When compiling to the web, the
+  web parameter needs to be set") antes de abrir nada, así que ninguna query
+  corre. Cadena: el catálogo de snippets nunca se siembra (`catalogSeed`),
+  `LearningPathsController` recibe catálogo vacío y devuelve `[]`, y todo lo
+  drift-backed (guías, progreso de lecciones, práctica) queda vacío. Además,
+  `web/` no traía `sqlite3.wasm` ni `drift_worker.js`.
+  **Fix**: `web/sqlite3.wasm` (749 KB) + `web/drift_worker.js` (357 KB)
+  versionados, bajados del release `drift-2.35.0` (mismo drift del
+  `pubspec.lock`; los dos sha256 verificados contra la API de GitHub), y
+  `AppDatabase` ahora pasa `web: DriftWebOptions(sqlite3Wasm: ...,
+  driftWorker: ...)` — ignorado en builds nativos. El usuario final no
+  descarga nada a mano: los dos archivos viajan en `build/web/` como
+  cualquier asset.
+- **Causa raíz 2 — content packs usaban `path_provider` en web** (detectada
+  al re-probar con drift ya arreglado): `contentPacksSnippetsDir()` /
+  `contentPacksLearningPathsDir()` llamaban a
+  `getApplicationSupportDirectory()`, que en web lanza
+  `MissingPluginException` (`path_provider` no tiene implementación web). En
+  `LearningPathRepositoryImpl._loadExternalInto` esa llamada está fuera del
+  try/catch por-archivo, así que el error escapaba y tumbaba `watchPaths()`;
+  `ExternalSnippetPackSource` tomaba el mismo camino para el seed del
+  catálogo. **Fix**: ambos resolvers devuelven `null` en web (guard `kIsWeb`,
+  mismo patrón que `desktop_platform.dart`) y los dos callers tratan `null`
+  como "no hay packs externos" — web no puede tenerlos (no hay directorio
+  on-device donde un tercero deje JSON), así que el seam es desktop/mobile.
+- **Verificado**: primer fix con `bash tool/check.sh` completo en verde —
+  **430 tests**, format/analyze/arquitectura limpios; `flutter build web
+  --release` copia ambos binarios a `build/web/` (confirmado con `ls`). El
+  segundo fix pasó `dart format` + `dart analyze` limpios sobre los archivos
+  tocados. **La suite completa no se pudo re-correr al cierre**: hay una
+  sesión concurrente en el mismo working tree agregando soporte de Haskell,
+  y su `pubspec.yaml` referencia `assets/.../haskell_*.json` que aún no
+  existen → `flutter test` falla al construir el asset bundle (ajeno a este
+  fix; correr el gate completo cuando esa sesión cree los JSON). En dev sin
+  COOP/COEP drift cae a `sharedIndexedDb` (funciona igual, algo más lento);
+  en producción `web/_headers` ya trae COOP/COEP para OPFS.
 
 ### 2026-09-11 — Sonido de tecleo migrado a flutter_soloud (fin del pool de audioplayers)
 

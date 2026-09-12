@@ -50,6 +50,10 @@ class LearningPathRepositoryImpl implements LearningPathRepository {
     'assets/content/learning_paths/python_algorithms_v1.json',
     'assets/content/learning_paths/javascript_foundations_v1.json',
     'assets/content/learning_paths/javascript_algorithms_v1.json',
+    'assets/content/learning_paths/typescript_foundations_v1.json',
+    'assets/content/learning_paths/typescript_algorithms_v1.json',
+    'assets/content/learning_paths/haskell_foundations_v1.json',
+    'assets/content/learning_paths/haskell_algorithms_v1.json',
   ];
 
   final List<String> _assetPaths;
@@ -91,6 +95,7 @@ class LearningPathRepositoryImpl implements LearningPathRepository {
   /// `content`'s `ExternalSnippetPackSource`.
   Future<void> _loadExternalInto(Map<LearningPathId, LearningPath> byId) async {
     final dir = await contentPacksLearningPathsDir();
+    if (dir == null) return;
     final files = dir
         .listSync()
         .whereType<File>()

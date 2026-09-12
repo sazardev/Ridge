@@ -26,6 +26,8 @@ const Map<ProgrammingLanguage, String> _catalogAssetByLanguage = {
   ProgrammingLanguage.rust: 'assets/content/snippets/rust_v1.json',
   ProgrammingLanguage.python: 'assets/content/snippets/python_v1.json',
   ProgrammingLanguage.javascript: 'assets/content/snippets/javascript_v1.json',
+  ProgrammingLanguage.typescript: 'assets/content/snippets/typescript_v1.json',
+  ProgrammingLanguage.haskell: 'assets/content/snippets/haskell_v1.json',
 };
 
 /// Languages whose catalog backs free practice (Zen/Sprint/Precision).
@@ -37,8 +39,8 @@ const Map<ProgrammingLanguage, String> _catalogAssetByLanguage = {
 /// snippets exist to compose `bash-foundations-v1`, never a free-standing
 /// practice pool), so its catalog is held to the lighter rule that it
 /// contains exactly the snippets its bundled paths use — see the
-/// "course-only" test below. SQL, Rust, Python, and JavaScript follow the
-/// same course-only rule.
+/// "course-only" test below. SQL, Rust, Python, JavaScript, TypeScript,
+/// and Haskell follow the same course-only rule.
 const Set<ProgrammingLanguage> _freePracticeLanguages = {
   ProgrammingLanguage.go,
 };
@@ -122,6 +124,10 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/python_algorithms_v1.json',
   'assets/content/learning_paths/javascript_foundations_v1.json',
   'assets/content/learning_paths/javascript_algorithms_v1.json',
+  'assets/content/learning_paths/typescript_foundations_v1.json',
+  'assets/content/learning_paths/typescript_algorithms_v1.json',
+  'assets/content/learning_paths/haskell_foundations_v1.json',
+  'assets/content/learning_paths/haskell_algorithms_v1.json',
 ];
 
 Future<Map<String, Object?>> _loadLearningPath(String assetPath) async {

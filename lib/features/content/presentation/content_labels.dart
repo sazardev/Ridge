@@ -19,6 +19,8 @@ extension ProgrammingLanguageLabel on ProgrammingLanguage {
     ProgrammingLanguage.rust => l10n.languageRust,
     ProgrammingLanguage.python => l10n.languagePython,
     ProgrammingLanguage.javascript => l10n.languageJavascript,
+    ProgrammingLanguage.typescript => l10n.languageTypescript,
+    ProgrammingLanguage.haskell => l10n.languageHaskell,
   };
 }
 
@@ -35,6 +37,8 @@ extension ProgrammingLanguageBlurb on ProgrammingLanguage {
     ProgrammingLanguage.rust => l10n.languageRustBlurb,
     ProgrammingLanguage.python => l10n.languagePythonBlurb,
     ProgrammingLanguage.javascript => l10n.languageJavascriptBlurb,
+    ProgrammingLanguage.typescript => l10n.languageTypescriptBlurb,
+    ProgrammingLanguage.haskell => l10n.languageHaskellBlurb,
   };
 }
 
@@ -99,6 +103,8 @@ extension ContentCategoryLabel on ContentCategory {
     ContentCategory.tuiStyling => l10n.categoryTuiStyling,
     ContentCategory.tuiComponents => l10n.categoryTuiComponents,
     ContentCategory.tuiAdapter => l10n.categoryTuiAdapter,
+    ContentCategory.classesAndObjects => l10n.categoryClassesAndObjects,
+    ContentCategory.modules => l10n.categoryModules,
   };
 }
 

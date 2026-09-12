@@ -95,6 +95,8 @@ flutter:
     - assets/content/snippets/rust_v1.json
     - assets/content/snippets/python_v1.json
     - assets/content/snippets/javascript_v1.json
+    - assets/content/snippets/typescript_v1.json
+    - assets/content/snippets/haskell_v1.json
     - assets/content/learning_paths/go_foundations_v1.json
     - assets/content/learning_paths/go_ddd_hexagonal_notes_v1.json
     - assets/content/learning_paths/go_intermediate_syntax_v1.json
@@ -109,6 +111,10 @@ flutter:
     - assets/content/learning_paths/python_algorithms_v1.json
     - assets/content/learning_paths/javascript_foundations_v1.json
     - assets/content/learning_paths/javascript_algorithms_v1.json
+    - assets/content/learning_paths/typescript_foundations_v1.json
+    - assets/content/learning_paths/typescript_algorithms_v1.json
+    - assets/content/learning_paths/haskell_foundations_v1.json
+    - assets/content/learning_paths/haskell_algorithms_v1.json
     - assets/content/keyboard_layouts/manifest.json
     - assets/content/keyboard_layouts/ergodox_ez.json
     - assets/content/keyboard_layouts/zsa_moonlander.json

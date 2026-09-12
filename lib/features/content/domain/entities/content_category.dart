@@ -205,4 +205,15 @@ enum ContentCategory {
   /// `main` composition root that wires every concrete adapter together.
   /// Architecture-layer category.
   tuiAdapter,
+
+  /// TypeScript classes: typed fields, constructors, access modifiers
+  /// (`private`, `readonly`), and `implements` against an interface.
+  /// Introduced by the `typescript-foundations-v1` Learning Route — a
+  /// language-feature category, unlike the architecture-layer ones above.
+  classesAndObjects,
+
+  /// TypeScript/JavaScript modules: exporting and importing values, plus
+  /// the type-only `export type`/`import type` distinction. Introduced by
+  /// the `typescript-foundations-v1` Learning Route.
+  modules,
 }

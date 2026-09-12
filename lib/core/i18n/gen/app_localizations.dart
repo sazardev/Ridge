@@ -1718,6 +1718,18 @@ abstract class AppLocalizations {
   /// **'Shell profiles'**
   String get categoryShellProfiles;
 
+  /// No description provided for @categoryClassesAndObjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Classes & objects'**
+  String get categoryClassesAndObjects;
+
+  /// No description provided for @categoryModules.
+  ///
+  /// In en, this message translates to:
+  /// **'Modules'**
+  String get categoryModules;
+
   /// No description provided for @languageGo.
   ///
   /// In en, this message translates to:
@@ -1754,6 +1766,18 @@ abstract class AppLocalizations {
   /// **'JavaScript'**
   String get languageJavascript;
 
+  /// No description provided for @languageTypescript.
+  ///
+  /// In en, this message translates to:
+  /// **'TypeScript'**
+  String get languageTypescript;
+
+  /// No description provided for @languageHaskell.
+  ///
+  /// In en, this message translates to:
+  /// **'Haskell'**
+  String get languageHaskell;
+
   /// No description provided for @languageGoBlurb.
   ///
   /// In en, this message translates to:
@@ -1789,6 +1813,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The language of the web, from frontend to backend.'**
   String get languageJavascriptBlurb;
+
+  /// No description provided for @languageTypescriptBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'JavaScript plus static types — safer, self-documenting code.'**
+  String get languageTypescriptBlurb;
+
+  /// No description provided for @languageHaskellBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Purely functional — values, types, and no side effects.'**
+  String get languageHaskellBlurb;
 
   /// No description provided for @snippetPracticeAction.
   ///

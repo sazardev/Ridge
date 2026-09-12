@@ -1,0 +1,98 @@
+[
+  {
+    "id": "haskell-foundations-v1",
+    "language": "haskell",
+    "titleEn": "Haskell from scratch",
+    "titleEs": "Haskell desde cero",
+    "descriptionEn": "Learn Haskell step by step: values, types, conditionals, and recursion.",
+    "descriptionEs": "Aprende Haskell paso a paso: valores, tipos, condicionales y recursión.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "haskell-foundations-v1-step01",
+        "snippetId": "haskell-vars-001",
+        "order": 1,
+        "titleEn": "Your first definition",
+        "titleEs": "Tu primera definición"
+      },
+      {
+        "id": "haskell-foundations-v1-step02",
+        "snippetId": "haskell-vars-002",
+        "order": 2,
+        "titleEn": "Type signatures with ::",
+        "titleEs": "Firmas de tipo con ::"
+      },
+      {
+        "id": "haskell-foundations-v1-step03",
+        "snippetId": "haskell-vars-003",
+        "order": 3,
+        "titleEn": "Local bindings with let ... in",
+        "titleEs": "Bindings locales con let ... in"
+      },
+      {
+        "id": "haskell-foundations-v1-step04",
+        "snippetId": "haskell-vars-004",
+        "order": 4,
+        "titleEn": "Definitions with where",
+        "titleEs": "Definiciones con where"
+      },
+      {
+        "id": "haskell-foundations-v1-step05",
+        "snippetId": "haskell-cond-001",
+        "order": 5,
+        "titleEn": "if / then / else is an expression",
+        "titleEs": "if / then / else es una expresión"
+      },
+      {
+        "id": "haskell-foundations-v1-step06",
+        "snippetId": "haskell-cond-002",
+        "order": 6,
+        "titleEn": "Guards: several conditions in a row",
+        "titleEs": "Guards: varias condiciones en fila"
+      },
+      {
+        "id": "haskell-foundations-v1-step07",
+        "snippetId": "haskell-cond-003",
+        "order": 7,
+        "titleEn": "case: matching on values",
+        "titleEs": "case: coincidencia sobre valores"
+      },
+      {
+        "id": "haskell-foundations-v1-step08",
+        "snippetId": "haskell-func-001",
+        "order": 8,
+        "titleEn": "Recursion replaces loops",
+        "titleEs": "La recursión reemplaza a los bucles"
+      },
+      {
+        "id": "haskell-foundations-v1-step09",
+        "snippetId": "haskell-func-002",
+        "order": 9,
+        "titleEn": "Pattern matching on lists",
+        "titleEs": "Coincidencia de patrones sobre listas"
+      },
+      {
+        "id": "haskell-foundations-v1-step10",
+        "snippetId": "haskell-func-003",
+        "order": 10,
+        "titleEn": "Currying and partial application",
+        "titleEs": "Currying y aplicación parcial"
+      },
+      {
+        "id": "haskell-foundations-v1-step11",
+        "snippetId": "haskell-func-004",
+        "order": 11,
+        "titleEn": "Higher-order functions: map and filter",
+        "titleEs": "Funciones de orden superior: map y filter"
+      },
+      {
+        "id": "haskell-foundations-v1-step12",
+        "snippetId": "haskell-func-005",
+        "order": 12,
+        "titleEn": "Put it together: double and sum",
+        "titleEs": "Poniéndolo junto: duplicar y sumar"
+      }
+    ]
+  }
+]

@@ -197,23 +197,28 @@ writing new constructors instead of writing `const ClassName(...)`.
 
 ## Content / curriculum editing
 
-Editing snippets (`assets/content/snippets/{go,bash,sql,rust,python,javascript}_v1.json`), a
+Editing snippets (`assets/content/snippets/{go,bash,sql,rust,python,javascript,typescript,haskell}_v1.json`), a
 Learning Path's lesson order (`assets/content/learning_paths/*.json`), or
 adding a new bilingual (en/es) content field is covered by the
 `content-curriculum` skill — use it rather than hand-editing these JSON
 files, since lesson ordering has produced real beginner-incoherence bugs
 before. Note the two catalog tiers (SPEC.md §3.2): Go backs free practice
 and keeps a dense (category, difficulty) grid; Bash, SQL, Rust, Python,
-and JavaScript are course-only and contain exactly the snippets their
-Learning Path(s) use (`bash-foundations-v1`, `sql-foundations-v1`,
-`rust-foundations-v1`, `python-foundations-v1`,
-`javascript-foundations-v1` — each of these foundations routes is
-beginner-only and reuses Go's generic categories). Go, Rust, Python, and
-JavaScript additionally each have a standalone, non-beginner "Algorithms"
-course (`go-algorithms-v1`, `rust-algorithms-v1`, `python-algorithms-v1`,
-`javascript-algorithms-v1`) with its own three categories
-(searching/sorting/graph algorithms), separate from that language's
-foundations route.
+JavaScript, TypeScript, and Haskell are course-only and contain exactly
+the snippets their Learning Path(s) use (`bash-foundations-v1`,
+`sql-foundations-v1`, `rust-foundations-v1`, `python-foundations-v1`,
+`javascript-foundations-v1`, `typescript-foundations-v1`,
+`haskell-foundations-v1` — each of these foundations routes targets
+beginners and reuses Go's generic categories; Haskell's has no loops
+block, presenting recursion as the functional substitute for iteration,
+and TypeScript's broader tour adds `classesAndObjects` and `modules` as
+its own two categories). Go, Rust, Python, JavaScript, TypeScript, and
+Haskell additionally each have a standalone, non-beginner "Algorithms"
+course (`go-algorithms-v1`, `rust-algorithms-v1`,
+`python-algorithms-v1`, `javascript-algorithms-v1`,
+`typescript-algorithms-v1`, `haskell-algorithms-v1`) with its own three
+categories (searching/sorting/graph algorithms), separate from that
+language's foundations route.
 
 ## Design system
 
