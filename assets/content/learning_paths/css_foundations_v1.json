@@ -1,0 +1,127 @@
+[
+  {
+    "file": "css_foundations_v1.json",
+    "id": "css-foundations-v1",
+    "language": "css",
+    "titleEn": "CSS from scratch",
+    "titleEs": "CSS desde cero",
+    "descriptionEn": "Learn CSS step by step: selectors, the box model, color, and typography.",
+    "descriptionEs": "Aprende CSS paso a paso: selectores, modelo de caja, color y tipografía.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "css-foundations-v1-step01",
+        "snippetId": "css-sel-001",
+        "order": 1,
+        "titleEn": "Type selectors",
+        "titleEs": "Selectores de tipo"
+      },
+      {
+        "id": "css-foundations-v1-step02",
+        "snippetId": "css-sel-002",
+        "order": 2,
+        "titleEn": "Class selectors",
+        "titleEs": "Selectores de clase"
+      },
+      {
+        "id": "css-foundations-v1-step03",
+        "snippetId": "css-sel-003",
+        "order": 3,
+        "titleEn": "ID selectors",
+        "titleEs": "Selectores de id"
+      },
+      {
+        "id": "css-foundations-v1-step04",
+        "snippetId": "css-sel-004",
+        "order": 4,
+        "titleEn": "Grouped and descendant selectors",
+        "titleEs": "Selectores agrupados y descendentes"
+      },
+      {
+        "id": "css-foundations-v1-step05",
+        "snippetId": "css-sel-005",
+        "order": 5,
+        "titleEn": "Child and sibling combinators",
+        "titleEs": "Combinadores de hijo y hermano"
+      },
+      {
+        "id": "css-foundations-v1-step06",
+        "snippetId": "css-sel-006",
+        "order": 6,
+        "titleEn": "Pseudo-classes",
+        "titleEs": "Pseudo-clases"
+      },
+      {
+        "id": "css-foundations-v1-step07",
+        "snippetId": "css-box-001",
+        "order": 7,
+        "titleEn": "Block vs inline-block",
+        "titleEs": "Bloque vs inline-block"
+      },
+      {
+        "id": "css-foundations-v1-step08",
+        "snippetId": "css-box-002",
+        "order": 8,
+        "titleEn": "Width, height and padding",
+        "titleEs": "Ancho, alto y padding"
+      },
+      {
+        "id": "css-foundations-v1-step09",
+        "snippetId": "css-box-003",
+        "order": 9,
+        "titleEn": "Horizontal centering",
+        "titleEs": "Centrado horizontal"
+      },
+      {
+        "id": "css-foundations-v1-step10",
+        "snippetId": "css-box-004",
+        "order": 10,
+        "titleEn": "Borders and circles",
+        "titleEs": "Bordes y círculos"
+      },
+      {
+        "id": "css-foundations-v1-step11",
+        "snippetId": "css-box-005",
+        "order": 11,
+        "titleEn": "Border-box sizing",
+        "titleEs": "Tamaño border-box"
+      },
+      {
+        "id": "css-foundations-v1-step12",
+        "snippetId": "css-color-001",
+        "order": 12,
+        "titleEn": "Hex colors",
+        "titleEs": "Colores hexadecimales"
+      },
+      {
+        "id": "css-foundations-v1-step13",
+        "snippetId": "css-color-002",
+        "order": 13,
+        "titleEn": "RGB, HSL and alpha",
+        "titleEs": "RGB, HSL y alfa"
+      },
+      {
+        "id": "css-foundations-v1-step14",
+        "snippetId": "css-color-003",
+        "order": 14,
+        "titleEn": "Linear gradients",
+        "titleEs": "Gradientes lineales"
+      },
+      {
+        "id": "css-foundations-v1-step15",
+        "snippetId": "css-type-001",
+        "order": 15,
+        "titleEn": "Font stacks",
+        "titleEs": "Pilas de fuentes"
+      },
+      {
+        "id": "css-foundations-v1-step16",
+        "snippetId": "css-type-002",
+        "order": 16,
+        "titleEn": "Typography controls",
+        "titleEs": "Controles tipográficos"
+      }
+    ]
+  }
+]

@@ -1,0 +1,189 @@
+[
+  {
+    "id": "dart-foundations-v1",
+    "language": "dart",
+    "titleEn": "Dart: Fundamentals",
+    "titleEs": "Dart: Fundamentos",
+    "descriptionEn": "Learn Dart step by step: types, null safety, control flow, functions, collections, classes, records, and async.",
+    "descriptionEs": "Aprende Dart paso a paso: tipos, seguridad frente a nulos, control de flujo, funciones, colecciones, clases, registros y programación asíncrona.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "dart-foundations-v1-step01",
+        "snippetId": "dart-vars-001",
+        "order": 1,
+        "titleEn": "Hello, Dart!",
+        "titleEs": "¡Hola, Dart!"
+      },
+      {
+        "id": "dart-foundations-v1-step02",
+        "snippetId": "dart-vars-002",
+        "order": 2,
+        "titleEn": "var, final, and const",
+        "titleEs": "var, final y const"
+      },
+      {
+        "id": "dart-foundations-v1-step03",
+        "snippetId": "dart-vars-003",
+        "order": 3,
+        "titleEn": "Types and string interpolation",
+        "titleEs": "Tipos e interpolación de cadenas"
+      },
+      {
+        "id": "dart-foundations-v1-step04",
+        "snippetId": "dart-null-001",
+        "order": 4,
+        "titleEn": "Nullable types and ??",
+        "titleEs": "Tipos anulables y ??"
+      },
+      {
+        "id": "dart-foundations-v1-step05",
+        "snippetId": "dart-null-002",
+        "order": 5,
+        "titleEn": "Safe calls, !, and promotion",
+        "titleEs": "Llamadas seguras, ! y promoción"
+      },
+      {
+        "id": "dart-foundations-v1-step06",
+        "snippetId": "dart-cond-001",
+        "order": 6,
+        "titleEn": "if, else if, and else",
+        "titleEs": "if, else if y else"
+      },
+      {
+        "id": "dart-foundations-v1-step07",
+        "snippetId": "dart-cond-002",
+        "order": 7,
+        "titleEn": "Switch expressions",
+        "titleEs": "Expresiones switch"
+      },
+      {
+        "id": "dart-foundations-v1-step08",
+        "snippetId": "dart-loop-001",
+        "order": 8,
+        "titleEn": "A classic for loop",
+        "titleEs": "Un for clásico"
+      },
+      {
+        "id": "dart-foundations-v1-step09",
+        "snippetId": "dart-loop-002",
+        "order": 9,
+        "titleEn": "while, break, and continue",
+        "titleEs": "while, break y continue"
+      },
+      {
+        "id": "dart-foundations-v1-step10",
+        "snippetId": "dart-coll-001",
+        "order": 10,
+        "titleEn": "Lists and for-in",
+        "titleEs": "Listas y for-in"
+      },
+      {
+        "id": "dart-foundations-v1-step11",
+        "snippetId": "dart-coll-002",
+        "order": 11,
+        "titleEn": "Maps",
+        "titleEs": "Mapas"
+      },
+      {
+        "id": "dart-foundations-v1-step12",
+        "snippetId": "dart-coll-003",
+        "order": 12,
+        "titleEn": "Sets, spread, and collection-if",
+        "titleEs": "Conjuntos, expansión e if de colección"
+      },
+      {
+        "id": "dart-foundations-v1-step13",
+        "snippetId": "dart-func-001",
+        "order": 13,
+        "titleEn": "A function with typed parameters",
+        "titleEs": "Una función con parámetros tipados"
+      },
+      {
+        "id": "dart-foundations-v1-step14",
+        "snippetId": "dart-func-002",
+        "order": 14,
+        "titleEn": "Named and default parameters",
+        "titleEs": "Parámetros nombrados y por defecto"
+      },
+      {
+        "id": "dart-foundations-v1-step15",
+        "snippetId": "dart-func-003",
+        "order": 15,
+        "titleEn": "Arrow functions and closures",
+        "titleEs": "Funciones flecha y clausuras"
+      },
+      {
+        "id": "dart-foundations-v1-step16",
+        "snippetId": "dart-func-004",
+        "order": 16,
+        "titleEn": "Put it together: countEvens",
+        "titleEs": "En conjunto: countEvens"
+      },
+      {
+        "id": "dart-foundations-v1-step17",
+        "snippetId": "dart-oop-001",
+        "order": 17,
+        "titleEn": "A class with a constructor",
+        "titleEs": "Una clase con constructor"
+      },
+      {
+        "id": "dart-foundations-v1-step18",
+        "snippetId": "dart-oop-002",
+        "order": 18,
+        "titleEn": "Getters and named constructors",
+        "titleEs": "Getters y constructores con nombre"
+      },
+      {
+        "id": "dart-foundations-v1-step19",
+        "snippetId": "dart-oop-003",
+        "order": 19,
+        "titleEn": "Inheritance and @override",
+        "titleEs": "Herencia y @override"
+      },
+      {
+        "id": "dart-foundations-v1-step20",
+        "snippetId": "dart-rec-001",
+        "order": 20,
+        "titleEn": "Records and destructuring",
+        "titleEs": "Registros y desestructuración"
+      },
+      {
+        "id": "dart-foundations-v1-step21",
+        "snippetId": "dart-rec-002",
+        "order": 21,
+        "titleEn": "Patterns in switch",
+        "titleEs": "Patrones en switch"
+      },
+      {
+        "id": "dart-foundations-v1-step22",
+        "snippetId": "dart-err-001",
+        "order": 22,
+        "titleEn": "try / catch / finally",
+        "titleEs": "try / catch / finally"
+      },
+      {
+        "id": "dart-foundations-v1-step23",
+        "snippetId": "dart-async-001",
+        "order": 23,
+        "titleEn": "Future and async/await",
+        "titleEs": "Future y async/await"
+      },
+      {
+        "id": "dart-foundations-v1-step24",
+        "snippetId": "dart-async-002",
+        "order": 24,
+        "titleEn": "Async errors with try/catch",
+        "titleEs": "Errores asíncronos con try/catch"
+      },
+      {
+        "id": "dart-foundations-v1-step25",
+        "snippetId": "dart-mod-001",
+        "order": 25,
+        "titleEn": "Importing a library",
+        "titleEs": "Importar una biblioteca"
+      }
+    ]
+  }
+]

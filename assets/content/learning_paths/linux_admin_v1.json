@@ -1,0 +1,224 @@
+[
+  {
+    "id": "linux-admin-v1",
+    "language": "linux",
+    "titleEn": "Linux administration",
+    "titleEs": "Administración de Linux",
+    "descriptionEn": "Manage users, packages, services, disks and logs on Arch Linux.",
+    "descriptionEs": "Administra usuarios, paquetes, servicios, discos y registros en Arch Linux.",
+    "tagEn": "Admin",
+    "tagEs": "Administración",
+    "lessons": [
+      {
+        "id": "linux-admin-v1-step01",
+        "snippetId": "linux-users-005",
+        "order": 1,
+        "titleEn": "Lock a user account",
+        "titleEs": "Bloquea una cuenta de usuario"
+      },
+      {
+        "id": "linux-admin-v1-step02",
+        "snippetId": "linux-users-006",
+        "order": 2,
+        "titleEn": "Remove a user with their home",
+        "titleEs": "Elimina un usuario y su carpeta"
+      },
+      {
+        "id": "linux-admin-v1-step03",
+        "snippetId": "linux-users-007",
+        "order": 3,
+        "titleEn": "Run a command as another user",
+        "titleEs": "Ejecuta un comando como otro usuario"
+      },
+      {
+        "id": "linux-admin-v1-step04",
+        "snippetId": "linux-users-008",
+        "order": 4,
+        "titleEn": "Validate the sudoers file",
+        "titleEs": "Valida el archivo sudoers"
+      },
+      {
+        "id": "linux-admin-v1-step05",
+        "snippetId": "linux-perm-006",
+        "order": 5,
+        "titleEn": "Create a sticky shared folder",
+        "titleEs": "Crea una carpeta con sticky bit"
+      },
+      {
+        "id": "linux-admin-v1-step06",
+        "snippetId": "linux-perm-007",
+        "order": 6,
+        "titleEn": "Make new files inherit a group",
+        "titleEs": "Aplica setgid a una carpeta"
+      },
+      {
+        "id": "linux-admin-v1-step07",
+        "snippetId": "linux-perm-008",
+        "order": 7,
+        "titleEn": "Grant access with an ACL",
+        "titleEs": "Concede acceso con una ACL"
+      },
+      {
+        "id": "linux-admin-v1-step08",
+        "snippetId": "linux-proc-004",
+        "order": 8,
+        "titleEn": "Stop a process with SIGTERM",
+        "titleEs": "Detén un proceso con SIGTERM"
+      },
+      {
+        "id": "linux-admin-v1-step09",
+        "snippetId": "linux-proc-005",
+        "order": 9,
+        "titleEn": "Force-kill an unresponsive process",
+        "titleEs": "Fuerza el cierre de un proceso"
+      },
+      {
+        "id": "linux-admin-v1-step10",
+        "snippetId": "linux-proc-006",
+        "order": 10,
+        "titleEn": "Lower a job's CPU priority",
+        "titleEs": "Baja la prioridad de un trabajo"
+      },
+      {
+        "id": "linux-admin-v1-step11",
+        "snippetId": "linux-storage-001",
+        "order": 11,
+        "titleEn": "List the block devices",
+        "titleEs": "Lista los dispositivos de bloque"
+      },
+      {
+        "id": "linux-admin-v1-step12",
+        "snippetId": "linux-storage-002",
+        "order": 12,
+        "titleEn": "Check free space on root",
+        "titleEs": "Comprueba el espacio libre en raíz"
+      },
+      {
+        "id": "linux-admin-v1-step13",
+        "snippetId": "linux-storage-003",
+        "order": 13,
+        "titleEn": "Measure directory sizes",
+        "titleEs": "Mide el tamaño de los directorios"
+      },
+      {
+        "id": "linux-admin-v1-step14",
+        "snippetId": "linux-svc-002",
+        "order": 14,
+        "titleEn": "List loaded service units",
+        "titleEs": "Lista las unidades de servicio cargadas"
+      },
+      {
+        "id": "linux-admin-v1-step15",
+        "snippetId": "linux-svc-003",
+        "order": 15,
+        "titleEn": "Check boot enablement status",
+        "titleEs": "Comprueba el arranque automático"
+      },
+      {
+        "id": "linux-admin-v1-step16",
+        "snippetId": "linux-svc-004",
+        "order": 16,
+        "titleEn": "Inspect a unit's definition",
+        "titleEs": "Inspecciona la definición de una unidad"
+      },
+      {
+        "id": "linux-admin-v1-step17",
+        "snippetId": "linux-svc-005",
+        "order": 17,
+        "titleEn": "Start and stop a service",
+        "titleEs": "Arranca y detén un servicio"
+      },
+      {
+        "id": "linux-admin-v1-step18",
+        "snippetId": "linux-svc-006",
+        "order": 18,
+        "titleEn": "Enable a service at boot",
+        "titleEs": "Habilita un servicio al arrancar"
+      },
+      {
+        "id": "linux-admin-v1-step19",
+        "snippetId": "linux-log-002",
+        "order": 19,
+        "titleEn": "Read one service's recent logs",
+        "titleEs": "Lee los registros de una unidad"
+      },
+      {
+        "id": "linux-admin-v1-step20",
+        "snippetId": "linux-log-003",
+        "order": 20,
+        "titleEn": "Check the journal's disk usage",
+        "titleEs": "Comprueba el espacio del journal"
+      },
+      {
+        "id": "linux-admin-v1-step21",
+        "snippetId": "linux-pkg-004",
+        "order": 21,
+        "titleEn": "Refresh the package databases",
+        "titleEs": "Refresca las bases de paquetes"
+      },
+      {
+        "id": "linux-admin-v1-step22",
+        "snippetId": "linux-pkg-005",
+        "order": 22,
+        "titleEn": "Install a package safely",
+        "titleEs": "Instala un paquete sin reinstalar"
+      },
+      {
+        "id": "linux-admin-v1-step23",
+        "snippetId": "linux-pkg-006",
+        "order": 23,
+        "titleEn": "Remove a package with its config",
+        "titleEs": "Elimina un paquete y su configuración"
+      },
+      {
+        "id": "linux-admin-v1-step24",
+        "snippetId": "linux-pkg-007",
+        "order": 24,
+        "titleEn": "Find which package owns a file",
+        "titleEs": "Averigua qué paquete posee un archivo"
+      },
+      {
+        "id": "linux-admin-v1-step25",
+        "snippetId": "linux-sched-001",
+        "order": 25,
+        "titleEn": "Validate a timer's calendar spec",
+        "titleEs": "Valida el calendario de un timer"
+      },
+      {
+        "id": "linux-admin-v1-step26",
+        "snippetId": "linux-sched-002",
+        "order": 26,
+        "titleEn": "List scheduled timers",
+        "titleEs": "Lista los timers programados"
+      },
+      {
+        "id": "linux-admin-v1-step27",
+        "snippetId": "linux-sched-003",
+        "order": 27,
+        "titleEn": "Schedule a one-shot timer",
+        "titleEs": "Programa un comando puntual"
+      },
+      {
+        "id": "linux-admin-v1-step28",
+        "snippetId": "linux-backup-001",
+        "order": 28,
+        "titleEn": "Create a compressed tarball",
+        "titleEs": "Crea un archivo tar comprimido"
+      },
+      {
+        "id": "linux-admin-v1-step29",
+        "snippetId": "linux-backup-002",
+        "order": 29,
+        "titleEn": "List an archive's contents",
+        "titleEs": "Lista el contenido de un tar"
+      },
+      {
+        "id": "linux-admin-v1-step30",
+        "snippetId": "linux-backup-003",
+        "order": 30,
+        "titleEn": "Extract an archive where you choose",
+        "titleEs": "Extrae un archivo tar donde quieras"
+      }
+    ]
+  }
+]

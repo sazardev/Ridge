@@ -1,0 +1,189 @@
+[
+  {
+    "id": "csharp-foundations-v1",
+    "language": "csharp",
+    "titleEn": "C# from scratch",
+    "titleEs": "C# desde cero",
+    "descriptionEn": "Learn C# step by step: types, control flow, methods, and classes.",
+    "descriptionEs": "Aprende C# paso a paso: tipos, control de flujo, métodos y clases.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "csharp-foundations-v1-step01",
+        "snippetId": "csharp-mod-001",
+        "order": 1,
+        "titleEn": "Your first C# program",
+        "titleEs": "Tu primer programa en C#"
+      },
+      {
+        "id": "csharp-foundations-v1-step02",
+        "snippetId": "csharp-mod-002",
+        "order": 2,
+        "titleEn": "Namespaces and the classic `Main`",
+        "titleEs": "Espacios de nombres y el `Main` clásico"
+      },
+      {
+        "id": "csharp-foundations-v1-step03",
+        "snippetId": "csharp-vars-001",
+        "order": 3,
+        "titleEn": "Built-in types: int, long, double, bool, char",
+        "titleEs": "Tipos integrados: int, long, double, bool, char"
+      },
+      {
+        "id": "csharp-foundations-v1-step04",
+        "snippetId": "csharp-vars-002",
+        "order": 4,
+        "titleEn": "`var` inference and `string.Length`",
+        "titleEs": "Inferencia con `var` y `string.Length`"
+      },
+      {
+        "id": "csharp-foundations-v1-step05",
+        "snippetId": "csharp-vars-003",
+        "order": 5,
+        "titleEn": "String interpolation with `$`",
+        "titleEs": "Interpolación de cadenas con `$`"
+      },
+      {
+        "id": "csharp-foundations-v1-step06",
+        "snippetId": "csharp-vars-004",
+        "order": 6,
+        "titleEn": "`const` and the `decimal` type",
+        "titleEs": "`const` y el tipo `decimal`"
+      },
+      {
+        "id": "csharp-foundations-v1-step07",
+        "snippetId": "csharp-cond-001",
+        "order": 7,
+        "titleEn": "`if` / `else` and `(double)` casts",
+        "titleEs": "`if` / `else` y conversiones a `(double)`"
+      },
+      {
+        "id": "csharp-foundations-v1-step08",
+        "snippetId": "csharp-cond-002",
+        "order": 8,
+        "titleEn": "Boolean logic with `&&`, `||`, and `!`",
+        "titleEs": "Lógica booleana con `&&`, `||` y `!`"
+      },
+      {
+        "id": "csharp-foundations-v1-step09",
+        "snippetId": "csharp-cond-003",
+        "order": 9,
+        "titleEn": "`switch` with `case` and `break`",
+        "titleEs": "`switch` con `case` y `break`"
+      },
+      {
+        "id": "csharp-foundations-v1-step10",
+        "snippetId": "csharp-loops-001",
+        "order": 10,
+        "titleEn": "A classic `for` loop",
+        "titleEs": "Un bucle `for` clásico"
+      },
+      {
+        "id": "csharp-foundations-v1-step11",
+        "snippetId": "csharp-loops-002",
+        "order": 11,
+        "titleEn": "`foreach` over an array",
+        "titleEs": "`foreach` sobre un arreglo"
+      },
+      {
+        "id": "csharp-foundations-v1-step12",
+        "snippetId": "csharp-loops-003",
+        "order": 12,
+        "titleEn": "`while` with `break` and `continue`",
+        "titleEs": "`while` con `break` y `continue`"
+      },
+      {
+        "id": "csharp-foundations-v1-step13",
+        "snippetId": "csharp-func-001",
+        "order": 13,
+        "titleEn": "Methods and `=>` expression bodies",
+        "titleEs": "Métodos y cuerpos con expresión `=>`"
+      },
+      {
+        "id": "csharp-foundations-v1-step14",
+        "snippetId": "csharp-func-002",
+        "order": 14,
+        "titleEn": "Default parameters and named arguments",
+        "titleEs": "Parámetros por defecto y argumentos con nombre"
+      },
+      {
+        "id": "csharp-foundations-v1-step15",
+        "snippetId": "csharp-func-003",
+        "order": 15,
+        "titleEn": "Method overloading by parameter type",
+        "titleEs": "Sobrecarga de métodos por tipo de parámetro"
+      },
+      {
+        "id": "csharp-foundations-v1-step16",
+        "snippetId": "csharp-oop-001",
+        "order": 16,
+        "titleEn": "A class with fields and a constructor",
+        "titleEs": "Una clase con campos y constructor"
+      },
+      {
+        "id": "csharp-foundations-v1-step17",
+        "snippetId": "csharp-oop-002",
+        "order": 17,
+        "titleEn": "`required`, `init`, and object initializers",
+        "titleEs": "`required`, `init` e inicializadores de objeto"
+      },
+      {
+        "id": "csharp-foundations-v1-step18",
+        "snippetId": "csharp-oop-003",
+        "order": 18,
+        "titleEn": "Inheritance, `base`, and `override`",
+        "titleEs": "Herencia, `base` y `override`"
+      },
+      {
+        "id": "csharp-foundations-v1-step19",
+        "snippetId": "csharp-oop-004",
+        "order": 19,
+        "titleEn": "Abstract classes and polymorphism",
+        "titleEs": "Clases abstractas y polimorfismo"
+      },
+      {
+        "id": "csharp-foundations-v1-step20",
+        "snippetId": "csharp-iface-001",
+        "order": 20,
+        "titleEn": "An interface and its first implementation",
+        "titleEs": "Una interfaz y su primera implementación"
+      },
+      {
+        "id": "csharp-foundations-v1-step21",
+        "snippetId": "csharp-iface-002",
+        "order": 21,
+        "titleEn": "One interface, two implementations",
+        "titleEs": "Una interfaz, dos implementaciones"
+      },
+      {
+        "id": "csharp-foundations-v1-step22",
+        "snippetId": "csharp-coll-001",
+        "order": 22,
+        "titleEn": "Arrays vs `List<T>`",
+        "titleEs": "Arreglos vs `List<T>`"
+      },
+      {
+        "id": "csharp-foundations-v1-step23",
+        "snippetId": "csharp-coll-002",
+        "order": 23,
+        "titleEn": "`Dictionary` and `TryGetValue`",
+        "titleEs": "`Dictionary` y `TryGetValue`"
+      },
+      {
+        "id": "csharp-foundations-v1-step24",
+        "snippetId": "csharp-err-001",
+        "order": 24,
+        "titleEn": "Catching `DivideByZeroException`",
+        "titleEs": "Capturar `DivideByZeroException`"
+      },
+      {
+        "id": "csharp-foundations-v1-step25",
+        "snippetId": "csharp-err-002",
+        "order": 25,
+        "titleEn": "Custom exceptions and `int.TryParse`",
+        "titleEs": "Excepciones propias e `int.TryParse`"
+      }
+    ]
+  }
+]

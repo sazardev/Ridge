@@ -41,6 +41,8 @@ class LearningPathRepositoryImpl implements LearningPathRepository {
     'assets/content/learning_paths/go_intermediate_syntax_v1.json',
     'assets/content/learning_paths/go_tui_notes_v1.json',
     'assets/content/learning_paths/go_algorithms_v1.json',
+    'assets/content/learning_paths/go_interfaces_v1.json',
+    'assets/content/learning_paths/go_rest_http_v1.json',
     'assets/content/learning_paths/bash_foundations_v1.json',
     'assets/content/learning_paths/bash_toolkit_v1.json',
     'assets/content/learning_paths/sql_foundations_v1.json',
@@ -48,12 +50,52 @@ class LearningPathRepositoryImpl implements LearningPathRepository {
     'assets/content/learning_paths/rust_algorithms_v1.json',
     'assets/content/learning_paths/python_foundations_v1.json',
     'assets/content/learning_paths/python_algorithms_v1.json',
+    'assets/content/learning_paths/python_django_foundations_v1.json',
+    'assets/content/learning_paths/python_django_orm_v1.json',
+    'assets/content/learning_paths/python_django_rest_v1.json',
     'assets/content/learning_paths/javascript_foundations_v1.json',
     'assets/content/learning_paths/javascript_algorithms_v1.json',
     'assets/content/learning_paths/typescript_foundations_v1.json',
     'assets/content/learning_paths/typescript_algorithms_v1.json',
     'assets/content/learning_paths/haskell_foundations_v1.json',
     'assets/content/learning_paths/haskell_algorithms_v1.json',
+    'assets/content/learning_paths/c_foundations_v1.json',
+    'assets/content/learning_paths/c_algorithms_v1.json',
+    'assets/content/learning_paths/c_systems_v1.json',
+    'assets/content/learning_paths/cpp_foundations_v1.json',
+    'assets/content/learning_paths/cpp_algorithms_v1.json',
+    'assets/content/learning_paths/cpp_advanced_v1.json',
+    'assets/content/learning_paths/java_foundations_v1.json',
+    'assets/content/learning_paths/java_algorithms_v1.json',
+    'assets/content/learning_paths/crystal_foundations_v1.json',
+    'assets/content/learning_paths/crystal_algorithms_v1.json',
+    'assets/content/learning_paths/css_foundations_v1.json',
+    'assets/content/learning_paths/css_layout_v1.json',
+    'assets/content/learning_paths/css_advanced_v1.json',
+    'assets/content/learning_paths/csharp_foundations_v1.json',
+    'assets/content/learning_paths/csharp_algorithms_v1.json',
+    'assets/content/learning_paths/csharp_advanced_v1.json',
+    'assets/content/learning_paths/swift_foundations_v1.json',
+    'assets/content/learning_paths/swift_algorithms_v1.json',
+    'assets/content/learning_paths/swift_advanced_v1.json',
+    'assets/content/learning_paths/kotlin_foundations_v1.json',
+    'assets/content/learning_paths/kotlin_algorithms_v1.json',
+    'assets/content/learning_paths/kotlin_advanced_v1.json',
+    'assets/content/learning_paths/dart_foundations_v1.json',
+    'assets/content/learning_paths/dart_advanced_v1.json',
+    'assets/content/learning_paths/dart_algorithms_v1.json',
+    'assets/content/learning_paths/php_foundations_v1.json',
+    'assets/content/learning_paths/php_web_v1.json',
+    'assets/content/learning_paths/php_algorithms_v1.json',
+    'assets/content/learning_paths/git_foundations_v1.json',
+    'assets/content/learning_paths/git_workflows_v1.json',
+    'assets/content/learning_paths/git_internals_v1.json',
+    'assets/content/learning_paths/linux_foundations_v1.json',
+    'assets/content/learning_paths/linux_admin_v1.json',
+    'assets/content/learning_paths/linux_networking_v1.json',
+    'assets/content/learning_paths/docker_foundations_v1.json',
+    'assets/content/learning_paths/docker_compose_v1.json',
+    'assets/content/learning_paths/docker_advanced_v1.json',
   ];
 
   final List<String> _assetPaths;
@@ -96,11 +138,27 @@ class LearningPathRepositoryImpl implements LearningPathRepository {
   Future<void> _loadExternalInto(Map<LearningPathId, LearningPath> byId) async {
     final dir = await contentPacksLearningPathsDir();
     if (dir == null) return;
-    final files = dir
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.json'))
-        .toList();
+
+    final List<File> files;
+    try {
+      files = dir
+          .listSync()
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.json'))
+          .toList();
+      // The directory can disappear (or become unreadable) between being
+      // resolved and listed — a pack dir on removable storage, or a
+      // teardown racing this call. Skipping the external packs entirely
+      // keeps this method's "deliberately never throws" contract; the
+      // bundled curriculum is unaffected either way.
+      // ignore: avoid_catches_without_on_clauses
+    } catch (e) {
+      debugPrint(
+        'LearningPathRepositoryImpl: skipped the pack directory '
+        '(${dir.path}) — $e',
+      );
+      return;
+    }
 
     for (final file in files) {
       try {

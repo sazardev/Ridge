@@ -1,0 +1,245 @@
+[
+  {
+    "id": "git-foundations-v1",
+    "language": "git",
+    "titleEn": "Git from scratch",
+    "titleEs": "Git desde cero",
+    "descriptionEn": "Learn version control step by step, from `git init` to pushing your first branch to a remote.",
+    "descriptionEs": "Aprende control de versiones paso a paso, de `git init` a publicar tu primera rama en un remoto.",
+    "tagEn": "Fundamentals",
+    "tagEs": "Fundamentos",
+    "lessons": [
+      {
+        "id": "git-foundations-v1-step01",
+        "snippetId": "git-basic-001",
+        "order": 1,
+        "titleEn": "Configure your identity",
+        "titleEs": "Configura tu identidad"
+      },
+      {
+        "id": "git-foundations-v1-step02",
+        "snippetId": "git-basic-002",
+        "order": 2,
+        "titleEn": "Create a repository",
+        "titleEs": "Crea un repositorio"
+      },
+      {
+        "id": "git-foundations-v1-step03",
+        "snippetId": "git-basic-003",
+        "order": 3,
+        "titleEn": "Check repository status",
+        "titleEs": "Consulta el estado del repositorio"
+      },
+      {
+        "id": "git-foundations-v1-step04",
+        "snippetId": "git-basic-004",
+        "order": 4,
+        "titleEn": "Stage a file",
+        "titleEs": "Prepara un archivo"
+      },
+      {
+        "id": "git-foundations-v1-step05",
+        "snippetId": "git-basic-005",
+        "order": 5,
+        "titleEn": "Stage every change at once",
+        "titleEs": "Prepara todos los cambios de una vez"
+      },
+      {
+        "id": "git-foundations-v1-step06",
+        "snippetId": "git-basic-006",
+        "order": 6,
+        "titleEn": "Make your first commit",
+        "titleEs": "Haz tu primer commit"
+      },
+      {
+        "id": "git-foundations-v1-step07",
+        "snippetId": "git-basic-007",
+        "order": 7,
+        "titleEn": "Ignore files with `.gitignore`",
+        "titleEs": "Ignora archivos con `.gitignore`"
+      },
+      {
+        "id": "git-foundations-v1-step08",
+        "snippetId": "git-basic-008",
+        "order": 8,
+        "titleEn": "Review unstaged changes",
+        "titleEs": "Revisa los cambios sin preparar"
+      },
+      {
+        "id": "git-foundations-v1-step09",
+        "snippetId": "git-basic-009",
+        "order": 9,
+        "titleEn": "Preview the next commit",
+        "titleEs": "Previsualiza el próximo commit"
+      },
+      {
+        "id": "git-foundations-v1-step10",
+        "snippetId": "git-basic-010",
+        "order": 10,
+        "titleEn": "Untrack a file without deleting it",
+        "titleEs": "Deja de rastrear un archivo sin borrarlo"
+      },
+      {
+        "id": "git-foundations-v1-step11",
+        "snippetId": "git-basic-011",
+        "order": 11,
+        "titleEn": "Rename a tracked file",
+        "titleEs": "Renombra un archivo rastreado"
+      },
+      {
+        "id": "git-foundations-v1-step12",
+        "snippetId": "git-undo-002",
+        "order": 12,
+        "titleEn": "Unstage a file",
+        "titleEs": "Quita un archivo del área de preparación"
+      },
+      {
+        "id": "git-foundations-v1-step13",
+        "snippetId": "git-undo-001",
+        "order": 13,
+        "titleEn": "Discard unstaged changes",
+        "titleEs": "Descarta los cambios sin preparar"
+      },
+      {
+        "id": "git-foundations-v1-step14",
+        "snippetId": "git-commit-002",
+        "order": 14,
+        "titleEn": "Commit tracked changes in one step",
+        "titleEs": "Confirma cambios rastreados en un paso"
+      },
+      {
+        "id": "git-foundations-v1-step15",
+        "snippetId": "git-commit-003",
+        "order": 15,
+        "titleEn": "Write a message with a body",
+        "titleEs": "Escribe un mensaje con cuerpo"
+      },
+      {
+        "id": "git-foundations-v1-step16",
+        "snippetId": "git-commit-004",
+        "order": 16,
+        "titleEn": "Scan history at a glance",
+        "titleEs": "Ojea el historial de un vistazo"
+      },
+      {
+        "id": "git-foundations-v1-step17",
+        "snippetId": "git-commit-005",
+        "order": 17,
+        "titleEn": "Inspect one commit",
+        "titleEs": "Inspecciona un commit"
+      },
+      {
+        "id": "git-foundations-v1-step18",
+        "snippetId": "git-commit-006",
+        "order": 18,
+        "titleEn": "Fix the last commit message",
+        "titleEs": "Corrige el mensaje del último commit"
+      },
+      {
+        "id": "git-foundations-v1-step19",
+        "snippetId": "git-commit-007",
+        "order": 19,
+        "titleEn": "Add a forgotten file to the last commit",
+        "titleEs": "Añade un archivo olvidado al último commit"
+      },
+      {
+        "id": "git-foundations-v1-step20",
+        "snippetId": "git-branch-001",
+        "order": 20,
+        "titleEn": "List your branches",
+        "titleEs": "Lista tus ramas"
+      },
+      {
+        "id": "git-foundations-v1-step21",
+        "snippetId": "git-branch-002",
+        "order": 21,
+        "titleEn": "Create and switch to a branch",
+        "titleEs": "Crea una rama y cámbiate a ella"
+      },
+      {
+        "id": "git-foundations-v1-step22",
+        "snippetId": "git-branch-003",
+        "order": 22,
+        "titleEn": "Merge with a fast-forward",
+        "titleEs": "Fusiona con fast-forward"
+      },
+      {
+        "id": "git-foundations-v1-step23",
+        "snippetId": "git-branch-004",
+        "order": 23,
+        "titleEn": "Force a merge commit",
+        "titleEs": "Fuerza un commit de merge"
+      },
+      {
+        "id": "git-foundations-v1-step24",
+        "snippetId": "git-branch-005",
+        "order": 24,
+        "titleEn": "Delete a merged branch",
+        "titleEs": "Borra una rama ya fusionada"
+      },
+      {
+        "id": "git-foundations-v1-step25",
+        "snippetId": "git-branch-006",
+        "order": 25,
+        "titleEn": "Handle a merge conflict",
+        "titleEs": "Resuelve un conflicto de merge"
+      },
+      {
+        "id": "git-foundations-v1-step26",
+        "snippetId": "git-branch-007",
+        "order": 26,
+        "titleEn": "Finish a conflicted merge",
+        "titleEs": "Termina un merge con conflicto"
+      },
+      {
+        "id": "git-foundations-v1-step27",
+        "snippetId": "git-remote-004",
+        "order": 27,
+        "titleEn": "Clone an existing repository",
+        "titleEs": "Clona un repositorio existente"
+      },
+      {
+        "id": "git-foundations-v1-step28",
+        "snippetId": "git-remote-003",
+        "order": 28,
+        "titleEn": "Inspect configured remotes",
+        "titleEs": "Inspecciona los remotos configurados"
+      },
+      {
+        "id": "git-foundations-v1-step29",
+        "snippetId": "git-remote-001",
+        "order": 29,
+        "titleEn": "Register a remote",
+        "titleEs": "Registra un remoto"
+      },
+      {
+        "id": "git-foundations-v1-step30",
+        "snippetId": "git-remote-002",
+        "order": 30,
+        "titleEn": "Push a branch for the first time",
+        "titleEs": "Publica una rama por primera vez"
+      },
+      {
+        "id": "git-foundations-v1-step31",
+        "snippetId": "git-remote-005",
+        "order": 31,
+        "titleEn": "Fetch without merging",
+        "titleEs": "Haz fetch sin fusionar"
+      },
+      {
+        "id": "git-foundations-v1-step32",
+        "snippetId": "git-remote-006",
+        "order": 32,
+        "titleEn": "Merge remote changes on pull",
+        "titleEs": "Fusiona los cambios remotos al hacer pull"
+      },
+      {
+        "id": "git-foundations-v1-step33",
+        "snippetId": "git-remote-007",
+        "order": 33,
+        "titleEn": "Pull with fast-forward only",
+        "titleEs": "Haz pull solo con fast-forward"
+      }
+    ]
+  }
+]

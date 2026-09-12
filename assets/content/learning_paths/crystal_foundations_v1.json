@@ -1,0 +1,126 @@
+[
+  {
+    "id": "crystal-foundations-v1",
+    "language": "crystal",
+    "titleEn": "Crystal from scratch",
+    "titleEs": "Crystal desde cero",
+    "descriptionEn": "Learn Crystal step by step: types, control flow, methods, blocks, and objects.",
+    "descriptionEs": "Aprende Crystal paso a paso: tipos, control de flujo, métodos, bloques y objetos.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "crystal-foundations-v1-step01",
+        "snippetId": "crystal-vars-001",
+        "order": 1,
+        "titleEn": "Hello, Crystal!",
+        "titleEs": "¡Hola, Crystal!"
+      },
+      {
+        "id": "crystal-foundations-v1-step02",
+        "snippetId": "crystal-vars-002",
+        "order": 2,
+        "titleEn": "Variables and type inference",
+        "titleEs": "Variables e inferencia de tipos"
+      },
+      {
+        "id": "crystal-foundations-v1-step03",
+        "snippetId": "crystal-vars-003",
+        "order": 3,
+        "titleEn": "String interpolation and methods",
+        "titleEs": "Interpolación de strings y métodos"
+      },
+      {
+        "id": "crystal-foundations-v1-step04",
+        "snippetId": "crystal-cond-001",
+        "order": 4,
+        "titleEn": "if, elsif, and unless",
+        "titleEs": "if, elsif y unless"
+      },
+      {
+        "id": "crystal-foundations-v1-step05",
+        "snippetId": "crystal-cond-002",
+        "order": 5,
+        "titleEn": "case/when",
+        "titleEs": "case/when"
+      },
+      {
+        "id": "crystal-foundations-v1-step06",
+        "snippetId": "crystal-loop-001",
+        "order": 6,
+        "titleEn": "while, until, and times",
+        "titleEs": "while, until y times"
+      },
+      {
+        "id": "crystal-foundations-v1-step07",
+        "snippetId": "crystal-loop-002",
+        "order": 7,
+        "titleEn": "Ranges and each",
+        "titleEs": "Rangos y each"
+      },
+      {
+        "id": "crystal-foundations-v1-step08",
+        "snippetId": "crystal-func-001",
+        "order": 8,
+        "titleEn": "Methods with def",
+        "titleEs": "Métodos con def"
+      },
+      {
+        "id": "crystal-foundations-v1-step09",
+        "snippetId": "crystal-block-001",
+        "order": 9,
+        "titleEn": "Blocks and yield",
+        "titleEs": "Bloques y yield"
+      },
+      {
+        "id": "crystal-foundations-v1-step10",
+        "snippetId": "crystal-arr-001",
+        "order": 10,
+        "titleEn": "Arrays",
+        "titleEs": "Arreglos"
+      },
+      {
+        "id": "crystal-foundations-v1-step11",
+        "snippetId": "crystal-hash-001",
+        "order": 11,
+        "titleEn": "Hashes",
+        "titleEs": "Hashes"
+      },
+      {
+        "id": "crystal-foundations-v1-step12",
+        "snippetId": "crystal-nil-001",
+        "order": 12,
+        "titleEn": "Nil safety and union types",
+        "titleEs": "Seguridad ante nil y tipos unión"
+      },
+      {
+        "id": "crystal-foundations-v1-step13",
+        "snippetId": "crystal-class-001",
+        "order": 13,
+        "titleEn": "Classes and objects",
+        "titleEs": "Clases y objetos"
+      },
+      {
+        "id": "crystal-foundations-v1-step14",
+        "snippetId": "crystal-struct-001",
+        "order": 14,
+        "titleEn": "Structs: value types",
+        "titleEs": "Structs: tipos por valor"
+      },
+      {
+        "id": "crystal-foundations-v1-step15",
+        "snippetId": "crystal-module-001",
+        "order": 15,
+        "titleEn": "Modules and mixins",
+        "titleEs": "Módulos y mixins"
+      },
+      {
+        "id": "crystal-foundations-v1-step16",
+        "snippetId": "crystal-error-001",
+        "order": 16,
+        "titleEn": "Exceptions: raise and rescue",
+        "titleEs": "Excepciones: raise y rescue"
+      }
+    ]
+  }
+]

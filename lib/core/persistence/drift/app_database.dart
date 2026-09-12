@@ -113,7 +113,7 @@ class AppDatabase extends _$AppDatabase {
       );
 
   @override
-  int get schemaVersion => 15;
+  int get schemaVersion => 16;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -259,6 +259,13 @@ class AppDatabase extends _$AppDatabase {
       // `IF NOT EXISTS` no-ops on an existing database.
       if (from < 15) {
         await _createPracticeIndices(m);
+      }
+      // v15 -> v16: added two nullable self-expression columns (github
+      // username, website URL) to guest_profiles for the profile links
+      // card. Existing rows simply get NULL in each new column.
+      if (from < 16) {
+        await m.addColumn(guestProfiles, guestProfiles.githubUsername);
+        await m.addColumn(guestProfiles, guestProfiles.websiteUrl);
       }
     },
   );

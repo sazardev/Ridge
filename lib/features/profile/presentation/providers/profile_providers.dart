@@ -102,8 +102,8 @@ class ActiveProfileController extends _$ActiveProfileController {
     return ref.read(renameProfileUseCaseProvider)(newUsername);
   }
 
-  /// Updates the Guest Profile's self-expression fields — always all six
-  /// together, since the editor is a single form.
+  /// Updates the Guest Profile's self-expression fields — always all of
+  /// them together, since the editor is a single form.
   Future<Result<void, AppFailure>> updateCustomization({
     List<FavoriteLanguage> favoriteLanguages = const [],
     KeyboardLayout? keyboardLayout,
@@ -111,6 +111,8 @@ class ActiveProfileController extends _$ActiveProfileController {
     String? keyboardModel,
     String? favoriteQuote,
     String? favoriteProgrammer,
+    String? githubUsername,
+    String? websiteUrl,
   }) {
     return ref.read(updateProfileCustomizationUseCaseProvider)(
       favoriteLanguages: favoriteLanguages,
@@ -119,6 +121,8 @@ class ActiveProfileController extends _$ActiveProfileController {
       keyboardModel: keyboardModel,
       favoriteQuote: favoriteQuote,
       favoriteProgrammer: favoriteProgrammer,
+      githubUsername: githubUsername,
+      websiteUrl: websiteUrl,
     );
   }
 }

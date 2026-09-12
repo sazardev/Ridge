@@ -1,0 +1,98 @@
+[
+  {
+    "id": "dart-algorithms-v1",
+    "language": "dart",
+    "titleEn": "Dart: Algorithms",
+    "titleEs": "Dart: Algoritmos",
+    "descriptionEn": "Classic searches, sorts, and graph algorithms implemented idiomatically in Dart.",
+    "descriptionEs": "Búsquedas, ordenamientos y algoritmos de grafos clásicos implementados de forma idiomática en Dart.",
+    "tagEn": "Algorithms",
+    "tagEs": "Algoritmos",
+    "lessons": [
+      {
+        "id": "dart-algorithms-v1-step01",
+        "snippetId": "dart-algo-001",
+        "order": 1,
+        "titleEn": "Linear Search",
+        "titleEs": "Búsqueda lineal"
+      },
+      {
+        "id": "dart-algorithms-v1-step02",
+        "snippetId": "dart-algo-002",
+        "order": 2,
+        "titleEn": "Binary Search",
+        "titleEs": "Búsqueda binaria"
+      },
+      {
+        "id": "dart-algorithms-v1-step03",
+        "snippetId": "dart-algo-003",
+        "order": 3,
+        "titleEn": "Bubble Sort",
+        "titleEs": "Ordenamiento burbuja"
+      },
+      {
+        "id": "dart-algorithms-v1-step04",
+        "snippetId": "dart-algo-004",
+        "order": 4,
+        "titleEn": "Selection Sort",
+        "titleEs": "Ordenamiento por selección"
+      },
+      {
+        "id": "dart-algorithms-v1-step05",
+        "snippetId": "dart-algo-005",
+        "order": 5,
+        "titleEn": "Insertion Sort",
+        "titleEs": "Ordenamiento por inserción"
+      },
+      {
+        "id": "dart-algorithms-v1-step06",
+        "snippetId": "dart-algo-006",
+        "order": 6,
+        "titleEn": "Merge Sort",
+        "titleEs": "Ordenamiento por mezcla (Merge Sort)"
+      },
+      {
+        "id": "dart-algorithms-v1-step07",
+        "snippetId": "dart-algo-007",
+        "order": 7,
+        "titleEn": "Quick Sort",
+        "titleEs": "Quicksort"
+      },
+      {
+        "id": "dart-algorithms-v1-step08",
+        "snippetId": "dart-algo-008",
+        "order": 8,
+        "titleEn": "Heap Sort",
+        "titleEs": "Heapsort"
+      },
+      {
+        "id": "dart-algorithms-v1-step09",
+        "snippetId": "dart-algo-009",
+        "order": 9,
+        "titleEn": "Graph as an Adjacency List",
+        "titleEs": "Grafo como lista de adyacencia"
+      },
+      {
+        "id": "dart-algorithms-v1-step10",
+        "snippetId": "dart-algo-010",
+        "order": 10,
+        "titleEn": "Breadth-First Search (BFS)",
+        "titleEs": "Búsqueda en anchura (BFS)"
+      },
+      {
+        "id": "dart-algorithms-v1-step11",
+        "snippetId": "dart-algo-011",
+        "order": 11,
+        "titleEn": "Depth-First Search (DFS)",
+        "titleEs": "Búsqueda en profundidad (DFS)"
+      },
+      {
+        "id": "dart-algorithms-v1-step12",
+        "snippetId": "dart-algo-012",
+        "order": 12,
+        "titleEn": "Dijkstra's Shortest Path",
+        "titleEs": "Camino más corto de Dijkstra"
+      }
+    ]
+  }
+]

@@ -1,0 +1,133 @@
+[
+  {
+    "id": "docker-advanced-v1",
+    "language": "docker",
+    "titleEn": "Docker: Advanced",
+    "titleEs": "Docker: Avanzado",
+    "descriptionEn": "Multi-stage builds, registries, resource limits, and container debugging.",
+    "descriptionEs": "Builds multi-etapa, registros, límites de recursos y depuración de contenedores.",
+    "tagEn": "Advanced",
+    "tagEs": "Avanzado",
+    "lessons": [
+      {
+        "id": "docker-advanced-v1-step01",
+        "snippetId": "docker-adv-001",
+        "order": 1,
+        "titleEn": "Multi-stage builds",
+        "titleEs": "Builds multi-etapa"
+      },
+      {
+        "id": "docker-advanced-v1-step02",
+        "snippetId": "docker-adv-002",
+        "order": 2,
+        "titleEn": "Health checks in the Dockerfile",
+        "titleEs": "Health checks en el Dockerfile"
+      },
+      {
+        "id": "docker-advanced-v1-step03",
+        "snippetId": "docker-adv-003",
+        "order": 3,
+        "titleEn": "Run as a non-root user",
+        "titleEs": "Ejecuta como usuario no root"
+      },
+      {
+        "id": "docker-advanced-v1-step04",
+        "snippetId": "docker-adv-004",
+        "order": 4,
+        "titleEn": "Order layers for the build cache",
+        "titleEs": "Ordena las capas para la caché"
+      },
+      {
+        "id": "docker-advanced-v1-step05",
+        "snippetId": "docker-adv-005",
+        "order": 5,
+        "titleEn": "Global build args before `FROM`",
+        "titleEs": "Build args globales antes de `FROM`"
+      },
+      {
+        "id": "docker-advanced-v1-step06",
+        "snippetId": "docker-adv-006",
+        "order": 6,
+        "titleEn": "Rebuild and hit the cache",
+        "titleEs": "Reconstruye y aprovecha la caché"
+      },
+      {
+        "id": "docker-advanced-v1-step07",
+        "snippetId": "docker-adv-007",
+        "order": 7,
+        "titleEn": "Save and load image tarballs",
+        "titleEs": "Guarda y carga imágenes en tar"
+      },
+      {
+        "id": "docker-advanced-v1-step08",
+        "snippetId": "docker-adv-008",
+        "order": 8,
+        "titleEn": "Export and import a filesystem",
+        "titleEs": "Exporta e importa un sistema de archivos"
+      },
+      {
+        "id": "docker-advanced-v1-step09",
+        "snippetId": "docker-adv-009",
+        "order": 9,
+        "titleEn": "Push to a local registry",
+        "titleEs": "Publica en un registro local"
+      },
+      {
+        "id": "docker-advanced-v1-step10",
+        "snippetId": "docker-adv-010",
+        "order": 10,
+        "titleEn": "Pin an image by digest",
+        "titleEs": "Fija una imagen por digest"
+      },
+      {
+        "id": "docker-advanced-v1-step11",
+        "snippetId": "docker-adv-011",
+        "order": 11,
+        "titleEn": "Log in to a registry",
+        "titleEs": "Inicia sesión en un registro"
+      },
+      {
+        "id": "docker-advanced-v1-step12",
+        "snippetId": "docker-adv-012",
+        "order": 12,
+        "titleEn": "Limit memory and CPU",
+        "titleEs": "Limita memoria y CPU"
+      },
+      {
+        "id": "docker-advanced-v1-step13",
+        "snippetId": "docker-adv-013",
+        "order": 13,
+        "titleEn": "Restart policies",
+        "titleEs": "Políticas de reinicio"
+      },
+      {
+        "id": "docker-advanced-v1-step14",
+        "snippetId": "docker-adv-014",
+        "order": 14,
+        "titleEn": "Run with a read-only filesystem",
+        "titleEs": "Ejecuta con sistema de solo lectura"
+      },
+      {
+        "id": "docker-advanced-v1-step15",
+        "snippetId": "docker-adv-015",
+        "order": 15,
+        "titleEn": "Check disk usage and stats",
+        "titleEs": "Consulta uso de disco y estadísticas"
+      },
+      {
+        "id": "docker-advanced-v1-step16",
+        "snippetId": "docker-adv-016",
+        "order": 16,
+        "titleEn": "See processes with `docker top`",
+        "titleEs": "Ve procesos con `docker top`"
+      },
+      {
+        "id": "docker-advanced-v1-step17",
+        "snippetId": "docker-adv-017",
+        "order": 17,
+        "titleEn": "Diff a container's filesystem",
+        "titleEs": "Compara el sistema de archivos de un contenedor"
+      }
+    ]
+  }
+]

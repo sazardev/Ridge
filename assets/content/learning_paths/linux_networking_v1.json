@@ -1,0 +1,154 @@
+[
+  {
+    "id": "linux-networking-v1",
+    "language": "linux",
+    "titleEn": "Linux networking",
+    "titleEs": "Redes en Linux",
+    "descriptionEn": "Connect, inspect and troubleshoot the network stack of a Linux machine.",
+    "descriptionEs": "Conecta, inspecciona y diagnostica la red de una máquina Linux.",
+    "tagEn": "Networking",
+    "tagEs": "Redes",
+    "lessons": [
+      {
+        "id": "linux-networking-v1-step01",
+        "snippetId": "linux-net-001",
+        "order": 1,
+        "titleEn": "List interfaces and addresses",
+        "titleEs": "Lista interfaces y direcciones"
+      },
+      {
+        "id": "linux-networking-v1-step02",
+        "snippetId": "linux-net-002",
+        "order": 2,
+        "titleEn": "Inspect the loopback interface",
+        "titleEs": "Inspecciona la interfaz loopback"
+      },
+      {
+        "id": "linux-networking-v1-step03",
+        "snippetId": "linux-net-003",
+        "order": 3,
+        "titleEn": "Show the routing table",
+        "titleEs": "Muestra la tabla de rutas"
+      },
+      {
+        "id": "linux-networking-v1-step04",
+        "snippetId": "linux-net-004",
+        "order": 4,
+        "titleEn": "Ask the kernel for a route",
+        "titleEs": "Pregunta al kernel por una ruta"
+      },
+      {
+        "id": "linux-networking-v1-step05",
+        "snippetId": "linux-net-005",
+        "order": 5,
+        "titleEn": "Read interface packet counters",
+        "titleEs": "Lee los contadores de una interfaz"
+      },
+      {
+        "id": "linux-networking-v1-step06",
+        "snippetId": "linux-net-006",
+        "order": 6,
+        "titleEn": "Take an interface down and up",
+        "titleEs": "Baja y sube una interfaz"
+      },
+      {
+        "id": "linux-networking-v1-step07",
+        "snippetId": "linux-net-007",
+        "order": 7,
+        "titleEn": "Resolve names through /etc/hosts",
+        "titleEs": "Resuelve nombres con /etc/hosts"
+      },
+      {
+        "id": "linux-networking-v1-step08",
+        "snippetId": "linux-net-008",
+        "order": 8,
+        "titleEn": "Read the DNS resolver configuration",
+        "titleEs": "Revisa la configuración de DNS"
+      },
+      {
+        "id": "linux-networking-v1-step09",
+        "snippetId": "linux-net-009",
+        "order": 9,
+        "titleEn": "Ping the loopback address",
+        "titleEs": "Haz ping a la dirección loopback"
+      },
+      {
+        "id": "linux-networking-v1-step10",
+        "snippetId": "linux-net-010",
+        "order": 10,
+        "titleEn": "Ping a host by name",
+        "titleEs": "Haz ping a un host por nombre"
+      },
+      {
+        "id": "linux-networking-v1-step11",
+        "snippetId": "linux-net-011",
+        "order": 11,
+        "titleEn": "Print only the HTTP status",
+        "titleEs": "Imprime solo el estado HTTP"
+      },
+      {
+        "id": "linux-networking-v1-step12",
+        "snippetId": "linux-net-012",
+        "order": 12,
+        "titleEn": "Download a page to a file",
+        "titleEs": "Descarga una página a un archivo"
+      },
+      {
+        "id": "linux-networking-v1-step13",
+        "snippetId": "linux-net-013",
+        "order": 13,
+        "titleEn": "Cap a request with a timeout",
+        "titleEs": "Limita una petición con un tiempo máximo"
+      },
+      {
+        "id": "linux-networking-v1-step14",
+        "snippetId": "linux-net-014",
+        "order": 14,
+        "titleEn": "Verify the TLS certificate",
+        "titleEs": "Verifica el certificado TLS"
+      },
+      {
+        "id": "linux-networking-v1-step15",
+        "snippetId": "linux-net-015",
+        "order": 15,
+        "titleEn": "Check listening TCP ports",
+        "titleEs": "Enumera los puertos TCP a la escucha"
+      },
+      {
+        "id": "linux-networking-v1-step16",
+        "snippetId": "linux-net-016",
+        "order": 16,
+        "titleEn": "Find the process behind a port",
+        "titleEs": "Encuentra el proceso tras un puerto"
+      },
+      {
+        "id": "linux-networking-v1-step17",
+        "snippetId": "linux-net-017",
+        "order": 17,
+        "titleEn": "Summarize socket counts",
+        "titleEs": "Resume el conteo de sockets"
+      },
+      {
+        "id": "linux-networking-v1-step18",
+        "snippetId": "linux-net-018",
+        "order": 18,
+        "titleEn": "Build an nftables drop rule",
+        "titleEs": "Crea una regla de descarte nftables"
+      },
+      {
+        "id": "linux-networking-v1-step19",
+        "snippetId": "linux-net-019",
+        "order": 19,
+        "titleEn": "Delete an nftables table",
+        "titleEs": "Elimina una tabla de nftables"
+      },
+      {
+        "id": "linux-networking-v1-step20",
+        "snippetId": "linux-net-020",
+        "order": 20,
+        "titleEn": "Query DNS via systemd-resolved",
+        "titleEs": "Consulta DNS con systemd-resolved"
+      }
+    ]
+  }
+]

@@ -1,0 +1,119 @@
+[
+  {
+    "id": "git-internals-v1",
+    "language": "git",
+    "titleEn": "Git internals",
+    "titleEs": "Git por dentro",
+    "descriptionEn": "See how Git really stores objects, refs, the index, worktrees and maintenance.",
+    "descriptionEs": "Mira cómo Git guarda objetos, referencias, el índice, worktrees y mantenimiento interno.",
+    "tagEn": "Internals",
+    "tagEs": "Internos",
+    "lessons": [
+      {
+        "id": "git-internals-v1-step01",
+        "snippetId": "git-obj-001",
+        "order": 1,
+        "titleEn": "Identify an object's type",
+        "titleEs": "Identifica el tipo de un objeto"
+      },
+      {
+        "id": "git-internals-v1-step02",
+        "snippetId": "git-obj-002",
+        "order": 2,
+        "titleEn": "Pretty-print a commit object",
+        "titleEs": "Muestra un commit con formato legible"
+      },
+      {
+        "id": "git-internals-v1-step03",
+        "snippetId": "git-obj-003",
+        "order": 3,
+        "titleEn": "Read a tree object",
+        "titleEs": "Lee un objeto tree"
+      },
+      {
+        "id": "git-internals-v1-step04",
+        "snippetId": "git-obj-004",
+        "order": 4,
+        "titleEn": "Read a blob at a path",
+        "titleEs": "Lee un blob en una ruta"
+      },
+      {
+        "id": "git-internals-v1-step05",
+        "snippetId": "git-obj-005",
+        "order": 5,
+        "titleEn": "Write a blob by hand",
+        "titleEs": "Escribe un blob a mano"
+      },
+      {
+        "id": "git-internals-v1-step06",
+        "snippetId": "git-obj-006",
+        "order": 6,
+        "titleEn": "List every tracked path",
+        "titleEs": "Lista cada ruta registrada"
+      },
+      {
+        "id": "git-internals-v1-step07",
+        "snippetId": "git-ref-001",
+        "order": 7,
+        "titleEn": "See where `HEAD` points",
+        "titleEs": "Mira a dónde apunta `HEAD`"
+      },
+      {
+        "id": "git-internals-v1-step08",
+        "snippetId": "git-ref-002",
+        "order": 8,
+        "titleEn": "List every ref",
+        "titleEs": "Lista todas las referencias"
+      },
+      {
+        "id": "git-internals-v1-step09",
+        "snippetId": "git-ref-003",
+        "order": 9,
+        "titleEn": "Detach `HEAD` and read it",
+        "titleEs": "Separa `HEAD` y léelo"
+      },
+      {
+        "id": "git-internals-v1-step10",
+        "snippetId": "git-ref-004",
+        "order": 10,
+        "titleEn": "Create a branch without switching",
+        "titleEs": "Crea una rama sin moverte de la actual"
+      },
+      {
+        "id": "git-internals-v1-step11",
+        "snippetId": "git-ref-005",
+        "order": 11,
+        "titleEn": "Trace where `HEAD` has been",
+        "titleEs": "Rastrea dónde estuvo `HEAD`"
+      },
+      {
+        "id": "git-internals-v1-step12",
+        "snippetId": "git-maint-001",
+        "order": 12,
+        "titleEn": "Inspect the staging index",
+        "titleEs": "Inspecciona el índice interno"
+      },
+      {
+        "id": "git-internals-v1-step13",
+        "snippetId": "git-maint-002",
+        "order": 13,
+        "titleEn": "Count loose objects",
+        "titleEs": "Cuenta los objetos sueltos"
+      },
+      {
+        "id": "git-internals-v1-step14",
+        "snippetId": "git-maint-003",
+        "order": 14,
+        "titleEn": "Pack loose objects away",
+        "titleEs": "Empaqueta los objetos sueltos"
+      },
+      {
+        "id": "git-internals-v1-step15",
+        "snippetId": "git-maint-004",
+        "order": 15,
+        "titleEn": "Check out a second worktree",
+        "titleEs": "Extrae un segundo árbol de trabajo"
+      }
+    ]
+  }
+]

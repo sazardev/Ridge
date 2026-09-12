@@ -31,11 +31,27 @@ class ExternalSnippetPackSource implements SnippetCatalogSource {
   Future<List<Snippet>> loadBundledCatalog() async {
     final dir = await contentPacksSnippetsDir();
     if (dir == null) return const [];
-    final files = dir
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.json'))
-        .toList();
+
+    final List<File> files;
+    try {
+      files = dir
+          .listSync()
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.json'))
+          .toList();
+      // The directory can disappear (or become unreadable) between being
+      // resolved and listed — a pack dir on removable storage, or a
+      // teardown racing this call. Skipping the external packs entirely
+      // keeps the class's "deliberately never throws" contract; the
+      // bundled catalog is unaffected either way.
+      // ignore: avoid_catches_without_on_clauses
+    } catch (e) {
+      debugPrint(
+        'ExternalSnippetPackSource: skipped the pack directory '
+        '(${dir.path}) — $e',
+      );
+      return const [];
+    }
 
     final snippets = <Snippet>[];
     for (final file in files) {

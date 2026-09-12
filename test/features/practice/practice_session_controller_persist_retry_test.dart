@@ -116,6 +116,20 @@ Future<void> _waitUntil(bool Function() condition) async {
   }
 }
 
+/// Waits for fire-and-forget background work — the downstream recomputes
+/// a successful persist fires — to actually finish before `tearDown`
+/// deletes the support directory they read from. `pumpEventQueue` alone
+/// only drains a fixed number of event-loop turns, which the recomputes'
+/// real file I/O (loading every bundled catalog) can outlast under a
+/// loaded suite runner; keep pumping events until a bounded real-time
+/// window has elapsed.
+Future<void> _drainBackgroundWork() async {
+  final deadline = DateTime.now().add(const Duration(milliseconds: 500));
+  do {
+    await pumpEventQueue();
+  } while (DateTime.now().isBefore(deadline));
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -190,9 +204,9 @@ void main() {
     // A successful persist fires `_notifyDownstreamFeatures` fire-and-
     // forget (progression/lesson-progress/achievements/daily-challenge
     // recomputes) — let those in-flight background calls actually
-    // finish before this test's `tearDown` closes the database out
-    // from under them.
-    await pumpEventQueue();
+    // finish before this test's `tearDown` closes the database and
+    // deletes the support directory out from under them.
+    await _drainBackgroundWork();
 
     final resolvedState = container.read(provider);
     expect(resolvedState.error, isNull);

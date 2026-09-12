@@ -17,6 +17,7 @@ import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dar
 import 'package:ridge/features/practice/presentation/physical_key_id_mapper.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_session_controller.dart';
+import 'package:ridge/features/practice/presentation/widgets/keystroke_capture_autoscroll.dart';
 import 'package:ridge/features/practice/presentation/widgets/keystroke_span_builder.dart';
 import 'package:ridge/features/practice/presentation/widgets/typing_progress_bar.dart';
 
@@ -135,40 +136,16 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
     if (cursorIndex == _lastAutoScrolledCursor) return;
     _lastAutoScrolledCursor = cursorIndex;
 
-    final painter = TextPainter(
-      text: textSpan,
-      textDirection: TextDirection.ltr,
-    )..layout(maxWidth: innerWidth);
-    final caretOffset = painter.getOffsetForCaret(
-      TextPosition(offset: cursorIndex),
-      Rect.zero,
+    final target = cursorScrollTarget(
+      textSpan: textSpan,
+      cursorIndex: cursorIndex,
+      innerWidth: innerWidth,
+      position: _scrollController.position,
     );
-    final lineHeight = painter.preferredLineHeight;
-
-    final position = _scrollController.position;
-    final viewportTop = position.pixels;
-    final viewportBottom = viewportTop + position.viewportDimension;
-    // 6 lines of context above/below the cursor — clamped to a fraction
-    // of the viewport so a short viewport (a small window, or a result
-    // area sharing the screen) can't make the margin exceed the space
-    // there is to scroll within.
-    final margin = math.min(lineHeight * 6, position.viewportDimension * 0.35);
-
-    double? target;
-    if (caretOffset.dy < viewportTop + margin) {
-      target = caretOffset.dy - margin;
-    } else if (caretOffset.dy + lineHeight > viewportBottom - margin) {
-      target =
-          caretOffset.dy + lineHeight - position.viewportDimension + margin;
-    }
     if (target == null) return;
 
-    final clamped = target.clamp(
-      position.minScrollExtent,
-      position.maxScrollExtent,
-    );
     _scrollController.animateTo(
-      clamped,
+      target,
       duration: AppMotion.spatialFast,
       curve: AppMotion.spatial,
     );
@@ -200,13 +177,43 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
   }
 
   KeyEventResult _handleKeyEvent(FocusNode node, KeyEvent event) {
+    final status = ref
+        .read(practiceSessionControllerProvider(widget.snippet, widget.mode))
+        .status;
+    final notifier = ref.read(
+      practiceSessionControllerProvider(widget.snippet, widget.mode).notifier,
+    );
+
+    // Keyups are still owed to already-classified keystrokes after the
+    // session leaves `running`: a session finishes on the completing
+    // key's *keydown*, so that key's own keyup — and the keyup of any key
+    // still held at that instant — only arrives while the status is
+    // `finished`. Let those patch their dwell, and once nothing is held
+    // anymore, tell the controller no more dwell patches are coming so it
+    // can persist without waiting out its settle timeout.
+    if (event is KeyUpEvent) {
+      if (status != PracticeSessionStatus.running &&
+          status != PracticeSessionStatus.finished) {
+        return KeyEventResult.ignored;
+      }
+      final keyDownAt = _keyDownAt.remove(event.physicalKey);
+      final sequenceIndex = _sequenceIndexForKeyDown.remove(event.physicalKey);
+      if (keyDownAt != null && sequenceIndex != null) {
+        notifier.patchDwell(
+          sequenceIndex: sequenceIndex,
+          dwell: event.timeStamp - keyDownAt,
+        );
+      }
+      if (status == PracticeSessionStatus.finished && _keyDownAt.isEmpty) {
+        notifier.concludePendingDwell();
+      }
+      return KeyEventResult.handled;
+    }
+
     // Once a session is finished/showing its result, there's nothing
     // left to capture — ignore every key so it bubbles up to the result
     // screen's own keyboard shortcuts (Enter/R/Escape) instead of being
     // silently swallowed here.
-    final status = ref
-        .read(practiceSessionControllerProvider(widget.snippet, widget.mode))
-        .status;
     if (status != PracticeSessionStatus.idle &&
         status != PracticeSessionStatus.running) {
       return KeyEventResult.ignored;
@@ -218,22 +225,6 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
 
     final physicalKeyId = physicalKeyIdFor(event.physicalKey);
     if (physicalKeyId == null) return KeyEventResult.ignored;
-
-    final notifier = ref.read(
-      practiceSessionControllerProvider(widget.snippet, widget.mode).notifier,
-    );
-
-    if (event is KeyUpEvent) {
-      final keyDownAt = _keyDownAt.remove(event.physicalKey);
-      final sequenceIndex = _sequenceIndexForKeyDown.remove(event.physicalKey);
-      if (keyDownAt != null && sequenceIndex != null) {
-        notifier.patchDwell(
-          sequenceIndex: sequenceIndex,
-          dwell: event.timeStamp - keyDownAt,
-        );
-      }
-      return KeyEventResult.handled;
-    }
 
     if (event is! KeyDownEvent) return KeyEventResult.ignored;
 

@@ -1,6 +1,6 @@
 ---
 name: content-curriculum
-description: Use when adding/editing snippets in assets/content/snippets/{go,bash,sql,rust,python,javascript,typescript,haskell}_v1.json, editing a Learning Path's lesson order in assets/content/learning_paths/*.json, or adding a new bilingual content field (schema + domain + drift + presentation). Encodes hard-won rules from building the 51-lesson go-foundations path — two earlier automated ordering attempts both produced real beginner-incoherence bugs before a manual, adversarially-audited pass fixed them. Bash (Arch Linux), SQL (PostgreSQL, shared library database), Rust, Python, JavaScript, TypeScript, and Haskell are course-only catalogs built the same way (their foundations routes reuse Go's generic categories — Haskell's presents recursion instead of loops, TypeScript's broader tour adds `classesAndObjects`/`modules` as its own categories).
+description: Use when adding/editing snippets in assets/content/snippets/{go,bash,sql,rust,python,javascript,typescript,haskell,c,cpp,java,crystal,swift,css,csharp,dart,kotlin,php,git}_v1.json, editing a Learning Path's lesson order in assets/content/learning_paths/*.json, or adding a new bilingual content field (schema + domain + drift + presentation). Encodes hard-won rules from building the 51-lesson go-foundations path — two earlier automated ordering attempts both produced real beginner-incoherence bugs before a manual, adversarially-audited pass fixed them. Bash (Arch Linux), SQL (PostgreSQL, shared library database), Rust, Python, JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#, and Dart are course-only catalogs built the same way (their foundations routes reuse Go's generic categories — Haskell's presents recursion instead of loops, TypeScript's broader tour adds `classesAndObjects`/`modules` as its own categories, C adds `arraysAndStrings`/`memoryManagement`/`preprocessor`/`fileIO`, C++ adds `templates`/`stlContainers`, Swift adds `optionals`/`closures`/`enumsAndPatternMatching` (plus `codable`/`propertyWrappers` in its advanced course), C# adds `patternMatching`/`delegatesAndEvents`/`linq`/`asyncProgramming` (in its advanced course), Dart adds `recordsAndPatterns` (reusing `collections`/`nullSafety`/`asyncProgramming`), Kotlin adds `nullSafety`/`dataClasses`/`lambdas`/`extensions`/`coroutines` (reusing `collections`), CSS uses none of Go's: it adds `cssSelectors`/`cssBoxModel`/`cssColorsAndTypography`/`cssLayout`/`cssPositioning`/`cssCustomProperties`/`cssResponsive`/`cssTransitionsAndAnimations`, and PHP uses none of Go's either: its three routes add nineteen categories (`phpBasics`/`phpStrings`/`phpConditionals`/`phpLoops`/`phpArrays`/`phpFunctions`/`phpClasses`/`phpEnums`/`phpErrorHandling`/`phpNamespaces`/`phpSuperglobals`/`phpForms`/`phpSessions`/`phpDatabase`/`phpJson`/`phpFiles`/`phpSearching`/`phpSorting`/`phpGraphs`), and Git uses none of Go's either: its three routes (`git-foundations-v1`/`git-workflows-v1`/`git-internals-v1`) add ten categories (`gitBasics`/`gitCommits`/`gitBranching`/`gitRemotes`/`gitHistory`/`gitUndo`/`gitCollaboration`/`gitObjects`/`gitRefs`/`gitMaintenance`).
 metadata:
   domain: content
   scope: content-authoring, curriculum-design
@@ -14,9 +14,12 @@ metadata:
 Owns the bundled, versioned JSON assets that back this app's whole
 practice experience: the snippet catalogs (Go
 `assets/content/snippets/go_v1.json`, Bash `bash_v1.json`, SQL
-`sql_v1.json`, Rust `rust_v1.json`, Python `python_v1.json`, JavaScript
+`sql_v1.json`, Rust `rust_v1.json`, Python `python_v1.json` (which also
+backs the three Django routes `python-django-foundations-v1`/
+`python-django-orm-v1`/`python-django-rest-v1`), JavaScript
 `javascript_v1.json`, TypeScript `typescript_v1.json`, Haskell
-`haskell_v1.json`, SPEC.md §3), and the
+`haskell_v1.json`, C `c_v1.json`, C++ `cpp_v1.json`, Java
+`java_v1.json`, Crystal `crystal_v1.json`, Swift `swift_v1.json`, CSS `css_v1.json`, C# `csharp_v1.json`, Dart `dart_v1.json`, Kotlin `kotlin_v1.json`, PHP `php_v1.json`, Git `git_v1.json`, SPEC.md §3), and the
 curated Learning Path curriculum
 (one file per route under `assets/content/learning_paths/`, SPEC.md §5.7).
 All are read-only at runtime; snippet catalogs are idempotently seeded
@@ -59,7 +62,59 @@ into drift tables on launch, paths are read straight from the bundle.
    `runghc` for Haskell (a disposable `podman run haskell:9.8-slim`
    container; GHC lives at `/opt/ghc/9.8.4/bin`, wrap fragments in
    `module Check where` and prepend the types/imports the fragment assumes,
-   e.g. `type Graph`). Never trust generated code unverified.
+   e.g. `type Graph`), and real `gcc` + `clang` for C
+   (`-std=c17 -Wall -Wextra -Werror -pedantic`, plus
+   `-fsanitize=address,undefined`; wrap statement fragments in a throwaway
+   `int main(void) { ... return 0; }`, drive definitions-only algorithm
+   snippets, and differentially fuzz every sort/search/graph against libc
+   `qsort` and an independent Bellman-Ford/flood-fill reference — see
+   `references/snippet-authoring.md`), real `g++` + `clang++` for C++
+   (`-std=c++20 -Wall -Wextra -Werror -pthread`; statement fragments and
+   definitions-only snippets compile inside generated harnesses, and the 12
+   algorithm snippets are differentially fuzzed against independent
+   references — see `references/snippet-authoring.md`), real `javac` +
+   `java` for Java (statement fragments wrapped in a throwaway class, and
+   the 12 algorithm snippets driven with edge cases — see
+   `references/snippet-authoring.md`), and real Crystal 1.21 via
+   `podman run docker.io/crystallang/crystal:latest` (every foundations
+   snippet is a runnable program; definitions-only algorithm snippets get
+   a throwaway driver with edge cases — see
+   `references/snippet-authoring.md`), real Swift 6.2 via
+   `podman run docker.io/library/swift:6.2` (every snippet must compile with
+   `swiftc -warnings-as-errors`; definitions-only algorithm snippets get a
+   driver and all 12 are differentially fuzzed against independent
+    references — see `references/snippet-authoring.md`), two independent
+    parsers for CSS (`npx --yes csstree-validator` validates every property/value
+    against the spec, and `lightningcss` parses it again as a second
+    engine; both must be clean — see `references/snippet-authoring.md`), and
+    real C# on .NET SDK 10 (`podman run mcr.microsoft.com/dotnet/sdk:10.0`;
+    every catalog snippet is compiled as `Program.cs` with
+    `<Nullable>enable</Nullable>` and `<TreatWarningsAsErrors>true</TreatWarningsAsErrors>`,
+    executed, and the 12 algorithm snippets are differentially fuzzed against
+    `Array.Sort`/`Array.IndexOf`, an independent flood fill, and Bellman-Ford
+    — see `references/snippet-authoring.md`), and the bundled Dart SDK 3.13
+    (`dart format`, `dart analyze`, `dart run`; statement fragments are wrapped
+    in a throwaway `void main()`, definitions-only snippets get a driver, and
+    the 12 algorithm snippets are differentially fuzzed against `List.sort`,
+    an independent scan, flood fill, and Bellman-Ford — see
+    `references/snippet-authoring.md`). Kotlin uses real `kotlinc` 2.4
+    (`-Werror`, `-include-runtime`, plus the `kotlinx-coroutines-core-jvm`
+    jar for the advanced course): each catalog fragment is compiled inside a
+    `fun main()` wrapper or a per-entry driver and must be a verbatim
+    substring of the compiled file, and the 12 algorithm snippets are
+    differentially fuzzed against `sortedArray`, an independent scan, flood
+    fill, and Bellman-Ford — see `references/snippet-authoring.md`. PHP uses
+    the official `php:8.4-cli` image (PHP 8.4.25, with `pdo_sqlite`): every
+    snippet is linted with `php -l` and executed, superglobal snippets are
+    driven with pre-filled `$_GET`/`$_POST`/`$_COOKIE`, the `Graph` lesson is
+    prepended when driving BFS/DFS/Dijkstra, and the 12 algorithm snippets
+    are differentially fuzzed against `sort`/`array_search`/an independent
+    traversal/Bellman-Ford — see `references/snippet-authoring.md`.
+    Git is verified with the real `git` binary (2.55 here): every snippet runs
+    in a fresh disposable repository with an isolated `HOME`, fixed
+    author/committer identity and dates, and asserted output/state, and the
+    catalog is re-run against the final merged asset — see
+    `references/snippet-authoring.md`. Never trust generated code unverified.
 4. **Adding a new schema field?** — read `references/migrations-and-tests.md`
    for the drift migration pattern and the exact test files/fixtures that
    need updating.
@@ -82,13 +137,33 @@ into drift tables on launch, paths are read straight from the bundle.
   `go build`/`go run` for Go, a real PostgreSQL 16 run for SQL, a shell
   smoke run for Bash, `rustfmt --check` and `rustc`+run for Rust, and
   `tsc --strict` plus node on the emitted JS for TypeScript,
-  `ghc -fno-code` + `runghc` for Haskell
+  `ghc -fno-code` + `runghc` for Haskell, `gcc` + `clang` with
+  `-std=c17 -Wall -Wextra -Werror -pedantic` (ASan/UBSan and differential
+  fuzzing included) for C, `g++` + `clang++` with
+  `-std=c++20 -Wall -Wextra -Werror -pthread` for C++, `javac` + `java`
+  for Java, `podman run docker.io/crystallang/crystal` (Crystal 1.21)
+  for Crystal, `podman run docker.io/library/swift:6.2` (Swift 6.2,
+  `swiftc -warnings-as-errors` plus differential fuzzing) for Swift,
+  `csstree-validator` + `lightningcss` for CSS, and .NET SDK 10
+  (`mcr.microsoft.com/dotnet/sdk:10.0`, nullable + warnings-as-errors) for C#,
+  and `dart format` + `dart analyze` + `dart run` with the bundled Dart SDK
+  3.13 for Dart (statement fragments wrapped in `void main()`, algorithms
+  driven and fuzzed), and real `kotlinc` 2.4 with `-Werror`
+  (coroutine snippets link `kotlinx-coroutines-core-jvm`) for Kotlin,
+  compiling every fragment inside a `fun main()` wrapper or a per-entry
+  driver and fuzzing the 12 algorithms, and `php -l` plus
+  `podman run docker.io/library/php:8.4-cli` (PHP 8.4) for PHP, driving
+  superglobals and the cumulative `Graph` lesson and fuzzing the 12
+  algorithms vs `sort`/`array_search`/Bellman-Ford, and the real `git`
+   binary (2.55) for Git, one disposable repository per snippet with an
+   isolated `HOME` and fixed author/date, asserting output and state
 - Keep every (category, difficulty) cell at ≥3 active entries for the 5
   "core" categories of each free-practice language (see
   `snippet_catalog_completeness_test.dart`) before reclassifying or
   deactivating a snippet; course-only catalogs (Bash, SQL, Rust, Python,
-  JavaScript, TypeScript, Haskell) instead require every active snippet to be
-  referenced by a bundled path — no orphans
+  JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#,
+  Dart, Kotlin, PHP, Git) instead require
+  every active snippet to be referenced by a bundled path — no orphans
 - Delegate large content-authoring batches (10+ entries) to a background
   `general-purpose` agent with a detailed style guide + few-shot examples;
   have it self-validate and write to `/tmp/*.json`; merge with your own

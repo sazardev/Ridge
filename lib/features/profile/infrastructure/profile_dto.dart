@@ -19,6 +19,8 @@ abstract class ProfileDto with _$ProfileDto {
     String? keyboardModel,
     String? favoriteQuote,
     String? favoriteProgrammer,
+    String? githubUsername,
+    String? websiteUrl,
     String? platform,
     String? operatingSystemVersion,
     String? deviceModel,

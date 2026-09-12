@@ -107,6 +107,28 @@ class $GuestProfilesTable extends GuestProfiles
         type: DriftSqlType.string,
         requiredDuringInsert: false,
       );
+  static const VerificationMeta _githubUsernameMeta = const VerificationMeta(
+    'githubUsername',
+  );
+  @override
+  late final GeneratedColumn<String> githubUsername = GeneratedColumn<String>(
+    'github_username',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _websiteUrlMeta = const VerificationMeta(
+    'websiteUrl',
+  );
+  @override
+  late final GeneratedColumn<String> websiteUrl = GeneratedColumn<String>(
+    'website_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _platformMeta = const VerificationMeta(
     'platform',
   );
@@ -151,6 +173,8 @@ class $GuestProfilesTable extends GuestProfiles
     keyboardModel,
     favoriteQuote,
     favoriteProgrammer,
+    githubUsername,
+    websiteUrl,
     platform,
     operatingSystemVersion,
     deviceModel,
@@ -242,6 +266,21 @@ class $GuestProfilesTable extends GuestProfiles
         ),
       );
     }
+    if (data.containsKey('github_username')) {
+      context.handle(
+        _githubUsernameMeta,
+        githubUsername.isAcceptableOrUnknown(
+          data['github_username']!,
+          _githubUsernameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('website_url')) {
+      context.handle(
+        _websiteUrlMeta,
+        websiteUrl.isAcceptableOrUnknown(data['website_url']!, _websiteUrlMeta),
+      );
+    }
     if (data.containsKey('platform')) {
       context.handle(
         _platformMeta,
@@ -311,6 +350,14 @@ class $GuestProfilesTable extends GuestProfiles
         DriftSqlType.string,
         data['${effectivePrefix}favorite_programmer'],
       ),
+      githubUsername: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}github_username'],
+      ),
+      websiteUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}website_url'],
+      ),
       platform: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}platform'],
@@ -366,6 +413,16 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
   /// if never set.
   final String? favoriteProgrammer;
 
+  /// The user's GitHub handle, without the leading `@` or any URL prefix
+  /// (normalized before storage by
+  /// `UpdateProfileCustomizationUseCase`), or `null` if never set.
+  final String? githubUsername;
+
+  /// The user's personal website URL, always with an `http(s)://` scheme
+  /// (normalized before storage by
+  /// `UpdateProfileCustomizationUseCase`), or `null` if never set.
+  final String? websiteUrl;
+
   /// Auto-detected platform name (e.g. `"Android"`, `"Linux"`), or `null`
   /// if never detected. Never user-edited — see `EnsureDeviceInfoUseCase`.
   final String? platform;
@@ -388,6 +445,8 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     this.keyboardModel,
     this.favoriteQuote,
     this.favoriteProgrammer,
+    this.githubUsername,
+    this.websiteUrl,
     this.platform,
     this.operatingSystemVersion,
     this.deviceModel,
@@ -415,6 +474,12 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     }
     if (!nullToAbsent || favoriteProgrammer != null) {
       map['favorite_programmer'] = Variable<String>(favoriteProgrammer);
+    }
+    if (!nullToAbsent || githubUsername != null) {
+      map['github_username'] = Variable<String>(githubUsername);
+    }
+    if (!nullToAbsent || websiteUrl != null) {
+      map['website_url'] = Variable<String>(websiteUrl);
     }
     if (!nullToAbsent || platform != null) {
       map['platform'] = Variable<String>(platform);
@@ -453,6 +518,12 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       favoriteProgrammer: favoriteProgrammer == null && nullToAbsent
           ? const Value.absent()
           : Value(favoriteProgrammer),
+      githubUsername: githubUsername == null && nullToAbsent
+          ? const Value.absent()
+          : Value(githubUsername),
+      websiteUrl: websiteUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(websiteUrl),
       platform: platform == null && nullToAbsent
           ? const Value.absent()
           : Value(platform),
@@ -484,6 +555,8 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       favoriteProgrammer: serializer.fromJson<String?>(
         json['favoriteProgrammer'],
       ),
+      githubUsername: serializer.fromJson<String?>(json['githubUsername']),
+      websiteUrl: serializer.fromJson<String?>(json['websiteUrl']),
       platform: serializer.fromJson<String?>(json['platform']),
       operatingSystemVersion: serializer.fromJson<String?>(
         json['operatingSystemVersion'],
@@ -504,6 +577,8 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       'keyboardModel': serializer.toJson<String?>(keyboardModel),
       'favoriteQuote': serializer.toJson<String?>(favoriteQuote),
       'favoriteProgrammer': serializer.toJson<String?>(favoriteProgrammer),
+      'githubUsername': serializer.toJson<String?>(githubUsername),
+      'websiteUrl': serializer.toJson<String?>(websiteUrl),
       'platform': serializer.toJson<String?>(platform),
       'operatingSystemVersion': serializer.toJson<String?>(
         operatingSystemVersion,
@@ -522,6 +597,8 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     Value<String?> keyboardModel = const Value.absent(),
     Value<String?> favoriteQuote = const Value.absent(),
     Value<String?> favoriteProgrammer = const Value.absent(),
+    Value<String?> githubUsername = const Value.absent(),
+    Value<String?> websiteUrl = const Value.absent(),
     Value<String?> platform = const Value.absent(),
     Value<String?> operatingSystemVersion = const Value.absent(),
     Value<String?> deviceModel = const Value.absent(),
@@ -547,6 +624,10 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     favoriteProgrammer: favoriteProgrammer.present
         ? favoriteProgrammer.value
         : this.favoriteProgrammer,
+    githubUsername: githubUsername.present
+        ? githubUsername.value
+        : this.githubUsername,
+    websiteUrl: websiteUrl.present ? websiteUrl.value : this.websiteUrl,
     platform: platform.present ? platform.value : this.platform,
     operatingSystemVersion: operatingSystemVersion.present
         ? operatingSystemVersion.value
@@ -576,6 +657,12 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       favoriteProgrammer: data.favoriteProgrammer.present
           ? data.favoriteProgrammer.value
           : this.favoriteProgrammer,
+      githubUsername: data.githubUsername.present
+          ? data.githubUsername.value
+          : this.githubUsername,
+      websiteUrl: data.websiteUrl.present
+          ? data.websiteUrl.value
+          : this.websiteUrl,
       platform: data.platform.present ? data.platform.value : this.platform,
       operatingSystemVersion: data.operatingSystemVersion.present
           ? data.operatingSystemVersion.value
@@ -598,6 +685,8 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
           ..write('keyboardModel: $keyboardModel, ')
           ..write('favoriteQuote: $favoriteQuote, ')
           ..write('favoriteProgrammer: $favoriteProgrammer, ')
+          ..write('githubUsername: $githubUsername, ')
+          ..write('websiteUrl: $websiteUrl, ')
           ..write('platform: $platform, ')
           ..write('operatingSystemVersion: $operatingSystemVersion, ')
           ..write('deviceModel: $deviceModel')
@@ -616,6 +705,8 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     keyboardModel,
     favoriteQuote,
     favoriteProgrammer,
+    githubUsername,
+    websiteUrl,
     platform,
     operatingSystemVersion,
     deviceModel,
@@ -633,6 +724,8 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
           other.keyboardModel == this.keyboardModel &&
           other.favoriteQuote == this.favoriteQuote &&
           other.favoriteProgrammer == this.favoriteProgrammer &&
+          other.githubUsername == this.githubUsername &&
+          other.websiteUrl == this.websiteUrl &&
           other.platform == this.platform &&
           other.operatingSystemVersion == this.operatingSystemVersion &&
           other.deviceModel == this.deviceModel);
@@ -648,6 +741,8 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
   final Value<String?> keyboardModel;
   final Value<String?> favoriteQuote;
   final Value<String?> favoriteProgrammer;
+  final Value<String?> githubUsername;
+  final Value<String?> websiteUrl;
   final Value<String?> platform;
   final Value<String?> operatingSystemVersion;
   final Value<String?> deviceModel;
@@ -662,6 +757,8 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     this.keyboardModel = const Value.absent(),
     this.favoriteQuote = const Value.absent(),
     this.favoriteProgrammer = const Value.absent(),
+    this.githubUsername = const Value.absent(),
+    this.websiteUrl = const Value.absent(),
     this.platform = const Value.absent(),
     this.operatingSystemVersion = const Value.absent(),
     this.deviceModel = const Value.absent(),
@@ -677,6 +774,8 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     this.keyboardModel = const Value.absent(),
     this.favoriteQuote = const Value.absent(),
     this.favoriteProgrammer = const Value.absent(),
+    this.githubUsername = const Value.absent(),
+    this.websiteUrl = const Value.absent(),
     this.platform = const Value.absent(),
     this.operatingSystemVersion = const Value.absent(),
     this.deviceModel = const Value.absent(),
@@ -694,6 +793,8 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     Expression<String>? keyboardModel,
     Expression<String>? favoriteQuote,
     Expression<String>? favoriteProgrammer,
+    Expression<String>? githubUsername,
+    Expression<String>? websiteUrl,
     Expression<String>? platform,
     Expression<String>? operatingSystemVersion,
     Expression<String>? deviceModel,
@@ -709,6 +810,8 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
       if (keyboardModel != null) 'keyboard_model': keyboardModel,
       if (favoriteQuote != null) 'favorite_quote': favoriteQuote,
       if (favoriteProgrammer != null) 'favorite_programmer': favoriteProgrammer,
+      if (githubUsername != null) 'github_username': githubUsername,
+      if (websiteUrl != null) 'website_url': websiteUrl,
       if (platform != null) 'platform': platform,
       if (operatingSystemVersion != null)
         'operating_system_version': operatingSystemVersion,
@@ -727,6 +830,8 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     Value<String?>? keyboardModel,
     Value<String?>? favoriteQuote,
     Value<String?>? favoriteProgrammer,
+    Value<String?>? githubUsername,
+    Value<String?>? websiteUrl,
     Value<String?>? platform,
     Value<String?>? operatingSystemVersion,
     Value<String?>? deviceModel,
@@ -742,6 +847,8 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
       keyboardModel: keyboardModel ?? this.keyboardModel,
       favoriteQuote: favoriteQuote ?? this.favoriteQuote,
       favoriteProgrammer: favoriteProgrammer ?? this.favoriteProgrammer,
+      githubUsername: githubUsername ?? this.githubUsername,
+      websiteUrl: websiteUrl ?? this.websiteUrl,
       platform: platform ?? this.platform,
       operatingSystemVersion:
           operatingSystemVersion ?? this.operatingSystemVersion,
@@ -780,6 +887,12 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     if (favoriteProgrammer.present) {
       map['favorite_programmer'] = Variable<String>(favoriteProgrammer.value);
     }
+    if (githubUsername.present) {
+      map['github_username'] = Variable<String>(githubUsername.value);
+    }
+    if (websiteUrl.present) {
+      map['website_url'] = Variable<String>(websiteUrl.value);
+    }
     if (platform.present) {
       map['platform'] = Variable<String>(platform.value);
     }
@@ -809,6 +922,8 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
           ..write('keyboardModel: $keyboardModel, ')
           ..write('favoriteQuote: $favoriteQuote, ')
           ..write('favoriteProgrammer: $favoriteProgrammer, ')
+          ..write('githubUsername: $githubUsername, ')
+          ..write('websiteUrl: $websiteUrl, ')
           ..write('platform: $platform, ')
           ..write('operatingSystemVersion: $operatingSystemVersion, ')
           ..write('deviceModel: $deviceModel, ')
@@ -6794,6 +6909,8 @@ typedef $$GuestProfilesTableCreateCompanionBuilder =
       Value<String?> keyboardModel,
       Value<String?> favoriteQuote,
       Value<String?> favoriteProgrammer,
+      Value<String?> githubUsername,
+      Value<String?> websiteUrl,
       Value<String?> platform,
       Value<String?> operatingSystemVersion,
       Value<String?> deviceModel,
@@ -6810,6 +6927,8 @@ typedef $$GuestProfilesTableUpdateCompanionBuilder =
       Value<String?> keyboardModel,
       Value<String?> favoriteQuote,
       Value<String?> favoriteProgrammer,
+      Value<String?> githubUsername,
+      Value<String?> websiteUrl,
       Value<String?> platform,
       Value<String?> operatingSystemVersion,
       Value<String?> deviceModel,
@@ -6867,6 +6986,16 @@ class $$GuestProfilesTableFilterComposer
 
   ColumnFilters<String> get favoriteProgrammer => $composableBuilder(
     column: $table.favoriteProgrammer,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get githubUsername => $composableBuilder(
+    column: $table.githubUsername,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get websiteUrl => $composableBuilder(
+    column: $table.websiteUrl,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -6940,6 +7069,16 @@ class $$GuestProfilesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get githubUsername => $composableBuilder(
+    column: $table.githubUsername,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get websiteUrl => $composableBuilder(
+    column: $table.websiteUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get platform => $composableBuilder(
     column: $table.platform,
     builder: (column) => ColumnOrderings(column),
@@ -7004,6 +7143,16 @@ class $$GuestProfilesTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<String> get githubUsername => $composableBuilder(
+    column: $table.githubUsername,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get websiteUrl => $composableBuilder(
+    column: $table.websiteUrl,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<String> get platform =>
       $composableBuilder(column: $table.platform, builder: (column) => column);
 
@@ -7058,6 +7207,8 @@ class $$GuestProfilesTableTableManager
                 Value<String?> keyboardModel = const Value.absent(),
                 Value<String?> favoriteQuote = const Value.absent(),
                 Value<String?> favoriteProgrammer = const Value.absent(),
+                Value<String?> githubUsername = const Value.absent(),
+                Value<String?> websiteUrl = const Value.absent(),
                 Value<String?> platform = const Value.absent(),
                 Value<String?> operatingSystemVersion = const Value.absent(),
                 Value<String?> deviceModel = const Value.absent(),
@@ -7072,6 +7223,8 @@ class $$GuestProfilesTableTableManager
                 keyboardModel: keyboardModel,
                 favoriteQuote: favoriteQuote,
                 favoriteProgrammer: favoriteProgrammer,
+                githubUsername: githubUsername,
+                websiteUrl: websiteUrl,
                 platform: platform,
                 operatingSystemVersion: operatingSystemVersion,
                 deviceModel: deviceModel,
@@ -7088,6 +7241,8 @@ class $$GuestProfilesTableTableManager
                 Value<String?> keyboardModel = const Value.absent(),
                 Value<String?> favoriteQuote = const Value.absent(),
                 Value<String?> favoriteProgrammer = const Value.absent(),
+                Value<String?> githubUsername = const Value.absent(),
+                Value<String?> websiteUrl = const Value.absent(),
                 Value<String?> platform = const Value.absent(),
                 Value<String?> operatingSystemVersion = const Value.absent(),
                 Value<String?> deviceModel = const Value.absent(),
@@ -7102,6 +7257,8 @@ class $$GuestProfilesTableTableManager
                 keyboardModel: keyboardModel,
                 favoriteQuote: favoriteQuote,
                 favoriteProgrammer: favoriteProgrammer,
+                githubUsername: githubUsername,
+                websiteUrl: websiteUrl,
                 platform: platform,
                 operatingSystemVersion: operatingSystemVersion,
                 deviceModel: deviceModel,

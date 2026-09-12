@@ -1,0 +1,168 @@
+[
+  {
+    "id": "kotlin-foundations-v1",
+    "language": "kotlin",
+    "titleEn": "Kotlin from scratch",
+    "titleEs": "Kotlin desde cero",
+    "descriptionEn": "Learn Kotlin step by step: types, control flow, functions, null safety, and classes.",
+    "descriptionEs": "Aprende Kotlin paso a paso: tipos, control de flujo, funciones, seguridad frente a nulos y clases.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "kotlin-foundations-v1-step01",
+        "snippetId": "kotlin-vars-001",
+        "order": 1,
+        "titleEn": "Bind values with `val` and `var`",
+        "titleEs": "Ligar valores con `val` y `var`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step02",
+        "snippetId": "kotlin-vars-002",
+        "order": 2,
+        "titleEn": "Explicit types after a colon",
+        "titleEs": "Tipos explícitos tras dos puntos"
+      },
+      {
+        "id": "kotlin-foundations-v1-step03",
+        "snippetId": "kotlin-vars-003",
+        "order": 3,
+        "titleEn": "Chaining string transformations",
+        "titleEs": "Encadenar transformaciones de texto"
+      },
+      {
+        "id": "kotlin-foundations-v1-step04",
+        "snippetId": "kotlin-cond-001",
+        "order": 4,
+        "titleEn": "`if` returns a value",
+        "titleEs": "`if` devuelve un valor"
+      },
+      {
+        "id": "kotlin-foundations-v1-step05",
+        "snippetId": "kotlin-cond-002",
+        "order": 5,
+        "titleEn": "`when` as an expression",
+        "titleEs": "`when` como expresión"
+      },
+      {
+        "id": "kotlin-foundations-v1-step06",
+        "snippetId": "kotlin-loop-001",
+        "order": 6,
+        "titleEn": "Ranges with `..`, `until`, `downTo`",
+        "titleEs": "Rangos con `..`, `until`, `downTo`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step07",
+        "snippetId": "kotlin-loop-002",
+        "order": 7,
+        "titleEn": "Counting down with `while`",
+        "titleEs": "Cuenta atrás con `while`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step08",
+        "snippetId": "kotlin-func-001",
+        "order": 8,
+        "titleEn": "Two ways to declare `fun`",
+        "titleEs": "Dos formas de declarar `fun`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step09",
+        "snippetId": "kotlin-func-002",
+        "order": 9,
+        "titleEn": "Default values and named arguments",
+        "titleEs": "Argumentos por defecto y con nombre"
+      },
+      {
+        "id": "kotlin-foundations-v1-step10",
+        "snippetId": "kotlin-func-003",
+        "order": 10,
+        "titleEn": "Counting evens in a range",
+        "titleEs": "Contar pares en un rango"
+      },
+      {
+        "id": "kotlin-foundations-v1-step11",
+        "snippetId": "kotlin-null-001",
+        "order": 11,
+        "titleEn": "Nullables, `?.`, and smart casts",
+        "titleEs": "Nulables, `?.` y smart casts"
+      },
+      {
+        "id": "kotlin-foundations-v1-step12",
+        "snippetId": "kotlin-null-002",
+        "order": 12,
+        "titleEn": "Elvis `?:` and `!!`",
+        "titleEs": "Elvis `?:` y `!!`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step13",
+        "snippetId": "kotlin-coll-001",
+        "order": 13,
+        "titleEn": "Read-only lists with `listOf`",
+        "titleEs": "Listas de solo lectura con `listOf`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step14",
+        "snippetId": "kotlin-coll-002",
+        "order": 14,
+        "titleEn": "Maps with `mapOf` and `to`",
+        "titleEs": "Mapas con `mapOf` y `to`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step15",
+        "snippetId": "kotlin-coll-003",
+        "order": 15,
+        "titleEn": "Fixed-size arrays with `IntArray`",
+        "titleEs": "Arreglos de tamaño fijo con `IntArray`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step16",
+        "snippetId": "kotlin-lambda-001",
+        "order": 16,
+        "titleEn": "Lambdas and the implicit `it`",
+        "titleEs": "Lambdas y el `it` implícito"
+      },
+      {
+        "id": "kotlin-foundations-v1-step17",
+        "snippetId": "kotlin-lambda-002",
+        "order": 17,
+        "titleEn": "`map`, `filter`, and `sumOf`",
+        "titleEs": "`map`, `filter` y `sumOf`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step18",
+        "snippetId": "kotlin-data-001",
+        "order": 18,
+        "titleEn": "`data class`: `toString`, `equals`, `copy`",
+        "titleEs": "`data class`: `toString`, `equals` y `copy`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step19",
+        "snippetId": "kotlin-data-002",
+        "order": 19,
+        "titleEn": "Destructuring a `data class`",
+        "titleEs": "Desestructurar una `data class`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step20",
+        "snippetId": "kotlin-ext-001",
+        "order": 20,
+        "titleEn": "Extension functions on `String`",
+        "titleEs": "Funciones de extensión sobre `String`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step21",
+        "snippetId": "kotlin-oop-001",
+        "order": 21,
+        "titleEn": "Primary constructors and `init`",
+        "titleEs": "Constructor primario e `init`"
+      },
+      {
+        "id": "kotlin-foundations-v1-step22",
+        "snippetId": "kotlin-err-001",
+        "order": 22,
+        "titleEn": "Try/catch as an expression",
+        "titleEs": "`try`/`catch` como expresión"
+      }
+    ]
+  }
+]

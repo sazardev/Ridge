@@ -8,8 +8,10 @@ import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:ridge/features/profile/presentation/widgets/profile_about_card.dart';
 import 'package:ridge/features/profile/presentation/widgets/profile_achievements_card.dart';
+import 'package:ridge/features/profile/presentation/widgets/profile_avatar.dart';
 import 'package:ridge/features/profile/presentation/widgets/profile_device_card.dart';
 import 'package:ridge/features/profile/presentation/widgets/profile_keyboard_hero_card.dart';
+import 'package:ridge/features/profile/presentation/widgets/profile_links_card.dart';
 import 'package:ridge/features/profile/presentation/widgets/profile_stats_card.dart';
 
 /// The Profile screen: the Guest Profile's identity (SPEC.md §7.1), a
@@ -63,35 +65,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 controller: _scrollController,
                 padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
                 children: [
-                  Center(
-                    child: Container(
-                      width: 96,
-                      height: 96,
-                      padding: const EdgeInsets.all(3),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [colorScheme.primary, colorScheme.tertiary],
-                        ),
-                      ),
-                      child: CircleAvatar(
-                        backgroundColor: colorScheme.surface,
-                        child: CircleAvatar(
-                          radius: 42,
-                          backgroundColor: colorScheme.primaryContainer,
-                          child: Text(
-                            profile.username.isEmpty
-                                ? '?'
-                                : profile.username[0].toUpperCase(),
-                            style: textTheme.headlineMedium?.copyWith(
-                              color: colorScheme.onPrimaryContainer,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  ProfileAvatar(
+                    username: profile.username,
+                    githubUsername: profile.githubUsername,
                   ),
                   const SizedBox(height: 16),
                   Row(
@@ -136,6 +112,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     profile: profile,
                     onEdit: () => context.push('/profile/edit', extra: profile),
                   ),
+                  if (profile.githubUsername != null ||
+                      profile.websiteUrl != null) ...[
+                    const SizedBox(height: 16),
+                    ProfileLinksCard(profile: profile),
+                  ],
                   const SizedBox(height: 16),
                   ProfileDeviceCard(profile: profile),
                 ],

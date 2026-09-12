@@ -42,6 +42,12 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   late final TextEditingController _quoteController = TextEditingController(
     text: widget.profile.favoriteQuote ?? '',
   );
+  late final TextEditingController _githubController = TextEditingController(
+    text: widget.profile.githubUsername ?? '',
+  );
+  late final TextEditingController _websiteController = TextEditingController(
+    text: widget.profile.websiteUrl ?? '',
+  );
   final TextEditingController _languageSearchController =
       TextEditingController();
   String _languageQuery = '';
@@ -78,6 +84,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   void dispose() {
     _usernameController.dispose();
     _quoteController.dispose();
+    _githubController.dispose();
+    _websiteController.dispose();
     _languageSearchController.dispose();
     _scrollController.dispose();
     super.dispose();
@@ -108,6 +116,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       keyboardModel: _model,
       favoriteQuote: _quoteController.text,
       favoriteProgrammer: _programmer,
+      githubUsername: _githubController.text,
+      websiteUrl: _websiteController.text,
     );
     if (!mounted) return;
     if (customizationResult.isOk) {
@@ -297,6 +307,29 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   labelText: l10n.profileFavoriteQuoteLabel,
                   alignLabelWithHint: true,
                   prefixIcon: const Icon(LucideIcons.quote300),
+                ),
+              ),
+              const SizedBox(height: 28),
+              Text(l10n.profileLinksTitle, style: textTheme.titleMedium),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _githubController,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  labelText: l10n.profileGithubLabel,
+                  hintText: l10n.profileGithubHint,
+                  prefixIcon: const Icon(LucideIcons.gitBranch300),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: _websiteController,
+                keyboardType: TextInputType.url,
+                textInputAction: TextInputAction.done,
+                decoration: InputDecoration(
+                  labelText: l10n.profileWebsiteLabel,
+                  hintText: l10n.profileWebsiteHint,
+                  prefixIcon: const Icon(LucideIcons.globe300),
                 ),
               ),
             ],

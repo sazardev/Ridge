@@ -1,0 +1,119 @@
+[
+  {
+    "id": "c-foundations-v1",
+    "language": "c",
+    "titleEn": "C: Fundamentals",
+    "titleEs": "C: Fundamentos",
+    "descriptionEn": "Learn C step by step: types, control flow, functions, arrays, and pointers.",
+    "descriptionEs": "Aprende C paso a paso: tipos, control de flujo, funciones, arreglos y punteros.",
+    "tagEn": "Systems",
+    "tagEs": "Sistemas",
+    "lessons": [
+      {
+        "id": "c-foundations-v1-step01",
+        "snippetId": "c-vars-001",
+        "order": 1,
+        "titleEn": "Your first C program",
+        "titleEs": "Tu primer programa en C"
+      },
+      {
+        "id": "c-foundations-v1-step02",
+        "snippetId": "c-vars-002",
+        "order": 2,
+        "titleEn": "Declaring int, double, and char",
+        "titleEs": "Declarar int, double y char"
+      },
+      {
+        "id": "c-foundations-v1-step03",
+        "snippetId": "c-vars-003",
+        "order": 3,
+        "titleEn": "Constants and sizeof",
+        "titleEs": "Constantes y sizeof"
+      },
+      {
+        "id": "c-foundations-v1-step04",
+        "snippetId": "c-vars-004",
+        "order": 4,
+        "titleEn": "Integer division, modulo, and casts",
+        "titleEs": "División entera, módulo y casts"
+      },
+      {
+        "id": "c-foundations-v1-step05",
+        "snippetId": "c-cond-001",
+        "order": 5,
+        "titleEn": "if, else if, else",
+        "titleEs": "if, else if, else"
+      },
+      {
+        "id": "c-foundations-v1-step06",
+        "snippetId": "c-cond-002",
+        "order": 6,
+        "titleEn": "Comparison and logical operators",
+        "titleEs": "Operadores de comparación y lógicos"
+      },
+      {
+        "id": "c-foundations-v1-step07",
+        "snippetId": "c-cond-003",
+        "order": 7,
+        "titleEn": "switch and break",
+        "titleEs": "switch y break"
+      },
+      {
+        "id": "c-foundations-v1-step08",
+        "snippetId": "c-loop-001",
+        "order": 8,
+        "titleEn": "The for loop",
+        "titleEs": "El bucle for"
+      },
+      {
+        "id": "c-foundations-v1-step09",
+        "snippetId": "c-loop-002",
+        "order": 9,
+        "titleEn": "The while loop",
+        "titleEs": "El bucle while"
+      },
+      {
+        "id": "c-foundations-v1-step10",
+        "snippetId": "c-arr-001",
+        "order": 10,
+        "titleEn": "Arrays and iteration",
+        "titleEs": "Arreglos e iteración"
+      },
+      {
+        "id": "c-foundations-v1-step11",
+        "snippetId": "c-arr-002",
+        "order": 11,
+        "titleEn": "Strings are char arrays",
+        "titleEs": "Los strings son arreglos de char"
+      },
+      {
+        "id": "c-foundations-v1-step12",
+        "snippetId": "c-ptr-001",
+        "order": 12,
+        "titleEn": "Address-of and dereference",
+        "titleEs": "Dirección y desreferencia"
+      },
+      {
+        "id": "c-foundations-v1-step13",
+        "snippetId": "c-func-001",
+        "order": 13,
+        "titleEn": "Functions with a return value",
+        "titleEs": "Funciones con valor de retorno"
+      },
+      {
+        "id": "c-foundations-v1-step14",
+        "snippetId": "c-func-002",
+        "order": 14,
+        "titleEn": "void functions and prototypes",
+        "titleEs": "Funciones void y prototipos"
+      },
+      {
+        "id": "c-foundations-v1-step15",
+        "snippetId": "c-func-003",
+        "order": 15,
+        "titleEn": "Put it together: count evens",
+        "titleEs": "Integrarlo todo: contar pares"
+      }
+    ]
+  }
+]

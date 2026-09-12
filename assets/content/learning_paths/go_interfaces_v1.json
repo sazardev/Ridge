@@ -1,0 +1,182 @@
+[
+  {
+    "id": "go-interfaces-v1",
+    "language": "go",
+    "titleEn": "Go: Interfaces & Types",
+    "titleEs": "Go: Interfaces y tipos",
+    "descriptionEn": "How type, struct, and interface fit together: from implicit satisfaction to JSON and testable design.",
+    "descriptionEs": "Cómo encajan type, struct e interface: de la satisfacción implícita al JSON y al diseño testeable.",
+    "lessons": [
+      {
+        "id": "go-interfaces-v1-step01",
+        "snippetId": "go-iface-005",
+        "order": 1,
+        "titleEn": "`type` defines a new type from an existing kind",
+        "titleEs": "`type` define un tipo nuevo a partir de uno existente"
+      },
+      {
+        "id": "go-interfaces-v1-step02",
+        "snippetId": "go-iface-006",
+        "order": 2,
+        "titleEn": "`struct` groups fields into one type",
+        "titleEs": "`struct` agrupa campos en un solo tipo"
+      },
+      {
+        "id": "go-interfaces-v1-step03",
+        "snippetId": "go-iface-007",
+        "order": 3,
+        "titleEn": "`interface` groups method signatures",
+        "titleEs": "`interface` agrupa firmas de métodos"
+      },
+      {
+        "id": "go-interfaces-v1-step04",
+        "snippetId": "go-iface-002",
+        "order": 4,
+        "titleEn": "Basic interface implementation",
+        "titleEs": "Implementación básica de interfaz"
+      },
+      {
+        "id": "go-interfaces-v1-step05",
+        "snippetId": "go-iface-008",
+        "order": 5,
+        "titleEn": "Pointer receivers and the method set of `*Tally`",
+        "titleEs": "Receptores puntero y el conjunto de métodos de `*Tally`"
+      },
+      {
+        "id": "go-interfaces-v1-step06",
+        "snippetId": "go-iface-009",
+        "order": 6,
+        "titleEn": "Value receivers work on a copy",
+        "titleEs": "Los receptores de valor trabajan sobre una copia"
+      },
+      {
+        "id": "go-interfaces-v1-step07",
+        "snippetId": "go-iface-010",
+        "order": 7,
+        "titleEn": "Compile-time proof that a type satisfies an interface",
+        "titleEs": "Prueba en tiempo de compilación de que un tipo cumple una interfaz"
+      },
+      {
+        "id": "go-interfaces-v1-step08",
+        "snippetId": "go-iface-011",
+        "order": 8,
+        "titleEn": "An interface value carries a dynamic type",
+        "titleEs": "Un valor de interfaz lleva un tipo dinámico"
+      },
+      {
+        "id": "go-interfaces-v1-step09",
+        "snippetId": "go-iface-012",
+        "order": 9,
+        "titleEn": "A nil pointer inside a non-nil interface",
+        "titleEs": "Un puntero nil dentro de una interfaz no nil"
+      },
+      {
+        "id": "go-interfaces-v1-step10",
+        "snippetId": "go-iface-013",
+        "order": 10,
+        "titleEn": "`any` is an alias for `interface{}`",
+        "titleEs": "`any` es un alias de `interface{}`"
+      },
+      {
+        "id": "go-interfaces-v1-step11",
+        "snippetId": "go-iface-014",
+        "order": 11,
+        "titleEn": "Type assertion with comma-ok",
+        "titleEs": "Aserción de tipo con coma-ok"
+      },
+      {
+        "id": "go-interfaces-v1-step12",
+        "snippetId": "go-iface-015",
+        "order": 12,
+        "titleEn": "Type switch dispatches on the dynamic type",
+        "titleEs": "El type switch despacha según el tipo dinámico"
+      },
+      {
+        "id": "go-interfaces-v1-step13",
+        "snippetId": "go-iface-016",
+        "order": 13,
+        "titleEn": "Custom printing with `fmt.Stringer`",
+        "titleEs": "Impresión personalizada con `fmt.Stringer`"
+      },
+      {
+        "id": "go-interfaces-v1-step14",
+        "snippetId": "go-iface-017",
+        "order": 14,
+        "titleEn": "`error` is just an interface",
+        "titleEs": "`error` es solo una interfaz"
+      },
+      {
+        "id": "go-interfaces-v1-step15",
+        "snippetId": "go-iface-018",
+        "order": 15,
+        "titleEn": "Compose interfaces by embedding",
+        "titleEs": "Compón interfaces mediante embedding"
+      },
+      {
+        "id": "go-interfaces-v1-step16",
+        "snippetId": "go-iface-019",
+        "order": 16,
+        "titleEn": "A concrete buffer as `io.ReadWriter`",
+        "titleEs": "Un buffer concreto como `io.ReadWriter`"
+      },
+      {
+        "id": "go-interfaces-v1-step17",
+        "snippetId": "go-iface-020",
+        "order": 17,
+        "titleEn": "Implementing `sort.Interface` on a slice type",
+        "titleEs": "Implementar `sort.Interface` en un tipo slice"
+      },
+      {
+        "id": "go-interfaces-v1-step18",
+        "snippetId": "go-iface-021",
+        "order": 18,
+        "titleEn": "Custom JSON output with `MarshalJSON`",
+        "titleEs": "Salida JSON personalizada con `MarshalJSON`"
+      },
+      {
+        "id": "go-interfaces-v1-step19",
+        "snippetId": "go-iface-022",
+        "order": 19,
+        "titleEn": "Custom parsing with `UnmarshalJSON`",
+        "titleEs": "Análisis personalizado con `UnmarshalJSON`"
+      },
+      {
+        "id": "go-interfaces-v1-step20",
+        "snippetId": "go-iface-023",
+        "order": 20,
+        "titleEn": "Polymorphic JSON with an `any` payload",
+        "titleEs": "JSON polimórfico con un payload `any`"
+      },
+      {
+        "id": "go-interfaces-v1-step21",
+        "snippetId": "go-iface-024",
+        "order": 21,
+        "titleEn": "Seal an interface with an unexported method",
+        "titleEs": "Sella una interfaz con un método no exportado"
+      },
+      {
+        "id": "go-interfaces-v1-step22",
+        "snippetId": "go-iface-025",
+        "order": 22,
+        "titleEn": "Embedding promotes methods",
+        "titleEs": "El embedding promueve métodos"
+      },
+      {
+        "id": "go-interfaces-v1-step23",
+        "snippetId": "go-iface-026",
+        "order": 23,
+        "titleEn": "A `Clock` interface makes time testable",
+        "titleEs": "Una interfaz `Clock` permite testear el tiempo"
+      },
+      {
+        "id": "go-interfaces-v1-step24",
+        "snippetId": "go-iface-027",
+        "order": 24,
+        "titleEn": "Capstone: types, interfaces and JSON",
+        "titleEs": "Proyecto final: tipos, interfaces y JSON"
+      }
+    ],
+    "tagEn": "Interfaces",
+    "tagEs": "Interfaces"
+  }
+]

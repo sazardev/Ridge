@@ -25,6 +25,7 @@ part 'practice_session_state.dart';
 part 'practice_lifecycle_observer.dart';
 part 'practice_session_downstream_effects.dart';
 part 'practice_session_persist_retry.dart';
+part 'practice_session_finish.dart';
 
 /// How long the app may sit backgrounded mid-session before the in-flight
 /// run is discarded rather than resumed (SPEC.md §8.1: only a genuinely
@@ -74,6 +75,10 @@ class PracticeSessionController extends _$PracticeSessionController {
   final Set<SnippetId> _usedSnippetIds = {};
   SurvivalRunTracker? _survival;
   _PersistAttempt? _lastPersistAttempt;
+
+  /// The bounded finish-time wait for keyups still owed to already
+  /// classified keystrokes (see `_DwellSettle`).
+  final _dwellSettle = _DwellSettle();
 
   /// This mode's Sprint window, or `null` for every other mode.
   Duration? get _sprintWindow =>
@@ -287,7 +292,7 @@ class PracticeSessionController extends _$PracticeSessionController {
       await _finish();
       return;
     }
-    final remaining = window - _elapsedSoFar();
+    final remaining = window - _elapsedSoFar(this);
     if (remaining <= Duration.zero) {
       await _finishAtDeadline();
       return;
@@ -345,7 +350,7 @@ class PracticeSessionController extends _$PracticeSessionController {
     if (_backgroundedAt != null) return;
     final window = _sprintWindow;
     if (window == null) return;
-    final remaining = window - _elapsedSoFar();
+    final remaining = window - _elapsedSoFar(this);
     if (remaining <= Duration.zero) {
       _countdownTimer?.cancel();
       _countdownTimer = null;
@@ -353,18 +358,6 @@ class PracticeSessionController extends _$PracticeSessionController {
     } else {
       _refresh(status: PracticeSessionStatus.running, remaining: remaining);
     }
-  }
-
-  /// Elapsed running time so far, excluding every backgrounded interval —
-  /// frozen at the instant backgrounding began if currently backgrounded,
-  /// so a countdown (or the final persisted duration) never advances
-  /// while the app isn't on screen.
-  Duration _elapsedSoFar() {
-    final runningSince = _runningSince;
-    if (runningSince == null) return Duration.zero;
-    final referenceNow = _backgroundedAt ?? DateTime.now();
-    final elapsed = referenceNow.difference(runningSince) - _totalPaused;
-    return elapsed.isNegative ? Duration.zero : elapsed;
   }
 
   void _refresh({required PracticeSessionStatus status, Duration? remaining}) {
@@ -385,52 +378,60 @@ class PracticeSessionController extends _$PracticeSessionController {
   /// (`SurvivalRunTracker.recordKeystroke`). Anything still pending is
   /// finalized like any other keystroke, since this isn't a hard external
   /// cutoff.
-  Future<void> _finish() async {
-    _countdownTimer?.cancel();
-    _countdownTimer = null;
-    _refresh(status: PracticeSessionStatus.finished);
-    final keystrokes = state.recorder.finish();
-    await _persistFinishedSession(keystrokes);
-  }
+  Future<void> _finish() => _finishNow(atDeadline: false);
 
   /// Sprint's countdown reached zero mid-typing (SPEC.md §5.2): anything
   /// still pending classification at this exact instant is dropped
   /// entirely from the metrics input, never judged right or wrong.
-  Future<void> _finishAtDeadline() async {
+  Future<void> _finishAtDeadline() => _finishNow(atDeadline: true);
+
+  /// Shared finish tail. Freezes the session clock at this instant (the
+  /// settle wait below must not inflate the persisted duration), moves to
+  /// `finished` — which stops accepting new keystrokes but leaves the
+  /// capture field mounted, so the completing key's own keyup can still
+  /// reach `KeystrokeStreamRecorder.patchDwell` — then snapshots and
+  /// persists the log once `_DwellSettle` resolves (every held key
+  /// released, or the fallback timeout).
+  Future<void> _finishNow({required bool atDeadline}) async {
     _countdownTimer?.cancel();
     _countdownTimer = null;
-    _refresh(status: PracticeSessionStatus.finished, remaining: Duration.zero);
-    final keystrokes = state.recorder.forceFinishAtDeadline();
-    await _persistFinishedSession(keystrokes);
-  }
-
-  Future<void> _persistFinishedSession(List<Keystroke> keystrokes) async {
-    final profileId = ref.read(activeProfileControllerProvider).value?.id;
-    if (profileId == null) {
-      state = PracticeSessionState(
-        status: PracticeSessionStatus.result,
-        recorder: state.recorder,
-        snippet: state.snippet,
-        remaining: state.remaining,
-        survival: _survival,
-        error: 'No guest profile found',
-      );
-      return;
-    }
-
-    await _attemptPersist((
-      id: TypingSessionId.generate(),
-      profileId: profileId,
-      mode: mode,
-      // The *starting* snippet, always — a multi-snippet Sprint run still
-      // denormalizes onto it (see the project plan's design decision);
-      // `state.snippet` may have already advanced past it.
-      snippet: snippet,
-      startedAtUtc: (_runningSince ?? DateTime.now()).toUtc(),
-      duration: _elapsedSoFar(),
+    final startedAtUtc = (_runningSince ?? DateTime.now()).toUtc();
+    final duration = _elapsedSoFar(this);
+    _refresh(
+      status: PracticeSessionStatus.finished,
+      remaining: atDeadline ? Duration.zero : null,
+    );
+    await _dwellSettle.wait();
+    // The route can be popped during the briefly-`finished` settle, and
+    // every later `ref` read on a disposed provider would throw — an
+    // abandoned run is never persisted by design (SPEC.md §8.1).
+    if (!ref.mounted) return;
+    final keystrokes = atDeadline
+        ? state.recorder.forceFinishAtDeadline()
+        : state.recorder.finish();
+    // `null` means the persist attempt ran and folded its own outcome
+    // into `state`; a non-null return is the no-profile result this
+    // helper can't assign itself (the `state` setter is `@protected` to
+    // subclasses).
+    final noProfileState = await _persistFinishedSession(
+      ref,
+      this,
+      recorder: state.recorder,
+      displaySnippet: state.snippet,
+      remaining: state.remaining,
+      startedAtUtc: startedAtUtc,
+      duration: duration,
       keystrokes: keystrokes,
-    ));
+    );
+    if (noProfileState != null) state = noProfileState;
   }
+
+  /// Called by `KeystrokeCaptureField` once every physical key it saw go
+  /// down has come back up while this session was finishing — the signal
+  /// that no more dwell patches are coming, so the finished session can
+  /// be snapshotted and persisted immediately instead of waiting out
+  /// `_dwellSettleTimeout`.
+  void concludePendingDwell() => _dwellSettle.conclude();
 
   /// Runs one persist attempt (the first try, or a [retryPersist] of a
   /// previously failed one) and folds the outcome into [state] — keeping

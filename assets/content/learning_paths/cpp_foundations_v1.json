@@ -1,0 +1,140 @@
+[
+  {
+    "id": "cpp-foundations-v1",
+    "language": "cpp",
+    "titleEn": "C++ from scratch",
+    "titleEs": "C++ desde cero",
+    "descriptionEn": "Learn C++ step by step: types, control flow, functions, and classes.",
+    "descriptionEs": "Aprende C++ paso a paso: tipos, control de flujo, funciones y clases.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "cpp-foundations-v1-step01",
+        "snippetId": "cpp-vars-001",
+        "order": 1,
+        "titleEn": "Your first C++ program",
+        "titleEs": "Tu primer programa en C++"
+      },
+      {
+        "id": "cpp-foundations-v1-step02",
+        "snippetId": "cpp-vars-002",
+        "order": 2,
+        "titleEn": "Variables and fundamental types",
+        "titleEs": "Variables y tipos fundamentales"
+      },
+      {
+        "id": "cpp-foundations-v1-step03",
+        "snippetId": "cpp-vars-003",
+        "order": 3,
+        "titleEn": "auto and const",
+        "titleEs": "auto y const"
+      },
+      {
+        "id": "cpp-foundations-v1-step04",
+        "snippetId": "cpp-vars-004",
+        "order": 4,
+        "titleEn": "Text with std::string",
+        "titleEs": "Texto con std::string"
+      },
+      {
+        "id": "cpp-foundations-v1-step05",
+        "snippetId": "cpp-cond-001",
+        "order": 5,
+        "titleEn": "if, else if, else",
+        "titleEs": "if, else if, else"
+      },
+      {
+        "id": "cpp-foundations-v1-step06",
+        "snippetId": "cpp-cond-002",
+        "order": 6,
+        "titleEn": "switch",
+        "titleEs": "switch"
+      },
+      {
+        "id": "cpp-foundations-v1-step07",
+        "snippetId": "cpp-cond-003",
+        "order": 7,
+        "titleEn": "Logical operators and the ternary",
+        "titleEs": "Operadores lógicos y el ternario"
+      },
+      {
+        "id": "cpp-foundations-v1-step08",
+        "snippetId": "cpp-loop-001",
+        "order": 8,
+        "titleEn": "The for loop",
+        "titleEs": "El ciclo for"
+      },
+      {
+        "id": "cpp-foundations-v1-step09",
+        "snippetId": "cpp-loop-002",
+        "order": 9,
+        "titleEn": "The while loop",
+        "titleEs": "El ciclo while"
+      },
+      {
+        "id": "cpp-foundations-v1-step10",
+        "snippetId": "cpp-loop-003",
+        "order": 10,
+        "titleEn": "Range-based for",
+        "titleEs": "for basado en rangos"
+      },
+      {
+        "id": "cpp-foundations-v1-step11",
+        "snippetId": "cpp-ptr-001",
+        "order": 11,
+        "titleEn": "References: another name for a value",
+        "titleEs": "Referencias: otro nombre para un valor"
+      },
+      {
+        "id": "cpp-foundations-v1-step12",
+        "snippetId": "cpp-ptr-002",
+        "order": 12,
+        "titleEn": "Pointers and nullptr",
+        "titleEs": "Punteros y nullptr"
+      },
+      {
+        "id": "cpp-foundations-v1-step13",
+        "snippetId": "cpp-func-001",
+        "order": 13,
+        "titleEn": "Functions with a return value",
+        "titleEs": "Funciones con valor de retorno"
+      },
+      {
+        "id": "cpp-foundations-v1-step14",
+        "snippetId": "cpp-func-002",
+        "order": 14,
+        "titleEn": "Overloading and default arguments",
+        "titleEs": "Sobrecarga y argumentos por defecto"
+      },
+      {
+        "id": "cpp-foundations-v1-step15",
+        "snippetId": "cpp-func-003",
+        "order": 15,
+        "titleEn": "Pass by reference with const &",
+        "titleEs": "Paso por referencia con const &"
+      },
+      {
+        "id": "cpp-foundations-v1-step16",
+        "snippetId": "cpp-stl-001",
+        "order": 16,
+        "titleEn": "std::vector: a growable list",
+        "titleEs": "std::vector: una lista que crece"
+      },
+      {
+        "id": "cpp-foundations-v1-step17",
+        "snippetId": "cpp-struct-001",
+        "order": 17,
+        "titleEn": "Structs: grouping data",
+        "titleEs": "Structs: agrupar datos"
+      },
+      {
+        "id": "cpp-foundations-v1-step18",
+        "snippetId": "cpp-class-001",
+        "order": 18,
+        "titleEn": "Classes, constructors, and encapsulation",
+        "titleEs": "Clases, constructores y encapsulación"
+      }
+    ]
+  }
+]

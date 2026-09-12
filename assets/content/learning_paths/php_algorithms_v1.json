@@ -1,0 +1,98 @@
+[
+  {
+    "id": "php-algorithms-v1",
+    "language": "php",
+    "titleEn": "PHP: Algorithms",
+    "titleEs": "PHP: Algoritmos",
+    "descriptionEn": "Searching, classic sorts, and graph algorithms, implemented in idiomatic PHP.",
+    "descriptionEs": "Búsquedas, ordenamientos clásicos y algoritmos de grafos, implementados en PHP idiomático.",
+    "tagEn": "Algorithms",
+    "tagEs": "Algoritmos",
+    "lessons": [
+      {
+        "id": "php-algorithms-v1-step01",
+        "snippetId": "php-algo-001",
+        "order": 1,
+        "titleEn": "Linear search",
+        "titleEs": "Búsqueda lineal"
+      },
+      {
+        "id": "php-algorithms-v1-step02",
+        "snippetId": "php-algo-002",
+        "order": 2,
+        "titleEn": "Binary search",
+        "titleEs": "Búsqueda binaria"
+      },
+      {
+        "id": "php-algorithms-v1-step03",
+        "snippetId": "php-algo-003",
+        "order": 3,
+        "titleEn": "Bubble sort",
+        "titleEs": "Ordenamiento burbuja"
+      },
+      {
+        "id": "php-algorithms-v1-step04",
+        "snippetId": "php-algo-004",
+        "order": 4,
+        "titleEn": "Selection sort",
+        "titleEs": "Ordenamiento por selección"
+      },
+      {
+        "id": "php-algorithms-v1-step05",
+        "snippetId": "php-algo-005",
+        "order": 5,
+        "titleEn": "Insertion sort",
+        "titleEs": "Ordenamiento por inserción"
+      },
+      {
+        "id": "php-algorithms-v1-step06",
+        "snippetId": "php-algo-006",
+        "order": 6,
+        "titleEn": "Merge sort",
+        "titleEs": "Ordenamiento por mezcla"
+      },
+      {
+        "id": "php-algorithms-v1-step07",
+        "snippetId": "php-algo-007",
+        "order": 7,
+        "titleEn": "Quicksort",
+        "titleEs": "Quicksort"
+      },
+      {
+        "id": "php-algorithms-v1-step08",
+        "snippetId": "php-algo-008",
+        "order": 8,
+        "titleEn": "Heap sort",
+        "titleEs": "Ordenamiento por montículos"
+      },
+      {
+        "id": "php-algorithms-v1-step09",
+        "snippetId": "php-algo-009",
+        "order": 9,
+        "titleEn": "Graph representation",
+        "titleEs": "Representación de grafos"
+      },
+      {
+        "id": "php-algorithms-v1-step10",
+        "snippetId": "php-algo-010",
+        "order": 10,
+        "titleEn": "Breadth-first search",
+        "titleEs": "Búsqueda en anchura"
+      },
+      {
+        "id": "php-algorithms-v1-step11",
+        "snippetId": "php-algo-011",
+        "order": 11,
+        "titleEn": "Depth-first search",
+        "titleEs": "Búsqueda en profundidad"
+      },
+      {
+        "id": "php-algorithms-v1-step12",
+        "snippetId": "php-algo-012",
+        "order": 12,
+        "titleEn": "Dijkstra's algorithm",
+        "titleEs": "Algoritmo de Dijkstra"
+      }
+    ]
+  }
+]

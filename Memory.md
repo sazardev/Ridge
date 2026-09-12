@@ -37,14 +37,25 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
   | Lenguaje | Catálogo | Ruta | Tier |
   |---|---|---|---|
-  | Go | 160 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) + `go-algorithms-v1` (12, ver sesión de hoy) | práctica libre (grid denso) |
+  | Go | 215 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) + `go-algorithms-v1` (12) + `go-interfaces-v1` (24, interfaces/type/struct → JSON y diseño testeable) + `go-rest-http-v1` (33, API REST/HTTP/CRUD, cliente y SQLite; 32 snippets nuevos, ver sesión de hoy) | práctica libre (grid denso) |
   | Bash (Arch) | 95 snippets | `bash-foundations-v1` + `bash-toolkit-v1` | solo-curso |
   | SQL (PostgreSQL) | 60 snippets | `sql-foundations-v1` (60) | solo-curso |
   | Rust | 24 snippets | `rust-foundations-v1` (12, solo principiante) + `rust-algorithms-v1` (12) | solo-curso |
-  | Python | 24 snippets | `python-foundations-v1` (12, solo principiante) + `python-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
+  | Python | 79 snippets | `python-foundations-v1` (12) + `python-algorithms-v1` (12) + `python-django-foundations-v1` (21, proyecto/modelos/vistas/plantillas/forms/admin/tests) + `python-django-orm-v1` (17, relaciones/QuerySets/migraciones) + `python-django-rest-v1` (17, DRF/token/paginación/tests) — los tres de Django nuevos, ver sesión de hoy | solo-curso |
   | JavaScript | 24 snippets | `javascript-foundations-v1` (12, solo principiante) + `javascript-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
   | TypeScript | 29 snippets | `typescript-foundations-v1` (17, tour amplio) + `typescript-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
   | Haskell | 24 snippets | `haskell-foundations-v1` (12, solo principiante) + `haskell-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
+  | C | 45 snippets | `c-foundations-v1` (15, introducción) + `c-algorithms-v1` (12) + `c-systems-v1` (18, structs/memoria/preprocesador/archivos) — los tres nuevos, ver sesión de hoy | solo-curso |
+  | C++ | 45 snippets | `cpp-foundations-v1` (18, introducción) + `cpp-algorithms-v1` (12) + `cpp-advanced-v1` (15, RAII/STL/plantillas/concurrencia) — los tres nuevos, ver sesión de hoy | solo-curso |
+  | Java | 36 snippets | `java-foundations-v1` (24, introducción) + `java-algorithms-v1` (12) | solo-curso |
+  | Crystal | 28 snippets | `crystal-foundations-v1` (16, tour amplio) + `crystal-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
+  | CSS | 45 snippets | `css-foundations-v1` (16, introducción) + `css-layout-v1` (16, flexbox/grid/posicionamiento/responsive) + `css-advanced-v1` (13, cascada/variables/animaciones) — los tres nuevos, ver sesión de hoy | solo-curso |
+  | C# (.NET 10) | 52 snippets | `csharp-foundations-v1` (25, introducción) + `csharp-algorithms-v1` (12) + `csharp-advanced-v1` (15, records/patrones/generics/delegados/LINQ/async/`IDisposable`) — los tres nuevos, ver sesión de hoy | solo-curso |
+  | Swift | 47 snippets | `swift-foundations-v1` (20, tour amplio con proyecto final) + `swift-algorithms-v1` (12) + `swift-advanced-v1` (15, ARC/genéricos/opacos/Codable/property wrappers/actores/task groups) — los tres nuevos, ver sesión de hoy | solo-curso |
+  | Dart | 53 snippets | `dart-foundations-v1` (25, tour amplio) + `dart-advanced-v1` (16, streams/isolates/patrones/mixins/genéricos) + `dart-algorithms-v1` (12) — los tres nuevos, ver sesión de hoy | solo-curso |
+| Kotlin | 53 snippets | `kotlin-foundations-v1` (22, introducción) + `kotlin-algorithms-v1` (12) + `kotlin-advanced-v1` (19, selladas/`object`/delegación/genéricos y varianza/`lateinit`/extensiones/lambdas/`Result`/corrutinas) — los tres nuevos, ver sesión de hoy | solo-curso |
+  | PHP | 48 snippets | `php-foundations-v1` (24, tour: tipos/null-coalescing/strings/condicionales/arreglos/ciclos/funciones/POO/enums/excepciones/namespaces) + `php-web-v1` (12, superglobales/formularios/sesiones/PDO/JSON/archivos) + `php-algorithms-v1` (12) — los tres nuevos, ver sesión de hoy | solo-curso |
+  | Git | 70 snippets | `git-foundations-v1` (33, de `git init` a remotos) + `git-workflows-v1` (24, historial/deshacer/rebase/tags/hooks) + `git-internals-v1` (15, objetos/referencias/mantenimiento) — los tres nuevos, ver sesión de hoy | solo-curso |
 
 - Curso SQL: base de datos de ejemplo compartida tipo biblioteca
   (`authors`, `books`, `members`, `loans`), 8 categorías contiguas:
@@ -52,10 +63,11 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `sqlAggregation` (7), `sqlJoins` (7), `sqlModifications` (5),
   `sqlAdvancedQueries` (6). Dificultad 30/22/7/1.
 - Gate de calidad: `bash tool/check.sh` (format + analyze + arquitectura +
-  tests). Última corrida (2026-09-12, cierre de Haskell + TypeScript):
-  **456 tests verdes**, format/analyze limpios, sin
-  violaciones duras de arquitectura (solo warnings informativos de "varios
-  tipos por archivo").
+  tests). Última corrida (2026-09-12, cierre de Git): **verde de punta a
+  punta — 680 tests**, format/analyze/arquitectura limpios (incluye C#,
+  Swift, Kotlin, Dart, Django, PHP y Git, todas las sesiones concurrentes
+  del día). `content_category.dart` quedó en **414 líneas** (límite duro
+  500) tras reescribir sus doc comments y añadir las 10 categorías de Git.
 - Set de íconos: **Lucide** (`lucide_icons_flutter`), no Material `Icons.*`
   — elegido por combinar con Geist (misma familia visual que usa Vercel/
   shadcn). `cupertino_icons` (vestigial, nunca usado) fue removido.
@@ -84,6 +96,12 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   una voz polifónica independiente (~11 ms tecla→sonido vía render-ahead ring
   en nativo), sin pools de players que reciclar — reemplaza al fix
   pool+breaker de `audioplayers` (sesión de hoy).
+- **Teclado del perfil en pseudo-3D estilo VIA** (sesión de hoy): keycaps
+  extruidos con cara superior en gradiente sutil, hover/press por tecla,
+  reposo centrado con parallax lento que sigue al puntero y drag-to-orbit
+  con el mouse (el ángulo persiste), y contraste tecla↔board garantizado
+  por test para las 24 paletas × 2 brightness. Única excepción sancionada
+  al "flat" (`STACK.md` §2.5).
 - Último release: **v1.11.0** (`5cf284a`). El siguiente push a `main`
   genera release automático desde los Conventional Commits.
 - **Deep link a una lección** (`/practice/:pathId/lessons/:lessonId`,
@@ -100,10 +118,997 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `typescript-foundations-v1` (17 lecciones, tour amplio) +
   `typescript-algorithms-v1` (12), 29 snippets solo-curso con dos
   categorías propias (`classesAndObjects`, `modules`).
+- **Django vive bajo Python** (sesión de hoy): tres rutas nuevas
+  (`python-django-foundations-v1` 21, `python-django-orm-v1` 17,
+  `python-django-rest-v1` 17) que llevan una app de bookmarks de
+  `django-admin startproject` a una API REST con DRF 3.16, auth por token
+  y tests; Python suma 16 categorías propias (`djangoProject` …
+  `djangoRestTesting`) y pasa de 24 a 79 snippets.
+- **Links del perfil** (sesión de hoy): GitHub + página web personal como
+  tarjeta "Links" propia en Profile (`ProfileLinksCard`), editables en
+  `EditProfileScreen`; al tocar abren el navegador del sistema
+  (`url_launcher ^6.3.2`, dependencia nueva). Handle/URL se normalizan en
+  `UpdateProfileCustomizationUseCase` antes de persistir; esquema drift
+  **v16** (dos columnas nullable nuevas en `guest_profiles`).
+- **Git es el decimonoveno lenguaje** (sesión de hoy): tres rutas
+  (`git-foundations-v1` 33, `git-workflows-v1` 24, `git-internals-v1` 15),
+  70 snippets solo-curso y diez categorías propias (`gitBasics` …
+  `gitMaintenance`). Cada comando se ejecutó de verdad con `git` 2.55 en
+  repos desechables deterministas (HOME aislado, autor/fecha fijos) —
+  ver sesión de hoy.
 
 ---
 
 ## Historial de sesiones
+
+### 2026-09-12 — Git: Fundamentos + Flujos + Internals (lenguaje nuevo, 3 rutas, 70 snippets)
+
+- **Pedido del usuario**: un curso/guía de introducción a Git bilingüe
+  (en/es, mismos estándares que las otras guías). Tras preguntarle eligió
+  **tres rutas** (fundamentos + flujos + internals), **categorías propias
+  dedicadas**, **comandos autocontenidos** (cada lección en su propio
+  mini-repo, sin narrativa compartida) y el título **"Git from scratch" /
+  "Git desde cero"** (tag `Fundamentals`/`Fundamentos`; blurb "Track every
+  change and collaborate without fear." / "Registra cada cambio y colabora
+  sin miedo.").
+- **Contenido**: 70 snippets solo-curso, dificultad 19/28/19/4, en tres
+  rutas — `git-foundations-v1` (33: config/init/status/staging/primer
+  commit/`.gitignore`/diffs, deshacer y archivos; commits, mensajes y
+  amend; ramas, merges ff y `--no-ff`, conflictos; clone/remote/fetch/
+  pull/push) + `git-workflows-v1` (24: log graph/format/patch/pickaxe/
+  blame/bisect; los tres `reset`, `restore`, `revert`, `clean`, `stash`;
+  rebase, `pull --rebase`, `force-with-lease`, `cherry-pick`,
+  `--fixup`/`--autosquash`, tags y hooks) + `git-internals-v1` (15:
+  `cat-file`/`hash-object`/`ls-tree`, `HEAD`/refs/reflog/detached,
+  índice, `count-objects`, `gc`, worktrees) — más 2 lecciones de `gitUndo`
+  reutilizadas en fundamentos.
+- **10 categorías propias** (`gitBasics`, `gitCommits`, `gitBranching`,
+  `gitRemotes`, `gitHistory`, `gitUndo`, `gitCollaboration`, `gitObjects`,
+  `gitRefs`, `gitMaintenance`): enum + `.arb` en/es + `gen-l10n` +
+  `content_labels.dart`, con `content_category.dart` reescrito a doc
+  comments de una línea (581→**414 líneas**, el límite duro es 500).
+- **Verificación real, no por ojo**: harness propio
+  (`/tmp/opencode/git-course/verify.py`) que corre **cada snippet con
+  `git` 2.55** en un repo desechable (HOME aislado, `GIT_CONFIG_NOSYSTEM=1`,
+  autor/committer y fechas fijos) con setup propio, salida asertada
+  (stdout+stderr) y estado resultante (`status --short`, `log --format`,
+  `rev-parse`, `test -f`); el `code` se lee del asset final (verbatim).
+  Casos de fallo incluidos a propósito: merge en conflicto (exit 1 +
+  `MERGE_HEAD`), `bisect run` hasta el veredicto, hook que imprime.
+  **70/70 en verde**, re-corrido contra el asset del repo (md5 idéntico).
+- **Revisión adversarial fresca** (2 agentes sin contexto, código/ejecución
+  y currícula/prosa) + falsificación (no-ops inyectados). Hallazgos reales
+  corregidos: `git clean -n` no previsualizaba los directorios que `-fd`
+  borra (ahora `-nd`, explicando que el preview lleva los mismos flags),
+  `git bisect` manual no llegaba a veredicto (se añadió `bad`/`good` del
+  punto medio), `git-collab-009` no se podía replicar sin `git add foo.txt`
+  (ahora va en el snippet) y explicaba mal `-i`/editores, `HEAD~n` se usaba
+  en 8 lecciones sin enseñarse (se introdujo en `git-commit-005`),
+  `rm --cached`/`mv` iban antes del primer commit (el primer commit pasó a
+  `git-basic-006`, renumerando basics), `git gc` prometía podar objetos
+  recientes y "un único pack" (matizado con `gc.pruneExpire` y cruft
+  packs), más precisión de prosa (staging area = índice, `clone`→
+  clonación, "en crudo"→formateado, salida de `bisect run` 1–127/125/128+,
+  similitud en rename detection, borrados con `-a`/`add .`).
+- **Wiring**: `ProgrammingLanguage.git` + `GitSyntaxTokenizer` nuevo
+  (subcomandos con guion, flags como un token, `HEAD~1`/`HEAD^{tree}`/
+  `stash@{0}`, comentarios `#`) con 17 tests; assets en `pubspec.yaml` +
+  ambos data sources; completeness (catálogo + 3 rutas), key-layout,
+  drift (1002→**1072** total, 372→**391** beginner; sets de `_` con
+  `git-collab-009` y `%` con `git-log-002`) y `audit_lesson_order.py`
+  (`git` en `COURSE_ONLY_LANGUAGES`, verde para las 3 rutas).
+- **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
+  `CLAUDE.md` (espejo byte a byte), skill `content-curriculum` (SKILL.md,
+  content-model y la receta de verificación de Git).
+- **Verificado**: `bash tool/check.sh` completo en verde — **680 tests**,
+  format/analyze/arquitectura limpios, con la tree compartida por las
+  sesiones concurrentes del mismo día (PHP, teclado 3D) también en verde.
+
+### 2026-09-12 — PHP: Fundamentos + Web/Backend + Algoritmos (lenguaje nuevo, 3 rutas, 48 snippets)
+
+- **Pedido del usuario**: un curso/guía de introducción a PHP bilingüe
+  (en/es, mismos estándares que las otras guías). Tras preguntarle el
+  alcance eligió **tres cursos** y, a diferencia de los demás lenguajes,
+  **todas las categorías propias estilo CSS**; aprobó el blurb técnico
+  ("The web's server-side workhorse — pragmatic, dynamic, and
+  everywhere." / "El motor del lado servidor de la web — pragmático,
+  dinámico y en todas partes.").
+- **Contenido**: 48 snippets solo-curso, dificultad 28/15/3/2, en tres rutas
+  — `php-foundations-v1` (24: `phpBasics`, `phpStrings`,
+  `phpConditionals`, `phpLoops`, `phpArrays`, `phpFunctions`,
+  `phpClasses`, `phpEnums`, `phpErrorHandling`, `phpNamespaces`),
+  `php-web-v1` (12: `phpSuperglobals`, `phpForms`, `phpSessions`,
+  `phpDatabase` con PDO/SQLite, `phpJson`, `phpFiles`) y
+  `php-algorithms-v1` (12: `phpSearching`, `phpSorting`, `phpGraphs`,
+  secuencia canónica). Desviación mínima del plan aprobado: se añadió
+  `php-vars-004` (null coalescing `??`/`??=`) dentro de `phpBasics` porque
+  la ruta web usa `??` desde su primera lección y no existía introducción
+  previa (sin categoría nueva).
+- **Verificación real, no por ojo**: los 48 snippets se pasaron por
+  `php -l` y se ejecutaron con **PHP 8.4.25 real**
+  (`podman run docker.io/library/php:8.4-cli`, con `pdo_sqlite`). Los
+  snippets web (superglobales, sesiones, cookies) se manejaron con drivers
+  que pre-rellenan `$_GET`/`$_POST`/`$_COOKIE` y apuntan
+  `session_save_path()` a un directorio temporal; los 12 algoritmos
+  (definiciones puras) se corrieron con drivers y se fuzzearon contra
+  referencias independientes: 500 arrays aleatorios × 6 sorts vs `sort()`,
+  200–300 trials de búsquedas vs `array_search(..., true)`, BFS/DFS vs
+  recorridos independientes, y Dijkstra vs Bellman-Ford (objetivos
+  inalcanzables → `null`), con el `Graph` de la lección 9 antepuesto.
+- **Prosa bilingüe** delegada a 3 agentes (uno por curso) con el código ya
+  verificado leído del draft + validación independiente del orquestador
+  (id-set, longitudes ≤80/≤950, 3 frases). **Revisión adversarial fresca**
+  (3 agentes sin contexto: código, currícula y prosa) confirmó 0 blockers
+  de código y cazó hallazgos reales corregidos antes de cerrar: la
+  matemática de `area()` en `php-class-003` (decía `3.14159 * 2` al
+  cuadrado), la contradicción de `php-web-006` (una cookie nueva no se lee
+  en la misma petición), "digestos"/calcos en web-004/009, el tldr vago de
+  web-008, "wrong type stops the call" (falso con strings numéricos), "`/`
+  devuelve float" (solo puede), estabilidad/adaptabilidad sin definir en
+  sorts, el título "CRUD" que prometía un delete inexistente, los
+  docblocks del `Graph` (catálogo sin comentarios) y las 5 dificultades
+  de algoritmos desalineadas del grid canónico (insertion→intermediate,
+  merge/quicksort→advanced, graph repr→beginner, Dijkstra→expert).
+- **Wiring**: `ProgrammingLanguage.php` + 19 categorías `php*` +
+  `PhpSyntaxTokenizer` nuevo (tags `<?php`/`?>`, `$variables`/`${...}`,
+  heredoc/nowdoc, `#` que no es comentario si es `#[`, `.`-números) con
+  15 tests; l10n (`languagePhp`/`languagePhpBlurb` + 19 categorías en
+  ambos `.arb`); assets en `pubspec.yaml` + ambos data sources;
+  completeness/key-layout/drift tests; `audit_lesson_order.py` (`php` en
+  `COURSE_ONLY_LANGUAGES`).
+- **Drift test**: conteos 954→1002 totales y 344→372 beginner, con los 39
+  ids de PHP que contienen `_` añadidos al set (ninguno contiene `%`).
+- **Nota de concurrencia**: el mismo working tree traía sesiones activas
+  terminando Dart/Kotlin/Swift/C# (el drift test se movió 953→954 a mitad
+  de esta sesión y hubo que recalcular encima; una inserción inicial de
+  ids de PHP cayó en el set de `%` por un ancla repetida y se movió al set
+  de `_`). `content_category.dart` estaba en el límite exacto de 500
+  líneas y hubo que compactar 75 doc comments a ≤2 líneas (466 finales).
+  `AGENTS.md` y `CLAUDE.md` estaban divergentes al entrar; se re-espejó
+  `CLAUDE.md` desde `AGENTS.md` (regla del repo).
+- **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
+  `CLAUDE.md` (espejo byte a byte), skill `content-curriculum` (SKILL.md,
+  content-model, snippet-authoring con la receta de PHP) y este archivo.
+- **Verificado**: `bash tool/check.sh` completo en verde — **663 tests**,
+  format/analyze/arquitectura limpios; `audit_lesson_order.py` verde para
+  las 3 rutas (course-only, sin huérfanos).
+
+### 2026-09-12 — Python/Django: Fundamentos + ORM + REST API (3 rutas nuevas, 55 snippets)
+
+- **Pedido del usuario**: un curso/guía bajo Python pero para Django, de 0
+  a una REST API completa, bilingüe (en/es, mismos estándares que las
+  otras guías). Tras preguntarle eligió **tres rutas**, dificultad
+  **mixta real** (beginner/intermediate/advanced honestos), proyecto
+  compartido **API de Bookmarks** y stack **Django 5.2 LTS + DRF 3.16 +
+  TokenAuthentication** (sin dependencias extra).
+- **Contenido**: `python-django-foundations-v1` (21: proyecto/settings/
+  `AppConfig`, primer modelo y migraciones, tipos de campo y `Meta`,
+  vistas y URLs con converters, plantillas + herencia, `Form`/`ModelForm`
+  y POST con CSRF, admin y `ModelAdmin`, `TestCase` + `Client`),
+  `python-django-orm-v1` (17: FK/`related_name`/M2M/`CASCADE` vs
+  `SET_NULL`, QuerySets, lookups, `get_or_create`, bulk, `Q`/`F`,
+  `aggregate`/`annotate`, `select_related`/`prefetch_related`, manager
+  propio, anatomía de migración, data migration `RunPython` y comandos) y
+  `python-django-rest-v1` (17: instalación DRF, `ModelSerializer` +
+  validación + campos anidados, `@api_view`/`APIView`/genéricas/
+  `ModelViewSet` + router + `@action`, token, `owner` +
+  `IsOwnerOrReadOnly` + `perform_create` + queryset por usuario,
+  paginación + search/ordering, `APITestCase` y flujo e2e). Python suma
+  **16 categorías propias** (`djangoProject`, `djangoModels`,
+  `djangoViews`, `djangoTemplates`, `djangoForms`, `djangoAdmin`,
+  `djangoTesting`, `djangoRelationships`, `djangoOrm`,
+  `djangoMigrations`, `djangoRestSetup`, `djangoSerializers`,
+  `djangoRestViews`, `djangoRestAuth`, `djangoRestFiltering`,
+  `djangoRestTesting`).
+- **Verificación real, no por ojo**: proyecto de referencia Django 5.2.17
+  + DRF 3.16.1 (venv nuevo con Python 3.12 vía `uv`) construido por
+  etapas; cada snippet es un slice verbatim de un archivo que corrió en su
+  etapa, con `check`/`makemigrations --check`/`migrate`/`test` y scripts
+  reales de `manage.py shell`; la data migration se probó forwards y
+  backwards; el API se ejercitó con `rest_framework.test.APIClient`
+  (201/400/401/403/404, token, paginación, search/ordering).
+- **Prosa bilingüe delegada** (3 agentes en paralelo con guía de estilo y
+  self-validation) y **fusión con validación independiente** (id-set
+  exacto, 3 oraciones por explicación, límites de 80/950 caracteres).
+- **Revisión adversarial fresca** (3 agentes sin contexto): reconstruyeron
+  el proyecto en un venv desde cero (55/55 snippets coinciden **byte a
+  byte** con lo ejecutado; 9 tests + smoke HTTP en verde), auditaron
+  currícula y prosa. Hallazgos reales corregidos: **bloqueante** en
+  `rest-005` (los campos declarados `collection_name`/`tags` no estaban en
+  `Meta.fields` → `AssertionError` de DRF) y en `rest-017` (el test
+  asertaba `owner` en la respuesta, que el serializer no expone; ahora lo
+  verifica contra la DB), imports visibles en la primera lección de cada
+  archivo (`rest-003`/`006`/`016`/`017`, `template-001`, `form-003`),
+  `verbose_name` mal descrito, atomicidad de `get_or_create` matizada,
+  `delete()` en lote corregido, "seis rutas" → manejadores/rutas estándar,
+  recordatorios de `makemigrations`/`migrate` tras cambiar modelos, 19
+  títulos es con acentos, `client`→`cliente`, `nullable`→`opcional`,
+  `tags`→`etiquetas` y varios calques.
+- **Wiring**: 16 valores en `ContentCategory` (los 24 previos se
+  comprimieron para no romper el límite de 500 líneas, tarea de una sesión
+  concurrente que ya los dejó en el límite) + labels en ambos `.arb`
+  (`flutter gen-l10n`), `content_labels.dart`, assets en `pubspec.yaml` +
+  `learning_path_repository_impl.dart`, completeness/drift tests (los
+  conteos vigentes los fijó la sesión de PHP; sets de `_`/`%` recomputados
+  con 48/3 ids de Django) y `audit_lesson_order.py` verde para las 5 rutas
+  de Python.
+- **Verificado**: `bash tool/check.sh` completo en verde — **648 tests**,
+  format/analyze/arquitectura limpios, con la tree compartida por sesiones
+  concurrentes del mismo día (Dart, PHP, C#, Go REST) también en verde.
+  `SPEC.md` §3.1, `AGENTS.md` + `CLAUDE.md` (espejo byte a byte) y la
+  skill `content-curriculum` (SKILL.md, content-model, snippet-authoring
+  con la receta de verificación de Django) actualizados.
+
+### 2026-09-12 — Kotlin: Fundamentos + Algoritmos + Avanzado (lenguaje nuevo, 3 rutas, 53 snippets)
+
+- **Pedido del usuario**: un curso de introducción a Kotlin bilingüe
+  (en/es, mismos estándares que las otras guías). Tras preguntarle el
+  alcance eligió **tres cursos** y **categorías propias dedicadas**:
+  `kotlin-foundations-v1` (22 lecciones: `val`/`var`, tipos y plantillas
+  de texto, `if`/`when` como expresión, rangos y `while`, funciones con
+  argumentos por defecto, null safety con `?.`/`?:`, colecciones (incluido
+  `IntArray`), lambdas, `data class` + desestructuración, extensiones,
+  clases e `init`, y `try`/`catch` como expresión),
+  `kotlin-algorithms-v1` (12, secuencia canónica; Dijkstra con distancias
+  `Long` y solo nodos alcanzables) y `kotlin-advanced-v1` (19: selladas +
+  `when` exhaustivo, `object`/`companion`, métodos por defecto y
+  delegación `by`, genéricos + varianza, `lateinit`/`as?`/guardas,
+  extensiones, funciones de orden superior, funciones de alcance, lambdas
+  con receptor, `runCatching`/`Result` y corrutinas con `flow`).
+- **Cinco categorías propias** (`nullSafety`, `dataClasses`, `lambdas`,
+  `extensions`, `coroutines`), con `collections` compartida con Crystal/C#;
+  `nullSafety` se mantiene separada de `nilSafety` (Crystal/C#) porque el
+  chip debe decir "Null safety", el término del propio lenguaje.
+- **Verificación real, no por ojo**: los 53 snippets se compilaron con
+  **kotlinc 2.4.20 / JRE 17** (`-Werror -include-runtime`) y se ejecutaron
+  con salida esperada, cada uno dentro de un driver que contiene el código
+  del catálogo como substring verbatim; los de corrutinas enlazan
+  `kotlinx-coroutines-core-jvm` 1.11.0. Los 12 algoritmos se fuzzearon
+  (25 684 casos con semillas fijas) contra `IntArray.sortedArray`, un scan
+  independiente, flood fill/BFS-DFS y Bellman-Ford; la revisión adversarial
+  inyectó 11 bugs deliberados y el fuzz los detectó todos.
+- **Revisión adversarial fresca** (2 agentes sin contexto, uno de código y
+  uno de currícula/prosa): 52/52 compilaban; hallazgos reales aplicados —
+  la prosa de `kotlin-loop-001` afirmaba que `println()` insertaba líneas
+  vacías (falso), faltaba presentar arrays (`IntArray`) en fundamentos
+  (nuevo `kotlin-coll-003`), el objeto `Dot` y `apply` aparecían antes de
+  sus lecciones (se intercambió el contenido de `oop-002`/`oop-003` y de
+  `lambda-004`/`lambda-005` para que los ids sigan el orden pedagógico), y
+  una decena de frases en español (calcos de "disparar y olvidar",
+  "retardo", "ranura", "frentes", mezcla max heap/montículo, etc.).
+- **Wiring**: `ProgrammingLanguage.kotlin` + 5 categorías nuevas,
+  `KotlinSyntaxTokenizer` (comentarios `/* */` anidados, strings crudos
+  `"""`, plantillas `$x`/`${...}`, identificadores con backticks, rangos
+  `1..3` sin tragarse los números) con 14 tests, l10n
+  (`languageKotlin`/`languageKotlinBlurb` + las 5 categorías en ambos
+  `.arb`), assets en `pubspec.yaml` + ambos data sources,
+  `snippet_catalog_completeness_test`/`key_layout_map_test`,
+  `audit_lesson_order.py` (`kotlin` en `COURSE_ONLY_LANGUAGES`),
+  `content_drift_integration_test` (conteos y sets de `_`/`%`).
+- **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
+  `CLAUDE.md` (espejo byte a byte), skill `content-curriculum` (SKILL.md,
+  content-model, snippet-authoring con la receta de Kotlin).
+- **Verificado**: `audit_lesson_order.py` verde para las 3 rutas; tests
+  enfocados de tokenizer/completeness/drift/key-layout/learning_paths en
+  verde; `bash tool/check.sh` al cierre (ver arriba). Nota de
+  concurrencia: Dart, C#, Swift, CSS, Java, Crystal y Django se estaban
+  integrando en el mismo working tree; los conteos del drift test se
+  recalcularon al final contra el catálogo sembrado real.
+
+### 2026-09-12 — Dart: Fundamentos + Avanzado + Algoritmos (lenguaje nuevo, 3 rutas, 53 snippets)
+
+- **Pedido del usuario**: un curso de introducción a Dart bilingüe (en/es,
+  mismos estándares que las otras guías). Tras preguntarle el alcance eligió
+  **tres cursos**: `dart-foundations-v1` (25, tour amplio: tipos, seguridad
+  frente a nulos, control de flujo, colecciones, funciones, clases y
+  herencia, registros y patrones, errores, `async`/`await` y módulos),
+  `dart-advanced-v1` (16: `late` y promotion, streams (`async*`, `await
+  for`, `StreamController`), futuros paralelos y `Completer`, isolates,
+  patrones avanzados con sealed classes, mixins, métodos de extensión,
+  genéricos con restricciones y excepciones propias) y
+  `dart-algorithms-v1` (12, secuencia canónica con grafo como lista de
+  adyacencia). Dart entra como lenguaje **solo-curso** con **una categoría
+  propia** (`recordsAndPatterns`) y reutiliza las genéricas más
+  `collections`, `nullSafety` y `asyncProgramming`.
+- **Verificación real, no por ojo**: los 53 snippets se corrieron con el
+  Dart SDK 3.13.3 del proyecto (`dart format --set-exit-if-changed`,
+  `dart analyze`, `dart run` con salida aseverada); los 12 algoritmos
+  (definiciones puras, sorts que devuelven lista nueva sin mutar la
+  entrada) se fuzzearon contra referencias independientes (`List.sort`,
+  scan lineal, flood-fill, Bellman-Ford) — la referencia DFS del fuzz
+  atrapó y corrigió un bug propio antes de cerrar.
+- **Revisión adversarial fresca** (2 agentes sin contexto, uno de
+  código/ejecución y uno de currícula): hallazgos reales corregidos —
+  `countEvens` usaba `List`/`for-in` antes de la lección de colecciones
+  (el bloque `collections` se movió antes de `functions`), la lección
+  "try/catch/finally" no contenía `try/catch/finally` en el código (ahora
+  sí, y `errorHandling` va antes de `asyncProgramming`), los records
+  avanzados enseñaban object patterns antes que `if-case` (reordenados
+  003 → 002 → 001), `dart-oop-003` prometía `Rex says Woof` sin el `name`
+  en `speak()`, prosa que exageraba el contrato de `late` (es
+  `LateInitializationError` en runtime, no una garantía de compilación),
+  "sealed" descrito como "solo Circle/Square" (es "solo la misma
+  biblioteca"), calques ES (`seguridad nula`, `retrollamadas`, `cierre`),
+  dificultades de los grafos alineadas con los catálogos hermanos y el
+  `\n` final que solo tenían los 12 algoritmos.
+- **Wiring**: `ProgrammingLanguage.dart` + `ContentCategory.recordsAndPatterns`
+  (con docs de `nullSafety`/`asyncProgramming`/`concurrency` ampliados),
+  `DartSyntaxTokenizer` nuevo (keywords, `r'...'` crudos, `'''`/`"""`,
+  `//`/`///`/`/* */` sin anidar, interpolación dentro del string, números
+  `0xFF_00`, `1.isEven` como acceso a miembro) + 12 tests; `languageDart`/
+  `languageDartBlurb`/`categoryRecordsAndPatterns` en ambos `.arb` +
+  gen-l10n; assets en `pubspec.yaml` + ambos data sources; completeness/
+  drift (900→953 total, 325→343 beginner, sets `_`/`%` con los ids de
+  Dart) + key-layout tests; `audit_lesson_order.py` (`dart` en
+  `COURSE_ONLY_LANGUAGES`).
+- **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
+  `CLAUDE.md` (espejo byte a byte), skill `content-curriculum` (SKILL.md,
+  content-model y snippet-authoring con la receta de verificación Dart).
+- **Verificado**: `bash tool/check.sh` **completo en verde** —
+  **648 tests**, format/analyze/arquitectura limpios; `audit_lesson_order.py`
+  verde para las tres rutas. Nota de concurrencia: el working tree compartía
+  sesiones activas (Swift/C#/Kotlin/CSS); el helper `settledCatalog` del
+  drift test quedó con un total stale al entrecruzarse con la sesión que
+  añadió el snippet 954, y se sincronizó al estado final del catálogo
+  (**954 activos / 344 beginner**).
+
+### 2026-09-12 — Swift: Fundamentos + Algoritmos + Avanzado (lenguaje nuevo, 3 rutas, 47 snippets)
+
+- **Pedido del usuario**: un curso de introducción a Swift bilingüe (en/es,
+  mismos estándares que las otras guías). Tras preguntarle el alcance eligió
+  **tres cursos**: `swift-foundations-v1` (20 lecciones, tour amplio:
+  `let`/`var`, tipos, condicionales con `switch` de rangos/tuplas, ciclos,
+  funciones con `inout`, opcionales, colecciones, closures, structs, clases,
+  protocolos, enums, errores y un proyecto final de conteo de palabras),
+  `swift-algorithms-v1` (12, misma secuencia canónica que Java/Crystal) y
+  `swift-advanced-v1` (15: opcionales avanzados, pattern matching con
+  `indirect`, ARC, closures de escape, genéricos, `some`/`any`, tipos
+  asociados, conformidad condicional, `Codable`, property wrappers y
+  concurrencia con `async`/`await`, actores y task groups). Swift entra como
+  lenguaje **solo-curso** con **cinco categorías propias** — `optionals`,
+  `closures`, `enumsAndPatternMatching`, `codable`, `propertyWrappers`.
+- **Verificación real, no por ojo**: los 47 snippets se compilaron con
+  **Swift 6.2.4** (`podman run docker.io/library/swift:6.2`,
+  `swiftc -warnings-as-errors`; scripts y drivers viven en `main.swift`) y
+  se ejecutaron con salida esperada exacta; los 12 algoritmos se fuzzearon
+  contra referencias independientes (sorts vs `sorted()`, búsquedas vs
+  `firstIndex(of:)`, BFS/DFS vs flood-fill, Dijkstra O(V²) vs Bellman-Ford,
+  pesos cercanos a `Int.max` incluidos).
+- **Revisión adversarial fresca** (2 agentes sin contexto) + **re-revisión
+  post-fix** (un tercero): hallazgos reales corregidos — `retry(times: 0)`
+  hacía trap con `1...0` (ahora `guard times > 0`), Dijkstra podía
+  desbordar `Int` con pesos cercanos a `Int.max` (ahora
+  `guard best <= Int.max - edge.weight`), el `@escaping` del ejemplo no
+  escapaba (el closure ahora se guarda en `pending` y se invoca después),
+  `enum Direction: CaseIterable` aparecía antes de la lección de protocolos
+  (protocolos pasó antes de enums en la ruta), `try?` sobre una función
+  `rethrows` con closure no-throwing no compila (se agregó el caso que sí
+  lanza), `switch` sobre tupla literal dispara "will never be executed" con
+  `-warnings-as-errors` (se usa una variable), y ~10 precisiones de prosa
+  (inferencia de `Character`, `inout` como copy-in copy-out, DFS preorden,
+  heap build O(n), `firstMatch` y `?? -1`).
+- **Etiquetas de `length`**: regla única (short ≤8 líneas y ≤1 declaración,
+  long ≥25, medium el resto) para corregir las inconsistencias que encontró
+  la revisión.
+- **Wiring**: enum `ProgrammingLanguage.swift` + 5 `ContentCategory` nuevas,
+  `SwiftSyntaxTokenizer` (comentarios anidados, raw strings `#"..."#`,
+  multiline `"""`, `$0`, directivas `#if` y `#available`) con 18 tests, l10n
+  (`languageSwift`/`languageSwiftBlurb` + 5 categorías en ambos `.arb`),
+  assets en `pubspec.yaml` + ambos data sources + completeness/key-layout,
+  `audit_lesson_order.py` (`swift` en `COURSE_ONLY_LANGUAGES`).
+- **Nota de concurrencia**: el mismo working tree tenía sesiones activas de
+  Dart, C#, CSS y Go REST/HTTP tocando los mismos archivos compartidos
+  (enum, l10n, data sources, el drift test). El conteo del
+  `content_drift_integration_test` se regeneró al final desde los assets
+  realmente sembrados (**953 activos / 343 beginner**, incluye Dart y C# de
+  esas sesiones) y sus sets de `_`/`%` se reconstruyeron completos. El gate
+  final (`bash tool/check.sh`) pasa formato y se detiene en analyze por un
+  único info ajeno (`dart_syntax_tokenizer_test.dart:74`, WIP de la sesión
+  de Dart), no por Swift.
+- **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
+  `CLAUDE.md` (espejo byte a byte), skill `content-curriculum` (SKILL.md,
+  content-model, snippet-authoring con la receta de Swift).
+- **Verificado**: `flutter test` completo **648/648 verdes** (incluye el
+  tokenizer Swift 18/18, completeness, key-layout con `swift_v1.json`,
+  learning_paths y el drift test regenerado); `audit_lesson_order.py` verde
+  para las 3 rutas; `dart format` limpio; analyzer limpio salvo el info
+  ajeno de Dart.
+
+### 2026-09-12 — C#: Fundamentos + Algoritmos + Avanzado (lenguaje nuevo, 3 rutas, 52 snippets)
+
+- **Pedido del usuario**: un curso de introducción a C# bilingüe (en/es,
+  mismos estándares que las otras guías). Tras preguntarle el alcance
+  eligió **tres cursos** (fundamentos + algoritmos + avanzado) y el
+  título **"C# from scratch" / "C# desde cero"**.
+- **Contenido**: `csharp-foundations-v1` (25 lecciones: sentencias de
+  nivel superior, `namespace`/`Main` clásico, tipos, interpolación,
+  `const`/`decimal`, `if`/`switch`, `for`/`foreach`/`while`, funciones
+  locales, sobrecarga, clases/propiedades/`required`/`init`,
+  herencia/`abstract`, interfaces, `List<T>`/`Dictionary`, excepciones
+  propias), `csharp-algorithms-v1` (12, secuencia canónica; grafo como
+  lista de adyacencia y Dijkstra O(V²)) y `csharp-advanced-v1` (15:
+  nullable reference types, records, patrones/`switch` expressions,
+  genéricos, delegados/eventos, métodos de extensión, iteradores con
+  `yield return`, LINQ de métodos y de consulta, `async`/`await` y
+  `Task.WhenAll`, `IDisposable`/`using`). C# entra como lenguaje
+  **solo-curso** con **cuatro categorías propias** (`patternMatching`,
+  `delegatesAndEvents`, `linq`, `asyncProgramming`) y reutiliza
+  `collections`/`nilSafety` de Crystal (docs del enum actualizadas).
+- **Verificación real, no por ojo**: los 52 snippets se compilaron y
+  ejecutaron contra **.NET SDK 10.0.401** en
+  `podman run mcr.microsoft.com/dotnet/sdk:10.0` con
+  `Nullable=enable` + `TreatWarningsAsErrors=true` (analyzers de diseño
+  apagados: CA1852 pide `sealed` en ejemplos de herencia a propósito;
+  el baremo es el warning del compilador, como en los otros lenguajes).
+  Los 12 algoritmos se fuzzearon contra `Array.Sort`/`Array.IndexOf`,
+  flood-fill independiente (BFS/DFS) y Bellman-Ford (Dijkstra). Dos
+  bugs reales atrapados por el compilador antes del catálogo: las
+  **funciones locales de C# no se pueden sobrecargar** (la lección de
+  overloading ahora usa una `static class Formatter`) y un `var ratio`
+  sin usar (CS0219).
+- **Revisión adversarial fresca** (2 agentes sin contexto): el de código
+  recompiló los 52 desde el JSON final y re-fuzzeó los 12 con ~9.150
+  casos diferenciales + 4 controles negativos (4/4 detectados), sin
+  defectos de código. El de currícula encontró 7 problemas reales, todos
+  corregidos: prosa que decía `List<T>` donde el código acabó usando
+  arreglos (`csharp-oop-004`, `csharp-iface-002`), regla falsa del sufijo
+  `L` (`csharp-vars-001`), contradicción de complejidad en insertion sort
+  (`csharp-algo-005`), "in place" en el TLDR de merge sort
+  (`csharp-algo-006`), `record`/nullable/ternario solo-avanzados en los
+  algoritmos (se reescribieron `csharp-algo-006`/`009`/`012` y
+  `csharp-func-004` con `class Edge`, `ContainsKey` y `if`/`else`), y
+  prosa que decía "el mensaje" donde se imprime `ex.Level`
+  (`csharp-err-002`). También se pulieron calcos ES (`namespace de
+  archivo`, `antes del print`, `en locales`) y backticks en títulos ES.
+- **Prosa bilingüe delegada** (3 agentes en paralelo con el código ya
+  verificado) y **unión validada aparte** (`merge.py` con id-set exacto,
+  longitudes, 3 oraciones, atribución por ruta, ASCII-only) más los
+  parches del review aplicados con reemplazos exactos asertados.
+- **Wiring**: `ProgrammingLanguage.csharp` + `CSharpSyntaxTokenizer`
+  nuevo (verbatim `@"..."`, interpolados `$"..."`/`$@"..."`, raw
+  `"""..."""`, `@`-identificadores, sufijos numéricos) con 19 tests;
+  l10n (`languageCsharp`/`languageCsharpBlurb` + las 4 categorías en
+  ambos `.arb`); assets en `pubspec.yaml` + ambos data sources;
+  completeness/key-layout tests; `audit_lesson_order.py` (`csharp` en
+  `COURSE_ONLY_LANGUAGES`).
+- **`content_drift_integration_test`**: 694→**746** total y 249→**272**
+  beginner (incluye los 77 snippets de CSS de la sesión concurrente),
+  sets de `_` (+8 ids) y `%` (+3) ampliados.
+- **Nota de concurrencia**: la sesión de CSS (mismo working tree) dejó el
+  `switch` de `SyntaxTokenizers.forLanguage` sin su arm y sus tres rutas
+  sin la clave `"language"`, lo que rompía analyze y el test de
+  completeness compartidos; se completaron esos cuatro puntos mínimos
+  (sin tocar su contenido) para poder verificar C#. `bash tool/format.sh`
+  se corrió sobre el repo (formatea archivos ajenos también).
+- **Verificado**: tests enfocados de contenido + key-layout + 
+  learning_paths **247 verdes**, incluido drift con los conteos nuevos;
+  `flutter analyze --fatal-infos --fatal-warnings` limpio. Cierre:
+  `bash tool/check.sh` **verde de punta a punta — 648 tests**,
+  format/analyze/arquitectura limpios (tras comprimir
+  `content_category.dart` a 500 líneas exactas por las categorías de
+  C#/CSS/Swift/Dart/Kotlin acumuladas, y arreglar el lint
+  `use_raw_strings` de `dart_syntax_tokenizer_test.dart` de la sesión de
+  Dart que bloqueaba analyze — cambio mecánico, mismo contenido del
+  string).
+- **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
+  `CLAUDE.md` (espejo byte a byte), skill `content-curriculum`
+  (SKILL.md, content-model, snippet-authoring con la receta de .NET 10).
+
+### 2026-09-12 — Go: REST & HTTP (ruta nueva, 33 lecciones, 32 snippets + 4 categorías)
+
+- **Pedido del usuario**: guía bilingüe (en/es) "muy a lo backend":
+  endpoints, CRUD, HTTP nativo, conexiones, REST API y lo nuevo de Go
+  1.27. Tras preguntarle eligió **ruta nueva independiente**, **memoria +
+  database/sql** ("ambas"), y **cliente HTTP + httptest**.
+- **Contenido**: `go-rest-http-v1` (33 lecciones, 32 snippets nuevos
+  `go-http-001..018` + `go-client-001..005` + `go-httptest-001..003` +
+  `go-sqlite-001..006`, más `go-modern-005` reutilizado en la posición
+  24): servidor mínimo → `Handler`/`ServeMux`/routing con método y
+  `{id}` → request/JSON seguro → modelo+DTOs con **campos promovidos**
+  (Go 1.27) → store en memoria con `RWMutex` e IDs `uuid.NewV7()`
+  (Go 1.27) → paginación con `Page[T]` y **método genérico** (Go 1.27)
+  → errores de dominio → status (400/404/422/500, con `errorMessage`
+  ocultando detalles internos) → handlers CRUD → middleware (request ID,
+  logging, recovery) → timeouts y shutdown con señales → router final;
+  cliente GET/POST con contexto, errores, `Transport`/keep-alive,
+  reintentos con backoff y perfil `goroutineleak` (Go 1.27); tests con
+  `httptest` (recorder, server real, tabla de endpoints); y persistencia
+  `database/sql` con SQLite (`modernc.org/sqlite` puro Go): pool,
+  DDL/INSERT con placeholders, `ErrNoRows`, iteración de filas,
+  transacción, y capstone `SQLStore` que implementa `TaskStore` sin tocar
+  los handlers.
+- **4 categorías nuevas** (`httpServers`, `httpClients`, `httpTesting`,
+  `sqlPersistence`): enum + doc comments, `.arb` en/es + `gen-l10n`,
+  `content_labels.dart`, set `_topicCategories` del test de completitud
+  (renombrado desde `_algorithmTopicCategories`) y set espejo del
+  `audit_lesson_order.py`.
+- **Verificación real, no por ojo**: harness propio
+  (`/tmp/opencode/jit-rest`) que envuelve cada lección con su soporte y
+  la compila/ejecuta con **go1.27.0** (descargado por `GOTOOLCHAIN`):
+  `gofmt` limpio + `go run`/`go build`/`go test` con salida aseverada
+  para las 32. SQLite se ejecutó de verdad con `modernc.org/sqlite
+  v1.58.0`. E2E adicional con servidores reales: `curl /health` +
+  SIGTERM (el server mínimo responde y el de shutdown sale limpiamente).
+- **Revisión adversarial fresca** (2 agentes sin contexto): bugs reales
+  corregidos — `SQLStore.Update` descartaba `Done` (ahora
+  `COALESCE(?, done)` + validación de título), `TaskStore.List` no
+  devolvía error (ahora sí, y el handler responde 500 en vez de una
+  página vacía), declaraciones compartidas (interface, store, centinelas
+  `ErrNotFound`/`ErrInvalidInput`/`ErrMalformedInput`, `queryInt`,
+  `errorMessage`, `decodeTask`) ahora **visibles en la primera lección
+  que las usa**, `List` con clamp de negativos, `SetConnMaxLifetime`
+  solo para bases con archivo (en `:memory:` borraba todo), 
+  `fetchAllTasks` propaga errores de parse y ordena por `id DESC`
+  (el texto RFC3339Nano no es cronológico con fracciones variables),
+  el retry drena antes de cerrar y ya no duerme tras el último intento,
+  claims falsos de Go 1.27 (inferencia de funciones en middleware)
+  eliminados, recovery tras escritura parcial matizado, 400 vs 422
+  separados (`ErrMalformedInput`), y ~20 calcos de español corregidos.
+- **Wiring**: catálogo Go 183→215 activos; runtime
+  `go_rest_http_v1.json` registrado en `pubspec.yaml`,
+  `learning_path_repository_impl.dart` y el test de completitud;
+  `content_drift_integration_test` sincronizado (793 activos / 287
+  beginner, incluye las sesiones concurrentes); `audit_lesson_order.py`
+  verde. Tests enfocados (drift + completeness + key-layout +
+  learning_paths) **58 verdes**.
+- **Nota de concurrencia**: el tree tenía sesiones activas de Kotlin,
+  Swift, CSS, Java y Crystal. Esta sesión además arregló el campo
+  `language` faltante en las 3 rutas CSS (rompía tests compartidos).
+  `flutter analyze` sigue bloqueado por el wiring a medias de Kotlin
+  (`languageKotlin`/`categoryNullSafety` sin casos en `content_labels`
+  ni claves en `app_es.arb`).
+
+### 2026-09-12 — CSS: Fundamentos + Layout & Responsive + Avanzado (lenguaje nuevo, 3 rutas, 45 snippets)
+
+- **Pedido del usuario**: un curso de introducción a CSS bilingüe (en/es,
+  mismos estándares que las otras guías). Tras preguntarle el alcance
+  eligió **tres cursos** y las **7 categorías propias** propuestas;
+  aprobó el blurb técnico ("La hoja de estilos de la web — cascada,
+  especificidad y layout."). Como el curso avanzado incluye animaciones,
+  se agregó una 8ª categoría (`cssTransitionsAndAnimations`) para que
+  tuvieran dónde vivir — ninguna categoría de Go representa un concepto
+  de CSS, así que las 8 son propias.
+- **Contenido**: 45 snippets solo-curso, dificultad 23/19/3, en tres rutas
+  — `css-foundations-v1` (16: selectores, modelo de caja, color y
+  tipografía), `css-layout-v1` (16: flexbox, grid, posicionamiento,
+  unidades/media queries/`clamp()`) y `css-advanced-v1` (13:
+  especificidad/herencia/`@layer`, custom properties, transiciones,
+  `@keyframes`, `prefers-reduced-motion` + capstone).
+- **Verificación real, no por ojo**: CSS no tiene compilador, así que el
+  estándar son **dos parsers independientes**: `csstree-validator`
+  (valida cada propiedad/valor contra la data de la spec; se comprobó que
+  atrapa errores sembrados a propósito) y `lightningcss` (motor Rust de
+  Parcel/Vite). Los 45 snippets pasan ambos; `code` ASCII-only (pasa
+  `key_layout_map_test`).
+- **Autoría bilingüe delegada** (3 agentes, uno por ruta, con el código
+  ya verificado leído del draft) y unión validada aparte (id-set,
+  longitudes, 3 frases). **Revisión adversarial fresca** (2 agentes sin
+  contexto, uno de código/orden y uno de prosa): ~20 hallazgos reales
+  corregidos — el orden de `@layer` estaba al revés (la capa declarada
+  *después* gana en declaraciones normales), `flex` decía que los ítems
+  no se encogen solos (`flex-shrink` default 1), `gap` en un layout sin
+  `display: flex/grid` no hacía nada, `width: 100%` + padding desbordaba
+  sin `border-box`, `css-flex-003` usaba `flex:` sin contenedor padre,
+  referencias adelantadas (`box-sizing`/`max-width`/`overflow`/selector
+  universal), `2rem`/`60vh`/`0.02em` usadas en fundamentos antes de su
+  lección de unidades (pasaron a `px`), tldr de `z-index` incompleto,
+  imprecisiones (padding vertical inline, `text-decoration` no
+  posiciona), calcos ES ("El root define X en Y", "la persona pide",
+  "escala limpio") y la descripción de la ruta avanzada (frase sin verbo).
+- **Wiring**: `ProgrammingLanguage.css` + `CssSyntaxTokenizer` nuevo
+  (propiedades posicionales, `@`-rules, hex, unidades, funciones y
+  pseudo-clases funcionales, custom properties `--x`) con 17 tests;
+  l10n (`languageCss`/`languageCssBlurb` + 8 categorías en ambos `.arb`);
+  assets en `pubspec.yaml` + ambos data sources; completeness/key-layout/
+  drift tests; `audit_lesson_order.py` (`css` en `COURSE_ONLY_LANGUAGES`).
+- **Bug real encontrado por el test de completeness**: los 3 JSON de
+  rutas generados no traían la clave `language` (el test de orfandad la
+  usa); corregido y regenerado.
+- **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
+  `CLAUDE.md` (espejo byte a byte), skill `content-curriculum` (SKILL.md,
+  content-model, snippet-authoring con la receta de los dos parsers).
+- **Verificado**: `flutter test` completo **600 verdes**; `flutter
+  analyze --fatal-infos --fatal-warnings` limpio; `check_architecture`
+  sin violaciones duras; `dart format` limpio en los archivos tocados;
+  `audit_lesson_order.py` verde para las 3 rutas.
+- **Nota de concurrencia**: el mismo working tree traía sesiones activas
+  de C# y del teclado 3D; una de ellas ya había actualizado el drift test
+  con los conteos/ids de CSS mientras corría esta sesión — se validaron
+  contra el catálogo final (45 snippets, 23 principiantes, sets de `_`/`%`
+  correctos) y la sesión de C# volvió a subir los totales combinados
+  después (746/272), sin romper nada.
+
+### 2026-09-12 — Teclado del perfil: look pseudo-3D estilo VIA (parallax, drag-to-orbit, hover/press, contraste)
+
+- **Pedido del usuario**: el visual del teclado en Profile se veía plano;
+  quería un efecto "2D que parece 3D" estilo UI de VIA. Decisiones
+  acordadas por pregunta explícita: **híbrido** extrusión + gradiente sutil
+  (sin blur), **hover/press por tecla**, **tilt isométrico solo en el
+  hero**, y **más contraste de case**.
+- **Arquitectura** (`lib/features/profile/presentation/widgets/keyboard/`):
+  `keyboard_keycap_style.dart` nuevo (colores, radios y profundidades
+  resueltos del `ColorScheme`); `KeyboardLayoutTransform` en
+  `keyboard_layout_geometry.dart` (fit + rects + hit-test con rotación
+  invertida, **compartido** por painter y puntero para que jamás diverjan);
+  `KeyboardLayoutPainter` reescrito a slabs extruidos (labio inferior sólido
+  + cara superior con gradiente vertical de 2 paradas); press hunde la cara
+  y colapsa el labio. `KeyboardVisual` pasó a `ConsumerStatefulWidget`
+  (`MouseRegion` + `Listener` + `AnimationController` con `AppMotion`) con
+  `tiltDegrees` opcional (default 0 = **reposo centrado**); el preview de
+  `EditProfileScreen` queda plano por defecto. En el hero la card **rastrea
+  el puntero** sobre toda su superficie (`MouseRegion` + `GlobalKey`) y
+  alimenta `pointerTilt` (±6° por eje) con `TweenAnimationBuilder` lento
+  (`AppMotion.spatialDefault`), así el tablero gira siguiendo el mouse sin
+  saltos y vuelve a centrado al salir (pedido explícito del usuario).
+- **Drag-to-orbit** (misma sesión, pedido posterior): arrastrando con el
+  mouse sobre la card se gira el 3D como visor de producto — horizontal =
+  yaw (±60°), vertical = pitch (±30°) — y el ángulo **persiste** al soltar;
+  umbral de 4 px para que un click normal siga siendo press de tecla (al
+  cruzar el umbral se cancela el press vía `interactiveSuspended`). Cursor
+  `grab`/`grabbing`, solo mouse (touch sigue scrolleando la lista). La
+  perspectiva es **dinámica** (0.006 pleno hasta 8° y decreciente después):
+  con factor fijo, un drag de 40°+ proyectaba el case fuera de la card al
+  escalar el borde cercano.
+- **Contraste medido, no adivinado**: `surfaceBright`/`surfaceDim` se
+  invertían en gruvbox light y colapsaban a ~1.06 en varias dark; el style
+  ancla el board al extremo oscuro (`inverseSurface` en light,
+  `surfaceContainerLowest`+`shadow` en dark) y las teclas al claro, con
+  test que exige contraste ≥2.5 en las **48 combinaciones**
+  paleta×brightness.
+- **Tests**: `keyboard_keycap_style_test.dart` (contraste + acentos),
+  casos nuevos de `KeyboardLayoutTransform` (rects, rotación, stepped,
+  `keyIndexAt`, espacio para la extrusión), de `keyboard_visual_test.dart`
+  (hover, press/release, `interactive: false`, hit-test con tilt,
+  `pointerTilt` vs. su ausencia, `rotation` de drag,
+  `interactiveSuspended` libera el press) y
+  `profile_keyboard_hero_card_test.dart` (el parallax responde al mouse y
+  se resetea al salir; el drag orbita, respeta el umbral de click y
+  persiste tras soltar).
+- **Harness visual**: `test/_manual_visual_check.dart` captura light/dark,
+  gruvbox, blackWhite, hover y pressed (`/tmp/hero_*.png`). Gotcha real:
+  `RenderRepaintBoundary.toImage` en widget tests **debe** ir dentro de
+  `tester.runAsync`; si no, el body termina pero el teardown cuelga para
+  siempre (y `pump(60ms)` extra para el primer tick del `Ticker`).
+- **Docs**: excepción al "flat, no gradients/shadows" documentada en
+  `STACK.md` §2.5 y en la sección Design system de `AGENTS.md`/`CLAUDE.md`
+  (mirror byte a byte re-hecho).
+- **Gate**: `bash tool/check.sh` de hoy — el format-check global se detiene
+  en archivos **ajenos en vuelo** de `content` (C#/CSS: `csharp_syntax_
+  tokenizer.dart` sin formatear, `ProgrammingLanguage.css` sin cablear). Con
+  esos archivos fuera del foco: analyze/arquitectura limpios para todo lo
+  demás (341 archivos, 0 violaciones) y **todos los tests del teclado en
+  verde** (32 en los 4 archivos del keycap/transform/visual/hero).
+
+### 2026-09-12 — Crystal: Fundamentos + Algoritmos (lenguaje nuevo, 2 rutas, 28 snippets)
+
+- **Pedido del usuario**: un curso de introducción a Crystal bilingüe
+  (en/es, mismos estándares que las otras guías). Tras preguntarle el
+  alcance eligió **dos cursos** y el **tour amplio** para fundamentos:
+  `crystal-foundations-v1` (16 lecciones: variables e inferencia, strings,
+  condicionales, `case/when`, ciclos, rangos, métodos, bloques/`yield`,
+  arreglos, hashes, nil-safety, clases, structs, módulos y excepciones) +
+  `crystal-algorithms-v1` (12, misma secuencia canónica de Go/Rust/Python/
+  JS/TS/Haskell/C/C++/Java). Crystal entra como lenguaje **solo-curso** con
+  **tres categorías propias** — `blocksAndProcs`, `collections`,
+  `nilSafety` — porque `yield`/bloques, arreglos/hashes y los tipos unión
+  con `nil` no encajan en las categorías existentes; el resto reutiliza
+  `variablesAndTypes`, `conditionals`, `loops`, `functions`,
+  `classesAndObjects`, `modules`, `errorHandling` y las 3 de algoritmos.
+- **Wiring**: `ProgrammingLanguage.crystal` + labels/blurb
+  (`languageCrystal`/`languageCrystalBlurb` + las 3 categorías en ambos
+  `.arb`), `crystal_syntax_tokenizer.dart` nuevo (comentarios `#`, `//`
+  como división entera —no comentario—, strings con interpolación, chars,
+  `0x`/`0b`/`0o`, sufijos `_i64`, y el punto de `1..5`/`3.times`/`1..]`
+  como puntuación), assets en `pubspec.yaml` + ambos data sources, y
+  `crystal_syntax_tokenizer_test.dart` (18 casos).
+- **Verificación real, no por ojo**: los 28 snippets se corrieron con
+  **Crystal 1.21.0 real** (`podman run
+  docker.io/crystallang/crystal:latest`): los 16 de fundamentos son
+  programas ejecutables (output comparado contra lo que afirma la prosa) y
+  los 12 de algoritmos se manejaron con drivers de casos borde (arreglo
+  vacío, un elemento, duplicados, ya ordenado, invertido, objetivo
+  ausente; BFS/DFS con el `Graph` de la lección 9 antepuesto; Dijkstra
+  fuzzeado contra Bellman-Ford). Gotchas reales cazados antes de entrar al
+  catálogo: `/` sobre enteros devuelve `Float64` (hay que usar `//`), no
+  existe `block_given?` ni bloque nilable, `String#to_sym` no existe,
+  `String#to_i` lanza en entrada inválida (`to_i?` da nil), `Box` colisiona
+  con la clase `Box(T)` de la stdlib, y `struct` copia por valor.
+- **Prosa bilingüe** delegada a 2 agentes (uno por curso) con el código ya
+  verificado pegado en el prompt + validación independiente del
+  orquestador (id-set, longitudes ≤80/≤950, conteo de frases 2-3) y
+  spot-check de calidad.
+- **Revisión adversarial fresca** (agente sin contexto que recompiló los
+  28, fuzzeó los 12 algoritmos —16k asserts— y probó el tokenizer):
+  0 blockers, 2 hallazgos reales y 9 nits, **todos corregidos** — la prosa
+  de heap sort prometía O(1) de memoria (el `dup` es O(n)), el tokenizer se
+  comía el primer punto tras un dígito (`1..5`, `3.times`), Dijkstra ahora
+  itera `while visited.size < dist.size` (soporta `nodes` sin `start`), DFS
+  usa acumulador mutable (O(V+E) real, sin `concat` que copiaba por
+  nivel), claims de complejidad/memoria corregidos, `capitalize` documenta
+  que también baja a minúsculas el resto, el ejemplo de arreglos/rangos de
+  la lección de loops se movió a la lección de arreglos (menos referencias
+  hacia adelante) y 4 pulidos de español.
+- **Chequeos**: `bash tool/check.sh` completo en verde — **558 tests**,
+  format/analyze/arquitectura limpios; `audit_lesson_order.py` verde para
+  ambas rutas (course-only, sin huérfanos); catálogo total 589→617
+  snippets, beginner 207→222.
+- **Nota de concurrencia**: había otra sesión agregando C, C++ y Java en
+  vivo al mismo árbol (mismos archivos compartidos). Se trabajó primero lo
+  libre de colisiones (contenido/tokenizer/tests propios) y el wiring se
+  hizo en una sola pasada vigilando cada archivo; Java se documentó
+  también en `SPEC.md`/`AGENTS.md` porque la otra sesión lo dejó sin docs
+  (el doc es la fuente de verdad y no debía quedar mintiendo). El set de
+  `_` del `content_drift_integration_test` se movió de `crystal-loop-002`
+  a `crystal-arr-001` tras el cambio de código.
+- Docs actualizados: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` + `CLAUDE.md`
+  (espejo byte a byte), la skill `content-curriculum` (SKILL.md,
+  content-model, snippet-authoring) y este archivo.
+
+### 2026-09-12 — C++: Fundamentos + Algoritmos + Avanzado (lenguaje nuevo, 3 rutas, 45 snippets)
+
+- **Pedido del usuario**: un curso de introducción a C++ bilingüe (en/es,
+  mismos estándares que las otras guías). Tras preguntarle el alcance
+  eligió **tres cursos** (fundamentos + algoritmos + avanzado) y
+  categorías propias: `cpp-foundations-v1` (18 lecciones: tipos, control
+  de flujo, referencias y punteros, `std::vector`, structs y clases),
+  `cpp-algorithms-v1` (12, secuencia canónica; grafo como lista de
+  adyacencia en la 9 y Dijkstra con `WeightedGraph` en la 12) y
+  `cpp-advanced-v1` (15: RAII/punteros inteligentes, semántica de
+  movimiento, STL, plantillas y conceptos, excepciones, herencia y
+  concurrencia). C++ entra como lenguaje **solo-curso** con **dos
+  categorías propias** — `templates` y `stlContainers` — y reutiliza las
+  genéricas ya existentes (incluidas `pointers`, `classesAndObjects`,
+  `memoryManagement`, `errorHandling` y `concurrency`).
+- **Verificación real, no por ojo**: los 45 snippets se compilaron con
+  **g++ 16 y clang++ 22** (`-std=c++20 -Wall -Wextra -Werror -pthread`) y
+  se ejecutaron contra salida esperada; los 12 algoritmos (definiciones
+  puras) con drivers y fuzz contra referencias independientes.
+- **Revisión adversarial fresca** (2 agentes sin contexto): recompilaron
+  los 45 desde el JSON final (ASan+UBSan; TSan en la lección de hilos),
+  fuzzearon los 12 algoritmos contra `std::sort`/`std::find`/Bellman-Ford
+  y auditaron prosa y orden. Hallazgos reales corregidos: `Buffer` (RAII)
+  ahora es no copiable (el doble-free latente que encontró ASan), la prosa
+  de `join` dice `std::terminate` (no "el programa termina antes"),
+  `find_if` se comprueba contra `end()` antes de desreferenciar, el bloque
+  de referencias/punteros se movió antes de funciones (elimina el
+  forward-reference de `const&`), el tldr de `.size()` dice bytes (no
+  caracteres), y precisión de prosa en quicksort (`<=`), Dijkstra
+  (no-negativo), `std::map` (sin "árbol balanceado") y `std::move` (sin
+  "transferencia de punteros").
+- **Wiring**: `ProgrammingLanguage.cpp` + `CppSyntaxTokenizer` nuevo
+  (C++20: raw strings con delimitador `R"tag(...)tag"`, separadores de
+  dígitos `1'000`, operadores alternativos `and`/`or`/`not`,
+  `#include <...>` como string) con 20 tests; l10n (`languageCpp`/
+  `languageCppBlurb` + `categoryTemplates`/`categoryStlContainers` en
+  ambos `.arb`); assets en `pubspec.yaml` + ambos data sources;
+  completeness/key-layout tests; `audit_lesson_order.py` (`cpp` en
+  `COURSE_ONLY_LANGUAGES`).
+- **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
+  `CLAUDE.md` (espejo byte a byte), skill `content-curriculum` (SKILL.md,
+  content-model, snippet-authoring con la receta de C++).
+- **Verificado**: `tool/check.sh` corre entero — format/analyze/arquitectura
+  limpios; `flutter test`: **557 de 558 verdes**, con el único fallo en
+  `crystal-loop-002` (falta en el set de `_` del drift test, sesión de
+  Crystal en vuelo — ajeno a C++). Los 4 tests de contenido + key layout en
+  verde; `audit_lesson_order.py` verde para las 3 rutas; arquitectura sin
+  violaciones duras. Se eliminó (con OK del usuario) el scratch ajeno
+  `test/_scratch_colors_test.dart`, que era el único bloqueo de analyze.
+
+### 2026-09-12 — Go: Interfaces & Types (ruta nueva, 24 lecciones, 23 snippets)
+
+- **Pedido del usuario**: una guía bilingüe (en/es) enfocada 100% en
+  interfaces de Go, "de inicio a fin": declaración, variaciones, method
+  sets, valores de interfaz, `any`/type assertions/type switch, embedding
+  (interfaz en interfaz), JSON (`MarshalJSON`/`UnmarshalJSON`), métodos
+  exportados vs no exportados, la satisfacción implícita ("se conecta
+  solito") y la diferencia entre `type`, `struct` e `interface`. Tras
+  preguntarle: aceptó **ruta nueva independiente**, profundidad
+  **~24-26 lecciones** y título **"Go: Interfaces & Types" / "Go:
+  Interfaces y tipos"** (tag `Interfaces`).
+- **Contenido**: `go-interfaces-v1` (24 lecciones) + 23 snippets nuevos
+  (`go-iface-005`..`go-iface-027`, categorías `variablesAndTypes` (1),
+  `structs` (1) e `interfaces` (21)) y 1 snippet reutilizado
+  (`go-iface-002`, la implementación implícita mínima). Orden por
+  dependencia de concepto: `type`/`struct`/`interface` → satisfacción
+  implícita → method sets (puntero vs valor) → valor de interfaz
+  (tipo dinámico, nil vs typed nil) → `any`, comma-ok, type switch →
+  `Stringer`, `error` → composición (embedding) → `io.ReadWriter`,
+  `sort.Interface` → JSON → sellado con método no exportado → embedding
+  de structs que promueve métodos → interfaz `Clock` testeable →
+  capstone con tipos, structs, interfaces y JSON. La revisión adversarial
+  quitó del path dos snippets reutilizados que duplicaban el mismo
+  concepto (`go-iface-001`/`go-iface-003`, ambos ya en
+  `go-intermediate-syntax-v1`) — quedan accesibles en práctica libre.
+- **Verificación real, no por ojo**: los 23 snippets se pasaron por
+  `gofmt -l` (limpio) y `go run`/`go build` con la salida esperada
+  aseverada (Go 1.26.5), incluidos los compile-only envueltos en un
+  `main` vacío.
+- **Autoría bilingüe delegada** (2 agentes en paralelo con el código ya
+  verificado pegado literal) y **unión validada aparte** (id-set exacto,
+  longitudes, 3 frases por explicación). **Revisión adversarial fresca**
+  (2 agentes sin contexto, uno de currícula y uno de código/prosa): 7
+  hallazgos reales aplicados — títulos de `go-iface-005` precisados
+  (defined type ≠ alias), `go-iface-010` ya no nombra "typed nil" antes
+  de su lección, `go-iface-018` aclara que las interfaces de restricción
+  también admiten type terms desde Go 1.18, `go-iface-024` matiza el
+  sellado (embeber un tipo que ya lleva el método igual lo promueve),
+  `go-iface-026` explica `time.Date`/`After` y que imprime `false`, la
+  descripción de la ruta ya no promete código de test, y ~10 correcciones
+  de español natural (calcos de "informa", "impresor", "costura",
+  "unmarshaling", "Capstone" → "Proyecto final").
+- **Wiring**: `assets/content/learning_paths/go_interfaces_v1.json`
+  nuevo, registrado en `pubspec.yaml`,
+  `learning_path_repository_impl.dart` y
+  `snippet_catalog_completeness_test.dart`; `audit_lesson_order.py` verde
+  (24 lecciones, id/order sincronizados, categorías contiguas). El
+  `content_drift_integration_test` quedó sincronizado con el catálogo
+  sembrado real (**617 activos / 222 beginner**, incluye Java y Crystal
+  de sesiones concurrentes) y los sets de `_`/`%` recomputados
+  (177/76; nuevos ids `go-iface-010`/`027` y
+  `go-iface-011`/`013`/`015`/`016`/`021`/`022` respectivamente).
+- **Nota de concurrencia**: el mismo working tree tenía sesiones activas
+  de C++, Java y Crystal tocando `programming_language.dart`,
+  `content_labels.dart`, data sources y el mismo drift test; una de ellas
+  pisó los conteos a mitad de sesión (los míos se recalcularon encima).
+  Tests enfocados verificados: drift + completeness + key-layout +
+  learning_paths = **58 verdes**.
+- **Verificado**: `audit_lesson_order.py` verde; tests enfocados (drift +
+  completeness + key-layout + learning_paths) **58 verdes**; `flutter
+  test` completo **554 verdes**; `dart format` limpio en todos los
+  archivos de esta sesión; `flutter analyze` limpio salvo 6 infos de
+  `test/_scratch_colors_test.dart` (scratch de una sesión concurrente).
+  `bash tool/check.sh` **se detiene en el format check** por 4 archivos
+  ajenos a esta sesión: `keyboard_keycap_style.dart`,
+  `keyboard_layout_painter.dart`, `test/_manual_visual_check.dart` y
+  `test/features/content/crystal_syntax_tokenizer_test.dart`. Este
+  trabajo no toca runtime: solo assets y tests.
+
+### 2026-09-12 — Tecleo rápido/solapado (tests) + fix del dwell de la última tecla (practice)
+
+- **Pedido del usuario**: revisar cómo se comporta la experiencia de
+  velocidad al teclear (gente que teclea muy rápido o con muchas teclas a la
+  vez) y si había soporte para esos escenarios. Se auditaron captura y
+  métricas, y se agregaron tests de ráfaga y solape — que destaparon un hueco
+  real: la sesión termina en el **keydown** de la última tecla, así que su
+  keyup (y el de cualquier tecla aún sostenida) llegaba con
+  `status == finished`, nunca parcheaba su `dwell`, y el snapshot persistido
+  ya se había tomado.
+- **Tests nuevos** (`test/features/practice/keystroke_capture_field_test.dart`):
+  solape de 3 teclas con sueltes desordenados (cada `dwell` cae en su propio
+  keystroke), ráfaga de ~66 CPS con 2 teclas solapadas (cero pérdidas, flight
+  inter-onset), la tecla que completa la sesión conserva su dwell, y un keyup
+  que nunca llega no cuelga la sesión.
+- **Fix**: ventana de "settle" acotada al terminar (`_DwellSettle` en
+  `practice_session_finish.dart`, tope 250ms) que el campo resuelve al
+  instante vía `concludePendingDwell()` cuando se suelta la última tecla;
+  keyups durante `finished` parchean su dwell (los keydowns se siguen
+  ignorando para que Escape/atajos burbujeen) y `practice_session_screen.dart`
+  ya no desmonta el campo hasta `result`. El reloj de sesión se congela antes
+  del settle (no infla `duration`). Refactor por el límite de 500 líneas:
+  `_elapsedSoFar`/`_persistFinishedSession` a part files y el auto-scroll a
+  `keystroke_capture_autoscroll.dart`.
+- **Hallazgo extra**: `ExternalSnippetPackSource` y
+  `LearningPathRepositoryImpl._loadExternalInto` documentan "deliberately
+  never throws" pero su `listSync()` quedaba fuera del try/catch (un pack dir
+  que desaparece entre resolver y listar tumbaba el recompute). Ahora ambos
+  degradan a "sin packs externos" con warning. El test de persistencia
+  también se endureció (`_drainBackgroundWork`): `pumpEventQueue()` no drena
+  el I/O real de fondo (carrera de teardown que el settle hizo aflorar).
+- **Verificado**: `test/features/practice` 118/118 y packs/drift 28/28;
+  analyzer y `check_architecture` limpios en lo tocado. La suite completa
+  queda roja por el WIP concurrente de otra sesión (l10n de Crystal y
+  `test/features/content/_tmp_cpp_wiring_review_test.dart`), no por esto.
+
+### 2026-09-12 — Links del perfil: GitHub + página web (drift v16, url_launcher)
+
+- **Pedido del usuario**: poder poner tu GitHub y tu página web personal en
+  Profile, y que al tocar abran el navegador. Tras preguntarle la ubicación,
+  eligió **tarjeta "Links" propia** en la pantalla de Profile (no chips
+  dentro de "About me").
+- **Datos + migración**: dos columnas nullable en `guest_profiles`
+  (`github_username`, `website_url`), `schemaVersion` 15→16 con su bloque
+  aditivo en `onUpgrade`; DTO, mapper (DTO/entidad/fila), DAO, puerto y
+  adaptador del repositorio y `ActiveProfileController` extendidos en
+  cadena — el editor sigue siendo una sola escritura atómica.
+- **Normalización en `UpdateProfileCustomizationUseCase`** (nunca URLs
+  crudas en la DB): GitHub acepta handle, `@handle`, `github.com/handle` o
+  URL completa con query y guarda solo el handle (regex 1-39, alfanum +
+  guiones simples, sin guion inicial/final/doble); la web acepta
+  `ejemplo.com` y guarda `https://ejemplo.com` (solo http/https con host
+  con punto). Inválidos → `ValidationFailure` antes de tocar el repo.
+  `profileCustomizationInvalid` ahora dice "algún campo no es válido" en
+  vez de "demasiado largo".
+- **UI**: sección "Enlaces" con dos `TextField` en `EditProfileScreen`;
+  `ProfileLinksCard` nueva en Profile (se auto-oculta sin links, mismo
+  patrón que `ProfileDeviceCard`) con filas tappables, ícono Lucide de
+  enlace externo (`gitBranch300`/`globe300`/`externalLink300`; Lucide no
+  trae brand icon de GitHub) y apertura best-effort vía
+  `launchUrl(..., LaunchMode.externalApplication)` en try/catch, con seam
+  `onOpenUrl` para tests.
+- **Avatar de GitHub** (ampliación pedida en la misma sesión):
+  `ProfileAvatar` nuevo (extraído de `ProfileScreen`) usa
+  `https://github.com/<handle>.png?size=200` como foto del círculo, con
+  `loadingBuilder`/`errorBuilder` que caen a la inicial del username — el
+  perfil offline nunca depende de la red para renderizar. Requirió
+  declarar el permiso `INTERNET` en `AndroidManifest.xml` (Android no lo
+  tenía; también lo necesitará Supabase) — anotado en `STACK.md` §3.4.
+- **`url_launcher ^6.3.2`** nueva dependencia directa (ya resolvía en el
+  lock como transitiva) — fila en la matriz `STACK.md` §3.1 + párrafo en
+  §3.2; `SPEC.md` §7.3 menciona los enlaces; strings en ambos `.arb`.
+- **Verificado**: 54 tests del feature profile verdes (usecase nuevo con
+  tabla de normalización/rechazo, widget test de la tarjeta con el seam,
+  avatar con su fallback, round-trip drift de los links vía stream
+  reactivo), format y `check_architecture.dart` limpios. **`bash
+  tool/check.sh` completo no se pudo cerrar en verde por una sesión
+  concurrente** en el mismo working tree: sus archivos de `practice` sin
+  commitear dejan `flutter analyze` en rojo y su test de persist-retry
+  falla de forma intermitente — ajeno a este trabajo; el resto de la suite
+  (539 tests verdes, incluidos los de profile) pasa.
+
+### 2026-09-12 — C: Fundamentos + Algoritmos + Sistemas (lenguaje nuevo, 3 rutas, 45 snippets)
+
+- **Pedido del usuario**: un curso de introducción a C bilingüe (en/es,
+  mismos estándares que las otras guías). Tras preguntarle el alcance
+  eligió **tres cursos**: `c-foundations-v1` (15 lecciones: tipos,
+  control de flujo, arreglos/strings, punteros y funciones),
+  `c-algorithms-v1` (12, secuencia canónica de búsqueda/ordenamiento/grafos)
+  y `c-systems-v1` (18: structs, memoria dinámica, punteros de bajo nivel,
+  preprocesador, errores y archivos). C entra como lenguaje **solo-curso**
+  con **cuatro categorías propias** — `arraysAndStrings`,
+  `memoryManagement`, `preprocessor`, `fileIO` — y reutiliza las genéricas
+  (`variablesAndTypes`/`conditionals`/`loops`/`functions`) más `pointers`,
+  `structs` y `errorHandling`.
+- **Verificación real, no por ojo**: los 45 snippets se compilaron con
+  **gcc 16 y clang 22** (`-std=c17 -Wall -Wextra -Werror -pedantic` +
+  `-fsanitize=address,undefined`, `detect_leaks=1`) y se ejecutaron con
+  chequeo de salida; los 12 algoritmos (definiciones puras) se corrieron con
+  drivers y se fuzzearon contra referencias independientes: sorts vs `qsort`
+  (tamaño 0/1, duplicados, ya ordenado, invertido), búsquedas entre sí,
+  BFS/DFS vs flood-fill (grafos desconectados), Dijkstra vs Bellman-Ford
+  (vértices inalcanzables).
+- **Revisión adversarial fresca** (2 agentes sin contexto, uno de código y
+  uno de currícula): 5 problemas reales corregidos antes de cerrar —
+  overflow de `int` en Dijkstra (`distances[current] + weight` con pesos
+  legales; UBSan lo confirmó → guarda `distances[current] <= INT_MAX -
+  weight`), `malloc` sin check de `NULL` en el `merge` de merge sort (ahora
+  retorna `-1` y `merge_sort` lo propaga), afirmación falsa "C no tiene
+  `bool`" (C99 tiene `_Bool`/`<stdbool.h>`), afirmación imprecisa de que
+  `errno` solo se asigna al fallar, y jerga ES (`array`→`arreglo`,
+  `helper`→`auxiliar`, `castea`, `fugado`, `bufferizado`, `se hunde`).
+  También se reordenó `c-foundations-v1` para enseñar punteros (lección 12)
+  antes que funciones (13-15) y evitar el forward-reference en el capstone.
+- **Decisión deliberada**: los snippets de C siguen la convención de
+  fragmentos del resto del catálogo (Go/Rust/Python), con `#include` solo
+  en la primera lección; no se repiten los headers en cada snippet porque
+  ninguna otra guía incluye imports en sus fragmentos.
+- **Wiring**: enum `ProgrammingLanguage.c`, `CSyntaxTokenizer` nuevo
+  (directivas `#`, `#include <...>` como string, char literals, números con
+  sufijos) + 16 tests, l10n (`languageC`/`languageCBlurb` + 4 categorías en
+  ambos `.arb`), assets en `pubspec.yaml` + ambos data sources,
+  completeness/key-layout tests, `audit_lesson_order.py` (`c` en
+  `COURSE_ONLY_LANGUAGES`). `content_drift_integration_test` 440→485 total
+  y 142→167 beginner, con los sets de `_`/`%` ampliados con los 20/26 ids
+  de C que los contienen.
+- **Nota de concurrencia**: el mismo working tree tenía una sesión activa
+  agregando C++ (mismo día, mismos archivos: drift test, pubspec, data
+  sources, SPEC/AGENTS) y otra tocando practice/profile. Los conteos
+  finales del catálogo combinado quedan en 530/185; la sesión de C++ ya
+  corrigió su conteo stale del drift test. Al cierre, `tool/check.sh` se
+  detiene en el format check por el temporal
+  `test/features/content/_tmp_cpp_wiring_review_test.dart` de esa sesión
+  (analyze y arquitectura sí pasan; la sesión de practice ya bajó
+  `practice_session_controller.dart` de 509 a 497 líneas).
+- **Docs actualizados**: `SPEC.md` §3.1/§3.2/§18, `AGENTS.md` +
+  `CLAUDE.md` (espejo), skill `content-curriculum` (SKILL.md,
+  content-model, snippet-authoring con la verificación de C).
+- **Verificado**: `flutter test test/features/content/` +
+  `test/features/practice/key_layout_map_test.dart` en verde (144 tests,
+  incluye los de la sesión de C++) y `test/features/learning_paths/` (38);
+  `flutter test` completo: 508 verdes con un único fallo de carga
+  intermitente en `deep_link_providers_test.dart` que pasa al correrlo
+  solo (flutter re-resolvió dependencias a mitad de corrida por la
+  sesión concurrente); `flutter analyze` limpio; format y arquitectura
+  sin violaciones en los archivos de C.
 
 ### 2026-09-12 — TypeScript: Fundamentos + Algoritmos (lenguaje nuevo, 2 rutas, 29 snippets)
 

@@ -1,0 +1,119 @@
+[
+  {
+    "id": "cpp-advanced-v1",
+    "language": "cpp",
+    "titleEn": "C++: Advanced",
+    "titleEs": "C++: Avanzado",
+    "descriptionEn": "RAII, smart pointers, the STL, templates, exceptions, and concurrency in modern C++.",
+    "descriptionEs": "RAII, punteros inteligentes, la STL, plantillas, excepciones y concurrencia en C++ moderno.",
+    "tagEn": "Advanced",
+    "tagEs": "Avanzado",
+    "lessons": [
+      {
+        "id": "cpp-advanced-v1-step01",
+        "snippetId": "cpp-mem-001",
+        "order": 1,
+        "titleEn": "RAII and destructors",
+        "titleEs": "RAII y destructores"
+      },
+      {
+        "id": "cpp-advanced-v1-step02",
+        "snippetId": "cpp-mem-002",
+        "order": 2,
+        "titleEn": "std::unique_ptr: sole ownership",
+        "titleEs": "std::unique_ptr: propiedad única"
+      },
+      {
+        "id": "cpp-advanced-v1-step03",
+        "snippetId": "cpp-mem-003",
+        "order": 3,
+        "titleEn": "std::shared_ptr and weak_ptr",
+        "titleEs": "std::shared_ptr y weak_ptr"
+      },
+      {
+        "id": "cpp-advanced-v1-step04",
+        "snippetId": "cpp-mem-004",
+        "order": 4,
+        "titleEn": "Move semantics with std::move",
+        "titleEs": "Semántica de movimiento con std::move"
+      },
+      {
+        "id": "cpp-advanced-v1-step05",
+        "snippetId": "cpp-stl-002",
+        "order": 5,
+        "titleEn": "std::map: key-value data",
+        "titleEs": "std::map: datos clave-valor"
+      },
+      {
+        "id": "cpp-advanced-v1-step06",
+        "snippetId": "cpp-stl-003",
+        "order": 6,
+        "titleEn": "std::set: unique, sorted values",
+        "titleEs": "std::set: valores únicos y ordenados"
+      },
+      {
+        "id": "cpp-advanced-v1-step07",
+        "snippetId": "cpp-stl-004",
+        "order": 7,
+        "titleEn": "Iterators",
+        "titleEs": "Iteradores"
+      },
+      {
+        "id": "cpp-advanced-v1-step08",
+        "snippetId": "cpp-stl-005",
+        "order": 8,
+        "titleEn": "STL algorithms and lambdas",
+        "titleEs": "Algoritmos de la STL y lambdas"
+      },
+      {
+        "id": "cpp-advanced-v1-step09",
+        "snippetId": "cpp-stl-006",
+        "order": 9,
+        "titleEn": "std::optional: a value that may be absent",
+        "titleEs": "std::optional: un valor que puede faltar"
+      },
+      {
+        "id": "cpp-advanced-v1-step10",
+        "snippetId": "cpp-tmpl-001",
+        "order": 10,
+        "titleEn": "Function templates",
+        "titleEs": "Plantillas de función"
+      },
+      {
+        "id": "cpp-advanced-v1-step11",
+        "snippetId": "cpp-tmpl-002",
+        "order": 11,
+        "titleEn": "Class templates",
+        "titleEs": "Plantillas de clase"
+      },
+      {
+        "id": "cpp-advanced-v1-step12",
+        "snippetId": "cpp-tmpl-003",
+        "order": 12,
+        "titleEn": "Constraining templates with concepts",
+        "titleEs": "Restringir plantillas con conceptos"
+      },
+      {
+        "id": "cpp-advanced-v1-step13",
+        "snippetId": "cpp-err-001",
+        "order": 13,
+        "titleEn": "Exceptions: throw and catch",
+        "titleEs": "Excepciones: throw y catch"
+      },
+      {
+        "id": "cpp-advanced-v1-step14",
+        "snippetId": "cpp-class-002",
+        "order": 14,
+        "titleEn": "Inheritance and virtual methods",
+        "titleEs": "Herencia y métodos virtuales"
+      },
+      {
+        "id": "cpp-advanced-v1-step15",
+        "snippetId": "cpp-conc-001",
+        "order": 15,
+        "titleEn": "Threads and mutexes",
+        "titleEs": "Hilos y mutex"
+      }
+    ]
+  }
+]

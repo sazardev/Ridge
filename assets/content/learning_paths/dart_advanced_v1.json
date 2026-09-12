@@ -1,0 +1,126 @@
+[
+  {
+    "id": "dart-advanced-v1",
+    "language": "dart",
+    "titleEn": "Dart: Advanced",
+    "titleEs": "Dart: Avanzado",
+    "descriptionEn": "Go deeper into Dart: late, streams, isolates, patterns, mixins, generics, and custom errors.",
+    "descriptionEs": "Profundiza en Dart: late, flujos, isolates, patrones, mixins, genéricos y errores propios.",
+    "tagEn": "Advanced",
+    "tagEs": "Avanzado",
+    "lessons": [
+      {
+        "id": "dart-advanced-v1-step01",
+        "snippetId": "dart-adv-null-001",
+        "order": 1,
+        "titleEn": "Deferred initialization with late",
+        "titleEs": "Inicialización diferida con late"
+      },
+      {
+        "id": "dart-advanced-v1-step02",
+        "snippetId": "dart-adv-null-002",
+        "order": 2,
+        "titleEn": "Promotion and local copies",
+        "titleEs": "Promoción y copias locales"
+      },
+      {
+        "id": "dart-advanced-v1-step03",
+        "snippetId": "dart-adv-async-001",
+        "order": 3,
+        "titleEn": "Streams: async*, yield, and await for",
+        "titleEs": "Flujos: async*, yield y await for"
+      },
+      {
+        "id": "dart-advanced-v1-step04",
+        "snippetId": "dart-adv-async-002",
+        "order": 4,
+        "titleEn": "StreamController and listen",
+        "titleEs": "StreamController y listen"
+      },
+      {
+        "id": "dart-advanced-v1-step05",
+        "snippetId": "dart-adv-async-003",
+        "order": 5,
+        "titleEn": "Parallel futures with Future.wait",
+        "titleEs": "Futuros en paralelo con Future.wait"
+      },
+      {
+        "id": "dart-advanced-v1-step06",
+        "snippetId": "dart-adv-async-004",
+        "order": 6,
+        "titleEn": "Manual futures with Completer",
+        "titleEs": "Futuros manuales con Completer"
+      },
+      {
+        "id": "dart-advanced-v1-step07",
+        "snippetId": "dart-adv-conc-001",
+        "order": 7,
+        "titleEn": "Isolates with Isolate.run",
+        "titleEs": "Isolates con Isolate.run"
+      },
+      {
+        "id": "dart-advanced-v1-step08",
+        "snippetId": "dart-adv-rec-003",
+        "order": 8,
+        "titleEn": "Guards and if-case",
+        "titleEs": "Guardas e if-case"
+      },
+      {
+        "id": "dart-advanced-v1-step09",
+        "snippetId": "dart-adv-rec-002",
+        "order": 9,
+        "titleEn": "Object and list patterns",
+        "titleEs": "Patrones de objeto y de lista"
+      },
+      {
+        "id": "dart-advanced-v1-step10",
+        "snippetId": "dart-adv-rec-001",
+        "order": 10,
+        "titleEn": "Sealed classes and exhaustive switches",
+        "titleEs": "Clases selladas y switch exhaustivo"
+      },
+      {
+        "id": "dart-advanced-v1-step11",
+        "snippetId": "dart-adv-oop-001",
+        "order": 11,
+        "titleEn": "Mixins: with and on",
+        "titleEs": "Mixins: with y on"
+      },
+      {
+        "id": "dart-advanced-v1-step12",
+        "snippetId": "dart-adv-oop-002",
+        "order": 12,
+        "titleEn": "Extension methods",
+        "titleEs": "Métodos de extensión"
+      },
+      {
+        "id": "dart-advanced-v1-step13",
+        "snippetId": "dart-adv-oop-003",
+        "order": 13,
+        "titleEn": "Abstract classes and implicit interfaces",
+        "titleEs": "Clases abstractas e interfaces implícitas"
+      },
+      {
+        "id": "dart-advanced-v1-step14",
+        "snippetId": "dart-adv-gen-001",
+        "order": 14,
+        "titleEn": "Generic functions with bounds",
+        "titleEs": "Funciones genéricas con restricciones"
+      },
+      {
+        "id": "dart-advanced-v1-step15",
+        "snippetId": "dart-adv-gen-002",
+        "order": 15,
+        "titleEn": "Generic classes",
+        "titleEs": "Clases genéricas"
+      },
+      {
+        "id": "dart-advanced-v1-step16",
+        "snippetId": "dart-adv-err-001",
+        "order": 16,
+        "titleEn": "Custom exceptions",
+        "titleEs": "Excepciones propias"
+      }
+    ]
+  }
+]

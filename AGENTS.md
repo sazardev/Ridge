@@ -197,26 +197,79 @@ writing new constructors instead of writing `const ClassName(...)`.
 
 ## Content / curriculum editing
 
-Editing snippets (`assets/content/snippets/{go,bash,sql,rust,python,javascript,typescript,haskell}_v1.json`), a
+Editing snippets (`assets/content/snippets/{go,bash,sql,rust,python,javascript,typescript,haskell,c,cpp,java,crystal,swift,css,csharp,dart,kotlin,php,git}_v1.json`), a
 Learning Path's lesson order (`assets/content/learning_paths/*.json`), or
 adding a new bilingual (en/es) content field is covered by the
 `content-curriculum` skill — use it rather than hand-editing these JSON
 files, since lesson ordering has produced real beginner-incoherence bugs
 before. Note the two catalog tiers (SPEC.md §3.2): Go backs free practice
 and keeps a dense (category, difficulty) grid; Bash, SQL, Rust, Python,
-JavaScript, TypeScript, and Haskell are course-only and contain exactly
-the snippets their Learning Path(s) use (`bash-foundations-v1`,
-`sql-foundations-v1`, `rust-foundations-v1`, `python-foundations-v1`,
-`javascript-foundations-v1`, `typescript-foundations-v1`,
-`haskell-foundations-v1` — each of these foundations routes targets
-beginners and reuses Go's generic categories; Haskell's has no loops
-block, presenting recursion as the functional substitute for iteration,
-and TypeScript's broader tour adds `classesAndObjects` and `modules` as
-its own two categories). Go, Rust, Python, JavaScript, TypeScript, and
-Haskell additionally each have a standalone, non-beginner "Algorithms"
-course (`go-algorithms-v1`, `rust-algorithms-v1`,
+JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#, Dart,
+Kotlin, PHP, and Git are course-only and contain exactly the snippets their
+Learning Path(s) use
+(`bash-foundations-v1`, `sql-foundations-v1`, `rust-foundations-v1`,
+`python-foundations-v1`, `javascript-foundations-v1`,
+`typescript-foundations-v1`, `haskell-foundations-v1`,
+`c-foundations-v1`, `c-systems-v1`, `cpp-foundations-v1`,
+`cpp-advanced-v1`, `java-foundations-v1`, `crystal-foundations-v1`,
+`swift-foundations-v1`, `csharp-foundations-v1`, `css-foundations-v1`,
+`dart-foundations-v1`, `kotlin-foundations-v1`, `php-foundations-v1` — each
+of these foundations routes targets beginners and reuses Go's generic
+categories; Haskell's has no loops block, presenting recursion as the
+functional substitute for iteration, TypeScript's broader tour adds
+`classesAndObjects` and `modules` as its own two categories, C's
+routes add `arraysAndStrings`, `memoryManagement`, `preprocessor`, and
+`fileIO`, with `c-systems-v1` as a separate non-beginner course, C++'s
+routes add `templates` and `stlContainers`, with
+`cpp-advanced-v1` as a separate non-beginner course, Java's adds no
+categories of its own, Crystal's adds `blocksAndProcs`,
+`collections`, and `nilSafety`, Swift's adds `optionals`, `closures`,
+and `enumsAndPatternMatching` (with `swift-advanced-v1` as a separate
+non-beginner course that adds `codable` and `propertyWrappers`), C#'s
+three routes add `patternMatching`, `delegatesAndEvents`, `linq`, and
+`asyncProgramming` (with `csharp-advanced-v1` as a separate non-beginner
+course), and
+CSS is a full exception: none of Go's
+categories represent a CSS concept, so its routes add eight of their own
+(`cssSelectors`, `cssBoxModel`, `cssColorsAndTypography`, `cssLayout`,
+`cssPositioning`, `cssCustomProperties`, `cssResponsive`, and
+`cssTransitionsAndAnimations`), with `css-layout-v1` and
+`css-advanced-v1` as separate courses, and Dart's adds `recordsAndPatterns`
+(reusing `collections`, `nullSafety`, and `asyncProgramming`) with
+`dart-advanced-v1` as a separate non-beginner course, and Kotlin's adds
+`nullSafety`, `dataClasses`, `lambdas`, `extensions`, and `coroutines`
+(reusing `collections`) with `kotlin-advanced-v1` as a separate
+non-beginner course, and PHP is a full exception like CSS: neither its
+language concepts nor its web focus map onto Go's categories, so its
+routes add nineteen of their own (`phpBasics`, `phpStrings`,
+`phpConditionals`, `phpLoops`, `phpArrays`, `phpFunctions`, `phpClasses`,
+`phpEnums`, `phpErrorHandling`, `phpNamespaces`, `phpSuperglobals`,
+`phpForms`, `phpSessions`, `phpDatabase`, `phpJson`, `phpFiles`,
+`phpSearching`, `phpSorting`, `phpGraphs`), with `php-web-v1` and
+`php-algorithms-v1` as separate courses). Git is another full exception: none of Go's categories
+represent version control, so its three routes (`git-foundations-v1`,
+`git-workflows-v1`, `git-internals-v1`) add ten of their own (`gitBasics`,
+`gitCommits`, `gitBranching`, `gitRemotes`, `gitHistory`, `gitUndo`,
+`gitCollaboration`, `gitObjects`, `gitRefs`, `gitMaintenance`). Python also
+adds three Django courses —
+`python-django-foundations-v1`, `python-django-orm-v1`, and
+`python-django-rest-v1` — whose sixteen own categories (`djangoProject`,
+`djangoModels`, `djangoViews`, `djangoTemplates`, `djangoForms`,
+`djangoAdmin`, `djangoTesting`, `djangoRelationships`, `djangoOrm`,
+`djangoMigrations`, `djangoRestSetup`, `djangoSerializers`,
+`djangoRestViews`, `djangoRestAuth`, `djangoRestFiltering`,
+`djangoRestTesting`) take a bookmarks app from `django-admin
+startproject` to a DRF REST API with token auth. Go,
+Rust, Python, JavaScript, TypeScript, Haskell, C, C++, Java, Crystal,
+Swift, C#, Dart, Kotlin, and PHP additionally
+each have a standalone, non-beginner "Algorithms" course
+(`go-algorithms-v1`, `rust-algorithms-v1`,
 `python-algorithms-v1`, `javascript-algorithms-v1`,
-`typescript-algorithms-v1`, `haskell-algorithms-v1`) with its own three
+`typescript-algorithms-v1`, `haskell-algorithms-v1`,
+`c-algorithms-v1`, `cpp-algorithms-v1`, `java-algorithms-v1`,
+`crystal-algorithms-v1`, `swift-algorithms-v1`,
+`csharp-algorithms-v1`, `dart-algorithms-v1`,
+`kotlin-algorithms-v1`, `php-algorithms-v1`) with its own three
 categories (searching/sorting/graph algorithms), separate from that
 language's foundations route.
 
@@ -224,7 +277,10 @@ language's foundations route.
 
 - Flat, no shadows/gradients — every elevation-bearing widget is themed
   `elevation: 0`; depth comes from Material 3 tonal surface-container
-  roles (`lib/core/theme/app_theme.dart`).
+  roles (`lib/core/theme/app_theme.dart`). One sanctioned exception: the
+  profile keyboard visual (`KeyboardLayoutPainter`), whose VIA-style
+  keycaps render depth as a solid extruded side plus a subtle two-stop
+  gradient on the top face — never blur shadows; see `STACK.md` §2.5.
 - Expressive color from a single seed (`ColorScheme.fromSeed(...,
   DynamicSchemeVariant.expressive)`), toggleable in Settings
   (`lib/core/theme/app_colors.dart`).

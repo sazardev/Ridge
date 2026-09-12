@@ -1,0 +1,98 @@
+[
+  {
+    "id": "c-algorithms-v1",
+    "language": "c",
+    "titleEn": "C: Algorithms",
+    "titleEs": "C: Algoritmos",
+    "descriptionEn": "Searches, classic sorts, and graph algorithms, implemented idiomatically in C.",
+    "descriptionEs": "Búsquedas, ordenamientos clásicos y algoritmos de grafos, implementados idiomáticamente en C.",
+    "tagEn": "Algorithms",
+    "tagEs": "Algoritmos",
+    "lessons": [
+      {
+        "id": "c-algorithms-v1-step01",
+        "snippetId": "c-algo-001",
+        "order": 1,
+        "titleEn": "Linear Search",
+        "titleEs": "Búsqueda lineal"
+      },
+      {
+        "id": "c-algorithms-v1-step02",
+        "snippetId": "c-algo-002",
+        "order": 2,
+        "titleEn": "Binary Search",
+        "titleEs": "Búsqueda binaria"
+      },
+      {
+        "id": "c-algorithms-v1-step03",
+        "snippetId": "c-algo-003",
+        "order": 3,
+        "titleEn": "Bubble Sort",
+        "titleEs": "Ordenamiento burbuja"
+      },
+      {
+        "id": "c-algorithms-v1-step04",
+        "snippetId": "c-algo-004",
+        "order": 4,
+        "titleEn": "Selection Sort",
+        "titleEs": "Ordenamiento por selección"
+      },
+      {
+        "id": "c-algorithms-v1-step05",
+        "snippetId": "c-algo-005",
+        "order": 5,
+        "titleEn": "Insertion Sort",
+        "titleEs": "Ordenamiento por inserción"
+      },
+      {
+        "id": "c-algorithms-v1-step06",
+        "snippetId": "c-algo-006",
+        "order": 6,
+        "titleEn": "Merge Sort",
+        "titleEs": "Ordenamiento por mezcla (Merge Sort)"
+      },
+      {
+        "id": "c-algorithms-v1-step07",
+        "snippetId": "c-algo-007",
+        "order": 7,
+        "titleEn": "Quick Sort",
+        "titleEs": "Quicksort"
+      },
+      {
+        "id": "c-algorithms-v1-step08",
+        "snippetId": "c-algo-008",
+        "order": 8,
+        "titleEn": "Heap Sort",
+        "titleEs": "Heapsort"
+      },
+      {
+        "id": "c-algorithms-v1-step09",
+        "snippetId": "c-algo-009",
+        "order": 9,
+        "titleEn": "Graph as an Adjacency Matrix",
+        "titleEs": "Grafo como matriz de adyacencia"
+      },
+      {
+        "id": "c-algorithms-v1-step10",
+        "snippetId": "c-algo-010",
+        "order": 10,
+        "titleEn": "Breadth-First Search (BFS)",
+        "titleEs": "Búsqueda en anchura (BFS)"
+      },
+      {
+        "id": "c-algorithms-v1-step11",
+        "snippetId": "c-algo-011",
+        "order": 11,
+        "titleEn": "Depth-First Search (DFS)",
+        "titleEs": "Búsqueda en profundidad (DFS)"
+      },
+      {
+        "id": "c-algorithms-v1-step12",
+        "snippetId": "c-algo-012",
+        "order": 12,
+        "titleEn": "Dijkstra's Shortest Path",
+        "titleEs": "Camino más corto de Dijkstra"
+      }
+    ]
+  }
+]

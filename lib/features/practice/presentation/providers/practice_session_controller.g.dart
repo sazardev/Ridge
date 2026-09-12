@@ -147,7 +147,7 @@ final class PracticeSessionControllerProvider
 }
 
 String _$practiceSessionControllerHash() =>
-    r'afbf1f3029efc7f86ea7dcb25ee6f3213ec105a8';
+    r'ea833089f1b9bca87151ce9519920ed6ef30cc82';
 
 /// Drives one practice session for a specific `Snippet` through
 /// `idle -> running -> finished -> result` (SPEC.md §5.1-§5.3).

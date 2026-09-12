@@ -1,0 +1,182 @@
+[
+  {
+    "id": "java-foundations-v1",
+    "language": "java",
+    "titleEn": "Java from scratch",
+    "titleEs": "Java desde cero",
+    "descriptionEn": "Learn Java step by step: types, control flow, methods, and classes.",
+    "descriptionEs": "Aprende Java paso a paso: tipos, control de flujo, métodos y clases.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "java-foundations-v1-step01",
+        "snippetId": "java-mod-001",
+        "order": 1,
+        "titleEn": "Your first Java program",
+        "titleEs": "Tu primer programa en Java"
+      },
+      {
+        "id": "java-foundations-v1-step02",
+        "snippetId": "java-mod-002",
+        "order": 2,
+        "titleEn": "Packages, imports, and List.of",
+        "titleEs": "Paquetes, imports y List.of"
+      },
+      {
+        "id": "java-foundations-v1-step03",
+        "snippetId": "java-vars-001",
+        "order": 3,
+        "titleEn": "Primitive types: int, long, double",
+        "titleEs": "Tipos primitivos: int, long, double"
+      },
+      {
+        "id": "java-foundations-v1-step04",
+        "snippetId": "java-vars-002",
+        "order": 4,
+        "titleEn": "`String` and its `length()`",
+        "titleEs": "`String` y su `length()`"
+      },
+      {
+        "id": "java-foundations-v1-step05",
+        "snippetId": "java-vars-003",
+        "order": 5,
+        "titleEn": "`var`: local type inference",
+        "titleEs": "`var`: inferencia de tipos local"
+      },
+      {
+        "id": "java-foundations-v1-step06",
+        "snippetId": "java-vars-004",
+        "order": 6,
+        "titleEn": "Text blocks for multi-line strings",
+        "titleEs": "Bloques de texto multilínea"
+      },
+      {
+        "id": "java-foundations-v1-step07",
+        "snippetId": "java-vars-005",
+        "order": 7,
+        "titleEn": "Fixed-size arrays and `.length`",
+        "titleEs": "Arreglos de tamaño fijo y `.length`"
+      },
+      {
+        "id": "java-foundations-v1-step08",
+        "snippetId": "java-cond-001",
+        "order": 8,
+        "titleEn": "if / else if / else",
+        "titleEs": "if / else if / else"
+      },
+      {
+        "id": "java-foundations-v1-step09",
+        "snippetId": "java-cond-002",
+        "order": 9,
+        "titleEn": "Switch expressions with `yield`",
+        "titleEs": "Expresiones switch con `yield`"
+      },
+      {
+        "id": "java-foundations-v1-step10",
+        "snippetId": "java-cond-003",
+        "order": 10,
+        "titleEn": "Pattern matching with `instanceof`",
+        "titleEs": "Coincidencia de patrones con `instanceof`"
+      },
+      {
+        "id": "java-foundations-v1-step11",
+        "snippetId": "java-loop-001",
+        "order": 11,
+        "titleEn": "A classic for loop",
+        "titleEs": "Un bucle for clásico"
+      },
+      {
+        "id": "java-foundations-v1-step12",
+        "snippetId": "java-loop-002",
+        "order": 12,
+        "titleEn": "The enhanced for over a List",
+        "titleEs": "El for mejorado sobre una lista"
+      },
+      {
+        "id": "java-foundations-v1-step13",
+        "snippetId": "java-loop-003",
+        "order": 13,
+        "titleEn": "Countdown with a while loop",
+        "titleEs": "Cuenta regresiva con while"
+      },
+      {
+        "id": "java-foundations-v1-step14",
+        "snippetId": "java-func-001",
+        "order": 14,
+        "titleEn": "A static method with return",
+        "titleEs": "Un método static con return"
+      },
+      {
+        "id": "java-foundations-v1-step15",
+        "snippetId": "java-func-002",
+        "order": 15,
+        "titleEn": "Method overloading in Java",
+        "titleEs": "Sobrecarga de métodos en Java"
+      },
+      {
+        "id": "java-foundations-v1-step16",
+        "snippetId": "java-func-003",
+        "order": 16,
+        "titleEn": "Put it together: countEvens",
+        "titleEs": "Júntalo todo: countEvens"
+      },
+      {
+        "id": "java-foundations-v1-step17",
+        "snippetId": "java-oop-001",
+        "order": 17,
+        "titleEn": "A class with state and behavior",
+        "titleEs": "Una clase con estado y comportamiento"
+      },
+      {
+        "id": "java-foundations-v1-step18",
+        "snippetId": "java-oop-002",
+        "order": 18,
+        "titleEn": "private fields and accessor methods",
+        "titleEs": "Campos private y métodos de acceso"
+      },
+      {
+        "id": "java-foundations-v1-step19",
+        "snippetId": "java-oop-003",
+        "order": 19,
+        "titleEn": "Inheritance, super, and overriding",
+        "titleEs": "Herencia, super y sobrescritura"
+      },
+      {
+        "id": "java-foundations-v1-step20",
+        "snippetId": "java-oop-004",
+        "order": 20,
+        "titleEn": "Records: compact data classes",
+        "titleEs": "Records: clases de datos compactas"
+      },
+      {
+        "id": "java-foundations-v1-step21",
+        "snippetId": "java-intf-001",
+        "order": 21,
+        "titleEn": "An interface with two implementations",
+        "titleEs": "Una interfaz con dos implementaciones"
+      },
+      {
+        "id": "java-foundations-v1-step22",
+        "snippetId": "java-intf-002",
+        "order": 22,
+        "titleEn": "Default methods in an interface",
+        "titleEs": "Métodos default en una interfaz"
+      },
+      {
+        "id": "java-foundations-v1-step23",
+        "snippetId": "java-err-001",
+        "order": 23,
+        "titleEn": "Catching `ArithmeticException`",
+        "titleEs": "Capturar `ArithmeticException`"
+      },
+      {
+        "id": "java-foundations-v1-step24",
+        "snippetId": "java-err-002",
+        "order": 24,
+        "titleEn": "`throw` and `finally` on every path",
+        "titleEs": "`throw` y `finally` en cada camino"
+      }
+    ]
+  }
+]

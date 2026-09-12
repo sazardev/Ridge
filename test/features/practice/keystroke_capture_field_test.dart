@@ -110,6 +110,30 @@ const _angleSnippet = Snippet(
   explanationEs: 'Explicación de prueba.',
 );
 
+/// A snippet long enough that a burst test can type several characters
+/// without reaching the end: the session flips to `finished` on the final
+/// keystroke's *keydown*, which would make that key's own keyup (and any
+/// still-held key's) arrive after capture is over — a different concern
+/// from overlap handling, so these tests keep typing well short of the end.
+const _burstSnippet = Snippet(
+  id: SnippetId('test-snippet-burst'),
+  revision: 1,
+  language: ProgrammingLanguage.go,
+  difficulty: Difficulty.beginner,
+  category: ContentCategory.variablesAndTypes,
+  symbolFocus: {},
+  length: SnippetLength.short,
+  titleEn: 'Burst snippet',
+  titleEs: 'Snippet de ráfaga',
+  code: 'abcdefghijklmnop',
+  sourceAttribution: 'hand-authored for test',
+  isActive: true,
+  tldrEn: 'Test tl;dr.',
+  tldrEs: 'Tl;dr de prueba.',
+  explanationEn: 'Test explanation.',
+  explanationEs: 'Explicación de prueba.',
+);
+
 void main() {
   testWidgets(
     'real key down/up events advance the buffer and produce classified '
@@ -268,6 +292,338 @@ void main() {
     // "a" key-down-shaped events reaching the engine.
     expect(state.recorder.keystrokes, hasLength(1));
   });
+
+  testWidgets(
+    'overlapping keydowns commit in order and each keyup patches dwell onto '
+    'its own keystroke, even when released out of order',
+    (tester) async {
+      final container = _createContainer();
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            home: Scaffold(
+              body: KeystrokeCaptureField(snippet: _burstSnippet, mode: _mode),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      // Three physical keys end up held at once (A is still down when B
+      // is pressed *and released*, C is pressed before A is released) —
+      // releases interleave with other keys' presses and arrive out of
+      // order relative to their own presses.
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyA,
+        logicalKey: LogicalKeyboardKey.keyA,
+        character: 'a',
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyB,
+        logicalKey: LogicalKeyboardKey.keyB,
+        character: 'b',
+        timeStamp: const Duration(milliseconds: 25),
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyB,
+        logicalKey: LogicalKeyboardKey.keyB,
+        type: ui.KeyEventType.up,
+        timeStamp: const Duration(milliseconds: 70),
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyC,
+        logicalKey: LogicalKeyboardKey.keyC,
+        character: 'c',
+        timeStamp: const Duration(milliseconds: 90),
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyA,
+        logicalKey: LogicalKeyboardKey.keyA,
+        type: ui.KeyEventType.up,
+        timeStamp: const Duration(milliseconds: 110),
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyC,
+        logicalKey: LogicalKeyboardKey.keyC,
+        type: ui.KeyEventType.up,
+        timeStamp: const Duration(milliseconds: 130),
+      );
+      await tester.pump();
+
+      final state = container.read(
+        practiceSessionControllerProvider(_burstSnippet, _mode),
+      );
+      expect(state.status, PracticeSessionStatus.running);
+      expect(state.recorder.expectedCharStatuses.take(3), [true, true, true]);
+
+      final keystrokes = state.recorder.keystrokes;
+      expect(keystrokes.map((k) => k.actualChar), ['a', 'b', 'c']);
+      expect(
+        keystrokes.every((k) => k.result == KeystrokeResult.correct),
+        isTrue,
+      );
+
+      // Flight is keydown-to-keydown (inter-onset): a release between two
+      // presses is not an onset of its own, so the gap is 25ms and then
+      // 90 - 25 = 65ms.
+      expect(keystrokes[0].flight, isNull);
+      expect(keystrokes[1].flight, const Duration(milliseconds: 25));
+      expect(keystrokes[2].flight, const Duration(milliseconds: 65));
+
+      // Each keyup's dwell lands on the keystroke *that physical key*
+      // produced — A (held 110ms) and C (40ms) are released after B
+      // (45ms), which a "most recent keystroke" shortcut would get wrong.
+      expect(keystrokes[0].dwell, const Duration(milliseconds: 110));
+      expect(keystrokes[1].dwell, const Duration(milliseconds: 45));
+      expect(keystrokes[2].dwell, const Duration(milliseconds: 40));
+    },
+  );
+
+  testWidgets(
+    'a high-CPS burst with two keys held at once loses no keystrokes and '
+    'keeps per-key dwell and flight intact',
+    (tester) async {
+      final container = _createContainer();
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            home: Scaffold(
+              body: KeystrokeCaptureField(snippet: _burstSnippet, mode: _mode),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      const keys = <(PhysicalKeyboardKey, LogicalKeyboardKey, String)>[
+        (PhysicalKeyboardKey.keyA, LogicalKeyboardKey.keyA, 'a'),
+        (PhysicalKeyboardKey.keyB, LogicalKeyboardKey.keyB, 'b'),
+        (PhysicalKeyboardKey.keyC, LogicalKeyboardKey.keyC, 'c'),
+        (PhysicalKeyboardKey.keyD, LogicalKeyboardKey.keyD, 'd'),
+        (PhysicalKeyboardKey.keyE, LogicalKeyboardKey.keyE, 'e'),
+        (PhysicalKeyboardKey.keyF, LogicalKeyboardKey.keyF, 'f'),
+        (PhysicalKeyboardKey.keyG, LogicalKeyboardKey.keyG, 'g'),
+        (PhysicalKeyboardKey.keyH, LogicalKeyboardKey.keyH, 'h'),
+      ];
+      // 15ms between presses with each key held 30ms: every keystroke
+      // overlaps the next two — roughly 66 chars/s, deliberately past
+      // anything a human hand produces, so the engine is proven to be the
+      // limiting factor rather than the simulated fingers.
+      const onsetGap = Duration(milliseconds: 15);
+      const holdTime = Duration(milliseconds: 30);
+
+      final events =
+          <({Duration at, bool isDown, int index})>[
+            for (var i = 0; i < keys.length; i++) ...[
+              (at: onsetGap * i, isDown: true, index: i),
+              (at: onsetGap * i + holdTime, isDown: false, index: i),
+            ],
+          ]..sort((a, b) {
+            final byTime = a.at.compareTo(b.at);
+            if (byTime != 0) return byTime;
+            // A release and a later press can share a timestamp; releasing
+            // first keeps the stream monotonic for each physical key.
+            return (a.isDown ? 1 : 0).compareTo(b.isDown ? 1 : 0);
+          });
+
+      for (final event in events) {
+        final (physicalKey, logicalKey, character) = keys[event.index];
+        _dispatch(
+          physicalKey: physicalKey,
+          logicalKey: logicalKey,
+          type: event.isDown ? ui.KeyEventType.down : ui.KeyEventType.up,
+          character: event.isDown ? character : null,
+          timeStamp: event.at,
+        );
+      }
+      await tester.pump();
+
+      final state = container.read(
+        practiceSessionControllerProvider(_burstSnippet, _mode),
+      );
+      expect(state.status, PracticeSessionStatus.running);
+      expect(state.recorder.expectedCursor, keys.length);
+
+      final keystrokes = state.recorder.keystrokes;
+      expect(keystrokes, hasLength(keys.length));
+      expect(keystrokes.map((k) => k.actualChar), [
+        for (final (_, _, character) in keys) character,
+      ]);
+      expect(keystrokes.map((k) => k.sequenceIndex), [0, 1, 2, 3, 4, 5, 6, 7]);
+      expect(
+        keystrokes.every((k) => k.result == KeystrokeResult.correct),
+        isTrue,
+      );
+
+      // One flight per press, measured between consecutive keydowns...
+      expect(keystrokes[0].flight, isNull);
+      for (final keystroke in keystrokes.skip(1)) {
+        expect(keystroke.flight, onsetGap);
+      }
+      // ...and every key's own dwell survives the interleaving.
+      for (final keystroke in keystrokes) {
+        expect(keystroke.dwell, holdTime);
+      }
+    },
+  );
+
+  testWidgets(
+    'the key that completes the session still gets its dwell before the '
+    'result replaces the field',
+    (tester) async {
+      final container = _createContainer();
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            home: Scaffold(
+              body: KeystrokeCaptureField(snippet: _snippet, mode: _mode),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      // "ab" typed normally, both keys fully released.
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyA,
+        logicalKey: LogicalKeyboardKey.keyA,
+        character: 'a',
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyA,
+        logicalKey: LogicalKeyboardKey.keyA,
+        type: ui.KeyEventType.up,
+        timeStamp: const Duration(milliseconds: 40),
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyB,
+        logicalKey: LogicalKeyboardKey.keyB,
+        character: 'b',
+        timeStamp: const Duration(milliseconds: 80),
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyB,
+        logicalKey: LogicalKeyboardKey.keyB,
+        type: ui.KeyEventType.up,
+        timeStamp: const Duration(milliseconds: 120),
+      );
+      await tester.pump();
+
+      // The completing 'c': its keydown finishes the session (nothing is
+      // left to type), and its keyup — the only event that can carry its
+      // dwell — necessarily arrives afterwards.
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyC,
+        logicalKey: LogicalKeyboardKey.keyC,
+        character: 'c',
+        timeStamp: const Duration(milliseconds: 160),
+      );
+      await tester.pump();
+      expect(
+        container
+            .read(practiceSessionControllerProvider(_snippet, _mode))
+            .status,
+        PracticeSessionStatus.finished,
+      );
+
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyC,
+        logicalKey: LogicalKeyboardKey.keyC,
+        type: ui.KeyEventType.up,
+        timeStamp: const Duration(milliseconds: 230),
+      );
+      await tester.pumpAndSettle();
+
+      final state = container.read(
+        practiceSessionControllerProvider(_snippet, _mode),
+      );
+      expect(
+        state.recorder.keystrokes.last.dwell,
+        const Duration(milliseconds: 70),
+        reason: 'the finishing key must not lose its dwell',
+      );
+      // The same keyup lets the controller conclude its settle wait, so
+      // the result is there without waiting out the fallback timeout.
+      expect(state.status, PracticeSessionStatus.result);
+    },
+  );
+
+  testWidgets(
+    'a keyup that never arrives does not stall a finished session past the '
+    'settle timeout',
+    (tester) async {
+      final container = _createContainer();
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            home: Scaffold(
+              body: KeystrokeCaptureField(snippet: _snippet, mode: _mode),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyA,
+        logicalKey: LogicalKeyboardKey.keyA,
+        character: 'a',
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyA,
+        logicalKey: LogicalKeyboardKey.keyA,
+        type: ui.KeyEventType.up,
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyB,
+        logicalKey: LogicalKeyboardKey.keyB,
+        character: 'b',
+        timeStamp: const Duration(milliseconds: 40),
+      );
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyB,
+        logicalKey: LogicalKeyboardKey.keyB,
+        type: ui.KeyEventType.up,
+        timeStamp: const Duration(milliseconds: 80),
+      );
+      // 'c' goes down, completes the session, and is never released — the
+      // fallback has to persist anyway.
+      _dispatch(
+        physicalKey: PhysicalKeyboardKey.keyC,
+        logicalKey: LogicalKeyboardKey.keyC,
+        character: 'c',
+        timeStamp: const Duration(milliseconds: 120),
+      );
+      await tester.pump();
+      expect(
+        container
+            .read(practiceSessionControllerProvider(_snippet, _mode))
+            .status,
+        PracticeSessionStatus.finished,
+      );
+
+      await tester.pump(const Duration(milliseconds: 250));
+      await tester.pump();
+
+      final state = container.read(
+        practiceSessionControllerProvider(_snippet, _mode),
+      );
+      expect(state.status, PracticeSessionStatus.result);
+      expect(state.recorder.keystrokes.last.dwell, isNull);
+    },
+  );
 
   testWidgets(
     'the ISO intlBackslash key types < > (the Spanish-layout path, where '

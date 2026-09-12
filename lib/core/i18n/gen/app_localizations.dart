@@ -299,7 +299,7 @@ abstract class AppLocalizations {
   /// No description provided for @profileCustomizationInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Couldn\'t save — one of the fields is too long'**
+  /// **'Couldn\'t save — one of the fields isn\'t valid'**
   String get profileCustomizationInvalid;
 
   /// No description provided for @profileSearchLanguageHint.
@@ -319,6 +319,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'More…'**
   String get profileLanguageShowMore;
+
+  /// No description provided for @profileLinksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Links'**
+  String get profileLinksTitle;
+
+  /// No description provided for @profileGithubLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'GitHub'**
+  String get profileGithubLabel;
+
+  /// No description provided for @profileGithubHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Username or profile URL'**
+  String get profileGithubHint;
+
+  /// No description provided for @profileWebsiteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal website'**
+  String get profileWebsiteLabel;
+
+  /// No description provided for @profileWebsiteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'example.com'**
+  String get profileWebsiteHint;
+
+  /// No description provided for @profileOpenLinkAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in browser'**
+  String get profileOpenLinkAction;
 
   /// No description provided for @profileDeviceTitle.
   ///
@@ -1610,6 +1646,30 @@ abstract class AppLocalizations {
   /// **'TUI adapter'**
   String get categoryTuiAdapter;
 
+  /// No description provided for @categoryHttpServers.
+  ///
+  /// In en, this message translates to:
+  /// **'HTTP server'**
+  String get categoryHttpServers;
+
+  /// No description provided for @categoryHttpClients.
+  ///
+  /// In en, this message translates to:
+  /// **'HTTP client'**
+  String get categoryHttpClients;
+
+  /// No description provided for @categoryHttpTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'HTTP testing'**
+  String get categoryHttpTesting;
+
+  /// No description provided for @categorySqlPersistence.
+  ///
+  /// In en, this message translates to:
+  /// **'SQL persistence'**
+  String get categorySqlPersistence;
+
   /// No description provided for @categoryShellCommands.
   ///
   /// In en, this message translates to:
@@ -1730,6 +1790,594 @@ abstract class AppLocalizations {
   /// **'Modules'**
   String get categoryModules;
 
+  /// No description provided for @categoryArraysAndStrings.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrays & strings'**
+  String get categoryArraysAndStrings;
+
+  /// No description provided for @categoryMemoryManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory management'**
+  String get categoryMemoryManagement;
+
+  /// No description provided for @categoryPreprocessor.
+  ///
+  /// In en, this message translates to:
+  /// **'Preprocessor'**
+  String get categoryPreprocessor;
+
+  /// No description provided for @categoryFileIO.
+  ///
+  /// In en, this message translates to:
+  /// **'File I/O'**
+  String get categoryFileIO;
+
+  /// No description provided for @categoryTemplates.
+  ///
+  /// In en, this message translates to:
+  /// **'Templates'**
+  String get categoryTemplates;
+
+  /// No description provided for @categoryStlContainers.
+  ///
+  /// In en, this message translates to:
+  /// **'STL containers'**
+  String get categoryStlContainers;
+
+  /// No description provided for @categoryBlocksAndProcs.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocks & procs'**
+  String get categoryBlocksAndProcs;
+
+  /// No description provided for @categoryCollections.
+  ///
+  /// In en, this message translates to:
+  /// **'Collections'**
+  String get categoryCollections;
+
+  /// No description provided for @categoryNilSafety.
+  ///
+  /// In en, this message translates to:
+  /// **'Nil safety'**
+  String get categoryNilSafety;
+
+  /// No description provided for @categoryCssSelectors.
+  ///
+  /// In en, this message translates to:
+  /// **'Selectors'**
+  String get categoryCssSelectors;
+
+  /// No description provided for @categoryCssBoxModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Box model'**
+  String get categoryCssBoxModel;
+
+  /// No description provided for @categoryCssColorsAndTypography.
+  ///
+  /// In en, this message translates to:
+  /// **'Color & typography'**
+  String get categoryCssColorsAndTypography;
+
+  /// No description provided for @categoryCssLayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Layout'**
+  String get categoryCssLayout;
+
+  /// No description provided for @categoryCssPositioning.
+  ///
+  /// In en, this message translates to:
+  /// **'Positioning'**
+  String get categoryCssPositioning;
+
+  /// No description provided for @categoryCssCustomProperties.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom properties'**
+  String get categoryCssCustomProperties;
+
+  /// No description provided for @categoryCssResponsive.
+  ///
+  /// In en, this message translates to:
+  /// **'Responsive'**
+  String get categoryCssResponsive;
+
+  /// No description provided for @categoryCssTransitionsAndAnimations.
+  ///
+  /// In en, this message translates to:
+  /// **'Transitions & animations'**
+  String get categoryCssTransitionsAndAnimations;
+
+  /// No description provided for @categoryPatternMatching.
+  ///
+  /// In en, this message translates to:
+  /// **'Pattern matching'**
+  String get categoryPatternMatching;
+
+  /// No description provided for @categoryDelegatesAndEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Delegates & events'**
+  String get categoryDelegatesAndEvents;
+
+  /// No description provided for @categoryLinq.
+  ///
+  /// In en, this message translates to:
+  /// **'LINQ'**
+  String get categoryLinq;
+
+  /// No description provided for @categoryAsyncProgramming.
+  ///
+  /// In en, this message translates to:
+  /// **'Async & await'**
+  String get categoryAsyncProgramming;
+
+  /// No description provided for @categoryOptionals.
+  ///
+  /// In en, this message translates to:
+  /// **'Optionals'**
+  String get categoryOptionals;
+
+  /// No description provided for @categoryClosures.
+  ///
+  /// In en, this message translates to:
+  /// **'Closures'**
+  String get categoryClosures;
+
+  /// No description provided for @categoryEnumsAndPatternMatching.
+  ///
+  /// In en, this message translates to:
+  /// **'Enums & pattern matching'**
+  String get categoryEnumsAndPatternMatching;
+
+  /// No description provided for @categoryCodable.
+  ///
+  /// In en, this message translates to:
+  /// **'Codable & JSON'**
+  String get categoryCodable;
+
+  /// No description provided for @categoryPropertyWrappers.
+  ///
+  /// In en, this message translates to:
+  /// **'Property wrappers'**
+  String get categoryPropertyWrappers;
+
+  /// No description provided for @categoryNullSafety.
+  ///
+  /// In en, this message translates to:
+  /// **'Null safety'**
+  String get categoryNullSafety;
+
+  /// No description provided for @categoryDataClasses.
+  ///
+  /// In en, this message translates to:
+  /// **'Data classes'**
+  String get categoryDataClasses;
+
+  /// No description provided for @categoryLambdas.
+  ///
+  /// In en, this message translates to:
+  /// **'Lambdas'**
+  String get categoryLambdas;
+
+  /// No description provided for @categoryExtensions.
+  ///
+  /// In en, this message translates to:
+  /// **'Extension functions'**
+  String get categoryExtensions;
+
+  /// No description provided for @categoryCoroutines.
+  ///
+  /// In en, this message translates to:
+  /// **'Coroutines'**
+  String get categoryCoroutines;
+
+  /// No description provided for @categoryDjangoProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Project setup'**
+  String get categoryDjangoProject;
+
+  /// No description provided for @categoryDjangoModels.
+  ///
+  /// In en, this message translates to:
+  /// **'Models'**
+  String get categoryDjangoModels;
+
+  /// No description provided for @categoryDjangoViews.
+  ///
+  /// In en, this message translates to:
+  /// **'Views & URLs'**
+  String get categoryDjangoViews;
+
+  /// No description provided for @categoryDjangoTemplates.
+  ///
+  /// In en, this message translates to:
+  /// **'Templates'**
+  String get categoryDjangoTemplates;
+
+  /// No description provided for @categoryDjangoForms.
+  ///
+  /// In en, this message translates to:
+  /// **'Forms'**
+  String get categoryDjangoForms;
+
+  /// No description provided for @categoryDjangoAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get categoryDjangoAdmin;
+
+  /// No description provided for @categoryDjangoTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'Testing'**
+  String get categoryDjangoTesting;
+
+  /// No description provided for @categoryDjangoRelationships.
+  ///
+  /// In en, this message translates to:
+  /// **'Relationships'**
+  String get categoryDjangoRelationships;
+
+  /// No description provided for @categoryDjangoOrm.
+  ///
+  /// In en, this message translates to:
+  /// **'ORM queries'**
+  String get categoryDjangoOrm;
+
+  /// No description provided for @categoryDjangoMigrations.
+  ///
+  /// In en, this message translates to:
+  /// **'Migrations'**
+  String get categoryDjangoMigrations;
+
+  /// No description provided for @categoryDjangoRestSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'DRF setup'**
+  String get categoryDjangoRestSetup;
+
+  /// No description provided for @categoryDjangoSerializers.
+  ///
+  /// In en, this message translates to:
+  /// **'Serializers'**
+  String get categoryDjangoSerializers;
+
+  /// No description provided for @categoryDjangoRestViews.
+  ///
+  /// In en, this message translates to:
+  /// **'API views'**
+  String get categoryDjangoRestViews;
+
+  /// No description provided for @categoryDjangoRestAuth.
+  ///
+  /// In en, this message translates to:
+  /// **'Auth & permissions'**
+  String get categoryDjangoRestAuth;
+
+  /// No description provided for @categoryDjangoRestFiltering.
+  ///
+  /// In en, this message translates to:
+  /// **'Pagination & filters'**
+  String get categoryDjangoRestFiltering;
+
+  /// No description provided for @categoryDjangoRestTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'API testing'**
+  String get categoryDjangoRestTesting;
+
+  /// No description provided for @categoryRecordsAndPatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'Records & patterns'**
+  String get categoryRecordsAndPatterns;
+
+  /// No description provided for @categoryPhpBasics.
+  ///
+  /// In en, this message translates to:
+  /// **'PHP basics'**
+  String get categoryPhpBasics;
+
+  /// No description provided for @categoryPhpStrings.
+  ///
+  /// In en, this message translates to:
+  /// **'Strings'**
+  String get categoryPhpStrings;
+
+  /// No description provided for @categoryPhpConditionals.
+  ///
+  /// In en, this message translates to:
+  /// **'Conditionals'**
+  String get categoryPhpConditionals;
+
+  /// No description provided for @categoryPhpLoops.
+  ///
+  /// In en, this message translates to:
+  /// **'Loops'**
+  String get categoryPhpLoops;
+
+  /// No description provided for @categoryPhpArrays.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrays'**
+  String get categoryPhpArrays;
+
+  /// No description provided for @categoryPhpFunctions.
+  ///
+  /// In en, this message translates to:
+  /// **'Functions'**
+  String get categoryPhpFunctions;
+
+  /// No description provided for @categoryPhpClasses.
+  ///
+  /// In en, this message translates to:
+  /// **'Classes & objects'**
+  String get categoryPhpClasses;
+
+  /// No description provided for @categoryPhpEnums.
+  ///
+  /// In en, this message translates to:
+  /// **'Enums'**
+  String get categoryPhpEnums;
+
+  /// No description provided for @categoryPhpErrorHandling.
+  ///
+  /// In en, this message translates to:
+  /// **'Error handling'**
+  String get categoryPhpErrorHandling;
+
+  /// No description provided for @categoryPhpNamespaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Namespaces'**
+  String get categoryPhpNamespaces;
+
+  /// No description provided for @categoryPhpSuperglobals.
+  ///
+  /// In en, this message translates to:
+  /// **'Superglobals'**
+  String get categoryPhpSuperglobals;
+
+  /// No description provided for @categoryPhpForms.
+  ///
+  /// In en, this message translates to:
+  /// **'Forms & validation'**
+  String get categoryPhpForms;
+
+  /// No description provided for @categoryPhpSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions & cookies'**
+  String get categoryPhpSessions;
+
+  /// No description provided for @categoryPhpDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'Database (PDO)'**
+  String get categoryPhpDatabase;
+
+  /// No description provided for @categoryPhpJson.
+  ///
+  /// In en, this message translates to:
+  /// **'JSON & APIs'**
+  String get categoryPhpJson;
+
+  /// No description provided for @categoryPhpFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Files'**
+  String get categoryPhpFiles;
+
+  /// No description provided for @categoryPhpSearching.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching'**
+  String get categoryPhpSearching;
+
+  /// No description provided for @categoryPhpSorting.
+  ///
+  /// In en, this message translates to:
+  /// **'Sorting'**
+  String get categoryPhpSorting;
+
+  /// No description provided for @categoryPhpGraphs.
+  ///
+  /// In en, this message translates to:
+  /// **'Graphs'**
+  String get categoryPhpGraphs;
+
+  /// No description provided for @categoryGitBasics.
+  ///
+  /// In en, this message translates to:
+  /// **'Git basics'**
+  String get categoryGitBasics;
+
+  /// No description provided for @categoryGitCommits.
+  ///
+  /// In en, this message translates to:
+  /// **'Commits'**
+  String get categoryGitCommits;
+
+  /// No description provided for @categoryGitBranching.
+  ///
+  /// In en, this message translates to:
+  /// **'Branching & merges'**
+  String get categoryGitBranching;
+
+  /// No description provided for @categoryGitRemotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Remotes'**
+  String get categoryGitRemotes;
+
+  /// No description provided for @categoryGitHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get categoryGitHistory;
+
+  /// No description provided for @categoryGitUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undoing changes'**
+  String get categoryGitUndo;
+
+  /// No description provided for @categoryGitCollaboration.
+  ///
+  /// In en, this message translates to:
+  /// **'Collaboration'**
+  String get categoryGitCollaboration;
+
+  /// No description provided for @categoryGitObjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Objects'**
+  String get categoryGitObjects;
+
+  /// No description provided for @categoryGitRefs.
+  ///
+  /// In en, this message translates to:
+  /// **'Refs & HEAD'**
+  String get categoryGitRefs;
+
+  /// No description provided for @categoryGitMaintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance'**
+  String get categoryGitMaintenance;
+
+  /// No description provided for @categoryLinuxBasics.
+  ///
+  /// In en, this message translates to:
+  /// **'Linux basics'**
+  String get categoryLinuxBasics;
+
+  /// No description provided for @categoryLinuxFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Files & paths'**
+  String get categoryLinuxFiles;
+
+  /// No description provided for @categoryPermissions.
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions'**
+  String get categoryPermissions;
+
+  /// No description provided for @categoryUsersAndGroups.
+  ///
+  /// In en, this message translates to:
+  /// **'Users & groups'**
+  String get categoryUsersAndGroups;
+
+  /// No description provided for @categoryProcesses.
+  ///
+  /// In en, this message translates to:
+  /// **'Processes'**
+  String get categoryProcesses;
+
+  /// No description provided for @categoryPackages.
+  ///
+  /// In en, this message translates to:
+  /// **'Packages'**
+  String get categoryPackages;
+
+  /// No description provided for @categoryServices.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get categoryServices;
+
+  /// No description provided for @categoryLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Logs'**
+  String get categoryLogs;
+
+  /// No description provided for @categoryStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage'**
+  String get categoryStorage;
+
+  /// No description provided for @categoryNetworking.
+  ///
+  /// In en, this message translates to:
+  /// **'Networking'**
+  String get categoryNetworking;
+
+  /// No description provided for @categoryScheduling.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduling'**
+  String get categoryScheduling;
+
+  /// No description provided for @categoryBackupAndArchives.
+  ///
+  /// In en, this message translates to:
+  /// **'Backups'**
+  String get categoryBackupAndArchives;
+
+  /// No description provided for @categoryDockerBasics.
+  ///
+  /// In en, this message translates to:
+  /// **'Docker basics'**
+  String get categoryDockerBasics;
+
+  /// No description provided for @categoryDockerImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Images'**
+  String get categoryDockerImages;
+
+  /// No description provided for @categoryDockerFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Dockerfiles'**
+  String get categoryDockerFiles;
+
+  /// No description provided for @categoryDockerContainers.
+  ///
+  /// In en, this message translates to:
+  /// **'Containers'**
+  String get categoryDockerContainers;
+
+  /// No description provided for @categoryDockerVolumes.
+  ///
+  /// In en, this message translates to:
+  /// **'Volumes & data'**
+  String get categoryDockerVolumes;
+
+  /// No description provided for @categoryDockerNetworking.
+  ///
+  /// In en, this message translates to:
+  /// **'Docker networking'**
+  String get categoryDockerNetworking;
+
+  /// No description provided for @categoryDockerRegistries.
+  ///
+  /// In en, this message translates to:
+  /// **'Registries'**
+  String get categoryDockerRegistries;
+
+  /// No description provided for @categoryDockerCompose.
+  ///
+  /// In en, this message translates to:
+  /// **'Compose'**
+  String get categoryDockerCompose;
+
+  /// No description provided for @categoryDockerMaintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'Debug & maintenance'**
+  String get categoryDockerMaintenance;
+
   /// No description provided for @languageGo.
   ///
   /// In en, this message translates to:
@@ -1778,6 +2426,84 @@ abstract class AppLocalizations {
   /// **'Haskell'**
   String get languageHaskell;
 
+  /// No description provided for @languageC.
+  ///
+  /// In en, this message translates to:
+  /// **'C'**
+  String get languageC;
+
+  /// No description provided for @languageCpp.
+  ///
+  /// In en, this message translates to:
+  /// **'C++'**
+  String get languageCpp;
+
+  /// No description provided for @languageJava.
+  ///
+  /// In en, this message translates to:
+  /// **'Java'**
+  String get languageJava;
+
+  /// No description provided for @languageCrystal.
+  ///
+  /// In en, this message translates to:
+  /// **'Crystal'**
+  String get languageCrystal;
+
+  /// No description provided for @languageCss.
+  ///
+  /// In en, this message translates to:
+  /// **'CSS'**
+  String get languageCss;
+
+  /// No description provided for @languageCsharp.
+  ///
+  /// In en, this message translates to:
+  /// **'C#'**
+  String get languageCsharp;
+
+  /// No description provided for @languageSwift.
+  ///
+  /// In en, this message translates to:
+  /// **'Swift'**
+  String get languageSwift;
+
+  /// No description provided for @languageKotlin.
+  ///
+  /// In en, this message translates to:
+  /// **'Kotlin'**
+  String get languageKotlin;
+
+  /// No description provided for @languageDart.
+  ///
+  /// In en, this message translates to:
+  /// **'Dart'**
+  String get languageDart;
+
+  /// No description provided for @languagePhp.
+  ///
+  /// In en, this message translates to:
+  /// **'PHP'**
+  String get languagePhp;
+
+  /// No description provided for @languageGit.
+  ///
+  /// In en, this message translates to:
+  /// **'Git'**
+  String get languageGit;
+
+  /// No description provided for @languageLinux.
+  ///
+  /// In en, this message translates to:
+  /// **'Linux'**
+  String get languageLinux;
+
+  /// No description provided for @languageDocker.
+  ///
+  /// In en, this message translates to:
+  /// **'Docker'**
+  String get languageDocker;
+
   /// No description provided for @languageGoBlurb.
   ///
   /// In en, this message translates to:
@@ -1825,6 +2551,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Purely functional — values, types, and no side effects.'**
   String get languageHaskellBlurb;
+
+  /// No description provided for @languageCBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Close to the metal — the language operating systems are built on.'**
+  String get languageCBlurb;
+
+  /// No description provided for @languageCppBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance and control — classes, templates, and the STL.'**
+  String get languageCppBlurb;
+
+  /// No description provided for @languageJavaBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Write once, run anywhere — the classic object-oriented workhorse.'**
+  String get languageJavaBlurb;
+
+  /// No description provided for @languageCrystalBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Ruby-like syntax, compiled and type-inferred — fast without the ceremony.'**
+  String get languageCrystalBlurb;
+
+  /// No description provided for @languageCssBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'The web\'s stylesheet language — cascade, specificity, and layout.'**
+  String get languageCssBlurb;
+
+  /// No description provided for @languageCsharpBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Modern, object-oriented, and fast — from apps and games to the cloud.'**
+  String get languageCsharpBlurb;
+
+  /// No description provided for @languageSwiftBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Safe, fast, and expressive — the modern language of Apple\'s platforms.'**
+  String get languageSwiftBlurb;
+
+  /// No description provided for @languageKotlinBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Concise, null-safe, and multiplatform — the language behind modern Android.'**
+  String get languageKotlinBlurb;
+
+  /// No description provided for @languageDartBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Null-safe and async-ready — the language behind Flutter.'**
+  String get languageDartBlurb;
+
+  /// No description provided for @languagePhpBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'The web\'s server-side workhorse — pragmatic, dynamic, and everywhere.'**
+  String get languagePhpBlurb;
+
+  /// No description provided for @languageGitBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Track every change and collaborate without fear.'**
+  String get languageGitBlurb;
+
+  /// No description provided for @languageLinuxBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Understand and operate the system beneath every server and container.'**
+  String get languageLinuxBlurb;
+
+  /// No description provided for @languageDockerBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Package it once, run it anywhere.'**
+  String get languageDockerBlurb;
 
   /// No description provided for @snippetPracticeAction.
   ///

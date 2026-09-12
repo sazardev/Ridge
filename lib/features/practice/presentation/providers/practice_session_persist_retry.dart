@@ -19,6 +19,55 @@ typedef _PersistAttempt = ({
 /// pending-retry bookkeeping or keep it for another retry.
 typedef _PersistOutcome = ({PracticeSessionState state, bool succeeded});
 
+/// Persists [controller]'s finished session — the first persist attempt
+/// of a run, shared by the natural finish and Sprint's deadline finish
+/// (both in `PracticeSessionController._finishNow`). A top-level function
+/// (not a method) so the controller class body stays within the project's
+/// 500-line file limit, matching [_resolvePersistAttempt]; the caller
+/// supplies the session-clock values it froze at the finish instant.
+///
+/// Returns the state the controller should move to when there is no guest
+/// profile to persist against, or `null` once the attempt ran (it folds
+/// its own outcome into the controller's state via `_attemptPersist` —
+/// the `state` setter is `@protected` to subclasses, so this helper can't
+/// assign it itself).
+Future<PracticeSessionState?> _persistFinishedSession(
+  Ref ref,
+  PracticeSessionController controller, {
+  required KeystrokeStreamRecorder recorder,
+  required Snippet displaySnippet,
+  required Duration? remaining,
+  required DateTime startedAtUtc,
+  required Duration duration,
+  required List<Keystroke> keystrokes,
+}) async {
+  final profileId = ref.read(activeProfileControllerProvider).value?.id;
+  if (profileId == null) {
+    return PracticeSessionState(
+      status: PracticeSessionStatus.result,
+      recorder: recorder,
+      snippet: displaySnippet,
+      remaining: remaining,
+      survival: controller._survival,
+      error: 'No guest profile found',
+    );
+  }
+
+  await controller._attemptPersist((
+    id: TypingSessionId.generate(),
+    profileId: profileId,
+    mode: controller.mode,
+    // The *starting* snippet, always — a multi-snippet Sprint run still
+    // denormalizes onto it (see the project plan's design decision);
+    // `displaySnippet` may have already advanced past it.
+    snippet: controller.snippet,
+    startedAtUtc: startedAtUtc,
+    duration: duration,
+    keystrokes: keystrokes,
+  ));
+  return null;
+}
+
 /// Calls [FinishPracticeSessionUseCase] with [attempt]'s exact inputs
 /// (used both for the first try and for every retry resubmission) and
 /// folds the result into the next state — success fires

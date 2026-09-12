@@ -1,0 +1,127 @@
+[
+  {
+    "file": "css_layout_v1.json",
+    "id": "css-layout-v1",
+    "language": "css",
+    "titleEn": "CSS: Layout & Responsive",
+    "titleEs": "CSS: Layout y responsive",
+    "descriptionEn": "Master flexbox, grid, positioning, and responsive design.",
+    "descriptionEs": "Domina flexbox, grid, posicionamiento y diseño adaptable.",
+    "tagEn": "Layout",
+    "tagEs": "Layout",
+    "lessons": [
+      {
+        "id": "css-layout-v1-step01",
+        "snippetId": "css-flex-001",
+        "order": 1,
+        "titleEn": "Flexbox rows and columns",
+        "titleEs": "Filas y columnas con flexbox"
+      },
+      {
+        "id": "css-layout-v1-step02",
+        "snippetId": "css-flex-002",
+        "order": 2,
+        "titleEn": "Flex alignment and gap",
+        "titleEs": "Alineación y gap en flexbox"
+      },
+      {
+        "id": "css-layout-v1-step03",
+        "snippetId": "css-flex-003",
+        "order": 3,
+        "titleEn": "The `flex` shorthand",
+        "titleEs": "El atajo `flex`"
+      },
+      {
+        "id": "css-layout-v1-step04",
+        "snippetId": "css-grid-001",
+        "order": 4,
+        "titleEn": "Grid with equal columns",
+        "titleEs": "Grid con columnas iguales"
+      },
+      {
+        "id": "css-layout-v1-step05",
+        "snippetId": "css-grid-002",
+        "order": 5,
+        "titleEn": "Placing items on grid lines",
+        "titleEs": "Ubicar ítems por líneas de grid"
+      },
+      {
+        "id": "css-layout-v1-step06",
+        "snippetId": "css-grid-003",
+        "order": 6,
+        "titleEn": "Named grid areas",
+        "titleEs": "Áreas nombradas de grid"
+      },
+      {
+        "id": "css-layout-v1-step07",
+        "snippetId": "css-pos-001",
+        "order": 7,
+        "titleEn": "Relative offsets",
+        "titleEs": "Desplazamientos relativos"
+      },
+      {
+        "id": "css-layout-v1-step08",
+        "snippetId": "css-pos-002",
+        "order": 8,
+        "titleEn": "Absolute inside a positioned parent",
+        "titleEs": "Absoluto dentro de un padre posicionado"
+      },
+      {
+        "id": "css-layout-v1-step09",
+        "snippetId": "css-pos-003",
+        "order": 9,
+        "titleEn": "Sticky headers and fixed buttons",
+        "titleEs": "Header sticky y botón fixed"
+      },
+      {
+        "id": "css-layout-v1-step10",
+        "snippetId": "css-pos-004",
+        "order": 10,
+        "titleEn": "Stacking with `z-index` and `inset`",
+        "titleEs": "Apilado con `z-index` e `inset`"
+      },
+      {
+        "id": "css-layout-v1-step11",
+        "snippetId": "css-pos-005",
+        "order": 11,
+        "titleEn": "Clipping and scrolling with `overflow`",
+        "titleEs": "Recorte y scroll con `overflow`"
+      },
+      {
+        "id": "css-layout-v1-step12",
+        "snippetId": "css-resp-001",
+        "order": 12,
+        "titleEn": "`em` vs `rem` units",
+        "titleEs": "Unidades `em` y `rem`"
+      },
+      {
+        "id": "css-layout-v1-step13",
+        "snippetId": "css-resp-002",
+        "order": 13,
+        "titleEn": "Viewport units",
+        "titleEs": "Unidades de viewport"
+      },
+      {
+        "id": "css-layout-v1-step14",
+        "snippetId": "css-resp-003",
+        "order": 14,
+        "titleEn": "Mobile-first `min-width` queries",
+        "titleEs": "Media queries `min-width` mobile-first"
+      },
+      {
+        "id": "css-layout-v1-step15",
+        "snippetId": "css-resp-004",
+        "order": 15,
+        "titleEn": "Responsive grid across two breakpoints",
+        "titleEs": "Grid adaptable con dos breakpoints"
+      },
+      {
+        "id": "css-layout-v1-step16",
+        "snippetId": "css-resp-005",
+        "order": 16,
+        "titleEn": "Fluid type with `clamp()`",
+        "titleEs": "Tipografía fluida con `clamp()`"
+      }
+    ]
+  }
+]

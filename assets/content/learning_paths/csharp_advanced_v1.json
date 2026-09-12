@@ -1,0 +1,119 @@
+[
+  {
+    "id": "csharp-advanced-v1",
+    "language": "csharp",
+    "titleEn": "C#: Advanced",
+    "titleEs": "C#: Avanzado",
+    "descriptionEn": "Records, pattern matching, generics, LINQ, async, and resource management in modern C#.",
+    "descriptionEs": "Records, pattern matching, genéricos, LINQ, async y gestión de recursos en C# moderno.",
+    "tagEn": "Advanced",
+    "tagEs": "Avanzado",
+    "lessons": [
+      {
+        "id": "csharp-advanced-v1-step01",
+        "snippetId": "csharp-nil-001",
+        "order": 1,
+        "titleEn": "Nullable reference types and null operators",
+        "titleEs": "Tipos anulables y operadores de `null`"
+      },
+      {
+        "id": "csharp-advanced-v1-step02",
+        "snippetId": "csharp-oop-005",
+        "order": 2,
+        "titleEn": "Records: value equality and with copies",
+        "titleEs": "Registros: igualdad por valor y copias con `with`"
+      },
+      {
+        "id": "csharp-advanced-v1-step03",
+        "snippetId": "csharp-pat-001",
+        "order": 3,
+        "titleEn": "Type patterns: test and bind with is",
+        "titleEs": "Patrones de tipo: probar y ligar con `is`"
+      },
+      {
+        "id": "csharp-advanced-v1-step04",
+        "snippetId": "csharp-pat-002",
+        "order": 4,
+        "titleEn": "Switch expressions with property patterns",
+        "titleEs": "Expresiones switch con patrones de propiedad"
+      },
+      {
+        "id": "csharp-advanced-v1-step05",
+        "snippetId": "csharp-gen-001",
+        "order": 5,
+        "titleEn": "Generic methods with constraints",
+        "titleEs": "Métodos genéricos con restricciones"
+      },
+      {
+        "id": "csharp-advanced-v1-step06",
+        "snippetId": "csharp-gen-002",
+        "order": 6,
+        "titleEn": "Generic classes: BoundedStack<T>",
+        "titleEs": "Clases genéricas: BoundedStack<T>"
+      },
+      {
+        "id": "csharp-advanced-v1-step07",
+        "snippetId": "csharp-del-001",
+        "order": 7,
+        "titleEn": "Func, Action and Predicate delegates",
+        "titleEs": "Delegados Func, Action y Predicate"
+      },
+      {
+        "id": "csharp-advanced-v1-step08",
+        "snippetId": "csharp-del-002",
+        "order": 8,
+        "titleEn": "Events: subscribe with += and raise safely",
+        "titleEs": "Eventos: suscribir con += y desencadenar seguro"
+      },
+      {
+        "id": "csharp-advanced-v1-step09",
+        "snippetId": "csharp-func-004",
+        "order": 9,
+        "titleEn": "Extension methods for strings",
+        "titleEs": "Métodos de extensión para `string`"
+      },
+      {
+        "id": "csharp-advanced-v1-step10",
+        "snippetId": "csharp-coll-003",
+        "order": 10,
+        "titleEn": "Lazy iterators with yield return",
+        "titleEs": "Iteradores perezosos con `yield return`"
+      },
+      {
+        "id": "csharp-advanced-v1-step11",
+        "snippetId": "csharp-linq-001",
+        "order": 11,
+        "titleEn": "LINQ method syntax: Where, OrderBy, Select",
+        "titleEs": "Sintaxis de métodos LINQ: Where, OrderBy, Select"
+      },
+      {
+        "id": "csharp-advanced-v1-step12",
+        "snippetId": "csharp-linq-002",
+        "order": 12,
+        "titleEn": "LINQ query syntax and aggregates",
+        "titleEs": "Sintaxis de consulta LINQ y agregaciones"
+      },
+      {
+        "id": "csharp-advanced-v1-step13",
+        "snippetId": "csharp-async-001",
+        "order": 13,
+        "titleEn": "async, await and top-level await",
+        "titleEs": "async, await y await de nivel superior"
+      },
+      {
+        "id": "csharp-advanced-v1-step14",
+        "snippetId": "csharp-async-002",
+        "order": 14,
+        "titleEn": "Concurrent tasks with Task.WhenAll",
+        "titleEs": "Tareas concurrentes con Task.WhenAll"
+      },
+      {
+        "id": "csharp-advanced-v1-step15",
+        "snippetId": "csharp-err-003",
+        "order": 15,
+        "titleEn": "IDisposable and using declarations",
+        "titleEs": "`IDisposable` y declaraciones `using`"
+      }
+    ]
+  }
+]

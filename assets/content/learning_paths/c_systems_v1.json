@@ -1,0 +1,140 @@
+[
+  {
+    "id": "c-systems-v1",
+    "language": "c",
+    "titleEn": "C: Systems",
+    "titleEs": "C: Sistemas",
+    "descriptionEn": "Structs, dynamic memory, the preprocessor, files, and low-level pointers in C.",
+    "descriptionEs": "Structs, memoria dinámica, preprocesador, archivos y punteros de bajo nivel en C.",
+    "tagEn": "Systems",
+    "tagEs": "Sistemas",
+    "lessons": [
+      {
+        "id": "c-systems-v1-step01",
+        "snippetId": "c-struct-001",
+        "order": 1,
+        "titleEn": "Defining a struct",
+        "titleEs": "Definir un struct"
+      },
+      {
+        "id": "c-systems-v1-step02",
+        "snippetId": "c-struct-002",
+        "order": 2,
+        "titleEn": "typedef and arrays of structs",
+        "titleEs": "typedef y arreglos de structs"
+      },
+      {
+        "id": "c-systems-v1-step03",
+        "snippetId": "c-struct-003",
+        "order": 3,
+        "titleEn": "Pointers to structs and ->",
+        "titleEs": "Punteros a structs y ->"
+      },
+      {
+        "id": "c-systems-v1-step04",
+        "snippetId": "c-arr-003",
+        "order": 4,
+        "titleEn": "Comparing strings with strcmp",
+        "titleEs": "Comparar strings con strcmp"
+      },
+      {
+        "id": "c-systems-v1-step05",
+        "snippetId": "c-arr-004",
+        "order": 5,
+        "titleEn": "Safe formatting with snprintf",
+        "titleEs": "Formateo seguro con snprintf"
+      },
+      {
+        "id": "c-systems-v1-step06",
+        "snippetId": "c-mem-001",
+        "order": 6,
+        "titleEn": "malloc and free",
+        "titleEs": "malloc y free"
+      },
+      {
+        "id": "c-systems-v1-step07",
+        "snippetId": "c-mem-002",
+        "order": 7,
+        "titleEn": "Zeroed memory with calloc",
+        "titleEs": "Memoria en cero con calloc"
+      },
+      {
+        "id": "c-systems-v1-step08",
+        "snippetId": "c-mem-003",
+        "order": 8,
+        "titleEn": "Growing memory with realloc",
+        "titleEs": "Crecer memoria con realloc"
+      },
+      {
+        "id": "c-systems-v1-step09",
+        "snippetId": "c-mem-004",
+        "order": 9,
+        "titleEn": "Raw bytes with memcpy and memset",
+        "titleEs": "Bytes crudos con memcpy y memset"
+      },
+      {
+        "id": "c-systems-v1-step10",
+        "snippetId": "c-ptr-002",
+        "order": 10,
+        "titleEn": "Pointer arithmetic over arrays",
+        "titleEs": "Aritmética de punteros sobre arreglos"
+      },
+      {
+        "id": "c-systems-v1-step11",
+        "snippetId": "c-ptr-003",
+        "order": 11,
+        "titleEn": "Function pointers",
+        "titleEs": "Punteros a funciones"
+      },
+      {
+        "id": "c-systems-v1-step12",
+        "snippetId": "c-pre-001",
+        "order": 12,
+        "titleEn": "Constants with #define",
+        "titleEs": "Constantes con #define"
+      },
+      {
+        "id": "c-systems-v1-step13",
+        "snippetId": "c-pre-002",
+        "order": 13,
+        "titleEn": "Function-like macros",
+        "titleEs": "Macros con parámetros"
+      },
+      {
+        "id": "c-systems-v1-step14",
+        "snippetId": "c-pre-003",
+        "order": 14,
+        "titleEn": "Header guards",
+        "titleEs": "Guardas de cabecera"
+      },
+      {
+        "id": "c-systems-v1-step15",
+        "snippetId": "c-err-001",
+        "order": 15,
+        "titleEn": "Checking return values",
+        "titleEs": "Verificar valores de retorno"
+      },
+      {
+        "id": "c-systems-v1-step16",
+        "snippetId": "c-err-002",
+        "order": 16,
+        "titleEn": "errno and strerror",
+        "titleEs": "errno y strerror"
+      },
+      {
+        "id": "c-systems-v1-step17",
+        "snippetId": "c-io-001",
+        "order": 17,
+        "titleEn": "Writing a text file",
+        "titleEs": "Escribir un archivo de texto"
+      },
+      {
+        "id": "c-systems-v1-step18",
+        "snippetId": "c-io-002",
+        "order": 18,
+        "titleEn": "Reading a file with fgets",
+        "titleEs": "Leer un archivo con fgets"
+      }
+    ]
+  }
+]

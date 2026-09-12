@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Required by local_auth for biometric app-lock unlock. -->
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
+    <!-- Required to load the profile's GitHub avatar (network image), and
+         by Supabase once the online features land (STACK.md §3.4). Normal
+         permission, no runtime prompt. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="Ridge"
         android:name="${applicationName}"

@@ -1,0 +1,154 @@
+[
+  {
+    "id": "swift-foundations-v1",
+    "language": "swift",
+    "titleEn": "Swift from scratch",
+    "titleEs": "Swift desde cero",
+    "descriptionEn": "Learn Swift step by step: types, optionals, control flow, functions, and structs.",
+    "descriptionEs": "Aprende Swift paso a paso: tipos, opcionales, control de flujo, funciones y structs.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "swift-foundations-v1-step01",
+        "snippetId": "swift-vars-001",
+        "order": 1,
+        "titleEn": "Your first Swift program",
+        "titleEs": "Tu primer programa en Swift"
+      },
+      {
+        "id": "swift-foundations-v1-step02",
+        "snippetId": "swift-vars-002",
+        "order": 2,
+        "titleEn": "Type annotations and basic types",
+        "titleEs": "Anotaciones de tipo y tipos básicos"
+      },
+      {
+        "id": "swift-foundations-v1-step03",
+        "snippetId": "swift-cond-001",
+        "order": 3,
+        "titleEn": "`if`, `else` and the ternary operator",
+        "titleEs": "`if`, `else` y el operador ternario"
+      },
+      {
+        "id": "swift-foundations-v1-step04",
+        "snippetId": "swift-cond-002",
+        "order": 4,
+        "titleEn": "`switch` with ranges and tuple patterns",
+        "titleEs": "`switch` con rangos y patrones de tupla"
+      },
+      {
+        "id": "swift-foundations-v1-step05",
+        "snippetId": "swift-loop-001",
+        "order": 5,
+        "titleEn": "`for-in` loops with ranges",
+        "titleEs": "Bucles `for-in` con rangos"
+      },
+      {
+        "id": "swift-foundations-v1-step06",
+        "snippetId": "swift-loop-002",
+        "order": 6,
+        "titleEn": "`while` and `repeat-while`",
+        "titleEs": "`while` y `repeat-while`"
+      },
+      {
+        "id": "swift-foundations-v1-step07",
+        "snippetId": "swift-func-001",
+        "order": 7,
+        "titleEn": "Functions with argument labels",
+        "titleEs": "Funciones con etiquetas de argumento"
+      },
+      {
+        "id": "swift-foundations-v1-step08",
+        "snippetId": "swift-func-002",
+        "order": 8,
+        "titleEn": "Default values and variadic parameters",
+        "titleEs": "Valores por defecto y parámetros variádicos"
+      },
+      {
+        "id": "swift-foundations-v1-step09",
+        "snippetId": "swift-func-003",
+        "order": 9,
+        "titleEn": "`inout` parameters",
+        "titleEs": "Parámetros `inout`"
+      },
+      {
+        "id": "swift-foundations-v1-step10",
+        "snippetId": "swift-opt-001",
+        "order": 10,
+        "titleEn": "Optionals, nil, `if let` and `guard let`",
+        "titleEs": "Opcionales, `nil`, `if let` y `guard let`"
+      },
+      {
+        "id": "swift-foundations-v1-step11",
+        "snippetId": "swift-opt-002",
+        "order": 11,
+        "titleEn": "Nil-coalescing and optional chaining",
+        "titleEs": "Coalescencia de `nil` y encadenamiento opcional"
+      },
+      {
+        "id": "swift-foundations-v1-step12",
+        "snippetId": "swift-coll-001",
+        "order": 12,
+        "titleEn": "Arrays",
+        "titleEs": "Arreglos"
+      },
+      {
+        "id": "swift-foundations-v1-step13",
+        "snippetId": "swift-coll-002",
+        "order": 13,
+        "titleEn": "Dictionaries and sets",
+        "titleEs": "Diccionarios y conjuntos"
+      },
+      {
+        "id": "swift-foundations-v1-step14",
+        "snippetId": "swift-closure-001",
+        "order": 14,
+        "titleEn": "Closures and trailing closure syntax",
+        "titleEs": "Closures y sintaxis de closure final"
+      },
+      {
+        "id": "swift-foundations-v1-step15",
+        "snippetId": "swift-struct-001",
+        "order": 15,
+        "titleEn": "Structs and value semantics",
+        "titleEs": "Structs y semántica de valor"
+      },
+      {
+        "id": "swift-foundations-v1-step16",
+        "snippetId": "swift-class-001",
+        "order": 16,
+        "titleEn": "Classes, initialization and inheritance",
+        "titleEs": "Clases, inicialización y herencia"
+      },
+      {
+        "id": "swift-foundations-v1-step17",
+        "snippetId": "swift-proto-001",
+        "order": 17,
+        "titleEn": "Protocols and default implementations",
+        "titleEs": "Protocolos e implementaciones por defecto"
+      },
+      {
+        "id": "swift-foundations-v1-step18",
+        "snippetId": "swift-enum-001",
+        "order": 18,
+        "titleEn": "Enums with cases and associated values",
+        "titleEs": "Enums con casos y valores asociados"
+      },
+      {
+        "id": "swift-foundations-v1-step19",
+        "snippetId": "swift-err-001",
+        "order": 19,
+        "titleEn": "Throwing and catching errors",
+        "titleEs": "Lanzar y capturar errores"
+      },
+      {
+        "id": "swift-foundations-v1-step20",
+        "snippetId": "swift-capstone-001",
+        "order": 20,
+        "titleEn": "Put it together: word count",
+        "titleEs": "Júntalo todo: conteo de palabras"
+      }
+    ]
+  }
+]

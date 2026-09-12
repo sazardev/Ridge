@@ -1,0 +1,98 @@
+[
+  {
+    "id": "kotlin-algorithms-v1",
+    "language": "kotlin",
+    "titleEn": "Kotlin: Algorithms",
+    "titleEs": "Kotlin: Algoritmos",
+    "descriptionEn": "Searching, classic sorts, and graph algorithms, implemented in idiomatic Kotlin.",
+    "descriptionEs": "Búsquedas, ordenamientos clásicos y algoritmos de grafos, en Kotlin idiomático.",
+    "tagEn": "Algorithms",
+    "tagEs": "Algoritmos",
+    "lessons": [
+      {
+        "id": "kotlin-algorithms-v1-step01",
+        "snippetId": "kotlin-algo-001",
+        "order": 1,
+        "titleEn": "Linear search",
+        "titleEs": "Búsqueda lineal"
+      },
+      {
+        "id": "kotlin-algorithms-v1-step02",
+        "snippetId": "kotlin-algo-002",
+        "order": 2,
+        "titleEn": "Binary search",
+        "titleEs": "Búsqueda binaria"
+      },
+      {
+        "id": "kotlin-algorithms-v1-step03",
+        "snippetId": "kotlin-algo-003",
+        "order": 3,
+        "titleEn": "Bubble sort with early exit",
+        "titleEs": "Ordenamiento burbuja con salida temprana"
+      },
+      {
+        "id": "kotlin-algorithms-v1-step04",
+        "snippetId": "kotlin-algo-004",
+        "order": 4,
+        "titleEn": "Selection sort",
+        "titleEs": "Ordenamiento por selección"
+      },
+      {
+        "id": "kotlin-algorithms-v1-step05",
+        "snippetId": "kotlin-algo-005",
+        "order": 5,
+        "titleEn": "Insertion sort",
+        "titleEs": "Ordenamiento por inserción"
+      },
+      {
+        "id": "kotlin-algorithms-v1-step06",
+        "snippetId": "kotlin-algo-006",
+        "order": 6,
+        "titleEn": "Merge sort with `copyOf`",
+        "titleEs": "Merge sort con `copyOf`"
+      },
+      {
+        "id": "kotlin-algorithms-v1-step07",
+        "snippetId": "kotlin-algo-007",
+        "order": 7,
+        "titleEn": "Quicksort with Lomuto partition",
+        "titleEs": "Quicksort con partición de Lomuto"
+      },
+      {
+        "id": "kotlin-algorithms-v1-step08",
+        "snippetId": "kotlin-algo-008",
+        "order": 8,
+        "titleEn": "Heap sort with `siftDown`",
+        "titleEs": "Heapsort con `siftDown`"
+      },
+      {
+        "id": "kotlin-algorithms-v1-step09",
+        "snippetId": "kotlin-algo-009",
+        "order": 9,
+        "titleEn": "Graph as an adjacency list",
+        "titleEs": "Grafo como lista de adyacencia"
+      },
+      {
+        "id": "kotlin-algorithms-v1-step10",
+        "snippetId": "kotlin-algo-010",
+        "order": 10,
+        "titleEn": "BFS with `ArrayDeque`",
+        "titleEs": "BFS con `ArrayDeque`"
+      },
+      {
+        "id": "kotlin-algorithms-v1-step11",
+        "snippetId": "kotlin-algo-011",
+        "order": 11,
+        "titleEn": "Recursive DFS with a helper",
+        "titleEs": "DFS recursivo con un auxiliar"
+      },
+      {
+        "id": "kotlin-algorithms-v1-step12",
+        "snippetId": "kotlin-algo-012",
+        "order": 12,
+        "titleEn": "Dijkstra with `Long` distances",
+        "titleEs": "Dijkstra con distancias `Long`"
+      }
+    ]
+  }
+]

@@ -1,0 +1,106 @@
+[
+  {
+    "file": "css_advanced_v1.json",
+    "id": "css-advanced-v1",
+    "language": "css",
+    "titleEn": "CSS: Advanced",
+    "titleEs": "CSS avanzado",
+    "descriptionEn": "Master cascade layers, custom properties, transitions, and animations.",
+    "descriptionEs": "Domina las capas de cascada, las propiedades personalizadas, las transiciones y las animaciones.",
+    "tagEn": "Advanced",
+    "tagEs": "Avanzado",
+    "lessons": [
+      {
+        "id": "css-advanced-v1-step01",
+        "snippetId": "css-spec-001",
+        "order": 1,
+        "titleEn": "Specificity in practice",
+        "titleEs": "La especificidad en la práctica"
+      },
+      {
+        "id": "css-advanced-v1-step02",
+        "snippetId": "css-spec-002",
+        "order": 2,
+        "titleEn": "Inheritance and `inherit`",
+        "titleEs": "Herencia y `inherit`"
+      },
+      {
+        "id": "css-advanced-v1-step03",
+        "snippetId": "css-spec-003",
+        "order": 3,
+        "titleEn": "Cascade layers, `:is()` and `:where()`",
+        "titleEs": "Capas de cascada, `:is()` y `:where()`"
+      },
+      {
+        "id": "css-advanced-v1-step04",
+        "snippetId": "css-var-001",
+        "order": 4,
+        "titleEn": "Custom properties with `var()`",
+        "titleEs": "Variables CSS con `var()`"
+      },
+      {
+        "id": "css-advanced-v1-step05",
+        "snippetId": "css-var-002",
+        "order": 5,
+        "titleEn": "Scoping custom properties",
+        "titleEs": "Alcance de las custom properties"
+      },
+      {
+        "id": "css-advanced-v1-step06",
+        "snippetId": "css-var-003",
+        "order": 6,
+        "titleEn": "Fallbacks and dark mode",
+        "titleEs": "Fallback y modo oscuro"
+      },
+      {
+        "id": "css-advanced-v1-step07",
+        "snippetId": "css-var-004",
+        "order": 7,
+        "titleEn": "Math with `calc()` and variables",
+        "titleEs": "Cálculo con `calc()` y variables"
+      },
+      {
+        "id": "css-advanced-v1-step08",
+        "snippetId": "css-anim-001",
+        "order": 8,
+        "titleEn": "Smooth hover transitions",
+        "titleEs": "Transiciones suaves en hover"
+      },
+      {
+        "id": "css-advanced-v1-step09",
+        "snippetId": "css-anim-002",
+        "order": 9,
+        "titleEn": "Hover lift with `transform`",
+        "titleEs": "Elevación en hover con `transform`"
+      },
+      {
+        "id": "css-advanced-v1-step10",
+        "snippetId": "css-anim-003",
+        "order": 10,
+        "titleEn": "Looping keyframe animations",
+        "titleEs": "Animaciones en bucle con `@keyframes`"
+      },
+      {
+        "id": "css-advanced-v1-step11",
+        "snippetId": "css-anim-004",
+        "order": 11,
+        "titleEn": "Entrance animations with a delay",
+        "titleEs": "Animaciones de entrada con delay"
+      },
+      {
+        "id": "css-advanced-v1-step12",
+        "snippetId": "css-anim-005",
+        "order": 12,
+        "titleEn": "Respecting `prefers-reduced-motion`",
+        "titleEs": "Respetar `prefers-reduced-motion`"
+      },
+      {
+        "id": "css-advanced-v1-step13",
+        "snippetId": "css-cap-001",
+        "order": 13,
+        "titleEn": "Capstone: an interactive card",
+        "titleEs": "Capstone: una card interactiva"
+      }
+    ]
+  }
+]

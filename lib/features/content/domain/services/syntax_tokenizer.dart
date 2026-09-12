@@ -7,6 +7,19 @@ part 'python_syntax_tokenizer.dart';
 part 'javascript_syntax_tokenizer.dart';
 part 'typescript_syntax_tokenizer.dart';
 part 'haskell_syntax_tokenizer.dart';
+part 'c_syntax_tokenizer.dart';
+part 'cpp_syntax_tokenizer.dart';
+part 'java_syntax_tokenizer.dart';
+part 'crystal_syntax_tokenizer.dart';
+part 'csharp_syntax_tokenizer.dart';
+part 'css_syntax_tokenizer.dart';
+part 'swift_syntax_tokenizer.dart';
+part 'kotlin_syntax_tokenizer.dart';
+part 'dart_syntax_tokenizer.dart';
+part 'php_syntax_tokenizer.dart';
+part 'git_syntax_tokenizer.dart';
+part 'linux_syntax_tokenizer.dart';
+part 'docker_syntax_tokenizer.dart';
 
 /// Classifies every character of a source-code string for syntax
 /// highlighting (SPEC.md-adjacent presentation concern, not itself part
@@ -32,6 +45,19 @@ abstract final class SyntaxTokenizers {
         ProgrammingLanguage.javascript => const JavaScriptSyntaxTokenizer(),
         ProgrammingLanguage.typescript => const TypeScriptSyntaxTokenizer(),
         ProgrammingLanguage.haskell => const HaskellSyntaxTokenizer(),
+        ProgrammingLanguage.c => const CSyntaxTokenizer(),
+        ProgrammingLanguage.cpp => const CppSyntaxTokenizer(),
+        ProgrammingLanguage.java => const JavaSyntaxTokenizer(),
+        ProgrammingLanguage.crystal => const CrystalSyntaxTokenizer(),
+        ProgrammingLanguage.swift => const SwiftSyntaxTokenizer(),
+        ProgrammingLanguage.csharp => const CSharpSyntaxTokenizer(),
+        ProgrammingLanguage.css => const CssSyntaxTokenizer(),
+        ProgrammingLanguage.kotlin => const KotlinSyntaxTokenizer(),
+        ProgrammingLanguage.dart => const DartSyntaxTokenizer(),
+        ProgrammingLanguage.php => const PhpSyntaxTokenizer(),
+        ProgrammingLanguage.git => const GitSyntaxTokenizer(),
+        ProgrammingLanguage.linux => const LinuxSyntaxTokenizer(),
+        ProgrammingLanguage.docker => const DockerSyntaxTokenizer(),
       };
 }
 

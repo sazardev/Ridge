@@ -1,0 +1,133 @@
+[
+  {
+    "id": "python-django-orm-v1",
+    "language": "python",
+    "titleEn": "Django ORM in depth",
+    "titleEs": "Django ORM en profundidad",
+    "descriptionEn": "Model relationships, QuerySets, and migrations, explained hands-on.",
+    "descriptionEs": "Relaciones, QuerySets y migraciones, explicados con las manos en el código.",
+    "tagEn": "ORM",
+    "tagEs": "ORM",
+    "lessons": [
+      {
+        "id": "python-django-orm-v1-step01",
+        "snippetId": "python-django-relation-001",
+        "order": 1,
+        "titleEn": "ForeignKey and related_name",
+        "titleEs": "ForeignKey y related_name"
+      },
+      {
+        "id": "python-django-orm-v1-step02",
+        "snippetId": "python-django-relation-002",
+        "order": 2,
+        "titleEn": "Following relations both ways",
+        "titleEs": "Recorrer relaciones en ambos sentidos"
+      },
+      {
+        "id": "python-django-orm-v1-step03",
+        "snippetId": "python-django-relation-003",
+        "order": 3,
+        "titleEn": "ManyToMany with tags",
+        "titleEs": "ManyToMany con etiquetas"
+      },
+      {
+        "id": "python-django-orm-v1-step04",
+        "snippetId": "python-django-relation-004",
+        "order": 4,
+        "titleEn": "CASCADE deletes related rows",
+        "titleEs": "CASCADE borra las filas relacionadas"
+      },
+      {
+        "id": "python-django-orm-v1-step05",
+        "snippetId": "python-django-orm-001",
+        "order": 5,
+        "titleEn": "QuerySets: all() and filter()",
+        "titleEs": "QuerySets: all() y filter()"
+      },
+      {
+        "id": "python-django-orm-v1-step06",
+        "snippetId": "python-django-orm-002",
+        "order": 6,
+        "titleEn": "Field lookups",
+        "titleEs": "Lookups de campo"
+      },
+      {
+        "id": "python-django-orm-v1-step07",
+        "snippetId": "python-django-orm-003",
+        "order": 7,
+        "titleEn": "get() and get_or_create()",
+        "titleEs": "get() y get_or_create()"
+      },
+      {
+        "id": "python-django-orm-v1-step08",
+        "snippetId": "python-django-orm-004",
+        "order": 8,
+        "titleEn": "Bulk create, update, delete",
+        "titleEs": "Crear, actualizar y borrar en lote"
+      },
+      {
+        "id": "python-django-orm-v1-step09",
+        "snippetId": "python-django-orm-005",
+        "order": 9,
+        "titleEn": "Ordering, slicing, values",
+        "titleEs": "Orden, cortes y values"
+      },
+      {
+        "id": "python-django-orm-v1-step10",
+        "snippetId": "python-django-orm-006",
+        "order": 10,
+        "titleEn": "Q objects for complex filters",
+        "titleEs": "Objetos Q para filtros complejos"
+      },
+      {
+        "id": "python-django-orm-v1-step11",
+        "snippetId": "python-django-orm-007",
+        "order": 11,
+        "titleEn": "F expressions and atomic updates",
+        "titleEs": "Expresiones F y actualizaciones atómicas"
+      },
+      {
+        "id": "python-django-orm-v1-step12",
+        "snippetId": "python-django-orm-008",
+        "order": 12,
+        "titleEn": "Aggregation and annotation",
+        "titleEs": "Agregación y anotación"
+      },
+      {
+        "id": "python-django-orm-v1-step13",
+        "snippetId": "python-django-orm-009",
+        "order": 13,
+        "titleEn": "select_related and prefetch_related",
+        "titleEs": "select_related y prefetch_related"
+      },
+      {
+        "id": "python-django-orm-v1-step14",
+        "snippetId": "python-django-orm-010",
+        "order": 14,
+        "titleEn": "Custom QuerySet and Manager",
+        "titleEs": "QuerySet y Manager personalizados"
+      },
+      {
+        "id": "python-django-orm-v1-step15",
+        "snippetId": "python-django-migration-001",
+        "order": 15,
+        "titleEn": "Anatomy of a migration",
+        "titleEs": "Anatomía de una migración"
+      },
+      {
+        "id": "python-django-orm-v1-step16",
+        "snippetId": "python-django-migration-002",
+        "order": 16,
+        "titleEn": "Data migrations with RunPython",
+        "titleEs": "Migraciones de datos con RunPython"
+      },
+      {
+        "id": "python-django-orm-v1-step17",
+        "snippetId": "python-django-migration-003",
+        "order": 17,
+        "titleEn": "Migration commands",
+        "titleEs": "Comandos de migraciones"
+      }
+    ]
+  }
+]

@@ -1,0 +1,119 @@
+[
+  {
+    "id": "swift-advanced-v1",
+    "language": "swift",
+    "titleEn": "Swift: Advanced",
+    "titleEs": "Swift: Avanzado",
+    "descriptionEn": "Optionals, protocols, generics, memory, concurrency, and Codable in modern Swift.",
+    "descriptionEs": "Opcionales, protocolos, genéricos, memoria, concurrencia y Codable en Swift moderno.",
+    "tagEn": "Advanced",
+    "tagEs": "Avanzado",
+    "lessons": [
+      {
+        "id": "swift-advanced-v1-step01",
+        "snippetId": "swift-opt-003",
+        "order": 1,
+        "titleEn": "compactMap and optional mapping",
+        "titleEs": "compactMap y mapeo de opcionales"
+      },
+      {
+        "id": "swift-advanced-v1-step02",
+        "snippetId": "swift-enum-002",
+        "order": 2,
+        "titleEn": "Recursive enums and pattern matching",
+        "titleEs": "Enums recursivos y coincidencia de patrones"
+      },
+      {
+        "id": "swift-advanced-v1-step03",
+        "snippetId": "swift-mem-001",
+        "order": 3,
+        "titleEn": "ARC, weak references and deinit",
+        "titleEs": "ARC, referencias débiles y deinit"
+      },
+      {
+        "id": "swift-advanced-v1-step04",
+        "snippetId": "swift-closure-002",
+        "order": 4,
+        "titleEn": "Escaping closures and capture lists",
+        "titleEs": "Closures de escape y listas de captura"
+      },
+      {
+        "id": "swift-advanced-v1-step05",
+        "snippetId": "swift-generics-001",
+        "order": 5,
+        "titleEn": "Generic functions and constraints",
+        "titleEs": "Funciones genéricas y restricciones"
+      },
+      {
+        "id": "swift-advanced-v1-step06",
+        "snippetId": "swift-generics-002",
+        "order": 6,
+        "titleEn": "Opaque and existential types",
+        "titleEs": "Tipos opacos y existenciales"
+      },
+      {
+        "id": "swift-advanced-v1-step07",
+        "snippetId": "swift-proto-002",
+        "order": 7,
+        "titleEn": "Protocols with associated types",
+        "titleEs": "Protocolos con tipos asociados"
+      },
+      {
+        "id": "swift-advanced-v1-step08",
+        "snippetId": "swift-proto-003",
+        "order": 8,
+        "titleEn": "Conditional conformance",
+        "titleEs": "Conformidad condicional"
+      },
+      {
+        "id": "swift-advanced-v1-step09",
+        "snippetId": "swift-err-002",
+        "order": 9,
+        "titleEn": "Custom errors, retries and rethrows",
+        "titleEs": "Errores personalizados, reintentos y rethrows"
+      },
+      {
+        "id": "swift-advanced-v1-step10",
+        "snippetId": "swift-codable-001",
+        "order": 10,
+        "titleEn": "Codable and JSON round-trips",
+        "titleEs": "Codable y JSON de ida y vuelta"
+      },
+      {
+        "id": "swift-advanced-v1-step11",
+        "snippetId": "swift-prop-001",
+        "order": 11,
+        "titleEn": "Property wrappers",
+        "titleEs": "Property wrappers"
+      },
+      {
+        "id": "swift-advanced-v1-step12",
+        "snippetId": "swift-conc-001",
+        "order": 12,
+        "titleEn": "async and await",
+        "titleEs": "async y await"
+      },
+      {
+        "id": "swift-advanced-v1-step13",
+        "snippetId": "swift-conc-002",
+        "order": 13,
+        "titleEn": "Actors",
+        "titleEs": "Actores"
+      },
+      {
+        "id": "swift-advanced-v1-step14",
+        "snippetId": "swift-conc-003",
+        "order": 14,
+        "titleEn": "async let and task groups",
+        "titleEs": "async let y grupos de tareas"
+      },
+      {
+        "id": "swift-advanced-v1-step15",
+        "snippetId": "swift-conc-004",
+        "order": 15,
+        "titleEn": "Protocol-oriented async pipeline",
+        "titleEs": "Pipeline asíncrono orientado a protocolos"
+      }
+    ]
+  }
+]

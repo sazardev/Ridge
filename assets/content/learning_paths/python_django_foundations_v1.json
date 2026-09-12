@@ -1,0 +1,161 @@
+[
+  {
+    "id": "python-django-foundations-v1",
+    "language": "python",
+    "titleEn": "Django from scratch",
+    "titleEs": "Django desde cero",
+    "descriptionEn": "Set up a Django project and build a working app step by step.",
+    "descriptionEs": "Crea un proyecto Django y construye una app paso a paso.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "python-django-foundations-v1-step01",
+        "snippetId": "python-django-project-001",
+        "order": 1,
+        "titleEn": "Creating the project and app",
+        "titleEs": "Crear el proyecto y la app"
+      },
+      {
+        "id": "python-django-foundations-v1-step02",
+        "snippetId": "python-django-project-002",
+        "order": 2,
+        "titleEn": "Registering the app in settings",
+        "titleEs": "Registrar la app en settings"
+      },
+      {
+        "id": "python-django-foundations-v1-step03",
+        "snippetId": "python-django-project-003",
+        "order": 3,
+        "titleEn": "The AppConfig class",
+        "titleEs": "La clase AppConfig"
+      },
+      {
+        "id": "python-django-foundations-v1-step04",
+        "snippetId": "python-django-model-001",
+        "order": 4,
+        "titleEn": "Your first model",
+        "titleEs": "Tu primer modelo"
+      },
+      {
+        "id": "python-django-foundations-v1-step05",
+        "snippetId": "python-django-model-002",
+        "order": 5,
+        "titleEn": "Making and applying migrations",
+        "titleEs": "Crear y aplicar migraciones"
+      },
+      {
+        "id": "python-django-foundations-v1-step06",
+        "snippetId": "python-django-model-003",
+        "order": 6,
+        "titleEn": "Field types and options",
+        "titleEs": "Tipos de campo y opciones"
+      },
+      {
+        "id": "python-django-foundations-v1-step07",
+        "snippetId": "python-django-model-004",
+        "order": 7,
+        "titleEn": "Meta options and a property",
+        "titleEs": "Opciones Meta y una propiedad"
+      },
+      {
+        "id": "python-django-foundations-v1-step08",
+        "snippetId": "python-django-view-001",
+        "order": 8,
+        "titleEn": "A view that returns text",
+        "titleEs": "Una vista que devuelve texto"
+      },
+      {
+        "id": "python-django-foundations-v1-step09",
+        "snippetId": "python-django-view-002",
+        "order": 9,
+        "titleEn": "Wiring URLs with include()",
+        "titleEs": "Conectar URLs con include()"
+      },
+      {
+        "id": "python-django-foundations-v1-step10",
+        "snippetId": "python-django-view-003",
+        "order": 10,
+        "titleEn": "URL parameters and 404s",
+        "titleEs": "Parámetros de URL y 404"
+      },
+      {
+        "id": "python-django-foundations-v1-step11",
+        "snippetId": "python-django-view-004",
+        "order": 11,
+        "titleEn": "JSON responses and query params",
+        "titleEs": "Respuestas JSON y parámetros de consulta"
+      },
+      {
+        "id": "python-django-foundations-v1-step12",
+        "snippetId": "python-django-template-001",
+        "order": 12,
+        "titleEn": "Rendering a template",
+        "titleEs": "Renderizar una plantilla"
+      },
+      {
+        "id": "python-django-foundations-v1-step13",
+        "snippetId": "python-django-template-002",
+        "order": 13,
+        "titleEn": "Loops and links in templates",
+        "titleEs": "Bucles y enlaces en plantillas"
+      },
+      {
+        "id": "python-django-foundations-v1-step14",
+        "snippetId": "python-django-template-003",
+        "order": 14,
+        "titleEn": "Template inheritance",
+        "titleEs": "Herencia de plantillas"
+      },
+      {
+        "id": "python-django-foundations-v1-step15",
+        "snippetId": "python-django-form-001",
+        "order": 15,
+        "titleEn": "A Form with validation",
+        "titleEs": "Un Form con validación"
+      },
+      {
+        "id": "python-django-foundations-v1-step16",
+        "snippetId": "python-django-form-002",
+        "order": 16,
+        "titleEn": "A ModelForm",
+        "titleEs": "Un ModelForm"
+      },
+      {
+        "id": "python-django-foundations-v1-step17",
+        "snippetId": "python-django-form-003",
+        "order": 17,
+        "titleEn": "Handling a form in a view",
+        "titleEs": "Manejar un formulario en una vista"
+      },
+      {
+        "id": "python-django-foundations-v1-step18",
+        "snippetId": "python-django-admin-001",
+        "order": 18,
+        "titleEn": "Registering a model in admin",
+        "titleEs": "Registrar un modelo en el admin"
+      },
+      {
+        "id": "python-django-foundations-v1-step19",
+        "snippetId": "python-django-admin-002",
+        "order": 19,
+        "titleEn": "Customizing the admin list",
+        "titleEs": "Personalizar la lista del admin"
+      },
+      {
+        "id": "python-django-foundations-v1-step20",
+        "snippetId": "python-django-test-001",
+        "order": 20,
+        "titleEn": "Testing the model",
+        "titleEs": "Probar el modelo"
+      },
+      {
+        "id": "python-django-foundations-v1-step21",
+        "snippetId": "python-django-test-002",
+        "order": 21,
+        "titleEn": "Testing a view with the client",
+        "titleEs": "Probar una vista con el cliente de pruebas"
+      }
+    ]
+  }
+]

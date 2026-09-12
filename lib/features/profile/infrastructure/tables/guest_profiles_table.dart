@@ -39,6 +39,16 @@ class GuestProfiles extends Table {
   /// if never set.
   TextColumn get favoriteProgrammer => text().nullable()();
 
+  /// The user's GitHub handle, without the leading `@` or any URL prefix
+  /// (normalized before storage by
+  /// `UpdateProfileCustomizationUseCase`), or `null` if never set.
+  TextColumn get githubUsername => text().nullable()();
+
+  /// The user's personal website URL, always with an `http(s)://` scheme
+  /// (normalized before storage by
+  /// `UpdateProfileCustomizationUseCase`), or `null` if never set.
+  TextColumn get websiteUrl => text().nullable()();
+
   /// Auto-detected platform name (e.g. `"Android"`, `"Linux"`), or `null`
   /// if never detected. Never user-edited — see `EnsureDeviceInfoUseCase`.
   TextColumn get platform => text().nullable()();

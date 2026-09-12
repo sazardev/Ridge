@@ -1,4 +1,8 @@
 /// The thematic construct a Snippet exercises (SPEC.md §3.1).
+///
+/// One concise line per value on purpose: `tool/check_architecture.dart`
+/// hard-fails any hand-written file over 500 lines, and this enum is the
+/// file that grows with every new language.
 enum ContentCategory {
   /// Variable declarations, constants, and basic types.
   variablesAndTypes,
@@ -27,193 +31,459 @@ enum ContentCategory {
   /// Pointers: address-of/dereference and pointer receivers.
   pointers,
 
-  /// Concurrency primitives: goroutines and channels.
+  /// Goroutines and channels; Dart reuses it for isolates.
   concurrency,
 
   /// Generic type parameters and constraints.
   generics,
 
-  /// Features introduced by recent Go releases, showcased in the
-  /// `go-intermediate-syntax-v1` route's closing block: Go 1.27's
-  /// generic methods, promoted-field struct-literal keys, generalized
-  /// function type inference, the `uuid` package, `strings.CutLast`,
-  /// and the `goroutineleak` pprof profile.
+  /// Go 1.27 features: generic methods, promoted struct keys, new stdlib.
   modernGo,
 
-  /// Idiomatic `gofmt` formatting conventions in general.
+  /// Idiomatic `gofmt` formatting conventions.
   idiomaticFormatting,
 
-  /// Shell-specific: running commands, `echo`/`printf`, script
-  /// arguments (`$1`, `$#`, `$@`), and command substitution. Introduced
-  /// by the `bash-foundations-v1` Learning Route.
+  /// Shell: commands, `echo`/`printf`, script arguments.
   shellCommands,
 
-  /// Shell-specific: pipes (`|`), redirection (`>`, `>>`, `<`, `2>`,
-  /// `&>`), heredocs, and process substitution. Bash Learning Route
-  /// category.
+  /// Shell: pipes, redirection, heredocs, process substitution.
   pipesAndRedirection,
 
-  /// Shell-specific: filtering and transforming text with `grep`,
-  /// `cut`, `sort`, `uniq`, `wc`, `tr`, `head`/`tail`, and a taste of
-  /// `sed`/`awk`. Bash Learning Route category.
+  /// Shell: filtering text with `grep`, `sort`, `cut`, `sed`.
   textProcessing,
 
-  /// Arch Linux system administration through the shell: `pacman`,
-  /// AUR helpers (`paru`/`yay`), `systemctl`, and `journalctl`. Bash
-  /// Learning Route category.
+  /// Arch: `pacman`, AUR helpers, systemd, journalctl.
   systemAdministration,
 
-  /// SQL basics: `SELECT` over literal expressions, aliases, arithmetic,
-  /// string concatenation with `||`, and built-in values like
-  /// `CURRENT_DATE`. Introduced by the PostgreSQL `sql-foundations-v1`
-  /// Learning Route.
+  /// `SELECT` over literals, aliases, arithmetic, `||`.
   sqlBasics,
 
-  /// SQL schema definition and setup: `psql` meta-commands (`\l`, `\c`,
-  /// `\dt`, `\d`), `CREATE TABLE`/`CREATE DATABASE`, column types and
-  /// constraints (`PRIMARY KEY`, `NOT NULL`, `UNIQUE`, `DEFAULT`,
-  /// `REFERENCES`), and seeding the sample library database.
+  /// `psql` setup, `CREATE TABLE`/constraints, seed data.
   sqlSchema,
 
-  /// Reading data: `SELECT` from tables, column projection, `DISTINCT`,
-  /// `ORDER BY`, and `LIMIT`/`OFFSET`. SQL Learning Route category.
+  /// `SELECT` from tables, projection, `DISTINCT`, `ORDER BY`.
   sqlQueries,
 
-  /// Narrowing rows: `WHERE` with comparison operators, `AND`/`OR`/`NOT`,
-  /// `IN`, `BETWEEN`, `LIKE`/`ILIKE`, and `IS NULL`. SQL Learning Route
-  /// category.
+  /// `WHERE`, comparisons, `AND`/`OR`, `IN`, `LIKE`, `IS NULL`.
   sqlFiltering,
 
-  /// Summarizing rows: `COUNT`/`SUM`/`AVG`/`MIN`/`MAX`, `GROUP BY`,
-  /// `HAVING`, and rounding. SQL Learning Route category.
+  /// `COUNT`/`SUM`/`AVG`/`MIN`/`MAX`, `GROUP BY`, `HAVING`.
   sqlAggregation,
 
-  /// Combining tables: `INNER JOIN`, `LEFT JOIN`, table aliases, and
-  /// multi-table joins. SQL Learning Route category.
+  /// `INNER`/`LEFT JOIN`, aliases, multi-table joins.
   sqlJoins,
 
-  /// Changing data: `INSERT`, `UPDATE`, `DELETE`, and `RETURNING`.
-  /// SQL Learning Route category.
+  /// `INSERT`, `UPDATE`, `DELETE`, `RETURNING`.
   sqlModifications,
 
-  /// Advanced querying: subqueries, `EXISTS`, common table expressions
-  /// (`WITH`), set operations (`UNION`), and `CASE` expressions. SQL
-  /// Learning Route category.
+  /// Subqueries, `EXISTS`, CTEs, `UNION`, `CASE`.
   sqlAdvancedQueries,
 
-  /// Shell-specific: locating files and content with `find`, `fd`,
-  /// ripgrep, and the `locate`/`updatedb` filename index. Introduced by
-  /// the `bash-toolkit-v1` Learning Route.
+  /// Shell: `find`, `fd`, ripgrep, the `locate` index.
   searchAndIndexing,
 
-  /// Shell-specific: extended regular expressions — anchors, quantifiers,
-  /// character classes, groups, alternation, backreferences, and word
-  /// boundaries — applied with `grep -E`, `sed -E`, and `rg`.
+  /// Shell: extended regex with `grep -E`, `sed -E`, `rg`.
   regularExpressions,
 
-  /// Shell-specific: everyday file CRUD at the user level — create, read,
-  /// copy, move, rename, delete, inspect metadata, set the executable
-  /// bit, and archive with `tar`.
+  /// Shell: file CRUD, metadata, `chmod`, `tar`.
   fileOperations,
 
-  /// Remote access as an SSH client: connecting, key generation and
-  /// installation, `~/.ssh/config` aliases, the agent, and `scp`.
+  /// SSH client: connect, keys, `~/.ssh/config`, `scp`.
   sshClient,
 
-  /// Running an SSH server: `~/.ssh` permissions, `authorized_keys`,
-  /// `sshd_config`, and the `sshd` service.
+  /// SSH server: permissions, `authorized_keys`, `sshd`.
   sshServer,
 
-  /// Shell startup files and personalization: `~/.bashrc` vs
-  /// `~/.bash_profile`, `PATH`, exports, aliases, functions, and
-  /// `source`.
+  /// Shell startup files: `~/.bashrc`, `PATH`, aliases.
   shellProfiles,
 
-  /// DDD domain modeling: entities, value objects, domain-level errors.
-  /// Architecture-layer category (unlike the language-feature categories
-  /// above) — see `snippet_catalog_completeness_test.dart`'s
-  /// `_architectureLayerCategories` for why it's held to a different
-  /// per-difficulty completeness bar.
+  /// DDD entities, value objects, domain errors.
+  /// Architecture-layer category: held to a looser completeness bar.
   domainModeling,
 
-  /// Hexagonal-architecture ports: interfaces owned by the application
-  /// core, implemented by adapters. Architecture-layer category.
+  /// Application-core interfaces implemented by adapters.
+  /// Architecture-layer category: held to a looser completeness bar.
   hexagonalPorts,
 
-  /// Application-layer use cases orchestrating domain + ports, and tests
-  /// that exercise them via a fake port implementation. Architecture-layer
-  /// category.
+  /// Use cases orchestrating domain + ports, and their fake-port tests.
+  /// Architecture-layer category: held to a looser completeness bar.
   applicationUseCases,
 
-  /// Adapters implementing a repository port (e.g. in-memory, file-backed).
-  /// Architecture-layer category.
+  /// Repository-port adapters (in-memory, file-backed).
+  /// Architecture-layer category: held to a looser completeness bar.
   persistenceAdapters,
 
-  /// The REST/HTTP adapter: request/response DTOs, handlers, routing,
-  /// error-to-status-code mapping, and the composition-root wiring that
-  /// starts the server. Architecture-layer category.
+  /// REST/HTTP DTOs, handlers, routing, error-to-status mapping.
+  /// Architecture-layer category: held to a looser completeness bar.
   restAdapters,
 
-  /// Hand-written test doubles (fakes) and the tests that use them to
-  /// exercise application-layer use cases in isolation from any real
-  /// adapter. Kept separate from [applicationUseCases] rather than
-  /// folded into it, since these lessons are sequenced at the very end
-  /// of a Learning Route (after every adapter has been introduced) —
-  /// a category must stay one contiguous block, so it can't share a tag
-  /// with lessons earlier in the same route. Architecture-layer category.
+  /// Hand-written test doubles and the tests using them.
+  /// Architecture-layer category: held to a looser completeness bar.
   testingWithFakes,
 
-  /// Linear and binary search. Introduced by the `go-algorithms-v1` /
-  /// `rust-algorithms-v1` Learning Routes — a topic category (see
-  /// `sortingAlgorithms`'s doc comment for why it's held to a looser
-  /// completeness bar than a language-feature category).
+  /// Linear and binary search.
+  /// Topic category: snippets carry a real difficulty.
   searchingAlgorithms,
 
-  /// Classic in-place and divide-and-conquer sorts: bubble, selection,
-  /// insertion, merge, quick, and heap sort. Introduced by the
-  /// `go-algorithms-v1` / `rust-algorithms-v1` Learning Routes. Unlike a
-  /// language-feature category, there's no meaningful notion of a
-  /// "beginner" or "expert" TIER OF THE CATEGORY ITSELF (individual
-  /// snippets still carry a real difficulty, reflecting genuine algorithmic
-  /// complexity, e.g. heap sort is `expert` and bubble sort is `beginner`)
-  /// — held to the same looser total-count completeness bar as the
-  /// architecture-layer categories below; see
-  /// `snippet_catalog_completeness_test.dart`'s `_algorithmTopicCategories`.
+  /// Bubble, selection, insertion, merge, quick, and heap sort.
+  /// Topic category: snippets carry a real difficulty.
   sortingAlgorithms,
 
-  /// Graph representation (adjacency list) and traversal/shortest-path:
-  /// BFS, DFS, and Dijkstra. Introduced by the `go-algorithms-v1` /
-  /// `rust-algorithms-v1` Learning Routes. Topic category, same
-  /// looser-bar treatment as `sortingAlgorithms`.
+  /// Adjacency-list graphs, BFS, DFS, Dijkstra.
+  /// Topic category: snippets carry a real difficulty.
   graphAlgorithms,
 
-  /// Bubble Tea's Elm loop: the `Model`/`Init`/`Update`/`View` contract,
-  /// typed messages, and `tea.Cmd` values. Introduced by the
-  /// `go-tui-notes-v1` Learning Route. Architecture-layer category.
+  /// Bubble Tea's `Model`/`Init`/`Update`/`View` loop.
+  /// Architecture-layer category: held to a looser completeness bar.
   tuiArchitecture,
 
-  /// Terminal styling with Lip Gloss: fluent styles, colors, adaptive
-  /// colors, padding, borders, and layout helpers. Architecture-layer
-  /// category.
+  /// Lip Gloss styles, colors, borders, padding.
+  /// Architecture-layer category: held to a looser completeness bar.
   tuiStyling,
 
-  /// Bubbles widgets (text input, spinner) embedded inside a Bubble Tea
-  /// model. Architecture-layer category.
+  /// Bubbles widgets inside a Bubble Tea model.
+  /// Architecture-layer category: held to a looser completeness bar.
   tuiComponents,
 
-  /// The TUI as a driving adapter: commands that call use cases, plus the
-  /// `main` composition root that wires every concrete adapter together.
-  /// Architecture-layer category.
+  /// TUI commands calling use cases; the composition root.
+  /// Architecture-layer category: held to a looser completeness bar.
   tuiAdapter,
 
-  /// TypeScript classes: typed fields, constructors, access modifiers
-  /// (`private`, `readonly`), and `implements` against an interface.
-  /// Introduced by the `typescript-foundations-v1` Learning Route — a
-  /// language-feature category, unlike the architecture-layer ones above.
+  /// Go handlers, `ServeMux`, middleware, server lifecycle.
+  /// Topic category: snippets carry a real difficulty.
+  httpServers,
+
+  /// HTTP requests with context/timeouts, transport, retries.
+  /// Topic category: snippets carry a real difficulty.
+  httpClients,
+
+  /// Testing handlers and servers with `net/http/httptest`.
+  /// Topic category: snippets carry a real difficulty.
+  httpTesting,
+
+  /// `database/sql` pools, DDL/DML, transactions, SQLite.
+  /// Topic category: snippets carry a real difficulty.
+  sqlPersistence,
+
+  /// Classes: typed fields, constructors, access modifiers.
   classesAndObjects,
 
-  /// TypeScript/JavaScript modules: exporting and importing values, plus
-  /// the type-only `export type`/`import type` distinction. Introduced by
-  /// the `typescript-foundations-v1` Learning Route.
+  /// Exports/imports, including type-only exports.
   modules,
+
+  /// C arrays, NUL-terminated strings, `<string.h>`.
+  arraysAndStrings,
+
+  /// `malloc`/`calloc`/`realloc`/`free`, ownership, raw memory.
+  memoryManagement,
+
+  /// `#define` macros, `#include`, header guards, conditional builds.
+  preprocessor,
+
+  /// `fopen`/`fclose`, `fprintf`/`fputs`, `fgets` until EOF.
+  fileIO,
+
+  /// C++ function/class templates and concept constraints.
+  templates,
+
+  /// `std::vector`/`map`/`set`, iterators, `std::optional`.
+  stlContainers,
+
+  /// Crystal `yield`, block forms, `&` procs.
+  blocksAndProcs,
+
+  /// Crystal/C#/Kotlin arrays, maps, and iteration.
+  collections,
+
+  /// Crystal/C# nullable types, `try(&.x)`, `?.`, `??`.
+  nilSafety,
+
+  /// Selectors, combinators, specificity, `:is()`, `@layer`.
+  cssSelectors,
+
+  /// `display`, sizing, padding, margin, border, `box-sizing`.
+  cssBoxModel,
+
+  /// Colors, gradients, font stacks, text styles.
+  cssColorsAndTypography,
+
+  /// Flexbox and grid: alignment, placement, named areas.
+  cssLayout,
+
+  /// `position`, offsets, `inset`, `z-index`, `overflow`.
+  cssPositioning,
+
+  /// `--name` variables, `var()` fallbacks, overrides, `calc()`.
+  cssCustomProperties,
+
+  /// Units, media queries, breakpoints, `clamp()` fluid type.
+  cssResponsive,
+
+  /// Transitions, transforms, `@keyframes`, reduced motion.
+  cssTransitionsAndAnimations,
+
+  /// C# `is` patterns and `switch` expressions.
+  patternMatching,
+
+  /// C# delegates, lambdas, `event` subscription.
+  delegatesAndEvents,
+
+  /// LINQ `Where`/`Select`/`OrderBy` and query syntax.
+  linq,
+
+  /// `async`/`await`, `Task`, `Future`, `Stream`, `Task.WhenAll`.
+  asyncProgramming,
+
+  /// Swift optionals: `nil`, `if let`, `guard let`, `??`.
+  optionals,
+
+  /// Swift closures: trailing syntax, `$0`, capturing, `@escaping`.
+  closures,
+
+  /// Swift enums, associated values, `switch`, `indirect`.
+  enumsAndPatternMatching,
+
+  /// Swift `Codable`, `CodingKeys`, JSON round-trips.
+  codable,
+
+  /// Swift `@propertyWrapper` and `wrappedValue`.
+  propertyWrappers,
+
+  /// Kotlin/Dart `String?`, `?.`, `?:`, `!!`, `late`, flow promotion.
+  nullSafety,
+
+  /// Kotlin `data class` and destructuring declarations.
+  dataClasses,
+
+  /// Kotlin lambdas, `it`, higher-order functions, scope functions.
+  lambdas,
+
+  /// Kotlin extension functions and properties.
+  extensions,
+
+  /// Kotlin `suspend`, `launch`, `async`, `flow`, dispatchers.
+  coroutines,
+
+  /// Django scaffolding: `startproject`, `startapp`, `INSTALLED_APPS`.
+  djangoProject,
+
+  /// Django models: fields, `Meta`, model methods.
+  djangoModels,
+
+  /// Django views, `HttpResponse`, `path()` routing, `include()`.
+  djangoViews,
+
+  /// Django templates, `{% for %}`, `{% extends %}`, contexts.
+  djangoTemplates,
+
+  /// Django `Form`/`ModelForm`, validation, POST with CSRF.
+  djangoForms,
+
+  /// Django admin registration and `ModelAdmin` options.
+  djangoAdmin,
+
+  /// Django `TestCase`, `setUpTestData`, request assertions.
+  djangoTesting,
+
+  /// `ForeignKey`, reverse accessors, M2M, cascade behavior.
+  djangoRelationships,
+
+  /// QuerySets, lookups, `Q`/`F`, aggregation, custom managers.
+  djangoOrm,
+
+  /// Migration anatomy, `RunPython`, management commands.
+  djangoMigrations,
+
+  /// Installing DRF and the first `@api_view` endpoint.
+  djangoRestSetup,
+
+  /// DRF serializers, validation, nested fields.
+  djangoSerializers,
+
+  /// DRF views, viewsets, routers, custom actions.
+  djangoRestViews,
+
+  /// DRF token auth, permissions, per-user querysets.
+  djangoRestAuth,
+
+  /// DRF pagination, search, and ordering.
+  djangoRestFiltering,
+
+  /// `APITestCase`/`APIClient` end-to-end CRUD tests.
+  djangoRestTesting,
+
+  /// Dart records, destructuring, sealed-class pattern matching.
+  recordsAndPatterns,
+
+  /// PHP tags, `echo`, variables, scalar types, `??`.
+  phpBasics,
+
+  /// PHP string interpolation, heredoc/nowdoc, string functions.
+  phpStrings,
+
+  /// PHP `if`/`elseif`/`else`, ternary, `match`.
+  phpConditionals,
+
+  /// PHP `for`, `while`, `break`, `continue`.
+  phpLoops,
+
+  /// PHP indexed/associative arrays, `array_*`, `foreach`.
+  phpArrays,
+
+  /// PHP typed functions, arrow functions, closures with `use`.
+  phpFunctions,
+
+  /// PHP classes, constructor promotion, interfaces, traits.
+  phpClasses,
+
+  /// PHP enum cases and `from`/`tryFrom`.
+  phpEnums,
+
+  /// PHP `throw`, `try`/`catch`/`finally`, custom exceptions.
+  phpErrorHandling,
+
+  /// PHP namespaces, `use`, autoload boundaries.
+  phpNamespaces,
+
+  /// PHP `$_GET`, `$_POST`, `$_SERVER` while handling a request.
+  phpSuperglobals,
+
+  /// Form validation, escaping, `filter_var`, password hashing.
+  phpForms,
+
+  /// `session_start`, `$_SESSION`, cookies.
+  phpSessions,
+
+  /// PDO connections, prepared statements, transactions.
+  phpDatabase,
+
+  /// `json_encode`/`json_decode` and JSON responses.
+  phpJson,
+
+  /// Server-side file reads, writes, and `unlink`.
+  phpFiles,
+
+  /// Linear and binary search in PHP.
+  phpSearching,
+
+  /// PHP bubble, selection, insertion, merge, quick, and heap sort.
+  phpSorting,
+
+  /// PHP weighted adjacency list, BFS, DFS, Dijkstra.
+  phpGraphs,
+
+  /// Git repo setup, staging, `.gitignore`, diffs, file surgery.
+  /// Introduced by the `git-foundations-v1` Learning Route.
+  gitBasics,
+
+  /// Committing: messages, history reading, amending the last commit.
+  /// Introduced by the `git-foundations-v1` Learning Route.
+  gitCommits,
+
+  /// Branch create/switch/delete, fast-forward and merge commits,
+  /// conflict resolution. Introduced by `git-foundations-v1`.
+  gitBranching,
+
+  /// Clone, remote setup, fetch, pull, push, tracking branches.
+  /// Introduced by the `git-foundations-v1` Learning Route.
+  gitRemotes,
+
+  /// Log formats, pickaxe, blame, and `git bisect`.
+  /// Introduced by the `git-workflows-v1` Learning Route.
+  gitHistory,
+
+  /// `restore`, the three `reset` modes, `revert`, `clean`, `stash`.
+  /// Introduced by the `git-workflows-v1` Learning Route.
+  gitUndo,
+
+  /// Rebase, force-with-lease, cherry-pick, autosquash, tags, hooks.
+  /// Introduced by the `git-workflows-v1` Learning Route.
+  gitCollaboration,
+
+  /// Blobs, trees, commits, and `cat-file`/`hash-object`/`ls-tree`.
+  /// Introduced by the `git-internals-v1` Learning Route.
+  gitObjects,
+
+  /// `HEAD`, detached state, `show-ref`, `update-ref`, reflog.
+  /// Introduced by the `git-internals-v1` Learning Route.
+  gitRefs,
+
+  /// Index internals, object counts, `git gc`, linked worktrees.
+  /// Introduced by the `git-internals-v1` Learning Route.
+  gitMaintenance,
+
+  /// Distro identity, kernel, hostname, help, environment variables.
+  /// Introduced by the `linux-foundations-v1` Learning Route.
+  linuxBasics,
+
+  /// Paths, navigation, file CRUD, symlinks, viewing files.
+  /// Introduced by the `linux-foundations-v1` Learning Route.
+  linuxFiles,
+
+  /// Mode bits, `chmod`/`chown`/`umask`, sticky/setgid, ACLs.
+  /// Introduced by the `linux-foundations-v1` Learning Route.
+  permissions,
+
+  /// Accounts, groups, `sudo`, password locks.
+  /// Introduced by the `linux-foundations-v1` Learning Route.
+  usersAndGroups,
+
+  /// Listing, signals, and scheduling priority.
+  /// Introduced by the `linux-foundations-v1` Learning Route.
+  processes,
+
+  /// `pacman` queries, installs, removals, file ownership.
+  /// Introduced by the `linux-foundations-v1` Learning Route.
+  packages,
+
+  /// `systemctl` units: status, lifecycle, enablement.
+  /// Introduced by the `linux-foundations-v1` Learning Route.
+  services,
+
+  /// `journalctl` filtering and disk usage.
+  /// Introduced by the `linux-foundations-v1` Learning Route.
+  logs,
+
+  /// Block devices, disk space, directory usage.
+  /// Introduced by the `linux-admin-v1` Learning Route.
+  storage,
+
+  /// Interfaces, routes, DNS, sockets, HTTP, firewalls.
+  /// Introduced by the `linux-networking-v1` Learning Route.
+  networking,
+
+  /// `systemd-analyze calendar`, timers, transient units.
+  /// Introduced by the `linux-admin-v1` Learning Route.
+  scheduling,
+
+  /// `tar` create/list/extract and compression.
+  /// Introduced by the `linux-admin-v1` Learning Route.
+  backupAndArchives,
+
+  /// Docker CLI basics: images vs containers, run, ps, info.
+  dockerBasics,
+
+  /// Building, tagging, pulling, and inspecting images.
+  dockerImages,
+
+  /// Dockerfile instructions: FROM, RUN, COPY, CMD, ENV.
+  dockerFiles,
+
+  /// Container lifecycle, logs, exec, inspect, and cleanup.
+  dockerContainers,
+
+  /// Named volumes and bind mounts for persistent data.
+  dockerVolumes,
+
+  /// Port publishing and user-defined networks with DNS.
+  dockerNetworking,
+
+  /// Pushing and pulling registries, digests, and login.
+  dockerRegistries,
+
+  /// compose.yaml: services, networks, volumes, healthchecks.
+  dockerCompose,
+
+  /// Disk usage, stats, top, and diff for debugging.
+  dockerMaintenance,
 }

@@ -240,14 +240,13 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
     final onShowInfoAction = explanation.isEmpty
         ? null
         : () => context.push('/practice/session/info', extra: state.snippet);
-    // Whether there's a result area to show at all (finishing spinner,
-    // error, or the actual result panel) — while typing (idle/running)
-    // there isn't, and the code card is shown full-height instead (see
-    // the body's outer `AnimatedSwitcher`, which shows exactly one of
-    // the two).
-    final showResultArea =
-        state.status == PracticeSessionStatus.finished ||
-        state.status == PracticeSessionStatus.result;
+    // Whether the result area is ready to replace the code card —
+    // deliberately *not* while `finished`: the capture field must stay
+    // mounted and focused through that brief settle window so the
+    // completing key's own keyup can still reach it (see
+    // `PracticeSessionController._settlePendingDwell`). The swap happens
+    // once the result exists.
+    final showResultArea = state.status == PracticeSessionStatus.result;
     if (showResultArea && !_wasShowingResultArea) {
       // Deferred a frame: `KeystrokeCaptureField` needs to actually finish
       // unmounting first — requesting focus here is still safe even before
@@ -353,13 +352,11 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
                             key: const ValueKey('error'),
                             child: Text(state.error ?? ''),
                           ),
-                          // `showResultArea` already narrows this branch to
-                          // `finished`/`result`, so anything else here is
-                          // the brief finishing spinner between the two.
-                          _ => const Center(
-                            key: ValueKey('finishing'),
-                            child: CircularProgressIndicator(),
-                          ),
+                          // `showResultArea` narrows this switch to
+                          // `result`, so this catch-all is unreachable in
+                          // practice — kept only so the switch stays
+                          // exhaustive.
+                          _ => const SizedBox.shrink(),
                         },
                       ),
                     ),

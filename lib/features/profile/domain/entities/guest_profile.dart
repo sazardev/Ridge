@@ -11,9 +11,13 @@ part 'guest_profile.freezed.dart';
 /// created on. Pure domain entity: no JSON, no Flutter, no drift.
 ///
 /// The trailing self-expression fields (`favoriteLanguages` through
-/// `favoriteProgrammer`) are optional flair set via the full-screen
-/// profile editor, never required to create a profile — none of them
-/// feed practice/progression logic anywhere.
+/// `favoriteProgrammer`, plus `githubUsername`/`websiteUrl`) are optional
+/// flair set via the full-screen profile editor, never required to create
+/// a profile — none of them feed practice/progression logic anywhere.
+/// The two link fields are normalized by
+/// `UpdateProfileCustomizationUseCase` before they ever reach this entity
+/// (GitHub as a bare handle, the website with an `http(s)://` scheme), so
+/// presentation can turn them straight into launchable URLs.
 ///
 /// `platform`/`operatingSystemVersion`/`deviceModel` are a different
 /// kind of optional field: auto-detected once (never user-editable, see
@@ -32,6 +36,8 @@ abstract class GuestProfile with _$GuestProfile {
     String? keyboardModel,
     String? favoriteQuote,
     String? favoriteProgrammer,
+    String? githubUsername,
+    String? websiteUrl,
     String? platform,
     String? operatingSystemVersion,
     String? deviceModel,

@@ -1,0 +1,126 @@
+[
+  {
+    "id": "docker-compose-v1",
+    "language": "docker",
+    "titleEn": "Docker Compose in practice",
+    "titleEs": "Docker Compose en la práctica",
+    "descriptionEn": "Define multi-container applications in a single `compose.yaml` file.",
+    "descriptionEs": "Define aplicaciones multicontenedor en un único archivo `compose.yaml`.",
+    "tagEn": "Compose",
+    "tagEs": "Compose",
+    "lessons": [
+      {
+        "id": "docker-compose-v1-step01",
+        "snippetId": "docker-compose-001",
+        "order": 1,
+        "titleEn": "Your first `compose.yaml`",
+        "titleEs": "Tu primer `compose.yaml`"
+      },
+      {
+        "id": "docker-compose-v1-step02",
+        "snippetId": "docker-compose-002",
+        "order": 2,
+        "titleEn": "Start and stop a stack",
+        "titleEs": "Arranca y detén un stack"
+      },
+      {
+        "id": "docker-compose-v1-step03",
+        "snippetId": "docker-compose-003",
+        "order": 3,
+        "titleEn": "Publish ports in Compose",
+        "titleEs": "Publica puertos en Compose"
+      },
+      {
+        "id": "docker-compose-v1-step04",
+        "snippetId": "docker-compose-004",
+        "order": 4,
+        "titleEn": "Build a service from source",
+        "titleEs": "Construye un servicio desde el código"
+      },
+      {
+        "id": "docker-compose-v1-step05",
+        "snippetId": "docker-compose-005",
+        "order": 5,
+        "titleEn": "Set environment variables",
+        "titleEs": "Define variables de entorno"
+      },
+      {
+        "id": "docker-compose-v1-step06",
+        "snippetId": "docker-compose-006",
+        "order": 6,
+        "titleEn": "Load variables from a file",
+        "titleEs": "Carga variables desde un archivo"
+      },
+      {
+        "id": "docker-compose-v1-step07",
+        "snippetId": "docker-compose-007",
+        "order": 7,
+        "titleEn": "Persist data with a volume",
+        "titleEs": "Persiste datos con un volumen"
+      },
+      {
+        "id": "docker-compose-v1-step08",
+        "snippetId": "docker-compose-008",
+        "order": 8,
+        "titleEn": "Bind-mount source for development",
+        "titleEs": "Monta el código para desarrollo"
+      },
+      {
+        "id": "docker-compose-v1-step09",
+        "snippetId": "docker-compose-009",
+        "order": 9,
+        "titleEn": "Service name as hostname",
+        "titleEs": "El nombre del servicio como hostname"
+      },
+      {
+        "id": "docker-compose-v1-step10",
+        "snippetId": "docker-compose-010",
+        "order": 10,
+        "titleEn": "Declare a custom network",
+        "titleEs": "Declara una red personalizada"
+      },
+      {
+        "id": "docker-compose-v1-step11",
+        "snippetId": "docker-compose-011",
+        "order": 11,
+        "titleEn": "Control startup order",
+        "titleEs": "Controla el orden de arranque"
+      },
+      {
+        "id": "docker-compose-v1-step12",
+        "snippetId": "docker-compose-012",
+        "order": 12,
+        "titleEn": "Wait for a healthy service",
+        "titleEs": "Espera a que un servicio esté sano"
+      },
+      {
+        "id": "docker-compose-v1-step13",
+        "snippetId": "docker-compose-013",
+        "order": 13,
+        "titleEn": "Manage a running stack",
+        "titleEs": "Gestiona un stack en ejecución"
+      },
+      {
+        "id": "docker-compose-v1-step14",
+        "snippetId": "docker-compose-014",
+        "order": 14,
+        "titleEn": "Validate the final config",
+        "titleEs": "Valida la configuración final"
+      },
+      {
+        "id": "docker-compose-v1-step15",
+        "snippetId": "docker-compose-015",
+        "order": 15,
+        "titleEn": "Run multiple replicas",
+        "titleEs": "Ejecuta varias réplicas"
+      },
+      {
+        "id": "docker-compose-v1-step16",
+        "snippetId": "docker-compose-016",
+        "order": 16,
+        "titleEn": "Capstone: web plus cache",
+        "titleEs": "Proyecto final: web más caché"
+      }
+    ]
+  }
+]

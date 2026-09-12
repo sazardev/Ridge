@@ -1,0 +1,182 @@
+[
+  {
+    "id": "php-foundations-v1",
+    "language": "php",
+    "titleEn": "PHP from scratch",
+    "titleEs": "PHP desde cero",
+    "descriptionEn": "Learn PHP step by step: types, control flow, arrays, functions, and objects.",
+    "descriptionEs": "Aprende PHP paso a paso: tipos, control de flujo, arreglos, funciones y objetos.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "php-foundations-v1-step01",
+        "snippetId": "php-vars-001",
+        "order": 1,
+        "titleEn": "Hello, PHP!",
+        "titleEs": "¡Hola, PHP!"
+      },
+      {
+        "id": "php-foundations-v1-step02",
+        "snippetId": "php-vars-002",
+        "order": 2,
+        "titleEn": "Variables and scalar types",
+        "titleEs": "Variables y tipos escalares"
+      },
+      {
+        "id": "php-foundations-v1-step03",
+        "snippetId": "php-vars-003",
+        "order": 3,
+        "titleEn": "Type juggling and casting",
+        "titleEs": "Coerción y conversión de tipos"
+      },
+      {
+        "id": "php-foundations-v1-step04",
+        "snippetId": "php-vars-004",
+        "order": 4,
+        "titleEn": "Null and the null coalescing operator",
+        "titleEs": "Null y el operador de coalescencia nula"
+      },
+      {
+        "id": "php-foundations-v1-step05",
+        "snippetId": "php-str-001",
+        "order": 5,
+        "titleEn": "String interpolation and heredoc",
+        "titleEs": "Interpolación de strings y heredoc"
+      },
+      {
+        "id": "php-foundations-v1-step06",
+        "snippetId": "php-str-002",
+        "order": 6,
+        "titleEn": "String functions",
+        "titleEs": "Funciones de strings"
+      },
+      {
+        "id": "php-foundations-v1-step07",
+        "snippetId": "php-cond-001",
+        "order": 7,
+        "titleEn": "if, elseif, and else",
+        "titleEs": "if, elseif y else"
+      },
+      {
+        "id": "php-foundations-v1-step08",
+        "snippetId": "php-cond-002",
+        "order": 8,
+        "titleEn": "match expressions",
+        "titleEs": "Expresiones match"
+      },
+      {
+        "id": "php-foundations-v1-step09",
+        "snippetId": "php-arr-001",
+        "order": 9,
+        "titleEn": "Indexed arrays",
+        "titleEs": "Arreglos indexados"
+      },
+      {
+        "id": "php-foundations-v1-step10",
+        "snippetId": "php-arr-002",
+        "order": 10,
+        "titleEn": "Associative arrays",
+        "titleEs": "Arreglos asociativos"
+      },
+      {
+        "id": "php-foundations-v1-step11",
+        "snippetId": "php-arr-003",
+        "order": 11,
+        "titleEn": "Array functions",
+        "titleEs": "Funciones de arreglos"
+      },
+      {
+        "id": "php-foundations-v1-step12",
+        "snippetId": "php-arr-004",
+        "order": 12,
+        "titleEn": "foreach and array iteration",
+        "titleEs": "foreach e iteración de arreglos"
+      },
+      {
+        "id": "php-foundations-v1-step13",
+        "snippetId": "php-loop-001",
+        "order": 13,
+        "titleEn": "for and while",
+        "titleEs": "for y while"
+      },
+      {
+        "id": "php-foundations-v1-step14",
+        "snippetId": "php-loop-002",
+        "order": 14,
+        "titleEn": "break and continue",
+        "titleEs": "break y continue"
+      },
+      {
+        "id": "php-foundations-v1-step15",
+        "snippetId": "php-func-001",
+        "order": 15,
+        "titleEn": "Typed functions",
+        "titleEs": "Funciones tipadas"
+      },
+      {
+        "id": "php-foundations-v1-step16",
+        "snippetId": "php-func-002",
+        "order": 16,
+        "titleEn": "Default, named, and variadic arguments",
+        "titleEs": "Argumentos por defecto, nombrados y variádicos"
+      },
+      {
+        "id": "php-foundations-v1-step17",
+        "snippetId": "php-func-003",
+        "order": 17,
+        "titleEn": "Closures and arrow functions",
+        "titleEs": "Closures y funciones flecha"
+      },
+      {
+        "id": "php-foundations-v1-step18",
+        "snippetId": "php-class-001",
+        "order": 18,
+        "titleEn": "Classes and constructor promotion",
+        "titleEs": "Clases y promoción del constructor"
+      },
+      {
+        "id": "php-foundations-v1-step19",
+        "snippetId": "php-class-002",
+        "order": 19,
+        "titleEn": "Visibility, readonly, and inheritance",
+        "titleEs": "Visibilidad, readonly y herencia"
+      },
+      {
+        "id": "php-foundations-v1-step20",
+        "snippetId": "php-class-003",
+        "order": 20,
+        "titleEn": "Interfaces and traits",
+        "titleEs": "Interfaces y traits"
+      },
+      {
+        "id": "php-foundations-v1-step21",
+        "snippetId": "php-enum-001",
+        "order": 21,
+        "titleEn": "Enums",
+        "titleEs": "Enums"
+      },
+      {
+        "id": "php-foundations-v1-step22",
+        "snippetId": "php-err-001",
+        "order": 22,
+        "titleEn": "Exceptions: try/catch/finally",
+        "titleEs": "Excepciones: try/catch/finally"
+      },
+      {
+        "id": "php-foundations-v1-step23",
+        "snippetId": "php-err-002",
+        "order": 23,
+        "titleEn": "Custom exceptions",
+        "titleEs": "Excepciones personalizadas"
+      },
+      {
+        "id": "php-foundations-v1-step24",
+        "snippetId": "php-ns-001",
+        "order": 24,
+        "titleEn": "Namespaces and use",
+        "titleEs": "Namespaces y use"
+      }
+    ]
+  }
+]

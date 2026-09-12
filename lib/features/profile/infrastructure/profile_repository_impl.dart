@@ -76,6 +76,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
     String? keyboardModel,
     String? favoriteQuote,
     String? favoriteProgrammer,
+    String? githubUsername,
+    String? websiteUrl,
   }) async {
     try {
       final current = await _dao.getActiveProfile();
@@ -92,6 +94,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
         keyboardModel: keyboardModel,
         favoriteQuote: favoriteQuote,
         favoriteProgrammer: favoriteProgrammer,
+        githubUsername: githubUsername,
+        websiteUrl: websiteUrl,
       );
       return const Result.ok(null);
     } on Exception catch (e) {

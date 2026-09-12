@@ -28,6 +28,19 @@ const Map<ProgrammingLanguage, String> _catalogAssetByLanguage = {
   ProgrammingLanguage.javascript: 'assets/content/snippets/javascript_v1.json',
   ProgrammingLanguage.typescript: 'assets/content/snippets/typescript_v1.json',
   ProgrammingLanguage.haskell: 'assets/content/snippets/haskell_v1.json',
+  ProgrammingLanguage.c: 'assets/content/snippets/c_v1.json',
+  ProgrammingLanguage.cpp: 'assets/content/snippets/cpp_v1.json',
+  ProgrammingLanguage.java: 'assets/content/snippets/java_v1.json',
+  ProgrammingLanguage.crystal: 'assets/content/snippets/crystal_v1.json',
+  ProgrammingLanguage.css: 'assets/content/snippets/css_v1.json',
+  ProgrammingLanguage.csharp: 'assets/content/snippets/csharp_v1.json',
+  ProgrammingLanguage.swift: 'assets/content/snippets/swift_v1.json',
+  ProgrammingLanguage.kotlin: 'assets/content/snippets/kotlin_v1.json',
+  ProgrammingLanguage.dart: 'assets/content/snippets/dart_v1.json',
+  ProgrammingLanguage.php: 'assets/content/snippets/php_v1.json',
+  ProgrammingLanguage.git: 'assets/content/snippets/git_v1.json',
+  ProgrammingLanguage.linux: 'assets/content/snippets/linux_v1.json',
+  ProgrammingLanguage.docker: 'assets/content/snippets/docker_v1.json',
 };
 
 /// Languages whose catalog backs free practice (Zen/Sprint/Precision).
@@ -40,7 +53,8 @@ const Map<ProgrammingLanguage, String> _catalogAssetByLanguage = {
 /// practice pool), so its catalog is held to the lighter rule that it
 /// contains exactly the snippets its bundled paths use — see the
 /// "course-only" test below. SQL, Rust, Python, JavaScript, TypeScript,
-/// and Haskell follow the same course-only rule.
+/// Haskell, C, C++, Java, Crystal, CSS, C#, Swift, Kotlin, Dart, and PHP
+/// follow the same course-only rule.
 const Set<ProgrammingLanguage> _freePracticeLanguages = {
   ProgrammingLanguage.go,
 };
@@ -77,17 +91,23 @@ const Set<ContentCategory> _architectureLayerCategories = {
   ContentCategory.tuiAdapter,
 };
 
-/// The 2 algorithm-topic categories back the `go-algorithms-v1` /
-/// `rust-algorithms-v1` Learning Routes. Individual snippets in them DO
-/// carry a real difficulty (e.g. bubble sort is `beginner`, heap sort is
-/// `expert`) unlike an architecture-layer category, but the category
-/// itself isn't a dense (category, difficulty) grid the way a
-/// language-feature category is — held to the same looser total-count
-/// bar as `_architectureLayerCategories` for that reason.
-const Set<ContentCategory> _algorithmTopicCategories = {
+/// Topic categories that aren't a language-feature grid: the algorithm
+/// topics back `go-algorithms-v1` / `rust-algorithms-v1`, and the HTTP/SQL
+/// topics back `go-rest-http-v1`. Individual snippets in them DO carry a
+/// real difficulty (e.g. bubble sort is `beginner`, heap sort is
+/// `expert`; a minimal server is `beginner`, the SQL capstone is `expert`)
+/// unlike an architecture-layer category, but the category itself isn't a
+/// dense (category, difficulty) grid the way a language-feature category
+/// is — held to the same looser total-count bar as
+/// `_architectureLayerCategories` for that reason.
+const Set<ContentCategory> _topicCategories = {
   ContentCategory.searchingAlgorithms,
   ContentCategory.sortingAlgorithms,
   ContentCategory.graphAlgorithms,
+  ContentCategory.httpServers,
+  ContentCategory.httpClients,
+  ContentCategory.httpTesting,
+  ContentCategory.sqlPersistence,
 };
 
 Future<List<Snippet>> _loadCatalog(ProgrammingLanguage language) async {
@@ -115,6 +135,8 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/go_intermediate_syntax_v1.json',
   'assets/content/learning_paths/go_tui_notes_v1.json',
   'assets/content/learning_paths/go_algorithms_v1.json',
+  'assets/content/learning_paths/go_interfaces_v1.json',
+  'assets/content/learning_paths/go_rest_http_v1.json',
   'assets/content/learning_paths/bash_foundations_v1.json',
   'assets/content/learning_paths/bash_toolkit_v1.json',
   'assets/content/learning_paths/sql_foundations_v1.json',
@@ -122,12 +144,52 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/rust_algorithms_v1.json',
   'assets/content/learning_paths/python_foundations_v1.json',
   'assets/content/learning_paths/python_algorithms_v1.json',
+  'assets/content/learning_paths/python_django_foundations_v1.json',
+  'assets/content/learning_paths/python_django_orm_v1.json',
+  'assets/content/learning_paths/python_django_rest_v1.json',
   'assets/content/learning_paths/javascript_foundations_v1.json',
   'assets/content/learning_paths/javascript_algorithms_v1.json',
   'assets/content/learning_paths/typescript_foundations_v1.json',
   'assets/content/learning_paths/typescript_algorithms_v1.json',
   'assets/content/learning_paths/haskell_foundations_v1.json',
   'assets/content/learning_paths/haskell_algorithms_v1.json',
+  'assets/content/learning_paths/c_foundations_v1.json',
+  'assets/content/learning_paths/c_algorithms_v1.json',
+  'assets/content/learning_paths/c_systems_v1.json',
+  'assets/content/learning_paths/cpp_foundations_v1.json',
+  'assets/content/learning_paths/cpp_algorithms_v1.json',
+  'assets/content/learning_paths/cpp_advanced_v1.json',
+  'assets/content/learning_paths/java_foundations_v1.json',
+  'assets/content/learning_paths/java_algorithms_v1.json',
+  'assets/content/learning_paths/crystal_foundations_v1.json',
+  'assets/content/learning_paths/crystal_algorithms_v1.json',
+  'assets/content/learning_paths/css_foundations_v1.json',
+  'assets/content/learning_paths/css_layout_v1.json',
+  'assets/content/learning_paths/css_advanced_v1.json',
+  'assets/content/learning_paths/csharp_foundations_v1.json',
+  'assets/content/learning_paths/csharp_algorithms_v1.json',
+  'assets/content/learning_paths/csharp_advanced_v1.json',
+  'assets/content/learning_paths/swift_foundations_v1.json',
+  'assets/content/learning_paths/swift_algorithms_v1.json',
+  'assets/content/learning_paths/swift_advanced_v1.json',
+  'assets/content/learning_paths/kotlin_foundations_v1.json',
+  'assets/content/learning_paths/kotlin_algorithms_v1.json',
+  'assets/content/learning_paths/kotlin_advanced_v1.json',
+  'assets/content/learning_paths/dart_foundations_v1.json',
+  'assets/content/learning_paths/dart_advanced_v1.json',
+  'assets/content/learning_paths/dart_algorithms_v1.json',
+  'assets/content/learning_paths/php_foundations_v1.json',
+  'assets/content/learning_paths/php_web_v1.json',
+  'assets/content/learning_paths/php_algorithms_v1.json',
+  'assets/content/learning_paths/git_foundations_v1.json',
+  'assets/content/learning_paths/git_workflows_v1.json',
+  'assets/content/learning_paths/git_internals_v1.json',
+  'assets/content/learning_paths/linux_foundations_v1.json',
+  'assets/content/learning_paths/linux_admin_v1.json',
+  'assets/content/learning_paths/linux_networking_v1.json',
+  'assets/content/learning_paths/docker_foundations_v1.json',
+  'assets/content/learning_paths/docker_compose_v1.json',
+  'assets/content/learning_paths/docker_advanced_v1.json',
 ];
 
 Future<Map<String, Object?>> _loadLearningPath(String assetPath) async {
@@ -200,7 +262,7 @@ void main() {
 
         for (final category in totalsByCategory.keys) {
           if (_architectureLayerCategories.contains(category) ||
-              _algorithmTopicCategories.contains(category)) {
+              _topicCategories.contains(category)) {
             if ((totalsByCategory[category] ?? 0) == 0) {
               empty.add('$language/$category has zero active entries');
             }

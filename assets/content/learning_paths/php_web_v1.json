@@ -1,0 +1,98 @@
+[
+  {
+    "id": "php-web-v1",
+    "language": "php",
+    "titleEn": "PHP for the web",
+    "titleEs": "PHP para la web",
+    "descriptionEn": "Handle requests, forms, sessions, and database-backed CRUD in PHP.",
+    "descriptionEs": "Maneja peticiones, formularios, sesiones y CRUD con base de datos en PHP.",
+    "tagEn": "Web",
+    "tagEs": "Web",
+    "lessons": [
+      {
+        "id": "php-web-v1-step01",
+        "snippetId": "php-web-001",
+        "order": 1,
+        "titleEn": "Reading query parameters",
+        "titleEs": "Leer parámetros de consulta"
+      },
+      {
+        "id": "php-web-v1-step02",
+        "snippetId": "php-web-002",
+        "order": 2,
+        "titleEn": "Handling form submissions",
+        "titleEs": "Procesar envíos de formularios"
+      },
+      {
+        "id": "php-web-v1-step03",
+        "snippetId": "php-web-003",
+        "order": 3,
+        "titleEn": "Escaping output",
+        "titleEs": "Escapar la salida"
+      },
+      {
+        "id": "php-web-v1-step04",
+        "snippetId": "php-web-004",
+        "order": 4,
+        "titleEn": "Validating input and hashing passwords",
+        "titleEs": "Validar entrada y hashear contraseñas"
+      },
+      {
+        "id": "php-web-v1-step05",
+        "snippetId": "php-web-005",
+        "order": 5,
+        "titleEn": "Sessions",
+        "titleEs": "Sesiones"
+      },
+      {
+        "id": "php-web-v1-step06",
+        "snippetId": "php-web-006",
+        "order": 6,
+        "titleEn": "Cookies",
+        "titleEs": "Cookies"
+      },
+      {
+        "id": "php-web-v1-step07",
+        "snippetId": "php-web-007",
+        "order": 7,
+        "titleEn": "Connecting with PDO",
+        "titleEs": "Conectar con PDO"
+      },
+      {
+        "id": "php-web-v1-step08",
+        "snippetId": "php-web-008",
+        "order": 8,
+        "titleEn": "Writing and reading with prepared statements",
+        "titleEs": "Escribir y leer con sentencias preparadas"
+      },
+      {
+        "id": "php-web-v1-step09",
+        "snippetId": "php-web-009",
+        "order": 9,
+        "titleEn": "Transactions",
+        "titleEs": "Transacciones"
+      },
+      {
+        "id": "php-web-v1-step10",
+        "snippetId": "php-web-010",
+        "order": 10,
+        "titleEn": "Encoding and decoding JSON",
+        "titleEs": "Codificar y decodificar JSON"
+      },
+      {
+        "id": "php-web-v1-step11",
+        "snippetId": "php-web-011",
+        "order": 11,
+        "titleEn": "JSON responses",
+        "titleEs": "Respuestas JSON"
+      },
+      {
+        "id": "php-web-v1-step12",
+        "snippetId": "php-web-012",
+        "order": 12,
+        "titleEn": "Reading and writing files",
+        "titleEs": "Leer y escribir archivos"
+      }
+    ]
+  }
+]

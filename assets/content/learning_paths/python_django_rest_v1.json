@@ -1,0 +1,133 @@
+[
+  {
+    "id": "python-django-rest-v1",
+    "language": "python",
+    "titleEn": "Django REST API",
+    "titleEs": "Django REST API",
+    "descriptionEn": "Turn the app into a REST API with DRF, tokens, and tests.",
+    "descriptionEs": "Convierte la app en una API REST con DRF, tokens y tests.",
+    "tagEn": "REST API",
+    "tagEs": "REST API",
+    "lessons": [
+      {
+        "id": "python-django-rest-v1-step01",
+        "snippetId": "python-django-rest-001",
+        "order": 1,
+        "titleEn": "Installing DRF",
+        "titleEs": "Instalar DRF"
+      },
+      {
+        "id": "python-django-rest-v1-step02",
+        "snippetId": "python-django-rest-002",
+        "order": 2,
+        "titleEn": "Your first API endpoint",
+        "titleEs": "Tu primer endpoint"
+      },
+      {
+        "id": "python-django-rest-v1-step03",
+        "snippetId": "python-django-rest-003",
+        "order": 3,
+        "titleEn": "A ModelSerializer",
+        "titleEs": "Un ModelSerializer"
+      },
+      {
+        "id": "python-django-rest-v1-step04",
+        "snippetId": "python-django-rest-004",
+        "order": 4,
+        "titleEn": "Custom validation",
+        "titleEs": "Validación personalizada"
+      },
+      {
+        "id": "python-django-rest-v1-step05",
+        "snippetId": "python-django-rest-005",
+        "order": 5,
+        "titleEn": "Nested read-only fields",
+        "titleEs": "Campos anidados de solo lectura"
+      },
+      {
+        "id": "python-django-rest-v1-step06",
+        "snippetId": "python-django-rest-006",
+        "order": 6,
+        "titleEn": "Function views with @api_view",
+        "titleEs": "Vistas de función con @api_view"
+      },
+      {
+        "id": "python-django-rest-v1-step07",
+        "snippetId": "python-django-rest-007",
+        "order": 7,
+        "titleEn": "Class-based APIView",
+        "titleEs": "APIView basada en clase"
+      },
+      {
+        "id": "python-django-rest-v1-step08",
+        "snippetId": "python-django-rest-008",
+        "order": 8,
+        "titleEn": "Generic views",
+        "titleEs": "Vistas genéricas"
+      },
+      {
+        "id": "python-django-rest-v1-step09",
+        "snippetId": "python-django-rest-009",
+        "order": 9,
+        "titleEn": "ViewSets and routers",
+        "titleEs": "ViewSets y routers"
+      },
+      {
+        "id": "python-django-rest-v1-step10",
+        "snippetId": "python-django-rest-010",
+        "order": 10,
+        "titleEn": "Token authentication",
+        "titleEs": "Autenticación por token"
+      },
+      {
+        "id": "python-django-rest-v1-step11",
+        "snippetId": "python-django-rest-011",
+        "order": 11,
+        "titleEn": "Owner field and permissions",
+        "titleEs": "Campo owner y permisos"
+      },
+      {
+        "id": "python-django-rest-v1-step12",
+        "snippetId": "python-django-rest-012",
+        "order": 12,
+        "titleEn": "Saving the owner",
+        "titleEs": "Guardar el owner"
+      },
+      {
+        "id": "python-django-rest-v1-step13",
+        "snippetId": "python-django-rest-013",
+        "order": 13,
+        "titleEn": "Per-user querysets",
+        "titleEs": "QuerySets por usuario"
+      },
+      {
+        "id": "python-django-rest-v1-step14",
+        "snippetId": "python-django-rest-014",
+        "order": 14,
+        "titleEn": "Pagination",
+        "titleEs": "Paginación"
+      },
+      {
+        "id": "python-django-rest-v1-step15",
+        "snippetId": "python-django-rest-015",
+        "order": 15,
+        "titleEn": "Search and ordering",
+        "titleEs": "Búsqueda y orden"
+      },
+      {
+        "id": "python-django-rest-v1-step16",
+        "snippetId": "python-django-rest-016",
+        "order": 16,
+        "titleEn": "Testing the API",
+        "titleEs": "Probar la API"
+      },
+      {
+        "id": "python-django-rest-v1-step17",
+        "snippetId": "python-django-rest-017",
+        "order": 17,
+        "titleEn": "End-to-end API flow",
+        "titleEs": "Flujo completo de la API"
+      }
+    ]
+  }
+]

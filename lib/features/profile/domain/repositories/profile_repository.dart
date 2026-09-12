@@ -30,8 +30,8 @@ abstract interface class ProfileRepository {
   Future<Result<void, AppFailure>> renameProfile(String newUsername);
 
   /// Overwrites the existing Guest Profile's self-expression fields —
-  /// always all six together (a `null`/empty-list explicitly clears that
-  /// field).
+  /// always all of them together (a `null`/empty-list explicitly clears
+  /// that field).
   ///
   /// Same expectation as [createGuestProfile]: every free-text argument is
   /// assumed already trimmed/validated by the caller.
@@ -42,6 +42,8 @@ abstract interface class ProfileRepository {
     String? keyboardModel,
     String? favoriteQuote,
     String? favoriteProgrammer,
+    String? githubUsername,
+    String? websiteUrl,
   });
 
   /// Overwrites the existing Guest Profile's auto-detected device info

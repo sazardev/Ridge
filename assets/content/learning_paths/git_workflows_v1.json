@@ -1,0 +1,182 @@
+[
+  {
+    "id": "git-workflows-v1",
+    "language": "git",
+    "titleEn": "Git workflows",
+    "titleEs": "Flujos de trabajo con Git",
+    "descriptionEn": "Inspect history, undo mistakes safely, and collaborate with branches, rebases, tags and hooks.",
+    "descriptionEs": "Inspecciona el historial, deshaz errores con seguridad y colabora con ramas, rebases, etiquetas y hooks.",
+    "tagEn": "Workflows",
+    "tagEs": "Flujos",
+    "lessons": [
+      {
+        "id": "git-workflows-v1-step01",
+        "snippetId": "git-log-001",
+        "order": 1,
+        "titleEn": "See the whole history graph",
+        "titleEs": "Mira el grafo completo del historial"
+      },
+      {
+        "id": "git-workflows-v1-step02",
+        "snippetId": "git-log-002",
+        "order": 2,
+        "titleEn": "Build a custom log format",
+        "titleEs": "Arma un formato de log a medida"
+      },
+      {
+        "id": "git-workflows-v1-step03",
+        "snippetId": "git-log-007",
+        "order": 3,
+        "titleEn": "Read the patch of one commit",
+        "titleEs": "Lee el parche de un commit"
+      },
+      {
+        "id": "git-workflows-v1-step04",
+        "snippetId": "git-log-003",
+        "order": 4,
+        "titleEn": "Find when a string appeared",
+        "titleEs": "Encuentra cuándo apareció un texto"
+      },
+      {
+        "id": "git-workflows-v1-step05",
+        "snippetId": "git-log-004",
+        "order": 5,
+        "titleEn": "Blame every line",
+        "titleEs": "Consulta la autoría de cada línea"
+      },
+      {
+        "id": "git-workflows-v1-step06",
+        "snippetId": "git-log-005",
+        "order": 6,
+        "titleEn": "Hunt a bug with `git bisect`",
+        "titleEs": "Caza un bug con `git bisect`"
+      },
+      {
+        "id": "git-workflows-v1-step07",
+        "snippetId": "git-log-006",
+        "order": 7,
+        "titleEn": "Automate the bisect search",
+        "titleEs": "Automatiza la búsqueda del bisect"
+      },
+      {
+        "id": "git-workflows-v1-step08",
+        "snippetId": "git-undo-001",
+        "order": 8,
+        "titleEn": "Discard unstaged changes",
+        "titleEs": "Descarta los cambios sin preparar"
+      },
+      {
+        "id": "git-workflows-v1-step09",
+        "snippetId": "git-undo-002",
+        "order": 9,
+        "titleEn": "Unstage a file",
+        "titleEs": "Quita un archivo del área de preparación"
+      },
+      {
+        "id": "git-workflows-v1-step10",
+        "snippetId": "git-undo-003",
+        "order": 10,
+        "titleEn": "Undo a commit, keep it staged",
+        "titleEs": "Deshaz un commit y consérvalo preparado"
+      },
+      {
+        "id": "git-workflows-v1-step11",
+        "snippetId": "git-undo-004",
+        "order": 11,
+        "titleEn": "Undo a commit, keep the files",
+        "titleEs": "Deshaz un commit y conserva los archivos"
+      },
+      {
+        "id": "git-workflows-v1-step12",
+        "snippetId": "git-undo-005",
+        "order": 12,
+        "titleEn": "Wipe the commit and its changes",
+        "titleEs": "Borra el commit y sus cambios"
+      },
+      {
+        "id": "git-workflows-v1-step13",
+        "snippetId": "git-undo-006",
+        "order": 13,
+        "titleEn": "Reverse a commit safely",
+        "titleEs": "Revierte un commit sin reescribir el historial"
+      },
+      {
+        "id": "git-workflows-v1-step14",
+        "snippetId": "git-undo-007",
+        "order": 14,
+        "titleEn": "Remove untracked junk",
+        "titleEs": "Elimina archivos sin seguimiento"
+      },
+      {
+        "id": "git-workflows-v1-step15",
+        "snippetId": "git-undo-008",
+        "order": 15,
+        "titleEn": "Park work with `git stash`",
+        "titleEs": "Aparta tu trabajo con `git stash`"
+      },
+      {
+        "id": "git-workflows-v1-step16",
+        "snippetId": "git-collab-004",
+        "order": 16,
+        "titleEn": "Rebase your branch onto main",
+        "titleEs": "Haz rebase de tu rama sobre main"
+      },
+      {
+        "id": "git-workflows-v1-step17",
+        "snippetId": "git-collab-005",
+        "order": 17,
+        "titleEn": "Pull with rebase",
+        "titleEs": "Haz pull con rebase"
+      },
+      {
+        "id": "git-workflows-v1-step18",
+        "snippetId": "git-collab-006",
+        "order": 18,
+        "titleEn": "Force push without losing work",
+        "titleEs": "Haz push forzado sin perder trabajo ajeno"
+      },
+      {
+        "id": "git-workflows-v1-step19",
+        "snippetId": "git-collab-007",
+        "order": 19,
+        "titleEn": "Copy a commit with `cherry-pick`",
+        "titleEs": "Copia un commit con `cherry-pick`"
+      },
+      {
+        "id": "git-workflows-v1-step20",
+        "snippetId": "git-collab-009",
+        "order": 20,
+        "titleEn": "Fold a fix into an old commit",
+        "titleEs": "Incrusta un arreglo en un commit antiguo"
+      },
+      {
+        "id": "git-workflows-v1-step21",
+        "snippetId": "git-collab-001",
+        "order": 21,
+        "titleEn": "Tag a release",
+        "titleEs": "Etiqueta una versión"
+      },
+      {
+        "id": "git-workflows-v1-step22",
+        "snippetId": "git-collab-002",
+        "order": 22,
+        "titleEn": "Write an annotated tag",
+        "titleEs": "Crea una etiqueta anotada"
+      },
+      {
+        "id": "git-workflows-v1-step23",
+        "snippetId": "git-collab-003",
+        "order": 23,
+        "titleEn": "Push commits with their tags",
+        "titleEs": "Sube commits junto con sus etiquetas"
+      },
+      {
+        "id": "git-workflows-v1-step24",
+        "snippetId": "git-collab-008",
+        "order": 24,
+        "titleEn": "Run a `pre-commit` hook",
+        "titleEs": "Ejecuta un hook `pre-commit`"
+      }
+    ]
+  }
+]

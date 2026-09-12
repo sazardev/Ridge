@@ -27,6 +27,19 @@ class SnippetLocalDataSource implements SnippetCatalogSource {
     'assets/content/snippets/javascript_v1.json',
     'assets/content/snippets/typescript_v1.json',
     'assets/content/snippets/haskell_v1.json',
+    'assets/content/snippets/c_v1.json',
+    'assets/content/snippets/cpp_v1.json',
+    'assets/content/snippets/java_v1.json',
+    'assets/content/snippets/crystal_v1.json',
+    'assets/content/snippets/css_v1.json',
+    'assets/content/snippets/csharp_v1.json',
+    'assets/content/snippets/swift_v1.json',
+    'assets/content/snippets/kotlin_v1.json',
+    'assets/content/snippets/dart_v1.json',
+    'assets/content/snippets/php_v1.json',
+    'assets/content/snippets/git_v1.json',
+    'assets/content/snippets/linux_v1.json',
+    'assets/content/snippets/docker_v1.json',
   ];
 
   final List<String> _assetPaths;

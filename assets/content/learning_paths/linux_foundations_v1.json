@@ -1,0 +1,259 @@
+[
+  {
+    "id": "linux-foundations-v1",
+    "language": "linux",
+    "titleEn": "Linux essentials",
+    "titleEs": "Linux esencial",
+    "descriptionEn": "Understand the system you use every day, from files to services.",
+    "descriptionEs": "Entiende el sistema que usas a diario, de los archivos a los servicios.",
+    "tagEn": "System",
+    "tagEs": "Sistema",
+    "lessons": [
+      {
+        "id": "linux-foundations-v1-step01",
+        "snippetId": "linux-basics-001",
+        "order": 1,
+        "titleEn": "Read the distro release file",
+        "titleEs": "Lee el archivo os-release"
+      },
+      {
+        "id": "linux-foundations-v1-step02",
+        "snippetId": "linux-basics-002",
+        "order": 2,
+        "titleEn": "Print kernel and architecture",
+        "titleEs": "Muestra kernel y arquitectura"
+      },
+      {
+        "id": "linux-foundations-v1-step03",
+        "snippetId": "linux-basics-003",
+        "order": 3,
+        "titleEn": "Show hostname and uptime",
+        "titleEs": "Muestra hostname y uptime"
+      },
+      {
+        "id": "linux-foundations-v1-step04",
+        "snippetId": "linux-basics-004",
+        "order": 4,
+        "titleEn": "Ask a command for help",
+        "titleEs": "Pide ayuda a un comando"
+      },
+      {
+        "id": "linux-foundations-v1-step05",
+        "snippetId": "linux-basics-005",
+        "order": 5,
+        "titleEn": "Read environment variables",
+        "titleEs": "Lee variables de entorno"
+      },
+      {
+        "id": "linux-foundations-v1-step06",
+        "snippetId": "linux-basics-006",
+        "order": 6,
+        "titleEn": "Export an environment variable",
+        "titleEs": "Exporta una variable de entorno"
+      },
+      {
+        "id": "linux-foundations-v1-step07",
+        "snippetId": "linux-files-001",
+        "order": 7,
+        "titleEn": "Locate yourself in the tree",
+        "titleEs": "Ubícate en el árbol de archivos"
+      },
+      {
+        "id": "linux-foundations-v1-step08",
+        "snippetId": "linux-files-002",
+        "order": 8,
+        "titleEn": "Change directory and confirm",
+        "titleEs": "Cambia de directorio y confirma"
+      },
+      {
+        "id": "linux-foundations-v1-step09",
+        "snippetId": "linux-files-003",
+        "order": 9,
+        "titleEn": "List files with readable sizes",
+        "titleEs": "Lista archivos con tamaños legibles"
+      },
+      {
+        "id": "linux-foundations-v1-step10",
+        "snippetId": "linux-files-004",
+        "order": 10,
+        "titleEn": "Create nested directories safely",
+        "titleEs": "Crea directorios anidados sin errores"
+      },
+      {
+        "id": "linux-foundations-v1-step11",
+        "snippetId": "linux-files-005",
+        "order": 11,
+        "titleEn": "Create an empty file",
+        "titleEs": "Crea un archivo vacío"
+      },
+      {
+        "id": "linux-foundations-v1-step12",
+        "snippetId": "linux-files-006",
+        "order": 12,
+        "titleEn": "Write one line to a file",
+        "titleEs": "Escribe una línea en un archivo"
+      },
+      {
+        "id": "linux-foundations-v1-step13",
+        "snippetId": "linux-files-007",
+        "order": 13,
+        "titleEn": "Copy a file safely",
+        "titleEs": "Copia un archivo de forma segura"
+      },
+      {
+        "id": "linux-foundations-v1-step14",
+        "snippetId": "linux-files-008",
+        "order": 14,
+        "titleEn": "Rename a file with mv",
+        "titleEs": "Renombra un archivo con mv"
+      },
+      {
+        "id": "linux-foundations-v1-step15",
+        "snippetId": "linux-files-009",
+        "order": 15,
+        "titleEn": "Delete files and directories",
+        "titleEs": "Borra archivos y directorios"
+      },
+      {
+        "id": "linux-foundations-v1-step16",
+        "snippetId": "linux-files-010",
+        "order": 16,
+        "titleEn": "Create a symbolic link",
+        "titleEs": "Crea un enlace simbólico"
+      },
+      {
+        "id": "linux-foundations-v1-step17",
+        "snippetId": "linux-files-011",
+        "order": 17,
+        "titleEn": "Read file starts and ends",
+        "titleEs": "Mira el inicio y el final"
+      },
+      {
+        "id": "linux-foundations-v1-step18",
+        "snippetId": "linux-files-012",
+        "order": 18,
+        "titleEn": "Find files by name",
+        "titleEs": "Busca archivos por nombre"
+      },
+      {
+        "id": "linux-foundations-v1-step19",
+        "snippetId": "linux-perm-001",
+        "order": 19,
+        "titleEn": "Read permission bits",
+        "titleEs": "Lee los bits de permisos"
+      },
+      {
+        "id": "linux-foundations-v1-step20",
+        "snippetId": "linux-perm-002",
+        "order": 20,
+        "titleEn": "Make a script executable",
+        "titleEs": "Haz ejecutable un script"
+      },
+      {
+        "id": "linux-foundations-v1-step21",
+        "snippetId": "linux-perm-003",
+        "order": 21,
+        "titleEn": "Set an exact octal mode",
+        "titleEs": "Define un modo octal exacto"
+      },
+      {
+        "id": "linux-foundations-v1-step22",
+        "snippetId": "linux-perm-004",
+        "order": 22,
+        "titleEn": "Change file ownership",
+        "titleEs": "Cambia el dueño de un archivo"
+      },
+      {
+        "id": "linux-foundations-v1-step23",
+        "snippetId": "linux-perm-005",
+        "order": 23,
+        "titleEn": "Control default permissions",
+        "titleEs": "Controla los permisos por defecto"
+      },
+      {
+        "id": "linux-foundations-v1-step24",
+        "snippetId": "linux-users-001",
+        "order": 24,
+        "titleEn": "Check who you are",
+        "titleEs": "Comprueba quién eres"
+      },
+      {
+        "id": "linux-foundations-v1-step25",
+        "snippetId": "linux-users-002",
+        "order": 25,
+        "titleEn": "Read the user database",
+        "titleEs": "Lee la base de usuarios"
+      },
+      {
+        "id": "linux-foundations-v1-step26",
+        "snippetId": "linux-users-003",
+        "order": 26,
+        "titleEn": "Create a user account",
+        "titleEs": "Crea una cuenta de usuario"
+      },
+      {
+        "id": "linux-foundations-v1-step27",
+        "snippetId": "linux-users-004",
+        "order": 27,
+        "titleEn": "Create a group and add members",
+        "titleEs": "Crea un grupo y añade miembros"
+      },
+      {
+        "id": "linux-foundations-v1-step28",
+        "snippetId": "linux-proc-001",
+        "order": 28,
+        "titleEn": "List running processes",
+        "titleEs": "Lista los procesos en ejecución"
+      },
+      {
+        "id": "linux-foundations-v1-step29",
+        "snippetId": "linux-proc-002",
+        "order": 29,
+        "titleEn": "Find processes by name",
+        "titleEs": "Busca procesos por nombre"
+      },
+      {
+        "id": "linux-foundations-v1-step30",
+        "snippetId": "linux-proc-003",
+        "order": 30,
+        "titleEn": "Stop a process by its PID",
+        "titleEs": "Detén un proceso por su PID"
+      },
+      {
+        "id": "linux-foundations-v1-step31",
+        "snippetId": "linux-pkg-001",
+        "order": 31,
+        "titleEn": "Check an installed package",
+        "titleEs": "Comprueba un paquete instalado"
+      },
+      {
+        "id": "linux-foundations-v1-step32",
+        "snippetId": "linux-pkg-002",
+        "order": 32,
+        "titleEn": "List the files of a package",
+        "titleEs": "Lista los archivos de un paquete"
+      },
+      {
+        "id": "linux-foundations-v1-step33",
+        "snippetId": "linux-pkg-003",
+        "order": 33,
+        "titleEn": "Search installed packages",
+        "titleEs": "Busca paquetes instalados"
+      },
+      {
+        "id": "linux-foundations-v1-step34",
+        "snippetId": "linux-svc-001",
+        "order": 34,
+        "titleEn": "Check a service status",
+        "titleEs": "Consulta el estado de un servicio"
+      },
+      {
+        "id": "linux-foundations-v1-step35",
+        "snippetId": "linux-log-001",
+        "order": 35,
+        "titleEn": "Read the system journal",
+        "titleEs": "Lee el diario del sistema"
+      }
+    ]
+  }
+]

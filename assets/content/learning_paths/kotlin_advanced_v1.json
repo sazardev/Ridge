@@ -1,0 +1,147 @@
+[
+  {
+    "id": "kotlin-advanced-v1",
+    "language": "kotlin",
+    "titleEn": "Kotlin: Advanced",
+    "titleEs": "Kotlin: Avanzado",
+    "descriptionEn": "Sealed classes, generics, lambdas, and coroutines in modern Kotlin.",
+    "descriptionEs": "Clases selladas, genéricos, lambdas y corrutinas en Kotlin moderno.",
+    "tagEn": "Advanced",
+    "tagEs": "Avanzado",
+    "lessons": [
+      {
+        "id": "kotlin-advanced-v1-step01",
+        "snippetId": "kotlin-oop-002",
+        "order": 1,
+        "titleEn": "`object` singletons and companions",
+        "titleEs": "Singletons `object` y companions"
+      },
+      {
+        "id": "kotlin-advanced-v1-step02",
+        "snippetId": "kotlin-oop-003",
+        "order": 2,
+        "titleEn": "Sealed hierarchies and exhaustive `when`",
+        "titleEs": "Jerarquías selladas y `when` exhaustivo"
+      },
+      {
+        "id": "kotlin-advanced-v1-step03",
+        "snippetId": "kotlin-intf-001",
+        "order": 3,
+        "titleEn": "Default methods in interfaces",
+        "titleEs": "Métodos por defecto en interfaces"
+      },
+      {
+        "id": "kotlin-advanced-v1-step04",
+        "snippetId": "kotlin-intf-002",
+        "order": 4,
+        "titleEn": "Interface delegation with `by`",
+        "titleEs": "Delegación de interfaces con `by`"
+      },
+      {
+        "id": "kotlin-advanced-v1-step05",
+        "snippetId": "kotlin-gen-001",
+        "order": 5,
+        "titleEn": "Generic functions and classes",
+        "titleEs": "Funciones y clases genéricas"
+      },
+      {
+        "id": "kotlin-advanced-v1-step06",
+        "snippetId": "kotlin-gen-002",
+        "order": 6,
+        "titleEn": "Variance with `out` and `in`",
+        "titleEs": "Varianza con `out` e `in`"
+      },
+      {
+        "id": "kotlin-advanced-v1-step07",
+        "snippetId": "kotlin-null-003",
+        "order": 7,
+        "titleEn": "`lateinit` and safe casts",
+        "titleEs": "`lateinit` y conversiones seguras"
+      },
+      {
+        "id": "kotlin-advanced-v1-step08",
+        "snippetId": "kotlin-null-004",
+        "order": 8,
+        "titleEn": "Fail fast with `requireNotNull` and `check`",
+        "titleEs": "Falla rápido con `requireNotNull` y `check`"
+      },
+      {
+        "id": "kotlin-advanced-v1-step09",
+        "snippetId": "kotlin-ext-002",
+        "order": 9,
+        "titleEn": "Extension properties",
+        "titleEs": "Propiedades de extensión"
+      },
+      {
+        "id": "kotlin-advanced-v1-step10",
+        "snippetId": "kotlin-ext-003",
+        "order": 10,
+        "titleEn": "Extensions on nullable receivers",
+        "titleEs": "Extensiones sobre receptores anulables"
+      },
+      {
+        "id": "kotlin-advanced-v1-step11",
+        "snippetId": "kotlin-lambda-003",
+        "order": 11,
+        "titleEn": "Function types and closures",
+        "titleEs": "Tipos de función y clausuras"
+      },
+      {
+        "id": "kotlin-advanced-v1-step12",
+        "snippetId": "kotlin-lambda-004",
+        "order": 12,
+        "titleEn": "`apply`, `also`, `let`, and `with`",
+        "titleEs": "`apply`, `also`, `let` y `with`"
+      },
+      {
+        "id": "kotlin-advanced-v1-step13",
+        "snippetId": "kotlin-lambda-005",
+        "order": 13,
+        "titleEn": "Lambdas with receiver",
+        "titleEs": "Lambdas con receptor"
+      },
+      {
+        "id": "kotlin-advanced-v1-step14",
+        "snippetId": "kotlin-err-002",
+        "order": 14,
+        "titleEn": "`runCatching` and `Result`",
+        "titleEs": "`runCatching` y `Result`"
+      },
+      {
+        "id": "kotlin-advanced-v1-step15",
+        "snippetId": "kotlin-cor-001",
+        "order": 15,
+        "titleEn": "Suspending functions and `delay`",
+        "titleEs": "Funciones suspendidas y `delay`"
+      },
+      {
+        "id": "kotlin-advanced-v1-step16",
+        "snippetId": "kotlin-cor-002",
+        "order": 16,
+        "titleEn": "`launch` children and `join`",
+        "titleEs": "Corrutinas hijas y `join`"
+      },
+      {
+        "id": "kotlin-advanced-v1-step17",
+        "snippetId": "kotlin-cor-003",
+        "order": 17,
+        "titleEn": "`async` and `awaitAll`",
+        "titleEs": "`async` y `awaitAll`"
+      },
+      {
+        "id": "kotlin-advanced-v1-step18",
+        "snippetId": "kotlin-cor-004",
+        "order": 18,
+        "titleEn": "`withContext` and `withTimeoutOrNull`",
+        "titleEs": "`withContext` y `withTimeoutOrNull`"
+      },
+      {
+        "id": "kotlin-advanced-v1-step19",
+        "snippetId": "kotlin-cor-005",
+        "order": 19,
+        "titleEn": "Cold `flow` pipelines",
+        "titleEs": "Tuberías `flow` en frío"
+      }
+    ]
+  }
+]

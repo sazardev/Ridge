@@ -4,6 +4,9 @@
 // overridden with a fake so these stay pure rendering tests, independent
 // of the real bundled data bank (that's `keyboard_visual_layout_local_
 // data_source_test.dart`'s job).
+import 'dart:math' as math;
+
+import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -50,6 +53,12 @@ Future<void> _pump(
   WidgetTester tester,
   String? model, {
   Map<String, KeyboardVisualLayout> curated = const {},
+  double tiltDegrees = 0,
+  Offset pointerTilt = Offset.zero,
+  double pointerTiltDegrees = 0,
+  Offset rotation = Offset.zero,
+  bool interactive = true,
+  bool interactiveSuspended = false,
 }) async {
   await tester.pumpWidget(
     ProviderScope(
@@ -61,12 +70,41 @@ Future<void> _pump(
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(body: KeyboardVisual(model: model)),
+        home: Scaffold(
+          body: KeyboardVisual(
+            model: model,
+            tiltDegrees: tiltDegrees,
+            pointerTilt: pointerTilt,
+            pointerTiltDegrees: pointerTiltDegrees,
+            rotation: rotation,
+            interactive: interactive,
+            interactiveSuspended: interactiveSuspended,
+          ),
+        ),
       ),
     ),
   );
   await tester.pump();
 }
+
+/// The visual's tilt transform — absent when neither the base tilt nor the
+/// pointer parallax is enabled.
+final Finder _tiltTransform = find.descendant(
+  of: find.byType(KeyboardVisual),
+  matching: find.byType(Transform),
+);
+
+/// The painter currently backing the visual — interaction tests read its
+/// hover/press state directly, since that state *is* the rendered result.
+KeyboardLayoutPainter _painter(WidgetTester tester) =>
+    tester.widget<CustomPaint>(_painted).painter! as KeyboardLayoutPainter;
+
+const _curatedOneKey = {
+  'Glorious GMMK Pro': KeyboardVisualLayout(
+    model: 'Glorious GMMK Pro',
+    keys: [_oneKeySpec],
+  ),
+};
 
 void main() {
   // Representative model per `KeyboardShapeFamily`, mirroring
@@ -94,16 +132,7 @@ void main() {
   testWidgets('prefers a curated layout over the family fallback', (
     tester,
   ) async {
-    await _pump(
-      tester,
-      'Glorious GMMK Pro',
-      curated: const {
-        'Glorious GMMK Pro': KeyboardVisualLayout(
-          model: 'Glorious GMMK Pro',
-          keys: [_oneKeySpec],
-        ),
-      },
-    );
+    await _pump(tester, 'Glorious GMMK Pro', curated: _curatedOneKey);
 
     expect(_painted, findsOneWidget);
     expect(tester.takeException(), isNull);
@@ -117,5 +146,145 @@ void main() {
       expect(find.byType(KeyboardVisual), findsOneWidget);
       expect(_painted, findsNothing);
     }
+  });
+
+  testWidgets('hover tracks the key under the pointer', (tester) async {
+    await _pump(tester, 'Glorious GMMK Pro', curated: _curatedOneKey);
+    final center = tester.getCenter(_painted);
+
+    final mouse = await tester.createGesture(kind: PointerDeviceKind.mouse);
+    await mouse.addPointer(location: Offset.zero);
+    addTearDown(mouse.removePointer);
+
+    await mouse.moveTo(center);
+    await tester.pump();
+    expect(_painter(tester).hoveredIndex, 0);
+
+    await mouse.moveTo(Offset(center.dx, center.dy + 500));
+    await tester.pump();
+    expect(_painter(tester).hoveredIndex, isNull);
+  });
+
+  testWidgets('pressing a key sinks it and releasing brings it back', (
+    tester,
+  ) async {
+    await _pump(tester, 'Glorious GMMK Pro', curated: _curatedOneKey);
+
+    final touch = await tester.startGesture(tester.getCenter(_painted));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 60));
+    expect(_painter(tester).pressedIndex, 0);
+    expect(_painter(tester).pressProgress, greaterThan(0));
+
+    await tester.pump(const Duration(milliseconds: 120));
+    expect(_painter(tester).pressProgress, closeTo(1, 0.001));
+
+    await touch.up();
+    await tester.pump();
+    expect(_painter(tester).pressedIndex, isNull);
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(_painter(tester).pressProgress, closeTo(0, 0.001));
+  });
+
+  testWidgets('interactive: false leaves hover and press untouched', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      'Glorious GMMK Pro',
+      curated: _curatedOneKey,
+      interactive: false,
+    );
+    final center = tester.getCenter(_painted);
+
+    final mouse = await tester.createGesture(kind: PointerDeviceKind.mouse);
+    await mouse.addPointer(location: Offset.zero);
+    addTearDown(mouse.removePointer);
+    await mouse.moveTo(center);
+    await tester.pump();
+    expect(_painter(tester).hoveredIndex, isNull);
+
+    final touch = await tester.startGesture(center);
+    await tester.pump(const Duration(milliseconds: 200));
+    expect(_painter(tester).pressedIndex, isNull);
+    await touch.up();
+  });
+
+  testWidgets('the hero tilt keeps pointer hit-testing accurate', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      'Glorious GMMK Pro',
+      curated: _curatedOneKey,
+      tiltDegrees: 6,
+    );
+
+    final mouse = await tester.createGesture(kind: PointerDeviceKind.mouse);
+    await mouse.addPointer(location: Offset.zero);
+    addTearDown(mouse.removePointer);
+    await mouse.moveTo(tester.getCenter(_painted));
+    await tester.pump();
+
+    expect(_painter(tester).hoveredIndex, 0);
+  });
+
+  testWidgets('pointerTilt rotates the board with the pointer', (tester) async {
+    Future<Matrix4> boardTransform(Offset pointerTilt) async {
+      await _pump(
+        tester,
+        'Glorious GMMK Pro',
+        curated: _curatedOneKey,
+        tiltDegrees: 6,
+        pointerTilt: pointerTilt,
+        pointerTiltDegrees: 4,
+      );
+      await tester.pump(const Duration(milliseconds: 300));
+      return tester.widget<Transform>(_tiltTransform).transform;
+    }
+
+    final right = await boardTransform(const Offset(1, 0));
+    final left = await boardTransform(const Offset(-1, 0));
+
+    // Yawing left vs. right flips the sign of the rotateY shear entry.
+    expect(right.entry(0, 2), isNot(closeTo(left.entry(0, 2), 1e-6)));
+  });
+
+  testWidgets('rotation adds drag yaw on top of the parallax', (tester) async {
+    await _pump(
+      tester,
+      'Glorious GMMK Pro',
+      curated: _curatedOneKey,
+      pointerTiltDegrees: 6,
+      rotation: const Offset(30, 0),
+    );
+    await tester.pump(const Duration(milliseconds: 500));
+
+    final yaw = tester.widget<Transform>(_tiltTransform).transform;
+    expect(yaw.entry(0, 2), closeTo(math.sin(30 * math.pi / 180), 1e-6));
+  });
+
+  testWidgets('interactiveSuspended releases a held key', (tester) async {
+    await _pump(tester, 'Glorious GMMK Pro', curated: _curatedOneKey);
+    final touch = await tester.startGesture(tester.getCenter(_painted));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 200));
+    expect(_painter(tester).pressedIndex, 0);
+
+    await _pump(
+      tester,
+      'Glorious GMMK Pro',
+      curated: _curatedOneKey,
+      interactiveSuspended: true,
+    );
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(_painter(tester).pressedIndex, isNull);
+    await touch.up();
+  });
+
+  testWidgets('no tilt at all leaves the board untransformed', (tester) async {
+    await _pump(tester, 'Glorious GMMK Pro', curated: _curatedOneKey);
+
+    expect(_tiltTransform, findsNothing);
   });
 }

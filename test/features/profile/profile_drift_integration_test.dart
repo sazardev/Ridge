@@ -125,6 +125,35 @@ void main() {
     expect(row?.username, 'nova-renamed');
   });
 
+  test('customization round-trips the normalized GitHub/website links through '
+      'drift and the stream updates', () async {
+    await container
+        .read(activeProfileControllerProvider.notifier)
+        .create('nova');
+
+    final nextUpdate = profileUpdates.stream
+        .firstWhere((p) => p?.githubUsername == 'sazar')
+        .timeout(const Duration(seconds: 5));
+
+    final result = await container
+        .read(activeProfileControllerProvider.notifier)
+        .updateCustomization(
+          githubUsername: 'https://github.com/sazar',
+          websiteUrl: 'example.com',
+        );
+    expect(result.isOk, isTrue);
+
+    final afterUpdate = await nextUpdate;
+    expect(afterUpdate?.githubUsername, 'sazar');
+    expect(afterUpdate?.websiteUrl, 'https://example.com');
+
+    final row = await container
+        .read(guestProfileDaoProvider)
+        .getActiveProfile();
+    expect(row?.githubUsername, 'sazar');
+    expect(row?.websiteUrl, 'https://example.com');
+  });
+
   test(
     'CreateGuestProfileUseCase rejects a blank username before writing',
     () async {

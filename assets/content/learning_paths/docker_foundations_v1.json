@@ -1,0 +1,189 @@
+[
+  {
+    "id": "docker-foundations-v1",
+    "language": "docker",
+    "titleEn": "Docker from scratch",
+    "titleEs": "Docker desde cero",
+    "descriptionEn": "Learn containers step by step, from your first `docker run` to custom images with volumes and networks.",
+    "descriptionEs": "Aprende contenedores paso a paso: de tu primer `docker run` a imágenes propias con volúmenes y redes.",
+    "tagEn": "Fundamentals",
+    "tagEs": "Fundamentos",
+    "lessons": [
+      {
+        "id": "docker-foundations-v1-step01",
+        "snippetId": "docker-basic-001",
+        "order": 1,
+        "titleEn": "Run your first container",
+        "titleEs": "Ejecuta tu primer contenedor"
+      },
+      {
+        "id": "docker-foundations-v1-step02",
+        "snippetId": "docker-basic-002",
+        "order": 2,
+        "titleEn": "Check versions and engine info",
+        "titleEs": "Consulta versiones e información del motor"
+      },
+      {
+        "id": "docker-foundations-v1-step03",
+        "snippetId": "docker-basic-003",
+        "order": 3,
+        "titleEn": "Run a command in a fresh container",
+        "titleEs": "Ejecuta un comando en un contenedor nuevo"
+      },
+      {
+        "id": "docker-foundations-v1-step04",
+        "snippetId": "docker-basic-004",
+        "order": 4,
+        "titleEn": "List images and containers",
+        "titleEs": "Lista imágenes y contenedores"
+      },
+      {
+        "id": "docker-foundations-v1-step05",
+        "snippetId": "docker-basic-005",
+        "order": 5,
+        "titleEn": "Run in the background with a name",
+        "titleEs": "Ejecuta en segundo plano con un nombre"
+      },
+      {
+        "id": "docker-foundations-v1-step06",
+        "snippetId": "docker-file-001",
+        "order": 6,
+        "titleEn": "Your first Dockerfile",
+        "titleEs": "Tu primer Dockerfile"
+      },
+      {
+        "id": "docker-foundations-v1-step07",
+        "snippetId": "docker-file-002",
+        "order": 7,
+        "titleEn": "Copy files with `WORKDIR` and `COPY`",
+        "titleEs": "Copia archivos con `WORKDIR` y `COPY`"
+      },
+      {
+        "id": "docker-foundations-v1-step08",
+        "snippetId": "docker-file-003",
+        "order": 8,
+        "titleEn": "Combine `ENTRYPOINT` and `CMD`",
+        "titleEs": "Combina `ENTRYPOINT` y `CMD`"
+      },
+      {
+        "id": "docker-foundations-v1-step09",
+        "snippetId": "docker-file-004",
+        "order": 9,
+        "titleEn": "Configure builds with `ARG` and `ENV`",
+        "titleEs": "Configura builds con `ARG` y `ENV`"
+      },
+      {
+        "id": "docker-foundations-v1-step10",
+        "snippetId": "docker-file-005",
+        "order": 10,
+        "titleEn": "Exclude files with `.dockerignore`",
+        "titleEs": "Excluye archivos con `.dockerignore`"
+      },
+      {
+        "id": "docker-foundations-v1-step11",
+        "snippetId": "docker-image-001",
+        "order": 11,
+        "titleEn": "Build an image from a Dockerfile",
+        "titleEs": "Construye una imagen desde un Dockerfile"
+      },
+      {
+        "id": "docker-foundations-v1-step12",
+        "snippetId": "docker-image-002",
+        "order": 12,
+        "titleEn": "Pull an image and inspect its metadata",
+        "titleEs": "Descarga una imagen e inspecciona sus metadatos"
+      },
+      {
+        "id": "docker-foundations-v1-step13",
+        "snippetId": "docker-image-003",
+        "order": 13,
+        "titleEn": "Read the layer history",
+        "titleEs": "Lee el historial de capas"
+      },
+      {
+        "id": "docker-foundations-v1-step14",
+        "snippetId": "docker-image-004",
+        "order": 14,
+        "titleEn": "Tag an image",
+        "titleEs": "Etiqueta una imagen"
+      },
+      {
+        "id": "docker-foundations-v1-step15",
+        "snippetId": "docker-cont-001",
+        "order": 15,
+        "titleEn": "Stop and start a container",
+        "titleEs": "Detén y arranca un contenedor"
+      },
+      {
+        "id": "docker-foundations-v1-step16",
+        "snippetId": "docker-cont-002",
+        "order": 16,
+        "titleEn": "Read container logs",
+        "titleEs": "Lee los logs del contenedor"
+      },
+      {
+        "id": "docker-foundations-v1-step17",
+        "snippetId": "docker-cont-003",
+        "order": 17,
+        "titleEn": "Run a command inside a container",
+        "titleEs": "Ejecuta un comando dentro del contenedor"
+      },
+      {
+        "id": "docker-foundations-v1-step18",
+        "snippetId": "docker-cont-004",
+        "order": 18,
+        "titleEn": "Inspect the state of a container",
+        "titleEs": "Inspecciona el estado de un contenedor"
+      },
+      {
+        "id": "docker-foundations-v1-step19",
+        "snippetId": "docker-cont-005",
+        "order": 19,
+        "titleEn": "Auto-remove containers with `--rm`",
+        "titleEs": "Autodestruye contenedores con `--rm`"
+      },
+      {
+        "id": "docker-foundations-v1-step20",
+        "snippetId": "docker-volume-001",
+        "order": 20,
+        "titleEn": "Create and mount a volume",
+        "titleEs": "Crea y monta un volumen"
+      },
+      {
+        "id": "docker-foundations-v1-step21",
+        "snippetId": "docker-volume-002",
+        "order": 21,
+        "titleEn": "Data survives the container",
+        "titleEs": "Los datos sobreviven al contenedor"
+      },
+      {
+        "id": "docker-foundations-v1-step22",
+        "snippetId": "docker-volume-003",
+        "order": 22,
+        "titleEn": "Mount a host folder",
+        "titleEs": "Monta una carpeta del host"
+      },
+      {
+        "id": "docker-foundations-v1-step23",
+        "snippetId": "docker-net-001",
+        "order": 23,
+        "titleEn": "Publish a container port",
+        "titleEs": "Publica un puerto del contenedor"
+      },
+      {
+        "id": "docker-foundations-v1-step24",
+        "snippetId": "docker-net-002",
+        "order": 24,
+        "titleEn": "Connect containers by name",
+        "titleEs": "Conecta contenedores por nombre"
+      },
+      {
+        "id": "docker-foundations-v1-step25",
+        "snippetId": "docker-net-003",
+        "order": 25,
+        "titleEn": "List and inspect networks",
+        "titleEs": "Lista e inspecciona redes"
+      }
+    ]
+  }
+]

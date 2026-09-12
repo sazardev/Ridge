@@ -1,0 +1,245 @@
+[
+  {
+    "id": "go-rest-http-v1",
+    "language": "go",
+    "titleEn": "Go: REST & HTTP",
+    "titleEs": "Go: REST y HTTP",
+    "descriptionEn": "Build a Tasks REST API with the standard library: handlers, CRUD, middleware, an HTTP client, tests, and SQLite.",
+    "descriptionEs": "Construye una API REST de tareas con la biblioteca estándar: handlers, CRUD, middleware, cliente HTTP, tests y SQLite.",
+    "lessons": [
+      {
+        "id": "go-rest-http-v1-step01",
+        "snippetId": "go-http-001",
+        "order": 1,
+        "titleEn": "A minimal server with `http.ServeMux`",
+        "titleEs": "Un servidor mínimo con `http.ServeMux`"
+      },
+      {
+        "id": "go-rest-http-v1-step02",
+        "snippetId": "go-http-002",
+        "order": 2,
+        "titleEn": "Types that satisfy `http.Handler`",
+        "titleEs": "Tipos que cumplen `http.Handler`"
+      },
+      {
+        "id": "go-rest-http-v1-step03",
+        "snippetId": "go-http-003",
+        "order": 3,
+        "titleEn": "Method patterns and wildcards in `ServeMux`",
+        "titleEs": "Patrones con método y comodines en `ServeMux`"
+      },
+      {
+        "id": "go-rest-http-v1-step04",
+        "snippetId": "go-http-004",
+        "order": 4,
+        "titleEn": "Reading method, query, and headers",
+        "titleEs": "Leer método, query y cabeceras"
+      },
+      {
+        "id": "go-rest-http-v1-step05",
+        "snippetId": "go-http-005",
+        "order": 5,
+        "titleEn": "Decode JSON safely with limits",
+        "titleEs": "Decodificar JSON de forma segura"
+      },
+      {
+        "id": "go-rest-http-v1-step06",
+        "snippetId": "go-http-006",
+        "order": 6,
+        "titleEn": "Write JSON with the right status",
+        "titleEs": "Responder JSON con el estado correcto"
+      },
+      {
+        "id": "go-rest-http-v1-step07",
+        "snippetId": "go-http-007",
+        "order": 7,
+        "titleEn": "Embedded models, DTOs, and optional fields",
+        "titleEs": "Modelos embebidos, DTOs y campos opcionales"
+      },
+      {
+        "id": "go-rest-http-v1-step08",
+        "snippetId": "go-http-008",
+        "order": 8,
+        "titleEn": "An in-memory store behind an interface",
+        "titleEs": "Un store en memoria detrás de una interfaz"
+      },
+      {
+        "id": "go-rest-http-v1-step09",
+        "snippetId": "go-http-009",
+        "order": 9,
+        "titleEn": "Pagination with a generic `Page[T]`",
+        "titleEs": "Paginación con un `Page[T]` genérico"
+      },
+      {
+        "id": "go-rest-http-v1-step10",
+        "snippetId": "go-http-010",
+        "order": 10,
+        "titleEn": "Updating and deleting store records",
+        "titleEs": "Actualizar y borrar registros del store"
+      },
+      {
+        "id": "go-rest-http-v1-step11",
+        "snippetId": "go-http-011",
+        "order": 11,
+        "titleEn": "Map domain errors to HTTP statuses",
+        "titleEs": "Mapear errores de dominio a status HTTP"
+      },
+      {
+        "id": "go-rest-http-v1-step12",
+        "snippetId": "go-http-012",
+        "order": 12,
+        "titleEn": "The `createTask` handler",
+        "titleEs": "El handler `createTask`"
+      },
+      {
+        "id": "go-rest-http-v1-step13",
+        "snippetId": "go-http-013",
+        "order": 13,
+        "titleEn": "Handlers for reading one task or a page",
+        "titleEs": "Handlers para leer una tarea o una página"
+      },
+      {
+        "id": "go-rest-http-v1-step14",
+        "snippetId": "go-http-014",
+        "order": 14,
+        "titleEn": "Updating and deleting over HTTP",
+        "titleEs": "Actualizar y borrar por HTTP"
+      },
+      {
+        "id": "go-rest-http-v1-step15",
+        "snippetId": "go-http-015",
+        "order": 15,
+        "titleEn": "Middleware: one signature, many wrappers",
+        "titleEs": "Middleware: una firma, muchos envoltorios"
+      },
+      {
+        "id": "go-rest-http-v1-step16",
+        "snippetId": "go-http-016",
+        "order": 16,
+        "titleEn": "Recover from panics in middleware",
+        "titleEs": "Recuperarse de panics en middleware"
+      },
+      {
+        "id": "go-rest-http-v1-step17",
+        "snippetId": "go-http-017",
+        "order": 17,
+        "titleEn": "Timeouts and graceful shutdown",
+        "titleEs": "Timeouts y apagado ordenado"
+      },
+      {
+        "id": "go-rest-http-v1-step18",
+        "snippetId": "go-http-018",
+        "order": 18,
+        "titleEn": "Wiring the whole router",
+        "titleEs": "Ensamblando el router completo"
+      },
+      {
+        "id": "go-rest-http-v1-step19",
+        "snippetId": "go-client-001",
+        "order": 19,
+        "titleEn": "An HTTP `GET` bounded by timeout and context",
+        "titleEs": "Un `GET` HTTP acotado por timeout y contexto"
+      },
+      {
+        "id": "go-rest-http-v1-step20",
+        "snippetId": "go-client-002",
+        "order": 20,
+        "titleEn": "POST JSON with `bytes.NewReader`",
+        "titleEs": "POST con JSON usando `bytes.NewReader`"
+      },
+      {
+        "id": "go-rest-http-v1-step21",
+        "snippetId": "go-client-003",
+        "order": 21,
+        "titleEn": "Turn an HTTP error body into a Go `error`",
+        "titleEs": "Convertir el cuerpo de un error HTTP en un `error` de Go"
+      },
+      {
+        "id": "go-rest-http-v1-step22",
+        "snippetId": "go-client-004",
+        "order": 22,
+        "titleEn": "Tuning the `http.Transport` idle pool",
+        "titleEs": "Ajustar el pool idle de `http.Transport`"
+      },
+      {
+        "id": "go-rest-http-v1-step23",
+        "snippetId": "go-client-005",
+        "order": 23,
+        "titleEn": "Retry transient failures with exponential backoff",
+        "titleEs": "Reintentar fallos transitorios con backoff exponencial"
+      },
+      {
+        "id": "go-rest-http-v1-step24",
+        "snippetId": "go-modern-005",
+        "order": 24,
+        "titleEn": "Report leaked goroutines with pprof (Go 1.27)",
+        "titleEs": "Reportar goroutines con fugas usando pprof (Go 1.27)"
+      },
+      {
+        "id": "go-rest-http-v1-step25",
+        "snippetId": "go-httptest-001",
+        "order": 25,
+        "titleEn": "Test a handler without a real server",
+        "titleEs": "Probar un handler sin servidor real"
+      },
+      {
+        "id": "go-rest-http-v1-step26",
+        "snippetId": "go-httptest-002",
+        "order": 26,
+        "titleEn": "A real `httptest` server on a random port",
+        "titleEs": "Un servidor `httptest` real en un puerto aleatorio"
+      },
+      {
+        "id": "go-rest-http-v1-step27",
+        "snippetId": "go-httptest-003",
+        "order": 27,
+        "titleEn": "Table-driven endpoint tests against the router",
+        "titleEs": "Tests table-driven de endpoints contra el router"
+      },
+      {
+        "id": "go-rest-http-v1-step28",
+        "snippetId": "go-sqlite-001",
+        "order": 28,
+        "titleEn": "`sql.Open` prepares a pool, it does not connect",
+        "titleEs": "`sql.Open` prepara el pool, no conecta"
+      },
+      {
+        "id": "go-rest-http-v1-step29",
+        "snippetId": "go-sqlite-002",
+        "order": 29,
+        "titleEn": "Schema and inserts through `ExecContext`",
+        "titleEs": "Esquema e inserts con `ExecContext`"
+      },
+      {
+        "id": "go-rest-http-v1-step30",
+        "snippetId": "go-sqlite-003",
+        "order": 30,
+        "titleEn": "Reading one row with `QueryRowContext`",
+        "titleEs": "Leer una fila con `QueryRowContext`"
+      },
+      {
+        "id": "go-rest-http-v1-step31",
+        "snippetId": "go-sqlite-004",
+        "order": 31,
+        "titleEn": "Iterate a result set with `rows.Next()`",
+        "titleEs": "Iterar un result set con `rows.Next()`"
+      },
+      {
+        "id": "go-rest-http-v1-step32",
+        "snippetId": "go-sqlite-005",
+        "order": 32,
+        "titleEn": "A transaction with a guaranteed rollback",
+        "titleEs": "Una transacción con rollback garantizado"
+      },
+      {
+        "id": "go-rest-http-v1-step33",
+        "snippetId": "go-sqlite-006",
+        "order": 33,
+        "titleEn": "Swap the store without touching the router",
+        "titleEs": "Cambiar el store sin tocar el router"
+      }
+    ],
+    "tagEn": "Backend",
+    "tagEs": "Backend"
+  }
+]

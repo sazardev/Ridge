@@ -94,6 +94,373 @@ never exits. The pattern used for `go-tui-notes-v1`:
   the ordering — it is what caught nine forward references (styles/widgets
   used before their own lesson) in the first `go-tui-notes-v1` pass.
 
+## New C code: two compilers, sanitizers, and differential fuzzing
+
+The bar for `c_v1.json` is the strictest in the repo because C has no
+runtime safety net:
+
+- Compile every snippet with **both** `gcc` and `clang`:
+  `-std=c17 -Wall -Wextra -Werror -pedantic`, plus
+  `-fsanitize=address,undefined` and (`ASAN_OPTIONS=detect_leaks=1`) when
+  running.
+- Snippets containing `int main` compile as-is; statement fragments get
+  wrapped in a generated `int main(void) { ... return 0; }` with the
+  standard includes; function-definition snippets compile as a TU with a
+  driver. The catalog `code` must be a **verbatim substring** of the
+  compiled TU (assert it, never hand-copy).
+- Definitions-only algorithm snippets must be *driven* and *fuzzed*, not
+  just compiled: sorts against libc `qsort` (including size 0/1,
+  duplicates, already-sorted, reverse-sorted), searches against each other
+  (agreement on presence plus valid, in-range, matching indices), BFS/DFS
+  reachability against a flood fill (disconnected graphs, isolated start),
+  and Dijkstra against an independently written Bellman-Ford with
+  unreachable vertices. `INT_MAX` arithmetic needs an explicit overflow
+  guard (`distances[current] <= INT_MAX - weight`) or UBSan fails on legal
+  weights.
+- Allocations inside a snippet (`malloc` in merge sort) need the same NULL
+  check the memory lessons teach; on failure return an error code instead
+  of writing through the pointer.
+- Keep `code` ASCII-only — `key_layout_map_test.dart` maps every character
+  to a physical US-QWERTY key.
+
+## New C++ code: two compilers, generated harnesses, differential fuzzing
+
+`cpp_v1.json` follows C's real-execution bar, against C++20:
+
+- Compile every snippet with **both** `g++` and `clang++`:
+  `-std=c++20 -Wall -Wextra -Werror -pthread`. Full programs compile
+  as-is; statement fragments are wrapped in a generated `int main() { ... }`
+  with a broad standard-header set; definitions-only snippets get a
+  per-entry driver. The catalog `code` must be a **verbatim substring** of
+  the compiled TU (assert it, never hand-copy).
+- Drive and fuzz the 12 algorithm snippets: all six sorts against
+  `std::sort` (empty, one element, duplicates, negatives, already sorted,
+  reverse sorted, all equal), linear search against `std::find`, binary
+  search on sorted input only (multiples, absent target, empty), BFS/DFS
+  against an independent traversal (disconnected graphs, self-loops), and
+  the O(V^2) Dijkstra against a priority-queue or Bellman-Ford reference
+  with unreachable nodes (`-1` sentinel).
+- The adversarial pass additionally re-ran the whole catalog under
+  ASan/UBSan (the thread lesson under TSan): clean. RAII snippets that own
+  a raw resource must be non-copyable
+  (`Buffer(const Buffer&) = delete; Buffer& operator=(const Buffer&) = delete;`)
+  or the lesson ships a double-free trap, and `find_if` results are checked
+  against `end()` before being dereferenced.
+- Keep `code` ASCII-only — `key_layout_map_test.dart` maps every character
+  to a physical US-QWERTY key.
+
+## New Crystal code: run every snippet in a real compiler
+
+The equivalent of `go run` for a Crystal snippet is executing it with a
+real compiler — a disposable container works well and needs no host
+install:
+
+```sh
+podman run --rm -v <scratch>:/work:Z -w /work \
+  docker.io/crystallang/crystal:latest crystal run <file>.cr
+```
+
+- Foundations snippets are complete runnable programs (top-level code
+  runs; there is no `main`), so check the printed output, not just a
+  clean compile.
+- Definitions-only snippets (the `crystal-algo-*` course) must be
+  *driven*: concatenate the snippet with a throwaway driver that calls
+  each method with edge cases (empty array, one element, all-equal,
+  already/never sorted, target absent) and compares against an
+  independent reference (`Array#sort`, a Bellman-Ford for Dijkstra, a
+  flood-fill for BFS/DFS). The algorithms course is cumulative: prepend
+  the lesson-9 `Graph` class when driving BFS/DFS.
+- Crystal gotchas that have bitten real verification: `/` on two ints
+  returns `Float64` (`7 / 2 == 3.5`), so integer division must use `//`;
+  there is no `block_given?` and no nilable block type (a method either
+  requires a block or captures `&` with an explicit non-nilable
+  signature); `String#to_sym` doesn't exist (symbols are literals);
+  `String#to_i` raises on invalid input (`to_i?` returns `nil`); `Set`
+  and `Deque` live in the prelude (no `require` needed); `struct` values
+  copy on assignment while classes are references; and `Box` collides
+  with the stdlib's `Box(T)`, so pick another class name.
+- Keep `code` ASCII-only — `key_layout_map_test.dart` maps every character
+  to a physical US-QWERTY key.
+
+## New CSS code: validate with two independent parsers
+
+CSS has no compiler to run, so the bar for `css_v1.json` is two real
+parsers that must both accept every snippet:
+
+- `npx --yes csstree-validator <file-or-dir>` — validates syntax AND each
+  property/value against the spec data (it catches unknown properties and
+  invalid values, not just unbalanced braces). Exit 0 with no output means
+  clean. Sanity-check the validator itself once against a file with a
+  deliberate error (`colour: red`, `font-size: banana`) before trusting a
+  silent pass.
+- `lightningcss` (Parcel/Vite's Rust engine) as the second, independent
+  parser: `npm install lightningcss` in a scratch dir and call
+  `transform({ filename, code, minify: true })` for every snippet — a
+  throw means invalid CSS.
+
+Keep the baseline modern but real: `@layer`, `:is()`/`:where()`,
+`hsl(12 88% 60% / 0.15)`, `clamp()`, `inset`, and `rotate(1turn)` are all
+valid in current engines and were used in the catalog; both validators
+accepted them. A disagreement between engines is the signal to check the
+construct, not to silently drop it.
+
+- Keep `code` ASCII-only and comment-free — `key_layout_map_test.dart`
+  maps every character to a physical US-QWERTY key, and the catalog's
+  "pure code, zero comments" rule applies here too.
+- Snippets are standalone rule sets (`selector { ... }`) so they parse as
+  a complete stylesheet on their own; never wrap them in HTML, and use
+  two-space indentation like the rest of the catalog.
+
+## New Swift code: Swift 6.2 in a container, with differential fuzzing
+
+`swift_v1.json` follows the same real-execution bar as C/C++, against
+Swift 6.2 on Linux:
+
+- Compile and run every snippet in the official container:
+  `podman run --rm -v <dir>:/work -w /work docker.io/library/swift:6.2
+  bash -c 'swiftc -warnings-as-errors -o /tmp/bin main.swift && /tmp/bin'`.
+  Top-level statements are only legal in a file named `main.swift`, so
+  scripts and generated drivers both go there. `-warnings-as-errors`
+  catches Swift's constant-folding diagnostics (a `switch` over a literal
+  tuple warns "will never be executed"), so keep `switch` subjects in a
+  `var`/parameter when the warning would fire.
+- Definitions-only snippets (the 12 algorithms) get a per-entry driver
+  appended to the TU; the catalog `code` must stay a verbatim substring
+  of the compiled file. BFS/DFS reference the `Graph` type declared by
+  the previous lesson — prepend that snippet to the scratch TU (the same
+  forward reference `rust-algorithms-v1`/`typescript-algorithms-v1`
+  already allow).
+- Fuzz the algorithms differentially: all six sorts against `sorted()`,
+  linear search against `firstIndex(of:)`, binary search validated as a
+  real matching index (with duplicates any valid index is correct —
+  comparing to `firstIndex` produces false failures), BFS/DFS
+  reachability plus BFS level order against an independent flood-fill,
+  and the O(V^2) Dijkstra against an independently written Bellman-Ford
+  (unreachable nodes stay absent).
+- Trap-proof the ranges: `1...times` and `1..<count` crash on
+  empty/zero inputs, so every sort guards `count > 1` and
+  `retry(times: 0)` carries an explicit `guard times > 0`. Dijkstra's
+  `Int.max` sentinel needs `guard best <= Int.max - edge.weight` before
+  adding, or legal near-max weights crash instead of being skipped.
+- Keep `code` ASCII-only — `key_layout_map_test.dart` maps every
+  character to a physical US-QWERTY key.
+
+## New C# code: .NET SDK 10, nullable, warnings-as-errors, differential fuzzing
+
+`csharp_v1.json` is verified against real Roslyn (.NET SDK 10) in a
+container:
+
+- `podman run mcr.microsoft.com/dotnet/sdk:10.0` (the image is already
+  pulled). A scratch project with `ImplicitUsings=disable`,
+  `Nullable=enable`, `TreatWarningsAsErrors=true`, `LangVersion=latest`,
+  `InvariantGlobalization=true` and `EnableNETAnalyzers=false` — the .NET
+  *linter*'s design suggestions (e.g. CA1852 "seal this internal type")
+  conflict with teaching examples that deliberately show inheritance; the
+  bar is the compiler's own warnings, same as the other languages. A
+  `NuGet.config` with `<clear />` sources keeps restore offline.
+- Full programs (top-level statements or a `Main`) compile as `Program.cs`
+  as-is. Definitions-only snippets (the algorithms) get a scratch
+  `Driver.cs` with the `Main`; snippets that reference a type taught in an
+  earlier lesson of the same course (BFS/DFS need `Graph` from the
+  adjacency-list lesson) get that declaration as a `Support.cs` — the
+  catalog `code` itself stays the fragment, verbatim.
+- Drive and fuzz the 12 algorithm snippets independently: sorts vs
+  `Array.Sort` (empty, one element, duplicates, negatives, already sorted,
+  reverse sorted, all equal), searches against `Array.IndexOf`, BFS/DFS
+  reachability against an independent flood fill (disconnected graphs,
+  isolated start), and Dijkstra against an independent Bellman-Ford
+  (unreachable nodes must be absent from the returned map).
+- Keep the algorithms course free of constructs only taught in the
+  advanced route: no `record`, no nullable annotations, no `? :` ternary.
+  An adversarial review flagged exactly this in the first pass — the
+  catalog now uses a small `class Edge`, `ContainsKey` lookups, and
+  `if`/`else`. C# also cannot overload *local* functions, so the
+  overloading lesson wraps its methods in a `static class`.
+- Keep `code` ASCII-only — `key_layout_map_test.dart` maps every character
+  to a physical US-QWERTY key.
+
+## New Kotlin code: `kotlinc -Werror` + driven/fuzzed harnesses
+
+`kotlin_v1.json` (foundations + algorithms + advanced, coroutines
+included) was verified with the official Kotlin compiler as a portable
+unzip — no container needed:
+
+- Download `kotlin-compiler-<version>.zip` from the JetBrains GitHub
+  release into a scratch directory and put its `bin/` on `PATH`
+  (Kotlin 2.4.20 / JRE 17 here). For the advanced course's coroutine
+  snippets also fetch `kotlinx-coroutines-core-jvm` from Maven Central and
+  pass it with `-cp` both to `kotlinc` and to `java`.
+- The catalog stores fragments: `code` never contains `import`,
+  `package`, or `fun main`, so each entry gets a `run/<id>/Main.kt`
+  harness that must contain the catalog `code` byte-for-byte as a
+  contiguous substring, compile with `-Werror`, and print a deterministic
+  expected output. Statement fragments go inside `fun main() { ... }`
+  (unindented, so the substring stays verbatim); declaration snippets get
+  a driver that exercises the API; coroutine snippets add
+  `import kotlinx.coroutines.*` (plus `kotlinx.coroutines.flow.*` for
+  `Flow`) and run inside `runBlocking`.
+- Compile `-include-runtime` and run `java -jar` for non-coroutine
+  entries; for coroutines link the jar on both sides and launch `MainKt`.
+- Fuzz the 12 algorithm snippets differentially: the six sorts against
+  `IntArray.sortedArray()` (empty, single, duplicates, all-equal,
+  negatives, sorted, reverse, `Int.MIN/MAX`), the searches against an
+  independent scan (`Int?` null on absent/empty), BFS/DFS against
+  independent traversals (disconnected graphs, isolated/absent start),
+  and the `Long`-distance Dijkstra against an independent Bellman-Ford
+  (unreachable nodes absent, zero weights, huge sums). Do a mutation pass
+  too: the adversarial review of this catalog injected 11 deliberate bugs
+  and confirmed the fuzz caught all of them.
+- `kotlin-null-002` is the only snippet allowed to use `!!` (that is its
+  lesson); keep every `code` ASCII-only — `key_layout_map_test.dart` maps
+  every character to a physical US-QWERTY key.
+
+## New Dart code: `dart format` + `dart analyze` + `dart run`, algorithms fuzzed
+
+Dart ships with the Flutter SDK, so `dart_v1.json`'s verification needs no
+container — the bundled Dart SDK 3.13.3 is the compiler:
+
+- Put the harnesses in a scratch package (`pubspec.yaml` with
+  `environment: sdk: ^3.13.0`) so `dart analyze .` resolves. Statement
+  fragments are wrapped in a throwaway `void main() { ... }` (or
+  `Future<void> main() async { ... }` when they await); definitions-only
+  snippets get a per-entry driver. After formatting, the wrapper is removed
+  and the catalog `code` must be byte-identical to the dedented,
+  `dart format`-clean fragment.
+- `dart format --output=none --set-exit-if-changed .` must be clean and
+  `dart analyze .` must print `No issues found!` before `dart run` is
+  trusted. Dart 3.13's formatter is the tall style — verify the fragment,
+  never guess the layout.
+- The catalog stores the fragment, not the harness: only `dart-vars-001`
+  carries `void main()`, and imports appear only where they are the topic
+  (`dart-mod-001`'s `dart:math`) or required for correctness
+  (`dart-adv-conc-001`'s `dart:isolate`, the `Completer`/`StreamController`
+  lessons' `dart:async`).
+- Drive and fuzz the 12 algorithm snippets differentially: the six sorts
+  return a new list (never mutate the input) and are checked against
+  `List.sort` on empty, single, duplicate, negative, sorted, and reverse
+  inputs; searches against an independent linear scan (found -> matching
+  in-range index, absent -> `-1`); BFS/DFS against independent traversals
+  (disconnected graphs, isolated start, deterministic order); and the
+  `O(V^2)` Dijkstra against an independent Bellman-Ford with unreachable
+  vertices absent.
+- Async snippets must be deterministic: fixed `Future.delayed` delays
+  (`10ms`), no `Random`, no wall-clock output; run each one several times
+  to catch ordering races. `dart:core` re-exports `Future`/`Stream` but not
+  `Completer`/`StreamController` — those need their own `dart:async`
+  import. `late` is verified as a runtime `LateInitializationError`, never
+  described as a compile-time guarantee.
+- Keep `code` ASCII-only — `key_layout_map_test.dart` maps every character
+  to a physical US-QWERTY key.
+
+## New PHP code: `php -l` + real 8.4 execution in a container
+
+PHP has no compilation step, so the bar for `php_v1.json` is lint plus a
+real execution on the official image (PHP 8.4.25, `pdo_sqlite` included):
+
+```sh
+podman run --rm -v <scratch>:/work:Z -w /work docker.io/library/php:8.4-cli \
+  bash -c 'for f in *.php; do php -l "$f" && php "$f"; done'
+```
+
+- Every catalog `code` fragment is written as a `.php` file with `<?php`
+  prepended (only `php-vars-001` carries the tag in the catalog); the
+  catalog `code` must be a verbatim substring of that file.
+- Web snippets are not standalone: drive them with a setup block that
+  pre-fills `$_GET`/`$_POST`/`$_COOKIE` and points `session_save_path()`
+  at a scratch dir. The prose must say PHP fills those superglobals in a
+  real request, never that the snippet sets them.
+- The algorithms course is cumulative: prepend the `Graph` class from
+  `php-algo-009` when driving BFS/DFS/Dijkstra, exactly like the
+  TypeScript/Crystal courses. Fuzz the six sorts against `sort()` (empty,
+  single, duplicates, sorted, reversed, 500 random arrays), both searches
+  against `array_search(..., true)`, BFS/DFS against independent
+  traversals (disconnected components, isolated start), and the
+  `O(V^2)` Dijkstra against an independently written Bellman-Ford
+  (unreachable targets return `null`).
+- PHP gotchas that have bitten real verification: `#` opens a comment but
+  `#[` opens an attribute; a heredoc terminator must sit on its own line
+  (indentation allowed since 7.3); `$this` and `${...}` are lexed as
+  variables; `never` + `exit` really terminates the process;
+  `password_hash` emits `$2y$` hashes whose `$` must never be interpolated
+  into a double-quoted string; PDO's `sqlite::memory:` keeps each run
+  self-contained.
+- Keep `code` ASCII-only and comment-free — `key_layout_map_test.dart`
+  maps every character to a physical US-QWERTY key and the catalog's
+  "pure code, zero comments" rule applies (the type shapes a docblock
+  would carry are explained in the lesson prose instead).
+
+## New Python/Django code: staged reference project, real server checks
+
+For the Django courses (`python-django-foundations-v1`,
+`python-django-orm-v1`, `python-django-rest-v1`; their snippets live in
+`python_v1.json`), the equivalent of `go run` is a real Django 5.2 LTS +
+DRF 3.16 project that is built lesson by lesson and actually executed:
+
+- Pin the stack in a disposable venv (`uv venv --python 3.12`, then
+  `uv pip install "Django~=5.2.0" "djangorestframework~=3.16.0"`); no
+  container is needed for SQLite. Verify with `manage.py check`,
+  `makemigrations --check --dry-run`, `migrate`, and `manage.py test`.
+- Author the course as ordered stages: each stage writes only the files
+  that lesson changes, then runs the checks above; every snippet must be
+  a marker-delimited verbatim slice of a file that ran at that stage
+  (`# snip:<id>:start`/`:end` in Python, `{# snip:... #}` in templates)
+  or a terminal command that was actually executed. Keep the generated
+  migration files as the migration-lesson snippets.
+- Exercise behavior, not just the system check: create data through the
+  ORM, hit endpoints with `rest_framework.test.APIClient` (token
+  credentials or `force_authenticate`), assert status codes/payloads,
+  and drive data migrations forwards *and* backwards
+  (`migrate bookmarks <previous>` and forward again).
+- Model changes need `makemigrations` shown in the lesson or named in
+  its prose. Adding `auto_now`/`auto_now_add` to an existing table
+  prompts interactively for a one-off default, so introduce timestamp
+  fields in the initial model or give new fields a default.
+- Widening a lesson's marker to include the file's imports the first
+  time a file appears, and labelling fragments (`# <path>`,
+  `# inside class X`), keeps snippets runnable on their own; label
+  mixed-source snippets (`# manage.py shell` vs `# bookmarks/models.py`)
+  so the learner knows where each part goes.
+- Keep `code` ASCII-only — `key_layout_map_test.dart` maps every
+  character to a physical US-QWERTY key.
+
+## New Git code: a real repository per snippet, deterministic, output asserted
+
+Git snippets are command lines (not programs), so the equivalent of
+`go run` is executing each one with the real `git` binary (2.55 here)
+against a disposable repository:
+
+- One fresh repo per snippet in a scratch dir, with an **isolated `HOME`**
+  (so `git config --global` lessons never touch the developer's config),
+  `GIT_CONFIG_NOSYSTEM=1`, `GIT_TERMINAL_PROMPT=0`, `GIT_PAGER=cat`, and
+  fixed `GIT_AUTHOR_*`/`GIT_COMMITTER_*` name, email and date — commits
+  then hash deterministically across runs.
+- Each case declares its own setup (the files, commits, branches and
+  remote the command needs), runs the exact catalog `code` **read from the
+  final JSON** (a verbatim guarantee; never retype it in the harness), and
+  asserts both output (`stdout+stderr` substrings/regexes) and resulting
+  state (`git status --short`, `git log --format=...`, `git rev-parse`,
+  `test -f ...`).
+- Cover the failure path when the failure is the lesson: a conflicting
+  `git merge` must exit 1 and leave `.git/MERGE_HEAD`; `git bisect run`
+  must finish with the "first bad commit" line (and `reset` to close the
+  session); a hook must abort the commit when it exits non-zero.
+- Remote lessons need a bare repo (`git init --bare -b main
+  ../remote.git`) plus a second clone acting as the teammate;
+  `--force-with-lease` is verified by comparing the remote ref with the
+  local one after the push, not by the message alone.
+- Every command that would open an editor (`rebase -i`, `revert`, merge
+  commit messages) is scripted with `GIT_SEQUENCE_EDITOR=:`/`GIT_EDITOR=:`
+  or `--no-edit`, so the harness never blocks. Preview commands must carry
+  the same flags as the real one (`git clean -nd` before `git clean -fd`),
+  or the preview hides whole directories.
+- Keep `code` ASCII-only and command-only — `key_layout_map_test.dart`
+  maps every character to a physical US-QWERTY key.
+- Run the whole harness again against the **final merged asset** (not the
+  pre-prose draft) and take a fresh adversarial pass; for Git this caught a
+  dry-run that did not preview what the real command deletes, a `bisect`
+  lesson that never reached a verdict, and a `--fixup` snippet missing its
+  own `git add`.
+
 ## Large batch authoring/rewrites (10+ entries): delegate, then validate twice
 
 When rewriting or extending a large slice of the catalog (e.g. adding

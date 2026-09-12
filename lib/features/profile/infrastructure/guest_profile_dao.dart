@@ -36,7 +36,7 @@ class GuestProfileDao extends DatabaseAccessor<AppDatabase>
   }
 
   /// Overwrites the row identified by [id]'s self-expression fields —
-  /// always all six together, since the editor is a single form; a
+  /// always all eight together, since the editor is a single form; a
   /// `null` explicitly clears that field. [favoriteLanguages] is already
   /// comma-joined by the caller (see `ProfileMapper`'s CSV helpers).
   Future<void> updateCustomization({
@@ -47,6 +47,8 @@ class GuestProfileDao extends DatabaseAccessor<AppDatabase>
     required String? keyboardModel,
     required String? favoriteQuote,
     required String? favoriteProgrammer,
+    required String? githubUsername,
+    required String? websiteUrl,
   }) {
     return (update(guestProfiles)..where((row) => row.id.equals(id))).write(
       GuestProfilesCompanion(
@@ -56,6 +58,8 @@ class GuestProfileDao extends DatabaseAccessor<AppDatabase>
         keyboardModel: Value(keyboardModel),
         favoriteQuote: Value(favoriteQuote),
         favoriteProgrammer: Value(favoriteProgrammer),
+        githubUsername: Value(githubUsername),
+        websiteUrl: Value(websiteUrl),
       ),
     );
   }

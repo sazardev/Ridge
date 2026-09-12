@@ -515,7 +515,7 @@ final class ActiveProfileControllerProvider
 }
 
 String _$activeProfileControllerHash() =>
-    r'f7ed8b7272a95a4ac2c1653f5a1fa9cdc58420db';
+    r'c8813a5377e5a8f6725d84b9301f3c437412faab';
 
 /// Exposes the current [GuestProfile] (or `null` before one exists) and
 /// the mutations the UI can request.

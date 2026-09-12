@@ -47,13 +47,18 @@ ARCHITECTURE_LAYER_CATEGORIES = {
     "tuiStyling",
     "tuiComponents",
     "tuiAdapter",
-    # Mirrors `_algorithmTopicCategories` — topic categories for the
-    # go-algorithms-v1 / rust-algorithms-v1 Learning Routes. Individual
-    # snippets DO carry a real difficulty here, but the category itself
-    # gets the same looser total-count bar as the architecture-layer ones.
+    # Mirrors `_topicCategories` — topic categories for the
+    # go-algorithms-v1 / rust-algorithms-v1 Learning Routes, plus the
+    # HTTP/SQL topic categories of go-rest-http-v1. Individual snippets
+    # DO carry a real difficulty here, but the category itself gets the
+    # same looser total-count bar as the architecture-layer ones.
     "searchingAlgorithms",
     "sortingAlgorithms",
     "graphAlgorithms",
+    "httpServers",
+    "httpClients",
+    "httpTesting",
+    "sqlPersistence",
 }
 
 # Languages whose catalog exists only to compose a Learning Path (never a
@@ -71,6 +76,19 @@ COURSE_ONLY_LANGUAGES = {
     "javascript",
     "typescript",
     "haskell",
+    "c",
+    "cpp",
+    "java",
+    "crystal",
+    "dart",
+    "css",
+    "csharp",
+    "swift",
+    "kotlin",
+    "php",
+    "git",
+    "linux",
+    "docker",
 }
 
 

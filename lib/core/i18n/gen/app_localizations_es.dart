@@ -120,7 +120,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get profileCustomizationInvalid =>
-      'No se pudo guardar — un campo es demasiado largo';
+      'No se pudo guardar — algún campo no es válido';
 
   @override
   String get profileSearchLanguageHint => 'Buscar lenguajes…';
@@ -131,6 +131,24 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get profileLanguageShowMore => 'Más…';
+
+  @override
+  String get profileLinksTitle => 'Enlaces';
+
+  @override
+  String get profileGithubLabel => 'GitHub';
+
+  @override
+  String get profileGithubHint => 'Usuario o URL del perfil';
+
+  @override
+  String get profileWebsiteLabel => 'Página web personal';
+
+  @override
+  String get profileWebsiteHint => 'ejemplo.com';
+
+  @override
+  String get profileOpenLinkAction => 'Abrir en el navegador';
 
   @override
   String get profileDeviceTitle => 'Dispositivo';
@@ -806,6 +824,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categoryTuiAdapter => 'Adaptador TUI';
 
   @override
+  String get categoryHttpServers => 'Servidor HTTP';
+
+  @override
+  String get categoryHttpClients => 'Cliente HTTP';
+
+  @override
+  String get categoryHttpTesting => 'Tests HTTP';
+
+  @override
+  String get categorySqlPersistence => 'Persistencia SQL';
+
+  @override
   String get categoryShellCommands => 'Comandos de shell';
 
   @override
@@ -866,6 +896,301 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categoryModules => 'Módulos';
 
   @override
+  String get categoryArraysAndStrings => 'Arreglos y strings';
+
+  @override
+  String get categoryMemoryManagement => 'Gestión de memoria';
+
+  @override
+  String get categoryPreprocessor => 'Preprocesador';
+
+  @override
+  String get categoryFileIO => 'Archivos (I/O)';
+
+  @override
+  String get categoryTemplates => 'Plantillas';
+
+  @override
+  String get categoryStlContainers => 'Contenedores STL';
+
+  @override
+  String get categoryBlocksAndProcs => 'Bloques y procs';
+
+  @override
+  String get categoryCollections => 'Colecciones';
+
+  @override
+  String get categoryNilSafety => 'Seguridad ante nil';
+
+  @override
+  String get categoryCssSelectors => 'Selectores';
+
+  @override
+  String get categoryCssBoxModel => 'Modelo de caja';
+
+  @override
+  String get categoryCssColorsAndTypography => 'Color y tipografía';
+
+  @override
+  String get categoryCssLayout => 'Layout';
+
+  @override
+  String get categoryCssPositioning => 'Posicionamiento';
+
+  @override
+  String get categoryCssCustomProperties => 'Propiedades personalizadas';
+
+  @override
+  String get categoryCssResponsive => 'Diseño adaptable';
+
+  @override
+  String get categoryCssTransitionsAndAnimations =>
+      'Transiciones y animaciones';
+
+  @override
+  String get categoryPatternMatching => 'Coincidencia de patrones';
+
+  @override
+  String get categoryDelegatesAndEvents => 'Delegados y eventos';
+
+  @override
+  String get categoryLinq => 'LINQ';
+
+  @override
+  String get categoryAsyncProgramming => 'Async y await';
+
+  @override
+  String get categoryOptionals => 'Opcionales';
+
+  @override
+  String get categoryClosures => 'Closures';
+
+  @override
+  String get categoryEnumsAndPatternMatching => 'Enums y patrones';
+
+  @override
+  String get categoryCodable => 'Codable y JSON';
+
+  @override
+  String get categoryPropertyWrappers => 'Property wrappers';
+
+  @override
+  String get categoryNullSafety => 'Seguridad frente a nulos';
+
+  @override
+  String get categoryDataClasses => 'Clases de datos';
+
+  @override
+  String get categoryLambdas => 'Lambdas';
+
+  @override
+  String get categoryExtensions => 'Funciones de extensión';
+
+  @override
+  String get categoryCoroutines => 'Corrutinas';
+
+  @override
+  String get categoryDjangoProject => 'Estructura del proyecto';
+
+  @override
+  String get categoryDjangoModels => 'Modelos';
+
+  @override
+  String get categoryDjangoViews => 'Vistas y URLs';
+
+  @override
+  String get categoryDjangoTemplates => 'Plantillas';
+
+  @override
+  String get categoryDjangoForms => 'Formularios';
+
+  @override
+  String get categoryDjangoAdmin => 'Admin';
+
+  @override
+  String get categoryDjangoTesting => 'Tests';
+
+  @override
+  String get categoryDjangoRelationships => 'Relaciones';
+
+  @override
+  String get categoryDjangoOrm => 'Consultas ORM';
+
+  @override
+  String get categoryDjangoMigrations => 'Migraciones';
+
+  @override
+  String get categoryDjangoRestSetup => 'Configuración de DRF';
+
+  @override
+  String get categoryDjangoSerializers => 'Serializers';
+
+  @override
+  String get categoryDjangoRestViews => 'Vistas de API';
+
+  @override
+  String get categoryDjangoRestAuth => 'Autenticación y permisos';
+
+  @override
+  String get categoryDjangoRestFiltering => 'Paginación y filtros';
+
+  @override
+  String get categoryDjangoRestTesting => 'Tests de API';
+
+  @override
+  String get categoryRecordsAndPatterns => 'Registros y patrones';
+
+  @override
+  String get categoryPhpBasics => 'Fundamentos de PHP';
+
+  @override
+  String get categoryPhpStrings => 'Strings';
+
+  @override
+  String get categoryPhpConditionals => 'Condicionales';
+
+  @override
+  String get categoryPhpLoops => 'Ciclos';
+
+  @override
+  String get categoryPhpArrays => 'Arreglos';
+
+  @override
+  String get categoryPhpFunctions => 'Funciones';
+
+  @override
+  String get categoryPhpClasses => 'Clases y objetos';
+
+  @override
+  String get categoryPhpEnums => 'Enums';
+
+  @override
+  String get categoryPhpErrorHandling => 'Manejo de errores';
+
+  @override
+  String get categoryPhpNamespaces => 'Namespaces';
+
+  @override
+  String get categoryPhpSuperglobals => 'Superglobales';
+
+  @override
+  String get categoryPhpForms => 'Formularios y validación';
+
+  @override
+  String get categoryPhpSessions => 'Sesiones y cookies';
+
+  @override
+  String get categoryPhpDatabase => 'Base de datos (PDO)';
+
+  @override
+  String get categoryPhpJson => 'JSON y APIs';
+
+  @override
+  String get categoryPhpFiles => 'Archivos';
+
+  @override
+  String get categoryPhpSearching => 'Búsqueda';
+
+  @override
+  String get categoryPhpSorting => 'Ordenamiento';
+
+  @override
+  String get categoryPhpGraphs => 'Grafos';
+
+  @override
+  String get categoryGitBasics => 'Fundamentos de Git';
+
+  @override
+  String get categoryGitCommits => 'Commits';
+
+  @override
+  String get categoryGitBranching => 'Ramas y merges';
+
+  @override
+  String get categoryGitRemotes => 'Remotos';
+
+  @override
+  String get categoryGitHistory => 'Historial';
+
+  @override
+  String get categoryGitUndo => 'Deshacer cambios';
+
+  @override
+  String get categoryGitCollaboration => 'Colaboración';
+
+  @override
+  String get categoryGitObjects => 'Objetos';
+
+  @override
+  String get categoryGitRefs => 'Referencias y HEAD';
+
+  @override
+  String get categoryGitMaintenance => 'Mantenimiento';
+
+  @override
+  String get categoryLinuxBasics => 'Fundamentos de Linux';
+
+  @override
+  String get categoryLinuxFiles => 'Archivos y rutas';
+
+  @override
+  String get categoryPermissions => 'Permisos';
+
+  @override
+  String get categoryUsersAndGroups => 'Usuarios y grupos';
+
+  @override
+  String get categoryProcesses => 'Procesos';
+
+  @override
+  String get categoryPackages => 'Paquetes';
+
+  @override
+  String get categoryServices => 'Servicios';
+
+  @override
+  String get categoryLogs => 'Registros';
+
+  @override
+  String get categoryStorage => 'Almacenamiento';
+
+  @override
+  String get categoryNetworking => 'Redes';
+
+  @override
+  String get categoryScheduling => 'Programación de tareas';
+
+  @override
+  String get categoryBackupAndArchives => 'Respaldos';
+
+  @override
+  String get categoryDockerBasics => 'Fundamentos de Docker';
+
+  @override
+  String get categoryDockerImages => 'Imágenes';
+
+  @override
+  String get categoryDockerFiles => 'Dockerfiles';
+
+  @override
+  String get categoryDockerContainers => 'Contenedores';
+
+  @override
+  String get categoryDockerVolumes => 'Volúmenes y datos';
+
+  @override
+  String get categoryDockerNetworking => 'Redes en Docker';
+
+  @override
+  String get categoryDockerRegistries => 'Registros';
+
+  @override
+  String get categoryDockerCompose => 'Compose';
+
+  @override
+  String get categoryDockerMaintenance => 'Depuración y mantenimiento';
+
+  @override
   String get languageGo => 'Go';
 
   @override
@@ -888,6 +1213,45 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get languageHaskell => 'Haskell';
+
+  @override
+  String get languageC => 'C';
+
+  @override
+  String get languageCpp => 'C++';
+
+  @override
+  String get languageJava => 'Java';
+
+  @override
+  String get languageCrystal => 'Crystal';
+
+  @override
+  String get languageCss => 'CSS';
+
+  @override
+  String get languageCsharp => 'C#';
+
+  @override
+  String get languageSwift => 'Swift';
+
+  @override
+  String get languageKotlin => 'Kotlin';
+
+  @override
+  String get languageDart => 'Dart';
+
+  @override
+  String get languagePhp => 'PHP';
+
+  @override
+  String get languageGit => 'Git';
+
+  @override
+  String get languageLinux => 'Linux';
+
+  @override
+  String get languageDocker => 'Docker';
 
   @override
   String get languageGoBlurb => 'Simple y rápido — ideal para backend y nube.';
@@ -919,6 +1283,56 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get languageHaskellBlurb =>
       'Funcional y puro — valores, tipos y sin efectos secundarios.';
+
+  @override
+  String get languageCBlurb =>
+      'Cerca del metal — el lenguaje sobre el que se construyen los sistemas operativos.';
+
+  @override
+  String get languageCppBlurb =>
+      'Rendimiento y control — clases, plantillas y la STL.';
+
+  @override
+  String get languageJavaBlurb =>
+      'Escribe una vez, ejecuta en todas partes — el clásico orientado a objetos.';
+
+  @override
+  String get languageCrystalBlurb =>
+      'Sintaxis tipo Ruby, compilada y con inferencia de tipos — rápida sin ceremonia.';
+
+  @override
+  String get languageCssBlurb =>
+      'La hoja de estilos de la web — cascada, especificidad y layout.';
+
+  @override
+  String get languageCsharpBlurb =>
+      'Moderno, orientado a objetos y rápido — de apps y juegos a la nube.';
+
+  @override
+  String get languageSwiftBlurb =>
+      'Seguro, rápido y expresivo — el lenguaje moderno de las plataformas de Apple.';
+
+  @override
+  String get languageKotlinBlurb =>
+      'Conciso, seguro frente a nulos y multiplataforma — el lenguaje detrás del Android moderno.';
+
+  @override
+  String get languageDartBlurb =>
+      'Seguro frente a nulos y asíncrono — el lenguaje detrás de Flutter.';
+
+  @override
+  String get languagePhpBlurb =>
+      'El motor del lado servidor de la web — pragmático, dinámico y en todas partes.';
+
+  @override
+  String get languageGitBlurb => 'Registra cada cambio y colabora sin miedo.';
+
+  @override
+  String get languageLinuxBlurb =>
+      'Entiende y opera el sistema bajo cada servidor y contenedor.';
+
+  @override
+  String get languageDockerBlurb => 'Empaquétalo una vez, ejecútalo donde sea.';
 
   @override
   String get snippetPracticeAction => 'Practicar';
