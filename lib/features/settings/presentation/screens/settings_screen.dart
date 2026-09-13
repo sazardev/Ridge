@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +10,7 @@ import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/core/window/desktop_platform.dart';
 import 'package:ridge/features/data_management/presentation/widgets/data_management_section.dart';
 import 'package:ridge/features/lock/presentation/providers/lock_providers.dart';
+import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
 import 'package:ridge/features/settings/domain/entities/app_corner_style.dart';
 import 'package:ridge/features/settings/domain/entities/app_settings.dart';
 import 'package:ridge/features/settings/domain/entities/app_theme_mode.dart';
@@ -307,6 +310,61 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   ],
                 ],
               ),
+              if (Platform.isAndroid)
+                SettingsSection(
+                  title: l10n.settingsSectionPermissions,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          l10n.settingsPermissionsSubtitle,
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurfaceVariant,
+                              ),
+                        ),
+                      ),
+                    ),
+                    _PermissionTile(
+                      icon: LucideIcons.wifi300,
+                      title: l10n.settingsPermissionInternet,
+                      subtitle: l10n.settingsPermissionInternetSubtitle,
+                      // A normal manifest permission (`INTERNET`) — Android
+                      // grants it automatically at install time, with no
+                      // runtime prompt and no way for the user to revoke it
+                      // short of uninstalling, so this is always true.
+                      granted: true,
+                    ),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    _PermissionTile(
+                      icon: LucideIcons.fingerprint300,
+                      title: l10n.settingsPermissionBiometric,
+                      subtitle:
+                          (ref.watch(biometricAvailableProvider).value ?? false)
+                          ? l10n.settingsPermissionBiometricAvailable
+                          : l10n.settingsPermissionBiometricUnavailable,
+                      granted:
+                          ref.watch(biometricAvailableProvider).value ?? false,
+                    ),
+                    const Divider(height: 1, indent: 16, endIndent: 16),
+                    _PermissionTile(
+                      icon: LucideIcons.keyboard300,
+                      title: l10n.settingsPermissionKeyboard,
+                      subtitle:
+                          (ref.watch(hardwareKeyboardConnectedProvider).value ??
+                              true)
+                          ? l10n.settingsPermissionKeyboardConnected
+                          : l10n.settingsPermissionKeyboardDisconnected,
+                      granted:
+                          ref.watch(hardwareKeyboardConnectedProvider).value ??
+                          true,
+                    ),
+                  ],
+                ),
               SettingsSection(
                 title: l10n.settingsSectionShortcuts,
                 children: [
@@ -345,6 +403,37 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// One row of the Android-only "Permissions" section: what the
+/// capability is, its current status in plain language, and a
+/// check/alert glyph as the at-a-glance signal.
+class _PermissionTile extends StatelessWidget {
+  const new({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.granted,
+  });
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final bool granted;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return ListTile(
+      leading: Icon(icon, color: colorScheme.onSurfaceVariant),
+      title: Text(title),
+      subtitle: Text(subtitle),
+      trailing: Icon(
+        granted ? LucideIcons.circleCheck300 : LucideIcons.circleAlert300,
+        color: granted ? colorScheme.primary : colorScheme.error,
       ),
     );
   }

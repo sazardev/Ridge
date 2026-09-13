@@ -187,6 +187,16 @@
   "settingsAppLockBiometric": "Use biometrics",
   "settingsAppLockBiometricSubtitle": "Unlock with fingerprint or Face ID instead of typing your PIN",
   "settingsLockNow": "Lock now",
+  "settingsSectionPermissions": "Permissions",
+  "settingsPermissionsSubtitle": "What Ridge can access on this device, and why.",
+  "settingsPermissionInternet": "Internet access",
+  "settingsPermissionInternetSubtitle": "Granted automatically — used to load your GitHub avatar.",
+  "settingsPermissionBiometric": "Biometric unlock",
+  "settingsPermissionBiometricAvailable": "Available on this device.",
+  "settingsPermissionBiometricUnavailable": "Not available — no fingerprint or face enrolled, or unsupported hardware.",
+  "settingsPermissionKeyboard": "Physical keyboard",
+  "settingsPermissionKeyboardConnected": "Connected — ready to practice.",
+  "settingsPermissionKeyboardDisconnected": "Not connected — required to type. Connect one via Bluetooth or USB.",
   "settingsSectionShortcuts": "Keyboard shortcuts",
   "settingsShortcutsTitle": "Keyboard shortcuts",
   "settingsShortcutsSubtitle": "View and customize how you navigate without a mouse",
@@ -516,6 +526,8 @@
   "snippetPracticeAction": "Practice",
 
   "practiceZenTitle": "Zen practice",
+  "practiceKeyboardRequiredTitle": "Connect a keyboard to practice",
+  "practiceKeyboardRequiredBody": "Ridge is built for touch typing on a real keyboard, so it can't capture taps on the on-screen keyboard. Connect a physical or Bluetooth keyboard — we'll pick it up automatically.",
   "practiceLiveLives": "{count} lives left",
   "@practiceLiveLives": {
     "placeholders": {

@@ -4,7 +4,10 @@ import 'package:ridge/features/content/presentation/providers/content_providers.
 import 'package:ridge/features/practice/application/usecases/finish_practice_session_usecase.dart';
 import 'package:ridge/features/practice/application/usecases/get_next_sprint_snippet_usecase.dart';
 import 'package:ridge/features/practice/application/usecases/start_practice_session_usecase.dart';
+import 'package:ridge/features/practice/application/usecases/watch_hardware_keyboard_connected_usecase.dart';
+import 'package:ridge/features/practice/domain/repositories/hardware_keyboard_repository.dart';
 import 'package:ridge/features/practice/domain/repositories/session_repository.dart';
+import 'package:ridge/features/practice/infrastructure/hardware_keyboard_repository_impl.dart';
 import 'package:ridge/features/practice/infrastructure/practice_dao.dart';
 import 'package:ridge/features/practice/infrastructure/session_repository_impl.dart';
 import 'package:ridge/features/practice/presentation/services/keystroke_sound_player.dart';
@@ -60,4 +63,31 @@ KeystrokeSoundPlayer keystrokeSoundPlayer(Ref ref) {
   final player = KeystrokeSoundPlayer(pack);
   ref.onDispose(player.dispose);
   return player;
+}
+
+/// Provides the [HardwareKeyboardRepository] implementation used across
+/// the app.
+@Riverpod(keepAlive: true)
+HardwareKeyboardRepository hardwareKeyboardRepository(Ref ref) {
+  return const HardwareKeyboardRepositoryImpl();
+}
+
+/// Provides the [WatchHardwareKeyboardConnectedUseCase].
+@riverpod
+WatchHardwareKeyboardConnectedUseCase watchHardwareKeyboardConnectedUseCase(
+  Ref ref,
+) {
+  return WatchHardwareKeyboardConnectedUseCase(
+    ref.watch(hardwareKeyboardRepositoryProvider),
+  );
+}
+
+/// Whether a physical/Bluetooth keyboard is currently attached — gates
+/// `KeystrokeCaptureField` behind `KeyboardRequiredNotice` when it isn't
+/// (Android only; every other platform always reports connected, see
+/// `HardwareKeyboardRepositoryImpl`). Not kept alive: only worth polling
+/// while an actual typing screen is watching it.
+@riverpod
+Stream<bool> hardwareKeyboardConnected(Ref ref) {
+  return ref.watch(watchHardwareKeyboardConnectedUseCaseProvider)();
 }

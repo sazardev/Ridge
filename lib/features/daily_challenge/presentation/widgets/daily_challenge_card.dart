@@ -41,6 +41,7 @@ class DailyChallengeCard extends ConsumerWidget {
                     challengeDate: data.challengeDate.value,
                   ),
                   onContinue: null,
+                  onShare: null,
                 ),
               ),
         child: Padding(

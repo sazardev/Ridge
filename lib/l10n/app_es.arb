@@ -167,6 +167,16 @@
   "settingsAppLockBiometric": "Usar biometría",
   "settingsAppLockBiometricSubtitle": "Desbloquea con huella o Face ID en lugar de escribir tu PIN",
   "settingsLockNow": "Bloquear ahora",
+  "settingsSectionPermissions": "Permisos",
+  "settingsPermissionsSubtitle": "A qué puede acceder Ridge en este dispositivo, y para qué.",
+  "settingsPermissionInternet": "Acceso a internet",
+  "settingsPermissionInternetSubtitle": "Concedido automáticamente — se usa para cargar tu avatar de GitHub.",
+  "settingsPermissionBiometric": "Desbloqueo biométrico",
+  "settingsPermissionBiometricAvailable": "Disponible en este dispositivo.",
+  "settingsPermissionBiometricUnavailable": "No disponible — no hay huella ni rostro registrado, o el hardware no es compatible.",
+  "settingsPermissionKeyboard": "Teclado físico",
+  "settingsPermissionKeyboardConnected": "Conectado — listo para practicar.",
+  "settingsPermissionKeyboardDisconnected": "No conectado — hace falta para escribir. Conectá uno por Bluetooth o USB.",
   "settingsSectionShortcuts": "Atajos de teclado",
   "settingsShortcutsTitle": "Atajos de teclado",
   "settingsShortcutsSubtitle": "Ve y personaliza cómo navegar sin usar el mouse",
@@ -496,6 +506,8 @@
   "snippetPracticeAction": "Practicar",
 
   "practiceZenTitle": "Práctica Zen",
+  "practiceKeyboardRequiredTitle": "Conectá un teclado para practicar",
+  "practiceKeyboardRequiredBody": "Ridge está pensado para mecanografía con un teclado real, así que no puede capturar los toques en el teclado en pantalla. Conectá un teclado físico o Bluetooth — lo detectamos automáticamente.",
   "practiceLiveLives": "{count} vidas restantes",
   "@practiceLiveLives": {
     "placeholders": {

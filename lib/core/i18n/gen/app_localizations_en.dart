@@ -493,6 +493,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLockNow => 'Lock now';
 
   @override
+  String get settingsSectionPermissions => 'Permissions';
+
+  @override
+  String get settingsPermissionsSubtitle =>
+      'What Ridge can access on this device, and why.';
+
+  @override
+  String get settingsPermissionInternet => 'Internet access';
+
+  @override
+  String get settingsPermissionInternetSubtitle =>
+      'Granted automatically — used to load your GitHub avatar.';
+
+  @override
+  String get settingsPermissionBiometric => 'Biometric unlock';
+
+  @override
+  String get settingsPermissionBiometricAvailable =>
+      'Available on this device.';
+
+  @override
+  String get settingsPermissionBiometricUnavailable =>
+      'Not available — no fingerprint or face enrolled, or unsupported hardware.';
+
+  @override
+  String get settingsPermissionKeyboard => 'Physical keyboard';
+
+  @override
+  String get settingsPermissionKeyboardConnected =>
+      'Connected — ready to practice.';
+
+  @override
+  String get settingsPermissionKeyboardDisconnected =>
+      'Not connected — required to type. Connect one via Bluetooth or USB.';
+
+  @override
   String get settingsSectionShortcuts => 'Keyboard shortcuts';
 
   @override
@@ -1420,6 +1456,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get practiceZenTitle => 'Zen practice';
+
+  @override
+  String get practiceKeyboardRequiredTitle => 'Connect a keyboard to practice';
+
+  @override
+  String get practiceKeyboardRequiredBody =>
+      'Ridge is built for touch typing on a real keyboard, so it can\'t capture taps on the on-screen keyboard. Connect a physical or Bluetooth keyboard — we\'ll pick it up automatically.';
 
   @override
   String practiceLiveLives(int count) {

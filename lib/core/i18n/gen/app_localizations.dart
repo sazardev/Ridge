@@ -1034,6 +1034,66 @@ abstract class AppLocalizations {
   /// **'Lock now'**
   String get settingsLockNow;
 
+  /// No description provided for @settingsSectionPermissions.
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions'**
+  String get settingsSectionPermissions;
+
+  /// No description provided for @settingsPermissionsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What Ridge can access on this device, and why.'**
+  String get settingsPermissionsSubtitle;
+
+  /// No description provided for @settingsPermissionInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'Internet access'**
+  String get settingsPermissionInternet;
+
+  /// No description provided for @settingsPermissionInternetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Granted automatically — used to load your GitHub avatar.'**
+  String get settingsPermissionInternetSubtitle;
+
+  /// No description provided for @settingsPermissionBiometric.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric unlock'**
+  String get settingsPermissionBiometric;
+
+  /// No description provided for @settingsPermissionBiometricAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Available on this device.'**
+  String get settingsPermissionBiometricAvailable;
+
+  /// No description provided for @settingsPermissionBiometricUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available — no fingerprint or face enrolled, or unsupported hardware.'**
+  String get settingsPermissionBiometricUnavailable;
+
+  /// No description provided for @settingsPermissionKeyboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical keyboard'**
+  String get settingsPermissionKeyboard;
+
+  /// No description provided for @settingsPermissionKeyboardConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected — ready to practice.'**
+  String get settingsPermissionKeyboardConnected;
+
+  /// No description provided for @settingsPermissionKeyboardDisconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected — required to type. Connect one via Bluetooth or USB.'**
+  String get settingsPermissionKeyboardDisconnected;
+
   /// No description provided for @settingsSectionShortcuts.
   ///
   /// In en, this message translates to:
@@ -2815,6 +2875,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Zen practice'**
   String get practiceZenTitle;
+
+  /// No description provided for @practiceKeyboardRequiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a keyboard to practice'**
+  String get practiceKeyboardRequiredTitle;
+
+  /// No description provided for @practiceKeyboardRequiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Ridge is built for touch typing on a real keyboard, so it can\'t capture taps on the on-screen keyboard. Connect a physical or Bluetooth keyboard — we\'ll pick it up automatically.'**
+  String get practiceKeyboardRequiredBody;
 
   /// No description provided for @practiceLiveLives.
   ///

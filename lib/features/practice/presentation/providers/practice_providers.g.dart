@@ -341,3 +341,167 @@ final class KeystrokeSoundPlayerProvider
 
 String _$keystrokeSoundPlayerHash() =>
     r'2fdc6b3dfdf1487fcb8a5588fbe525f704ff7289';
+
+/// Provides the [HardwareKeyboardRepository] implementation used across
+/// the app.
+
+@ProviderFor(hardwareKeyboardRepository)
+final hardwareKeyboardRepositoryProvider =
+    HardwareKeyboardRepositoryProvider._();
+
+/// Provides the [HardwareKeyboardRepository] implementation used across
+/// the app.
+
+final class HardwareKeyboardRepositoryProvider
+    extends
+        $FunctionalProvider<
+          HardwareKeyboardRepository,
+          HardwareKeyboardRepository,
+          HardwareKeyboardRepository
+        >
+    with $Provider<HardwareKeyboardRepository> {
+  /// Provides the [HardwareKeyboardRepository] implementation used across
+  /// the app.
+  HardwareKeyboardRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'hardwareKeyboardRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$hardwareKeyboardRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<HardwareKeyboardRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  HardwareKeyboardRepository create(Ref ref) {
+    return hardwareKeyboardRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(HardwareKeyboardRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<HardwareKeyboardRepository>(value),
+    );
+  }
+}
+
+String _$hardwareKeyboardRepositoryHash() =>
+    r'55eba899afb0169c456876ad95ba210f772ebbf7';
+
+/// Provides the [WatchHardwareKeyboardConnectedUseCase].
+
+@ProviderFor(watchHardwareKeyboardConnectedUseCase)
+final watchHardwareKeyboardConnectedUseCaseProvider =
+    WatchHardwareKeyboardConnectedUseCaseProvider._();
+
+/// Provides the [WatchHardwareKeyboardConnectedUseCase].
+
+final class WatchHardwareKeyboardConnectedUseCaseProvider
+    extends
+        $FunctionalProvider<
+          WatchHardwareKeyboardConnectedUseCase,
+          WatchHardwareKeyboardConnectedUseCase,
+          WatchHardwareKeyboardConnectedUseCase
+        >
+    with $Provider<WatchHardwareKeyboardConnectedUseCase> {
+  /// Provides the [WatchHardwareKeyboardConnectedUseCase].
+  WatchHardwareKeyboardConnectedUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'watchHardwareKeyboardConnectedUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() =>
+      _$watchHardwareKeyboardConnectedUseCaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<WatchHardwareKeyboardConnectedUseCase> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  WatchHardwareKeyboardConnectedUseCase create(Ref ref) {
+    return watchHardwareKeyboardConnectedUseCase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(WatchHardwareKeyboardConnectedUseCase value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride:
+          $SyncValueProvider<WatchHardwareKeyboardConnectedUseCase>(value),
+    );
+  }
+}
+
+String _$watchHardwareKeyboardConnectedUseCaseHash() =>
+    r'07990bbcf40cb4f9e703b2ef9ffc97e3fa85ee38';
+
+/// Whether a physical/Bluetooth keyboard is currently attached — gates
+/// `KeystrokeCaptureField` behind `KeyboardRequiredNotice` when it isn't
+/// (Android only; every other platform always reports connected, see
+/// `HardwareKeyboardRepositoryImpl`). Not kept alive: only worth polling
+/// while an actual typing screen is watching it.
+
+@ProviderFor(hardwareKeyboardConnected)
+final hardwareKeyboardConnectedProvider = HardwareKeyboardConnectedProvider._();
+
+/// Whether a physical/Bluetooth keyboard is currently attached — gates
+/// `KeystrokeCaptureField` behind `KeyboardRequiredNotice` when it isn't
+/// (Android only; every other platform always reports connected, see
+/// `HardwareKeyboardRepositoryImpl`). Not kept alive: only worth polling
+/// while an actual typing screen is watching it.
+
+final class HardwareKeyboardConnectedProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, Stream<bool>>
+    with $FutureModifier<bool>, $StreamProvider<bool> {
+  /// Whether a physical/Bluetooth keyboard is currently attached — gates
+  /// `KeystrokeCaptureField` behind `KeyboardRequiredNotice` when it isn't
+  /// (Android only; every other platform always reports connected, see
+  /// `HardwareKeyboardRepositoryImpl`). Not kept alive: only worth polling
+  /// while an actual typing screen is watching it.
+  HardwareKeyboardConnectedProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'hardwareKeyboardConnectedProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$hardwareKeyboardConnectedHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<bool> create(Ref ref) {
+    return hardwareKeyboardConnected(ref);
+  }
+}
+
+String _$hardwareKeyboardConnectedHash() =>
+    r'85861390650d8ce23d200fc4df4ae435e5d6216e';

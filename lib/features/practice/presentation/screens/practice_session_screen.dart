@@ -15,7 +15,9 @@ import 'package:ridge/features/content/presentation/content_labels.dart';
 import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
 import 'package:ridge/features/practice/domain/entities/practice_session_status.dart';
 import 'package:ridge/features/practice/domain/services/survival_run_tracker.dart';
+import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_session_controller.dart';
+import 'package:ridge/features/practice/presentation/widgets/keyboard_required_notice.dart';
 import 'package:ridge/features/practice/presentation/widgets/keystroke_capture_field.dart';
 import 'package:ridge/features/practice/presentation/widgets/session_result_footer.dart';
 import 'package:ridge/features/practice/presentation/widgets/session_result_panel.dart';
@@ -197,6 +199,11 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
     });
 
     final state = ref.watch(practiceSessionControllerProvider(snippet, mode));
+    // Defaults to connected while the first native check is still in
+    // flight (`AsyncValue.loading`) rather than flashing the notice for
+    // an instant on every screen — see `HardwareKeyboardRepositoryImpl`.
+    final keyboardConnected =
+        ref.watch(hardwareKeyboardConnectedProvider).value ?? true;
     final sprintWindow = mode.maybeWhen(
       sprint: (window) => window,
       orElse: () => null,
@@ -372,10 +379,12 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
                           child: _LiveStatsRow(survival: survival),
                         ),
                       Expanded(
-                        child: KeystrokeCaptureField(
-                          snippet: snippet,
-                          mode: mode,
-                        ),
+                        child: keyboardConnected
+                            ? KeystrokeCaptureField(
+                                snippet: snippet,
+                                mode: mode,
+                              )
+                            : const KeyboardRequiredNotice(),
                       ),
                     ],
                   ),

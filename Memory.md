@@ -161,6 +161,165 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ## Historial de sesiones
 
+### 2026-09-12 — Aviso "conectá un teclado" en Android (nuevo canal nativo)
+
+- **Pedido del usuario**, tras la sesión de verificación de Android de más
+  abajo: como `KeystrokeCaptureField` solo reacciona a `KeyEvent` físicos
+  reales (nunca al IME táctil, STACK.md §2.8), hoy tocar el teclado en
+  pantalla en un teléfono sin teclado físico/Bluetooth no hacía
+  absolutamente nada — sin explicación. Pidió un aviso explícito.
+- **Diseño**: puerto `HardwareKeyboardRepository` (nuevo, en
+  `practice/domain/repositories/`) con `Stream<bool> watchConnected()`,
+  implementado en `HardwareKeyboardRepositoryImpl`
+  (`practice/infrastructure/`) — solo Android tiene ambigüedad real
+  (STACK.md §1: el resto son desktops mouse+teclado), así que en
+  cualquier otro `Platform` emite un único `true` y nunca cambia, sin
+  rama especial en presentación. Sondea cada 2s vía un `MethodChannel`
+  nuevo (`dev.omarcodes.ridge/hardware_keyboard`, primer canal nativo
+  custom del proyecto — antes todo pasaba por plugins) que
+  `MainActivity.kt` resuelve consultando `InputDevice.getDeviceIds()`:
+  cuenta como teclado real cualquier `InputDevice` no-virtual con
+  `keyboardType == KEYBOARD_TYPE_ALPHABETIC` y `SOURCE_KEYBOARD` (excluye
+  el teclado en pantalla, que nunca es un `InputDevice`, y "teclados" no
+  alfabéticos como los botones de volumen/power del propio teléfono). Uso
+  de caso fino (`WatchHardwareKeyboardConnectedUseCase`, mismo patrón que
+  `CheckBiometricAvailabilityUseCase` de `lock`) + provider
+  `hardwareKeyboardConnectedProvider` (`Stream<bool>`, no `keepAlive` —
+  solo vale la pena sondear mientras una pantalla de tipeo lo esté
+  observando).
+- **UI**: `PracticeSessionScreen` reemplaza `KeystrokeCaptureField` por
+  `KeyboardRequiredNotice` (ícono `LucideIcons.keyboardOff` en círculo
+  `errorContainer`, título + cuerpo explicando por qué) mientras el
+  provider reporta `false` — es el único punto de entrada de
+  `/practice/session` (lecciones, Reto Diario, Zen/Sprint/Precision/
+  Survival pasan todos por acá), así que un solo gate cubre todos los
+  modos. Vuelve a mostrar el campo de captura solo, sin acción manual,
+  en cuanto el siguiente sondeo detecta un teclado. Copys nuevos en/es:
+  `practiceKeyboardRequiredTitle`/`practiceKeyboardRequiredBody`.
+- **Verificación real, no solo de código** (clave del hallazgo de esta
+  sesión): en el emulador **x86_64** hay un `InputDevice` "AT Translated
+  Set 2 keyboard" (`isa0060/serio0`, `KeyboardType: 2`, confirmado con
+  `dumpsys input`) que **siempre está presente**, sin importar el toggle
+  `hw.keyboard` del AVD (`~/.config/.android/avd/Medium_Phone.avd/
+  config.ini`) — es el controlador i8042 que QEMU emula para cualquier
+  PC x86, no algo que dependa de la config de Android. Un teléfono ARM
+  real no tiene esto. Para probar la rama "sin teclado" de verdad, sin
+  descargar una imagen ARM (lenta, pesada), se forzó temporalmente
+  `result.success(false)` en el canal nativo, se verificó visualmente el
+  aviso completo (ícono/título/cuerpo, que tocar el teclado en pantalla
+  no hace nada) y se revirtió antes de dejar el código final — la lógica
+  real (`hasPhysicalKeyboard()`) se validó por separado leyendo los
+  campos crudos de `dumpsys input` (`isVirtual`/`KeyboardType`/
+  `Sources`), no por observación en vivo. **Documentado para la próxima
+  vez que haga falta forzar este estado**: es la única forma práctica en
+  este entorno.
+- **Tests**: `watch_hardware_keyboard_connected_usecase_test.dart` (fake
+  de puerto, confirma que reenvía el stream) y
+  `keyboard_required_notice_test.dart` (rendering puro, mismo patrón que
+  `session_result_footer_test.dart`) — no se testeó
+  `HardwareKeyboardRepositoryImpl` directamente (implica `Platform.isX`
+  crudo sin seam de testing, mismo criterio ya aceptado en el repo para
+  `device_info_source_impl.dart`, que tampoco tiene test). `flutter
+  analyze`, `check_architecture.dart` (353 archivos, sin violaciones) y
+  `flutter test` (733/733) limpios.
+
+### 2026-09-12 — Verificación funcional completa en Android (emulador real, MCP)
+
+- **Pedido del usuario**: instalar y probar Ridge en un emulador Android
+  (API 33, ya levantado) vía las herramientas MCP de `android`/Chrome, y
+  dejar Android tan funcional como Linux, incluyendo permisos correctos.
+- **Build/instalación**: `flutter build apk --debug` compila limpio
+  (ALSA ya estaba instalado); `flutter analyze` y
+  `dart run tool/check_architecture.dart` sin violaciones. Nota de
+  entorno: este host tiene **dos binarios `adb` distintos**
+  (`/usr/bin/adb` del sistema vs. `/home/sazar/Android/Sdk/platform-tools/adb`)
+  que no comparten protocolo de servidor — mezclarlos mata el emulador
+  (`adb kill-server`/reinicios espontáneos). Siempre anteponer
+  `PATH="$ANDROID_HOME/platform-tools:$PATH"` antes de `flutter`/`adb` en
+  este host. El emulador también murió una vez por presión de memoria
+  real (swap casi lleno) mientras había un daemon de Gradle 9.3.1 viejo
+  residente (~2 GB) — `cd android && ./gradlew --stop` lo liberó.
+- **Cómo probar tecleo real sin teclado físico**: `adb shell input
+  keyevent`/`input text` **no sirven** para `KeystrokeCaptureField` — el
+  widget resuelve `PhysicalKeyboardKey` a partir del scancode real del
+  evento, y los eventos inyectados por `adb shell input` no traen uno
+  válido, así que `physicalKeyIdFor()` devuelve `null` y la tecla se
+  ignora en silencio. La forma que sí funciona: `xdotool` apuntando a la
+  ventana del emulador vía **XTEST global** (`xdotool windowactivate
+  <id>` + `xdotool key`/`type`, **sin** `--window`, que usa
+  `XSendEvent` sintético y QEMU lo ignora) — así QEMU lo reenvía como
+  teclado USB/virtio real con scancode válido. Documentado para
+  cualquier sesión futura que necesite automatizar el motor de captura.
+- **Bug real encontrado y arreglado** (cross-platform, no solo Android):
+  tocar la tarjeta de Reto Diario en `Free` crasheaba con pantalla roja
+  — `type '({_DailyChallenge mode, Null onContinue, _Snippet snippet})'
+  is not a subtype of type '({String modeKind, Snippet snippet})'`.
+  Causa: `daily_challenge_card.dart` empujaba `/practice/session` con un
+  record de 3 campos (`snippet, mode, onContinue`), pero
+  `app_router.dart` solo reconoce el shape de 4 campos que usa
+  `lesson_navigation.dart` (con `onShare`) — al no matchear por aridad,
+  caía al otro `as` (el de `modeKind` string) y tronaba. Fix: agregar
+  `onShare: null` al record. Verificado en vivo end-to-end (sesión
+  completa, "already played" con streak). El test existente
+  (`daily_challenge_card_test.dart`) solo comprueba que `onTap` no sea
+  null, nunca lo invoca contra un `GoRouter` real — por eso no lo
+  atrapó; no se agregó test de router nuevo (el archivo declara
+  explícitamente que quiere quedarse como rendering test puro, sin
+  engancharse a `app_router.dart`) pero queda como hueco de cobertura
+  conocido si se retoca esa ruta de nuevo.
+- **Fix Android nativo**: `AndroidManifest.xml` no declaraba
+  `android:enableOnBackInvokedCallback="true"`, así que Android 13+
+  logueaba el warning `OnBackInvokedCallback is not enabled` y la app se
+  quedaba en el dispatcher de back antiguo — pese a que el código ya usa
+  `PopScope` deliberadamente para el back de Android (selector de
+  lenguaje transitorio en `/practice`, ver sesión 2026-09-11). Agregado
+  el atributo; verificado que el back del sistema (tecla/gesto) sigue
+  funcionando igual tras el rebuild y que el warning desapareció de
+  logcat.
+- **Permisos Android revisados**: solo `USE_BIOMETRIC` (normal, sin
+  diálogo, ya condicionado en UI a que `biometricAvailableProvider`
+  reporte biometría disponible) e `INTERNET` (normal, sin diálogo, solo
+  para el avatar de GitHub) — ambos ya estaban bien declarados y
+  correctamente acotados a "solo si aplica". No hace falta
+  `READ/WRITE_EXTERNAL_STORAGE` (content packs usan
+  `getApplicationSupportDirectory`, almacenamiento privado de la app;
+  `data_management` solo resetea/borra filas de drift, no exporta
+  archivos) ni `RECORD_AUDIO` (`flutter_soloud` aquí es solo
+  reproducción). No se tocó nada de permisos porque ya estaban
+  correctos.
+- **Cobertura funcional verificada en el emulador** (Android 13,
+  `sdk_gphone64_x86_64`): onboarding, creación de perfil, selector de
+  lenguaje (catálogo con barra de progreso), rutas Go y Bash completas
+  (lista → sesión → resultado con métricas/logros), las 4 pestañas de
+  Progress (Overview/Weakness/Activity/History), los 4 modos de Free
+  Practice (Zen, Sprint con cronómetro, Precision, Survival con pérdida
+  de vida real), Snippet Browser con filtros + selector de modo, Profile
+  (auto-detección de dispositivo: "Android"/"Android 13"/modelo real vía
+  `device_info_plus`), Achievements (709 logros, grid con desbloqueados),
+  Settings completo (tema, color expresivo, esquina, paleta de 21
+  colores, preview de sonido de tecleo vía AAudio confirmado en logcat,
+  idioma, **App Lock**: set PIN → confirm → bloqueo inmediato →
+  desbloqueo, todo funcionando), y Keyboard Shortcuts (pantalla visible
+  y usable en Android).
+- **Hallazgo menor, no arreglado**: los atajos de teclado globales
+  (`AppNavigationShortcuts` para Ctrl+1–5, `EscapeToPop` en Achievements/
+  Snippet Browser/Changelog/Edit Profile/Stats JSON) no disparan si
+  ningún descendiente tiene foco de teclado — que es el estado normal
+  justo después de tocar/clickear un elemento no enfocable. El propio
+  código ya conoce este patrón de Flutter (`snippet_info_screen.dart` y
+  `practice_session_screen.dart` lo evitan con un `Focus(autofocus:
+  true)` propio) pero `EscapeToPop`/`AppNavigationShortcuts` no lo
+  aplican. **No es específico de Android** — reproduciría igual en Linux
+  tras un click de mouse en un widget no enfocable — así que se deja
+  como pendiente general, no como bloqueante de esta tarea.
+- **Biometría**: no se probó en vivo (el AVD no tenía huella
+  enrolada y automatizar el enrolamiento vía la Settings del sistema no
+  se intentó por tiempo/beneficio). Revisado por código:
+  `MainActivity.kt` ya extiende `FlutterFragmentActivity` (requisito de
+  `local_auth` para `BiometricPrompt`, `STACK.md §3.2`) y el toggle de
+  Settings correctamente se oculta cuando `biometricAvailableProvider`
+  no reporta biometría — comportamiento correcto, no bug.
+
 ### 2026-09-12 — Go: Modern & Idiomatic + Production Patterns (2 rutas nuevas, 58 snippets, 14 categorías)
 
 - **Pedido del usuario**: curso de Go de nivel avanzado bilingüe (en/es) con
@@ -2753,6 +2912,13 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 - Ampliar `assets/content/keyboard_layouts/` con más modelos QMK/VIA con
   el tiempo (ver sesión 2026-09-11) — el patrón/arquitectura ya está
   armado, es trabajo de curación de datos, no de código.
+- `AppNavigationShortcuts`/`EscapeToPop` no disparan sin foco de teclado
+  previo (ver sesión 2026-09-12 de verificación en Android) — no
+  bloqueante, pero si se retoca esa zona, replicar el patrón
+  `Focus(autofocus: true)` que ya usan `snippet_info_screen.dart`/
+  `practice_session_screen.dart`.
+- Probar biometría end-to-end en un AVD con huella enrolada (ver sesión
+  2026-09-12) — hoy solo verificado por código/lectura, no en vivo.
 
 ## Comandos clave
 

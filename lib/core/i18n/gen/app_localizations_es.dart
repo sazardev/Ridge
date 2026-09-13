@@ -496,6 +496,42 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsLockNow => 'Bloquear ahora';
 
   @override
+  String get settingsSectionPermissions => 'Permisos';
+
+  @override
+  String get settingsPermissionsSubtitle =>
+      'A qué puede acceder Ridge en este dispositivo, y para qué.';
+
+  @override
+  String get settingsPermissionInternet => 'Acceso a internet';
+
+  @override
+  String get settingsPermissionInternetSubtitle =>
+      'Concedido automáticamente — se usa para cargar tu avatar de GitHub.';
+
+  @override
+  String get settingsPermissionBiometric => 'Desbloqueo biométrico';
+
+  @override
+  String get settingsPermissionBiometricAvailable =>
+      'Disponible en este dispositivo.';
+
+  @override
+  String get settingsPermissionBiometricUnavailable =>
+      'No disponible — no hay huella ni rostro registrado, o el hardware no es compatible.';
+
+  @override
+  String get settingsPermissionKeyboard => 'Teclado físico';
+
+  @override
+  String get settingsPermissionKeyboardConnected =>
+      'Conectado — listo para practicar.';
+
+  @override
+  String get settingsPermissionKeyboardDisconnected =>
+      'No conectado — hace falta para escribir. Conectá uno por Bluetooth o USB.';
+
+  @override
   String get settingsSectionShortcuts => 'Atajos de teclado';
 
   @override
@@ -1427,6 +1463,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get practiceZenTitle => 'Práctica Zen';
+
+  @override
+  String get practiceKeyboardRequiredTitle =>
+      'Conectá un teclado para practicar';
+
+  @override
+  String get practiceKeyboardRequiredBody =>
+      'Ridge está pensado para mecanografía con un teclado real, así que no puede capturar los toques en el teclado en pantalla. Conectá un teclado físico o Bluetooth — lo detectamos automáticamente.';
 
   @override
   String practiceLiveLives(int count) {
