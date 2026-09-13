@@ -11,6 +11,12 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.15.0] - 2026-09-13
+
+### Added
+- **profile:** full keyboard customization with 3D editor and firmware RGB (9003706)
+- **scope:** ready (ab524f3)
+
 ## [1.14.0] - 2026-09-13
 
 ### Added
