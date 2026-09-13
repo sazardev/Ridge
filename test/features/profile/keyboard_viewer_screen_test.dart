@@ -100,7 +100,10 @@ void main() {
     expect(find.byIcon(LucideIcons.rotateCcw), findsOneWidget);
     expect(find.byIcon(LucideIcons.zoomIn), findsOneWidget);
     expect(
-      find.text('Drag to rotate · Pinch or scroll to zoom'),
+      find.text(
+        'Drag to rotate · Pinch or scroll to zoom · '
+        'Type on your keyboard to feel it',
+      ),
       findsOneWidget,
     );
   });

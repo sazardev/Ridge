@@ -4,13 +4,15 @@ import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
 import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
+import 'package:ridge/features/profile/infrastructure/keyboard_customization_mapper.dart';
 import 'package:ridge/features/profile/infrastructure/profile_dto.dart';
 
 /// Converts a [ProfileDto] into its domain [GuestProfile] representation.
 extension ProfileDtoMapper on ProfileDto {
   /// Maps this DTO to the domain entity, dropping an unrecognized
   /// favorite-language/keyboard-layout name back to `null` rather than
-  /// guessing.
+  /// guessing. A malformed keyboard-customization JSON blob decodes to
+  /// `null` (see `decodeKeyboardCustomization`), never a crash.
   GuestProfile toDomain() {
     return GuestProfile(
       id: ProfileId(id),
@@ -27,6 +29,9 @@ extension ProfileDtoMapper on ProfileDto {
             ),
       keyboardBrand: keyboardBrand,
       keyboardModel: keyboardModel,
+      keyboardCustomization: decodeKeyboardCustomization(
+        keyboardCustomizationJson,
+      ),
       favoriteQuote: favoriteQuote,
       favoriteProgrammer: favoriteProgrammer,
       githubUsername: githubUsername,
@@ -54,6 +59,7 @@ extension ProfileDtoMapper on ProfileDto {
       platform: Value(platform),
       operatingSystemVersion: Value(operatingSystemVersion),
       deviceModel: Value(deviceModel),
+      keyboardCustomizationJson: Value(keyboardCustomizationJson),
     );
   }
 }
@@ -70,6 +76,9 @@ extension GuestProfileMapper on GuestProfile {
       keyboardLayout: keyboardLayout?.name,
       keyboardBrand: keyboardBrand,
       keyboardModel: keyboardModel,
+      keyboardCustomizationJson: keyboardCustomization == null
+          ? null
+          : encodeKeyboardCustomization(keyboardCustomization!),
       favoriteQuote: favoriteQuote,
       favoriteProgrammer: favoriteProgrammer,
       githubUsername: githubUsername,
@@ -96,6 +105,7 @@ extension GuestProfileRowMapper on GuestProfileRow {
       keyboardLayout: keyboardLayout,
       keyboardBrand: keyboardBrand,
       keyboardModel: keyboardModel,
+      keyboardCustomizationJson: keyboardCustomizationJson,
       favoriteQuote: favoriteQuote,
       favoriteProgrammer: favoriteProgrammer,
       githubUsername: githubUsername,

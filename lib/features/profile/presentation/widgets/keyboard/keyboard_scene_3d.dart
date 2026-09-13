@@ -1,130 +1,45 @@
 import 'dart:math' as math;
 
-import 'package:flutter/foundation.dart' show immutable;
 import 'package:flutter/painting.dart';
 
+import 'package:ridge/features/profile/domain/entities/keyboard_customization_options.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_key_spec.dart';
 import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_geometry_3d.dart';
 import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_keycap_style.dart';
 import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_layout_geometry.dart';
+import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_scene_effects.dart';
+import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_scene_faces.dart';
+import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_scene_shading.dart';
 
-/// One flat, filled polygon of the keyboard scene, already projected to
-/// screen space and shaded, ready to paint — the renderer's only drawing
-/// primitive.
-@immutable
-class KeyboardFace {
-  /// Creates a face from its projected [points] and resolved [color].
-  const new({
-    required this.points,
-    required this.depth,
-    required this.color,
-    this.gradient,
-    this.strokeColor,
-    this.strokeWidth = 1,
-    this.legend,
-  });
-
-  /// The polygon's vertices, in screen space, in order.
-  final List<Offset> points;
-
-  /// Camera-space distance of the face's centre — faces are painted in
-  /// descending order of this value (farthest first).
-  final double depth;
-
-  /// The flat fill, before [gradient] (when set).
-  final Color color;
-
-  /// Optional two-stop sheen for keycap tops — the one sanctioned
-  /// gradient of the design system (STACK.md §2.5).
-  final Gradient? gradient;
-
-  /// Optional outline, drawn after the fill.
-  final Color? strokeColor;
-
-  /// Outline stroke width in logical pixels.
-  final double strokeWidth;
-
-  /// Optional printed legend for keycap tops — painted after the fill,
-  /// projected onto the cap's own top plane by the camera.
-  final KeyboardLegend? legend;
-}
-
-/// A keycap's printed legend: up to two text rows (the shifted symbol
-/// above the primary one, like a real `!` over `1`), positioned and sized
-/// in board units and drawn by the painter through
-/// [KeyboardCamera.canvasMatrix] so it lies flat on the cap in true
-/// perspective.
-@immutable
-class KeyboardLegend {
-  /// Creates a legend at [position] (the cap top's centre, board units).
-  const new({
-    required this.position,
-    required this.maxWidth,
-    required this.primaryFontSize,
-    required this.secondaryFontSize,
-    required this.lineOffset,
-    required this.color,
-    this.primary,
-    this.secondary,
-  });
-
-  /// The main legend (centered, or below [secondary] when both exist).
-  final String? primary;
-
-  /// The shifted-symbol legend, drawn above [primary].
-  final String? secondary;
-
-  /// The cap top's centre in board space.
-  final Vec3 position;
-
-  /// How much room the legend has, in board units — longer labels are
-  /// auto-shrunk to fit instead of spilling over neighbouring caps.
-  final double maxWidth;
-
-  /// Primary legend em-size, in board units.
-  final double primaryFontSize;
-
-  /// Secondary legend em-size, in board units.
-  final double secondaryFontSize;
-
-  /// Vertical distance from [position] to each legend row's centre, in
-  /// board units — only used when both legends are present.
-  final double lineOffset;
-
-  /// Resolved ink color.
-  final Color color;
-}
-
-/// How much a keycap's top face is inset from its base outline, as a
-/// fraction of one key-unit — the classic tapered keycap silhouette.
-const _taperFraction = 0.075;
-
-/// How far the plate sits below the case's top face, in key-units.
-const _plateRecessFraction = 0.06;
+export 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_scene_faces.dart';
 
 /// Legend sizing/detailing, as fractions of one key-unit.
-const _legendPrimarySize = 0.34;
-const _legendSecondarySize = 0.24;
-const _legendLineOffset = 0.185;
+const _legendPrimarySize = 0.27;
+const _legendSecondarySize = 0.19;
+const _legendLineOffset = 0.10;
 
 /// Outline segments per rounded corner for the case — smoother than the
 /// keycaps' default, since the chassis' curve is long.
 const _caseCornerSegments = 4;
 
-/// The direction the scene's single directional light comes from, fixed
-/// to the viewer — so faces genuinely change brightness as the board
-/// orbits under it.
-final Vec3 _lightDirection = const Vec3(-0.35, -0.45, 0.82).normalized();
-
 /// The height a keycap's top face sits at, in key-units above the case's
 /// top face — where pointer hit-testing assumes the caps to be.
 double keyTopZFor(KeyboardKeycapStyle style) =>
-    style.keyDepthFraction - _plateRecessFraction;
+    style.keyDepthFraction - plateRecessFraction;
 
 /// Builds every face of the keyboard scene for one frame, farthest first:
 /// the case (walls, top face, recessed plate) followed by the keycaps,
 /// each sorted back-to-front by camera depth. Pressed keys sink along
-/// their real z axis and hovered keys tint their top face.
+/// their real z axis and hovered keys tint their top face. With RGB
+/// enabled, an ambient glow is laid down before everything else and the
+/// caps/plate are tinted toward the current light color; [rgbPhase] (0..1,
+/// repeating) drives the animated effects and is ignored by the static
+/// effect (see `keyboard_scene_shading.dart`). [keyPulses] adds the
+/// reactive per-key flash (0..1, decaying) on top of whatever the effect
+/// is doing, [rippleAges] spreads the typewriter splash from each pressed
+/// key's origin (seconds of age per origin key), and [keyPressLevels]
+/// sinks caps held down by an external source (the real keyboard, in the
+/// viewer/editor) alongside the pointer's own [pressedIndex].
 List<KeyboardFace> buildKeyboardScene({
   required List<KeyboardKeySpec> keys,
   required KeyboardKeycapStyle style,
@@ -132,10 +47,27 @@ List<KeyboardFace> buildKeyboardScene({
   int? hoveredIndex,
   int? pressedIndex,
   double pressProgress = 0,
+  double rgbPhase = 0,
+  List<int?>? keyLightColors,
+  List<double>? keyPressLevels,
+  List<double>? keyPulses,
+  List<double>? rippleAges,
 }) {
   final faces = <KeyboardFace>[
+    if (style.rgbEnabled) ...rgbGlowFaces(camera, style, rgbPhase),
     ..._caseFaces(camera, style),
-    ..._plateFaces(camera, style),
+    ..._plateFaces(camera, style, rgbPhase),
+    if (style.rgbEnabled)
+      ...plateGlowFaces(
+        camera,
+        style,
+        rgbPhase,
+        keys,
+        keyLightColors,
+        keyPressLevels,
+        keyPulses,
+        rippleAges,
+      ),
   ];
 
   final byDepth = List.generate(keys.length, (index) => index)
@@ -147,20 +79,35 @@ List<KeyboardFace> buildKeyboardScene({
       ).compareTo(_keyDepth(camera, style, keys[a])),
     );
   for (final index in byDepth) {
-    final pressed = index == pressedIndex ? pressProgress : 0.0;
+    final pointerPress = index == pressedIndex ? pressProgress : 0.0;
+    final held = levelAt(keyPressLevels, index);
+    final boost = math.min(
+      1.6,
+      levelAt(keyPulses, index) + rippleBoost(keys, index, rippleAges),
+    );
     faces.addAll(
       _keyFaces(
         camera: camera,
         style: style,
         key: keys[index],
         hovered: index == hoveredIndex,
-        pressProgress: pressed,
+        pressProgress: math.max(pointerPress, held),
+        pulse: boost,
+        rgbPhase: rgbPhase,
+        lightColor: _lightColorFor(keyLightColors, index),
       ),
     );
   }
   return faces;
 }
 
+int? _lightColorFor(List<int?>? keyLightColors, int index) =>
+    (keyLightColors != null && index < keyLightColors.length)
+    ? keyLightColors[index]
+    : null;
+
+/// One key: its tapered cap (primary plus, for stepped keys, secondary
+/// rectangle) as side quads plus a gradient-lit top face.
 /// The case's extruded walls and top face, walls first (far to near) so
 /// the top face's outline always stays crisp.
 List<KeyboardFace> _caseFaces(
@@ -168,10 +115,14 @@ List<KeyboardFace> _caseFaces(
   KeyboardKeycapStyle style,
 ) {
   final rect = camera.caseRect;
-  final cornerUnits = style.caseCornerRadius / camera.unit;
+  // Theme radii are screen pixels; converting them with the fitted unit
+  // would make corners balloon on small screens (a phone's unit is a
+  // third of a desktop's), so they are capped to a size-independent
+  // fraction — big screens keep the exact px radius, small screens keep
+  // the same *shape*.
   final outline = roundedRectOutline(
     rect,
-    cornerUnits,
+    caseCornerUnits(style, camera),
     segmentsPerCorner: _caseCornerSegments,
   );
   if (outline.isEmpty) return const [];
@@ -200,7 +151,7 @@ List<KeyboardFace> _caseFaces(
       for (final point in outline) camera.project(Vec3(point.dx, point.dy, 0)),
     ],
     depth: camera.depthOf(Vec3(rect.center.dx, rect.center.dy, 0)),
-    color: _shade(style.caseTop, const Vec3(0, 0, 1), camera),
+    color: shadeFace(style.caseTop, const Vec3(0, 0, 1), camera),
     strokeColor: style.caseBorder,
     strokeWidth: 1.5,
   );
@@ -208,10 +159,12 @@ List<KeyboardFace> _caseFaces(
 }
 
 /// The darker plate the keys are mounted on, recessed below the case's
-/// top face.
+/// top face. With RGB on it takes a pronounced share of the current light
+/// color, which is what reads as "the light is underneath the keys".
 List<KeyboardFace> _plateFaces(
   KeyboardCamera camera,
   KeyboardKeycapStyle style,
+  double rgbPhase,
 ) {
   final rect = camera.caseRect.deflate(
     KeyboardCamera.bezelFraction * KeyboardCamera.plateInsetFraction,
@@ -219,37 +172,44 @@ List<KeyboardFace> _plateFaces(
   if (rect.isEmpty) return const [];
   final outline = roundedRectOutline(
     rect,
-    style.caseCornerRadius / camera.unit * 0.7,
+    plateCornerUnits(style, camera),
     segmentsPerCorner: _caseCornerSegments,
   );
+  final plateColor = style.rgbEnabled
+      ? Color.lerp(
+          style.plate,
+          rgbTint(style, rgbPhase, null, camera),
+          0.30 * rgbIntensity(style, rgbPhase),
+        )!
+      : style.plate;
   return [
     KeyboardFace(
       points: [
         for (final point in outline)
-          camera.project(Vec3(point.dx, point.dy, -_plateRecessFraction)),
+          camera.project(Vec3(point.dx, point.dy, -plateRecessFraction)),
       ],
       depth: camera.depthOf(
-        Vec3(rect.center.dx, rect.center.dy, -_plateRecessFraction),
+        Vec3(rect.center.dx, rect.center.dy, -plateRecessFraction),
       ),
-      color: _shade(style.plate, const Vec3(0, 0, 1), camera),
+      color: shadeFace(plateColor, const Vec3(0, 0, 1), camera),
       strokeColor: style.caseBorder,
     ),
   ];
 }
 
-/// One key: its tapered cap (primary plus, for stepped keys, secondary
-/// rectangle) as side quads plus a gradient-lit top face.
 List<KeyboardFace> _keyFaces({
   required KeyboardCamera camera,
   required KeyboardKeycapStyle style,
   required KeyboardKeySpec key,
   required bool hovered,
   required double pressProgress,
+  required double pulse,
+  required double rgbPhase,
+  required int? lightColor,
 }) {
-  final cornerUnits = (style.keyCornerRadius / camera.unit).clamp(0.02, 0.24);
   final sink = style.keyDepthFraction * pressProgress;
-  final baseZ = -_plateRecessFraction - sink;
-  final topZ = style.keyDepthFraction - _plateRecessFraction - sink;
+  final baseZ = -plateRecessFraction - sink;
+  final topZ = style.keyDepthFraction - plateRecessFraction - sink;
   final accent = key.w > 1.05 || key.h > 1.05;
 
   final caps = [
@@ -258,14 +218,16 @@ List<KeyboardFace> _keyFaces({
       style: style,
       key: key,
       rect: camera.rectFor(key),
-      cornerUnits: cornerUnits,
       baseZ: baseZ,
       topZ: topZ,
       sideColor: accent ? style.keySideAccent : style.keySide,
       topColor: accent ? style.keyTopAccent : style.keyTop,
       hovered: hovered,
       pressProgress: pressProgress,
+      pulse: pulse,
       withLabel: true,
+      rgbPhase: rgbPhase,
+      lightColor: lightColor,
     ),
   ];
   if (camera.hasSecondaryRect(key)) {
@@ -275,14 +237,16 @@ List<KeyboardFace> _keyFaces({
         style: style,
         key: key,
         rect: camera.rectFor(key, secondary: true),
-        cornerUnits: cornerUnits,
         baseZ: baseZ,
         topZ: topZ,
         sideColor: accent ? style.keySideAccent : style.keySide,
         topColor: accent ? style.keyTopAccent : style.keyTop,
         hovered: hovered,
         pressProgress: pressProgress,
+        pulse: pulse,
         withLabel: false,
+        rgbPhase: rgbPhase,
+        lightColor: lightColor,
       ),
     );
   }
@@ -294,14 +258,16 @@ List<KeyboardFace> _capFaces({
   required KeyboardKeycapStyle style,
   required KeyboardKeySpec key,
   required Rect rect,
-  required double cornerUnits,
   required double baseZ,
   required double topZ,
   required Color sideColor,
   required Color topColor,
   required bool hovered,
   required double pressProgress,
+  required double pulse,
   required bool withLabel,
+  required double rgbPhase,
+  required int? lightColor,
 }) {
   Offset rotate(Offset point) => key.rotationAngle == 0
       ? point
@@ -311,24 +277,60 @@ List<KeyboardFace> _capFaces({
           key.rotationAngle,
         );
 
+  final segments = style.keycapShape == KeycapShape.round
+      ? roundCornerSegments
+      : 3;
+  final baseCornerUnits = keyBaseCornerUnits(style, rect, camera);
   final baseOutline = [
-    for (final point in roundedRectOutline(rect, cornerUnits)) rotate(point),
+    for (final point in roundedRectOutline(
+      rect,
+      baseCornerUnits,
+      segmentsPerCorner: segments,
+    ))
+      rotate(point),
   ];
-  final topRect = rect.deflate(_taperFraction);
+  final topRect = rect.deflate(keycapTaperFraction);
   if (baseOutline.isEmpty || topRect.isEmpty) return const [];
   final topOutline = [
     for (final point in roundedRectOutline(
       topRect,
-      // Keep a strictly positive radius: `roundedRectOutline` falls back
-      // to a 4-point outline at radius 0, which would no longer match the
-      // base outline's segment count.
-      math.max(0.001, cornerUnits - _taperFraction * 0.35),
+      keyTopCornerUnits(style, baseCornerUnits, topRect),
+      segmentsPerCorner: segments,
     ))
       rotate(point),
   ];
 
   final center = rotate(rect.center);
   final inside = Vec3(center.dx, center.dy, (baseZ + topZ) / 2);
+  // With RGB on, the cap's sides pick up a share of the current light
+  // color (light spilling out around the cap), the top face gets a wash
+  // and the legend is tinted — all scaled by the cap's light transmission
+  // (`KeycapTransparency`: opaque caps keep a dark legend and barely wash;
+  // pudding caps glow from the sides; translucent ones light up whole). A
+  // per-key light (when set) replaces the board-wide color for this cap.
+  final tint = style.rgbEnabled
+      ? (lightColor != null
+            ? Color(lightColor)
+            : rgbTint(style, rgbPhase, key, camera))
+      : null;
+  // The effect's per-key brightness; the reactive mode keeps held keys
+  // lit, and any pulse/ripple adds on top before everything saturates.
+  var glow = style.rgbEnabled
+      ? effectIntensity(style, rgbPhase, key, camera)
+      : 0.0;
+  if (style.rgbEnabled &&
+      style.rgbEffect == RgbEffect.reactive &&
+      pressProgress > 0) {
+    glow = math.max(glow, pressProgress * 1.2);
+  }
+  glow = math.min(1.6, glow + pulse);
+  final litSide = tint == null
+      ? sideColor
+      : Color.lerp(
+          sideColor,
+          tint,
+          (style.sideLightFraction * glow + 0.3 * pulse).clamp(0.0, 1.0),
+        )!;
   final sides = <KeyboardFace>[];
   for (var i = 0; i < baseOutline.length; i++) {
     final next = (i + 1) % baseOutline.length;
@@ -338,7 +340,7 @@ List<KeyboardFace> _capFaces({
     final topB = topOutline[next];
     final face = _quad(
       camera: camera,
-      baseColor: sideColor,
+      baseColor: litSide,
       inside: inside,
       a: Vec3(a.dx, a.dy, baseZ),
       b: Vec3(b.dx, b.dy, baseZ),
@@ -352,12 +354,19 @@ List<KeyboardFace> _capFaces({
   var faceColor = hovered
       ? Color.lerp(topColor, style.hoverTint, 0.35)!
       : topColor;
+  if (tint != null) {
+    faceColor = Color.lerp(
+      faceColor,
+      tint,
+      (style.topLightFraction * glow + 0.35 * pulse).clamp(0.0, 0.8),
+    )!;
+  }
   if (pressProgress > 0) {
     faceColor = Color.lerp(faceColor, sideColor, 0.25 * pressProgress)!;
   }
   // Shade the top face too, so the caps dim and brighten as the board
   // turns under the light instead of staying artificially constant.
-  final litTop = _shade(faceColor, const Vec3(0, 0, 1), camera);
+  final litTop = shadeFace(faceColor, const Vec3(0, 0, 1), camera);
 
   final topPoints = [
     for (final point in topOutline)
@@ -381,6 +390,9 @@ List<KeyboardFace> _capFaces({
         ],
       ),
       strokeColor: style.keyBorder,
+      glowColor: tint?.withValues(
+        alpha: (style.glowLightFraction * glow + 0.30 * pulse).clamp(0.0, 0.8),
+      ),
       legend: withLabel && (key.label != null || key.label2 != null)
           ? KeyboardLegend(
               primary: key.label,
@@ -390,7 +402,15 @@ List<KeyboardFace> _capFaces({
               primaryFontSize: _legendPrimarySize,
               secondaryFontSize: _legendSecondarySize,
               lineOffset: _legendLineOffset,
-              color: style.keyLegend,
+              color: tint == null
+                  ? style.keyLegend
+                  : Color.lerp(
+                      style.keyLegend,
+                      tint,
+                      (style.legendLightFraction * math.min(1.0, glow) +
+                              0.4 * pulse)
+                          .clamp(0.0, 1.0),
+                    )!,
             )
           : null,
     ),
@@ -428,27 +448,9 @@ KeyboardFace? _quad({
             camera.depthOf(c) +
             camera.depthOf(d)) /
         4,
-    color: _shade(baseColor, normal, camera),
+    color: shadeFace(baseColor, normal, camera),
   );
 }
-
-/// Lambert-ish shading against [_lightDirection], with a wrap term so
-/// faces turned fully away from the light stay readable instead of black.
-/// The resting top-face intensity is the zero point, so the designed
-/// keycap colors survive at rest (STACK.md §2.5, contrast test).
-Color _shade(Color base, Vec3 boardNormal, KeyboardCamera camera) {
-  final normal = camera.rotate(boardNormal);
-  final intensity = _intensity(normal);
-  return KeyboardKeycapStyle.shiftLightness(
-    base,
-    (intensity - _restingTopIntensity) * 0.45,
-  );
-}
-
-double _intensity(Vec3 cameraNormal) =>
-    0.45 + 0.55 * (0.5 + 0.5 * _lightDirection.dot(cameraNormal));
-
-final double _restingTopIntensity = _intensity(const Vec3(0, 0, 1));
 
 /// Sort depth for [key]: the middle of its footprint at mid-cap height.
 double _keyDepth(

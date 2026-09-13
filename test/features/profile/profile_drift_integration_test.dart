@@ -14,6 +14,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ridge/core/persistence/drift/app_database.dart';
 import 'package:ridge/core/persistence/drift/database_provider.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization_options.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 
 void main() {
@@ -168,4 +171,81 @@ void main() {
       expect(row, isNull);
     },
   );
+
+  test('keyboard setup round-trips through drift — layout, brand/model and '
+      'the advanced customization blob — and the stream updates', () async {
+    await container
+        .read(activeProfileControllerProvider.notifier)
+        .create('nova');
+
+    final nextUpdate = profileUpdates.stream
+        .firstWhere((p) => p?.keyboardCustomization?.rgbEnabled ?? false)
+        .timeout(const Duration(seconds: 5));
+
+    final result = await container
+        .read(activeProfileControllerProvider.notifier)
+        .updateKeyboardSetup(
+          keyboardLayout: KeyboardLayout.colemak,
+          keyboardBrand: 'Monsgeek',
+          keyboardModel: 'M1',
+          keyboardCustomization: const KeyboardCustomization(
+            keycapShape: KeycapShape.round,
+            rgbEnabled: true,
+            rgbColor: 0xFFFF5A36,
+            remaps: [KeyboardKeyRemap(physicalKey: 'keyA', character: 'q')],
+          ),
+        );
+    expect(result.isOk, isTrue);
+
+    final afterUpdate = await nextUpdate;
+    expect(afterUpdate?.keyboardLayout, KeyboardLayout.colemak);
+    expect(afterUpdate?.keyboardBrand, 'Monsgeek');
+    expect(afterUpdate?.keyboardModel, 'M1');
+    expect(afterUpdate?.keyboardCustomization?.keycapShape, KeycapShape.round);
+    expect(afterUpdate?.keyboardCustomization?.rgbColor, 0xFFFF5A36);
+
+    // Prove the blob landed as JSON text in SQLite, not just in the
+    // riverpod-cached value.
+    final row = await container
+        .read(guestProfileDaoProvider)
+        .getActiveProfile();
+    expect(row?.keyboardCustomizationJson, isNotNull);
+    expect(row?.keyboardCustomizationJson, contains('keyA'));
+  });
+
+  test('a profile-flair update never clobbers the keyboard setup (and vice '
+      'versa) — the two editors own disjoint columns', () async {
+    final notifier = container.read(activeProfileControllerProvider.notifier);
+    await notifier.create('nova');
+    await notifier.updateKeyboardSetup(
+      keyboardBrand: 'Monsgeek',
+      keyboardModel: 'M1',
+      keyboardCustomization: const KeyboardCustomization(
+        switchType: SwitchType.tactile,
+      ),
+    );
+
+    await notifier.updateCustomization(
+      favoriteQuote: 'Simple is better',
+      githubUsername: 'sazar',
+    );
+
+    var row = await container.read(guestProfileDaoProvider).getActiveProfile();
+    expect(row?.favoriteQuote, 'Simple is better');
+    expect(row?.keyboardBrand, 'Monsgeek');
+    expect(row?.keyboardModel, 'M1');
+    expect(row?.keyboardCustomizationJson, isNotNull);
+
+    await notifier.updateKeyboardSetup(
+      keyboardLayout: KeyboardLayout.qwerty,
+      keyboardBrand: 'Monsgeek',
+      keyboardModel: 'M1',
+      keyboardCustomization: const KeyboardCustomization(rgbEnabled: true),
+    );
+
+    row = await container.read(guestProfileDaoProvider).getActiveProfile();
+    expect(row?.keyboardLayout, 'qwerty');
+    expect(row?.favoriteQuote, 'Simple is better');
+    expect(row?.githubUsername, 'sazar');
+  });
 }

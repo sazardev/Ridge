@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/core/widgets/escape_to_pop.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
-import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
-import 'package:ridge/features/profile/presentation/keyboard_model_brand_matching.dart';
 import 'package:ridge/features/profile/presentation/profile_labels.dart';
 import 'package:ridge/features/profile/presentation/profile_suggestions.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
-import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_visual.dart';
+import 'package:ridge/features/profile/presentation/widgets/suggestion_field.dart';
 
-/// Full-screen editor for the Guest Profile — username plus every
-/// self-expression field (favorite languages, keyboard layout/brand/model,
-/// favorite quote/programmer) in one place, pushed as `/profile/edit`
-/// with the current [GuestProfile] as `extra`.
+/// Full-screen editor for the Guest Profile — username plus the
+/// profile-flair fields (favorite languages, favorite quote/programmer,
+/// links) in one place, pushed as `/profile/edit` with the current
+/// [GuestProfile] as `extra`.
+///
+/// The keyboard (layout, brand/model and the advanced customization) has
+/// its own dedicated editor at `/profile/keyboard/customize`, reachable
+/// from the keyboard card below; the two forms write disjoint columns so
+/// neither can clobber the other.
 class EditProfileScreen extends ConsumerStatefulWidget {
   /// Creates the screen pre-filled with [profile]'s current values.
   const new({required this.profile, super.key});
@@ -35,9 +40,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   late final Set<FavoriteLanguage> _languages = {
     ...widget.profile.favoriteLanguages,
   };
-  late KeyboardLayout? _layout = widget.profile.keyboardLayout;
-  String _brand = '';
-  String _model = '';
   String _programmer = '';
   late final TextEditingController _quoteController = TextEditingController(
     text: widget.profile.favoriteQuote ?? '',
@@ -66,8 +68,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _brand = widget.profile.keyboardBrand ?? '';
-    _model = widget.profile.keyboardModel ?? '';
     _programmer = widget.profile.favoriteProgrammer ?? '';
     _languageSearchController.addListener(() {
       setState(() {
@@ -111,9 +111,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
     final customizationResult = await notifier.updateCustomization(
       favoriteLanguages: _languages.toList(),
-      keyboardLayout: _layout,
-      keyboardBrand: _brand,
-      keyboardModel: _model,
       favoriteQuote: _quoteController.text,
       favoriteProgrammer: _programmer,
       githubUsername: _githubController.text,
@@ -247,51 +244,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   ],
                 ),
               const SizedBox(height: 28),
-              Text(
-                l10n.profileKeyboardLayoutLabel,
-                style: textTheme.titleMedium,
-              ),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  for (final layout in KeyboardLayout.values)
-                    ChoiceChip(
-                      label: Text(layout.label(l10n)),
-                      selected: _layout == layout,
-                      onSelected: (selected) =>
-                          setState(() => _layout = selected ? layout : null),
-                    ),
-                ],
-              ),
+              _KeyboardCard(profile: widget.profile),
               const SizedBox(height: 28),
-              _SuggestionField(
-                label: l10n.profileKeyboardBrandLabel,
-                icon: LucideIcons.keyboard300,
-                initialValue: _brand,
-                suggestions: kKeyboardBrandSuggestions,
-                onChanged: (value) => setState(() => _brand = value),
-              ),
-              const SizedBox(height: 16),
-              _SuggestionField(
-                label: l10n.profileKeyboardModelLabel,
-                icon: LucideIcons.memoryStick300,
-                initialValue: _model,
-                suggestions: kKeyboardModelSuggestions,
-                // Once a brand is chosen, its models are prioritized so
-                // the user isn't forced to type the brand name a second
-                // time here — see `_preferBrandMatches`'s doc comment
-                // for why this reorders rather than filters.
-                preferredPrefix: _brand,
-                onChanged: (value) => setState(() => _model = value),
-              ),
-              if (_model.isNotEmpty) ...[
-                const SizedBox(height: 16),
-                KeyboardVisual(model: _model),
-              ],
-              const SizedBox(height: 16),
-              _SuggestionField(
+              SuggestionField(
                 label: l10n.profileFavoriteProgrammerLabel,
                 icon: LucideIcons.user300,
                 initialValue: _programmer,
@@ -340,76 +295,88 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   }
 }
 
-/// A text field backed by a curated [suggestions] list — the autocomplete
-/// overlay narrows as the user types, but any value (including one not in
-/// the list) is still accepted, since these are just a fast-completion
-/// aid, not a closed set of valid answers.
-class _SuggestionField extends StatelessWidget {
-  const new({
-    required this.label,
-    required this.icon,
-    required this.initialValue,
-    required this.suggestions,
-    required this.onChanged,
-    this.preferredPrefix,
-  });
+/// A read-only summary of the profile's keyboard setup that links to the
+/// dedicated editor at `/profile/keyboard/customize`. The keyboard earns
+/// its own screen — a big live 3D preview plus many controls — so this
+/// form only shows what's currently set and hands off; both forms write
+/// disjoint columns of the same profile row.
+class _KeyboardCard extends StatelessWidget {
+  const new({required this.profile});
 
-  final String label;
-  final IconData icon;
-  final String initialValue;
-  final List<String> suggestions;
-  final ValueChanged<String> onChanged;
-
-  /// When set (e.g. the keyboard brand the user already picked), matches
-  /// whose name starts with this — or one of its parenthesized aliases,
-  /// see `_brandTokens` — are shown ahead of the rest, so picking a brand
-  /// first means its models surface without retyping the brand name.
-  /// Never excludes anything: a query still searches every suggestion.
-  final String? preferredPrefix;
-
-  /// The most matches shown at once — plenty to scroll through, but a
-  /// hard ceiling so a broad query (e.g. a single common letter) against
-  /// a long suggestion list never has to lay out hundreds of rows just to
-  /// render the first few.
-  static const _maxOptions = 30;
+  final GuestProfile profile;
 
   @override
   Widget build(BuildContext context) {
-    return Autocomplete<String>(
-      initialValue: TextEditingValue(text: initialValue),
-      optionsBuilder: (value) {
-        if (value.text.isEmpty) return const Iterable<String>.empty();
-        final query = value.text.toLowerCase();
-        final prefix = preferredPrefix;
-        final pool = (prefix == null || prefix.isEmpty)
-            ? suggestions
-            : preferBrandMatches(suggestions, prefix);
-        // Single pass: prefix matches ("Key" -> "Keychron...") are the
-        // most relevant, so they're returned ahead of mid-string ones —
-        // brand-preferred entries (see `pool` above) sort ahead within
-        // each of those two groups too.
-        final startsWith = <String>[];
-        final contains = <String>[];
-        for (final suggestion in pool) {
-          final lower = suggestion.toLowerCase();
-          if (lower.startsWith(query)) {
-            startsWith.add(suggestion);
-          } else if (lower.contains(query)) {
-            contains.add(suggestion);
-          }
-        }
-        return startsWith.followedBy(contains).take(_maxOptions);
-      },
-      onSelected: onChanged,
-      fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
-        return TextField(
-          controller: controller,
-          focusNode: focusNode,
-          textInputAction: TextInputAction.next,
-          onChanged: onChanged,
-          decoration: InputDecoration(labelText: label, prefixIcon: Icon(icon)),
-        );
-      },
+    final l10n = AppLocalizations.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final shapes = AppShapes.of(context);
+    final brand = profile.keyboardBrand;
+    final model = profile.keyboardModel;
+    final hasModel = model != null && model.isNotEmpty;
+    final layout = profile.keyboardLayout;
+    final customization = profile.keyboardCustomization;
+
+    final title = hasModel
+        ? [if (brand != null && brand.isNotEmpty) brand, model].join(' ')
+        : l10n.profileKeyboardNotSet;
+    final details = <String>[
+      if (layout != null) layout.label(l10n),
+      if (customization != null) customization.keycapShape.label(l10n),
+      if (customization?.rgbEnabled ?? false)
+        l10n.profileKeyboardRgbEnabledLabel,
+    ];
+
+    return Card(
+      shape: shapes.largeShape,
+      child: InkWell(
+        onTap: () =>
+            context.push('/profile/keyboard/customize', extra: profile),
+        customBorder: shapes.largeShape,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            children: [
+              Icon(LucideIcons.keyboard300, color: colorScheme.primary),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.profileKeyboardSectionTitle,
+                      style: textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.bodyMedium,
+                    ),
+                    if (details.isNotEmpty) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        details.join(' · '),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Icon(
+                LucideIcons.chevronRight300,
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

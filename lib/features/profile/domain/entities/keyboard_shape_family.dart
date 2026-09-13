@@ -5,6 +5,11 @@
 /// model are free text with no guaranteed spec sheet, so per-model
 /// pixel-accurate geometry isn't something this app curates or maintains.
 /// See `keyboard_shape_lookup.dart` for the curated model → family map.
+///
+/// Lives in `domain` (not `presentation`) because it became part of the
+/// persisted keyboard customization: a user can override the family their
+/// board is drawn with (`KeyboardCustomization.shapeFamily`), and a
+/// domain entity may never depend on a presentation type.
 enum KeyboardShapeFamily {
   /// 104/105-key, includes a numpad (e.g. Cooler Master MK770, Corsair
   /// K95, Royal Kludge RK100).
@@ -29,4 +34,9 @@ enum KeyboardShapeFamily {
   /// Physically split into two halves (e.g. ZSA Moonlander/Voyager,
   /// ErgoDox EZ, Kinesis Advantage2/360/Freestyle Edge).
   splitErgo,
+
+  /// A blank canvas: no predefined key geometry at all — the user builds
+  /// the whole board from extra keys (the "100% custom build" option, for
+  /// homemade/macro-pad boards no curated model describes).
+  custom,
 }

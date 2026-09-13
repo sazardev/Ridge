@@ -6,6 +6,9 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
+import 'package:ridge/features/profile/presentation/keyboard_specs.dart';
+import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_customization_geometry.dart';
 import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_visual.dart';
 
 /// The profile screen's keyboard hero: a large rendering of the active
@@ -160,16 +163,25 @@ class _ProfileKeyboardHeroCardState
   @override
   Widget build(BuildContext context) {
     final model = widget.profile.keyboardModel;
-    if (model == null || model.isEmpty) return const SizedBox.shrink();
-
-    final keys = resolveKeyboardKeySpecs(ref, model);
-    if (keys == null || keys.isEmpty) return const SizedBox.shrink();
+    final customization =
+        widget.profile.keyboardCustomization ?? KeyboardCustomization.empty;
+    final resolved = resolveKeyboardKeySpecs(ref, model, customization);
+    if (resolved == null) return const SizedBox.shrink();
+    if (applyKeyboardCustomization(
+      baseKeys: resolved,
+      customization: customization,
+    ).isEmpty) {
+      return const SizedBox.shrink();
+    }
 
     final l10n = AppLocalizations.of(context);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final brand = widget.profile.keyboardBrand;
-    final caption = (brand?.isNotEmpty ?? false) ? '$brand $model' : model;
+    final caption = (brand?.isNotEmpty ?? false)
+        ? '$brand ${model ?? ''}'.trim()
+        : (model ?? l10n.profileKeyboardSectionTitle);
+    final specSummary = keyboardSpecSummary(widget.profile, l10n);
 
     return MouseRegion(
       key: _cardKey,
@@ -195,6 +207,7 @@ class _ProfileKeyboardHeroCardState
                   children: [
                     KeyboardVisual(
                       model: model,
+                      customization: customization,
                       height: ProfileKeyboardHeroCard._visualHeight,
                       pointerTilt: _pointer,
                       pointerTiltDegrees:
@@ -225,21 +238,49 @@ class _ProfileKeyboardHeroCardState
                         ),
                       ],
                     ),
+                    if (specSummary.isNotEmpty) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        specSummary.join(' · '),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),
             ),
-            // Sits above the board's pointer surface, so tapping it opens
-            // the viewer instead of pressing the key underneath.
+            // Sits above the board's pointer surface, so tapping these
+            // opens the editor/inspector instead of pressing the key
+            // underneath.
             Positioned(
               top: 4,
               right: 4,
-              child: IconButton(
-                onPressed: () =>
-                    context.push('/profile/keyboard', extra: widget.profile),
-                tooltip: l10n.profileKeyboardViewFullscreenAction,
-                iconSize: 18,
-                icon: const Icon(LucideIcons.maximize2),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () => context.push(
+                      '/profile/keyboard/customize',
+                      extra: widget.profile,
+                    ),
+                    tooltip: l10n.profileKeyboardCustomizeAction,
+                    iconSize: 18,
+                    icon: const Icon(LucideIcons.pencil),
+                  ),
+                  IconButton(
+                    onPressed: () => context.push(
+                      '/profile/keyboard',
+                      extra: widget.profile,
+                    ),
+                    tooltip: l10n.profileKeyboardViewFullscreenAction,
+                    iconSize: 18,
+                    icon: const Icon(LucideIcons.maximize2),
+                  ),
+                ],
               ),
             ),
           ],

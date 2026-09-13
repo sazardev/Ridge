@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_key_spec.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_visual_layout.dart';
 import 'package:ridge/features/profile/domain/repositories/keyboard_visual_layout_source.dart';
@@ -57,6 +58,8 @@ Future<void> _pump(
   Offset rotation = Offset.zero,
   bool interactive = true,
   bool interactiveSuspended = false,
+  KeyboardCustomization customization = KeyboardCustomization.empty,
+  Set<String> pressedPhysicalKeys = const {},
 }) async {
   await tester.pumpWidget(
     ProviderScope(
@@ -71,12 +74,14 @@ Future<void> _pump(
         home: Scaffold(
           body: KeyboardVisual(
             model: model,
+            customization: customization,
             tiltDegrees: tiltDegrees,
             pointerTilt: pointerTilt,
             pointerTiltDegrees: pointerTiltDegrees,
             rotation: rotation,
             interactive: interactive,
             interactiveSuspended: interactiveSuspended,
+            pressedPhysicalKeys: pressedPhysicalKeys,
           ),
         ),
       ),
@@ -95,6 +100,30 @@ const _curatedOneKey = {
   'Glorious GMMK Pro': KeyboardVisualLayout(
     model: 'Glorious GMMK Pro',
     keys: [_oneKeySpec],
+  ),
+};
+
+/// A layout whose single cap prints `A`, so the physical key `keyA` maps
+/// onto it for the real-keystroke reaction.
+const _curatedLabeledKey = {
+  'Test Board': KeyboardVisualLayout(
+    model: 'Test Board',
+    keys: [
+      KeyboardKeySpec(
+        x: 0,
+        y: 0,
+        w: 1,
+        h: 1,
+        x2: 0,
+        y2: 0,
+        w2: 1,
+        h2: 1,
+        rotationAngle: 0,
+        rotationX: 0,
+        rotationY: 0,
+        label: 'A',
+      ),
+    ],
   ),
 };
 
@@ -278,5 +307,36 @@ void main() {
 
     expect(_painter(tester).yawDegrees, 0);
     expect(_painter(tester).pitchDegrees, 0);
+  });
+
+  testWidgets('a held physical key sinks and pulses its matching cap', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      'Test Board',
+      curated: _curatedLabeledKey,
+      customization: const KeyboardCustomization(rgbEnabled: true),
+      pressedPhysicalKeys: const {'keyA'},
+    );
+
+    // Let the effects ticker advance one real frame's worth of time.
+    await tester.pump(const Duration(milliseconds: 60));
+    final painter = _painter(tester);
+
+    expect(painter.keyPressLevels, isNotNull);
+    expect(painter.keyPressLevels!.first, greaterThan(0));
+    expect(painter.keyPulses, isNotNull);
+    expect(painter.keyPulses!.first, greaterThan(0));
+
+    // Release the key and let everything settle so the ticker stops.
+    await _pump(
+      tester,
+      'Test Board',
+      curated: _curatedLabeledKey,
+      customization: const KeyboardCustomization(rgbEnabled: true),
+    );
+    await tester.pump(const Duration(seconds: 2));
+    expect(_painter(tester).keyPressLevels!.first, 0);
   });
 }

@@ -20,6 +20,7 @@ import 'package:ridge/features/practice/presentation/providers/practice_session_
 import 'package:ridge/features/practice/presentation/widgets/keystroke_capture_autoscroll.dart';
 import 'package:ridge/features/practice/presentation/widgets/keystroke_span_builder.dart';
 import 'package:ridge/features/practice/presentation/widgets/typing_progress_bar.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 
 /// The capture engine itself: renders [snippet]'s code with live
 /// per-character green/red feedback and turns real physical keyboard
@@ -165,6 +166,16 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
   }
 
   String? _resolveChar(KeyEvent event, PhysicalKeyId physicalKeyId) {
+    // A functional keyboard remap (profile customization) wins over both
+    // the platform character and the fallback — see
+    // `keyboardRemapsByNameProvider`. Read per keydown so a remap saved
+    // between sessions (or even mid-session) takes effect live.
+    final remap = ref.read(keyboardRemapsByNameProvider)[physicalKeyId.name];
+    if (remap != null) {
+      return HardwareKeyboard.instance.isShiftPressed
+          ? remap.shiftedCharacter ?? remap.character
+          : remap.character;
+    }
     // Tab and Enter are handled separately, before this is ever called —
     // see `_handleKeyEvent`'s dedicated branches calling `ingestTabKey`/
     // `ingestEnterKey`.

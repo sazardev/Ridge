@@ -162,6 +162,17 @@ class $GuestProfilesTable extends GuestProfiles
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _keyboardCustomizationJsonMeta =
+      const VerificationMeta('keyboardCustomizationJson');
+  @override
+  late final GeneratedColumn<String> keyboardCustomizationJson =
+      GeneratedColumn<String>(
+        'keyboard_customization_json',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -178,6 +189,7 @@ class $GuestProfilesTable extends GuestProfiles
     platform,
     operatingSystemVersion,
     deviceModel,
+    keyboardCustomizationJson,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -305,6 +317,15 @@ class $GuestProfilesTable extends GuestProfiles
         ),
       );
     }
+    if (data.containsKey('keyboard_customization_json')) {
+      context.handle(
+        _keyboardCustomizationJsonMeta,
+        keyboardCustomizationJson.isAcceptableOrUnknown(
+          data['keyboard_customization_json']!,
+          _keyboardCustomizationJsonMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -369,6 +390,10 @@ class $GuestProfilesTable extends GuestProfiles
       deviceModel: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}device_model'],
+      ),
+      keyboardCustomizationJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}keyboard_customization_json'],
       ),
     );
   }
@@ -435,6 +460,16 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
   /// when never detected or the platform doesn't expose one (Linux,
   /// Windows, Web).
   final String? deviceModel;
+
+  /// The user's JSON-encoded `KeyboardCustomization` (advanced keyboard
+  /// personalization: keycap shape, custom colors, RGB, switch/material
+  /// metadata, per-key legend overrides, extra keys and functional
+  /// remaps), or `null` if never customized. One JSON blob rather than
+  /// normalized columns/tables because it's a single self-expression
+  /// object only ever read back wholesale — same reasoning as
+  /// `progress_snapshot_cache`'s report blobs. See
+  /// `keyboard_customization_mapper.dart` for the encode/decode pair.
+  final String? keyboardCustomizationJson;
   const GuestProfileRow({
     required this.id,
     required this.username,
@@ -450,6 +485,7 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     this.platform,
     this.operatingSystemVersion,
     this.deviceModel,
+    this.keyboardCustomizationJson,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -492,6 +528,11 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     if (!nullToAbsent || deviceModel != null) {
       map['device_model'] = Variable<String>(deviceModel);
     }
+    if (!nullToAbsent || keyboardCustomizationJson != null) {
+      map['keyboard_customization_json'] = Variable<String>(
+        keyboardCustomizationJson,
+      );
+    }
     return map;
   }
 
@@ -533,6 +574,10 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       deviceModel: deviceModel == null && nullToAbsent
           ? const Value.absent()
           : Value(deviceModel),
+      keyboardCustomizationJson:
+          keyboardCustomizationJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(keyboardCustomizationJson),
     );
   }
 
@@ -562,6 +607,9 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
         json['operatingSystemVersion'],
       ),
       deviceModel: serializer.fromJson<String?>(json['deviceModel']),
+      keyboardCustomizationJson: serializer.fromJson<String?>(
+        json['keyboardCustomizationJson'],
+      ),
     );
   }
   @override
@@ -584,6 +632,9 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
         operatingSystemVersion,
       ),
       'deviceModel': serializer.toJson<String?>(deviceModel),
+      'keyboardCustomizationJson': serializer.toJson<String?>(
+        keyboardCustomizationJson,
+      ),
     };
   }
 
@@ -602,6 +653,7 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     Value<String?> platform = const Value.absent(),
     Value<String?> operatingSystemVersion = const Value.absent(),
     Value<String?> deviceModel = const Value.absent(),
+    Value<String?> keyboardCustomizationJson = const Value.absent(),
   }) => GuestProfileRow(
     id: id ?? this.id,
     username: username ?? this.username,
@@ -633,6 +685,9 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
         ? operatingSystemVersion.value
         : this.operatingSystemVersion,
     deviceModel: deviceModel.present ? deviceModel.value : this.deviceModel,
+    keyboardCustomizationJson: keyboardCustomizationJson.present
+        ? keyboardCustomizationJson.value
+        : this.keyboardCustomizationJson,
   );
   GuestProfileRow copyWithCompanion(GuestProfilesCompanion data) {
     return GuestProfileRow(
@@ -670,6 +725,9 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       deviceModel: data.deviceModel.present
           ? data.deviceModel.value
           : this.deviceModel,
+      keyboardCustomizationJson: data.keyboardCustomizationJson.present
+          ? data.keyboardCustomizationJson.value
+          : this.keyboardCustomizationJson,
     );
   }
 
@@ -689,7 +747,8 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
           ..write('websiteUrl: $websiteUrl, ')
           ..write('platform: $platform, ')
           ..write('operatingSystemVersion: $operatingSystemVersion, ')
-          ..write('deviceModel: $deviceModel')
+          ..write('deviceModel: $deviceModel, ')
+          ..write('keyboardCustomizationJson: $keyboardCustomizationJson')
           ..write(')'))
         .toString();
   }
@@ -710,6 +769,7 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     platform,
     operatingSystemVersion,
     deviceModel,
+    keyboardCustomizationJson,
   );
   @override
   bool operator ==(Object other) =>
@@ -728,7 +788,8 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
           other.websiteUrl == this.websiteUrl &&
           other.platform == this.platform &&
           other.operatingSystemVersion == this.operatingSystemVersion &&
-          other.deviceModel == this.deviceModel);
+          other.deviceModel == this.deviceModel &&
+          other.keyboardCustomizationJson == this.keyboardCustomizationJson);
 }
 
 class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
@@ -746,6 +807,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
   final Value<String?> platform;
   final Value<String?> operatingSystemVersion;
   final Value<String?> deviceModel;
+  final Value<String?> keyboardCustomizationJson;
   final Value<int> rowid;
   const GuestProfilesCompanion({
     this.id = const Value.absent(),
@@ -762,6 +824,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     this.platform = const Value.absent(),
     this.operatingSystemVersion = const Value.absent(),
     this.deviceModel = const Value.absent(),
+    this.keyboardCustomizationJson = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   GuestProfilesCompanion.insert({
@@ -779,6 +842,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     this.platform = const Value.absent(),
     this.operatingSystemVersion = const Value.absent(),
     this.deviceModel = const Value.absent(),
+    this.keyboardCustomizationJson = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        username = Value(username),
@@ -798,6 +862,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     Expression<String>? platform,
     Expression<String>? operatingSystemVersion,
     Expression<String>? deviceModel,
+    Expression<String>? keyboardCustomizationJson,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -816,6 +881,8 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
       if (operatingSystemVersion != null)
         'operating_system_version': operatingSystemVersion,
       if (deviceModel != null) 'device_model': deviceModel,
+      if (keyboardCustomizationJson != null)
+        'keyboard_customization_json': keyboardCustomizationJson,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -835,6 +902,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     Value<String?>? platform,
     Value<String?>? operatingSystemVersion,
     Value<String?>? deviceModel,
+    Value<String?>? keyboardCustomizationJson,
     Value<int>? rowid,
   }) {
     return GuestProfilesCompanion(
@@ -853,6 +921,8 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
       operatingSystemVersion:
           operatingSystemVersion ?? this.operatingSystemVersion,
       deviceModel: deviceModel ?? this.deviceModel,
+      keyboardCustomizationJson:
+          keyboardCustomizationJson ?? this.keyboardCustomizationJson,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -904,6 +974,11 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     if (deviceModel.present) {
       map['device_model'] = Variable<String>(deviceModel.value);
     }
+    if (keyboardCustomizationJson.present) {
+      map['keyboard_customization_json'] = Variable<String>(
+        keyboardCustomizationJson.value,
+      );
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -927,6 +1002,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
           ..write('platform: $platform, ')
           ..write('operatingSystemVersion: $operatingSystemVersion, ')
           ..write('deviceModel: $deviceModel, ')
+          ..write('keyboardCustomizationJson: $keyboardCustomizationJson, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -6914,6 +6990,7 @@ typedef $$GuestProfilesTableCreateCompanionBuilder =
       Value<String?> platform,
       Value<String?> operatingSystemVersion,
       Value<String?> deviceModel,
+      Value<String?> keyboardCustomizationJson,
       Value<int> rowid,
     });
 typedef $$GuestProfilesTableUpdateCompanionBuilder =
@@ -6932,6 +7009,7 @@ typedef $$GuestProfilesTableUpdateCompanionBuilder =
       Value<String?> platform,
       Value<String?> operatingSystemVersion,
       Value<String?> deviceModel,
+      Value<String?> keyboardCustomizationJson,
       Value<int> rowid,
     });
 
@@ -7011,6 +7089,11 @@ class $$GuestProfilesTableFilterComposer
 
   ColumnFilters<String> get deviceModel => $composableBuilder(
     column: $table.deviceModel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get keyboardCustomizationJson => $composableBuilder(
+    column: $table.keyboardCustomizationJson,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -7093,6 +7176,11 @@ class $$GuestProfilesTableOrderingComposer
     column: $table.deviceModel,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get keyboardCustomizationJson => $composableBuilder(
+    column: $table.keyboardCustomizationJson,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$GuestProfilesTableAnnotationComposer
@@ -7165,6 +7253,11 @@ class $$GuestProfilesTableAnnotationComposer
     column: $table.deviceModel,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get keyboardCustomizationJson => $composableBuilder(
+    column: $table.keyboardCustomizationJson,
+    builder: (column) => column,
+  );
 }
 
 class $$GuestProfilesTableTableManager
@@ -7212,6 +7305,7 @@ class $$GuestProfilesTableTableManager
                 Value<String?> platform = const Value.absent(),
                 Value<String?> operatingSystemVersion = const Value.absent(),
                 Value<String?> deviceModel = const Value.absent(),
+                Value<String?> keyboardCustomizationJson = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => GuestProfilesCompanion(
                 id: id,
@@ -7228,6 +7322,7 @@ class $$GuestProfilesTableTableManager
                 platform: platform,
                 operatingSystemVersion: operatingSystemVersion,
                 deviceModel: deviceModel,
+                keyboardCustomizationJson: keyboardCustomizationJson,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -7246,6 +7341,7 @@ class $$GuestProfilesTableTableManager
                 Value<String?> platform = const Value.absent(),
                 Value<String?> operatingSystemVersion = const Value.absent(),
                 Value<String?> deviceModel = const Value.absent(),
+                Value<String?> keyboardCustomizationJson = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => GuestProfilesCompanion.insert(
                 id: id,
@@ -7262,6 +7358,7 @@ class $$GuestProfilesTableTableManager
                 platform: platform,
                 operatingSystemVersion: operatingSystemVersion,
                 deviceModel: deviceModel,
+                keyboardCustomizationJson: keyboardCustomizationJson,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

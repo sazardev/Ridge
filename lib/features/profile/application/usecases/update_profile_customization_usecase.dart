@@ -1,19 +1,20 @@
 import 'package:ridge/core/error/app_failure.dart';
 import 'package:ridge/core/utils/result.dart';
 import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
-import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
 import 'package:ridge/features/profile/domain/repositories/profile_repository.dart';
 
-/// Trims and validates the Guest Profile's self-expression fields, then
-/// persists all of them together through the repository port.
+/// Trims and validates the Guest Profile's profile-flair fields, then
+/// persists all of them together through the repository port. The
+/// keyboard setup has its own use case (`UpdateKeyboardSetupUseCase`) so
+/// the two editors never overwrite each other's columns.
 class UpdateProfileCustomizationUseCase {
   /// Creates the use case over the given [ProfileRepository] port.
   const new(this._repository);
 
   final ProfileRepository _repository;
 
-  /// The longest a free-text field (keyboard brand/model, favorite
-  /// programmer) this app accepts.
+  /// The longest a free-text field (favorite programmer) this app
+  /// accepts.
   static const maxShortTextLength = 60;
 
   /// The longest favorite-quote text this app accepts.
@@ -37,34 +38,11 @@ class UpdateProfileCustomizationUseCase {
   /// (clearing that field) rather than stored as an empty string.
   Future<Result<void, AppFailure>> call({
     List<FavoriteLanguage> favoriteLanguages = const [],
-    KeyboardLayout? keyboardLayout,
-    String? keyboardBrand,
-    String? keyboardModel,
     String? favoriteQuote,
     String? favoriteProgrammer,
     String? githubUsername,
     String? websiteUrl,
   }) {
-    final cleanBrand = _clean(keyboardBrand);
-    if (cleanBrand != null && cleanBrand.length > maxShortTextLength) {
-      return Future.value(
-        const Result.err(
-          ValidationFailure(
-            'Keyboard brand must be $maxShortTextLength characters or fewer',
-          ),
-        ),
-      );
-    }
-    final cleanModel = _clean(keyboardModel);
-    if (cleanModel != null && cleanModel.length > maxShortTextLength) {
-      return Future.value(
-        const Result.err(
-          ValidationFailure(
-            'Keyboard model must be $maxShortTextLength characters or fewer',
-          ),
-        ),
-      );
-    }
     final cleanProgrammer = _clean(favoriteProgrammer);
     if (cleanProgrammer != null &&
         cleanProgrammer.length > maxShortTextLength) {
@@ -117,9 +95,6 @@ class UpdateProfileCustomizationUseCase {
 
     return _repository.updateCustomization(
       favoriteLanguages: favoriteLanguages,
-      keyboardLayout: keyboardLayout,
-      keyboardBrand: cleanBrand,
-      keyboardModel: cleanModel,
       favoriteQuote: cleanQuote,
       favoriteProgrammer: cleanProgrammer,
       githubUsername: cleanGithub,

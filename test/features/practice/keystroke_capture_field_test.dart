@@ -23,6 +23,8 @@ import 'package:ridge/features/practice/presentation/providers/practice_provider
 import 'package:ridge/features/practice/presentation/providers/practice_session_controller.dart';
 import 'package:ridge/features/practice/presentation/services/keystroke_sound_player.dart';
 import 'package:ridge/features/practice/presentation/widgets/keystroke_capture_field.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
+import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:ridge/features/settings/domain/entities/app_sound_pack.dart';
 
 const _snippet = Snippet(
@@ -54,6 +56,10 @@ ProviderContainer _createContainer() => ProviderContainer(
     keystrokeSoundPlayerProvider.overrideWithValue(
       KeystrokeSoundPlayer.silent(AppSoundPack.mechanical),
     ),
+    // The field reads the active profile's remaps on every keydown; these
+    // tests aren't about remapping, so the map is pinned empty instead of
+    // letting the real profile stack open the drift database.
+    keyboardRemapsByNameProvider.overrideWithValue(const {}),
   ],
 );
 
@@ -126,6 +132,27 @@ const _burstSnippet = Snippet(
   titleEn: 'Burst snippet',
   titleEs: 'Snippet de ráfaga',
   code: 'abcdefghijklmnop',
+  sourceAttribution: 'hand-authored for test',
+  isActive: true,
+  tldrEn: 'Test tl;dr.',
+  tldrEs: 'Tl;dr de prueba.',
+  explanationEn: 'Test explanation.',
+  explanationEs: 'Explicación de prueba.',
+);
+
+/// A snippet whose whole code is the remap's output (`qZ`), so a single
+/// test proves both the unshifted and the shifted remap path end to end.
+const _remapSnippet = Snippet(
+  id: SnippetId('test-snippet-remap'),
+  revision: 1,
+  language: ProgrammingLanguage.go,
+  difficulty: Difficulty.beginner,
+  category: ContentCategory.variablesAndTypes,
+  symbolFocus: {},
+  length: SnippetLength.short,
+  titleEn: 'Remapped keys',
+  titleEs: 'Teclas remapeadas',
+  code: 'qZ',
   sourceAttribution: 'hand-authored for test',
   isActive: true,
   tldrEn: 'Test tl;dr.',
@@ -709,6 +736,73 @@ void main() {
       expect(state.recorder.expectedCharStatuses, [true, true]);
       expect(state.status, PracticeSessionStatus.result);
       expect(state.recorder.isComplete, isTrue);
+    },
+  );
+
+  testWidgets(
+    'a functional remap (profile keyboard customization) overrides the '
+    'platform character, shifted form included',
+    (tester) async {
+      final container = ProviderContainer(
+        overrides: [
+          keystrokeSoundPlayerProvider.overrideWithValue(
+            KeystrokeSoundPlayer.silent(AppSoundPack.mechanical),
+          ),
+          // The capture engine reads this map per keydown; overriding it
+          // directly keeps this test independent of the profile stack.
+          keyboardRemapsByNameProvider.overrideWithValue(const {
+            'keyA': KeyboardKeyRemap(
+              physicalKey: 'keyA',
+              character: 'q',
+              shiftedCharacter: 'Z',
+            ),
+          }),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            home: Scaffold(
+              body: KeystrokeCaptureField(snippet: _remapSnippet, mode: _mode),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      // Physical A, unshifted: the remap wins over the platform's 'a'.
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.keyA);
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.keyA);
+      await tester.pump();
+
+      var state = container.read(
+        practiceSessionControllerProvider(_remapSnippet, _mode),
+      );
+      expect(state.recorder.expectedCharStatuses, [true, null]);
+      expect(state.recorder.keystrokes.single.actualChar, 'q');
+      expect(state.recorder.keystrokes.single.result, KeystrokeResult.correct);
+      expect(
+        state.recorder.keystrokes.single.physicalKeyId,
+        PhysicalKeyId.keyA,
+        reason: 'metrics still record the real physical key, not the output',
+      );
+
+      // Shift + physical A: the shifted remap applies ('Z').
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.shiftLeft);
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.keyA);
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.keyA);
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.shiftLeft);
+      await tester.pumpAndSettle();
+
+      state = container.read(
+        practiceSessionControllerProvider(_remapSnippet, _mode),
+      );
+      expect(state.recorder.expectedCharStatuses, [true, true]);
+      expect(state.recorder.keystrokes.last.actualChar, 'Z');
+      expect(state.status, PracticeSessionStatus.result);
     },
   );
 }

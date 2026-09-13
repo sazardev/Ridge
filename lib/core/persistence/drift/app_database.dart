@@ -113,7 +113,7 @@ class AppDatabase extends _$AppDatabase {
       );
 
   @override
-  int get schemaVersion => 16;
+  int get schemaVersion => 17;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -266,6 +266,17 @@ class AppDatabase extends _$AppDatabase {
       if (from < 16) {
         await m.addColumn(guestProfiles, guestProfiles.githubUsername);
         await m.addColumn(guestProfiles, guestProfiles.websiteUrl);
+      }
+      // v16 -> v17: added the nullable keyboard_customization_json column
+      // to guest_profiles for the advanced keyboard editor (keycap shape,
+      // custom colors, RGB, switch/material metadata, per-key overrides,
+      // extra keys and functional remaps). Existing rows get NULL — an
+      // un-customized keyboard renders exactly as before.
+      if (from < 17) {
+        await m.addColumn(
+          guestProfiles,
+          guestProfiles.keyboardCustomizationJson,
+        );
       }
     },
   );

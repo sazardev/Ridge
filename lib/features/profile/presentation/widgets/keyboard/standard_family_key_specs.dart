@@ -1,5 +1,5 @@
 import 'package:ridge/features/profile/domain/entities/keyboard_key_spec.dart';
-import 'package:ridge/features/profile/presentation/keyboard_shape_family.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_shape_family.dart';
 
 /// The generic fallback geometry for every [KeyboardShapeFamily] — an
 /// unlabeled grid of keycaps approximating that physical layout's size
@@ -23,33 +23,33 @@ List<KeyboardKeySpec> standardFamilyKeySpecsFor(KeyboardShapeFamily family) {
     case KeyboardShapeFamily.sixtyFive:
       const gap = 0.5;
       return _specsFromRows([
-        [..._numberRow, ..._navSide(gap)],
-        [..._topRow, ..._navSide(gap)],
+        [..._numberRow, ..._navSide(gap, 'Ins', 'Home', 'PgUp')],
+        [..._topRow, ..._navSide(gap, 'Del', 'End', 'PgDn')],
         _homeRow,
-        [..._bottomRow, ..._navCenteredKey(gap)],
-        [..._spaceRow, ..._navSide(gap)],
+        [..._bottomRow, ..._navCenteredKey(gap, '↑')],
+        [..._spaceRow, ..._navSide(gap, '←', '↓', '→')],
       ]);
 
     case KeyboardShapeFamily.seventyFive:
       const gap = 0.3;
       return _specsFromRows([
         _functionRow,
-        [..._numberRow, ..._navSide(gap)],
-        [..._topRow, ..._navSide(gap)],
+        [..._numberRow, ..._navSide(gap, 'Ins', 'Home', 'PgUp')],
+        [..._topRow, ..._navSide(gap, 'Del', 'End', 'PgDn')],
         _homeRow,
-        [..._bottomRow, ..._navCenteredKey(gap)],
-        [..._spaceRow, ..._navSide(gap)],
+        [..._bottomRow, ..._navCenteredKey(gap, '↑')],
+        [..._spaceRow, ..._navSide(gap, '←', '↓', '→')],
       ]);
 
     case KeyboardShapeFamily.tkl:
       const gap = 0.8;
       return _specsFromRows([
         _functionRow,
-        [..._numberRow, ..._navSide(gap)],
-        [..._topRow, ..._navSide(gap)],
+        [..._numberRow, ..._navSide(gap, 'Ins', 'Home', 'PgUp')],
+        [..._topRow, ..._navSide(gap, 'Del', 'End', 'PgDn')],
         _homeRow,
-        [..._bottomRow, ..._navCenteredKey(gap)],
-        [..._spaceRow, ..._navSide(gap)],
+        [..._bottomRow, ..._navCenteredKey(gap, '↑')],
+        [..._spaceRow, ..._navSide(gap, '←', '↓', '→')],
       ]);
 
     case KeyboardShapeFamily.fullSize:
@@ -86,6 +86,10 @@ List<KeyboardKeySpec> standardFamilyKeySpecsFor(KeyboardShapeFamily family) {
 
     case KeyboardShapeFamily.splitErgo:
       return _splitErgoKeySpecs();
+    case KeyboardShapeFamily.custom:
+      // A blank canvas: the user builds the whole board from extra keys
+      // (`KeyboardCustomization.extraKeys`), so the base layout is empty.
+      return const [];
   }
 }
 

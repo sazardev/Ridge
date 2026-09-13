@@ -1,13 +1,21 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/core/widgets/escape_to_pop.dart';
+import 'package:ridge/features/practice/presentation/physical_key_id_mapper.dart';
+import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
+import 'package:ridge/features/profile/presentation/keyboard_specs.dart';
+import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_customization_geometry.dart';
 import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_visual.dart';
 
 /// The fullscreen keyboard inspector reached from Profile's keyboard hero
@@ -20,7 +28,7 @@ import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_vi
 /// nav rail/bottom bar disappears and the board owns the screen; the
 /// `AppBar` keeps the model caption and the platform back affordance,
 /// and `EscapeToPop` gives desktop users the usual Escape-to-close.
-class KeyboardViewerScreen extends StatefulWidget {
+class KeyboardViewerScreen extends ConsumerStatefulWidget {
   /// Creates the viewer for [profile]'s keyboard model.
   const new({required this.profile, super.key});
 
@@ -30,10 +38,11 @@ class KeyboardViewerScreen extends StatefulWidget {
   final GuestProfile profile;
 
   @override
-  State<KeyboardViewerScreen> createState() => _KeyboardViewerScreenState();
+  ConsumerState<KeyboardViewerScreen> createState() =>
+      _KeyboardViewerScreenState();
 }
 
-class _KeyboardViewerScreenState extends State<KeyboardViewerScreen> {
+class _KeyboardViewerScreenState extends ConsumerState<KeyboardViewerScreen> {
   /// Degrees of orbit rotation per logical pixel of drag travel — the
   /// same feel as the hero card, so the small preview and the fullscreen
   /// inspector never disagree.
@@ -79,6 +88,30 @@ class _KeyboardViewerScreenState extends State<KeyboardViewerScreen> {
   /// Whether the board is being orbited/pinched, which yields the press
   /// feedback so a held key doesn't look stuck while the board moves.
   bool _dragging = false;
+
+  /// Physical keys held down on the real keyboard, by
+  /// `PhysicalKeyId.name` — the viewer doubles as a "try your own board"
+  /// playground: each real keystroke sinks and pulses its matching cap.
+  final Set<String> _heldPhysicalKeys = {};
+
+  /// Tracks real key down/up events. Always returns `ignored` so the
+  /// viewer's scroll shortcuts and Escape-to-pop keep working — this only
+  /// observes.
+  KeyEventResult _onKeyEvent(FocusNode node, KeyEvent event) {
+    final id = physicalKeyIdFor(event.physicalKey);
+    if (id == null) return KeyEventResult.ignored;
+    if (event is KeyDownEvent) {
+      if (_heldPhysicalKeys.add(id.name)) {
+        // Each real keystroke plays the app's typing click — the viewer
+        // doubles as the most immersive "try your board" surface.
+        unawaited(ref.read(keystrokeSoundPlayerProvider).playClick());
+        setState(() {});
+      }
+    } else if (event is KeyUpEvent) {
+      if (_heldPhysicalKeys.remove(id.name)) setState(() {});
+    }
+    return KeyEventResult.ignored;
+  }
 
   void _onScaleStart(ScaleStartDetails details) {
     _zoomAtScaleStart = _zoom;
@@ -143,13 +176,73 @@ class _KeyboardViewerScreenState extends State<KeyboardViewerScreen> {
     }
   }
 
+  /// Opens the full spec sheet — every keyboard metadata field the user
+  /// has set, straight from the shared `keyboardSpecRows` source.
+  void _showSpecs(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final rows = keyboardSpecRows(widget.profile, l10n);
+    unawaited(
+      showModalBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.keyboardSpecsTitle,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8),
+                if (rows.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      l10n.keyboardSpecsEmpty,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  )
+                else
+                  Flexible(
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: [
+                        for (final (label, value) in rows)
+                          _SpecRow(label: label, value: value),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final model = widget.profile.keyboardModel;
-    if (model == null || model.isEmpty) return const SizedBox.shrink();
+    final customization =
+        widget.profile.keyboardCustomization ?? KeyboardCustomization.empty;
+    final resolved = resolveKeyboardKeySpecs(ref, model, customization);
+    if (resolved == null) return const SizedBox.shrink();
+    if (applyKeyboardCustomization(
+      baseKeys: resolved,
+      customization: customization,
+    ).isEmpty) {
+      return const SizedBox.shrink();
+    }
 
     final brand = widget.profile.keyboardBrand;
-    final caption = (brand?.isNotEmpty ?? false) ? '$brand $model' : model;
+    final caption = (brand?.isNotEmpty ?? false)
+        ? '$brand ${model ?? ''}'.trim()
+        : (model ?? AppLocalizations.of(context).profileKeyboardSectionTitle);
     final l10n = AppLocalizations.of(context);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
@@ -157,7 +250,16 @@ class _KeyboardViewerScreenState extends State<KeyboardViewerScreen> {
 
     return EscapeToPop(
       child: Scaffold(
-        appBar: AppBar(title: Text(caption)),
+        appBar: AppBar(
+          title: Text(caption),
+          actions: [
+            IconButton(
+              onPressed: () => _showSpecs(context),
+              tooltip: l10n.keyboardSpecsTitle,
+              icon: const Icon(LucideIcons.info300),
+            ),
+          ],
+        ),
         body: SafeArea(
           child: Column(
             children: [
@@ -165,25 +267,31 @@ class _KeyboardViewerScreenState extends State<KeyboardViewerScreen> {
                 // The board can paint past the viewport once zoomed in;
                 // clipping keeps it from spilling over the controls.
                 child: ClipRect(
-                  child: Listener(
-                    onPointerSignal: _onPointerSignal,
-                    child: MouseRegion(
-                      cursor: _dragging
-                          ? SystemMouseCursors.grabbing
-                          : SystemMouseCursors.grab,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onScaleStart: _onScaleStart,
-                        onScaleUpdate: _onScaleUpdate,
-                        onScaleEnd: _onScaleEnd,
-                        child: LayoutBuilder(
-                          builder: (context, constraints) => Transform.scale(
-                            scale: _zoom,
-                            child: KeyboardVisual(
-                              model: model,
-                              height: constraints.maxHeight,
-                              rotation: _rotation,
-                              interactiveSuspended: _dragging,
+                  child: Focus(
+                    autofocus: true,
+                    onKeyEvent: _onKeyEvent,
+                    child: Listener(
+                      onPointerSignal: _onPointerSignal,
+                      child: MouseRegion(
+                        cursor: _dragging
+                            ? SystemMouseCursors.grabbing
+                            : SystemMouseCursors.grab,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onScaleStart: _onScaleStart,
+                          onScaleUpdate: _onScaleUpdate,
+                          onScaleEnd: _onScaleEnd,
+                          child: LayoutBuilder(
+                            builder: (context, constraints) => Transform.scale(
+                              scale: _zoom,
+                              child: KeyboardVisual(
+                                model: model,
+                                customization: customization,
+                                height: constraints.maxHeight,
+                                rotation: _rotation,
+                                interactiveSuspended: _dragging,
+                                pressedPhysicalKeys: _heldPhysicalKeys,
+                              ),
                             ),
                           ),
                         ),
@@ -243,6 +351,38 @@ class _KeyboardViewerScreenState extends State<KeyboardViewerScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// One label/value row of the viewer's spec sheet.
+class _SpecRow extends StatelessWidget {
+  const new({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 150,
+            child: Text(
+              label,
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ),
+          Expanded(child: Text(value, style: textTheme.bodyMedium)),
+        ],
       ),
     );
   }

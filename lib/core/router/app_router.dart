@@ -21,6 +21,7 @@ import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:ridge/features/profile/presentation/screens/create_profile_screen.dart';
 import 'package:ridge/features/profile/presentation/screens/edit_profile_screen.dart';
+import 'package:ridge/features/profile/presentation/screens/keyboard_customize_screen.dart';
 import 'package:ridge/features/profile/presentation/screens/keyboard_viewer_screen.dart';
 import 'package:ridge/features/profile/presentation/screens/profile_screen.dart';
 import 'package:ridge/features/progression/presentation/screens/progress_screen.dart';
@@ -166,6 +167,15 @@ GoRouter appRouter(Ref ref) {
         path: '/profile/keyboard',
         builder: (context, state) =>
             KeyboardViewerScreen(profile: state.extra! as GuestProfile),
+      ),
+      // Pushed as a non-shell route from the keyboard hero card's edit
+      // action and from the keyboard card in the profile editor — the
+      // dedicated keyboard editor: a pinned live 3D preview plus every
+      // keyboard metadata control, saved as one disjoint write.
+      GoRoute(
+        path: '/profile/keyboard/customize',
+        builder: (context, state) =>
+            KeyboardCustomizeScreen(profile: state.extra! as GuestProfile),
       ),
       // Pushed as a non-shell route reachable from the Practice hub's
       // "Browse all snippets" action — the catalog browser used to be

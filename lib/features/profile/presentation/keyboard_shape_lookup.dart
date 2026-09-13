@@ -1,4 +1,4 @@
-import 'package:ridge/features/profile/presentation/keyboard_shape_family.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_shape_family.dart';
 
 /// Curated `keyboardModel` string → [KeyboardShapeFamily] classification,
 /// one entry per non-`'Other'` value in `kKeyboardModelSuggestions`

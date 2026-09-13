@@ -4,7 +4,7 @@
 // addition to `kKeyboardModelSuggestions` can't silently ship unclassified
 // (falling through to "no illustration" without anyone noticing).
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ridge/features/profile/presentation/keyboard_shape_family.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_shape_family.dart';
 import 'package:ridge/features/profile/presentation/keyboard_shape_lookup.dart';
 import 'package:ridge/features/profile/presentation/profile_suggestions.dart';
 

@@ -5,10 +5,12 @@ import 'package:ridge/core/utils/result.dart';
 import 'package:ridge/features/profile/application/usecases/create_guest_profile_usecase.dart';
 import 'package:ridge/features/profile/application/usecases/ensure_device_info_usecase.dart';
 import 'package:ridge/features/profile/application/usecases/rename_profile_usecase.dart';
+import 'package:ridge/features/profile/application/usecases/update_keyboard_setup_usecase.dart';
 import 'package:ridge/features/profile/application/usecases/update_profile_customization_usecase.dart';
 import 'package:ridge/features/profile/application/usecases/watch_active_profile_usecase.dart';
 import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
 import 'package:ridge/features/profile/domain/repositories/device_info_source.dart';
 import 'package:ridge/features/profile/domain/repositories/profile_repository.dart';
@@ -58,6 +60,14 @@ UpdateProfileCustomizationUseCase updateProfileCustomizationUseCase(Ref ref) {
   );
 }
 
+/// Provides the [UpdateKeyboardSetupUseCase] for editing the Guest
+/// Profile's keyboard (brand, model, character layout and advanced
+/// customization) from the dedicated keyboard editor.
+@riverpod
+UpdateKeyboardSetupUseCase updateKeyboardSetupUseCase(Ref ref) {
+  return UpdateKeyboardSetupUseCase(ref.watch(profileRepositoryProvider));
+}
+
 /// Provides the [DeviceInfoSource] adapter.
 @Riverpod(keepAlive: true)
 DeviceInfoSource deviceInfoSource(Ref ref) => const DeviceInfoSourceImpl();
@@ -102,13 +112,10 @@ class ActiveProfileController extends _$ActiveProfileController {
     return ref.read(renameProfileUseCaseProvider)(newUsername);
   }
 
-  /// Updates the Guest Profile's self-expression fields — always all of
+  /// Updates the Guest Profile's profile-flair fields — always all of
   /// them together, since the editor is a single form.
   Future<Result<void, AppFailure>> updateCustomization({
     List<FavoriteLanguage> favoriteLanguages = const [],
-    KeyboardLayout? keyboardLayout,
-    String? keyboardBrand,
-    String? keyboardModel,
     String? favoriteQuote,
     String? favoriteProgrammer,
     String? githubUsername,
@@ -116,13 +123,26 @@ class ActiveProfileController extends _$ActiveProfileController {
   }) {
     return ref.read(updateProfileCustomizationUseCaseProvider)(
       favoriteLanguages: favoriteLanguages,
-      keyboardLayout: keyboardLayout,
-      keyboardBrand: keyboardBrand,
-      keyboardModel: keyboardModel,
       favoriteQuote: favoriteQuote,
       favoriteProgrammer: favoriteProgrammer,
       githubUsername: githubUsername,
       websiteUrl: websiteUrl,
+    );
+  }
+
+  /// Updates the Guest Profile's keyboard setup — always all of it
+  /// together, since the dedicated editor is a single form.
+  Future<Result<void, AppFailure>> updateKeyboardSetup({
+    KeyboardLayout? keyboardLayout,
+    String? keyboardBrand,
+    String? keyboardModel,
+    KeyboardCustomization? keyboardCustomization,
+  }) {
+    return ref.read(updateKeyboardSetupUseCaseProvider)(
+      keyboardLayout: keyboardLayout,
+      keyboardBrand: keyboardBrand,
+      keyboardModel: keyboardModel,
+      keyboardCustomization: keyboardCustomization,
     );
   }
 }
@@ -140,4 +160,21 @@ bool hasGuestProfile(Ref ref) {
   final profileState = ref.watch(activeProfileControllerProvider);
   if (!profileState.hasValue) return true;
   return profileState.value != null;
+}
+
+/// The active profile's functional keyboard remaps, indexed by
+/// `PhysicalKeyId.name` — read by `practice`'s capture engine on every
+/// keydown (a deliberately narrow cross-feature read: the keyboard being
+/// remapped is the profile's own). Empty while no profile or no remap
+/// exists; kept alive and recomputed from the profile stream, so a saved
+/// remap takes effect live, without restarting the session.
+@Riverpod(keepAlive: true)
+Map<String, KeyboardKeyRemap> keyboardRemapsByName(Ref ref) {
+  final remaps = ref
+      .watch(activeProfileControllerProvider)
+      .value
+      ?.keyboardCustomization
+      ?.remaps;
+  if (remaps == null || remaps.isEmpty) return const {};
+  return {for (final remap in remaps) remap.physicalKey: remap};
 }

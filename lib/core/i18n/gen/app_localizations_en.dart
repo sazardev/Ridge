@@ -114,7 +114,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileKeyboardViewerHint =>
-      'Drag to rotate · Pinch or scroll to zoom';
+      'Drag to rotate · Pinch or scroll to zoom · Type on your keyboard to feel it';
 
   @override
   String get profileKeyboardZoomInTooltip => 'Zoom in';
@@ -124,6 +124,389 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileKeyboardResetViewTooltip => 'Reset view';
+
+  @override
+  String get profileKeyboardSectionTitle => 'Keyboard';
+
+  @override
+  String get profileKeyboardCustomizeAction => 'Customize keyboard';
+
+  @override
+  String get profileKeyboardNotSet => 'No keyboard set yet';
+
+  @override
+  String get profileKeyboardRgbEnabledLabel => 'RGB';
+
+  @override
+  String get keyboardCustomizeTitle => 'Customize keyboard';
+
+  @override
+  String get keyboardCustomizeBrandSectionTitle => 'Brand & model';
+
+  @override
+  String get keyboardCustomizeShapeSectionTitle => 'Shape & size';
+
+  @override
+  String get keyboardCustomizeFormFactorLabel => 'Form factor';
+
+  @override
+  String get keyboardCustomizeFormFactorAuto => 'Match my model';
+
+  @override
+  String get keyboardCustomizeKeycapsSectionTitle => 'Keycaps';
+
+  @override
+  String get keyboardCustomizeKeycapShapeLabel => 'Keycap shape';
+
+  @override
+  String get keyboardCustomizeKeycapColorLabel => 'Keycap color';
+
+  @override
+  String get keyboardCustomizeCaseColorLabel => 'Case color';
+
+  @override
+  String get keyboardCustomizeLightingSectionTitle => 'Lighting';
+
+  @override
+  String get keyboardCustomizeRgbToggleLabel => 'Has RGB backlight';
+
+  @override
+  String get keyboardCustomizeRgbColorLabel => 'Light color';
+
+  @override
+  String get keyboardCustomizeRgbEffectLabel => 'Effect';
+
+  @override
+  String get keyboardCustomizeHardwareSectionTitle => 'Switches & materials';
+
+  @override
+  String get keyboardCustomizeSwitchTypeLabel => 'Switch type';
+
+  @override
+  String get keyboardCustomizeKeycapMaterialLabel => 'Keycap material';
+
+  @override
+  String get keyboardCustomizeCaseMaterialLabel => 'Case material';
+
+  @override
+  String get keyboardCustomizePhysicalLayoutLabel => 'Physical layout';
+
+  @override
+  String get keyboardCustomizeConnectionLabel => 'Connection';
+
+  @override
+  String get keyboardCustomizeHotSwappableLabel => 'Hot-swappable';
+
+  @override
+  String get keyboardCustomizeStorySectionTitle => 'Story';
+
+  @override
+  String get keyboardCustomizePurchaseYearLabel => 'Purchase year';
+
+  @override
+  String get keyboardCustomizeNotesLabel => 'Notes';
+
+  @override
+  String get keyboardCustomizeNotesHint => 'Anything else about this board';
+
+  @override
+  String get keyboardCustomizeKeysSectionTitle => 'Per-key customization';
+
+  @override
+  String get keyboardCustomizeKeysHint =>
+      'Tap a key in the preview to edit its legend or remap it';
+
+  @override
+  String get keyboardCustomizeExtraKeysLabel => 'Extra keys';
+
+  @override
+  String get keyboardCustomizeExtraKeysAddAction => 'Add extra key';
+
+  @override
+  String get keyboardCustomizeRemapLabel => 'Functional remaps';
+
+  @override
+  String get keyboardCustomizeRemapAddAction => 'Add remap';
+
+  @override
+  String get keyboardCustomizeRemapExplainer =>
+      'Make a physical key count as another character while practicing';
+
+  @override
+  String get keyboardCustomizeRemapPhysicalKeyLabel => 'Physical key';
+
+  @override
+  String get keyboardCustomizeRemapCharacterLabel => 'Types instead';
+
+  @override
+  String get keyboardCustomizeRemapShiftedLabel => 'With Shift';
+
+  @override
+  String get keyboardCustomizeKeySheetTitle => 'Edit key';
+
+  @override
+  String get keyboardCustomizeKeyLegendLabel => 'Legend';
+
+  @override
+  String get keyboardCustomizeKeyLegendShiftLabel => 'Shift legend';
+
+  @override
+  String get keyboardCustomizeResetKeyAction => 'Reset key';
+
+  @override
+  String get keyboardCustomizeExtraKeyLabel => 'Legend';
+
+  @override
+  String get keyboardCustomizeExtraKeyShiftLabel => 'Shift legend';
+
+  @override
+  String get keyboardCustomizeExtraKeyWidthLabel => 'Width';
+
+  @override
+  String get keyboardCustomizeExtraKeyHeightLabel => 'Height';
+
+  @override
+  String get keyboardCustomizeRemoveAction => 'Remove';
+
+  @override
+  String get keyboardCustomizeCancelAction => 'Cancel';
+
+  @override
+  String get keyboardCustomizeApplyAction => 'Apply';
+
+  @override
+  String get keyboardCustomizeColorDefaultLabel => 'Default';
+
+  @override
+  String get keyboardCustomizeNotSetLabel => 'Not set';
+
+  @override
+  String get keyboardCustomizeCustomColorLabel => 'Custom color';
+
+  @override
+  String get keyboardCustomizeEmptyPreview =>
+      'Pick a brand and model to see your keyboard in 3D';
+
+  @override
+  String get keyboardCustomizeSaving => 'Saving…';
+
+  @override
+  String get keyboardSpecsTitle => 'Specs';
+
+  @override
+  String get keyboardSpecsCustomLegendsLabel => 'Custom legends';
+
+  @override
+  String get keyboardSpecsExtraKeysLabel => 'Extra keys';
+
+  @override
+  String get keyboardSpecsRemapsLabel => 'Functional remaps';
+
+  @override
+  String get keyboardSpecsPurchaseYearLabel => 'Purchased';
+
+  @override
+  String get keyboardSpecsYes => 'Yes';
+
+  @override
+  String get keyboardSpecsNo => 'No';
+
+  @override
+  String get keyboardSpecsEmpty =>
+      'No extra details yet — customize this keyboard';
+
+  @override
+  String get keyboardShapeFamilyFullSize => 'Full-size';
+
+  @override
+  String get keyboardShapeFamilyTkl => 'Tenkeyless (TKL)';
+
+  @override
+  String get keyboardShapeFamilySeventyFive => '75%';
+
+  @override
+  String get keyboardShapeFamilySixtyFive => '65%';
+
+  @override
+  String get keyboardShapeFamilySixty => '60%';
+
+  @override
+  String get keyboardShapeFamilySplitErgo => 'Split ergonomic';
+
+  @override
+  String get keyboardShapeFamilyCustom => '100% custom';
+
+  @override
+  String get keyboardCustomizeFormFactorOverrideHint =>
+      'The chosen silhouette replaces your model\'s layout';
+
+  @override
+  String get keyboardCustomizePerKeyLightLabel => 'Key light';
+
+  @override
+  String get keyboardCustomizeCustomBoardHint =>
+      'Your custom board has no keys yet — add extra keys below';
+
+  @override
+  String get keyboardCustomizePreviewHint =>
+      'Drag to rotate · Tap a key to edit it · Type on your own board to light it up';
+
+  @override
+  String get keyboardSpecsKeyLightsLabel => 'Per-key lights';
+
+  @override
+  String get keyboardKeycapShapeRounded => 'Rounded';
+
+  @override
+  String get keyboardKeycapShapeSquare => 'Square';
+
+  @override
+  String get keyboardKeycapShapeRound => 'Round';
+
+  @override
+  String get keyboardRgbEffectStatic => 'Static';
+
+  @override
+  String get keyboardRgbEffectBreathing => 'Breathing';
+
+  @override
+  String get keyboardRgbEffectRainbow => 'Rainbow';
+
+  @override
+  String get keyboardRgbEffectWave => 'Wave';
+
+  @override
+  String get keyboardRgbEffectColorCycle => 'Color cycle';
+
+  @override
+  String get keyboardRgbEffectAurora => 'Aurora';
+
+  @override
+  String get keyboardRgbEffectStars => 'Stars';
+
+  @override
+  String get keyboardRgbEffectRain => 'Rain';
+
+  @override
+  String get keyboardRgbEffectGradient => 'Gradient';
+
+  @override
+  String get keyboardRgbEffectRipple => 'Ripple (on press)';
+
+  @override
+  String get keyboardRgbEffectReactive => 'Reactive (on press)';
+
+  @override
+  String get keyboardCustomizeKeycapTransparencyLabel =>
+      'Light through keycaps';
+
+  @override
+  String get keyboardKeycapTransparencyOpaque => 'Opaque';
+
+  @override
+  String get keyboardKeycapTransparencyShineThrough => 'Shine-through';
+
+  @override
+  String get keyboardKeycapTransparencyPudding => 'Pudding';
+
+  @override
+  String get keyboardKeycapTransparencyTranslucent => 'Translucent';
+
+  @override
+  String get keyboardCustomizeResetAction => 'Reset keyboard';
+
+  @override
+  String get keyboardSwitchLinear => 'Linear';
+
+  @override
+  String get keyboardSwitchTactile => 'Tactile';
+
+  @override
+  String get keyboardSwitchClicky => 'Clicky';
+
+  @override
+  String get keyboardSwitchOptical => 'Optical';
+
+  @override
+  String get keyboardSwitchMagnetic => 'Magnetic (Hall effect)';
+
+  @override
+  String get keyboardSwitchTopre => 'Topre (electro-capacitive)';
+
+  @override
+  String get keyboardSwitchRubberDome => 'Rubber dome';
+
+  @override
+  String get keyboardSwitchScissor => 'Scissor';
+
+  @override
+  String get keyboardSwitchBucklingSpring => 'Buckling spring';
+
+  @override
+  String get keyboardSwitchOther => 'Other';
+
+  @override
+  String get keyboardKeycapMaterialAbs => 'ABS';
+
+  @override
+  String get keyboardKeycapMaterialPbt => 'PBT';
+
+  @override
+  String get keyboardKeycapMaterialPom => 'POM';
+
+  @override
+  String get keyboardKeycapMaterialMetal => 'Metal';
+
+  @override
+  String get keyboardKeycapMaterialCeramic => 'Ceramic';
+
+  @override
+  String get keyboardKeycapMaterialWood => 'Wood';
+
+  @override
+  String get keyboardKeycapMaterialOther => 'Other';
+
+  @override
+  String get keyboardCaseMaterialPlastic => 'Plastic';
+
+  @override
+  String get keyboardCaseMaterialAluminum => 'Aluminum';
+
+  @override
+  String get keyboardCaseMaterialSteel => 'Steel';
+
+  @override
+  String get keyboardCaseMaterialWood => 'Wood';
+
+  @override
+  String get keyboardCaseMaterialResin => 'Resin';
+
+  @override
+  String get keyboardCaseMaterialOther => 'Other';
+
+  @override
+  String get keyboardPhysicalLayoutAnsi => 'ANSI';
+
+  @override
+  String get keyboardPhysicalLayoutIso => 'ISO';
+
+  @override
+  String get keyboardPhysicalLayoutJis => 'JIS';
+
+  @override
+  String get keyboardPhysicalLayoutOther => 'Other';
+
+  @override
+  String get keyboardConnectionWired => 'Wired';
+
+  @override
+  String get keyboardConnectionBluetooth => 'Bluetooth';
+
+  @override
+  String get keyboardConnectionWireless24 => '2.4 GHz wireless';
+
+  @override
+  String get keyboardConnectionMulti => 'Multi-mode';
 
   @override
   String get profileFavoriteProgrammerLabel =>

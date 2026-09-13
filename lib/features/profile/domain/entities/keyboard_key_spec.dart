@@ -41,3 +41,12 @@ abstract class KeyboardKeySpec with _$KeyboardKeySpec {
     String? label2,
   }) = _KeyboardKeySpec;
 }
+
+/// Stable identifier for a key's physical position, used to attach
+/// per-key customization (`KeyboardCustomization.keyOverrides`) to a
+/// curated or generic-family layout without depending on list order —
+/// the same position always formats to the same id, whatever the source
+/// asset. Three decimals is far beyond key-unit granularity, so the id
+/// only needs to absorb floating-point noise, nothing else.
+String keyboardKeyIdFor(KeyboardKeySpec key) =>
+    '${key.x.toStringAsFixed(3)},${key.y.toStringAsFixed(3)}';

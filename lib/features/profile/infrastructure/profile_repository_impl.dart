@@ -2,11 +2,13 @@ import 'package:ridge/core/error/app_failure.dart';
 import 'package:ridge/core/utils/result.dart';
 import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
 import 'package:ridge/features/profile/domain/repositories/device_info_source.dart';
 import 'package:ridge/features/profile/domain/repositories/profile_repository.dart';
 import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 import 'package:ridge/features/profile/infrastructure/guest_profile_dao.dart';
+import 'package:ridge/features/profile/infrastructure/keyboard_customization_mapper.dart';
 import 'package:ridge/features/profile/infrastructure/profile_mapper.dart';
 
 /// Drift-backed adapter for [ProfileRepository].
@@ -71,9 +73,6 @@ class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Future<Result<void, AppFailure>> updateCustomization({
     List<FavoriteLanguage> favoriteLanguages = const [],
-    KeyboardLayout? keyboardLayout,
-    String? keyboardBrand,
-    String? keyboardModel,
     String? favoriteQuote,
     String? favoriteProgrammer,
     String? githubUsername,
@@ -89,9 +88,6 @@ class ProfileRepositoryImpl implements ProfileRepository {
         favoriteLanguages: favoriteLanguages.isEmpty
             ? null
             : favoriteLanguages.map((l) => l.name).join(','),
-        keyboardLayout: keyboardLayout?.name,
-        keyboardBrand: keyboardBrand,
-        keyboardModel: keyboardModel,
         favoriteQuote: favoriteQuote,
         favoriteProgrammer: favoriteProgrammer,
         githubUsername: githubUsername,
@@ -100,6 +96,35 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return const Result.ok(null);
     } on Exception catch (e) {
       return Result.err(StorageFailure('Could not update profile', cause: e));
+    }
+  }
+
+  @override
+  Future<Result<void, AppFailure>> updateKeyboardSetup({
+    KeyboardLayout? keyboardLayout,
+    String? keyboardBrand,
+    String? keyboardModel,
+    KeyboardCustomization? keyboardCustomization,
+  }) async {
+    try {
+      final current = await _dao.getActiveProfile();
+      if (current == null) {
+        return const Result.err(NotFoundFailure('No guest profile to update'));
+      }
+      await _dao.updateKeyboardSetup(
+        id: current.id,
+        keyboardLayout: keyboardLayout?.name,
+        keyboardBrand: keyboardBrand,
+        keyboardModel: keyboardModel,
+        keyboardCustomizationJson: keyboardCustomization == null
+            ? null
+            : encodeKeyboardCustomization(keyboardCustomization),
+      );
+      return const Result.ok(null);
+    } on Exception catch (e) {
+      return Result.err(
+        StorageFailure('Could not update keyboard setup', cause: e),
+      );
     }
   }
 

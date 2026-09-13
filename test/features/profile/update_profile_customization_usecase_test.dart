@@ -9,6 +9,7 @@ import 'package:ridge/core/utils/result.dart';
 import 'package:ridge/features/profile/application/usecases/update_profile_customization_usecase.dart';
 import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
 import 'package:ridge/features/profile/domain/repositories/device_info_source.dart';
 import 'package:ridge/features/profile/domain/repositories/profile_repository.dart';
@@ -16,9 +17,6 @@ import 'package:ridge/features/profile/domain/repositories/profile_repository.da
 class _FakeProfileRepository implements ProfileRepository {
   bool updateCalled = false;
   List<FavoriteLanguage>? favoriteLanguages;
-  KeyboardLayout? keyboardLayout;
-  String? keyboardBrand;
-  String? keyboardModel;
   String? favoriteQuote;
   String? favoriteProgrammer;
   String? githubUsername;
@@ -27,9 +25,6 @@ class _FakeProfileRepository implements ProfileRepository {
   @override
   Future<Result<void, AppFailure>> updateCustomization({
     List<FavoriteLanguage> favoriteLanguages = const [],
-    KeyboardLayout? keyboardLayout,
-    String? keyboardBrand,
-    String? keyboardModel,
     String? favoriteQuote,
     String? favoriteProgrammer,
     String? githubUsername,
@@ -37,15 +32,20 @@ class _FakeProfileRepository implements ProfileRepository {
   }) async {
     updateCalled = true;
     this.favoriteLanguages = favoriteLanguages;
-    this.keyboardLayout = keyboardLayout;
-    this.keyboardBrand = keyboardBrand;
-    this.keyboardModel = keyboardModel;
     this.favoriteQuote = favoriteQuote;
     this.favoriteProgrammer = favoriteProgrammer;
     this.githubUsername = githubUsername;
     this.websiteUrl = websiteUrl;
     return const Result.ok(null);
   }
+
+  @override
+  Future<Result<void, AppFailure>> updateKeyboardSetup({
+    KeyboardLayout? keyboardLayout,
+    String? keyboardBrand,
+    String? keyboardModel,
+    KeyboardCustomization? keyboardCustomization,
+  }) async => const Result.err(ValidationFailure('unused in this test'));
 
   @override
   Stream<GuestProfile?> watchActiveProfile() => const Stream.empty();
@@ -181,12 +181,9 @@ void main() {
     });
   });
 
-  test('links travel alongside the other self-expression fields', () async {
+  test('flair travels alongside the links', () async {
     final result = await useCase(
       favoriteLanguages: const [FavoriteLanguage.go],
-      keyboardLayout: KeyboardLayout.qwerty,
-      keyboardBrand: 'Monsgeek',
-      keyboardModel: 'M1',
       favoriteQuote: 'Simple is better',
       favoriteProgrammer: 'Rob Pike',
       githubUsername: 'sazar',
@@ -195,9 +192,6 @@ void main() {
 
     expect(result.isOk, isTrue);
     expect(repository.favoriteLanguages, const [FavoriteLanguage.go]);
-    expect(repository.keyboardLayout, KeyboardLayout.qwerty);
-    expect(repository.keyboardBrand, 'Monsgeek');
-    expect(repository.keyboardModel, 'M1');
     expect(repository.favoriteQuote, 'Simple is better');
     expect(repository.favoriteProgrammer, 'Rob Pike');
     expect(repository.githubUsername, 'sazar');

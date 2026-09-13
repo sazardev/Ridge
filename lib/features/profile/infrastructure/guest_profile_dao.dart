@@ -35,16 +35,16 @@ class GuestProfileDao extends DatabaseAccessor<AppDatabase>
     );
   }
 
-  /// Overwrites the row identified by [id]'s self-expression fields —
-  /// always all eight together, since the editor is a single form; a
+  /// Overwrites the row identified by [id]'s profile-flair fields —
+  /// always all five together, since the editor is a single form; a
   /// `null` explicitly clears that field. [favoriteLanguages] is already
-  /// comma-joined by the caller (see `ProfileMapper`'s CSV helpers).
+  /// comma-joined by the caller (see `ProfileMapper`'s CSV helpers). The
+  /// keyboard fields are written separately by [updateKeyboardSetup] so
+  /// the profile form and the dedicated keyboard editor can never
+  /// clobber each other's columns.
   Future<void> updateCustomization({
     required String id,
     required String? favoriteLanguages,
-    required String? keyboardLayout,
-    required String? keyboardBrand,
-    required String? keyboardModel,
     required String? favoriteQuote,
     required String? favoriteProgrammer,
     required String? githubUsername,
@@ -53,13 +53,32 @@ class GuestProfileDao extends DatabaseAccessor<AppDatabase>
     return (update(guestProfiles)..where((row) => row.id.equals(id))).write(
       GuestProfilesCompanion(
         favoriteLanguages: Value(favoriteLanguages),
-        keyboardLayout: Value(keyboardLayout),
-        keyboardBrand: Value(keyboardBrand),
-        keyboardModel: Value(keyboardModel),
         favoriteQuote: Value(favoriteQuote),
         favoriteProgrammer: Value(favoriteProgrammer),
         githubUsername: Value(githubUsername),
         websiteUrl: Value(websiteUrl),
+      ),
+    );
+  }
+
+  /// Overwrites the row identified by [id]'s keyboard setup — character
+  /// layout, brand, model and the JSON-encoded advanced customization —
+  /// always all four together, mirroring [updateCustomization]. The
+  /// caller encodes/validates [keyboardCustomizationJson] before it gets
+  /// here (see `UpdateKeyboardSetupUseCase`).
+  Future<void> updateKeyboardSetup({
+    required String id,
+    required String? keyboardLayout,
+    required String? keyboardBrand,
+    required String? keyboardModel,
+    required String? keyboardCustomizationJson,
+  }) {
+    return (update(guestProfiles)..where((row) => row.id.equals(id))).write(
+      GuestProfilesCompanion(
+        keyboardLayout: Value(keyboardLayout),
+        keyboardBrand: Value(keyboardBrand),
+        keyboardModel: Value(keyboardModel),
+        keyboardCustomizationJson: Value(keyboardCustomizationJson),
       ),
     );
   }

@@ -62,6 +62,16 @@ class GuestProfiles extends Table {
   /// Windows, Web).
   TextColumn get deviceModel => text().nullable()();
 
+  /// The user's JSON-encoded `KeyboardCustomization` (advanced keyboard
+  /// personalization: keycap shape, custom colors, RGB, switch/material
+  /// metadata, per-key legend overrides, extra keys and functional
+  /// remaps), or `null` if never customized. One JSON blob rather than
+  /// normalized columns/tables because it's a single self-expression
+  /// object only ever read back wholesale — same reasoning as
+  /// `progress_snapshot_cache`'s report blobs. See
+  /// `keyboard_customization_mapper.dart` for the encode/decode pair.
+  TextColumn get keyboardCustomizationJson => text().nullable()();
+
   @override
   Set<Column> get primaryKey => {id};
 }

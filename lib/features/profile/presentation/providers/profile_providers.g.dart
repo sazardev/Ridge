@@ -326,6 +326,66 @@ final class UpdateProfileCustomizationUseCaseProvider
 String _$updateProfileCustomizationUseCaseHash() =>
     r'14d0c39feecca4ef7bd06f4d1c69e623cff4526e';
 
+/// Provides the [UpdateKeyboardSetupUseCase] for editing the Guest
+/// Profile's keyboard (brand, model, character layout and advanced
+/// customization) from the dedicated keyboard editor.
+
+@ProviderFor(updateKeyboardSetupUseCase)
+final updateKeyboardSetupUseCaseProvider =
+    UpdateKeyboardSetupUseCaseProvider._();
+
+/// Provides the [UpdateKeyboardSetupUseCase] for editing the Guest
+/// Profile's keyboard (brand, model, character layout and advanced
+/// customization) from the dedicated keyboard editor.
+
+final class UpdateKeyboardSetupUseCaseProvider
+    extends
+        $FunctionalProvider<
+          UpdateKeyboardSetupUseCase,
+          UpdateKeyboardSetupUseCase,
+          UpdateKeyboardSetupUseCase
+        >
+    with $Provider<UpdateKeyboardSetupUseCase> {
+  /// Provides the [UpdateKeyboardSetupUseCase] for editing the Guest
+  /// Profile's keyboard (brand, model, character layout and advanced
+  /// customization) from the dedicated keyboard editor.
+  UpdateKeyboardSetupUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'updateKeyboardSetupUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$updateKeyboardSetupUseCaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<UpdateKeyboardSetupUseCase> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  UpdateKeyboardSetupUseCase create(Ref ref) {
+    return updateKeyboardSetupUseCase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(UpdateKeyboardSetupUseCase value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<UpdateKeyboardSetupUseCase>(value),
+    );
+  }
+}
+
+String _$updateKeyboardSetupUseCaseHash() =>
+    r'6eaccbb8457b8aa38339ce629cc01c3f847a7461';
+
 /// Provides the [DeviceInfoSource] adapter.
 
 @ProviderFor(deviceInfoSource)
@@ -515,7 +575,7 @@ final class ActiveProfileControllerProvider
 }
 
 String _$activeProfileControllerHash() =>
-    r'c8813a5377e5a8f6725d84b9301f3c437412faab';
+    r'ff6c2b4ac247dba3ad6f87e8d0353cbd046bf420';
 
 /// Exposes the current [GuestProfile] (or `null` before one exists) and
 /// the mutations the UI can request.
@@ -605,3 +665,73 @@ final class HasGuestProfileProvider
 }
 
 String _$hasGuestProfileHash() => r'01abfa2108420060e0f75d31d0028769314077e3';
+
+/// The active profile's functional keyboard remaps, indexed by
+/// `PhysicalKeyId.name` — read by `practice`'s capture engine on every
+/// keydown (a deliberately narrow cross-feature read: the keyboard being
+/// remapped is the profile's own). Empty while no profile or no remap
+/// exists; kept alive and recomputed from the profile stream, so a saved
+/// remap takes effect live, without restarting the session.
+
+@ProviderFor(keyboardRemapsByName)
+final keyboardRemapsByNameProvider = KeyboardRemapsByNameProvider._();
+
+/// The active profile's functional keyboard remaps, indexed by
+/// `PhysicalKeyId.name` — read by `practice`'s capture engine on every
+/// keydown (a deliberately narrow cross-feature read: the keyboard being
+/// remapped is the profile's own). Empty while no profile or no remap
+/// exists; kept alive and recomputed from the profile stream, so a saved
+/// remap takes effect live, without restarting the session.
+
+final class KeyboardRemapsByNameProvider
+    extends
+        $FunctionalProvider<
+          Map<String, KeyboardKeyRemap>,
+          Map<String, KeyboardKeyRemap>,
+          Map<String, KeyboardKeyRemap>
+        >
+    with $Provider<Map<String, KeyboardKeyRemap>> {
+  /// The active profile's functional keyboard remaps, indexed by
+  /// `PhysicalKeyId.name` — read by `practice`'s capture engine on every
+  /// keydown (a deliberately narrow cross-feature read: the keyboard being
+  /// remapped is the profile's own). Empty while no profile or no remap
+  /// exists; kept alive and recomputed from the profile stream, so a saved
+  /// remap takes effect live, without restarting the session.
+  KeyboardRemapsByNameProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'keyboardRemapsByNameProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$keyboardRemapsByNameHash();
+
+  @$internal
+  @override
+  $ProviderElement<Map<String, KeyboardKeyRemap>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  Map<String, KeyboardKeyRemap> create(Ref ref) {
+    return keyboardRemapsByName(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Map<String, KeyboardKeyRemap> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Map<String, KeyboardKeyRemap>>(
+        value,
+      ),
+    );
+  }
+}
+
+String _$keyboardRemapsByNameHash() =>
+    r'fff07a604a89eebfab0d9c42443582f870020e21';

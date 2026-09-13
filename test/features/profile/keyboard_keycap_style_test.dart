@@ -6,6 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ridge/core/theme/app_palette_catalog.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization_options.dart';
 import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_keycap_style.dart';
 
 /// WCAG contrast ratio between two opaque colors.
@@ -100,5 +102,89 @@ void main() {
   test('shiftLightness clamps instead of overflowing', () {
     expect(KeyboardKeycapStyle.shiftLightness(Colors.black, -1), Colors.black);
     expect(KeyboardKeycapStyle.shiftLightness(Colors.white, 1), Colors.white);
+  });
+
+  test('custom keycap/case colors replace the scheme-derived ones', () {
+    final scheme = ColorScheme.fromSeed(seedColor: Colors.blue);
+    final style = KeyboardKeycapStyle.fromScheme(
+      scheme,
+      keyCornerRadius: 4,
+      caseCornerRadius: 12,
+      customization: const KeyboardCustomization(
+        keycapColor: 0xFF123456,
+        caseColor: 0xFF654321,
+      ),
+    );
+
+    expect(style.keyTop, const Color(0xFF123456));
+    expect(style.caseTop, const Color(0xFF654321));
+  });
+
+  test('RGB settings travel onto the style, defaulting the color to the '
+      'scheme primary', () {
+    final scheme = ColorScheme.fromSeed(seedColor: Colors.blue);
+    final defaulted = KeyboardKeycapStyle.fromScheme(
+      scheme,
+      keyCornerRadius: 4,
+      caseCornerRadius: 12,
+      customization: const KeyboardCustomization(rgbEnabled: true),
+    );
+    expect(defaulted.rgbEnabled, isTrue);
+    expect(defaulted.rgbColor, scheme.primary.toARGB32());
+
+    final custom = KeyboardKeycapStyle.fromScheme(
+      scheme,
+      keyCornerRadius: 4,
+      caseCornerRadius: 12,
+      customization: const KeyboardCustomization(
+        rgbEnabled: true,
+        rgbEffect: RgbEffect.rainbow,
+        rgbColor: 0xFF00FF00,
+      ),
+    );
+    expect(custom.rgbEffect, RgbEffect.rainbow);
+    expect(custom.rgbColor, 0xFF00FF00);
+  });
+
+  test('the keycap shape travels onto the style', () {
+    final scheme = ColorScheme.fromSeed(seedColor: Colors.blue);
+    for (final shape in KeycapShape.values) {
+      final style = KeyboardKeycapStyle.fromScheme(
+        scheme,
+        keyCornerRadius: 4,
+        caseCornerRadius: 12,
+        customization: KeyboardCustomization(keycapShape: shape),
+      );
+      expect(style.keycapShape, shape);
+    }
+  });
+
+  test('keycap light transmission follows the transparency setting', () {
+    final scheme = ColorScheme.fromSeed(seedColor: Colors.blue);
+    KeyboardKeycapStyle styleFor(KeycapTransparency transparency) =>
+        KeyboardKeycapStyle.fromScheme(
+          scheme,
+          keyCornerRadius: 4,
+          caseCornerRadius: 12,
+          customization: KeyboardCustomization(
+            keycapTransparency: transparency,
+          ),
+        );
+
+    // Opaque caps never light their legend; shine-through is legend-first;
+    // pudding glows from its sides.
+    expect(styleFor(KeycapTransparency.opaque).legendLightFraction, 0);
+    expect(
+      styleFor(KeycapTransparency.shineThrough).legendLightFraction,
+      greaterThan(styleFor(KeycapTransparency.shineThrough).topLightFraction),
+    );
+    expect(
+      styleFor(KeycapTransparency.pudding).sideLightFraction,
+      greaterThan(styleFor(KeycapTransparency.translucent).sideLightFraction),
+    );
+    expect(
+      styleFor(KeycapTransparency.translucent).topLightFraction,
+      greaterThan(styleFor(KeycapTransparency.shineThrough).topLightFraction),
+    );
   });
 }

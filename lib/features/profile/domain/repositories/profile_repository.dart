@@ -2,6 +2,7 @@ import 'package:ridge/core/error/app_failure.dart';
 import 'package:ridge/core/utils/result.dart';
 import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
 import 'package:ridge/features/profile/domain/repositories/device_info_source.dart';
 
@@ -29,21 +30,33 @@ abstract interface class ProfileRepository {
   /// already validated by the caller.
   Future<Result<void, AppFailure>> renameProfile(String newUsername);
 
-  /// Overwrites the existing Guest Profile's self-expression fields —
+  /// Overwrites the existing Guest Profile's profile-flair fields —
   /// always all of them together (a `null`/empty-list explicitly clears
-  /// that field).
+  /// that field). The keyboard setup is written separately by
+  /// [updateKeyboardSetup] so the two editors can never clobber each
+  /// other's columns.
   ///
   /// Same expectation as [createGuestProfile]: every free-text argument is
   /// assumed already trimmed/validated by the caller.
   Future<Result<void, AppFailure>> updateCustomization({
     List<FavoriteLanguage> favoriteLanguages = const [],
-    KeyboardLayout? keyboardLayout,
-    String? keyboardBrand,
-    String? keyboardModel,
     String? favoriteQuote,
     String? favoriteProgrammer,
     String? githubUsername,
     String? websiteUrl,
+  });
+
+  /// Overwrites the existing Guest Profile's keyboard setup — character
+  /// layout, free-text brand/model and the advanced customization blob —
+  /// always all of them together.
+  ///
+  /// Same expectation as [createGuestProfile]: every free-text argument is
+  /// assumed already trimmed/validated by the caller.
+  Future<Result<void, AppFailure>> updateKeyboardSetup({
+    KeyboardLayout? keyboardLayout,
+    String? keyboardBrand,
+    String? keyboardModel,
+    KeyboardCustomization? keyboardCustomization,
   });
 
   /// Overwrites the existing Guest Profile's auto-detected device info

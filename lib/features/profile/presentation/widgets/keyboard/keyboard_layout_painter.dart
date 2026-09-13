@@ -32,6 +32,11 @@ class KeyboardLayoutPainter extends CustomPainter {
     this.hoveredIndex,
     this.pressedIndex,
     this.pressProgress = 0,
+    this.rgbPhase = 0,
+    this.keyLightColors,
+    this.keyPressLevels,
+    this.keyPulses,
+    this.rippleAges,
   });
 
   /// The keys to draw, in key-units.
@@ -56,6 +61,27 @@ class KeyboardLayoutPainter extends CustomPainter {
   /// How far the pressed key has sunk, 0 (rest) to 1 (fully bottomed out).
   final double pressProgress;
 
+  /// The repeating 0..1 phase of the RGB effect — drives breathing/rainbow
+  /// when [KeyboardKeycapStyle.rgbEnabled], ignored otherwise.
+  final double rgbPhase;
+
+  /// Per-key backlight colors (ARGB) indexed like [keys]; a `null` entry
+  /// means "use the board-wide light color for this key".
+  final List<int?>? keyLightColors;
+
+  /// Per-key press levels (0..1) from an external source (the real
+  /// keyboard) indexed like [keys] — merged with the pointer's own press
+  /// when building the scene.
+  final List<double>? keyPressLevels;
+
+  /// Per-key reactive flashes (0..1, decaying) indexed like [keys] — the
+  /// click/keystroke light burst.
+  final List<double>? keyPulses;
+
+  /// Active ripple ages (seconds), indexed by origin key — the expanding
+  /// "splash" of `RgbEffect.ripple`.
+  final List<double>? rippleAges;
+
   @override
   void paint(Canvas canvas, Size size) {
     if (keys.isEmpty) return;
@@ -75,12 +101,18 @@ class KeyboardLayoutPainter extends CustomPainter {
       hoveredIndex: hoveredIndex,
       pressedIndex: pressedIndex,
       pressProgress: pressProgress,
+      rgbPhase: rgbPhase,
+      keyLightColors: keyLightColors,
+      keyPressLevels: keyPressLevels,
+      keyPulses: keyPulses,
+      rippleAges: rippleAges,
     );
 
     final fill = Paint();
     final stroke = Paint()
       ..style = PaintingStyle.stroke
       ..strokeJoin = StrokeJoin.round;
+    final glow = Paint()..blendMode = BlendMode.plus;
     for (final face in faces) {
       if (face.points.length < 3) continue;
       final path = Path()..moveTo(face.points.first.dx, face.points.first.dy);
@@ -93,6 +125,15 @@ class KeyboardLayoutPainter extends CustomPainter {
         ..shader = face.gradient?.createShader(path.getBounds())
         ..color = face.color;
       canvas.drawPath(path, fill);
+
+      final glowColor = face.glowColor;
+      if (glowColor != null) {
+        glow.shader = RadialGradient(
+          colors: [glowColor, glowColor.withValues(alpha: 0)],
+          stops: const [0, 0.9],
+        ).createShader(path.getBounds());
+        canvas.drawPath(path, glow);
+      }
 
       final strokeColor = face.strokeColor;
       if (strokeColor != null) {
@@ -172,7 +213,8 @@ class KeyboardLayoutPainter extends CustomPainter {
     double maxWidth,
     Color color,
   ) {
-    final painter = _legendPainter(text, color);
+    final entry = _legendEntry(text, color);
+    final painter = entry.painter;
     // Auto-fit: never let a long legend spill past its cap.
     final fitted = maxWidth <= 0
         ? size
@@ -181,15 +223,24 @@ class KeyboardLayoutPainter extends CustomPainter {
       ..save()
       ..translate(0, dy)
       ..scale(fitted);
-    painter.paint(canvas, Offset(-painter.width / 2, -painter.height / 2));
+    // `-entry.capCenter` instead of `-painter.height / 2`: centring the
+    // full line box (descender included) leaves caps/digits a hair high;
+    // this centres the glyphs themselves.
+    painter.paint(canvas, Offset(-painter.width / 2, -entry.capCenter));
     canvas.restore();
   }
 
-  /// One cached paragraph per (text, ink) pair, laid out at font-size 1
-  /// so a board-unit size can scale it at paint time.
-  static final Map<(String, Color), TextPainter> _legendCache = {};
+  /// Geist Mono's cap height, as a fraction of the em — the glyphs that
+  /// make up keycap legends (letters, digits, symbols) all sit between
+  /// the baseline and this height.
+  static const _capHeightFraction = 0.7;
 
-  static TextPainter _legendPainter(String text, Color color) =>
+  /// One cached paragraph per (text, ink) pair, laid out at font-size 1
+  /// so a board-unit size can scale it at paint time, plus the vertical
+  /// distance from the line box's top to the caps' optical centre.
+  static final Map<(String, Color), _LegendEntry> _legendCache = {};
+
+  static _LegendEntry _legendEntry(String text, Color color) =>
       _legendCache.putIfAbsent((text, color), () {
         final painter = TextPainter(
           text: TextSpan(
@@ -204,7 +255,11 @@ class KeyboardLayoutPainter extends CustomPainter {
           ),
           textDirection: TextDirection.ltr,
         )..layout();
-        return painter;
+        final ascent = painter.computeLineMetrics().first.ascent;
+        return _LegendEntry(
+          painter: painter,
+          capCenter: ascent - _capHeightFraction / 2,
+        );
       });
 
   @override
@@ -215,5 +270,18 @@ class KeyboardLayoutPainter extends CustomPainter {
       pitchDegrees != oldDelegate.pitchDegrees ||
       hoveredIndex != oldDelegate.hoveredIndex ||
       pressedIndex != oldDelegate.pressedIndex ||
-      pressProgress != oldDelegate.pressProgress;
+      pressProgress != oldDelegate.pressProgress ||
+      rgbPhase != oldDelegate.rgbPhase ||
+      !listEquals(keyLightColors, oldDelegate.keyLightColors) ||
+      !listEquals(keyPressLevels, oldDelegate.keyPressLevels) ||
+      !listEquals(keyPulses, oldDelegate.keyPulses) ||
+      !listEquals(rippleAges, oldDelegate.rippleAges);
+}
+
+/// A cached legend layout plus its glyph-centre metric.
+class _LegendEntry {
+  const new({required this.painter, required this.capCenter});
+
+  final TextPainter painter;
+  final double capCenter;
 }

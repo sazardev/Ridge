@@ -293,7 +293,7 @@ abstract class AppLocalizations {
   /// No description provided for @profileKeyboardViewerHint.
   ///
   /// In en, this message translates to:
-  /// **'Drag to rotate · Pinch or scroll to zoom'**
+  /// **'Drag to rotate · Pinch or scroll to zoom · Type on your keyboard to feel it'**
   String get profileKeyboardViewerHint;
 
   /// No description provided for @profileKeyboardZoomInTooltip.
@@ -313,6 +313,756 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reset view'**
   String get profileKeyboardResetViewTooltip;
+
+  /// No description provided for @profileKeyboardSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keyboard'**
+  String get profileKeyboardSectionTitle;
+
+  /// No description provided for @profileKeyboardCustomizeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize keyboard'**
+  String get profileKeyboardCustomizeAction;
+
+  /// No description provided for @profileKeyboardNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'No keyboard set yet'**
+  String get profileKeyboardNotSet;
+
+  /// No description provided for @profileKeyboardRgbEnabledLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'RGB'**
+  String get profileKeyboardRgbEnabledLabel;
+
+  /// No description provided for @keyboardCustomizeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize keyboard'**
+  String get keyboardCustomizeTitle;
+
+  /// No description provided for @keyboardCustomizeBrandSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand & model'**
+  String get keyboardCustomizeBrandSectionTitle;
+
+  /// No description provided for @keyboardCustomizeShapeSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shape & size'**
+  String get keyboardCustomizeShapeSectionTitle;
+
+  /// No description provided for @keyboardCustomizeFormFactorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Form factor'**
+  String get keyboardCustomizeFormFactorLabel;
+
+  /// No description provided for @keyboardCustomizeFormFactorAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Match my model'**
+  String get keyboardCustomizeFormFactorAuto;
+
+  /// No description provided for @keyboardCustomizeKeycapsSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keycaps'**
+  String get keyboardCustomizeKeycapsSectionTitle;
+
+  /// No description provided for @keyboardCustomizeKeycapShapeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Keycap shape'**
+  String get keyboardCustomizeKeycapShapeLabel;
+
+  /// No description provided for @keyboardCustomizeKeycapColorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Keycap color'**
+  String get keyboardCustomizeKeycapColorLabel;
+
+  /// No description provided for @keyboardCustomizeCaseColorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Case color'**
+  String get keyboardCustomizeCaseColorLabel;
+
+  /// No description provided for @keyboardCustomizeLightingSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Lighting'**
+  String get keyboardCustomizeLightingSectionTitle;
+
+  /// No description provided for @keyboardCustomizeRgbToggleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Has RGB backlight'**
+  String get keyboardCustomizeRgbToggleLabel;
+
+  /// No description provided for @keyboardCustomizeRgbColorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Light color'**
+  String get keyboardCustomizeRgbColorLabel;
+
+  /// No description provided for @keyboardCustomizeRgbEffectLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Effect'**
+  String get keyboardCustomizeRgbEffectLabel;
+
+  /// No description provided for @keyboardCustomizeHardwareSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Switches & materials'**
+  String get keyboardCustomizeHardwareSectionTitle;
+
+  /// No description provided for @keyboardCustomizeSwitchTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch type'**
+  String get keyboardCustomizeSwitchTypeLabel;
+
+  /// No description provided for @keyboardCustomizeKeycapMaterialLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Keycap material'**
+  String get keyboardCustomizeKeycapMaterialLabel;
+
+  /// No description provided for @keyboardCustomizeCaseMaterialLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Case material'**
+  String get keyboardCustomizeCaseMaterialLabel;
+
+  /// No description provided for @keyboardCustomizePhysicalLayoutLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical layout'**
+  String get keyboardCustomizePhysicalLayoutLabel;
+
+  /// No description provided for @keyboardCustomizeConnectionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection'**
+  String get keyboardCustomizeConnectionLabel;
+
+  /// No description provided for @keyboardCustomizeHotSwappableLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hot-swappable'**
+  String get keyboardCustomizeHotSwappableLabel;
+
+  /// No description provided for @keyboardCustomizeStorySectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Story'**
+  String get keyboardCustomizeStorySectionTitle;
+
+  /// No description provided for @keyboardCustomizePurchaseYearLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase year'**
+  String get keyboardCustomizePurchaseYearLabel;
+
+  /// No description provided for @keyboardCustomizeNotesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get keyboardCustomizeNotesLabel;
+
+  /// No description provided for @keyboardCustomizeNotesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything else about this board'**
+  String get keyboardCustomizeNotesHint;
+
+  /// No description provided for @keyboardCustomizeKeysSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Per-key customization'**
+  String get keyboardCustomizeKeysSectionTitle;
+
+  /// No description provided for @keyboardCustomizeKeysHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a key in the preview to edit its legend or remap it'**
+  String get keyboardCustomizeKeysHint;
+
+  /// No description provided for @keyboardCustomizeExtraKeysLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra keys'**
+  String get keyboardCustomizeExtraKeysLabel;
+
+  /// No description provided for @keyboardCustomizeExtraKeysAddAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Add extra key'**
+  String get keyboardCustomizeExtraKeysAddAction;
+
+  /// No description provided for @keyboardCustomizeRemapLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Functional remaps'**
+  String get keyboardCustomizeRemapLabel;
+
+  /// No description provided for @keyboardCustomizeRemapAddAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Add remap'**
+  String get keyboardCustomizeRemapAddAction;
+
+  /// No description provided for @keyboardCustomizeRemapExplainer.
+  ///
+  /// In en, this message translates to:
+  /// **'Make a physical key count as another character while practicing'**
+  String get keyboardCustomizeRemapExplainer;
+
+  /// No description provided for @keyboardCustomizeRemapPhysicalKeyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical key'**
+  String get keyboardCustomizeRemapPhysicalKeyLabel;
+
+  /// No description provided for @keyboardCustomizeRemapCharacterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Types instead'**
+  String get keyboardCustomizeRemapCharacterLabel;
+
+  /// No description provided for @keyboardCustomizeRemapShiftedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'With Shift'**
+  String get keyboardCustomizeRemapShiftedLabel;
+
+  /// No description provided for @keyboardCustomizeKeySheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit key'**
+  String get keyboardCustomizeKeySheetTitle;
+
+  /// No description provided for @keyboardCustomizeKeyLegendLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Legend'**
+  String get keyboardCustomizeKeyLegendLabel;
+
+  /// No description provided for @keyboardCustomizeKeyLegendShiftLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift legend'**
+  String get keyboardCustomizeKeyLegendShiftLabel;
+
+  /// No description provided for @keyboardCustomizeResetKeyAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset key'**
+  String get keyboardCustomizeResetKeyAction;
+
+  /// No description provided for @keyboardCustomizeExtraKeyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Legend'**
+  String get keyboardCustomizeExtraKeyLabel;
+
+  /// No description provided for @keyboardCustomizeExtraKeyShiftLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift legend'**
+  String get keyboardCustomizeExtraKeyShiftLabel;
+
+  /// No description provided for @keyboardCustomizeExtraKeyWidthLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Width'**
+  String get keyboardCustomizeExtraKeyWidthLabel;
+
+  /// No description provided for @keyboardCustomizeExtraKeyHeightLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get keyboardCustomizeExtraKeyHeightLabel;
+
+  /// No description provided for @keyboardCustomizeRemoveAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get keyboardCustomizeRemoveAction;
+
+  /// No description provided for @keyboardCustomizeCancelAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get keyboardCustomizeCancelAction;
+
+  /// No description provided for @keyboardCustomizeApplyAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get keyboardCustomizeApplyAction;
+
+  /// No description provided for @keyboardCustomizeColorDefaultLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get keyboardCustomizeColorDefaultLabel;
+
+  /// No description provided for @keyboardCustomizeNotSetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get keyboardCustomizeNotSetLabel;
+
+  /// No description provided for @keyboardCustomizeCustomColorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom color'**
+  String get keyboardCustomizeCustomColorLabel;
+
+  /// No description provided for @keyboardCustomizeEmptyPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a brand and model to see your keyboard in 3D'**
+  String get keyboardCustomizeEmptyPreview;
+
+  /// No description provided for @keyboardCustomizeSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving…'**
+  String get keyboardCustomizeSaving;
+
+  /// No description provided for @keyboardSpecsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Specs'**
+  String get keyboardSpecsTitle;
+
+  /// No description provided for @keyboardSpecsCustomLegendsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom legends'**
+  String get keyboardSpecsCustomLegendsLabel;
+
+  /// No description provided for @keyboardSpecsExtraKeysLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra keys'**
+  String get keyboardSpecsExtraKeysLabel;
+
+  /// No description provided for @keyboardSpecsRemapsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Functional remaps'**
+  String get keyboardSpecsRemapsLabel;
+
+  /// No description provided for @keyboardSpecsPurchaseYearLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchased'**
+  String get keyboardSpecsPurchaseYearLabel;
+
+  /// No description provided for @keyboardSpecsYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get keyboardSpecsYes;
+
+  /// No description provided for @keyboardSpecsNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get keyboardSpecsNo;
+
+  /// No description provided for @keyboardSpecsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No extra details yet — customize this keyboard'**
+  String get keyboardSpecsEmpty;
+
+  /// No description provided for @keyboardShapeFamilyFullSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Full-size'**
+  String get keyboardShapeFamilyFullSize;
+
+  /// No description provided for @keyboardShapeFamilyTkl.
+  ///
+  /// In en, this message translates to:
+  /// **'Tenkeyless (TKL)'**
+  String get keyboardShapeFamilyTkl;
+
+  /// No description provided for @keyboardShapeFamilySeventyFive.
+  ///
+  /// In en, this message translates to:
+  /// **'75%'**
+  String get keyboardShapeFamilySeventyFive;
+
+  /// No description provided for @keyboardShapeFamilySixtyFive.
+  ///
+  /// In en, this message translates to:
+  /// **'65%'**
+  String get keyboardShapeFamilySixtyFive;
+
+  /// No description provided for @keyboardShapeFamilySixty.
+  ///
+  /// In en, this message translates to:
+  /// **'60%'**
+  String get keyboardShapeFamilySixty;
+
+  /// No description provided for @keyboardShapeFamilySplitErgo.
+  ///
+  /// In en, this message translates to:
+  /// **'Split ergonomic'**
+  String get keyboardShapeFamilySplitErgo;
+
+  /// No description provided for @keyboardShapeFamilyCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'100% custom'**
+  String get keyboardShapeFamilyCustom;
+
+  /// No description provided for @keyboardCustomizeFormFactorOverrideHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The chosen silhouette replaces your model\'s layout'**
+  String get keyboardCustomizeFormFactorOverrideHint;
+
+  /// No description provided for @keyboardCustomizePerKeyLightLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Key light'**
+  String get keyboardCustomizePerKeyLightLabel;
+
+  /// No description provided for @keyboardCustomizeCustomBoardHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your custom board has no keys yet — add extra keys below'**
+  String get keyboardCustomizeCustomBoardHint;
+
+  /// No description provided for @keyboardCustomizePreviewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to rotate · Tap a key to edit it · Type on your own board to light it up'**
+  String get keyboardCustomizePreviewHint;
+
+  /// No description provided for @keyboardSpecsKeyLightsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Per-key lights'**
+  String get keyboardSpecsKeyLightsLabel;
+
+  /// No description provided for @keyboardKeycapShapeRounded.
+  ///
+  /// In en, this message translates to:
+  /// **'Rounded'**
+  String get keyboardKeycapShapeRounded;
+
+  /// No description provided for @keyboardKeycapShapeSquare.
+  ///
+  /// In en, this message translates to:
+  /// **'Square'**
+  String get keyboardKeycapShapeSquare;
+
+  /// No description provided for @keyboardKeycapShapeRound.
+  ///
+  /// In en, this message translates to:
+  /// **'Round'**
+  String get keyboardKeycapShapeRound;
+
+  /// No description provided for @keyboardRgbEffectStatic.
+  ///
+  /// In en, this message translates to:
+  /// **'Static'**
+  String get keyboardRgbEffectStatic;
+
+  /// No description provided for @keyboardRgbEffectBreathing.
+  ///
+  /// In en, this message translates to:
+  /// **'Breathing'**
+  String get keyboardRgbEffectBreathing;
+
+  /// No description provided for @keyboardRgbEffectRainbow.
+  ///
+  /// In en, this message translates to:
+  /// **'Rainbow'**
+  String get keyboardRgbEffectRainbow;
+
+  /// No description provided for @keyboardRgbEffectWave.
+  ///
+  /// In en, this message translates to:
+  /// **'Wave'**
+  String get keyboardRgbEffectWave;
+
+  /// No description provided for @keyboardRgbEffectColorCycle.
+  ///
+  /// In en, this message translates to:
+  /// **'Color cycle'**
+  String get keyboardRgbEffectColorCycle;
+
+  /// No description provided for @keyboardRgbEffectAurora.
+  ///
+  /// In en, this message translates to:
+  /// **'Aurora'**
+  String get keyboardRgbEffectAurora;
+
+  /// No description provided for @keyboardRgbEffectStars.
+  ///
+  /// In en, this message translates to:
+  /// **'Stars'**
+  String get keyboardRgbEffectStars;
+
+  /// No description provided for @keyboardRgbEffectRain.
+  ///
+  /// In en, this message translates to:
+  /// **'Rain'**
+  String get keyboardRgbEffectRain;
+
+  /// No description provided for @keyboardRgbEffectGradient.
+  ///
+  /// In en, this message translates to:
+  /// **'Gradient'**
+  String get keyboardRgbEffectGradient;
+
+  /// No description provided for @keyboardRgbEffectRipple.
+  ///
+  /// In en, this message translates to:
+  /// **'Ripple (on press)'**
+  String get keyboardRgbEffectRipple;
+
+  /// No description provided for @keyboardRgbEffectReactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Reactive (on press)'**
+  String get keyboardRgbEffectReactive;
+
+  /// No description provided for @keyboardCustomizeKeycapTransparencyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Light through keycaps'**
+  String get keyboardCustomizeKeycapTransparencyLabel;
+
+  /// No description provided for @keyboardKeycapTransparencyOpaque.
+  ///
+  /// In en, this message translates to:
+  /// **'Opaque'**
+  String get keyboardKeycapTransparencyOpaque;
+
+  /// No description provided for @keyboardKeycapTransparencyShineThrough.
+  ///
+  /// In en, this message translates to:
+  /// **'Shine-through'**
+  String get keyboardKeycapTransparencyShineThrough;
+
+  /// No description provided for @keyboardKeycapTransparencyPudding.
+  ///
+  /// In en, this message translates to:
+  /// **'Pudding'**
+  String get keyboardKeycapTransparencyPudding;
+
+  /// No description provided for @keyboardKeycapTransparencyTranslucent.
+  ///
+  /// In en, this message translates to:
+  /// **'Translucent'**
+  String get keyboardKeycapTransparencyTranslucent;
+
+  /// No description provided for @keyboardCustomizeResetAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset keyboard'**
+  String get keyboardCustomizeResetAction;
+
+  /// No description provided for @keyboardSwitchLinear.
+  ///
+  /// In en, this message translates to:
+  /// **'Linear'**
+  String get keyboardSwitchLinear;
+
+  /// No description provided for @keyboardSwitchTactile.
+  ///
+  /// In en, this message translates to:
+  /// **'Tactile'**
+  String get keyboardSwitchTactile;
+
+  /// No description provided for @keyboardSwitchClicky.
+  ///
+  /// In en, this message translates to:
+  /// **'Clicky'**
+  String get keyboardSwitchClicky;
+
+  /// No description provided for @keyboardSwitchOptical.
+  ///
+  /// In en, this message translates to:
+  /// **'Optical'**
+  String get keyboardSwitchOptical;
+
+  /// No description provided for @keyboardSwitchMagnetic.
+  ///
+  /// In en, this message translates to:
+  /// **'Magnetic (Hall effect)'**
+  String get keyboardSwitchMagnetic;
+
+  /// No description provided for @keyboardSwitchTopre.
+  ///
+  /// In en, this message translates to:
+  /// **'Topre (electro-capacitive)'**
+  String get keyboardSwitchTopre;
+
+  /// No description provided for @keyboardSwitchRubberDome.
+  ///
+  /// In en, this message translates to:
+  /// **'Rubber dome'**
+  String get keyboardSwitchRubberDome;
+
+  /// No description provided for @keyboardSwitchScissor.
+  ///
+  /// In en, this message translates to:
+  /// **'Scissor'**
+  String get keyboardSwitchScissor;
+
+  /// No description provided for @keyboardSwitchBucklingSpring.
+  ///
+  /// In en, this message translates to:
+  /// **'Buckling spring'**
+  String get keyboardSwitchBucklingSpring;
+
+  /// No description provided for @keyboardSwitchOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get keyboardSwitchOther;
+
+  /// No description provided for @keyboardKeycapMaterialAbs.
+  ///
+  /// In en, this message translates to:
+  /// **'ABS'**
+  String get keyboardKeycapMaterialAbs;
+
+  /// No description provided for @keyboardKeycapMaterialPbt.
+  ///
+  /// In en, this message translates to:
+  /// **'PBT'**
+  String get keyboardKeycapMaterialPbt;
+
+  /// No description provided for @keyboardKeycapMaterialPom.
+  ///
+  /// In en, this message translates to:
+  /// **'POM'**
+  String get keyboardKeycapMaterialPom;
+
+  /// No description provided for @keyboardKeycapMaterialMetal.
+  ///
+  /// In en, this message translates to:
+  /// **'Metal'**
+  String get keyboardKeycapMaterialMetal;
+
+  /// No description provided for @keyboardKeycapMaterialCeramic.
+  ///
+  /// In en, this message translates to:
+  /// **'Ceramic'**
+  String get keyboardKeycapMaterialCeramic;
+
+  /// No description provided for @keyboardKeycapMaterialWood.
+  ///
+  /// In en, this message translates to:
+  /// **'Wood'**
+  String get keyboardKeycapMaterialWood;
+
+  /// No description provided for @keyboardKeycapMaterialOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get keyboardKeycapMaterialOther;
+
+  /// No description provided for @keyboardCaseMaterialPlastic.
+  ///
+  /// In en, this message translates to:
+  /// **'Plastic'**
+  String get keyboardCaseMaterialPlastic;
+
+  /// No description provided for @keyboardCaseMaterialAluminum.
+  ///
+  /// In en, this message translates to:
+  /// **'Aluminum'**
+  String get keyboardCaseMaterialAluminum;
+
+  /// No description provided for @keyboardCaseMaterialSteel.
+  ///
+  /// In en, this message translates to:
+  /// **'Steel'**
+  String get keyboardCaseMaterialSteel;
+
+  /// No description provided for @keyboardCaseMaterialWood.
+  ///
+  /// In en, this message translates to:
+  /// **'Wood'**
+  String get keyboardCaseMaterialWood;
+
+  /// No description provided for @keyboardCaseMaterialResin.
+  ///
+  /// In en, this message translates to:
+  /// **'Resin'**
+  String get keyboardCaseMaterialResin;
+
+  /// No description provided for @keyboardCaseMaterialOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get keyboardCaseMaterialOther;
+
+  /// No description provided for @keyboardPhysicalLayoutAnsi.
+  ///
+  /// In en, this message translates to:
+  /// **'ANSI'**
+  String get keyboardPhysicalLayoutAnsi;
+
+  /// No description provided for @keyboardPhysicalLayoutIso.
+  ///
+  /// In en, this message translates to:
+  /// **'ISO'**
+  String get keyboardPhysicalLayoutIso;
+
+  /// No description provided for @keyboardPhysicalLayoutJis.
+  ///
+  /// In en, this message translates to:
+  /// **'JIS'**
+  String get keyboardPhysicalLayoutJis;
+
+  /// No description provided for @keyboardPhysicalLayoutOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get keyboardPhysicalLayoutOther;
+
+  /// No description provided for @keyboardConnectionWired.
+  ///
+  /// In en, this message translates to:
+  /// **'Wired'**
+  String get keyboardConnectionWired;
+
+  /// No description provided for @keyboardConnectionBluetooth.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth'**
+  String get keyboardConnectionBluetooth;
+
+  /// No description provided for @keyboardConnectionWireless24.
+  ///
+  /// In en, this message translates to:
+  /// **'2.4 GHz wireless'**
+  String get keyboardConnectionWireless24;
+
+  /// No description provided for @keyboardConnectionMulti.
+  ///
+  /// In en, this message translates to:
+  /// **'Multi-mode'**
+  String get keyboardConnectionMulti;
 
   /// No description provided for @profileFavoriteProgrammerLabel.
   ///

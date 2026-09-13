@@ -244,11 +244,24 @@ JSON against the real DTOs.
   `elevation: 0`; depth comes from Material 3 tonal surface-container
   roles (`lib/core/theme/app_theme.dart`). One sanctioned exception: the
   profile keyboard visual (`KeyboardLayoutPainter` + `keyboard_scene_3d
-  .dart`), a real-3D software renderer whose tapered keycaps and extruded
-  case carry per-face directional lighting plus a subtle two-stop
-  gradient on the top faces, with Geist Mono cap legends projected onto
-  the key planes by the same camera — never blur shadows; see
-  `STACK.md` §2.5.
+  .dart` + `keyboard_scene_shading.dart`), a real-3D software renderer
+  whose tapered keycaps and extruded case carry per-face directional
+  lighting plus gradients on the top faces and the RGB backlight halo,
+  with Geist Mono cap legends projected onto the key planes by the same
+  camera — never blur shadows; see `STACK.md` §2.5. Its dedicated editor
+  (`/profile/keyboard/customize` and `keyboard_editor/`) is a full
+  configurator: card sections with a quick-nav strip, keycap shapes and
+  light transmission (opaque/shine-through/pudding/translucent), custom
+  keycap/case colors, the eleven standard firmware RGB effects (static,
+  breathing, rainbow, color cycle, wave, aurora, stars, rain, gradient,
+  reactive, ripple) with optional per-key light colors, free geometry (a
+  chosen form factor replaces the model's, including a 100% custom blank
+  canvas built from extra keys), per-key legends, extra keys and
+  functional remaps, all persisted as one JSON blob in
+  `guest_profiles.keyboard_customization_json` (drift schema v17); the
+  pinned preview orbits live, taps straight into per-key editing, and —
+  like the fullscreen viewer — sinks, lights and clicks as you type on
+  your real keyboard.
 - Expressive color from a single seed (`ColorScheme.fromSeed(...,
   DynamicSchemeVariant.expressive)`), toggleable in Settings
   (`lib/core/theme/app_colors.dart`).

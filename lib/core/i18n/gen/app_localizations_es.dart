@@ -116,7 +116,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get profileKeyboardViewerHint =>
-      'Arrastra para rotar · Pellizca o usa la rueda para hacer zoom';
+      'Arrastra para rotar · Pellizca o usa la rueda para hacer zoom · Escribe en tu teclado para sentirlo';
 
   @override
   String get profileKeyboardZoomInTooltip => 'Acercar';
@@ -126,6 +126,392 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get profileKeyboardResetViewTooltip => 'Restablecer vista';
+
+  @override
+  String get profileKeyboardSectionTitle => 'Teclado';
+
+  @override
+  String get profileKeyboardCustomizeAction => 'Personalizar teclado';
+
+  @override
+  String get profileKeyboardNotSet => 'Aún sin teclado configurado';
+
+  @override
+  String get profileKeyboardRgbEnabledLabel => 'RGB';
+
+  @override
+  String get keyboardCustomizeTitle => 'Personalizar teclado';
+
+  @override
+  String get keyboardCustomizeBrandSectionTitle => 'Marca y modelo';
+
+  @override
+  String get keyboardCustomizeShapeSectionTitle => 'Forma y tamaño';
+
+  @override
+  String get keyboardCustomizeFormFactorLabel => 'Formato físico';
+
+  @override
+  String get keyboardCustomizeFormFactorAuto => 'Según mi modelo';
+
+  @override
+  String get keyboardCustomizeKeycapsSectionTitle => 'Keycaps';
+
+  @override
+  String get keyboardCustomizeKeycapShapeLabel => 'Forma de las teclas';
+
+  @override
+  String get keyboardCustomizeKeycapColorLabel => 'Color de teclas';
+
+  @override
+  String get keyboardCustomizeCaseColorLabel => 'Color de carcasa';
+
+  @override
+  String get keyboardCustomizeLightingSectionTitle => 'Iluminación';
+
+  @override
+  String get keyboardCustomizeRgbToggleLabel => 'Tiene retroiluminación RGB';
+
+  @override
+  String get keyboardCustomizeRgbColorLabel => 'Color de luz';
+
+  @override
+  String get keyboardCustomizeRgbEffectLabel => 'Efecto';
+
+  @override
+  String get keyboardCustomizeHardwareSectionTitle =>
+      'Interruptores y materiales';
+
+  @override
+  String get keyboardCustomizeSwitchTypeLabel => 'Tipo de interruptor';
+
+  @override
+  String get keyboardCustomizeKeycapMaterialLabel => 'Material de keycaps';
+
+  @override
+  String get keyboardCustomizeCaseMaterialLabel => 'Material de carcasa';
+
+  @override
+  String get keyboardCustomizePhysicalLayoutLabel => 'Disposición física';
+
+  @override
+  String get keyboardCustomizeConnectionLabel => 'Conexión';
+
+  @override
+  String get keyboardCustomizeHotSwappableLabel => 'Hot-swap';
+
+  @override
+  String get keyboardCustomizeStorySectionTitle => 'Historia';
+
+  @override
+  String get keyboardCustomizePurchaseYearLabel => 'Año de compra';
+
+  @override
+  String get keyboardCustomizeNotesLabel => 'Notas';
+
+  @override
+  String get keyboardCustomizeNotesHint =>
+      'Lo que quieras contar de este teclado';
+
+  @override
+  String get keyboardCustomizeKeysSectionTitle =>
+      'Personalización tecla a tecla';
+
+  @override
+  String get keyboardCustomizeKeysHint =>
+      'Toca una tecla en la vista previa para editar su leyenda o remapearla';
+
+  @override
+  String get keyboardCustomizeExtraKeysLabel => 'Teclas extra';
+
+  @override
+  String get keyboardCustomizeExtraKeysAddAction => 'Añadir tecla extra';
+
+  @override
+  String get keyboardCustomizeRemapLabel => 'Remapeos funcionales';
+
+  @override
+  String get keyboardCustomizeRemapAddAction => 'Añadir remapeo';
+
+  @override
+  String get keyboardCustomizeRemapExplainer =>
+      'Haz que una tecla física cuente como otro carácter al practicar';
+
+  @override
+  String get keyboardCustomizeRemapPhysicalKeyLabel => 'Tecla física';
+
+  @override
+  String get keyboardCustomizeRemapCharacterLabel => 'Escribe';
+
+  @override
+  String get keyboardCustomizeRemapShiftedLabel => 'Con Shift';
+
+  @override
+  String get keyboardCustomizeKeySheetTitle => 'Editar tecla';
+
+  @override
+  String get keyboardCustomizeKeyLegendLabel => 'Leyenda';
+
+  @override
+  String get keyboardCustomizeKeyLegendShiftLabel => 'Leyenda con Shift';
+
+  @override
+  String get keyboardCustomizeResetKeyAction => 'Restablecer tecla';
+
+  @override
+  String get keyboardCustomizeExtraKeyLabel => 'Leyenda';
+
+  @override
+  String get keyboardCustomizeExtraKeyShiftLabel => 'Leyenda con Shift';
+
+  @override
+  String get keyboardCustomizeExtraKeyWidthLabel => 'Ancho';
+
+  @override
+  String get keyboardCustomizeExtraKeyHeightLabel => 'Alto';
+
+  @override
+  String get keyboardCustomizeRemoveAction => 'Quitar';
+
+  @override
+  String get keyboardCustomizeCancelAction => 'Cancelar';
+
+  @override
+  String get keyboardCustomizeApplyAction => 'Aplicar';
+
+  @override
+  String get keyboardCustomizeColorDefaultLabel => 'Predeterminado';
+
+  @override
+  String get keyboardCustomizeNotSetLabel => 'Sin definir';
+
+  @override
+  String get keyboardCustomizeCustomColorLabel => 'Color personalizado';
+
+  @override
+  String get keyboardCustomizeEmptyPreview =>
+      'Elige marca y modelo para ver tu teclado en 3D';
+
+  @override
+  String get keyboardCustomizeSaving => 'Guardando…';
+
+  @override
+  String get keyboardSpecsTitle => 'Especificaciones';
+
+  @override
+  String get keyboardSpecsCustomLegendsLabel => 'Leyendas personalizadas';
+
+  @override
+  String get keyboardSpecsExtraKeysLabel => 'Teclas extra';
+
+  @override
+  String get keyboardSpecsRemapsLabel => 'Remapeos funcionales';
+
+  @override
+  String get keyboardSpecsPurchaseYearLabel => 'Comprado en';
+
+  @override
+  String get keyboardSpecsYes => 'Sí';
+
+  @override
+  String get keyboardSpecsNo => 'No';
+
+  @override
+  String get keyboardSpecsEmpty =>
+      'Aún sin detalles — personaliza este teclado';
+
+  @override
+  String get keyboardShapeFamilyFullSize => 'Tamaño completo';
+
+  @override
+  String get keyboardShapeFamilyTkl => 'Sin numérico (TKL)';
+
+  @override
+  String get keyboardShapeFamilySeventyFive => '75 %';
+
+  @override
+  String get keyboardShapeFamilySixtyFive => '65 %';
+
+  @override
+  String get keyboardShapeFamilySixty => '60 %';
+
+  @override
+  String get keyboardShapeFamilySplitErgo => 'Ergonómico dividido';
+
+  @override
+  String get keyboardShapeFamilyCustom => '100 % personalizado';
+
+  @override
+  String get keyboardCustomizeFormFactorOverrideHint =>
+      'La silueta elegida reemplaza la disposición de tu modelo';
+
+  @override
+  String get keyboardCustomizePerKeyLightLabel => 'Luz de la tecla';
+
+  @override
+  String get keyboardCustomizeCustomBoardHint =>
+      'Tu teclado personalizado aún no tiene teclas — añade teclas extra abajo';
+
+  @override
+  String get keyboardCustomizePreviewHint =>
+      'Arrastra para girar · Toca una tecla para editarla · Escribe en tu teclado para iluminarla';
+
+  @override
+  String get keyboardSpecsKeyLightsLabel => 'Luces por tecla';
+
+  @override
+  String get keyboardKeycapShapeRounded => 'Redondeadas';
+
+  @override
+  String get keyboardKeycapShapeSquare => 'Cuadradas';
+
+  @override
+  String get keyboardKeycapShapeRound => 'Redondas';
+
+  @override
+  String get keyboardRgbEffectStatic => 'Estático';
+
+  @override
+  String get keyboardRgbEffectBreathing => 'Respiración';
+
+  @override
+  String get keyboardRgbEffectRainbow => 'Arcoíris';
+
+  @override
+  String get keyboardRgbEffectWave => 'Onda';
+
+  @override
+  String get keyboardRgbEffectColorCycle => 'Ciclo de color';
+
+  @override
+  String get keyboardRgbEffectAurora => 'Aurora';
+
+  @override
+  String get keyboardRgbEffectStars => 'Estrellas';
+
+  @override
+  String get keyboardRgbEffectRain => 'Lluvia';
+
+  @override
+  String get keyboardRgbEffectGradient => 'Degradado';
+
+  @override
+  String get keyboardRgbEffectRipple => 'Onda expansiva (al pulsar)';
+
+  @override
+  String get keyboardRgbEffectReactive => 'Reactivo (al pulsar)';
+
+  @override
+  String get keyboardCustomizeKeycapTransparencyLabel =>
+      'Luz a través de las teclas';
+
+  @override
+  String get keyboardKeycapTransparencyOpaque => 'Opacas';
+
+  @override
+  String get keyboardKeycapTransparencyShineThrough => 'Shine-through';
+
+  @override
+  String get keyboardKeycapTransparencyPudding => 'Pudding';
+
+  @override
+  String get keyboardKeycapTransparencyTranslucent => 'Translúcidas';
+
+  @override
+  String get keyboardCustomizeResetAction => 'Restablecer teclado';
+
+  @override
+  String get keyboardSwitchLinear => 'Lineal';
+
+  @override
+  String get keyboardSwitchTactile => 'Táctil';
+
+  @override
+  String get keyboardSwitchClicky => 'Clicky';
+
+  @override
+  String get keyboardSwitchOptical => 'Óptico';
+
+  @override
+  String get keyboardSwitchMagnetic => 'Magnético (efecto Hall)';
+
+  @override
+  String get keyboardSwitchTopre => 'Topre (electro-capacitivo)';
+
+  @override
+  String get keyboardSwitchRubberDome => 'Membrana';
+
+  @override
+  String get keyboardSwitchScissor => 'Tijera';
+
+  @override
+  String get keyboardSwitchBucklingSpring => 'Muelle pandeado';
+
+  @override
+  String get keyboardSwitchOther => 'Otro';
+
+  @override
+  String get keyboardKeycapMaterialAbs => 'ABS';
+
+  @override
+  String get keyboardKeycapMaterialPbt => 'PBT';
+
+  @override
+  String get keyboardKeycapMaterialPom => 'POM';
+
+  @override
+  String get keyboardKeycapMaterialMetal => 'Metal';
+
+  @override
+  String get keyboardKeycapMaterialCeramic => 'Cerámica';
+
+  @override
+  String get keyboardKeycapMaterialWood => 'Madera';
+
+  @override
+  String get keyboardKeycapMaterialOther => 'Otro';
+
+  @override
+  String get keyboardCaseMaterialPlastic => 'Plástico';
+
+  @override
+  String get keyboardCaseMaterialAluminum => 'Aluminio';
+
+  @override
+  String get keyboardCaseMaterialSteel => 'Acero';
+
+  @override
+  String get keyboardCaseMaterialWood => 'Madera';
+
+  @override
+  String get keyboardCaseMaterialResin => 'Resina';
+
+  @override
+  String get keyboardCaseMaterialOther => 'Otro';
+
+  @override
+  String get keyboardPhysicalLayoutAnsi => 'ANSI';
+
+  @override
+  String get keyboardPhysicalLayoutIso => 'ISO';
+
+  @override
+  String get keyboardPhysicalLayoutJis => 'JIS';
+
+  @override
+  String get keyboardPhysicalLayoutOther => 'Otro';
+
+  @override
+  String get keyboardConnectionWired => 'Cable';
+
+  @override
+  String get keyboardConnectionBluetooth => 'Bluetooth';
+
+  @override
+  String get keyboardConnectionWireless24 => 'Inalámbrico 2.4 GHz';
+
+  @override
+  String get keyboardConnectionMulti => 'Multimodo';
 
   @override
   String get profileFavoriteProgrammerLabel =>

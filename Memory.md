@@ -66,10 +66,9 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `sqlAggregation` (7), `sqlJoins` (7), `sqlModifications` (5),
   `sqlAdvancedQueries` (6). Dificultad 30/22/7/1.
 - Gate de calidad: `bash tool/check.sh` (format + analyze + arquitectura +
-  tests). Última corrida (2026-09-12, cierre de Go avanzado): **verde de
-  punta a punta — 731 tests**, format/analyze/arquitectura limpios (incluye
-  C#, Swift, Kotlin, Dart, Django, PHP, Git, Linux, Docker, GitHub Actions y
-  las dos rutas avanzadas de Go). `content_category.dart` quedó en **358
+  tests). Última corrida (2026-09-13, cierre de personalización de
+  teclado): **verde de punta a punta — 822 tests**, format/analyze/
+  arquitectura limpios. `content_category.dart` quedó en **358
   líneas** (límite duro 500): el formatter tall obliga línea en blanco
   alrededor de cada constante documentada con `///` (llevaba el archivo a
   532), así que los docs por-valor son `//` empaquetados con
@@ -117,6 +116,25 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   tarjeta abre `/profile/keyboard`, un inspector a pantalla completa con
   orbit, zoom (rueda/pellizco/botones), press de teclas, reset y pista de
   uso (ver sesión de hoy).
+- **Personalización total del teclado** (sesión de hoy): editor dedicado
+  `/profile/keyboard/customize` con preview 3D fijo en vivo (pitch 20°,
+  órbita por arrastre, tap directo a la edición de la tecla) — formas de
+  keycap (redondeado/cuadrado/redondo), **transmisión de luz de la
+  tecla** (opaca/shine-through/pudding/translúcida), colores propios de
+  keycaps y carcasa, RGB con **11 efectos de firmware** (fijo,
+  respiración, arcoíris, ciclo, onda, aurora, estrellas, lluvia,
+  degradado, reactivo y onda expansiva) y **luz propia por tecla**,
+  geometría **100 % libre** (elegir formato reemplaza la del modelo e
+  incluye un lienzo en blanco), metadata de interruptores/materiales/
+  formato/conexión/hot-swap/año/notas, leyendas por tecla, teclas extra
+  y remapeos funcionales reflejados en las tapas — todo en
+  `KeyboardCustomization`, persistido como blob JSON en
+  `guest_profiles.keyboard_customization_json` (schema drift **v17**). El
+  hero card muestra un resumen de specs y el viewer una ficha completa;
+  el visor y el preview reaccionan al teclado físico real (hundir,
+  iluminar y sonar); el capture engine de `practice` aplica los remapeos
+  (única excepción documentada a "el layout no afecta la clasificación",
+  `SPEC.md` §7.3).
 - Último release: **v1.11.0** (`5cf284a`). El siguiente push a `main`
   genera release automático desde los Conventional Commits.
 - **Deep link a una lección** (`/practice/:pathId/lessons/:lessonId`,
@@ -170,6 +188,130 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ## Historial de sesiones
 
+### 2026-09-13 — Personalización total del teclado (editor 3D dedicado, metadata, RGB y remapeo funcional)
+
+- **Pedido del usuario**: llevar la personalización del teclado al máximo —
+  verlo en 3D mientras se elige, forma de keycaps (redondo/cuadrado),
+  teclas extra que el layout no tiene, mapeo tecla por tecla, RGB, más
+  metadata — pidiendo explícitamente **primero la fundación de datos y su
+  persistencia**. Decisiones acordadas por pregunta: pantalla dedicada
+  `/profile/keyboard/customize`, tres formas de keycap (redondeado,
+  cuadrado, redondo), RGB con color + efectos animados (fijo, respiración,
+  arcoíris), mapeo = leyendas por tecla + teclas extra + **remapeo
+  funcional real**, y metadata de interruptores/materiales/formato/
+  conexión/notas.
+- **Fundación (lo primero)**: `KeyboardCustomization` (freezed, dominio
+  puro) + enums (`KeycapShape`, `RgbEffect`, `SwitchType`,
+  `KeycapMaterial`, `CaseMaterial`, `KeyboardPhysicalLayout`,
+  `KeyboardConnectionType`); `KeyboardShapeFamily` movido de
+  `presentation` a `domain`; DTO + mapper JSON tolerante
+  (`keyboard_customization_mapper.dart`: un enum desconocido degrada solo
+  ese campo, un blob corrupto o un array no-objeto → `null`, las entradas
+  a medio formar se podan); columna nueva
+  `guest_profiles.keyboard_customization_json` (schema drift **v17**);
+  separación de escrituras — `updateCustomization` (flair) y
+  `updateKeyboardSetup` (layout+marca+modelo+blob) no comparten columnas,
+  así los dos editores nunca se pisan (test de regresión en
+  `profile_drift_integration_test.dart`); `UpdateKeyboardSetupUseCase`
+  con límites reales. Tests: mapper round-trip/tolerancia, usecase,
+  drift v17.
+- **Render 3D**: `keyboard_customization_geometry.dart` (overrides de
+  leyenda por posición física `keyboardKeyIdFor`, teclas extra
+  autocolocadas en columnas a la derecha del tablero), `keyboard_scene_
+  faces.dart` + `keyboard_scene_shading.dart` extraídos de
+  `keyboard_scene_3d.dart` (el archivo pasó de 633 a ~440 líneas, límite
+  500); formas de keycap con radio por forma (redondo = 6 segmentos por
+  esquina y radio mitad del cap), colores ARGB propios de keycaps/carcasa,
+  y RGB con halo radial + tinte de tapas/laterales/plate y un
+  `AnimationController` que solo vive mientras el efecto es animado.
+  `KeyboardVisual` gana `customization` y `onKeyTap` (disparado en
+  pointer-up, para que abrir el editor no deje el press pegado).
+- **Editor**: `/profile/keyboard/customize` (pantalla dedicada, preview
+  3D fijo e interactivo arriba, formulario abajo) con secciones de
+  marca/modelo/layout, forma, keycaps/colores, iluminación, hardware,
+  historia (año/notas) y tecla por tecla (chips de leyendas, extras,
+  remapeos); sheets de edición de tecla y de remapeo; `EditProfileScreen`
+  pierde la sección de teclado y en su lugar enlaza con una tarjeta al
+  editor; el hero card suma un botón de lápiz.
+- **Práctica**: el capture field aplica los remapeos funcionales leyendo
+  `keyboardRemapsByNameProvider` (keepAlive, índice por
+  `PhysicalKeyId.name`) en cada keydown, con forma shift; las métricas
+  siguen registrando la tecla física real. `SPEC.md` §7.3 documenta la
+  excepción como la única pieza que cambia qué carácter produce una tecla
+  (decisión del usuario, solo teclas imprimibles).
+- **Vitrina**: `keyboard_specs.dart` (filas etiqueta/valor compartidas)
+  alimenta el resumen del hero card y la ficha completa del viewer
+  (acción de info).
+- **Segunda vuelta (mismo día, pedido del usuario)**: luces **por
+  tecla** (`KeyboardKeyLight`, color ARGB por posición física o por id de
+  tecla extra): con RGB encendido, cada tecla con luz propia recibe un
+  charco radial sobre el plate (`_plateGlowFaces`) y un glow aditivo a
+  través de la tapa (`glowColor` de `KeyboardFace`, `BlendMode.plus` en el
+  painter), con la leyenda teñida hacia la luz; el sheet de cada tecla
+  gana el campo "Luz de la tecla" (default = color global). Libertad
+  geométrica total: un formato elegido **reemplaza** la geometría del
+  modelo (antes ganaba el layout curado), incluida
+  `KeyboardShapeFamily.custom` — un lienzo en blanco construido solo con
+  teclas extra (bloque macro-pad desde el origen). El preview del editor
+  es ahora un product-shot en vivo (pitch 20°, órbita por arrastre con
+  umbral para no romper el tap, botón de pantalla completa que abre el
+  viewer con el estado **sin guardar**); los remapeos se reflejan en las
+  tapas (carácter nuevo primario, viejo como leyenda secundaria, vía
+  `_legendToPhysicalKeyName`) y las familias genéricas 60/65/75/TKL
+  ganaron las leyendas de su clúster de navegación. El screen volvió a
+  partirse (`keyboard_customize_preview.dart` con la órbita propia).
+- **Tercera vuelta (mismo día, pedido del usuario)**: efectos típicos de
+  teclado completos — se suman **onda** (banda gaussiana de luz que
+  recorre el tablero) y **reactivo** (base tenue; cada pulsación destella
+  y decae, las teclas sostenidas quedan encendidas), y **los clicks
+  destellan en cualquier modo** con RGB encendido. El viewer y el preview
+  del editor ahora **reaccionan al teclado físico real**: un `Focus`
+  observa keydown/keyup, los mapea por posición física
+  (`physicalKeyIdFor` de `practice`) y `KeyboardKeyEffects`
+  (ticker propio, se detiene solo) hunde/ilumina la tapa equivalente;
+  los remaps no mueven la reacción (se mapea contra el layout base). El
+  scene volvió a partirse: `keyboard_scene_effects.dart` (onda + charcos
+  de plate) y `keyboard_key_effects.dart` (niveles/pulsos), ambos < 500
+  líneas. Render verificado con harness PNG (onda cian atravesando el
+  75 % y reactivo magenta con WASD sostenidas + destellos).
+- **Cuarta vuelta (mismo día, pedido del usuario — "más efectos estándar
+  de la industria, transmisión de luz, escribir = tap, editor con UI")**:
+  el set RGB pasa de 5 a **11 efectos de firmware** (fijo, respiración,
+  arcoíris, ciclo de color, onda, aurora, estrellas, lluvia, degradado,
+  reactivo y **onda expansiva/ripple**) elegidos en una **rejilla visual
+  de tiles con ícono** (`keyboard_effect_grid.dart`, no chips de texto).
+  Los efectos animados se resuelven por tecla en
+  `keyboard_scene_effects.dart` (`effectIntensity`/`rgbTint` por
+  posición: banda gaussiana, swells de aurora, twinkles con hash por
+  tecla, gotas que caen con desfase por columna, blend vertical en el
+  degradado, hue global en el ciclo) y el ripple se calcula por
+  **distancia al origen de cada pulsación** (`rippleBoost`, radio a
+  7 u/s, vida 1.4 s) — se esparce desde la tecla que escribes.
+  **Transmisión de luz por keycap**: nuevo enum `KeycapTransparency`
+  (opacas / shine-through / pudding / translúcidas) con factores en
+  `KeyboardKeycapStyle` (top/side/lente/glow) — los opacos dejan la
+  leyenda oscura y la luz solo entre teclas; pudding ilumina los
+  laterales; shine-through la leyenda. Persistido en el blob (mapper con
+  fallback `translucent`) y mostrado en la ficha de specs. El visor
+  fullscreen y el preview del editor: **escribir en tu teclado real es
+  como darle tap** — hunde, ilumina y ahora **suena** (se reproduce el
+  click de `keystrokeSoundPlayer` del motor de práctica). El editor se
+  rediseñó como configurador: **cards con ícono por sección**, tira de
+  **navegación rápida** que hace scroll a cada sección
+  (`keyboard_section_nav.dart`), y **reset total** en el AppBar.
+  Refactor de límites: la edición por tecla pasó a un **mixin**
+  (`keyboard_customize_key_editing.dart`), el preview ya era widget
+  propio y `keyboard_scene_effects.dart` concentra el look de los
+  efectos; todos los archivos <500. Render verificado con harness PNG
+  (ripple anaranjado expandiéndose desde la G, lluvia cian, estrellas
+  violeta, pudding vs opaco).
+- **Verificación**: `bash tool/check.sh` verde de punta a punta —
+  **822 tests**, format/analyze/arquitectura limpios. Tests nuevos:
+  ripple (el anillo enciende la tecla lejana al llegar), ciclo de color,
+  factores de transmisión por estilo, mapper con `keycapTransparency`;
+  ajustados los tests de pantalla (títulos duplicados por la nav, scroll
+  al ListView vertical) y el del viewer (copy nuevo).
+
 ### 2026-09-13 — Leyendas de teclas (font Geist Mono, datos reales de QMK)
 
 - **Pedido del usuario**: que se vean las letras de las teclas en el
@@ -208,6 +350,25 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   leyenda en cada layout curado. `bash tool/check.sh` verde: **768 tests**
   (una corrida previa cayó por el flaky conocido de `survival_controller`
   bajo carga; pasa aislado y en la re-corrida).
+- **Ajuste tras feedback del usuario**: las leyendas estaban algo
+  grandes y descentradas. Tamaños bajados (primaria 0.34u→0.27u,
+  secundaria 0.24u→0.19u) y par compactado (separación 0.185u→0.10u);
+  además el painter ahora centra **por glifo**: mide el `ascent` real
+  (`computeLineMetrics()`, 0.773em en Geist Mono Medium) y pinta en
+  `-(ascent − capHeight/2)` con capHeight 0.7em, en vez de centrar la
+  caja de línea con descendente (que dejaba las letras ~0.077em altas).
+  Verificado con renders de acercamiento en reposo y con orbit.
+- **Segundo ajuste (feedback: pantallas chicas)**: en mobile los keycaps
+  se veían «rotados ~15° a la izquierda y más redonditos» — no era
+  rotación real: los radios del theme en px (4/12) convertidos por el
+  `unit` ajustado daban 0.19u por tecla y 0.57u por caja en una pantalla
+  de 360px, y como cada esquina se muestrea con 3 segmentos, los chords
+  del arco a 30° dominaban el contorno (bordes dominantes a ±15°) → el
+  cap se leía como un octágono rotado, y el texto con él. Fix:
+  `_maxKeyCornerFraction = 0.09` y `_maxCaseCornerFraction = 0.22`
+  (fracciones independientes del tamaño) en `keyboard_scene_3d.dart`;
+  desktop queda igual (0.073/0.218) y mobile se ve igual de cuadrado.
+  Verificado con renders a 360×560 (viewer portrait) y crops al 500%.
 - **Verificación visual**: harness temporal de render (painter→PNG con
   las fuentes Geist reales cargadas vía `FontLoader`) para GX87, GMMK
   Pro, HHKB, Voyager, ErgoDox y familia TKL en dark/light y con orbit —

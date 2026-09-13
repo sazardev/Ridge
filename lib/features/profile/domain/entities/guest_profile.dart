@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_layout.dart';
 import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
@@ -34,6 +35,7 @@ abstract class GuestProfile with _$GuestProfile {
     KeyboardLayout? keyboardLayout,
     String? keyboardBrand,
     String? keyboardModel,
+    KeyboardCustomization? keyboardCustomization,
     String? favoriteQuote,
     String? favoriteProgrammer,
     String? githubUsername,
