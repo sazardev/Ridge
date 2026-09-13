@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.14.0] - 2026-09-13
+
+### Added
+- **scope:** ready (1f3549d)
+
 ## [1.13.0] - 2026-09-12
 
 ### Added
