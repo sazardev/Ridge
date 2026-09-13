@@ -110,6 +110,22 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get profileKeyboardViewFullscreenAction => 'View fullscreen';
+
+  @override
+  String get profileKeyboardViewerHint =>
+      'Drag to rotate · Pinch or scroll to zoom';
+
+  @override
+  String get profileKeyboardZoomInTooltip => 'Zoom in';
+
+  @override
+  String get profileKeyboardZoomOutTooltip => 'Zoom out';
+
+  @override
+  String get profileKeyboardResetViewTooltip => 'Reset view';
+
+  @override
   String get profileFavoriteProgrammerLabel =>
       'Favorite programmer or influence';
 

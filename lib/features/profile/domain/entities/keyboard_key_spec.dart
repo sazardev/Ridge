@@ -16,6 +16,12 @@ part 'keyboard_key_spec.freezed.dart';
 /// on this entity. [rotationAngle] (degrees) rotates the key around
 /// ([rotationX], [rotationY]) — both default to ([x], [y]), the key's
 /// own corner, when the source doesn't specify a different pivot.
+///
+/// [label]/[label2] are the cap's printed legends: [label] is the primary
+/// one (centered, or lower when [label2] exists) and [label2] the shifted
+/// symbol drawn above it (e.g. `!` over `1`). Both are optional — a key
+/// with no legend renders as a blank cap, exactly like the geometry-only
+/// data bank did before legends existed.
 @freezed
 abstract class KeyboardKeySpec with _$KeyboardKeySpec {
   /// Creates a fully-resolved key geometry snapshot.
@@ -31,5 +37,7 @@ abstract class KeyboardKeySpec with _$KeyboardKeySpec {
     required double rotationAngle,
     required double rotationX,
     required double rotationY,
+    String? label,
+    String? label2,
   }) = _KeyboardKeySpec;
 }

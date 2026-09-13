@@ -21,7 +21,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ---
 
-## Estado actual (2026-09-12)
+## Estado actual (2026-09-13)
 
 - App **offline-only** (drift/SQLite + secure storage + shared_preferences).
   Todo lo online (auth, duelos, escuadrones, leaderboards, sync Supabase)
@@ -102,12 +102,21 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   una voz polifónica independiente (~11 ms tecla→sonido vía render-ahead ring
   en nativo), sin pools de players que reciclar — reemplaza al fix
   pool+breaker de `audioplayers` (sesión de hoy).
-- **Teclado del perfil en pseudo-3D estilo VIA** (sesión de hoy): keycaps
-  extruidos con cara superior en gradiente sutil, hover/press por tecla,
-  reposo centrado con parallax lento que sigue al puntero y drag-to-orbit
-  con el mouse (el ángulo persiste), y contraste tecla↔board garantizado
-  por test para las 24 paletas × 2 brightness. Única excepción sancionada
-  al "flat" (`STACK.md` §2.5).
+- **Teclado del perfil en 3D real con leyendas** (sesión de hoy):
+  renderer 3D propio por software (sin paquetes nuevos) — caja extruida,
+  plate hundido, keycaps como frustums con esquinas redondeadas, cámara
+  con perspectiva, auto-fit al bounding proyectado, culling, z-sorting e
+  iluminación por cara (las tapas también se sombrean); hover/press por
+  tecla, parallax que sigue al puntero y drag-to-orbit (el ángulo
+  persiste), y contraste tecla↔board garantizado por test para las 24
+  paletas × 2 brightness. Cada keycap muestra su **leyenda impresa** en
+  Geist Mono (proyectada por la misma cámara, auto-ajustada al ancho del
+  cap), derivada de los keymaps default reales de QMK para los 24 layouts
+  curados y canónica en las familias genéricas. Única excepción
+  sancionada al "flat" (`STACK.md` §2.5). El botón de expandir de la
+  tarjeta abre `/profile/keyboard`, un inspector a pantalla completa con
+  orbit, zoom (rueda/pellizco/botones), press de teclas, reset y pista de
+  uso (ver sesión de hoy).
 - Último release: **v1.11.0** (`5cf284a`). El siguiente push a `main`
   genera release automático desde los Conventional Commits.
 - **Deep link a una lección** (`/practice/:pathId/lessons/:lessonId`,
@@ -160,6 +169,179 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 ---
 
 ## Historial de sesiones
+
+### 2026-09-13 — Leyendas de teclas (font Geist Mono, datos reales de QMK)
+
+- **Pedido del usuario**: que se vean las letras de las teclas en el
+  teclado 3D.
+- **Pipeline**: `KeyboardKeySpec` gana `label`/`label2` opcionales
+  (freezed + DTO + mapper; `label2` = símbolo shift, dibujado arriba);
+  `KeyboardCamera.canvasMatrix` expone la proyección como matriz de
+  canvas (la traslación del centro de proyección va **pre-multiplicada**,
+  no apilada: el término de perspectiva también la multiplica, si no el
+  divide homogéneo no coincide con `project` — lo cazó un test); el
+  painter dibuja el texto con `Canvas.transform(canvasMatrix)` en el
+  plano de la tapa (perspectiva real, no texto escalado), con
+  TextPainters cacheados a font-size 1 y auto-fit al ancho del cap
+  (`maxWidth` en la leyenda) para que «Backspace» o «PrtSc» no invadan
+  teclas vecinas; Geist Mono Medium, color `keyLegend` nuevo del
+  `KeyboardKeycapStyle` (mix 0.82 hacia el extremo oscuro, contraste
+  ≥2.5 por test en las 24 paletas × 2 brightness).
+- **Datos**: los 24 layouts curados se enriquecieron con las leyendas
+  **reales de los keymaps default de QMK** (`keymaps/default/keymap.c`,
+  heredados de directorios padre cuando aplica), mapeando cada argumento
+  del `LAYOUT(...)` a la clave física por coordenadas (x,y) del
+  `info.json`; el script elige la capa más poblada (las capas Mac de
+  Keychron dejan F3/F4 en `KC_NO`), normaliza mod-taps
+  (`CTL_T(KC_ESC)` → `Esc`), nombres Mac (`KC_LCMD` → `Cmd`), rotary
+  (`RM_VALU` → `Vol+`), flechas (`KC_RGHT` → `→`), etc. Combos como
+  `G(KC_D)` (la tecla extra del GX87) quedan **en blanco a propósito**.
+  Nota de procedencia añadida a `THIRD_PARTY_SOURCES.md` (las leyendas no
+  son geometría extraída; salen del keymap default GPL-2.0). Las familias
+  genéricas (`standard_family_key_specs.dart`) ahora llevan leyendas
+  QWERTY canónicas escritas en Dart (incluye numpad completo y columnas
+  del `splitErgo`).
+- **Tests**: cámara (la matriz de canvas reproduce `project` con puntos y
+  ángulos), escena (leyenda en la tapa, `label2` con tamaño menor, stepped
+  keys la imprimen una sola vez, teclas sin leyenda no pintan nada),
+  contraste de tinta, y el data source real exige ≥90% de teclas con
+  leyenda en cada layout curado. `bash tool/check.sh` verde: **768 tests**
+  (una corrida previa cayó por el flaky conocido de `survival_controller`
+  bajo carga; pasa aislado y en la re-corrida).
+- **Verificación visual**: harness temporal de render (painter→PNG con
+  las fuentes Geist reales cargadas vía `FontLoader`) para GX87, GMMK
+  Pro, HHKB, Voyager, ErgoDox y familia TKL en dark/light y con orbit —
+  leyendas legibles, centradas y ajustadas; harness borrado antes de
+  cerrar. La app de Linux ya no estaba corriendo al final de la sesión,
+  así que la verificación en vivo quedó pendiente para el próximo
+  `flutter run` (el pipeline es el mismo que renderizó el harness).
+- **Docs**: `STACK.md` §2.5, `AGENTS.md`+`CLAUDE.md` espejados y
+  `THIRD_PARTY_SOURCES.md`.
+
+### 2026-09-13 — Teclado del perfil en 3D real (renderer propio, sin dependencias)
+
+- **Pedido del usuario**: pasar la vista del teclado de "2D en entorno 3D"
+  a **3D real** — profundidad de teclas, caja y todo lo demás.
+- **Decisiones con el usuario** (preguntadas antes de codificar): renderer
+  3D propio sobre Canvas (sin paquetes de motor, mantiene
+  Android/Linux/Windows/Web y el CI livianos) y geometría 3D + luz por
+  cara (sin dish, sin sombra de contacto, sin leyendas) — las dos
+  recomendadas.
+- **Arquitectura nueva** (todo bajo
+  `lib/features/profile/presentation/widgets/keyboard/`):
+  - `keyboard_geometry_3d.dart`: `Vec3`; `KeyboardCamera` con `yaw`/`pitch`,
+    proyección en perspectiva (`D = 4.0 × lado mayor`, teleobjetivo
+    suave), `unprojectToPlane` (rayo→plano para hit-testing),
+    `depthOf` para ordenar y **auto-fit al bounding proyectado**: el
+    `unit` de reposo es el tope y a ángulos grandes el tablero solo se
+    encoge (nunca crece ni se corta); `roundedRectOutline` muestrea
+    esquinas redondeadas en polilínea.
+  - `keyboard_scene_3d.dart`: constructor de escena — case con paredes +
+    tapa + plate hundido, keycaps como frustums (base, tapa inset por
+    taper 0.075u, esquinas redondeadas), stepped keys como dos caps, z
+    real para el press (`sink = keyDepthFraction`), culling de caras
+    traseras, orden pintado por profundidad y luz direccional fija al
+    espectador con wrap; las tapas también se sombrean.
+  - `keyboard_layout_painter.dart` reescrito: solo vuelca caras
+    ordenadas (gradiente sancionado en las tapas) y sella las grietas de
+    antialiasing entre quads con un stroke del mismo color.
+  - `keyboard_visual.dart` reescrito: parallax con `AnimationController`
+    propio (ya no hay `Transform` interno), cámara por frame, hit-testing
+    por desproyección al plano `keyTopZFor(style)`; API público intacto,
+    los tres usos (hero, editor, viewer) no cambiaron.
+  - `keyboard_keycap_style.dart`: defaults de profundidad subidos
+    (`keyDepthFraction` 0.10→0.26, `caseDepthFraction` 0.16→0.40).
+- **Bugs cazados durante el desarrollo** (por tests y renders de prueba):
+  (1) `bezel` devolvía píxeles pero se usaba como unidades →
+  plate vacío; (2) las paredes de cada keycap reusaban las coordenadas de
+  la base arriba (quedaban verticales, normal z=0, el culling las
+  borraba) → debían usar el outline superior inset; (3) con radio
+  superior 0 el outline caía de 12 a 4 puntos → mismatch de índices (se
+  fuerza radio > 0); (4) `Rect.toString()` redondea a 1 decimal en este
+  Dart, lo que engañó los prints de debug un rato.
+- **Tests**: `keyboard_geometry_3d_test.dart` (Vec3, outline, fit,
+  round-trip project/unproject con ángulos, depth, hit-testing con
+  rotación y stepped keys) y `keyboard_scene_3d_test.dart` (escena
+  completa, press baja el centroide a pitch>0, hover tinta, la geometría
+  cambia al orbitar, sombreado lateral variable); adaptados
+  `keyboard_layout_geometry_test.dart`, `keyboard_visual_test.dart`,
+  `profile_keyboard_hero_card_test.dart` y
+  `keyboard_viewer_screen_test.dart` (se asserta
+  `KeyboardLayoutPainter.yawDegrees/pitchDegrees` en vez del `Transform`).
+  `bash tool/check.sh` verde: **761 tests**.
+- **Verificación visual real**: harness temporal de render
+  (painter→PNG, nunca commiteado) para iterar rest/turn/extreme/
+  hover-press en dark y light y en los tamaños reales (hero 320×176,
+  viewer 900×700); app Linux viva con hot reload y
+  `ext.flutter.inspector.screenshot` por VM service (captura la app sin
+  depender del compositor, clave cuando el usuario cambia de workspace);
+  drag/hover/press sintéticos por `GestureBinding.handlePointerEvent` —
+  confirmados el orbit con perspectiva, el hover tintado con hit-testing
+  exacto y el press hundiendo la tecla. Los archivos temporales se
+  borraron antes de cerrar.
+- **Docs**: `STACK.md` §2.5 reescrito (renderer 3D real, auto-fit,
+  iluminación por cara) y `AGENTS.md`+`CLAUDE.md` espejados.
+
+### 2026-09-13 — Teclado del perfil a pantalla completa (`/profile/keyboard`)
+
+- **Pedido del usuario**: poder dar click al teclado del Profile para
+  abrirlo a pantalla completa y manipularlo/verlo con más detalle.
+- **Decisiones con el usuario** (preguntadas antes de codificar): ruta
+  dedicada no-shell `/profile/keyboard` (misma forma que `/achievements`),
+  botón de expandir en la esquina de la tarjeta (el click sobre el
+  tablero sigue hundiendo teclas, no abre el viewer), y dentro del viewer
+  orbit con drag, zoom (rueda + pellizco + botones), press de teclas,
+  botón de reset y pista de uso. Todas elegidas por el usuario.
+- **Nuevo `KeyboardViewerScreen`**
+  (`lib/features/profile/presentation/screens/keyboard_viewer_screen.dart`):
+  el mismo `KeyboardVisual` a tamaño completo con `AppBar` (caption marca
+  + modelo), `EscapeToPop` y una píldora tonal de controles
+  (`zoom out`/`reset`/`zoom in`, deshabilitados en los límites). Orbit:
+  `GestureDetector.onScale*`; pinch: `_zoomAtScaleStart * details.scale`
+  (el recognizer re-baseliza al cambiar el número de punteros); rueda:
+  `PointerScrollEvent`/`PointerScaleEvent` con paso multiplicativo `exp`;
+  zoom 0.5–3.0 en pasos de 1.25; clamp de orbit ±75° yaw / ±45° pitch
+  (más amplio que el hero card).
+- **Hallazgo real de gestos**: al ser el único recognizer de la arena, el
+  `ScaleGestureRecognizer` gana **en el pointer-down** (no tras el slop),
+  así que suspender el press en `onScaleStart` mataba el click de tecla —
+  lo cazó un test (press a través del zoom). Fix: umbral de 4 px sobre
+  `ScaleStartDetails.localFocalPoint` antes de empezar a orbitar (mismo
+  criterio que el hero card), y `_dragging` se activa recién en el primer
+  `onScaleUpdate` que lo cruza. Documentado en el código.
+- **Hero card**: `Stack` con `IconButton` (`LucideIcons.maximize2`,
+  `profileKeyboardViewFullscreenAction`) en la esquina superior derecha
+  que hace `context.push('/profile/keyboard', extra: profile)`; su target
+  de 48 px queda por encima del tablero, así que no dispara el press de
+  la tecla de abajo.
+- **Router**: ruta no-shell `/profile/keyboard` junto a `/profile/edit`,
+  `GuestProfile` en `extra` (misma forma).
+- **l10n**: 5 claves nuevas en/es (`profileKeyboardViewFullscreenAction`,
+  `profileKeyboardViewerHint`, `profileKeyboardZoomInTooltip`,
+  `profileKeyboardZoomOutTooltip`, `profileKeyboardResetViewTooltip`) +
+  `flutter gen-l10n`.
+- **Tests**: `keyboard_viewer_screen_test.dart` (6: render con caption/
+  controles/pista, drag de mouse orbita, pinch de dos dedos, rueda,
+  botones+reset, press de tecla a través del `Transform.scale`) + test de
+  navegación con `GoRouter` real en `profile_keyboard_hero_card_test.dart`
+  (`tap` al botón → cae en la ruta). `bash tool/check.sh` verde: **740
+  tests**, format/analyze/arquitectura limpios (una primera corrida cayó
+  por el flaky conocido de `survival_controller` bajo carga; pasa aislado
+  y en la re-corrida completa).
+- **Verificación visual real (Linux/Hyprland, sin reiniciar la app)**:
+  `dart_hot_reload` + `dart_hot_restart` sobre la sesión debug viva
+  (pid 27814); `Ctrl+4` enviado con
+  `hyprctl dispatch sendshortcut CTRL,4,pid:27814` para llegar a Profile;
+  el click del botón se simuló por VM service evaluando
+  `GestureBinding.instance.handlePointerEvent(PointerDownEvent(...))` en
+  el scope de `keyboard_viewer_screen.dart` (importa
+  `package:flutter/gestures.dart` completo) y las capturas con
+  `grim -g "960,22 960x1058"` confirmaron el viewer abierto (AppBar
+  "MCHOSE MCHOSE GX87", tablero completo, píldora de controles y pista).
+  Drag/zoom/tap-reset también se despacharon así. **Truco reutilizable**
+  para futuras sesiones: `ydotoold` no está corriendo y Ridge es Wayland
+  nativo (xdotool no lo ve); esta vía (VM service evaluate + sendshortcut
+  + grim) evita instalar/levantar nada.
 
 ### 2026-09-12 — Aviso "conectá un teclado" en Android (nuevo canal nativo)
 
@@ -2924,7 +3106,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ```sh
 bash tool/check.sh                         # gate completo
-flutter test                               # suite (404 tests)
+flutter test                               # suite (768 tests)
 python3 .claude/skills/content-curriculum/scripts/audit_lesson_order.py \
   assets/content/snippets/sql_v1.json \
   assets/content/learning_paths/sql_foundations_v1.json

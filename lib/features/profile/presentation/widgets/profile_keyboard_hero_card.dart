@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
 import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_visual.dart';
@@ -22,6 +24,11 @@ import 'package:ridge/features/profile/presentation/widgets/keyboard/keyboard_vi
 ///   drag. The first few pixels are a threshold so a plain click still
 ///   presses keys, and once a drag starts the press feedback is released.
 /// - Touch devices just scroll as usual: hover and drag are mouse-only.
+///
+/// The expand button in the card's top-right corner pushes the fullscreen
+/// keyboard inspector (`/profile/keyboard`), where the same board has room
+/// to orbit and zoom properly; clicking the board itself stays a key
+/// press, here as in the inspector.
 ///
 /// Renders nothing if [GuestProfile.keyboardModel] is unset, or is free
 /// text `KeyboardVisual` can't match to a curated layout or generic
@@ -158,6 +165,7 @@ class _ProfileKeyboardHeroCardState
     final keys = resolveKeyboardKeySpecs(ref, model);
     if (keys == null || keys.isEmpty) return const SizedBox.shrink();
 
+    final l10n = AppLocalizations.of(context);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final brand = widget.profile.keyboardBrand;
@@ -174,50 +182,67 @@ class _ProfileKeyboardHeroCardState
         onPointerMove: _onPointerMove,
         onPointerUp: _onPointerEnd,
         onPointerCancel: _onPointerEnd,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: colorScheme.surfaceContainerLow,
-            shape: AppShapes.of(context).largeShape,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
-            child: Column(
-              children: [
-                KeyboardVisual(
-                  model: model,
-                  height: ProfileKeyboardHeroCard._visualHeight,
-                  pointerTilt: _pointer,
-                  pointerTiltDegrees:
-                      ProfileKeyboardHeroCard._pointerTiltDegrees,
-                  rotation: _rotation,
-                  interactiveSuspended: _dragging,
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
+          children: [
+            DecoratedBox(
+              decoration: ShapeDecoration(
+                color: colorScheme.surfaceContainerLow,
+                shape: AppShapes.of(context).largeShape,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+                child: Column(
                   children: [
-                    Icon(
-                      LucideIcons.keyboard300,
-                      size: 16,
-                      color: colorScheme.onSurfaceVariant,
+                    KeyboardVisual(
+                      model: model,
+                      height: ProfileKeyboardHeroCard._visualHeight,
+                      pointerTilt: _pointer,
+                      pointerTiltDegrees:
+                          ProfileKeyboardHeroCard._pointerTiltDegrees,
+                      rotation: _rotation,
+                      interactiveSuspended: _dragging,
                     ),
-                    const SizedBox(width: 6),
-                    Flexible(
-                      child: Text(
-                        caption,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: textTheme.labelLarge?.copyWith(
+                    const SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          LucideIcons.keyboard300,
+                          size: 16,
                           color: colorScheme.onSurfaceVariant,
                         ),
-                      ),
+                        const SizedBox(width: 6),
+                        Flexible(
+                          child: Text(
+                            caption,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: textTheme.labelLarge?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+            // Sits above the board's pointer surface, so tapping it opens
+            // the viewer instead of pressing the key underneath.
+            Positioned(
+              top: 4,
+              right: 4,
+              child: IconButton(
+                onPressed: () =>
+                    context.push('/profile/keyboard', extra: widget.profile),
+                tooltip: l10n.profileKeyboardViewFullscreenAction,
+                iconSize: 18,
+                icon: const Icon(LucideIcons.maximize2),
+              ),
+            ),
+          ],
         ),
       ),
     );

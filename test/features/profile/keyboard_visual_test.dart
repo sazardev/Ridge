@@ -4,8 +4,6 @@
 // overridden with a fake so these stay pure rendering tests, independent
 // of the real bundled data bank (that's `keyboard_visual_layout_local_
 // data_source_test.dart`'s job).
-import 'dart:math' as math;
-
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -87,15 +85,9 @@ Future<void> _pump(
   await tester.pump();
 }
 
-/// The visual's tilt transform — absent when neither the base tilt nor the
-/// pointer parallax is enabled.
-final Finder _tiltTransform = find.descendant(
-  of: find.byType(KeyboardVisual),
-  matching: find.byType(Transform),
-);
-
 /// The painter currently backing the visual — interaction tests read its
-/// hover/press state directly, since that state *is* the rendered result.
+/// hover/press/camera state directly, since that state *is* the rendered
+/// result.
 KeyboardLayoutPainter _painter(WidgetTester tester) =>
     tester.widget<CustomPaint>(_painted).painter! as KeyboardLayoutPainter;
 
@@ -229,8 +221,8 @@ void main() {
     expect(_painter(tester).hoveredIndex, 0);
   });
 
-  testWidgets('pointerTilt rotates the board with the pointer', (tester) async {
-    Future<Matrix4> boardTransform(Offset pointerTilt) async {
+  testWidgets('pointerTilt orbits the board with the pointer', (tester) async {
+    Future<double> yawFor(Offset pointerTilt) async {
       await _pump(
         tester,
         'Glorious GMMK Pro',
@@ -239,15 +231,15 @@ void main() {
         pointerTilt: pointerTilt,
         pointerTiltDegrees: 4,
       );
-      await tester.pump(const Duration(milliseconds: 300));
-      return tester.widget<Transform>(_tiltTransform).transform;
+      await tester.pump(const Duration(milliseconds: 400));
+      return _painter(tester).yawDegrees;
     }
 
-    final right = await boardTransform(const Offset(1, 0));
-    final left = await boardTransform(const Offset(-1, 0));
+    final right = await yawFor(const Offset(1, 0));
+    final left = await yawFor(const Offset(-1, 0));
 
-    // Yawing left vs. right flips the sign of the rotateY shear entry.
-    expect(right.entry(0, 2), isNot(closeTo(left.entry(0, 2), 1e-6)));
+    // Moving the pointer to either side yaws the board the opposite way.
+    expect(right, isNot(closeTo(left, 1e-6)));
   });
 
   testWidgets('rotation adds drag yaw on top of the parallax', (tester) async {
@@ -260,8 +252,7 @@ void main() {
     );
     await tester.pump(const Duration(milliseconds: 500));
 
-    final yaw = tester.widget<Transform>(_tiltTransform).transform;
-    expect(yaw.entry(0, 2), closeTo(math.sin(30 * math.pi / 180), 1e-6));
+    expect(_painter(tester).yawDegrees, closeTo(30, 1e-6));
   });
 
   testWidgets('interactiveSuspended releases a held key', (tester) async {
@@ -282,9 +273,10 @@ void main() {
     await touch.up();
   });
 
-  testWidgets('no tilt at all leaves the board untransformed', (tester) async {
+  testWidgets('no tilt leaves the camera at rest', (tester) async {
     await _pump(tester, 'Glorious GMMK Pro', curated: _curatedOneKey);
 
-    expect(_tiltTransform, findsNothing);
+    expect(_painter(tester).yawDegrees, 0);
+    expect(_painter(tester).pitchDegrees, 0);
   });
 }

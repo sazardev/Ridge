@@ -21,6 +21,7 @@ import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:ridge/features/profile/presentation/screens/create_profile_screen.dart';
 import 'package:ridge/features/profile/presentation/screens/edit_profile_screen.dart';
+import 'package:ridge/features/profile/presentation/screens/keyboard_viewer_screen.dart';
 import 'package:ridge/features/profile/presentation/screens/profile_screen.dart';
 import 'package:ridge/features/progression/presentation/screens/progress_screen.dart';
 import 'package:ridge/features/progression/presentation/screens/stats_json_screen.dart';
@@ -156,6 +157,15 @@ GoRouter appRouter(Ref ref) {
         path: '/profile/edit',
         builder: (context, state) =>
             EditProfileScreen(profile: state.extra! as GuestProfile),
+      ),
+      // Pushed as a non-shell route from the keyboard hero card's expand
+      // action (same `extra` handover as `/profile/edit`) — a fullscreen
+      // inspector of the same `KeyboardVisual` the card previews, with
+      // room for orbit and zoom.
+      GoRoute(
+        path: '/profile/keyboard',
+        builder: (context, state) =>
+            KeyboardViewerScreen(profile: state.extra! as GuestProfile),
       ),
       // Pushed as a non-shell route reachable from the Practice hub's
       // "Browse all snippets" action — the catalog browser used to be

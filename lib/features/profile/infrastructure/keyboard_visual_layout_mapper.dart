@@ -19,6 +19,8 @@ extension KeyboardKeySpecDtoMapper on KeyboardKeySpecDto {
     rotationAngle: rotationAngle,
     rotationX: rotationX ?? x,
     rotationY: rotationY ?? y,
+    label: label,
+    label2: label2,
   );
 }
 

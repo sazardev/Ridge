@@ -61,6 +61,11 @@
       }
     }
   },
+  "profileKeyboardViewFullscreenAction": "View fullscreen",
+  "profileKeyboardViewerHint": "Drag to rotate · Pinch or scroll to zoom",
+  "profileKeyboardZoomInTooltip": "Zoom in",
+  "profileKeyboardZoomOutTooltip": "Zoom out",
+  "profileKeyboardResetViewTooltip": "Reset view",
   "profileFavoriteProgrammerLabel": "Favorite programmer or influence",
   "profileFavoriteQuoteLabel": "Favorite quote",
   "profileCustomizationInvalid": "Couldn't save — one of the fields isn't valid",

@@ -243,9 +243,12 @@ JSON against the real DTOs.
 - Flat, no shadows/gradients — every elevation-bearing widget is themed
   `elevation: 0`; depth comes from Material 3 tonal surface-container
   roles (`lib/core/theme/app_theme.dart`). One sanctioned exception: the
-  profile keyboard visual (`KeyboardLayoutPainter`), whose VIA-style
-  keycaps render depth as a solid extruded side plus a subtle two-stop
-  gradient on the top face — never blur shadows; see `STACK.md` §2.5.
+  profile keyboard visual (`KeyboardLayoutPainter` + `keyboard_scene_3d
+  .dart`), a real-3D software renderer whose tapered keycaps and extruded
+  case carry per-face directional lighting plus a subtle two-stop
+  gradient on the top faces, with Geist Mono cap legends projected onto
+  the key planes by the same camera — never blur shadows; see
+  `STACK.md` §2.5.
 - Expressive color from a single seed (`ColorScheme.fromSeed(...,
   DynamicSchemeVariant.expressive)`), toggleable in Settings
   (`lib/core/theme/app_colors.dart`).

@@ -19,6 +19,8 @@ _KeyboardKeySpecDto _$KeyboardKeySpecDtoFromJson(Map<String, dynamic> json) =>
       rotationAngle: (json['r'] as num?)?.toDouble() ?? 0,
       rotationX: (json['rx'] as num?)?.toDouble(),
       rotationY: (json['ry'] as num?)?.toDouble(),
+      label: json['label'] as String?,
+      label2: json['label2'] as String?,
     );
 
 Map<String, dynamic> _$KeyboardKeySpecDtoToJson(_KeyboardKeySpecDto instance) =>
@@ -34,6 +36,8 @@ Map<String, dynamic> _$KeyboardKeySpecDtoToJson(_KeyboardKeySpecDto instance) =>
       'r': instance.rotationAngle,
       'rx': instance.rotationX,
       'ry': instance.rotationY,
+      'label': instance.label,
+      'label2': instance.label2,
     };
 
 _KeyboardVisualLayoutDto _$KeyboardVisualLayoutDtoFromJson(

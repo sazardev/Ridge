@@ -70,6 +70,33 @@ void main() {
     }
   });
 
+  test('legend ink stays readable over every palette key top', () {
+    for (final def in AppPaletteCatalog.all) {
+      for (final brightness in Brightness.values) {
+        final scheme = def.buildScheme(
+          brightness: brightness,
+          expressive: true,
+        );
+        final style = KeyboardKeycapStyle.fromScheme(
+          scheme,
+          keyCornerRadius: 4,
+          caseCornerRadius: 12,
+        );
+
+        expect(
+          _contrast(style.keyLegend, style.keyTop),
+          greaterThanOrEqualTo(2.5),
+          reason: '${def.id.name}/${brightness.name} legend contrast',
+        );
+        expect(
+          style.keyLegend.computeLuminance(),
+          lessThan(style.keyTop.computeLuminance()),
+          reason: '${def.id.name}/${brightness.name} legend darker than cap',
+        );
+      }
+    }
+  });
+
   test('shiftLightness clamps instead of overflowing', () {
     expect(KeyboardKeycapStyle.shiftLightness(Colors.black, -1), Colors.black);
     expect(KeyboardKeycapStyle.shiftLightness(Colors.white, 1), Colors.white);

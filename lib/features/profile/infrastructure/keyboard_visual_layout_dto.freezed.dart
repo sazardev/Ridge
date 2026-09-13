@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$KeyboardKeySpecDto {
 
- double get x; double get y; double get w; double get h; double? get x2; double? get y2; double? get w2; double? get h2;@JsonKey(name: 'r') double get rotationAngle;@JsonKey(name: 'rx') double? get rotationX;@JsonKey(name: 'ry') double? get rotationY;
+ double get x; double get y; double get w; double get h; double? get x2; double? get y2; double? get w2; double? get h2;@JsonKey(name: 'r') double get rotationAngle;@JsonKey(name: 'rx') double? get rotationX;@JsonKey(name: 'ry') double? get rotationY; String? get label; String? get label2;
 /// Create a copy of KeyboardKeySpecDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $KeyboardKeySpecDtoCopyWith<KeyboardKeySpecDto> get copyWith => _$KeyboardKeySpe
 @override
 bool operator ==(Object other) {
   final _this = this as KeyboardKeySpecDto;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is KeyboardKeySpecDto&&(identical(other.x, _this.x) || other.x == _this.x)&&(identical(other.y, _this.y) || other.y == _this.y)&&(identical(other.w, _this.w) || other.w == _this.w)&&(identical(other.h, _this.h) || other.h == _this.h)&&(identical(other.x2, _this.x2) || other.x2 == _this.x2)&&(identical(other.y2, _this.y2) || other.y2 == _this.y2)&&(identical(other.w2, _this.w2) || other.w2 == _this.w2)&&(identical(other.h2, _this.h2) || other.h2 == _this.h2)&&(identical(other.rotationAngle, _this.rotationAngle) || other.rotationAngle == _this.rotationAngle)&&(identical(other.rotationX, _this.rotationX) || other.rotationX == _this.rotationX)&&(identical(other.rotationY, _this.rotationY) || other.rotationY == _this.rotationY));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is KeyboardKeySpecDto&&(identical(other.x, _this.x) || other.x == _this.x)&&(identical(other.y, _this.y) || other.y == _this.y)&&(identical(other.w, _this.w) || other.w == _this.w)&&(identical(other.h, _this.h) || other.h == _this.h)&&(identical(other.x2, _this.x2) || other.x2 == _this.x2)&&(identical(other.y2, _this.y2) || other.y2 == _this.y2)&&(identical(other.w2, _this.w2) || other.w2 == _this.w2)&&(identical(other.h2, _this.h2) || other.h2 == _this.h2)&&(identical(other.rotationAngle, _this.rotationAngle) || other.rotationAngle == _this.rotationAngle)&&(identical(other.rotationX, _this.rotationX) || other.rotationX == _this.rotationX)&&(identical(other.rotationY, _this.rotationY) || other.rotationY == _this.rotationY)&&(identical(other.label, _this.label) || other.label == _this.label)&&(identical(other.label2, _this.label2) || other.label2 == _this.label2));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as KeyboardKeySpecDto;
-  return Object.hash(runtimeType,_this.x,_this.y,_this.w,_this.h,_this.x2,_this.y2,_this.w2,_this.h2,_this.rotationAngle,_this.rotationX,_this.rotationY);
+  return Object.hash(runtimeType,_this.x,_this.y,_this.w,_this.h,_this.x2,_this.y2,_this.w2,_this.h2,_this.rotationAngle,_this.rotationX,_this.rotationY,_this.label,_this.label2);
 }
 
 @override
 String toString() {
   final _this = this as KeyboardKeySpecDto;
-  return 'KeyboardKeySpecDto(x: ${_this.x}, y: ${_this.y}, w: ${_this.w}, h: ${_this.h}, x2: ${_this.x2}, y2: ${_this.y2}, w2: ${_this.w2}, h2: ${_this.h2}, rotationAngle: ${_this.rotationAngle}, rotationX: ${_this.rotationX}, rotationY: ${_this.rotationY})';
+  return 'KeyboardKeySpecDto(x: ${_this.x}, y: ${_this.y}, w: ${_this.w}, h: ${_this.h}, x2: ${_this.x2}, y2: ${_this.y2}, w2: ${_this.w2}, h2: ${_this.h2}, rotationAngle: ${_this.rotationAngle}, rotationX: ${_this.rotationX}, rotationY: ${_this.rotationY}, label: ${_this.label}, label2: ${_this.label2})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $KeyboardKeySpecDtoCopyWith<$Res>  {
   factory $KeyboardKeySpecDtoCopyWith(KeyboardKeySpecDto value, $Res Function(KeyboardKeySpecDto) _then) = _$KeyboardKeySpecDtoCopyWithImpl;
 @useResult
 $Res call({
- double x, double y, double w, double h, double? x2, double? y2, double? w2, double? h2,@JsonKey(name: 'r') double rotationAngle,@JsonKey(name: 'rx') double? rotationX,@JsonKey(name: 'ry') double? rotationY
+ double x, double y, double w, double h, double? x2, double? y2, double? w2, double? h2,@JsonKey(name: 'r') double rotationAngle,@JsonKey(name: 'rx') double? rotationX,@JsonKey(name: 'ry') double? rotationY, String? label, String? label2
 });
 
 
@@ -71,7 +71,7 @@ class _$KeyboardKeySpecDtoCopyWithImpl<$Res>
 
 /// Create a copy of KeyboardKeySpecDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? x = null,Object? y = null,Object? w = null,Object? h = null,Object? x2 = freezed,Object? y2 = freezed,Object? w2 = freezed,Object? h2 = freezed,Object? rotationAngle = null,Object? rotationX = freezed,Object? rotationY = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? x = null,Object? y = null,Object? w = null,Object? h = null,Object? x2 = freezed,Object? y2 = freezed,Object? w2 = freezed,Object? h2 = freezed,Object? rotationAngle = null,Object? rotationX = freezed,Object? rotationY = freezed,Object? label = freezed,Object? label2 = freezed,}) {
   return _then(KeyboardKeySpecDto(
 x: null == x ? _self.x : x // ignore: cast_nullable_to_non_nullable
 as double,y: null == y ? _self.y : y // ignore: cast_nullable_to_non_nullable
@@ -84,7 +84,9 @@ as double?,h2: freezed == h2 ? _self.h2 : h2 // ignore: cast_nullable_to_non_nul
 as double?,rotationAngle: null == rotationAngle ? _self.rotationAngle : rotationAngle // ignore: cast_nullable_to_non_nullable
 as double,rotationX: freezed == rotationX ? _self.rotationX : rotationX // ignore: cast_nullable_to_non_nullable
 as double?,rotationY: freezed == rotationY ? _self.rotationY : rotationY // ignore: cast_nullable_to_non_nullable
-as double?,
+as double?,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
+as String?,label2: freezed == label2 ? _self.label2 : label2 // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -169,10 +171,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double x,  double y,  double w,  double h,  double? x2,  double? y2,  double? w2,  double? h2, @JsonKey(name: 'r')  double rotationAngle, @JsonKey(name: 'rx')  double? rotationX, @JsonKey(name: 'ry')  double? rotationY)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double x,  double y,  double w,  double h,  double? x2,  double? y2,  double? w2,  double? h2, @JsonKey(name: 'r')  double rotationAngle, @JsonKey(name: 'rx')  double? rotationX, @JsonKey(name: 'ry')  double? rotationY,  String? label,  String? label2)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _KeyboardKeySpecDto() when $default != null:
-return $default(_that.x,_that.y,_that.w,_that.h,_that.x2,_that.y2,_that.w2,_that.h2,_that.rotationAngle,_that.rotationX,_that.rotationY);case _:
+return $default(_that.x,_that.y,_that.w,_that.h,_that.x2,_that.y2,_that.w2,_that.h2,_that.rotationAngle,_that.rotationX,_that.rotationY,_that.label,_that.label2);case _:
   return orElse();
 
 }
@@ -190,10 +192,10 @@ return $default(_that.x,_that.y,_that.w,_that.h,_that.x2,_that.y2,_that.w2,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double x,  double y,  double w,  double h,  double? x2,  double? y2,  double? w2,  double? h2, @JsonKey(name: 'r')  double rotationAngle, @JsonKey(name: 'rx')  double? rotationX, @JsonKey(name: 'ry')  double? rotationY)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double x,  double y,  double w,  double h,  double? x2,  double? y2,  double? w2,  double? h2, @JsonKey(name: 'r')  double rotationAngle, @JsonKey(name: 'rx')  double? rotationX, @JsonKey(name: 'ry')  double? rotationY,  String? label,  String? label2)  $default,) {final _that = this;
 switch (_that) {
 case _KeyboardKeySpecDto():
-return $default(_that.x,_that.y,_that.w,_that.h,_that.x2,_that.y2,_that.w2,_that.h2,_that.rotationAngle,_that.rotationX,_that.rotationY);case _:
+return $default(_that.x,_that.y,_that.w,_that.h,_that.x2,_that.y2,_that.w2,_that.h2,_that.rotationAngle,_that.rotationX,_that.rotationY,_that.label,_that.label2);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -210,10 +212,10 @@ return $default(_that.x,_that.y,_that.w,_that.h,_that.x2,_that.y2,_that.w2,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double x,  double y,  double w,  double h,  double? x2,  double? y2,  double? w2,  double? h2, @JsonKey(name: 'r')  double rotationAngle, @JsonKey(name: 'rx')  double? rotationX, @JsonKey(name: 'ry')  double? rotationY)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double x,  double y,  double w,  double h,  double? x2,  double? y2,  double? w2,  double? h2, @JsonKey(name: 'r')  double rotationAngle, @JsonKey(name: 'rx')  double? rotationX, @JsonKey(name: 'ry')  double? rotationY,  String? label,  String? label2)?  $default,) {final _that = this;
 switch (_that) {
 case _KeyboardKeySpecDto() when $default != null:
-return $default(_that.x,_that.y,_that.w,_that.h,_that.x2,_that.y2,_that.w2,_that.h2,_that.rotationAngle,_that.rotationX,_that.rotationY);case _:
+return $default(_that.x,_that.y,_that.w,_that.h,_that.x2,_that.y2,_that.w2,_that.h2,_that.rotationAngle,_that.rotationX,_that.rotationY,_that.label,_that.label2);case _:
   return null;
 
 }
@@ -225,7 +227,7 @@ return $default(_that.x,_that.y,_that.w,_that.h,_that.x2,_that.y2,_that.w2,_that
 @JsonSerializable()
 
 class _KeyboardKeySpecDto implements KeyboardKeySpecDto {
-  const _KeyboardKeySpecDto({required this.x, required this.y, this.w = 1, this.h = 1, this.x2, this.y2, this.w2, this.h2, @JsonKey(name: 'r') this.rotationAngle = 0, @JsonKey(name: 'rx') this.rotationX, @JsonKey(name: 'ry') this.rotationY});
+  const _KeyboardKeySpecDto({required this.x, required this.y, this.w = 1, this.h = 1, this.x2, this.y2, this.w2, this.h2, @JsonKey(name: 'r') this.rotationAngle = 0, @JsonKey(name: 'rx') this.rotationX, @JsonKey(name: 'ry') this.rotationY, this.label, this.label2});
   factory _KeyboardKeySpecDto.fromJson(Map<String, dynamic> json) => _$KeyboardKeySpecDtoFromJson(json);
 
 @override final  double x;
@@ -239,6 +241,8 @@ class _KeyboardKeySpecDto implements KeyboardKeySpecDto {
 @override@JsonKey(name: 'r') final  double rotationAngle;
 @override@JsonKey(name: 'rx') final  double? rotationX;
 @override@JsonKey(name: 'ry') final  double? rotationY;
+@override final  String? label;
+@override final  String? label2;
 
 /// Create a copy of KeyboardKeySpecDto
 /// with the given fields replaced by the non-null parameter values.
@@ -253,18 +257,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _KeyboardKeySpecDto&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.w, w) || other.w == w)&&(identical(other.h, h) || other.h == h)&&(identical(other.x2, x2) || other.x2 == x2)&&(identical(other.y2, y2) || other.y2 == y2)&&(identical(other.w2, w2) || other.w2 == w2)&&(identical(other.h2, h2) || other.h2 == h2)&&(identical(other.rotationAngle, rotationAngle) || other.rotationAngle == rotationAngle)&&(identical(other.rotationX, rotationX) || other.rotationX == rotationX)&&(identical(other.rotationY, rotationY) || other.rotationY == rotationY));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _KeyboardKeySpecDto&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y)&&(identical(other.w, w) || other.w == w)&&(identical(other.h, h) || other.h == h)&&(identical(other.x2, x2) || other.x2 == x2)&&(identical(other.y2, y2) || other.y2 == y2)&&(identical(other.w2, w2) || other.w2 == w2)&&(identical(other.h2, h2) || other.h2 == h2)&&(identical(other.rotationAngle, rotationAngle) || other.rotationAngle == rotationAngle)&&(identical(other.rotationX, rotationX) || other.rotationX == rotationX)&&(identical(other.rotationY, rotationY) || other.rotationY == rotationY)&&(identical(other.label, label) || other.label == label)&&(identical(other.label2, label2) || other.label2 == label2));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,x,y,w,h,x2,y2,w2,h2,rotationAngle,rotationX,rotationY);
+    return Object.hash(runtimeType,x,y,w,h,x2,y2,w2,h2,rotationAngle,rotationX,rotationY,label,label2);
 }
 
 @override
 String toString() {
-    return 'KeyboardKeySpecDto(x: $x, y: $y, w: $w, h: $h, x2: $x2, y2: $y2, w2: $w2, h2: $h2, rotationAngle: $rotationAngle, rotationX: $rotationX, rotationY: $rotationY)';
+    return 'KeyboardKeySpecDto(x: $x, y: $y, w: $w, h: $h, x2: $x2, y2: $y2, w2: $w2, h2: $h2, rotationAngle: $rotationAngle, rotationX: $rotationX, rotationY: $rotationY, label: $label, label2: $label2)';
 }
 
 
@@ -275,7 +279,7 @@ abstract mixin class _$KeyboardKeySpecDtoCopyWith<$Res> implements $KeyboardKeyS
   factory _$KeyboardKeySpecDtoCopyWith(_KeyboardKeySpecDto value, $Res Function(_KeyboardKeySpecDto) _then) = __$KeyboardKeySpecDtoCopyWithImpl;
 @override @useResult
 $Res call({
- double x, double y, double w, double h, double? x2, double? y2, double? w2, double? h2,@JsonKey(name: 'r') double rotationAngle,@JsonKey(name: 'rx') double? rotationX,@JsonKey(name: 'ry') double? rotationY
+ double x, double y, double w, double h, double? x2, double? y2, double? w2, double? h2,@JsonKey(name: 'r') double rotationAngle,@JsonKey(name: 'rx') double? rotationX,@JsonKey(name: 'ry') double? rotationY, String? label, String? label2
 });
 
 
@@ -292,7 +296,7 @@ class __$KeyboardKeySpecDtoCopyWithImpl<$Res>
 
 /// Create a copy of KeyboardKeySpecDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? x = null,Object? y = null,Object? w = null,Object? h = null,Object? x2 = freezed,Object? y2 = freezed,Object? w2 = freezed,Object? h2 = freezed,Object? rotationAngle = null,Object? rotationX = freezed,Object? rotationY = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? x = null,Object? y = null,Object? w = null,Object? h = null,Object? x2 = freezed,Object? y2 = freezed,Object? w2 = freezed,Object? h2 = freezed,Object? rotationAngle = null,Object? rotationX = freezed,Object? rotationY = freezed,Object? label = freezed,Object? label2 = freezed,}) {
   return _then(_KeyboardKeySpecDto(
 x: null == x ? _self.x : x // ignore: cast_nullable_to_non_nullable
 as double,y: null == y ? _self.y : y // ignore: cast_nullable_to_non_nullable
@@ -305,7 +309,9 @@ as double?,h2: freezed == h2 ? _self.h2 : h2 // ignore: cast_nullable_to_non_nul
 as double?,rotationAngle: null == rotationAngle ? _self.rotationAngle : rotationAngle // ignore: cast_nullable_to_non_nullable
 as double,rotationX: freezed == rotationX ? _self.rotationX : rotationX // ignore: cast_nullable_to_non_nullable
 as double?,rotationY: freezed == rotationY ? _self.rotationY : rotationY // ignore: cast_nullable_to_non_nullable
-as double?,
+as double?,label: freezed == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
+as String?,label2: freezed == label2 ? _self.label2 : label2 // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

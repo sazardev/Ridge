@@ -59,28 +59,28 @@ List<KeyboardKeySpec> standardFamilyKeySpecsFor(KeyboardShapeFamily family) {
         _functionRow,
         [
           ..._numberRow,
-          ..._navSide(navGap),
-          ..._numpadRow(numGap, [1, 1, 1, 1]),
+          ..._navSide(navGap, 'Ins', 'Home', 'PgUp'),
+          ..._numpadRow(numGap, ['Num', '/', '*', '-']),
         ],
         [
           ..._topRow,
-          ..._navSide(navGap),
-          ..._numpadRow(numGap, [1, 1, 1, 1]),
+          ..._navSide(navGap, 'Del', 'End', 'PgDn'),
+          ..._numpadRow(numGap, ['7', '8', '9', '+']),
         ],
         [
           ..._homeRow,
           ..._navBlank(navGap),
-          ..._numpadRow(numGap, [1, 1, 1, -1]),
+          ..._numpadRow(numGap, ['4', '5', '6', null]),
         ],
         [
           ..._bottomRow,
-          ..._navCenteredKey(navGap),
-          ..._numpadRow(numGap, [1, 1, 1, 1]),
+          ..._navCenteredKey(navGap, '↑'),
+          ..._numpadRow(numGap, ['1', '2', '3', 'Enter']),
         ],
         [
           ..._spaceRow,
-          ..._navSide(navGap),
-          ..._numpadRow(numGap, [2, 1, -1]),
+          ..._navSide(navGap, '←', '↓', '→'),
+          ..._numpadRow(numGap, ['0', '.', null], wide: 2),
         ],
       ]);
 
@@ -92,57 +92,112 @@ List<KeyboardKeySpec> standardFamilyKeySpecsFor(KeyboardShapeFamily family) {
 /// One key-sized cell in a row: a drawn keycap when `isKey` is true,
 /// otherwise a blank spacer of the same `width` — used both for the
 /// small gaps between clusters and for the footprint of keys this
-/// silhouette omits (e.g. the numpad's tall Plus/Enter keys).
-typedef _Span = ({double width, bool isKey});
+/// silhouette omits (e.g. the numpad's tall Plus/Enter keys). Key cells
+/// carry the canonical QWERTY legends for their position (a primary
+/// legend plus a shifted one where it exists), so a generic silhouette
+/// still reads as a real keyboard; spacers have no legends.
+typedef _Span = ({double width, bool isKey, String? label, String? label2});
 
-_Span _key(double width) => (width: width, isKey: true);
-_Span _gap(double width) => (width: width, isKey: false);
+_Span _key(double width, [String? label, String? label2]) =>
+    (width: width, isKey: true, label: label, label2: label2);
+_Span _gap(double width) =>
+    (width: width, isKey: false, label: null, label2: null);
 
-List<_Span> get _numberRow => [for (var i = 0; i < 13; i++) _key(1), _key(2)];
+List<_Span> get _numberRow => [
+  _key(1, '`', '~'),
+  _key(1, '1', '!'),
+  _key(1, '2', '@'),
+  _key(1, '3', '#'),
+  _key(1, '4', r'$'),
+  _key(1, '5', '%'),
+  _key(1, '6', '^'),
+  _key(1, '7', '&'),
+  _key(1, '8', '*'),
+  _key(1, '9', '('),
+  _key(1, '0', ')'),
+  _key(1, '-', '_'),
+  _key(1, '=', '+'),
+  _key(2, 'Backspace'),
+];
 
 List<_Span> get _topRow => [
-  _key(1.5),
-  for (var i = 0; i < 12; i++) _key(1),
-  _key(1.5),
+  _key(1.5, 'Tab'),
+  _key(1, 'Q'),
+  _key(1, 'W'),
+  _key(1, 'E'),
+  _key(1, 'R'),
+  _key(1, 'T'),
+  _key(1, 'Y'),
+  _key(1, 'U'),
+  _key(1, 'I'),
+  _key(1, 'O'),
+  _key(1, 'P'),
+  _key(1, '['),
+  _key(1, ']'),
+  _key(1.5, r'\'),
 ];
 
 List<_Span> get _homeRow => [
-  _key(1.75),
-  for (var i = 0; i < 11; i++) _key(1),
-  _key(2.25),
+  _key(1.75, 'Caps'),
+  _key(1, 'A'),
+  _key(1, 'S'),
+  _key(1, 'D'),
+  _key(1, 'F'),
+  _key(1, 'G'),
+  _key(1, 'H'),
+  _key(1, 'J'),
+  _key(1, 'K'),
+  _key(1, 'L'),
+  _key(1, ';', ':'),
+  _key(1, "'", '"'),
+  _key(2.25, 'Enter'),
 ];
 
 List<_Span> get _bottomRow => [
-  _key(2.25),
-  for (var i = 0; i < 10; i++) _key(1),
-  _key(2.75),
+  _key(2.25, 'Shift'),
+  _key(1, 'Z'),
+  _key(1, 'X'),
+  _key(1, 'C'),
+  _key(1, 'V'),
+  _key(1, 'B'),
+  _key(1, 'N'),
+  _key(1, 'M'),
+  _key(1, ',', '<'),
+  _key(1, '.', '>'),
+  _key(1, '/', '?'),
+  _key(2.75, 'Shift'),
 ];
 
 List<_Span> get _spaceRow => [
-  _key(1.25),
-  _key(1.25),
-  _key(1.25),
-  _key(6.25),
-  _key(1.25),
-  _key(1.25),
-  _key(1.25),
-  _key(1.25),
+  _key(1.25, 'Ctrl'),
+  _key(1.25, 'Win'),
+  _key(1.25, 'Alt'),
+  _key(6.25, 'Space'),
+  _key(1.25, 'Alt'),
+  _key(1.25, 'Win'),
+  _key(1.25, 'Menu'),
+  _key(1.25, 'Ctrl'),
 ];
 
 List<_Span> get _functionRow => [
-  _key(1),
+  _key(1, 'Esc'),
   _gap(0.5),
-  for (var i = 0; i < 12; i++) _key(0.85),
+  for (var i = 1; i <= 12; i++) _key(0.85, 'F$i'),
 ];
 
 /// A 3-key nav-cluster column (e.g. Ins/Home/PgUp) offset by [gap].
-List<_Span> _navSide(double gap) => [_gap(gap), _key(1), _key(1), _key(1)];
+List<_Span> _navSide(double gap, [String? a, String? b, String? c]) => [
+  _gap(gap),
+  _key(1, a),
+  _key(1, b),
+  _key(1, c),
+];
 
 /// The nav cluster's arrow row: a single centered key (e.g. Up).
-List<_Span> _navCenteredKey(double gap) => [
+List<_Span> _navCenteredKey(double gap, [String? label]) => [
   _gap(gap),
   _gap(1),
-  _key(1),
+  _key(1, label),
   _gap(1),
 ];
 
@@ -154,12 +209,21 @@ List<_Span> _navBlank(double gap) => [_gap(gap), _gap(3)];
 /// A numpad row's cells: a positive width draws a key, a negative width
 /// is a blank spacer of that magnitude (used for the footprint of the
 /// tall Plus/Enter keys, which only get a real key on the row they
-/// visually start on).
-List<_Span> _numpadRow(double gap, List<double> cells) => [
-  _gap(gap),
-  for (final cell in cells)
-    if (cell > 0) _key(cell) else _gap(-cell),
-];
+/// visually start on). [legends] labels the drawn cells in order; a null
+/// entry is a key with no printed legend. [wide] marks the first cell as
+/// a double-width key (the numpad's 2u zero).
+List<_Span> _numpadRow(double gap, List<String?> legends, {int wide = 1}) {
+  final spans = <_Span>[_gap(gap)];
+  for (var i = 0; i < legends.length; i++) {
+    final legend = legends[i];
+    if (legend == null) {
+      spans.add(_gap(1));
+    } else {
+      spans.add(_key(i == 0 ? wide.toDouble() : 1, legend));
+    }
+  }
+  return spans;
+}
 
 /// Converts row-relative spans into absolute [KeyboardKeySpec]s — row
 /// index becomes `y`, and `x` accumulates across each row independently
@@ -170,7 +234,17 @@ List<KeyboardKeySpec> _specsFromRows(List<List<_Span>> rows) {
   for (var r = 0; r < rows.length; r++) {
     var x = 0.0;
     for (final span in rows[r]) {
-      if (span.isKey) specs.add(_spec(x: x, y: r.toDouble(), w: span.width));
+      if (span.isKey) {
+        specs.add(
+          _spec(
+            x: x,
+            y: r.toDouble(),
+            w: span.width,
+            label: span.label,
+            label2: span.label2,
+          ),
+        );
+      }
       x += span.width;
     }
   }
@@ -179,14 +253,34 @@ List<KeyboardKeySpec> _specsFromRows(List<List<_Span>> rows) {
 
 /// Two 5-column x 4-row staggered blocks side by side — a generic
 /// split-ergonomic silhouette (e.g. ZSA Moonlander/Voyager, ErgoDox EZ,
-/// Kinesis) for any split model with no curated real layout.
+/// Kinesis) for any split model with no curated real layout. The two
+/// halves carry the canonical QWERTY columns they mirror: the left half
+/// walks `` `1..4 / Tab QWER / Caps ASDF / Shift ZXCV `` and the right
+/// half continues `5..9 / TYUI O / GHJKL / BNM,.`.
 List<KeyboardKeySpec> _splitErgoKeySpecs() {
   const columns = 5;
   const rows = 4;
   const halfGap = 1.5;
+  const leftLegends = [
+    ['`', 'Tab', 'Caps', 'Shift'],
+    ['1', 'Q', 'A', 'Z'],
+    ['2', 'W', 'S', 'X'],
+    ['3', 'E', 'D', 'C'],
+    ['4', 'R', 'F', 'V'],
+  ];
+  const rightLegends = [
+    ['5', 'T', 'G', 'B'],
+    ['6', 'Y', 'H', 'N'],
+    ['7', 'U', 'J', 'M'],
+    ['8', 'I', 'K', ','],
+    ['9', 'O', 'L', '.'],
+  ];
   final specs = <KeyboardKeySpec>[];
 
-  for (final xOrigin in [0.0, columns + halfGap]) {
+  for (final (half, xOrigin) in [
+    (leftLegends, 0.0),
+    (rightLegends, columns + halfGap),
+  ]) {
     for (var c = 0; c < columns; c++) {
       // Columnar stagger: middle columns (index/middle fingers) sit
       // slightly lower, evoking a split/ortholinear board's column
@@ -195,7 +289,7 @@ List<KeyboardKeySpec> _splitErgoKeySpecs() {
           (c - (columns - 1) / 2).abs() / ((columns - 1) / 2);
       final stagger = (1 - distanceFromCenter) * 0.5;
       for (var r = 0; r < rows; r++) {
-        specs.add(_spec(x: xOrigin + c, y: r + stagger));
+        specs.add(_spec(x: xOrigin + c, y: r + stagger, label: half[c][r]));
       }
     }
   }
@@ -207,6 +301,8 @@ KeyboardKeySpec _spec({
   required double y,
   double w = 1,
   double h = 1,
+  String? label,
+  String? label2,
 }) => KeyboardKeySpec(
   x: x,
   y: y,
@@ -219,4 +315,6 @@ KeyboardKeySpec _spec({
   rotationAngle: 0,
   rotationX: x,
   rotationY: y,
+  label: label,
+  label2: label2,
 );

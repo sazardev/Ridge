@@ -113,3 +113,18 @@ for it was found in `qmk/qmk_firmware` or `the-via/keyboards`. Rather
 than approximate its physical layout without a verifiable public
 source, this model falls back to the app's generic `splitErgo` family
 silhouette like any other uncurated model.
+
+## Note on keycap legends
+
+The `label`/`label2` fields on each key are **not** part of the extracted
+geometry. They are derived from the same boards' upstream QMK *default
+keymap* sources (`keyboards/*/keymaps/default/keymap.c` or the nearest
+inherited parent-directory keymap, GPL-2.0-or-later, same repository as
+the geometry), by mapping each keymap argument to the physical key at
+the same (x, y) coordinates and normalizing QMK keycodes to short cap
+legends (`KC_ESC` -> `Esc`, mod-taps like `CTL_T(KC_ESC)` -> `Esc`,
+shifted pairs like `KC_1` -> `1`/`!`). Keys whose real default is a
+layer-transparent/blank/combination key (e.g. `KC_TRNS`, a Win-combo
+macro key) stay unlabeled on purpose. Generic family silhouettes
+(`standard_family_key_specs.dart`) use the same canonical QWERTY
+legends, hand-written as code rather than extracted data.

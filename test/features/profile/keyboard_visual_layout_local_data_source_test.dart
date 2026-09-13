@@ -21,6 +21,25 @@ void main() {
     },
   );
 
+  test('every curated layout carries legends on almost every key', () async {
+    // Legends come from each board's real QMK default keymap (see
+    // THIRD_PARTY_SOURCES.md); a handful of truly blank keys per board
+    // is legitimate (layer-transparent macros, combos, encoders).
+    final layouts = await KeyboardVisualLayoutLocalDataSource()
+        .loadCuratedLayouts();
+
+    for (final MapEntry(key: model, value: layout) in layouts.entries) {
+      final labeled = layout.keys.where((key) => key.label != null).length;
+      expect(
+        labeled / layout.keys.length,
+        greaterThanOrEqualTo(0.9),
+        reason:
+            '"$model" only has $labeled/${layout.keys.length} labeled '
+            'keys — did the keymap-derived legends regress?',
+      );
+    }
+  });
+
   test(
     'every curated model is a real kKeyboardModelSuggestions entry',
     () async {

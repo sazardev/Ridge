@@ -284,6 +284,36 @@ abstract class AppLocalizations {
   /// **'Keyboard shape preview for {model}'**
   String profileKeyboardShapePreviewSemanticLabel(String model);
 
+  /// No description provided for @profileKeyboardViewFullscreenAction.
+  ///
+  /// In en, this message translates to:
+  /// **'View fullscreen'**
+  String get profileKeyboardViewFullscreenAction;
+
+  /// No description provided for @profileKeyboardViewerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to rotate · Pinch or scroll to zoom'**
+  String get profileKeyboardViewerHint;
+
+  /// No description provided for @profileKeyboardZoomInTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom in'**
+  String get profileKeyboardZoomInTooltip;
+
+  /// No description provided for @profileKeyboardZoomOutTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom out'**
+  String get profileKeyboardZoomOutTooltip;
+
+  /// No description provided for @profileKeyboardResetViewTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset view'**
+  String get profileKeyboardResetViewTooltip;
+
   /// No description provided for @profileFavoriteProgrammerLabel.
   ///
   /// In en, this message translates to:

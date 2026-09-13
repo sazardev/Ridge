@@ -27,6 +27,8 @@ abstract class KeyboardKeySpecDto with _$KeyboardKeySpecDto {
     @JsonKey(name: 'r') @Default(0) double rotationAngle,
     @JsonKey(name: 'rx') double? rotationX,
     @JsonKey(name: 'ry') double? rotationY,
+    String? label,
+    String? label2,
   }) = _KeyboardKeySpecDto;
 
   /// Deserializes a DTO from decoded JSON.

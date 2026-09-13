@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// Resolved colors and proportions for the pseudo-3D keycap rendering —
-/// a VIA-style look (light keycaps with a visible extruded side, on a
+/// Resolved colors and proportions for the 3D keycap rendering — a
+/// VIA-style look (light keycaps with visible extruded sides, on a
 /// noticeably darker board) derived entirely from the active
 /// [ColorScheme], so every user palette gets a coherent keyboard without
 /// hardcoding a single color.
@@ -29,10 +29,11 @@ class KeyboardKeycapStyle {
     required this.caseBorder,
     required this.plate,
     required this.hoverTint,
+    required this.keyLegend,
     required this.keyCornerRadius,
     required this.caseCornerRadius,
-    this.keyDepthFraction = 0.10,
-    this.caseDepthFraction = 0.16,
+    this.keyDepthFraction = 0.26,
+    this.caseDepthFraction = 0.40,
     this.topLightnessDelta = 0.045,
     this.bottomLightnessDelta = 0.03,
   });
@@ -69,6 +70,11 @@ class KeyboardKeycapStyle {
       caseBorder: _mix(caseTop, scheme.shadow, 0.55),
       plate: _mix(caseTop, scheme.shadow, 0.22),
       hoverTint: scheme.primary,
+      // Legends: pulled most of the way toward the board's dark end, so
+      // they read as printed-on-the-cap in every palette (light caps get
+      // dark legends, dark caps get near-black ones) without hardcoding
+      // ink.
+      keyLegend: _mix(keyTop, caseTop, 0.82),
       keyCornerRadius: keyCornerRadius,
       caseCornerRadius: caseCornerRadius,
     );
@@ -105,6 +111,9 @@ class KeyboardKeycapStyle {
 
   /// Tint blended into a keycap's top face while hovered.
   final Color hoverTint;
+
+  /// Color of the legends printed on a keycap's top face.
+  final Color keyLegend;
 
   /// Corner radius applied to every keycap.
   final double keyCornerRadius;
@@ -149,6 +158,7 @@ class KeyboardKeycapStyle {
         caseBorder == other.caseBorder &&
         plate == other.plate &&
         hoverTint == other.hoverTint &&
+        keyLegend == other.keyLegend &&
         keyCornerRadius == other.keyCornerRadius &&
         caseCornerRadius == other.caseCornerRadius &&
         keyDepthFraction == other.keyDepthFraction &&
@@ -169,6 +179,7 @@ class KeyboardKeycapStyle {
     caseBorder,
     plate,
     hoverTint,
+    keyLegend,
     keyCornerRadius,
     caseCornerRadius,
     keyDepthFraction,
