@@ -87,7 +87,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 1347)
+        .firstWhere((snippets) => snippets.length == 1367)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -101,7 +101,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(1347));
+    expect(catalog, hasLength(1367));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -113,7 +113,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(1347));
+      expect(catalog, hasLength(1367));
     },
   );
 
@@ -124,7 +124,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(1347));
+    expect(result, hasLength(1367));
   });
 
   test(
@@ -154,7 +154,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(489));
+    expect(beginnerSnippets, hasLength(495));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -306,6 +306,11 @@ void main() {
       'go-algo-011',
       'go-algo-012',
       'go-apidesign-002',
+      'go-clichal-003',
+      'go-clichal-004',
+      'go-climenu-005',
+      'go-clitext-003',
+      'go-clitext-004',
       'go-concpat-001',
       'go-concpat-003',
       'go-concpat-004',
@@ -607,6 +612,20 @@ void main() {
       'css-resp-003',
       'dart-func-004',
       'git-log-002',
+      'go-clichal-002',
+      'go-clichal-003',
+      'go-clichal-004',
+      'go-clichal-005',
+      'go-climath-001',
+      'go-climath-002',
+      'go-climath-003',
+      'go-climath-004',
+      'go-climath-005',
+      'go-climenu-003',
+      'go-climenu-004',
+      'go-climenu-005',
+      'go-clitext-003',
+      'go-clitext-004',
       'go-client-001',
       'go-client-002',
       'go-client-003',

@@ -3380,6 +3380,30 @@ abstract class AppLocalizations {
   /// **'Go tooling'**
   String get categoryGoTooling;
 
+  /// No description provided for @categoryCliArithmetic.
+  ///
+  /// In en, this message translates to:
+  /// **'CLI arithmetic'**
+  String get categoryCliArithmetic;
+
+  /// No description provided for @categoryCliTextTools.
+  ///
+  /// In en, this message translates to:
+  /// **'CLI text tools'**
+  String get categoryCliTextTools;
+
+  /// No description provided for @categoryCliMenus.
+  ///
+  /// In en, this message translates to:
+  /// **'CLI menus'**
+  String get categoryCliMenus;
+
+  /// No description provided for @categoryCliChallenges.
+  ///
+  /// In en, this message translates to:
+  /// **'CLI challenges'**
+  String get categoryCliChallenges;
+
   /// No description provided for @languageGo.
   ///
   /// In en, this message translates to:

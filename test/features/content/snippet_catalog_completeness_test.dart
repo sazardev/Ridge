@@ -95,8 +95,10 @@ const Set<ContentCategory> _architectureLayerCategories = {
 
 /// Topic categories that aren't a language-feature grid: the algorithm
 /// topics back `go-algorithms-v1` / `rust-algorithms-v1`, the HTTP/SQL
-/// topics back `go-rest-http-v1`, and the modern-language/production
-/// topics back `go-modern-idioms-v1` / `go-production-v1`. Individual
+/// topics back `go-rest-http-v1`, the modern-language/production
+/// topics back `go-modern-idioms-v1` / `go-production-v1`, and the `cli*`
+/// topics back `go-cli-programs-v1` (each entry there is a complete,
+/// self-contained CLI program, not a fragment). Individual
 /// snippets in them DO carry a real difficulty (e.g. bubble sort is
 /// `beginner`, heap sort is `expert`; a minimal server is `beginner`, the
 /// SQL capstone is `expert`) unlike an architecture-layer category, but
@@ -125,6 +127,10 @@ const Set<ContentCategory> _topicCategories = {
   ContentCategory.performanceProfiling,
   ContentCategory.observability,
   ContentCategory.goTooling,
+  ContentCategory.cliArithmetic,
+  ContentCategory.cliTextTools,
+  ContentCategory.cliMenus,
+  ContentCategory.cliChallenges,
 };
 
 Future<List<Snippet>> _loadCatalog(ProgrammingLanguage language) async {
@@ -156,6 +162,7 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/go_rest_http_v1.json',
   'assets/content/learning_paths/go_modern_idioms_v1.json',
   'assets/content/learning_paths/go_production_v1.json',
+  'assets/content/learning_paths/go_cli_programs_v1.json',
   'assets/content/learning_paths/bash_foundations_v1.json',
   'assets/content/learning_paths/bash_toolkit_v1.json',
   'assets/content/learning_paths/sql_foundations_v1.json',

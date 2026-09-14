@@ -607,6 +607,10 @@
   "categoryPerformanceProfiling": "Performance & profiling",
   "categoryObservability": "Observability",
   "categoryGoTooling": "Go tooling",
+  "categoryCliArithmetic": "CLI arithmetic",
+  "categoryCliTextTools": "CLI text tools",
+  "categoryCliMenus": "CLI menus",
+  "categoryCliChallenges": "CLI challenges",
 
   "languageGo": "Go",
   "languageBash": "Bash",

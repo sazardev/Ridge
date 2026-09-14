@@ -364,4 +364,12 @@ enum ContentCategory {
   observability,
   // `//go:embed`, build info, `//go:generate`, `go fix`.
   goTooling,
+  // Complete, self-contained CLI programs: arithmetic and formatted output.
+  cliArithmetic,
+  // Complete CLI programs manipulating strings: case, runes, ciphers.
+  cliTextTools,
+  // Complete CLI programs driven by a `bufio.Scanner` menu loop.
+  cliMenus,
+  // Complete CLI programs combining state, maps, and randomness.
+  cliChallenges,
 }

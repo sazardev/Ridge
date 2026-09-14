@@ -1,0 +1,154 @@
+[
+  {
+    "id": "go-cli-programs-v1",
+    "language": "go",
+    "titleEn": "Go: CLI Programs",
+    "titleEs": "Go: Programas CLI",
+    "descriptionEn": "Twenty complete, standalone command-line programs in Go, start to finish — no scaffolding, just full working code.",
+    "descriptionEs": "Veinte programas completos de línea de comandos en Go, de principio a fin — sin andamiaje, solo código real.",
+    "tagEn": "CLI",
+    "tagEs": "CLI",
+    "lessons": [
+      {
+        "id": "go-cli-programs-v1-step01",
+        "snippetId": "go-climath-001",
+        "order": 1,
+        "titleEn": "Add two numbers and print the sum",
+        "titleEs": "Sumar dos números e imprimir el resultado"
+      },
+      {
+        "id": "go-cli-programs-v1-step02",
+        "snippetId": "go-climath-002",
+        "order": 2,
+        "titleEn": "Convert Celsius to Fahrenheit",
+        "titleEs": "Convertir Celsius a Fahrenheit"
+      },
+      {
+        "id": "go-cli-programs-v1-step03",
+        "snippetId": "go-climath-003",
+        "order": 3,
+        "titleEn": "Print a multiplication table",
+        "titleEs": "Imprimir una tabla de multiplicar"
+      },
+      {
+        "id": "go-cli-programs-v1-step04",
+        "snippetId": "go-climath-004",
+        "order": 4,
+        "titleEn": "FizzBuzz from 1 to 30",
+        "titleEs": "FizzBuzz del 1 al 30"
+      },
+      {
+        "id": "go-cli-programs-v1-step05",
+        "snippetId": "go-climath-005",
+        "order": 5,
+        "titleEn": "Find every prime number up to 50",
+        "titleEs": "Encontrar los números primos hasta 50"
+      },
+      {
+        "id": "go-cli-programs-v1-step06",
+        "snippetId": "go-clitext-001",
+        "order": 6,
+        "titleEn": "Shout it: convert text to uppercase",
+        "titleEs": "Gritarlo: convertir texto a mayúsculas"
+      },
+      {
+        "id": "go-cli-programs-v1-step07",
+        "snippetId": "go-clitext-002",
+        "order": 7,
+        "titleEn": "Reverse a string, rune by rune",
+        "titleEs": "Invertir un string, rune por rune"
+      },
+      {
+        "id": "go-cli-programs-v1-step08",
+        "snippetId": "go-clitext-003",
+        "order": 8,
+        "titleEn": "Check a list of words for palindromes",
+        "titleEs": "Revisar si una lista de palabras son palíndromos"
+      },
+      {
+        "id": "go-cli-programs-v1-step09",
+        "snippetId": "go-clitext-004",
+        "order": 9,
+        "titleEn": "Count the words and vowels in a sentence",
+        "titleEs": "Contar las palabras y vocales de una oración"
+      },
+      {
+        "id": "go-cli-programs-v1-step10",
+        "snippetId": "go-clitext-005",
+        "order": 10,
+        "titleEn": "Flip text upside down",
+        "titleEs": "Voltear el texto de cabeza"
+      },
+      {
+        "id": "go-cli-programs-v1-step11",
+        "snippetId": "go-climenu-001",
+        "order": 11,
+        "titleEn": "A simple menu with sections",
+        "titleEs": "Un menú simple con secciones"
+      },
+      {
+        "id": "go-cli-programs-v1-step12",
+        "snippetId": "go-climenu-002",
+        "order": 12,
+        "titleEn": "An interactive calculator menu",
+        "titleEs": "Un menú de calculadora interactivo"
+      },
+      {
+        "id": "go-cli-programs-v1-step13",
+        "snippetId": "go-climenu-003",
+        "order": 13,
+        "titleEn": "A unit converter menu",
+        "titleEs": "Un menú de conversión de unidades"
+      },
+      {
+        "id": "go-cli-programs-v1-step14",
+        "snippetId": "go-climenu-004",
+        "order": 14,
+        "titleEn": "An in-memory to-do list",
+        "titleEs": "Una lista de tareas en memoria"
+      },
+      {
+        "id": "go-cli-programs-v1-step15",
+        "snippetId": "go-climenu-005",
+        "order": 15,
+        "titleEn": "A contact book with a struct",
+        "titleEs": "Una libreta de contactos con un struct"
+      },
+      {
+        "id": "go-cli-programs-v1-step16",
+        "snippetId": "go-clichal-001",
+        "order": 16,
+        "titleEn": "Guess the secret number",
+        "titleEs": "Adivina el número secreto"
+      },
+      {
+        "id": "go-cli-programs-v1-step17",
+        "snippetId": "go-clichal-002",
+        "order": 17,
+        "titleEn": "Rock, paper, scissors against the CLI",
+        "titleEs": "Piedra, papel o tijera contra la CLI"
+      },
+      {
+        "id": "go-cli-programs-v1-step18",
+        "snippetId": "go-clichal-003",
+        "order": 18,
+        "titleEn": "Count word frequency and rank it",
+        "titleEs": "Contar la frecuencia de palabras y ordenarla"
+      },
+      {
+        "id": "go-cli-programs-v1-step19",
+        "snippetId": "go-clichal-004",
+        "order": 19,
+        "titleEn": "A Caesar cipher encoder and decoder",
+        "titleEs": "Un cifrado y descifrado César"
+      },
+      {
+        "id": "go-cli-programs-v1-step20",
+        "snippetId": "go-clichal-005",
+        "order": 20,
+        "titleEn": "A mini trivia quiz with a running score",
+        "titleEs": "Un mini quiz de trivia con puntaje acumulado"
+      }
+    ]
+  }
+]

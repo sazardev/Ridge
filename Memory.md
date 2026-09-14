@@ -37,7 +37,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
   | Lenguaje | Catálogo | Ruta | Tier |
   |---|---|---|---|
-  | Go | 273 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) + `go-algorithms-v1` (12) + `go-interfaces-v1` (24, interfaces/type/struct → JSON y diseño testeable) + `go-rest-http-v1` (33, API REST/HTTP/CRUD, cliente y SQLite) + `go-modern-idioms-v1` (34, lenguaje/stdlib 1.26-1.27, iteradores, JSON v2, diseño de API y errores) + `go-production-v1` (24, concurrencia, fugas, testing, perfilado, observabilidad y tooling; 58 snippets nuevos, ver sesión de hoy) | práctica libre (grid denso) |
+  | Go | 293 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) + `go-algorithms-v1` (12) + `go-interfaces-v1` (24, interfaces/type/struct → JSON y diseño testeable) + `go-rest-http-v1` (33, API REST/HTTP/CRUD, cliente y SQLite) + `go-modern-idioms-v1` (34, lenguaje/stdlib 1.26-1.27, iteradores, JSON v2, diseño de API y errores) + `go-production-v1` (24, concurrencia, fugas, testing, perfilado, observabilidad y tooling) + `go-cli-programs-v1` (20, programas CLI completos e independientes — no incrementales: aritmética, texto, menús interactivos con `bufio.Scanner` y desafíos con maps/rand; 4 categorías nuevas `cli*`, ver sesión de hoy) | práctica libre (grid denso) |
   | Bash (Arch) | 95 snippets | `bash-foundations-v1` + `bash-toolkit-v1` | solo-curso |
   | SQL (PostgreSQL) | 60 snippets | `sql-foundations-v1` (60) | solo-curso |
   | Rust | 24 snippets | `rust-foundations-v1` (12, solo principiante) + `rust-algorithms-v1` (12) | solo-curso |
@@ -73,6 +73,27 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   alrededor de cada constante documentada con `///` (llevaba el archivo a
   532), así que los docs por-valor son `//` empaquetados con
   `ignore_for_file: public_member_api_docs` justificado.
+- **`git pull --rebase` externo resuelto** (sesión de `go-cli-programs-v1`,
+  ver entrada de hoy más abajo): apareció a medio resolver, con conflictos
+  reales sin quitar en 7 archivos de personalización de teclado
+  (`STACK.md`, `edit_profile_screen.dart`, `keyboard_keycap_style.dart`,
+  `keyboard_layout_painter.dart`, `keyboard_visual.dart`, y sus dos
+  tests). Causa: un commit local `fix` (WIP, versión temprana y más
+  simple de la misma feature) chocó al rebasar sobre el remoto, que ya
+  tenía esa feature completa y probada (`9003706`, "full keyboard
+  customization..."). Se resolvió tomando la versión remota en los 7
+  archivos (estrictamente más completa: RGB, teclas extra, remapeos,
+  transparencia de keycaps — nada se perdió, el commit local quedó
+  recuperable por reflog) y se aplastaron los dos commits `fix`
+  resultantes en uno solo, bien formado: `feat(content): add Go CLI
+  programs learning path`. `content_category.dart` quedó en **375
+  líneas** tras las 4 categorías `cli*` nuevas. **Gate completo
+  verificado tras la resolución: `bash tool/check.sh` verde — 822
+  tests** (un flake aislado de
+  `survival_controller_drift_integration_test.dart` en una corrida no se
+  repitió al re-correr la suite completa ni en aislado), format/analyze/
+  arquitectura limpios. Rama local 1 commit adelante de `origin/main`,
+  lista para `git push`.
 - Set de íconos: **Lucide** (`lucide_icons_flutter`), no Material `Icons.*`
   — elegido por combinar con Geist (misma familia visual que usa Vercel/
   shadcn). `cupertino_icons` (vestigial, nunca usado) fue removido.
@@ -187,6 +208,62 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 ---
 
 ## Historial de sesiones
+
+### 2026-09-13 — Curso Go: Programas CLI completos (`go-cli-programs-v1`)
+
+- **Pedido del usuario**: un curso de Go enfocado a "programas CLI",
+  explícitamente **no** paso a paso como `go-foundations-v1` — cada
+  lección debe ser un programa completo e independiente de inicio a fin
+  (sumas, menús con secciones, tablas de multiplicar, cosas sencillas, y
+  desafíos como voltear texto/fonts, mayúsculas), pensado "al máximo".
+- **20 lecciones, 4 categorías nuevas** (`ContentCategory.cliArithmetic`,
+  `cliTextTools`, `cliMenus`, `cliChallenges` — bloque contiguo cada una,
+  patrón ya usado por `go-tui-notes-v1`/`go-ddd-hexagonal-notes-v1`: solo
+  necesitan >=1 entrada activa total, no la grilla densa de las 5
+  categorías core): `climath-{001..005}` (suma, C↔F, tabla de multiplicar,
+  FizzBuzz, primos hasta 50), `clitext-{001..005}` (mayúsculas, invertir
+  string, palíndromos, contar palabras/vocales, voltear texto de cabeza
+  con `map[rune]rune` de escapes Unicode), `climenu-{001..005}` (menú
+  simple con `bufio.Scanner`, calculadora interactiva con clausura,
+  conversor de unidades, lista de tareas en memoria, libreta de
+  contactos con struct) y `clichal-{001..005}` (adivinar número con
+  `rand` sembrado, piedra-papel-tijera, frecuencia de palabras con
+  `sort.Slice`, cifrado César, quiz de trivia con puntaje).
+- **Cada snippet es el programa completo** (uno o más `func`/`type` de
+  nivel de paquete, nunca un fragmento), siguiendo la convención ya
+  usada por todo `go_v1.json`: el campo `code` omite `package main` y
+  los `import`, igual que `go-http-001` y el resto del catálogo.
+- **Verificación real, no confiada a la IA**: Go no estaba instalado en
+  esta máquina ni había acceso a `docker.sock` (permiso denegado, sin
+  grupo `docker`) — se resolvió con `mise install go@1.27.1` (sin sudo,
+  aislado en `~/.local/share/mise`). Los 20 programas se compilaron y
+  ejecutaron de verdad con `mise exec go@1.27.1 -- gofmt -l` / `go run`,
+  incluyendo los interactivos con stdin real (`printf ... | go run`) para
+  cubrir cada rama de sus menús; la matriz completa de piedra-papel-
+  tijera se verificó por separado contra las 9 combinaciones. Bug real
+  encontrado y corregido en el camino: escribir `ɐ` literal en un
+  comando de shell lo convierte en el carácter Unicode real antes de que
+  bash lo vea (la capa de tool-calling lo decodifica), así que el mapa de
+  "voltear texto" se generó con un script Python que arma el escape en
+  tiempo de ejecución (`chr(92) + "u0250"`) para que el `.go` final quede
+  ASCII puro de verdad.
+- **Integración completa**: 20 entradas nuevas en `go_v1.json` (273→293),
+  archivo nuevo `go_cli_programs_v1.json`, registrado en
+  `pubspec.yaml`, `learning_path_repository_impl.dart` y
+  `_learningPathAssetPaths`/`_topicCategories` de
+  `snippet_catalog_completeness_test.dart`; 4 claves ARB nuevas
+  (`categoryCliArithmetic/CliTextTools/CliMenus/CliChallenges`) en
+  ambos `.arb` + `content_labels.dart` + `flutter gen-l10n`;
+  `content_drift_integration_test.dart` actualizado (1347→1367 total,
+  489→495 beginner, y los 5/14 ids nuevos con `_`/`%` literal en su
+  `code` añadidos a los sets hardcodeados de `findContainingSymbols`).
+- **Bloqueador externo, no de este curso**: a mitad de sesión apareció un
+  `git pull --rebase` ya en curso (no iniciado por este agente) con
+  conflictos reales sin resolver en 7 archivos de personalización de
+  teclado — ver el bullet de "Gate de calidad" arriba. No se tocó ese
+  rebase; se verificó el curso CLI con `flutter test
+  test/features/content/` (340 tests) y `check_architecture.dart` en vez
+  del gate completo.
 
 ### 2026-09-13 — Personalización total del teclado (editor 3D dedicado, metadata, RGB y remapeo funcional)
 

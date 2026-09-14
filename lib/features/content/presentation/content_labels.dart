@@ -267,6 +267,10 @@ extension ContentCategoryLabel on ContentCategory {
     ContentCategory.performanceProfiling => l10n.categoryPerformanceProfiling,
     ContentCategory.observability => l10n.categoryObservability,
     ContentCategory.goTooling => l10n.categoryGoTooling,
+    ContentCategory.cliArithmetic => l10n.categoryCliArithmetic,
+    ContentCategory.cliTextTools => l10n.categoryCliTextTools,
+    ContentCategory.cliMenus => l10n.categoryCliMenus,
+    ContentCategory.cliChallenges => l10n.categoryCliChallenges,
   };
 }
 

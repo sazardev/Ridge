@@ -1710,6 +1710,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categoryGoTooling => 'Tooling de Go';
 
   @override
+  String get categoryCliArithmetic => 'Aritmética CLI';
+
+  @override
+  String get categoryCliTextTools => 'Texto CLI';
+
+  @override
+  String get categoryCliMenus => 'Menús CLI';
+
+  @override
+  String get categoryCliChallenges => 'Desafíos CLI';
+
+  @override
   String get languageGo => 'Go';
 
   @override
