@@ -2,7 +2,7 @@ name: ridge
 description: "Ridge — a hexagonal-architecture Flutter app for Linux and Android."
 publish_to: 'none'
 
-version: 1.15.0+16
+version: 1.16.0+17
 
 environment:
   sdk: ^3.13.2
