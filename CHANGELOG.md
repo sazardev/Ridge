@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.17.0] - 2026-09-22
+
+### Added
+- **distribution:** open-source Ridge under AGPL-3.0 and prepare Linux desktop packaging (fb40ba2)
+
 ## [1.16.0] - 2026-09-14
 
 ### Added
