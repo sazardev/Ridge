@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AppStream metainfo for Ridge (STACK.md §12, Flathub submission checklist).
+  Not validated against `appstreamcli validate`/`appstream-glib validate` in
+  this environment (neither tool is installed here) — run one of those
+  against this file before opening a Flathub PR, and keep the <releases>
+  block in sync with CHANGELOG.md on each tagged release (see Memory.md).
+
+  project_license is the SPDX id for the AGPL-3.0-or-later (see LICENSE at
+  the repo root — Ridge was relicensed from proprietary to open source on
+  2026-09-21, see Memory.md). metadata_license (CC0-1.0) covers only this
+  XML file, as Flathub requires, and is independent of the app's own
+  license.
+-->
+<component type="desktop-application">
+  <id>dev.omarcodes.ridge</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>AGPL-3.0-or-later</project_license>
+  <name>Ridge</name>
+  <summary>Typing practice built from real code, not filler text</summary>
+  <description>
+    <p>
+      Ridge is a deliberate-practice typing trainer for programmers and
+      keyboard enthusiasts. Snippets are real code — Go, Bash, SQL, Rust,
+      Python, JavaScript, TypeScript, and more — not lorem ipsum, so every
+      session trains the brackets, operators, and symbol combinations you
+      actually type.
+    </p>
+    <p>Ridge tracks more than words per minute:</p>
+    <ul>
+      <li>Per-finger and per-character accuracy breakdowns</li>
+      <li>Zen, Sprint, Precision, Survival, and Daily Challenge modes</li>
+      <li>Guided Learning Paths that build up from foundations</li>
+      <li>A fully customizable keyboard profile, including a 3D keycap and
+        RGB editor</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">dev.omarcodes.ridge.desktop</launchable>
+  <developer id="dev.omarcodes">
+    <name>Omar Flores</name>
+  </developer>
+  <categories>
+    <category>Development</category>
+    <category>Education</category>
+  </categories>
+  <keywords>
+    <keyword>typing</keyword>
+    <keyword>touch typing</keyword>
+    <keyword>programming</keyword>
+    <keyword>keyboard</keyword>
+    <keyword>wpm</keyword>
+  </keywords>
+  <!-- TODO before a real Flathub submission: replace with a homepage domain
+       actually controlled by the project (Flathub's app-id verification
+       expects ownership of the reversed domain, `omarcodes.dev` here, or an
+       accepted alternative such as GitHub-org verification) — see
+       Memory.md. -->
+  <url type="homepage">https://github.com/sazardev/Ridge</url>
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="1.16.0" date="2026-09-14">
+      <description>
+        <p>Add the Go CLI programs learning path.</p>
+      </description>
+    </release>
+    <release version="1.15.0" date="2026-09-13">
+      <description>
+        <p>Full keyboard customization with a 3D editor and firmware RGB
+          effects.</p>
+      </description>
+    </release>
+  </releases>
+  <supports>
+    <control>keyboard</control>
+  </supports>
+</component>

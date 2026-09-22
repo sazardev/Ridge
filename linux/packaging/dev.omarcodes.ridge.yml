@@ -1,12 +1,35 @@
 # Flatpak manifest for Ridge (STACK.md §12). Not build-verified yet in this
 # environment (flatpak-builder + a GNOME runtime aren't available here) — the
 # `linux` job in `.github/workflows/release-builds.yml` is the first place
-# this actually runs, once a `v*.*.*` tag is pushed.
+# this actually runs, once a `v*.*.*` tag is pushed (and only succeeds once
+# the repo is public — see the `x-checker-data` comment below).
 #
 # Packages the *pre-built* release bundle (`flutter build linux --release`)
 # rather than compiling Flutter/Dart inside the sandbox — flatpak-builder
-# disables network access during the build by default, which would break
+# disables network access during the *build-commands* phase by default
+# (source fetching happens in an earlier, unsandboxed phase, so the
+# `type: archive` source below is unaffected), which would break
 # `pub get`/codegen if attempted from inside the sandbox.
+#
+# The `ridge` module's source is a tarball of that bundle fetched from a
+# **public** GitHub Release asset, not a local `type: dir` path — Flathub's
+# own build service has no access to our private repo or to artifacts from
+# our CI runs, so it (and our own `release-builds.yml`, which now exercises
+# the exact same public download to catch this failing early) must be able
+# to fetch the compiled binary anonymously over HTTPS. This is the standard
+# Flathub pattern for closed-source apps (same as the Spotify/Slack/Discord/
+# Zoom Flatpaks: ship a pre-built binary, source stays private) — see
+# STACK.md §12. The same tarball also feeds the AUR package
+# (`linux/packaging/aur/PKGBUILD`), which is why it carries the desktop
+# file/metainfo/icons alongside `ridge`/`lib`/`data`, not just the raw
+# Flutter bundle. `__RIDGE_TARBALL_URL__`/`__RIDGE_TARBALL_SHA256__` are
+# substituted by the `linux` job right before invoking flatpak-builder, once
+# it has published that tag's tarball as a release asset; a real Flathub
+# submission instead commits the concrete values, which
+# `flatpak-external-data-checker` (see `x-checker-data` below) then updates
+# automatically via PR whenever a new GitHub Release appears — the actual
+# mechanism behind "auto-actualización: gestionada por Flatpak" for end
+# users running `flatpak update`.
 app-id: dev.omarcodes.ridge
 runtime: org.gnome.Platform
 # GNOME Platform version bundling a GTK3 compatible with the Flutter Linux
@@ -33,22 +56,31 @@ modules:
       - mkdir -p /app/bin/lib /app/bin/data
       - cp -r bundle/lib/. /app/bin/lib/
       - cp -r bundle/data/. /app/bin/data/
-      - install -Dm644 packaging/dev.omarcodes.ridge.desktop
+      - install -Dm644 bundle/dev.omarcodes.ridge.desktop
         /app/share/applications/dev.omarcodes.ridge.desktop
-      # TODO: resize assets/icons/ridge_launcher_master.png (1024x1024) to
-      # the standard hicolor sizes (128/256/512) before a real Flathub
-      # submission — for now the master PNG is installed at one size.
-      - install -Dm644 packaging/ridge_launcher_master.png
-        /app/share/icons/hicolor/256x256/apps/dev.omarcodes.ridge.png
+      - install -Dm644 bundle/dev.omarcodes.ridge.metainfo.xml
+        /app/share/metainfo/dev.omarcodes.ridge.metainfo.xml
+      - install -Dm644 bundle/LICENSE
+        /app/share/licenses/dev.omarcodes.ridge/LICENSE
+      # Pre-resized from assets/icons/ridge_launcher_master.png (1024x1024)
+      # into the standard hicolor sizes Flathub's checklist requires —
+      # generated once with ImageMagick, part of the same downloaded tarball.
+      - for size in 64 128 256 512; do
+          install -Dm644 bundle/icons/hicolor/${size}x${size}/apps/dev.omarcodes.ridge.png
+          /app/share/icons/hicolor/${size}x${size}/apps/dev.omarcodes.ridge.png;
+        done
     sources:
-      - type: dir
-        # Populated by `flutter build linux --release` before
-        # flatpak-builder runs (see release-builds.yml).
-        path: ../../build/linux/x64/release/bundle
+      - type: archive
+        url: __RIDGE_TARBALL_URL__
+        sha256: __RIDGE_TARBALL_SHA256__
         dest: bundle
-      - type: dir
-        path: .
-        dest: packaging
-      - type: file
-        path: ../../assets/icons/ridge_launcher_master.png
-        dest: packaging
+        # Watched by Flathub's flatpak-external-data-checker bot once this
+        # manifest is submitted: on every new GitHub Release it re-resolves
+        # url-query/version-query and opens a PR bumping url+sha256 above.
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/sazardev/Ridge/releases/latest
+          version-query: .tag_name
+          url-query: >-
+            .assets[] | select(.name == "ridge-linux-x64.tar.gz") |
+            .browser_download_url

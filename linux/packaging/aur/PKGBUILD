@@ -1,0 +1,55 @@
+# Maintainer: Omar Flores <omar.desarrollo@gmtransporterp.com>
+#
+# AUR package for Ridge (STACK.md §12) — installs the same pre-built,
+# obfuscated release bundle as the Flatpak (linux/packaging/dev.omarcodes.ridge.yml),
+# fetched from the same public GitHub Release tarball. Plainly named
+# `ridge`, not `ridge-bin`: Arch packaging convention reserves the `-bin`
+# suffix for when a from-source alternative exists or could reasonably
+# exist, and this one ships the release build (obfuscated, tree-shaken)
+# rather than building the Flutter/Dart toolchain from source in a
+# PKGBUILD, even though the source (LICENSE: AGPL-3.0-or-later) is public.
+#
+# `pkgver`/`source`/`sha256sums` below are bumped automatically by the `aur`
+# job in `.github/workflows/release-builds.yml` on every tag, which also
+# regenerates .SRCINFO and pushes both to the AUR git repo once an SSH
+# deploy key is configured (see Memory.md for that one-time setup). To do
+# this by hand instead: bump `pkgver`, run `updpkgsums`, then
+# `makepkg --printsrcinfo > .SRCINFO`.
+pkgname=ridge
+pkgver=1.16.0
+pkgrel=1
+pkgdesc="Deliberate-practice typing trainer for programmers, built from real code"
+arch=('x86_64')
+url="https://github.com/sazardev/Ridge"
+license=('AGPL3')
+depends=('gtk3' 'alsa-lib' 'libsecret' 'hicolor-icon-theme' 'desktop-file-utils')
+source=("https://github.com/sazardev/Ridge/releases/download/v${pkgver}/ridge-linux-x64.tar.gz")
+sha256sums=('__RIDGE_TARBALL_SHA256__')
+
+package() {
+  # Flutter's Linux embedder resolves lib/ and data/ relative to the real
+  # path of its own executable (via /proc/self/exe, which the kernel always
+  # resolves through symlinks) — so /usr/bin/ridge can be a plain symlink
+  # into this private directory, same layout the Flutter build itself
+  # produces and the Flatpak build-commands install into /app/bin.
+  install -Dm755 "${srcdir}/ridge" "${pkgdir}/usr/lib/${pkgname}/ridge"
+  cp -r "${srcdir}/lib/." "${pkgdir}/usr/lib/${pkgname}/lib/"
+  cp -r "${srcdir}/data/." "${pkgdir}/usr/lib/${pkgname}/data/"
+
+  install -d "${pkgdir}/usr/bin"
+  ln -s "/usr/lib/${pkgname}/ridge" "${pkgdir}/usr/bin/ridge"
+
+  install -Dm644 "${srcdir}/dev.omarcodes.ridge.desktop" \
+    "${pkgdir}/usr/share/applications/dev.omarcodes.ridge.desktop"
+  install -Dm644 "${srcdir}/dev.omarcodes.ridge.metainfo.xml" \
+    "${pkgdir}/usr/share/metainfo/dev.omarcodes.ridge.metainfo.xml"
+
+  local size
+  for size in 64 128 256 512; do
+    install -Dm644 \
+      "${srcdir}/icons/hicolor/${size}x${size}/apps/dev.omarcodes.ridge.png" \
+      "${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps/dev.omarcodes.ridge.png"
+  done
+
+  install -Dm644 "${srcdir}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

@@ -517,11 +517,93 @@ Checklist que aplica a **todo** feature nuevo, sin excepción, para que el códi
 |---|---|---|---|---|
 | Android | `flutter build appbundle` | Android App Bundle | Google Play Console (Play App Signing) | Gestionada por Play Store |
 | Windows | `flutter build windows` | MSIX (paquete `msix`) | Microsoft Store (preferido) o instalador firmado de descarga directa | Microsoft Store, o mecanismo propio si es descarga directa |
-| Linux | `flutter build linux` | Flatpak (manifiesto con `--share=network` y `--talk-name=org.freedesktop.secrets`, ver §3.4) | Flathub | Gestionada por Flatpak |
+| Linux | `flutter build linux` | Flatpak (manifiesto con `--share=network` y `--talk-name=org.freedesktop.secrets`, ver §3.4) **+** paquete AUR (`linux/packaging/aur/PKGBUILD`, mismo bundle) | Flathub (Debian/Ubuntu/Fedora/cualquier distro con Flatpak) **+** AUR (Arch/Omarchy — `yay -S ridge` / `paru -S ridge`) | Flatpak: `flatpak update`. AUR: `yay -Syu`/`paru -Syu` (el `pkgver` avanza en cada release vía el job `aur`, ver abajo) |
 | Web | `flutter build web` | Estático (HTML/JS/Wasm, renderer CanvasKit/Skwasm — §3.4) | Hosting estático de bajo costo con CDN (p. ej. Cloudflare Pages), con reglas de SPA fallback y cabeceras COOP/COEP (§3.4) | Instantánea (siguiente carga de página); se sirve con cabeceras de caché apropiadas y manifest PWA para instalación |
 
 - Credenciales de firma/publicación (cuenta de servicio de Play Console, certificado de firma de Windows, token de despliegue del hosting web) viven como *secrets* de GitHub Actions — nunca en el repositorio.
 - Los releases de escritorio/móvil se acompañan de notas de versión derivadas del `CHANGELOG.md` generado por Conventional Commits (§10.4).
+- **Relicenciamiento a open source (sesión 2026-09-21, pedido explícito del
+  usuario)**: Ridge pasó de `proprietary` a **AGPL-3.0-or-later** — texto
+  completo en `LICENSE` (repo root), obtenido verbatim de la API de
+  licencias de GitHub para exactitud legal. Se eligió copyleft fuerte
+  (AGPL, no MIT/Apache) deliberadamente: protege contra que un tercero
+  ofrezca Ridge como servicio de red modificado sin devolver sus cambios a
+  la comunidad, mientras el cliente completo queda abierto. Se sumaron los
+  archivos estándar de "community health" de GitHub: `CONTRIBUTING.md`,
+  `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1 verbatim), `SECURITY.md`,
+  `.github/PULL_REQUEST_TEMPLATE.md`, `.github/ISSUE_TEMPLATE/*`. `README.md`
+  se actualizó de paso para dejar de describir el scaffold de "Tasks" ya
+  eliminado (ver nota de `CLAUDE.md` sobre esa sección obsoleta) y reflejar
+  las features reales de `lib/features/`. `SPEC.md`/`MARKETING.md` no se
+  tocaron — no mencionan explícitamente "cerrado"/"propietario" en su
+  modelo de negocio, así que no hay conflicto textual que resolver, pero el
+  usuario debería revisar si el modelo de negocio (monetización,
+  competencia) sigue siendo coherente con un cliente abierto antes de
+  apoyarse en eso como ventaja competitiva.
+- **Preparación para Flathub (Linux, sesión 2026-09-21)**: `linux/packaging/` ya
+  incluye los íconos hicolor (64/128/256/512, generados desde
+  `assets/icons/ridge_launcher_master.png`) y un `dev.omarcodes.ridge.metainfo.xml`
+  (AppStream) con `project_license: AGPL-3.0-or-later`, consistente con el
+  relicenciamiento de arriba. El manifiesto Flatpak ya no empaqueta un `type:
+  dir` local: el módulo `ridge` usa `type: archive` apuntando a un tarball
+  del bundle compilado, publicado como *asset* de un GitHub Release por el
+  propio job `linux` de `release-builds.yml` (que crea el Release del tag
+  con notas extraídas de `CHANGELOG.md`, sube `ridge-linux-x64.tar.gz`, y
+  sustituye los placeholders `__RIDGE_TARBALL_URL__`/`__RIDGE_TARBALL_SHA256__`
+  antes de invocar `flatpak-builder`) — el mismo patrón que usan los
+  `.flatpak` de Spotify/Slack/Discord/Zoom para apps propietarias: el
+  código fuente sigue privado, solo el binario compilado necesita ser
+  público. Un bloque `x-checker-data` en esa fuente deja lista la
+  detección automática de `flatpak-external-data-checker` (el bot de
+  Flathub que abre el PR de bump de versión en cuanto hay un GitHub
+  Release nuevo) — ese es el mecanismo real detrás de "Auto-actualización:
+  Gestionada por Flatpak" de la tabla de arriba, sin código propio en la
+  app. **Bloqueante actual**: el repo debe ser público para que esos
+  *release assets* sean descargables sin autenticación — el cambio de
+  visibilidad requiere una acción manual del usuario (el harness bloquea
+  automáticamente `gh repo edit --visibility public`, ver Memory.md), así
+  que el job `linux` seguirá fallando en el próximo tag hasta que se haga.
+  Homepage del metainfo apunta al repo como *placeholder* — reemplazar por
+  un dominio real antes de someterlo. Falta también al menos una captura de
+  pantalla pública (Flathub la exige) y decidir la verificación de dominio
+  del app-id (`dev.omarcodes.*`).
+- **Paquete AUR para Omarchy/Arch (sesión 2026-09-21)**: pedido explícito
+  del usuario — Omarchy es Arch, así que `yay`/`paru` (no Flatpak) es el
+  canal nativo. `linux/packaging/aur/PKGBUILD` instala el **mismo**
+  `ridge-linux-x64.tar.gz` que consume el Flatpak (por eso ese tarball ya
+  no es solo el bundle de Flutter: ahora también lleva el `.desktop`, el
+  metainfo y los íconos hicolor dentro, para que un `PKGBUILD` externo —
+  que no tiene acceso a este repo — pueda instalar todo desde una sola
+  descarga pública). Nombre de paquete `ridge` (no `ridge-bin`: la
+  convención de Arch reserva ese sufijo para cuando existe o podría
+  existir una variante compilada desde código fuente — aunque el código ya
+  es público tras el relicenciamiento de arriba, este paquete instala el
+  build de release ya optimizado/ofuscado, no compila el toolchain de
+  Flutter/Dart dentro del PKGBUILD, así que la distinción sigue sin
+  aplicar) — confirmado libre vía `aur.archlinux.org/rpc/v5/info`
+  (sin resultados para `ridge` ni `ridge-bin`). El binario vive en
+  `/usr/lib/ridge/` (junto a `lib/`/`data/`, igual que el layout que ya
+  produce `flutter build linux`) con `/usr/bin/ridge` como symlink — el
+  embedder de Flutter resuelve su propio directorio vía `/proc/self/exe`,
+  que el kernel resuelve a través de symlinks, así que esto funciona sin
+  script *wrapper*. Empaquetado probado de punta a punta en esta misma
+  máquina (Omarchy trae `makepkg`) con un tarball sintético que imita la
+  forma real — `makepkg -f --nodeps --skipchecksums` produjo un `.pkg.tar.zst`
+  con exactamente el árbol de archivos esperado. El job `aur` de
+  `release-builds.yml` bumpea `pkgver`/`source`/`sha256sums` en cada tag,
+  regenera `.SRCINFO` con `makepkg` dentro de un contenedor oficial
+  `archlinux` (`ubuntu-latest` no trae `pacman`), y — solo si existe el
+  secret `AUR_SSH_PRIVATE_KEY` — hace `git push` a
+  `ssh://aur@aur.archlinux.org/ridge.git` (mismo patrón "solo se activa si
+  el secret real existe" que ya usa la firma de Android en este archivo).
+  Deliberadamente sin ninguna GitHub Action de terceros para este paso —
+  maneja una llave SSH real con permiso de push al namespace de AUR, así
+  que es git/ssh plano + la imagen oficial de Docker `archlinux`, no una
+  Action de terceros opaca con acceso a ese secret. El primer `git push`
+  (en cuanto exista el secret) **es** la publicación inicial en AUR — no
+  hay un paso separado de "crear el paquete"; lo único pendiente del lado
+  del usuario es crear una cuenta en aur.archlinux.org, registrar una
+  llave SSH ahí, y guardar la privada como ese secret (ver Memory.md).
 - El backend (migraciones + Edge Functions de Supabase) se despliega en su **propio job**, disparado también por el mismo tag, vía Supabase CLI (`supabase db push`, `supabase functions deploy`) — el backend y el cliente versionan juntos, pero el esquema es aditivo (§10.2) para que clientes de una versión anterior sigan funcionando durante el *rollout* escalonado de cada tienda.
 
 ---

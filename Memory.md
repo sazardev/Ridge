@@ -209,6 +209,238 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ## Historial de sesiones
 
+### 2026-09-21 (continuación 2) — Relicenciamiento a open source (AGPL-3.0)
+
+- **Pedido del usuario** (mensaje enviado a mitad de turno, mientras se
+  probaba el PKGBUILD): "al finalizar, pushea, genera documento, abrelo a
+  open source ridge, docuimenta, con permiso, licencia, libre,
+  documentado, estándares, corrección, seguridad, readme, protección de
+  rama, publicación, pull request, etc." — interpretado como el checklist
+  estándar de "community health files" de GitHub. Se preguntó la licencia
+  (dado que Ridge era `proprietary` y `SPEC.md` tiene modelo de negocio) —
+  el usuario eligió **AGPL-3.0-or-later** sobre MIT/Apache.
+- **`LICENSE`** (repo root): texto completo AGPL-3.0 obtenido verbatim vía
+  `api.github.com/licenses/agpl-3.0` (no reconstruido de memoria, para
+  exactitud legal).
+- **`CODE_OF_CONDUCT.md`**: Contributor Covenant 2.1 verbatim (bajado de
+  `contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md`
+  — el primer intento a `raw.githubusercontent.com/EthicalSource/...` dio
+  404, la URL de contributor-covenant.org sí sirvió el markdown crudo),
+  con `[INSERT CONTACT METHOD]` reemplazado por el email del usuario.
+- **`CONTRIBUTING.md`** y **`SECURITY.md`** nuevos (en inglés, a diferencia
+  de los docs de gobierno del proyecto que son en español — ver razón en
+  el propio `README.md`: mayor alcance para contribuidores OSS
+  internacionales). `SECURITY.md` documenta honestamente que hoy no hay
+  backend online desplegado (superficie de ataque = solo local).
+- **`.github/PULL_REQUEST_TEMPLATE.md`**, **`.github/ISSUE_TEMPLATE/bug_report.md`**,
+  **`.github/ISSUE_TEMPLATE/feature_request.md`**, **`.github/ISSUE_TEMPLATE/config.yml`**
+  (deshabilita issues en blanco, enlaza a `SECURITY.md` para
+  vulnerabilidades) nuevos.
+- **`README.md`** reescrito parcialmente: badge de licencia actualizado,
+  tabla de documentación ampliada (`MARKETING.md`/`Memory.md`/
+  `CODE_STANDARDS.md`/`CONTRIBUTING.md`/`SECURITY.md`), sección "Features
+  shipped so far" reemplazada (ya no describe el scaffold de "Tasks"
+  eliminado hace tiempo — CLAUDE.md ya advertía que esa sección estaba
+  obsolesta — ahora lista las features reales de `lib/features/`), tabla
+  de stack corregida (persistencia es `drift` hoy, no solo
+  `shared_preferences`), referencia rota a un test de Tasks corregida a
+  `finish_practice_session_usecase_test.dart`, nueva sección "Installing
+  (desktop)" (honesta: packaging listo, nada publicado todavía), nueva
+  sección "Contributing, security, and license", sección "Status"
+  reescrita.
+- **`linux/packaging/dev.omarcodes.ridge.metainfo.xml`**: `project_license`
+  cambiado de `LicenseRef-proprietary` a `AGPL-3.0-or-later`. Revalidado
+  con `appstreamcli validate` — mismo único warning esperado de siempre
+  (`url-not-reachable`, repo aún privado).
+- **`linux/packaging/aur/PKGBUILD`**: `license=('custom')` →
+  `license=('AGPL3')` (nombre corto de Arch para AGPLv3), se agregó
+  instalar `LICENSE` en `/usr/share/licenses/ridge/LICENSE` en
+  `package()`. `release-builds.yml` y el manifiesto Flatpak actualizados
+  para incluir `LICENSE` dentro del mismo tarball público
+  (`/app/share/licenses/dev.omarcodes.ridge/LICENSE` en el Flatpak).
+- **Bug real encontrado y descartado durante la re-verificación**: al
+  re-probar el PKGBUILD con el nuevo paso de `LICENSE` usando
+  `--skipchecksums` y reutilizando el mismo nombre de archivo de tarball
+  entre corridas, `makepkg` sirvió una copia **cacheada y desactualizada**
+  del tarball (guarda una copia local de fuentes `file://` junto al
+  `PKGBUILD`, indexada por nombre de archivo, y no la refresca si el
+  archivo remoto/local cambió pero el nombre no) — el `LICENSE` faltaba en
+  el paquete resultante. **No es un bug del `PKGBUILD` real**: al repetir
+  la prueba con verificación de `sha256sums` real (sin `--skipchecksums`)
+  y un directorio de trabajo limpio, todo instaló correctamente
+  (confirmado con `tar -tvf` sobre el `.pkg.tar.zst` y `.PKGINFO` mostrando
+  `license = AGPL3`). Lección para pruebas futuras con `makepkg` local:
+  nunca combinar `--skipchecksums` con reutilizar un nombre de archivo de
+  fuente entre iteraciones — el cacheo por nombre de archivo de `file://`
+  es real y silencioso.
+- **`STACK.md §12`** documenta la decisión de relicenciamiento (por qué
+  AGPL y no MIT/Apache: copyleft de red, protege contra un fork-SaaS sin
+  devolver cambios) y deja una nota para el usuario: revisar si el modelo
+  de negocio de `SPEC.md`/`MARKETING.md` (monetización, competencia) sigue
+  siendo coherente con un cliente 100% abierto — no se tocó ninguno de los
+  dos documentos porque no mencionan explícitamente "cerrado"/"propietario"
+  en el texto, así que no hay conflicto textual, pero sí una posible
+  tensión estratégica que es decisión del usuario, no del agente.
+- **Protección de rama intentada y bloqueada** (pedida en el mismo
+  mensaje): `gh api repos/sazardev/Ridge/branches/main/protection -X PUT
+  ...` devolvió 403: *"Upgrade to GitHub Pro or make this repository
+  public to enable this feature."* — GitHub no ofrece branch protection en
+  repos privados del plan free. Depende del mismo bloqueo de visibilidad
+  de arriba: en cuanto el usuario haga público el repo (o si prefiere,
+  pague GitHub Pro), este mismo comando queda listo para reintentarse.
+- **Push final**: se hizo commit y push de todo lo de esta sesión a `main`
+  (ver el commit correspondiente en el historial de git — mensaje
+  Conventional Commits `feat(distribution): ...`).
+
+### 2026-09-21 (continuación) — Paquete AUR para Omarchy/Arch (yay/paru)
+
+- **Pedido del usuario**: "vamos preparando todo para que esté disponible
+  para Omarchy, ya sea yay o paru para escritorio o el flatpak también
+  para debian, etc." — confirma que Flatpak (ya preparado, ver entrada de
+  arriba) cubre Debian/Ubuntu/etc., y que Arch/Omarchy necesita su propio
+  canal nativo: AUR.
+- **`linux/packaging/aur/PKGBUILD`** nuevo. Paquete llamado `ridge` (no
+  `ridge-bin` — no hay ni habrá variante compilable desde código fuente,
+  así que el sufijo no aplica según la convención de Arch). Verificado
+  libre en AUR: `curl .../rpc/v5/info?arg[]=ridge` y `...=ridge-bin` →
+  `resultcount: 0` ambos.
+- El tarball de release (`ridge-linux-x64.tar.gz`, mismo que consume
+  Flathub) se reestructuró para llevar también `dev.omarcodes.ridge.desktop`,
+  `dev.omarcodes.ridge.metainfo.xml` y `icons/hicolor/` — un `PKGBUILD`
+  externo (repo separado en AUR) no tiene forma de leer nuestro repo, así
+  que todo lo que necesita debe ir en esa única descarga pública. El
+  manifiesto Flatpak se simplificó de paso: ya no necesita una segunda
+  fuente `type: dir` para esos archivos, ahora vienen en el mismo
+  `type: archive`.
+- **Probado de verdad en esta máquina** (Omarchy trae `makepkg`/`pacman`
+  nativamente): armé un tarball sintético con la misma forma que el real
+  (ejecutable falso + `lib/`/`data/` + los archivos de packaging reales) y
+  corrí `makepkg -f --nodeps --skipchecksums` contra el `PKGBUILD` apuntando
+  a ese tarball local — compiló limpio y el `.pkg.tar.zst` resultante tiene
+  exactamente el árbol esperado (`/usr/bin/ridge` symlink → `/usr/lib/ridge/ridge`,
+  `lib/`/`data/` junto a él, `.desktop`/metainfo/los 4 tamaños de ícono en
+  sus rutas `/usr/share/*`). También corrí `makepkg --printsrcinfo` (genera
+  `.SRCINFO` válido) y `desktop-file-validate` sobre el `.desktop` (pasa,
+  con un *hint* no bloqueante sobre tener dos categorías principales
+  `Development;Education;` — intencional, ver `MARKETING.md` §2 "doble
+  comunidad").
+- **CI** (`.github/workflows/release-builds.yml`, job `aur` nuevo, corre
+  después de `linux`): bumpea `pkgver`/`source`/`sha256sums` del PKGBUILD
+  en cada tag (siempre), regenera `.SRCINFO` con `makepkg` dentro de un
+  contenedor `archlinux:latest` oficial (el runner `ubuntu-latest` no
+  tiene `pacman`), y solo si existe el secret `AUR_SSH_PRIVATE_KEY` hace
+  `git push` a `ssh://aur@aur.archlinux.org/ridge.git` — mismo patrón
+  "materializa solo si el secret real existe" que ya usa la firma de
+  Android (`ANDROID_KEYSTORE_BASE64`) en este mismo archivo. **A
+  propósito, no se usó ninguna GitHub Action de terceros** para el paso de
+  push (a diferencia del `flatpak-github-actions/flatpak-builder@v6` que sí
+  se usa para Flatpak) — maneja una llave SSH real con permiso de escritura
+  sobre el namespace de AUR, así que se implementó con git/ssh plano +
+  `ssh-keyscan` (TOFU, el patrón estándar documentado por el wiki de Arch
+  para CI contra AUR) en vez de confiar esa llave a una Action publicada
+  por un tercero.
+- **Importante — el primer push A ES la publicación**: en AUR no existe un
+  paso separado de "crear el paquete"; clonar `ridge.git` (vacío, porque
+  el nombre está libre) y hacer el primer `git push` con una llave SSH
+  válida de una cuenta real **es** la submission. O sea: en cuanto el
+  usuario complete el setup de abajo, el próximo tag publica Ridge en AUR
+  automáticamente, sin ningún paso manual adicional de "crear/reclamar" el
+  paquete.
+- **Pendiente, acción del usuario** (no depende de código): (1) crear una
+  cuenta en aur.archlinux.org, (2) generar un par de llaves SSH y
+  registrar la pública en esa cuenta, (3) guardar la privada como el
+  secret de GitHub Actions `AUR_SSH_PRIVATE_KEY` de este repo. Hasta
+  entonces el job `aur` corre pero su paso final de `push` se salta
+  (`if: env.AUR_SSH_PRIVATE_KEY != ''`), sin fallar el pipeline.
+- Igual que con Flathub: el job `aur` también depende de que el repo sea
+  público (bloqueado hoy — ver entrada anterior) para poder descargar el
+  tarball al bumpear `sha256sums` locales de verificación manual, aunque
+  el bump del PKGBUILD en sí no requiere descargar nada.
+
+### 2026-09-21 — Auto-actualización desktop: preparación Flathub (Linux)
+
+- **Pedido del usuario**: automatizar la actualización de Ridge en
+  Linux/desktop (explícitamente no aplica a Android/mobile). Aclarado por
+  preguntas: es para **usuarios reales (beta testers/lanzamiento)**, no
+  solo para uso personal, y el alcance de esta sesión es **Linux**
+  (Windows queda para otra sesión). El usuario eligió **Flathub oficial**
+  como distribución (no un repo Flatpak propio ni GitHub Pages) —
+  `STACK.md §12` ya documentaba esto como el plan a mediano plazo
+  ("Auto-actualización: Gestionada por Flatpak").
+- **Hecho esta sesión** (`linux/packaging/`):
+  - Íconos hicolor generados con ImageMagick desde
+    `assets/icons/ridge_launcher_master.png` (1024×1024) en 64/128/256/512
+    (`packaging/icons/hicolor/<size>x<size>/apps/dev.omarcodes.ridge.png`) —
+    resuelve el pendiente que ya estaba anotado más abajo.
+  - `dev.omarcodes.ridge.metainfo.xml` (AppStream) nuevo: `project_license:
+    LicenseRef-proprietary` (Ridge es cerrado — badge de licencia en
+    README.md — y Flathub sí acepta apps propietarias bajo ese marcador,
+    no exige FOSS), `metadata_license: CC0-1.0`, descripción/summary/
+    keywords/categorías, `<developer>` (Omar Flores), `<content_rating
+    type="oars-1.1">` vacío (sin contenido sensible) y `<releases>` con
+    las últimas 2 versiones desde `CHANGELOG.md`. Validado con
+    `appstreamcli validate` (instalado en esta máquina) — pasa salvo el
+    warning esperado `url-not-reachable` en `<url type="homepage">`
+    (apunta al repo privado como placeholder, ver TODO en el XML).
+  - `dev.omarcodes.ridge.yml` (manifiesto Flatpak) actualizado para
+    instalar el metainfo y los 4 tamaños de ícono (antes solo instalaba un
+    256×256 desde el master sin redimensionar).
+- **Descubrimiento importante, no resuelto todavía** (documentado en
+  `STACK.md §12`): el manifiesto Flatpak actual empaqueta el `bundle/` que
+  `flutter build linux --release` deja en el mismo runner de
+  `release-builds.yml` (`type: dir` a una ruta local del propio CI). Eso
+  funciona para nuestro CI, pero **no funciona para el builder real de
+  Flathub** — no tiene acceso a nuestro repo privado ni a ese artefacto
+  local. El patrón estándar de Flathub para apps propietarias (igual que
+  Spotify/Slack/Discord/Zoom) es que el módulo descargue un **tarball
+  público del bundle ya compilado** (`type: archive` + `sha256`), sin
+  tocar el código fuente (que sigue privado). **Falta decidir dónde alojar
+  ese tarball público** (repo de GitHub separado y público solo para
+  binarios vs. servidor/bucket propio) antes de poder terminar el
+  manifiesto y abrir el PR de submission — quedó como pregunta abierta
+  para la próxima sesión, no se creó ningún recurso público todavía.
+- **Resuelto tras la pregunta de hosting**: el usuario decidió hacer
+  **público el repo existente** (`sazardev/Ridge`), no crear un repo
+  separado solo para binarios. Con eso decidido, se implementó el resto de
+  la tubería en esta misma sesión (`.github/workflows/release-builds.yml`,
+  job `linux`): compila el bundle, lo empaqueta en
+  `ridge-linux-x64.tar.gz` (contenido plano, sin carpeta `bundle/`
+  envolvente — importante para que el `dest: bundle` del manifiesto
+  cuadre), crea (si no existe) el GitHub Release del tag con notas
+  extraídas de `CHANGELOG.md`, sube el tarball como *asset*, y **sustituye
+  los placeholders `__RIDGE_TARBALL_URL__`/`__RIDGE_TARBALL_SHA256__`** del
+  manifiesto Flatpak (`linux/packaging/dev.omarcodes.ridge.yml`, que ahora
+  usa `type: archive` en vez de `type: dir`, con un bloque
+  `x-checker-data` para que `flatpak-external-data-checker` de Flathub
+  detecte releases nuevos solo). Este job ahora depende de que los
+  *release assets* sean descargables sin autenticación — **solo funciona
+  una vez el repo sea público**.
+- **Bloqueado por el clasificador de seguridad de auto mode**: el intento
+  de ejecutar `gh repo edit --visibility public` fue denegado
+  automáticamente (categoría "Create Public Surface" — cambiar la
+  visibilidad de un repo es una acción que el harness nunca autoriza solo).
+  Se hizo antes un escaneo de `git log --all` buscando secretos reales
+  (llaves AWS, private keys, tokens, contraseñas) — **no se encontró
+  ninguno** (el único `password=` en todo el histórico es código de
+  ejemplo Django dentro de un snippet de contenido curricular, no una
+  credencial real); tampoco hay `.env`/`key.properties`/`*.jks` comiteados
+  nunca (están en `.gitignore` desde el inicio). El usuario debe hacer el
+  cambio de visibilidad él mismo (GitHub UI → Settings → Danger Zone, o
+  `gh repo edit --visibility public` desde su propia terminal) — nótese
+  que el badge `license-proprietary` de `README.md` sigue siendo válido
+  con el repo público (código público ≠ código libre; "todos los derechos
+  reservados" es perfectamente compatible), pero es una decisión de
+  negocio que confirmó él, no algo que se infiera del código.
+- **Pendiente todavía** (no depende de código, son acciones/decisiones del
+  usuario): hacer público el repo (bloqueante para que el job `linux`
+  vuelva a pasar en el próximo tag — hoy fallará con un 404/401 al intentar
+  descargar el asset del Release hasta que se haga público), una captura
+  de pantalla real de la app para `<screenshots>` del metainfo (Flathub la
+  exige), un dominio real para `<url type="homepage">` (hoy apunta al repo
+  como placeholder) y su verificación para el app-id `dev.omarcodes.*`, y
+  finalmente abrir el PR a `flathub/flathub`. Windows quedó fuera de
+  alcance de esta sesión a pedido del usuario.
+
 ### 2026-09-13 — Curso Go: Programas CLI completos (`go-cli-programs-v1`)
 
 - **Pedido del usuario**: un curso de Go enfocado a "programas CLI",
@@ -3322,9 +3554,44 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   antes del primer tag `v*.*.*` real — hoy `release-builds.yml` compila y
   empaqueta pero cae a firma debug/certificado de prueba sin esos
   secrets (ver sesión 2026-09-11 de build hardening).
-- Redimensionar `assets/icons/ridge_launcher_master.png` a los tamaños
-  `hicolor` estándar (128/256/512) antes de un submit real a Flathub —
-  hoy el manifiesto Flatpak instala un único tamaño sin escalar.
+- ~~Redimensionar `assets/icons/ridge_launcher_master.png` a los tamaños
+  `hicolor` estándar~~ — hecho (sesión 2026-09-21, ver arriba: 64/128/256/512
+  ya generados e instalados por el manifiesto Flatpak).
+- **Auto-actualización Linux/Flathub + AUR (sesión 2026-09-21)**: el
+  usuario decidió hacer público el repo existente (`sazardev/Ridge`) en
+  vez de un repo separado solo para binarios — **bloqueado**: el intento
+  de `gh repo edit --visibility public` fue denegado por el clasificador
+  de seguridad de auto mode ("Create Public Surface"); el usuario debe
+  hacerlo él mismo (web o su propia terminal). Hasta que eso pase, los
+  jobs `linux` y `aur` de `release-builds.yml` fallarán al intentar
+  descargar/verificar el *release asset* recién publicado (esperado, no
+  silencioso). Antes de pedir el cambio se escaneó todo `git log --all`
+  buscando secretos reales — no se encontró ninguno (ver sesión de arriba).
+  Además, antes de abrir el PR de submission a Flathub falta: (a) una
+  captura de pantalla real de la app para `<screenshots>` del metainfo,
+  (b) un dominio real para `<url type="homepage">` (hoy apunta al repo
+  como placeholder) y su verificación de dominio para el app-id
+  `dev.omarcodes.*`. Para AUR falta que el usuario cree una cuenta en
+  aur.archlinux.org, registre una llave SSH, y guarde la privada como el
+  secret `AUR_SSH_PRIVATE_KEY` — hecho eso, el próximo tag publica el
+  paquete `ridge` automáticamente (no hay paso manual de "crear" el
+  paquete, ver `STACK.md §12`). Windows (auto-actualización vía
+  MSIX/`.appinstaller` o Microsoft Store) quedó fuera de alcance de esta
+  sesión a pedido del usuario.
+- **Open source + protección de rama (sesión 2026-09-21)**: Ridge se
+  relicenció a AGPL-3.0-or-later (`LICENSE`, ver arriba). Falta que el
+  usuario haga público el repo (mismo bloqueo de arriba) — sin eso,
+  también falla `gh api .../branches/main/protection` (probado: 403
+  "Upgrade to GitHub Pro or make this repository public"). Una vez
+  público, reintentar ese mismo comando (requerir el check `quality-gate`
+  de `ci.yml`, bloquear force-push/delete, exigir resolución de
+  conversaciones). Pendiente también, decisión del usuario, no del código:
+  revisar si el modelo de negocio de `SPEC.md`/`MARKETING.md`
+  (monetización, competencia) sigue siendo coherente con un cliente 100%
+  abierto bajo AGPL. Opcional/no bloqueante: agregar cabeceras SPDX
+  (`// SPDX-License-Identifier: AGPL-3.0-or-later`) por archivo fuente —
+  no se hizo en esta sesión (tocaría cientos de archivos), el `LICENSE` en
+  la raíz ya cubre el repo legalmente sin eso.
 - Evaluar si `symbolFocus` merece valores SQL (hoy `[]`, como Bash) si se
   le da uso real en recomendaciones.
 - Considerar versionar el harness de verificación de contenido SQL dentro

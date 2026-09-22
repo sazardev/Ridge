@@ -86,6 +86,15 @@ jobs:
 
   linux:
     runs-on: ubuntu-latest
+    # Needed to create/upload the GitHub Release asset below (the default
+    # token is read-only on some repo settings) — Flathub's own builder, and
+    # our own flatpak-builder step further down, both fetch that asset over
+    # plain public HTTPS (see the comment in the manifest), so this job only
+    # succeeds once the repo/its Releases are public.
+    permissions:
+      contents: write
+    outputs:
+      tarball_sha256: ${{ steps.tarball.outputs.sha256 }}
     steps:
       - uses: actions/checkout@v4
       - name: Install Linux build toolchain (STACK.md §3.3)
@@ -104,6 +113,54 @@ jobs:
           flutter build linux --release \
             --obfuscate --split-debug-info=build/symbols/linux
 
+      # One tarball feeds both the Flatpak manifest (STACK.md §12) and the
+      # AUR PKGBUILD (linux/packaging/aur/) — neither Flathub's builder nor
+      # a `yay`/`paru` build on someone else's machine can reach our private
+      # repo, so the desktop file/metainfo/icons ride along inside the same
+      # public download instead of being fetched separately. No wrapping
+      # folder, so the archive extracts flat (`ridge`, `lib/`, `data/`, … at
+      # the source root) for both consumers.
+      - name: Package release tarball for Flathub/AUR fetch source
+        id: tarball
+        run: |
+          cp linux/packaging/dev.omarcodes.ridge.desktop build/linux/x64/release/bundle/
+          cp linux/packaging/dev.omarcodes.ridge.metainfo.xml build/linux/x64/release/bundle/
+          cp -r linux/packaging/icons build/linux/x64/release/bundle/icons
+          cp LICENSE build/linux/x64/release/bundle/
+          tar -C build/linux/x64/release/bundle -czf ridge-linux-x64.tar.gz .
+          sha256="$(sha256sum ridge-linux-x64.tar.gz | cut -d' ' -f1)"
+          echo "RIDGE_SHA256=$sha256" >> "$GITHUB_ENV"
+          echo "sha256=$sha256" >> "$GITHUB_OUTPUT"
+
+      - name: Publish tarball as a GitHub Release asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            version="${GITHUB_REF_NAME#v}"
+            start="$(grep -n "^## \[$version\]" CHANGELOG.md | head -1 | cut -d: -f1)"
+            if [ -n "$start" ]; then
+              end="$(tail -n "+$((start + 1))" CHANGELOG.md | grep -n "^## \[" | head -1 | cut -d: -f1)"
+              if [ -n "$end" ]; then
+                sed -n "$((start + 1)),$((start + end - 1))p" CHANGELOG.md > /tmp/release-notes.md
+              else
+                tail -n "+$((start + 1))" CHANGELOG.md > /tmp/release-notes.md
+              fi
+            else
+              echo "See CHANGELOG.md." > /tmp/release-notes.md
+            fi
+            gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" \
+              --notes-file /tmp/release-notes.md
+          fi
+          gh release upload "$GITHUB_REF_NAME" ridge-linux-x64.tar.gz --clobber
+
+      - name: Point the Flatpak manifest at the published tarball
+        run: |
+          sed -i \
+            -e "s|__RIDGE_TARBALL_URL__|https://github.com/${{ github.repository }}/releases/download/${GITHUB_REF_NAME}/ridge-linux-x64.tar.gz|" \
+            -e "s|__RIDGE_TARBALL_SHA256__|$RIDGE_SHA256|" \
+            linux/packaging/dev.omarcodes.ridge.yml
+
       # Community-standard action for CI Flatpak builds (used by GNOME/KDE
       # projects) — installs flatpak/flatpak-builder, adds the Flathub
       # remote, builds, and bundles, instead of hand-rolling that setup.
@@ -120,6 +177,65 @@ jobs:
           path: |
             dev.omarcodes.ridge.flatpak
             build/symbols/linux
+
+  # Bumps linux/packaging/aur/PKGBUILD to this tag and, only once an AUR
+  # deploy key exists as a secret, pushes it to the AUR git repo — the
+  # `yay`/`paru` distribution channel for Omarchy/Arch (STACK.md §12). No
+  # third-party Action here on purpose: this step handles a real SSH key
+  # with push access to the AUR namespace, so it's plain git/ssh + the
+  # official `archlinux` Docker image (for `makepkg --printsrcinfo`, which
+  # needs a real Arch environment `ubuntu-latest` doesn't have), fully
+  # readable instead of trusting an opaque published Action with that
+  # secret. Mirrors the "only materializes with real secrets, otherwise a
+  # no-op" pattern already used for Android signing in this same file — the
+  # very first push to `ridge.git` (once the secret exists) *is* the AUR
+  # submission, there's no separate "create the package" step (see
+  # Memory.md for the one-time account/key setup this still needs from the
+  # user).
+  aur:
+    runs-on: ubuntu-latest
+    needs: linux
+    env:
+      AUR_SSH_PRIVATE_KEY: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bump PKGBUILD to this tag
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          sed -i \
+            -e "s/^pkgver=.*/pkgver=${version}/" \
+            -e "s/^pkgrel=.*/pkgrel=1/" \
+            -e "s|^source=.*|source=(\"https://github.com/${{ github.repository }}/releases/download/${GITHUB_REF_NAME}/ridge-linux-x64.tar.gz\")|" \
+            -e "s/^sha256sums=.*/sha256sums=('${{ needs.linux.outputs.tarball_sha256 }}')/" \
+            linux/packaging/aur/PKGBUILD
+
+      - name: Regenerate .SRCINFO (makepkg needs a real Arch environment)
+        run: |
+          docker run --rm -v "$PWD/linux/packaging/aur:/pkg" -w /pkg archlinux:latest bash -c "
+            pacman -Sy --noconfirm --needed base-devel &&
+            useradd -m builder && chown -R builder /pkg &&
+            su builder -c 'makepkg --printsrcinfo > .SRCINFO'
+          "
+
+      - name: Push to the AUR (ridge package)
+        if: env.AUR_SSH_PRIVATE_KEY != ''
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$AUR_SSH_PRIVATE_KEY" > ~/.ssh/aur_ed25519
+          chmod 600 ~/.ssh/aur_ed25519
+          ssh-keyscan -H aur.archlinux.org >> ~/.ssh/known_hosts 2>/dev/null
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/aur_ed25519 -o IdentitiesOnly=yes"
+          git clone ssh://aur@aur.archlinux.org/ridge.git /tmp/aur-ridge
+          cp linux/packaging/aur/PKGBUILD linux/packaging/aur/.SRCINFO /tmp/aur-ridge/
+          cd /tmp/aur-ridge
+          git config user.name "Ridge release bot"
+          git config user.email "omar.desarrollo@gmtransporterp.com"
+          git add PKGBUILD .SRCINFO
+          if ! git diff --cached --quiet; then
+            git commit -m "Update to ${GITHUB_REF_NAME}"
+            git push origin HEAD
+          fi
 
   web:
     runs-on: ubuntu-latest
