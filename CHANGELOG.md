@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.18.0] - 2026-09-25
+
+### Added
+- **content:** add Zig 0.16 learning paths (ff047e0)
+
 ## [1.17.0] - 2026-09-22
 
 ### Added
