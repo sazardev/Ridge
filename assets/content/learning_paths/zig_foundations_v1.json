@@ -1,0 +1,252 @@
+[
+  {
+    "id": "zig-foundations-v1",
+    "language": "zig",
+    "titleEn": "Zig from scratch",
+    "titleEs": "Zig desde cero",
+    "descriptionEn": "Learn Zig 0.16 step by step, from values and control flow to tested programs.",
+    "descriptionEs": "Aprende Zig 0.16 paso a paso, desde valores y control de flujo hasta programas probados.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "zig-foundations-v1-step01",
+        "snippetId": "zig-found-001",
+        "order": 1,
+        "titleEn": "Choose between `const` and `var`",
+        "titleEs": "Elige entre `const` y `var`"
+      },
+      {
+        "id": "zig-foundations-v1-step02",
+        "snippetId": "zig-found-002",
+        "order": 2,
+        "titleEn": "Choose integer types and convert with `intCast`",
+        "titleEs": "Elige tipos enteros y convierte con `intCast`"
+      },
+      {
+        "id": "zig-foundations-v1-step03",
+        "snippetId": "zig-found-003",
+        "order": 3,
+        "titleEn": "Declare a fixed-size array",
+        "titleEs": "Declara un arreglo de tamaño fijo"
+      },
+      {
+        "id": "zig-foundations-v1-step04",
+        "snippetId": "zig-found-004",
+        "order": 4,
+        "titleEn": "Convert an array range to `[]const u32`",
+        "titleEs": "Convierte un rango del arreglo a `[]const u32`"
+      },
+      {
+        "id": "zig-foundations-v1-step05",
+        "snippetId": "zig-found-005",
+        "order": 5,
+        "titleEn": "View strings as byte slices",
+        "titleEs": "Mira cadenas como slices de bytes"
+      },
+      {
+        "id": "zig-foundations-v1-step06",
+        "snippetId": "zig-found-006",
+        "order": 6,
+        "titleEn": "Branch with `if` and `else`",
+        "titleEs": "Bifurca con `if` y `else`"
+      },
+      {
+        "id": "zig-foundations-v1-step07",
+        "snippetId": "zig-found-007",
+        "order": 7,
+        "titleEn": "Combine conditions with `and` and `or`",
+        "titleEs": "Combina condiciones con `and` y `or`"
+      },
+      {
+        "id": "zig-foundations-v1-step08",
+        "snippetId": "zig-found-008",
+        "order": 8,
+        "titleEn": "Select a statement branch with `switch`",
+        "titleEs": "Selecciona una rama de sentencia con `switch`"
+      },
+      {
+        "id": "zig-foundations-v1-step09",
+        "snippetId": "zig-found-009",
+        "order": 9,
+        "titleEn": "Repeat with `while`",
+        "titleEs": "Repite con `while`"
+      },
+      {
+        "id": "zig-foundations-v1-step10",
+        "snippetId": "zig-found-010",
+        "order": 10,
+        "titleEn": "Iterate values with `for`",
+        "titleEs": "Itera valores con `for`"
+      },
+      {
+        "id": "zig-foundations-v1-step11",
+        "snippetId": "zig-found-011",
+        "order": 11,
+        "titleEn": "Iterate values and indexes with `for`",
+        "titleEs": "Itera valores e índices con `for`"
+      },
+      {
+        "id": "zig-foundations-v1-step12",
+        "snippetId": "zig-found-012",
+        "order": 12,
+        "titleEn": "Exit a labeled loop with `break`",
+        "titleEs": "Sale de un bucle etiquetado con `break`"
+      },
+      {
+        "id": "zig-foundations-v1-step13",
+        "snippetId": "zig-found-013",
+        "order": 13,
+        "titleEn": "Write a typed function",
+        "titleEs": "Escribe una función tipada"
+      },
+      {
+        "id": "zig-foundations-v1-step14",
+        "snippetId": "zig-found-014",
+        "order": 14,
+        "titleEn": "Reduce with a recursive function",
+        "titleEs": "Reduce con una función recursiva"
+      },
+      {
+        "id": "zig-foundations-v1-step15",
+        "snippetId": "zig-found-015",
+        "order": 15,
+        "titleEn": "Evaluate code at `comptime`",
+        "titleEs": "Evalúa código en `comptime`"
+      },
+      {
+        "id": "zig-foundations-v1-step16",
+        "snippetId": "zig-found-016",
+        "order": 16,
+        "titleEn": "Instantiate a comptime-generic function",
+        "titleEs": "Instancia una función genérica en `comptime`"
+      },
+      {
+        "id": "zig-foundations-v1-step17",
+        "snippetId": "zig-found-018",
+        "order": 17,
+        "titleEn": "Propagate failures with `try`",
+        "titleEs": "Propaga fallos con `try`"
+      },
+      {
+        "id": "zig-foundations-v1-step18",
+        "snippetId": "zig-found-019",
+        "order": 18,
+        "titleEn": "Recover with a real `catch` fallback",
+        "titleEs": "Recupera con un fallback real de `catch`"
+      },
+      {
+        "id": "zig-foundations-v1-step19",
+        "snippetId": "zig-found-017",
+        "order": 19,
+        "titleEn": "Declare a closed error set",
+        "titleEs": "Declara un conjunto cerrado de errores"
+      },
+      {
+        "id": "zig-foundations-v1-step20",
+        "snippetId": "zig-found-020",
+        "order": 20,
+        "titleEn": "Observe cleanup with `defer`",
+        "titleEs": "Observa la limpieza con `defer`"
+      },
+      {
+        "id": "zig-foundations-v1-step21",
+        "snippetId": "zig-found-021",
+        "order": 21,
+        "titleEn": "Observe rollback with `errdefer`",
+        "titleEs": "Observa la reversión con `errdefer`"
+      },
+      {
+        "id": "zig-foundations-v1-step22",
+        "snippetId": "zig-found-022",
+        "order": 22,
+        "titleEn": "Build a struct with a field literal",
+        "titleEs": "Construye una estructura con un literal de campo"
+      },
+      {
+        "id": "zig-foundations-v1-step23",
+        "snippetId": "zig-found-023",
+        "order": 23,
+        "titleEn": "Add a value-receiver method",
+        "titleEs": "Agrega un método con receptor por valor"
+      },
+      {
+        "id": "zig-foundations-v1-step24",
+        "snippetId": "zig-found-024",
+        "order": 24,
+        "titleEn": "Mutate through a typed pointer",
+        "titleEs": "Muta mediante un puntero tipado"
+      },
+      {
+        "id": "zig-foundations-v1-step25",
+        "snippetId": "zig-found-025",
+        "order": 25,
+        "titleEn": "Mutate a struct through a pointer receiver",
+        "titleEs": "Muta una estructura con un receptor por puntero"
+      },
+      {
+        "id": "zig-foundations-v1-step26",
+        "snippetId": "zig-found-026",
+        "order": 26,
+        "titleEn": "Return an optional value",
+        "titleEs": "Retorna un valor opcional"
+      },
+      {
+        "id": "zig-foundations-v1-step27",
+        "snippetId": "zig-found-027",
+        "order": 27,
+        "titleEn": "Consume an optional with `orelse`",
+        "titleEs": "Consume un opcional con `orelse`"
+      },
+      {
+        "id": "zig-foundations-v1-step28",
+        "snippetId": "zig-found-028",
+        "order": 28,
+        "titleEn": "Match an enum with a statement switch",
+        "titleEs": "Haz coincidir un enum con un switch de sentencia"
+      },
+      {
+        "id": "zig-foundations-v1-step29",
+        "snippetId": "zig-found-029",
+        "order": 29,
+        "titleEn": "Produce a value with a switch expression",
+        "titleEs": "Produce un valor con una expresión switch"
+      },
+      {
+        "id": "zig-foundations-v1-step30",
+        "snippetId": "zig-found-030",
+        "order": 30,
+        "titleEn": "Capture a tagged-union payload",
+        "titleEs": "Captura el payload de una unión etiquetada"
+      },
+      {
+        "id": "zig-foundations-v1-step31",
+        "snippetId": "zig-found-031",
+        "order": 31,
+        "titleEn": "Allocate through an allocator interface",
+        "titleEs": "Asigna mediante una interfaz de allocator"
+      },
+      {
+        "id": "zig-foundations-v1-step32",
+        "snippetId": "zig-found-032",
+        "order": 32,
+        "titleEn": "Build a Zig 0.16 `ArrayList`",
+        "titleEs": "Construye un `ArrayList` de Zig 0.16"
+      },
+      {
+        "id": "zig-foundations-v1-step33",
+        "snippetId": "zig-found-033",
+        "order": 33,
+        "titleEn": "Write a basic `test` block",
+        "titleEs": "Escribe un bloque `test` básico"
+      },
+      {
+        "id": "zig-foundations-v1-step34",
+        "snippetId": "zig-found-034",
+        "order": 34,
+        "titleEn": "Testing APIs and an inventory capstone",
+        "titleEs": "APIs de pruebas y proyecto final de inventario"
+      }
+    ]
+  }
+]

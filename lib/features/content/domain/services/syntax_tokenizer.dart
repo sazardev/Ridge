@@ -2,6 +2,7 @@ import 'package:ridge/features/content/domain/entities/programming_language.dart
 import 'package:ridge/features/content/domain/entities/syntax_token_type.dart';
 
 part 'rust_syntax_tokenizer.dart';
+part 'zig_syntax_tokenizer.dart';
 part 'sql_syntax_tokenizer.dart';
 part 'python_syntax_tokenizer.dart';
 part 'javascript_syntax_tokenizer.dart';
@@ -42,6 +43,7 @@ abstract final class SyntaxTokenizers {
         ProgrammingLanguage.bash => const BashSyntaxTokenizer(),
         ProgrammingLanguage.sql => const SqlSyntaxTokenizer(),
         ProgrammingLanguage.rust => const RustSyntaxTokenizer(),
+        ProgrammingLanguage.zig => const ZigSyntaxTokenizer(),
         ProgrammingLanguage.python => const PythonSyntaxTokenizer(),
         ProgrammingLanguage.javascript => const JavaScriptSyntaxTokenizer(),
         ProgrammingLanguage.typescript => const TypeScriptSyntaxTokenizer(),

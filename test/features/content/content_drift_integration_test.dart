@@ -4,10 +4,7 @@
 // repository, not fabricated in-test data). Mirrors
 // `test/features/profile/profile_drift_integration_test.dart`: table
 // creation via the drift migration, the seed usecase actually parsing
-// every bundled catalog asset (`go_v1.json`, `bash_v1.json`,
-// `sql_v1.json`, `rust_v1.json`, `python_v1.json`, `javascript_v1.json`,
-// `typescript_v1.json`, `haskell_v1.json`, `c_v1.json`, and
-// `cpp_v1.json`) and writing
+// every bundled catalog asset and writing
 // every row through SQL, and
 // every read port
 // (`findByFilters`, `getById`, `findContainingSymbols`) queried back out
@@ -87,7 +84,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 1367)
+        .firstWhere((snippets) => snippets.length == 1413)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -101,7 +98,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(1367));
+    expect(catalog, hasLength(1413));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -113,7 +110,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(1367));
+      expect(catalog, hasLength(1413));
     },
   );
 
@@ -124,7 +121,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(1367));
+    expect(result, hasLength(1413));
   });
 
   test(
@@ -154,7 +151,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(495));
+    expect(beginnerSnippets, hasLength(517));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -507,6 +504,17 @@ void main() {
       'rust-algo-011',
       'rust-algo-012',
       'rust-func-003',
+      'zig-algo-006',
+      'zig-algo-009',
+      'zig-algo-012',
+      'zig-found-002',
+      'zig-found-003',
+      'zig-found-004',
+      'zig-found-010',
+      'zig-found-011',
+      'zig-found-012',
+      'zig-found-020',
+      'zig-found-021',
       'sql-advanced-002',
       'sql-advanced-003',
       'sql-advanced-004',
@@ -713,6 +721,8 @@ void main() {
       'sql-filtering-008',
       'sql-filtering-009',
       'typescript-func-004',
+      'zig-found-002',
+      'zig-found-026',
     });
   });
 

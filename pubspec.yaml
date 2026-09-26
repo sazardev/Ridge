@@ -96,6 +96,7 @@ flutter:
     - assets/content/snippets/bash_v1.json
     - assets/content/snippets/sql_v1.json
     - assets/content/snippets/rust_v1.json
+    - assets/content/snippets/zig_v1.json
     - assets/content/snippets/python_v1.json
     - assets/content/snippets/javascript_v1.json
     - assets/content/snippets/typescript_v1.json
@@ -129,6 +130,8 @@ flutter:
     - assets/content/learning_paths/sql_foundations_v1.json
     - assets/content/learning_paths/rust_foundations_v1.json
     - assets/content/learning_paths/rust_algorithms_v1.json
+    - assets/content/learning_paths/zig_foundations_v1.json
+    - assets/content/learning_paths/zig_algorithms_v1.json
     - assets/content/learning_paths/python_foundations_v1.json
     - assets/content/learning_paths/python_algorithms_v1.json
     - assets/content/learning_paths/python_django_foundations_v1.json

@@ -35,6 +35,8 @@ enum ContentCategory {
   concurrency,
   // Generic type parameters and constraints.
   generics,
+  // Zig `comptime` evaluation, `inline` loops, `@compileError`.
+  comptime,
   // Go 1.27 features: generic methods, promoted struct keys, new stdlib.
   modernGo,
   // Idiomatic `gofmt` formatting conventions.
@@ -358,6 +360,8 @@ enum ContentCategory {
   goroutineLeaks,
   // Subtests, fuzzing, `synctest`, artifacts, golden files.
   advancedTesting,
+  // Zig `test` blocks, `std.testing` helpers, and assertions.
+  testing,
   // Benchmarks, allocation, pprof CPU, runtime metrics.
   performanceProfiling,
   // `log/slog` structured logging and multi-handler fan-out.

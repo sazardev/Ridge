@@ -51,6 +51,8 @@ class LearningPathRepositoryImpl implements LearningPathRepository {
     'assets/content/learning_paths/sql_foundations_v1.json',
     'assets/content/learning_paths/rust_foundations_v1.json',
     'assets/content/learning_paths/rust_algorithms_v1.json',
+    'assets/content/learning_paths/zig_foundations_v1.json',
+    'assets/content/learning_paths/zig_algorithms_v1.json',
     'assets/content/learning_paths/python_foundations_v1.json',
     'assets/content/learning_paths/python_algorithms_v1.json',
     'assets/content/learning_paths/python_django_foundations_v1.json',

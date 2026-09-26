@@ -43,18 +43,22 @@ A language is either **free-practice** or **course-only**:
 | Tier | Example | Catalog role | Completeness bar |
 |---|---|---|---|
 | Free-practice | Go | backs Zen/Sprint/Precision and the browser | dense grid: ≥3 per (category, difficulty) cell in core categories, ≥1 elsewhere |
-| Course-only | Bash, SQL, Rust, Python, JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#, Dart, Kotlin, PHP, Git, Linux, GitHub Actions, Docker | exists only to compose its Learning Route(s) | every active snippet must be used by a bundled path; no orphans |
+| Course-only | Bash, SQL, Rust, Python, JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#, Dart, Kotlin, PHP, Git, Linux, GitHub Actions, Docker, Zig | exists only to compose its Learning Route(s) | every active snippet must be used by a bundled path; no orphans |
+
+Zig currently has 46 active snippets across `zig-foundations-v1` (34) and `zig-algorithms-v1` (12), and adds the two generic `ContentCategory` values `comptime` and `testing`.
 
 Practical consequences:
 - A course-only language's snippet set is authored together with its path —
   there is no "extra practice pool" to keep stocked.
 - The browser and free-practice screens filter by language (default Go), so
   a course-only language never leaks into random practice.
-- A new language still needs code changes only for the shared enums
-  (`ProgrammingLanguage`, and new `ContentCategory` values if its concepts
-  don't fit the existing ones), its tokenizer, and its asset paths — the
+- Register a new language in `ProgrammingLanguage`, add its tokenizer and any
+  new `ContentCategory` values, and add every bundled snippet/path asset to
+  the relevant `defaultAssetPaths`, `pubspec.yaml`, and test asset lists. The
   Learning Paths screen and language selector already handle any number of
-  languages.
+  languages. Zig reuses the existing categories and adds `comptime` and
+  `testing`; adding its bundled catalog and paths requires no drift
+  migration.
 
 **Learning Path** — `assets/content/learning_paths/go_foundations_v1.json`,
 an array with one path object:

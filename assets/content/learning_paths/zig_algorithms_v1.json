@@ -1,0 +1,98 @@
+[
+  {
+    "id": "zig-algorithms-v1",
+    "language": "zig",
+    "titleEn": "Zig: Algorithms",
+    "titleEs": "Zig: Algoritmos",
+    "descriptionEn": "Searching, classic sorting, and graph algorithms implemented in Zig 0.16.",
+    "descriptionEs": "Búsquedas, ordenamientos clásicos y algoritmos de grafos implementados en Zig 0.16.",
+    "tagEn": "Algorithms",
+    "tagEs": "Algoritmos",
+    "lessons": [
+      {
+        "id": "zig-algorithms-v1-step01",
+        "snippetId": "zig-algo-001",
+        "order": 1,
+        "titleEn": "Linear search",
+        "titleEs": "Búsqueda lineal"
+      },
+      {
+        "id": "zig-algorithms-v1-step02",
+        "snippetId": "zig-algo-002",
+        "order": 2,
+        "titleEn": "Binary search",
+        "titleEs": "Búsqueda binaria"
+      },
+      {
+        "id": "zig-algorithms-v1-step03",
+        "snippetId": "zig-algo-003",
+        "order": 3,
+        "titleEn": "Bubble sort",
+        "titleEs": "Ordenamiento burbuja"
+      },
+      {
+        "id": "zig-algorithms-v1-step04",
+        "snippetId": "zig-algo-004",
+        "order": 4,
+        "titleEn": "Selection sort",
+        "titleEs": "Ordenamiento por selección"
+      },
+      {
+        "id": "zig-algorithms-v1-step05",
+        "snippetId": "zig-algo-005",
+        "order": 5,
+        "titleEn": "Insertion sort",
+        "titleEs": "Ordenamiento por inserción"
+      },
+      {
+        "id": "zig-algorithms-v1-step06",
+        "snippetId": "zig-algo-006",
+        "order": 6,
+        "titleEn": "Merge sort",
+        "titleEs": "Ordenamiento por mezcla"
+      },
+      {
+        "id": "zig-algorithms-v1-step07",
+        "snippetId": "zig-algo-007",
+        "order": 7,
+        "titleEn": "Quick sort",
+        "titleEs": "Quicksort"
+      },
+      {
+        "id": "zig-algorithms-v1-step08",
+        "snippetId": "zig-algo-008",
+        "order": 8,
+        "titleEn": "Heap sort",
+        "titleEs": "Heapsort"
+      },
+      {
+        "id": "zig-algorithms-v1-step09",
+        "snippetId": "zig-algo-009",
+        "order": 9,
+        "titleEn": "Graph as a directed borrowed adjacency list",
+        "titleEs": "Grafo como lista de adyacencia dirigida y prestada"
+      },
+      {
+        "id": "zig-algorithms-v1-step10",
+        "snippetId": "zig-algo-010",
+        "order": 10,
+        "titleEn": "Breadth-first search (BFS)",
+        "titleEs": "Búsqueda en anchura (BFS)"
+      },
+      {
+        "id": "zig-algorithms-v1-step11",
+        "snippetId": "zig-algo-011",
+        "order": 11,
+        "titleEn": "Depth-first search (DFS)",
+        "titleEs": "Búsqueda en profundidad (DFS)"
+      },
+      {
+        "id": "zig-algorithms-v1-step12",
+        "snippetId": "zig-algo-012",
+        "order": 12,
+        "titleEn": "Dijkstra's shortest distances",
+        "titleEs": "Distancias mínimas de Dijkstra"
+      }
+    ]
+  }
+]

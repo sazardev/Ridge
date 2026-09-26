@@ -144,9 +144,11 @@ leaderboards, Supabase sync — `STACK.md §5`–`§6`) is fully specified in
 - **`daily_challenge`** — Phase 0 (offline): the same snippet for everyone,
   computed deterministically from the UTC date, no server involved.
 - **`content` / `learning_paths`** — bundled snippet catalogs (Go, Bash,
-  SQL, Rust, Python, JavaScript, TypeScript, Haskell, C, C++, Java, Crystal,
-  Swift, CSS, C#, Dart, Kotlin, PHP, Git, Linux, GitHub Actions, Docker) and
-  guided Learning Paths, plus an on-device "content pack" extension point.
+  SQL, Rust, Zig, Python, JavaScript, TypeScript, Haskell, C, C++, Java,
+  Crystal, Swift, CSS, C#, Dart, Kotlin, PHP, Git, Linux, GitHub Actions,
+  Docker) and guided Learning Paths, plus an on-device "content pack"
+  extension point. Zig is course-only: 46 active snippets split between
+  `zig-foundations-v1` (34) and `zig-algorithms-v1` (12).
 - **`progression` / `achievements`** — streaks, stats over time, unlockable
   achievements.
 - **`profile`** — keyboard layout/brand/model, with a full 3D keycap +

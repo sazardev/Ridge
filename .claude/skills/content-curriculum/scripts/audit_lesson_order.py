@@ -48,7 +48,8 @@ ARCHITECTURE_LAYER_CATEGORIES = {
     "tuiComponents",
     "tuiAdapter",
     # Mirrors `_topicCategories` — topic categories for the
-    # go-algorithms-v1 / rust-algorithms-v1 Learning Routes, the
+    # go-algorithms-v1 / rust-algorithms-v1 / zig-algorithms-v1 Learning
+    # Routes, the
     # HTTP/SQL topic categories of go-rest-http-v1, and the
     # modern-language/production topic categories of
     # go-modern-idioms-v1 / go-production-v1. Individual snippets
@@ -88,6 +89,7 @@ COURSE_ONLY_LANGUAGES = {
     "bash",
     "sql",
     "rust",
+    "zig",
     "python",
     "javascript",
     "typescript",

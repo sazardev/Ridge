@@ -614,6 +614,51 @@ Compose 5.5 here:
 - Run the whole harness again against the final merged asset, not the
   pre-prose draft.
 
+## New Zig code: official 0.16.0, exact harnesses, differential fuzzing
+
+`zig_v1.json` is a course-only catalog for stable Zig 0.16.0: 46 active
+snippets (34 foundations and 12 algorithms). Use the official archive and
+its published checksum; do not substitute a host package.
+
+- For x86_64 Linux, download
+  `https://ziglang.org/download/0.16.0/zig-x86_64-linux-0.16.0.tar.xz`.
+  Read the matching `0.16.0` entry in
+  `https://ziglang.org/download/index.json`, verify the published SHA-256,
+  then extract the binary. The x86_64 Linux archive checksum is
+  `70e49664a74374b48b51e6f3fdfbf437f6395d42509050588bd49abe52ba3d00`; use the
+  matching `shasum` for another target. For the x86_64 Linux archive,
+  `printf '%s  %s\n' '70e49664a74374b48b51e6f3fdfbf437f6395d42509050588bd49abe52ba3d00' 'zig-x86_64-linux-0.16.0.tar.xz' | sha256sum -c -`
+  must pass before extraction. After extraction, `zig version` must report
+  `0.16.0` before any harness runs.
+- Generate each exact-catalog-code harness from the final JSON entry, never
+  from a hand-typed copy. Require the catalog `code` to be a byte-for-byte
+  contiguous substring of the compiled file, add only the imports, wrapper,
+  or driver needed by that entry, and run `zig fmt --check` on the harness.
+  The 46 entries follow the 44 run + 2 test entry pattern: run the 44
+  `zig run` cases and the 2 test-oriented cases (`zig-found-033` and
+  `zig-found-034`) with `zig test`.
+- Make behavioral assertions, not just clean compiles: assert return values,
+  errors and optionals, output, and cleanup in the run harnesses; retain
+  `std.testing.expect*`/`expectError` assertions and use the testing
+  allocator where relevant. Re-run every harness against the final merged
+  asset.
+- Drive and fuzz the 12 `zig-algo-*` snippets differentially: compare the
+  six sorts with an independent sort, both searches with a scan and
+  in-range/absent semantics, BFS/DFS with independent traversals including
+  disconnected graphs, and Dijkstra with an independent Bellman-Ford with
+  unreachable nodes. Prepend the lesson-9 `Graph` support when driving
+  BFS/DFS/Dijkstra. Include empty, singleton, duplicate, negative, sorted,
+  reverse, and randomized cases.
+- Zig 0.16.0 gotchas: prefer unsigned slices so ordinary `%` can test
+  parity (signed `%` is rejected, or use `@mod` deliberately); create
+  `std.ArrayList(T).empty` and pass the allocator explicitly to `append`,
+  `appendSlice`, and `deinit`; I/O now takes an explicit `std.Io` instance
+  and uses the 0.16 `std.Io.File`/`std.Io.Dir` APIs, so old `std.io` and
+  0.15-style `std.fs` calls are not valid examples. Keep examples on the
+  stable 0.16.0 APIs.
+- Keep `code` ASCII-only — `key_layout_map_test.dart` maps every character
+  to a physical US-QWERTY key.
+
 ## Large batch authoring/rewrites (10+ entries): delegate, then validate twice
 
 When rewriting or extending a large slice of the catalog (e.g. adding

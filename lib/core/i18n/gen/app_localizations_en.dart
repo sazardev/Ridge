@@ -1206,6 +1206,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryGenerics => 'Generics';
 
   @override
+  String get categoryComptime => 'Compile time';
+
+  @override
   String get categoryModernGo => 'Modern Go';
 
   @override
@@ -1689,6 +1692,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryAdvancedTesting => 'Advanced testing';
 
   @override
+  String get categoryTesting => 'Testing';
+
+  @override
   String get categoryPerformanceProfiling => 'Performance & profiling';
 
   @override
@@ -1720,6 +1726,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageRust => 'Rust';
+
+  @override
+  String get languageZig => 'Zig';
 
   @override
   String get languagePython => 'Python';
@@ -1790,6 +1799,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get languageRustBlurb =>
       'Memory-safe systems programming, without a garbage collector.';
+
+  @override
+  String get languageZigBlurb =>
+      'Low-level control with a clean, modern language — build fast, reliable systems.';
 
   @override
   String get languagePythonBlurb =>

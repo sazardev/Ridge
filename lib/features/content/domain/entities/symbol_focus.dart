@@ -15,7 +15,7 @@ enum SymbolFocus {
   /// Backtick-delimited struct field tags, e.g. `` `json:"name"` ``.
   backtickStructTags,
 
-  /// The logical operators `&&`/`||`.
+  /// The logical operators `&&`/`||`, or Zig's `and`/`or`.
   logicalOperators,
 
   /// The pointer operators `*`/`&`.

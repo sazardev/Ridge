@@ -1,11 +1,11 @@
 ---
 name: content-curriculum
-description: Use when adding/editing snippets in assets/content/snippets/{go,bash,sql,rust,python,javascript,typescript,haskell,c,cpp,java,crystal,swift,css,csharp,dart,kotlin,php,git}_v1.json, editing a Learning Path's lesson order in assets/content/learning_paths/*.json, or adding a new bilingual content field (schema + domain + drift + presentation). Encodes hard-won rules from building the 51-lesson go-foundations path — two earlier automated ordering attempts both produced real beginner-incoherence bugs before a manual, adversarially-audited pass fixed them. Bash (Arch Linux), SQL (PostgreSQL, shared library database), Rust, Python, JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#, and Dart are course-only catalogs built the same way (their foundations routes reuse Go's generic categories — Haskell's presents recursion instead of loops, TypeScript's broader tour adds `classesAndObjects`/`modules` as its own categories, C adds `arraysAndStrings`/`memoryManagement`/`preprocessor`/`fileIO`, C++ adds `templates`/`stlContainers`, Swift adds `optionals`/`closures`/`enumsAndPatternMatching` (plus `codable`/`propertyWrappers` in its advanced course), C# adds `patternMatching`/`delegatesAndEvents`/`linq`/`asyncProgramming` (in its advanced course), Dart adds `recordsAndPatterns` (reusing `collections`/`nullSafety`/`asyncProgramming`), Kotlin adds `nullSafety`/`dataClasses`/`lambdas`/`extensions`/`coroutines` (reusing `collections`), CSS uses none of Go's: it adds `cssSelectors`/`cssBoxModel`/`cssColorsAndTypography`/`cssLayout`/`cssPositioning`/`cssCustomProperties`/`cssResponsive`/`cssTransitionsAndAnimations`, and PHP uses none of Go's either: its three routes add nineteen categories (`phpBasics`/`phpStrings`/`phpConditionals`/`phpLoops`/`phpArrays`/`phpFunctions`/`phpClasses`/`phpEnums`/`phpErrorHandling`/`phpNamespaces`/`phpSuperglobals`/`phpForms`/`phpSessions`/`phpDatabase`/`phpJson`/`phpFiles`/`phpSearching`/`phpSorting`/`phpGraphs`), and Git uses none of Go's either: its three routes (`git-foundations-v1`/`git-workflows-v1`/`git-internals-v1`) add ten categories (`gitBasics`/`gitCommits`/`gitBranching`/`gitRemotes`/`gitHistory`/`gitUndo`/`gitCollaboration`/`gitObjects`/`gitRefs`/`gitMaintenance`). Linux (Arch Linux: foundations, administration and networking routes) is course-only too, verified as real command lines in disposable Arch containers (plain, privileged, and systemd-enabled). GitHub Actions (`github_actions_v1.json`) is course-only too: three routes add thirteen categories of their own (a YAML CI/CD pipeline shares no concept with Go's categories), verified with actionlint + ShellCheck, action-validator, check-jsonschema, and 33 workflows actually executed with `act`.
+description: Use when adding/editing snippets in assets/content/snippets/{go,bash,sql,rust,zig,python,javascript,typescript,haskell,c,cpp,java,crystal,swift,css,csharp,dart,kotlin,php,git}_v1.json, editing a Learning Path's lesson order in assets/content/learning_paths/*.json (including `zig_foundations_v1.json` and `zig_algorithms_v1.json`), or adding a new bilingual content field (schema + domain + drift + presentation). Encodes hard-won rules from building the 51-lesson go-foundations path — two earlier automated ordering attempts both produced real beginner-incoherence bugs before a manual, adversarially-audited pass fixed them. Bash (Arch Linux), SQL (PostgreSQL, shared library database), Rust, Zig (`zig_v1.json`), Python, JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#, and Dart are course-only catalogs built the same way (their foundations routes reuse Go's generic categories — Haskell's presents recursion instead of loops, TypeScript's broader tour adds `classesAndObjects`/`modules` as its own categories, C adds `arraysAndStrings`/`memoryManagement`/`preprocessor`/`fileIO`, C++ adds `templates`/`stlContainers`, Swift adds `optionals`/`closures`/`enumsAndPatternMatching` (plus `codable`/`propertyWrappers` in its advanced course), C# adds `patternMatching`/`delegatesAndEvents`/`linq`/`asyncProgramming` (in its advanced course), Dart adds `recordsAndPatterns` (reusing `collections`/`nullSafety`/`asyncProgramming`), Kotlin adds `nullSafety`/`dataClasses`/`lambdas`/`extensions`/`coroutines` (reusing `collections`), CSS uses none of Go's: it adds `cssSelectors`/`cssBoxModel`/`cssColorsAndTypography`/`cssLayout`/`cssPositioning`/`cssCustomProperties`/`cssResponsive`/`cssTransitionsAndAnimations`, and PHP uses none of Go's either: its three routes add nineteen categories (`phpBasics`/`phpStrings`/`phpConditionals`/`phpLoops`/`phpArrays`/`phpFunctions`/`phpClasses`/`phpEnums`/`phpErrorHandling`/`phpNamespaces`/`phpSuperglobals`/`phpForms`/`phpSessions`/`phpDatabase`/`phpJson`/`phpFiles`/`phpSearching`/`phpSorting`/`phpGraphs`), and Git uses none of Go's either: its three routes (`git-foundations-v1`/`git-workflows-v1`/`git-internals-v1`) add ten categories (`gitBasics`/`gitCommits`/`gitBranching`/`gitRemotes`/`gitHistory`/`gitUndo`/`gitCollaboration`/`gitObjects`/`gitRefs`/`gitMaintenance`). Linux (Arch Linux: foundations, administration and networking routes) is course-only too, verified as real command lines in disposable Arch containers (plain, privileged, and systemd-enabled). GitHub Actions (`github_actions_v1.json`) is course-only too: three routes add thirteen categories of their own (a YAML CI/CD pipeline shares no concept with Go's categories), verified with actionlint + ShellCheck, action-validator, check-jsonschema, and 33 workflows actually executed with `act`.
 metadata:
   domain: content
   scope: content-authoring, curriculum-design
   role: specialist
-  triggers: snippet, learning path, lesson order, curriculum, tldr, explanationEn, go_v1.json, go_foundations
+  triggers: snippet, learning path, lesson order, curriculum, tldr, explanationEn, go_v1.json, go_foundations, zig_v1.json, zig_foundations_v1, zig_algorithms_v1
   related-skills: dart-best-practices, flutter-testing
 ---
 
@@ -14,14 +14,16 @@ metadata:
 Owns the bundled, versioned JSON assets that back this app's whole
 practice experience: the snippet catalogs (Go
 `assets/content/snippets/go_v1.json`, Bash `bash_v1.json`, SQL
-`sql_v1.json`, Rust `rust_v1.json`, Python `python_v1.json` (which also
+`sql_v1.json`, Rust `rust_v1.json`, Zig `zig_v1.json`, Python `python_v1.json` (which also
 backs the three Django routes `python-django-foundations-v1`/
 `python-django-orm-v1`/`python-django-rest-v1`), JavaScript
 `javascript_v1.json`, TypeScript `typescript_v1.json`, Haskell
 `haskell_v1.json`, C `c_v1.json`, C++ `cpp_v1.json`, Java
 `java_v1.json`, Crystal `crystal_v1.json`, Swift `swift_v1.json`, CSS `css_v1.json`, C# `csharp_v1.json`, Dart `dart_v1.json`, Kotlin `kotlin_v1.json`, PHP `php_v1.json`, Git `git_v1.json`, Linux `linux_v1.json`, GitHub Actions `github_actions_v1.json`, Docker `docker_v1.json`, SPEC.md §3), and the
-curated Learning Path curriculum
-(one file per route under `assets/content/learning_paths/`, SPEC.md §5.7).
+curated Learning Path curriculum, including
+`zig_foundations_v1.json` (`zig-foundations-v1`) and
+`zig_algorithms_v1.json` (`zig-algorithms-v1`) under
+`assets/content/learning_paths/` (one file per route, SPEC.md §5.7).
 All are read-only at runtime; snippet catalogs are idempotently seeded
 into drift tables on launch, paths are read straight from the bundle.
 
@@ -135,6 +137,12 @@ into drift tables on launch, paths are read straight from the bundle.
     to their target filename and driven with `docker build`/`docker run`/
     `docker compose up -d`, asserting output and post-state — see
     `references/snippet-authoring.md`.
+    Zig (`zig_v1.json`) uses the
+    official stable 0.16.0 binary/checksum, runs `zig fmt --check`, and
+    executes 44 run cases with `zig run` plus 2 test cases with `zig test`;
+    every harness uses the exact catalog `code`, asserts behavior, and
+    differentially fuzzes the 12 algorithms. The app integration has
+    targeted tests — see `references/snippet-authoring.md`.
     Never trust generated code unverified.
 4. **Adding a new schema field?** — read `references/migrations-and-tests.md`
    for the drift migration pattern and the exact test files/fixtures that
@@ -169,7 +177,10 @@ into drift tables on launch, paths are read straight from the bundle.
   (`mcr.microsoft.com/dotnet/sdk:10.0`, nullable + warnings-as-errors) for C#,
   and `dart format` + `dart analyze` + `dart run` with the bundled Dart SDK
   3.13 for Dart (statement fragments wrapped in `void main()`, algorithms
-  driven and fuzzed), and real `kotlinc` 2.4 with `-Werror`
+  driven and fuzzed), official Zig 0.16.0 with `zig fmt --check` and
+   exact-catalog harnesses (44 `zig run` cases, 2 `zig test` cases,
+  behavioral assertions, and differential algorithm fuzzing) for Zig, and
+  real `kotlinc` 2.4 with `-Werror`
   (coroutine snippets link `kotlinx-coroutines-core-jvm`) for Kotlin,
   compiling every fragment inside a `fun main()` wrapper or a per-entry
   driver and fuzzing the 12 algorithms, and `php -l` plus
@@ -190,7 +201,7 @@ into drift tables on launch, paths are read straight from the bundle.
 - Keep every (category, difficulty) cell at ≥3 active entries for the 5
   "core" categories of each free-practice language (see
   `snippet_catalog_completeness_test.dart`) before reclassifying or
-  deactivating a snippet; course-only catalogs (Bash, SQL, Rust, Python,
+  deactivating a snippet; course-only catalogs (Bash, SQL, Rust, Zig, Python,
   JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#,
    Dart, Kotlin, PHP, Git, Linux, GitHub Actions, Docker) instead require
   every active snippet to be referenced by a bundled path — no orphans

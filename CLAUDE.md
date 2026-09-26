@@ -219,10 +219,15 @@ lesson order (`assets/content/learning_paths/*.json`) are versioned JSON
 assets, not code. Two catalog tiers (SPEC.md §3.2): Go backs free practice
 with a dense (category, difficulty) grid; every other language is
 course-only — its catalog contains exactly the snippets its bundled
-Learning Path(s) reference, no orphans (Bash, SQL, Rust, Python — including
-the three Django courses — JavaScript, TypeScript, Haskell, C, C++, Java,
-Crystal, Swift, CSS, C#, Dart, Kotlin, PHP, Git, Linux, GitHub Actions, and
-Docker). Foundations routes target beginners and mostly reuse Go's generic
+Learning Path(s) reference, no orphans (Bash, SQL, Rust, Zig, Python —
+including the three Django courses — JavaScript, TypeScript, Haskell, C,
+C++, Java, Crystal, Swift, CSS, C#, Dart, Kotlin, PHP, Git, Linux, GitHub
+Actions, and Docker). Zig 0.16.0's current catalog is
+`assets/content/snippets/zig_v1.json` with 46 active snippets:
+`zig-foundations-v1` has 34 and `zig-algorithms-v1` has the standard 12
+search/sort/graph lessons. Zig reuses the existing categories and adds
+`comptime` (compile-time evaluation and generics) plus `testing`. Foundations
+routes target beginners and mostly reuse Go's generic
 categories; CSS and PHP are full exceptions with categories of their own.
 Per-route details (categories, snippet counts, special cases) live in
 `Memory.md` and the skill below — trust those over any summary.

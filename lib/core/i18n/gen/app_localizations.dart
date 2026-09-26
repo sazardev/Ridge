@@ -2396,6 +2396,12 @@ abstract class AppLocalizations {
   /// **'Generics'**
   String get categoryGenerics;
 
+  /// No description provided for @categoryComptime.
+  ///
+  /// In en, this message translates to:
+  /// **'Compile time'**
+  String get categoryComptime;
+
   /// No description provided for @categoryModernGo.
   ///
   /// In en, this message translates to:
@@ -3362,6 +3368,12 @@ abstract class AppLocalizations {
   /// **'Advanced testing'**
   String get categoryAdvancedTesting;
 
+  /// No description provided for @categoryTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'Testing'**
+  String get categoryTesting;
+
   /// No description provided for @categoryPerformanceProfiling.
   ///
   /// In en, this message translates to:
@@ -3427,6 +3439,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rust'**
   String get languageRust;
+
+  /// No description provided for @languageZig.
+  ///
+  /// In en, this message translates to:
+  /// **'Zig'**
+  String get languageZig;
 
   /// No description provided for @languagePython.
   ///
@@ -3559,6 +3577,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Memory-safe systems programming, without a garbage collector.'**
   String get languageRustBlurb;
+
+  /// No description provided for @languageZigBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Low-level control with a clean, modern language — build fast, reliable systems.'**
+  String get languageZigBlurb;
 
   /// No description provided for @languagePythonBlurb.
   ///

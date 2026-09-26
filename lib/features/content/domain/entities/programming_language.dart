@@ -20,6 +20,10 @@ enum ProgrammingLanguage {
   /// `rust-foundations-v1` Learning Route — course-only, like Bash/SQL.
   rust,
 
+  /// Zig, taught by `zig-foundations-v1` and `zig-algorithms-v1` —
+  /// course-only, like Bash/SQL/Rust.
+  zig,
+
   /// The Python programming language, taught by `python-foundations-v1`
   /// (beginner) and `python-algorithms-v1` — course-only, like Bash/SQL/
   /// Rust.

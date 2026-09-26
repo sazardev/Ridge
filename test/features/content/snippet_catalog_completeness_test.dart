@@ -24,6 +24,7 @@ const Map<ProgrammingLanguage, String> _catalogAssetByLanguage = {
   ProgrammingLanguage.bash: 'assets/content/snippets/bash_v1.json',
   ProgrammingLanguage.sql: 'assets/content/snippets/sql_v1.json',
   ProgrammingLanguage.rust: 'assets/content/snippets/rust_v1.json',
+  ProgrammingLanguage.zig: 'assets/content/snippets/zig_v1.json',
   ProgrammingLanguage.python: 'assets/content/snippets/python_v1.json',
   ProgrammingLanguage.javascript: 'assets/content/snippets/javascript_v1.json',
   ProgrammingLanguage.typescript: 'assets/content/snippets/typescript_v1.json',
@@ -54,9 +55,9 @@ const Map<ProgrammingLanguage, String> _catalogAssetByLanguage = {
 /// snippets exist to compose `bash-foundations-v1`, never a free-standing
 /// practice pool), so its catalog is held to the lighter rule that it
 /// contains exactly the snippets its bundled paths use — see the
-/// "course-only" test below. SQL, Rust, Python, JavaScript, TypeScript,
-/// Haskell, C, C++, Java, Crystal, CSS, C#, Swift, Kotlin, Dart, and PHP
-/// follow the same course-only rule.
+/// "course-only" test below. SQL, Rust, Zig, Python, JavaScript, TypeScript,
+/// Haskell, C, C++, Java, Crystal, CSS, C#, Swift, Kotlin, Dart, PHP, Git,
+/// Linux, Docker, and GitHub Actions follow the same course-only rule.
 const Set<ProgrammingLanguage> _freePracticeLanguages = {
   ProgrammingLanguage.go,
 };
@@ -94,7 +95,8 @@ const Set<ContentCategory> _architectureLayerCategories = {
 };
 
 /// Topic categories that aren't a language-feature grid: the algorithm
-/// topics back `go-algorithms-v1` / `rust-algorithms-v1`, the HTTP/SQL
+/// topics back `go-algorithms-v1` / `rust-algorithms-v1` /
+/// `zig-algorithms-v1`, the HTTP/SQL
 /// topics back `go-rest-http-v1`, the modern-language/production
 /// topics back `go-modern-idioms-v1` / `go-production-v1`, and the `cli*`
 /// topics back `go-cli-programs-v1` (each entry there is a complete,
@@ -168,6 +170,8 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/sql_foundations_v1.json',
   'assets/content/learning_paths/rust_foundations_v1.json',
   'assets/content/learning_paths/rust_algorithms_v1.json',
+  'assets/content/learning_paths/zig_foundations_v1.json',
+  'assets/content/learning_paths/zig_algorithms_v1.json',
   'assets/content/learning_paths/python_foundations_v1.json',
   'assets/content/learning_paths/python_algorithms_v1.json',
   'assets/content/learning_paths/python_django_foundations_v1.json',

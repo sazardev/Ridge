@@ -21,7 +21,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ---
 
-## Estado actual (2026-09-13)
+## Estado actual (2026-09-25)
 
 - App **offline-only** (drift/SQLite + secure storage + shared_preferences).
   Todo lo online (auth, duelos, escuadrones, leaderboards, sync Supabase)
@@ -41,6 +41,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   | Bash (Arch) | 95 snippets | `bash-foundations-v1` + `bash-toolkit-v1` | solo-curso |
   | SQL (PostgreSQL) | 60 snippets | `sql-foundations-v1` (60) | solo-curso |
   | Rust | 24 snippets | `rust-foundations-v1` (12, solo principiante) + `rust-algorithms-v1` (12) | solo-curso |
+  | Zig | 46 snippets | `zig-foundations-v1` (34, Zig 0.16.0: tipos, slices, control, funciones, recursión, `comptime`, errores, structs, punteros, opcionales, enums/uniones, allocators, `ArrayList` y tests) + `zig-algorithms-v1` (12) | solo-curso |
   | Python | 79 snippets | `python-foundations-v1` (12) + `python-algorithms-v1` (12) + `python-django-foundations-v1` (21, proyecto/modelos/vistas/plantillas/forms/admin/tests) + `python-django-orm-v1` (17, relaciones/QuerySets/migraciones) + `python-django-rest-v1` (17, DRF/token/paginación/tests) — los tres de Django nuevos, ver sesión de hoy | solo-curso |
   | JavaScript | 24 snippets | `javascript-foundations-v1` (12, solo principiante) + `javascript-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
   | TypeScript | 29 snippets | `typescript-foundations-v1` (17, tour amplio) + `typescript-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
@@ -66,9 +67,11 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `sqlAggregation` (7), `sqlJoins` (7), `sqlModifications` (5),
   `sqlAdvancedQueries` (6). Dificultad 30/22/7/1.
 - Gate de calidad: `bash tool/check.sh` (format + analyze + arquitectura +
-  tests). Última corrida (2026-09-13, cierre de personalización de
-  teclado): **verde de punta a punta — 822 tests**, format/analyze/
-  arquitectura limpios. `content_category.dart` quedó en **358
+  tests). Última corrida (2026-09-25, cierre de Zig): **verde de punta a
+  punta — 831 tests**, format/analyze/arquitectura limpios. La primera
+  corrida tuvo el flake conocido de
+  `survival_controller_drift_integration_test.dart`; aislado y en la
+  repetición completa pasó. `content_category.dart` quedó en **379
   líneas** (límite duro 500): el formatter tall obliga línea en blanco
   alrededor de cada constante documentada con `///` (llevaba el archivo a
   532), así que los docs por-valor son `//` empaquetados con
@@ -208,6 +211,39 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 ---
 
 ## Historial de sesiones
+
+### 2026-09-25 — Zig 0.16.0 como lenguaje solo-curso
+
+- **Alcance:** se añadió Zig como vigésimo tercer lenguaje de contenido:
+  `zig_v1.json` (46 snippets activos), `zig-foundations-v1` (34 lecciones) y
+  `zig-algorithms-v1` (12). El contenido es solo-curso, sin snippets
+  huérfanos ni material de práctica libre.
+- **Verificación real:** se descargó el binario oficial x86_64 Linux de Zig
+  **0.16.0** (sha256 publicado verificado) y se ejecutaron los 46 harnesses
+  con el código exacto del catálogo: 44 con `zig run`, 2 con `zig test`,
+  todos con `zig fmt --check` limpio. Los 12 algoritmos se condujeron y
+  fuzzearon diferencialmente (ordenamientos contra `std.mem`, búsquedas
+  contra escaneos independientes, BFS/DFS contra traversals independientes
+  y Dijkstra contra Bellman-Ford, más grafos malformados, opcionales,
+  errores, fugas de allocator y límites de desborde).
+- **Correcciones reales encontradas por las auditorías adversariales:**
+  fuga de `left` en Merge Sort; `catch` antes de enseñarse; `if` sin
+  llaves; explanation de slices con límites de compilación; grafos con
+  aristas inválidas; `const`/pointee; `ArrayList` de 0.16; recursión,
+  `orelse`, switch-expresión y tests introducidos antes de sus usos;
+  Dijkstra pasó de centinela ambiguo a `[]?u64` (`null` = inalcanzable).
+  La versión final es V3 (34+12), no la primera borrador.
+- **Integración:** `ProgrammingLanguage.zig`, tokenizador Zig con test
+  propio, assets en `SnippetLocalDataSource`/`LearningPathRepositoryImpl`/
+  `pubspec.yaml`, listas de tests, l10n en/es, y dos categorías nuevas
+  genéricas `comptime` y `testing` (sin migración de DB; la categoría se
+  guarda como texto). `SPEC.md`, `README.md`, `AGENTS.md`/`CLAUDE.md` y la
+  skill `content-curriculum` quedaron alineados.
+- **Gate:** `dart run tool/validate_content_pack.dart` pasó para los tres
+  assets; el audit mecánico pasó; `bash tool/check.sh` terminó verde con
+  **831 tests** (el primer intento chocó con el flake de Survival ya
+  documentado; aislado y en la repetición completa pasó).
+- No se creó commit ni push en esta sesión.
 
 ### 2026-09-21 (continuación 2) — Relicenciamiento a open source (AGPL-3.0)
 
