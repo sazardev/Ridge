@@ -37,7 +37,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
   | Lenguaje | Catálogo | Ruta | Tier |
   |---|---|---|---|
-  | Go | 293 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) + `go-algorithms-v1` (12) + `go-interfaces-v1` (24, interfaces/type/struct → JSON y diseño testeable) + `go-rest-http-v1` (33, API REST/HTTP/CRUD, cliente y SQLite) + `go-modern-idioms-v1` (34, lenguaje/stdlib 1.26-1.27, iteradores, JSON v2, diseño de API y errores) + `go-production-v1` (24, concurrencia, fugas, testing, perfilado, observabilidad y tooling) + `go-cli-programs-v1` (20, programas CLI completos e independientes — no incrementales: aritmética, texto, menús interactivos con `bufio.Scanner` y desafíos con maps/rand; 4 categorías nuevas `cli*`, ver sesión de hoy) | práctica libre (grid denso) |
+  | Go | 329 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) + `go-algorithms-v1` (12) + `go-interfaces-v1` (24, interfaces/type/struct → JSON y diseño testeable) + `go-rest-http-v1` (33, API REST/HTTP/CRUD, cliente y SQLite) + `go-modern-idioms-v1` (34, lenguaje/stdlib 1.26-1.27, iteradores, JSON v2, diseño de API y errores) + `go-production-v1` (24, concurrencia, fugas, testing, perfilado, observabilidad y tooling) + `go-cli-programs-v1` (20, programas CLI completos e independientes — no incrementales: aritmética, texto, menús interactivos con `bufio.Scanner` y desafíos con maps/rand; 4 categorías nuevas `cli*`) + `go-wails-desktop-v1` (36, calculadora de escritorio con **Wails v2.16.0**: motor de expresiones propio → bindings Go↔JS → frontend vanilla-TS → ciclo de vida/eventos → CSS → `wails build` → tests; 8 categorías nuevas `calculatorCore`/`wails*`, ver sesión de hoy) | práctica libre (grid denso) |
   | Bash (Arch) | 95 snippets | `bash-foundations-v1` + `bash-toolkit-v1` | solo-curso |
   | SQL (PostgreSQL) | 60 snippets | `sql-foundations-v1` (60) | solo-curso |
   | Rust | 24 snippets | `rust-foundations-v1` (12, solo principiante) + `rust-algorithms-v1` (12) | solo-curso |
@@ -211,6 +211,68 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 ---
 
 ## Historial de sesiones
+
+### 2026-09-25 — Curso Go: apps de escritorio con Wails (`go-wails-desktop-v1`)
+
+- **Curso nuevo de 36 lecciones** que construye una **calculadora de
+  escritorio con Wails v2.16.0**, de principio a fin. La espina dorsal es
+  un motor de expresiones escrito a mano y verificado, y el resto son las
+  piezas reales de Wails: el struct `App` y la lista `Bind`, los shims
+  generados, `//go:embed`, `AssetServer.Handler`, los cuatro hooks del
+  ciclo de vida, eventos Go→JS, opciones por plataforma, `ErrorFormatter`,
+  el frontend vanilla-TS, el CSS, `wails build` y los tests. Ocho
+  categorías nuevas: `calculatorCore`, `wailsProjectSetup`,
+  `wailsBindings`, `wailsFrontend`, `wailsArchitecture`, `wailsStyling`,
+  `wailsPackaging`, `wailsTesting` (registradas en el enum, en
+  `content_labels.dart`, en `_architectureLayerCategories` del test de
+  completitud y en el `audit_lesson_order.py` de la skill).
+- **Verificación real, no de lectura**: se construyó una app Wails completa
+  y funcional en `/tmp` y **compiló y empaquetó de verdad** —
+  `gofmt -l` limpio, `go vet` limpio, `go test` verde, `tsc --noEmit`
+  limpio, y `wails build -clean -tags webkit2_41` produciendo un binario
+  de escritorio de 9 MB. 31 de los 36 snippets son **byte a byte** código
+  de ese proyecto; los 5 restantes son recortes fieles (comandos del CLI
+  realmente ejecutados, los dos archivos generados concatenados y
+  explícitamente etiquetados como tales, y un `go.mod` abreviado con una
+  marca visible de elipsis).
+- **Dos revisiones adversariales** (la skill las exige antes de dar por
+  buena una ordenación). La primera cazó **11 blockers reales**, entre
+  ellos: `OnBeforeClose` invertido (el parámetro se llama `prevent`, así
+  que `true` *cancela* el cierre — el código llegó a hacer la app
+  incerrable), tres snippets cuya prosa describía código que no contenían
+  (`KEYS.map`, `EventsOn`, `render()` nunca definidos), `//go:embed` sin
+  aparecer en ninguna lección, `CalcResult` usado tres lecciones antes de
+  definirse, `Describe`/`History`/`ClearHistory` sin definir, y la
+  afirmación falsa de que los structs de opciones de plataforma están
+  protegidos por `GOOS` (no lo están: no tienen `go:build`). La segunda
+  cazó 8 más, el más grave: **`ErrorFormatter` devuelve `any`, pero el
+  runtime de JS hace `new Error(message.error)`, así que un struct
+  acababa en la UI como el texto literal `[object Object]`** — la lección
+  ahora enseña precisamente esa trampa y devuelve un *string* con código.
+- **Un hallazgo que solo apareció al correr los gates**: los snippets
+  usaban `÷ × − ⌫ ·` y el banner galés `Â MODIWL`, y
+  `key_layout_map_test` los rechazó por no tener tecla física. En una app
+  de tipeo **todo carácter que el usuario teclee necesita una tecla real**,
+  así que se pasó todo el código a ASCII puro y el banner galés se
+  cuenta en la prosa en vez de teclearse. Los 36 `code` son hoy ASCII
+  puro.
+- **Arreglo de paso aparte**: `audit_lesson_order.py` no conocía las
+  categorías `cli*` que el test de completitud ya exime, así que
+  `go-cli-programs-v1` fallaba su propio audit con 7 errores. Sincronizado
+  con `_topicCategories`.
+- **Cuentas drifting que hubo que re-tocar**: el total del catálogo y los
+  id-sets de `findContainingSymbols` en
+  `content_drift_integration_test.dart` (el DAO busca en `code`, no en
+  `symbolFocus`, así que los ids hay que derivarlos del `code` de cada
+  snippet, no de sus `symbolFocus`).
+- **Verificación final**: `flutter analyze --fatal-infos
+  --fatal-warnings` limpio, `dart run tool/check_architecture.dart` sin
+  violaciones, `dart format` sin cambios, `build_runner` sin output
+  generado obsoleto, y **831 tests verdes**. Ojo con el gate de drift: los
+  conteos y los id-sets de `content_drift_integration_test.dart` son un
+  **recurso compartido** —cualquier curso nuevo los mueve—, así que
+  derivarlos siempre del `code` real de los assets y no de un número
+  anotado a mano.
 
 ### 2026-09-25 — Zig 0.16.0 como lenguaje solo-curso
 

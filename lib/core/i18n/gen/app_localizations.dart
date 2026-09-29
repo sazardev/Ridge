@@ -2468,6 +2468,54 @@ abstract class AppLocalizations {
   /// **'Testing with fakes'**
   String get categoryTestingWithFakes;
 
+  /// No description provided for @categoryCalculatorCore.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculator engine'**
+  String get categoryCalculatorCore;
+
+  /// No description provided for @categoryWailsProjectSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails project setup'**
+  String get categoryWailsProjectSetup;
+
+  /// No description provided for @categoryWailsBindings.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails bindings'**
+  String get categoryWailsBindings;
+
+  /// No description provided for @categoryWailsFrontend.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails frontend'**
+  String get categoryWailsFrontend;
+
+  /// No description provided for @categoryWailsArchitecture.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails architecture'**
+  String get categoryWailsArchitecture;
+
+  /// No description provided for @categoryWailsStyling.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails styling'**
+  String get categoryWailsStyling;
+
+  /// No description provided for @categoryWailsPackaging.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails packaging'**
+  String get categoryWailsPackaging;
+
+  /// No description provided for @categoryWailsTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails testing'**
+  String get categoryWailsTesting;
+
   /// No description provided for @categoryTuiArchitecture.
   ///
   /// In en, this message translates to:

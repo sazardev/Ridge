@@ -1242,6 +1242,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryTestingWithFakes => 'Testing with fakes';
 
   @override
+  String get categoryCalculatorCore => 'Calculator engine';
+
+  @override
+  String get categoryWailsProjectSetup => 'Wails project setup';
+
+  @override
+  String get categoryWailsBindings => 'Wails bindings';
+
+  @override
+  String get categoryWailsFrontend => 'Wails frontend';
+
+  @override
+  String get categoryWailsArchitecture => 'Wails architecture';
+
+  @override
+  String get categoryWailsStyling => 'Wails styling';
+
+  @override
+  String get categoryWailsPackaging => 'Wails packaging';
+
+  @override
+  String get categoryWailsTesting => 'Wails testing';
+
+  @override
   String get categoryTuiArchitecture => 'TUI architecture';
 
   @override

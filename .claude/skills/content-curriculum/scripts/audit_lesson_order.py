@@ -47,6 +47,14 @@ ARCHITECTURE_LAYER_CATEGORIES = {
     "tuiStyling",
     "tuiComponents",
     "tuiAdapter",
+    "calculatorCore",
+    "wailsProjectSetup",
+    "wailsBindings",
+    "wailsFrontend",
+    "wailsArchitecture",
+    "wailsStyling",
+    "wailsPackaging",
+    "wailsTesting",
     # Mirrors `_topicCategories` — topic categories for the
     # go-algorithms-v1 / rust-algorithms-v1 / zig-algorithms-v1 Learning
     # Routes, the
@@ -76,6 +84,14 @@ ARCHITECTURE_LAYER_CATEGORIES = {
     "performanceProfiling",
     "observability",
     "goTooling",
+    # Mirrors `_topicCategories`' `cli*` half (the `cli*` topics backing
+    # `go-cli-programs-v1`, where every entry is a complete self-contained
+    # program). The Dart test exempts these from the dense grid; this
+    # script had not, so `go-cli-programs-v1` failed its own audit.
+    "cliArithmetic",
+    "cliTextTools",
+    "cliMenus",
+    "cliChallenges",
 }
 
 # Languages whose catalog exists only to compose a Learning Path (never a

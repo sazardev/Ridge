@@ -1253,6 +1253,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get categoryTestingWithFakes => 'Pruebas con dobles falsos';
 
   @override
+  String get categoryCalculatorCore => 'Motor de calculadora';
+
+  @override
+  String get categoryWailsProjectSetup => 'Configuración del proyecto Wails';
+
+  @override
+  String get categoryWailsBindings => 'Bindings de Wails';
+
+  @override
+  String get categoryWailsFrontend => 'Frontend de Wails';
+
+  @override
+  String get categoryWailsArchitecture => 'Arquitectura de Wails';
+
+  @override
+  String get categoryWailsStyling => 'Estilos de Wails';
+
+  @override
+  String get categoryWailsPackaging => 'Empaquetado de Wails';
+
+  @override
+  String get categoryWailsTesting => 'Testing de Wails';
+
+  @override
   String get categoryTuiArchitecture => 'Arquitectura TUI';
 
   @override

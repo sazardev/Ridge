@@ -95,6 +95,22 @@ enum ContentCategory {
   sortingAlgorithms,
   // Adjacency-list graphs, BFS, DFS, Dijkstra. Topic category.
   graphAlgorithms,
+  // Wails' expression lexer, recursive-descent grammar and formatting.
+  calculatorCore,
+  // Wails' `wails.json` and `go.mod`: what the CLI reads to build.
+  wailsProjectSetup,
+  // Wails' `App` struct, `Bind` list, generated shims, Go->JS events.
+  wailsBindings,
+  // Wails' `frontend/`: `index.html`, the vanilla-TS module, the bindings.
+  wailsFrontend,
+  // Wails' `options.App`, `AssetServer`, lifecycle hooks, per-platform.
+  wailsArchitecture,
+  // Wails' embedded CSS: design tokens and the keypad grid.
+  wailsStyling,
+  // `wails build` flags and the `build/` per-platform metadata.
+  wailsPackaging,
+  // Testing the engine's table-driven cases and the bound methods.
+  wailsTesting,
   // Bubble Tea's `Model`/`Init`/`Update`/`View` loop. Architecture.
   tuiArchitecture,
   // Lip Gloss styles, colors, borders, padding. Architecture.

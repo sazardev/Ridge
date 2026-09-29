@@ -84,7 +84,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 1413)
+        .firstWhere((snippets) => snippets.length == 1449)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -98,7 +98,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(1413));
+    expect(catalog, hasLength(1449));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -110,7 +110,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(1413));
+      expect(catalog, hasLength(1449));
     },
   );
 
@@ -121,7 +121,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(1413));
+    expect(result, hasLength(1449));
   });
 
   test(
@@ -151,7 +151,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(517));
+    expect(beginnerSnippets, hasLength(532));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -375,6 +375,10 @@ void main() {
       'go-vars-009',
       'go-vars-011',
       'go-vars-012',
+      'go-wails-029',
+      'go-wails-033',
+      'go-wails-035',
+      'go-wails-036',
       'haskell-algo-001',
       'haskell-algo-002',
       'haskell-algo-004',
@@ -697,6 +701,12 @@ void main() {
       'go-usecase-004',
       'go-vars-003',
       'go-vars-006',
+      'go-wails-004',
+      'go-wails-006',
+      'go-wails-009',
+      'go-wails-027',
+      'go-wails-035',
+      'go-wails-036',
       'java-cond-003',
       'java-func-003',
       'javascript-func-003',

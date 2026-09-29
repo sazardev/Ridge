@@ -76,10 +76,10 @@ const Map<ProgrammingLanguage, Set<ContentCategory>> _coreCategoriesByLanguage =
       },
     };
 
-/// The 10 architecture-layer categories represent a DDD/hexagonal or TUI
-/// role, not a language feature, so unlike every other category there's
-/// no meaningful notion of a "beginner" or "expert" tier: held to a
-/// looser bar (>=1 active entry across ANY difficulty) than every other
+/// The architecture-layer categories represent a DDD/hexagonal, TUI or
+/// Wails role, not a language feature, so unlike every other category
+/// there's no meaningful notion of a "beginner" or "expert" tier: held to
+/// a looser bar (>=1 active entry across ANY difficulty) than every other
 /// category. See `.claude/skills/content-curriculum/references/content-model.md`.
 const Set<ContentCategory> _architectureLayerCategories = {
   ContentCategory.domainModeling,
@@ -92,6 +92,14 @@ const Set<ContentCategory> _architectureLayerCategories = {
   ContentCategory.tuiStyling,
   ContentCategory.tuiComponents,
   ContentCategory.tuiAdapter,
+  ContentCategory.calculatorCore,
+  ContentCategory.wailsProjectSetup,
+  ContentCategory.wailsBindings,
+  ContentCategory.wailsFrontend,
+  ContentCategory.wailsArchitecture,
+  ContentCategory.wailsStyling,
+  ContentCategory.wailsPackaging,
+  ContentCategory.wailsTesting,
 };
 
 /// Topic categories that aren't a language-feature grid: the algorithm
@@ -159,6 +167,7 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/go_ddd_hexagonal_notes_v1.json',
   'assets/content/learning_paths/go_intermediate_syntax_v1.json',
   'assets/content/learning_paths/go_tui_notes_v1.json',
+  'assets/content/learning_paths/go_wails_desktop_v1.json',
   'assets/content/learning_paths/go_algorithms_v1.json',
   'assets/content/learning_paths/go_interfaces_v1.json',
   'assets/content/learning_paths/go_rest_http_v1.json',
