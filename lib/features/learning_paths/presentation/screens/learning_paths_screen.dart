@@ -6,7 +6,9 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/widgets/bouncy_tap.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/content/domain/entities/programming_language.dart';
 import 'package:ridge/features/content/presentation/content_labels.dart';
 import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
@@ -179,83 +181,93 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
                                                 .first
                                                 .snippetId]
                                             ?.difficulty;
-                                  return Card(
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 4,
-                                    ),
-                                    shape: AppShapes.of(context).mediumShape,
-                                    // `Card` defaults to `Clip.none`, so
-                                    // without this its child `ListTile`'s ink
-                                    // splash paints as a plain rectangle
-                                    // overflowing past the card's own rounded
-                                    // corners — this makes the ripple actually
-                                    // respect whatever corner style
-                                    // (SPEC.md's Settings "Corner style") the
-                                    // card itself is using.
-                                    clipBehavior: Clip.antiAlias,
-                                    child: ListTile(
-                                      contentPadding: const EdgeInsets.fromLTRB(
-                                        16,
-                                        8,
-                                        16,
-                                        8,
+                                  final continueLabel =
+                                      l10n.learningPathsContinueAction;
+                                  void startNext(int lessonIndex) =>
+                                      LessonNavigation.startLesson(
+                                        context,
+                                        overview,
+                                        lessonIndex,
+                                      );
+                                  return BouncyTap(
+                                    enabled: true,
+                                    child: Card(
+                                      margin: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 4,
                                       ),
-                                      title: Text(
-                                        overview.path.titleFor(context),
-                                      ),
-                                      subtitle: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const SizedBox(height: 2),
-                                          Wrap(
-                                            spacing: 6,
-                                            runSpacing: 4,
-                                            children: [
-                                              _MiniChip(
-                                                label: overview.path.language
-                                                    .label(l10n),
-                                              ),
-                                              _MiniChip(
-                                                label: overview.path.tagFor(
-                                                  context,
-                                                ),
-                                              ),
-                                              if (entryDifficulty != null)
+                                      shape: AppShapes.of(context).mediumShape,
+                                      // `Card` defaults to `Clip.none`, so
+                                      // without this its child `ListTile`'s ink
+                                      // splash paints as a plain rectangle
+                                      // overflowing past the card's own rounded
+                                      // corners — this makes the ripple
+                                      // actually
+                                      // respect whatever corner style
+                                      // (SPEC.md's Settings "Corner style") the
+                                      // card itself is using.
+                                      clipBehavior: Clip.antiAlias,
+                                      child: ListTile(
+                                        contentPadding:
+                                            const EdgeInsets.fromLTRB(
+                                              16,
+                                              8,
+                                              16,
+                                              8,
+                                            ),
+                                        title: Text(
+                                          overview.path.titleFor(context),
+                                        ),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const SizedBox(height: 2),
+                                            Wrap(
+                                              spacing: 6,
+                                              runSpacing: 4,
+                                              children: [
                                                 _MiniChip(
-                                                  label: entryDifficulty.label(
-                                                    l10n,
+                                                  label: overview.path.language
+                                                      .label(l10n),
+                                                ),
+                                                _MiniChip(
+                                                  label: overview.path.tagFor(
+                                                    context,
                                                   ),
                                                 ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            overview.path.descriptionFor(
-                                              context,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      trailing: nextIndex == null
-                                          ? null
-                                          : _PlayProgressButton(
-                                              progress: progressFraction,
-                                              tooltip: l10n
-                                                  .learningPathsContinueAction,
-                                              onPressed: () =>
-                                                  LessonNavigation.startLesson(
-                                                    context,
-                                                    overview,
-                                                    nextIndex,
+                                                if (entryDifficulty != null)
+                                                  _MiniChip(
+                                                    label: entryDifficulty
+                                                        .label(l10n),
                                                   ),
+                                              ],
                                             ),
-                                      onTap: () => context.push(
-                                        '/practice/${overview.path.id.value}',
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              overview.path.descriptionFor(
+                                                context,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        trailing: nextIndex == null
+                                            ? null
+                                            : _PlayProgressButton(
+                                                progress: progressFraction,
+                                                tooltip: continueLabel,
+                                                onPressed: () =>
+                                                    startNext(nextIndex),
+                                              ),
+                                        onTap: () => context.push(
+                                          '/practice/${overview.path.id.value}',
+                                        ),
                                       ),
                                     ),
+                                  ).staggeredIn(
+                                    context,
+                                    index < 10 ? index : 0,
                                   );
                                 },
                               ),

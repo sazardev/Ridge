@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/content/presentation/content_labels.dart';
 import 'package:ridge/features/progression/domain/entities/progress_snapshot.dart';
 import 'package:ridge/features/progression/presentation/providers/progression_providers.dart';
@@ -212,13 +213,14 @@ class _WeaknessesTab extends StatelessWidget {
         controller: scrollController,
         padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
         children: [
-          WeaknessReportCard(report: snapshot.weaknessReport),
+          WeaknessReportCard(report: snapshot.weaknessReport)
+              .staggeredIn(context, 0),
           const SizedBox(height: 24),
           Text(l10n.progressHeatmapTitle, style: textTheme.titleMedium),
           const SizedBox(height: 12),
           KeyboardHeatmap(
             weakCharacters: snapshot.weaknessReport.weakCharacters,
-          ),
+          ).staggeredIn(context, 1),
         ],
       ),
     );
@@ -240,7 +242,10 @@ class _ActivityTab extends StatelessWidget {
       child: ListView(
         controller: scrollController,
         padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
-        children: [ActivityReportCard(report: snapshot.activityReport)],
+        children: [
+          ActivityReportCard(report: snapshot.activityReport)
+              .staggeredIn(context, 2),
+        ],
       ),
     );
   }

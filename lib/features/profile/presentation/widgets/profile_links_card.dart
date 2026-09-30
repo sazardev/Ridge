@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/widgets/bouncy_tap.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -107,30 +108,33 @@ class _LinkRow extends StatelessWidget {
 
     return Tooltip(
       message: l10n.profileOpenLinkAction,
-      child: InkWell(
-        onTap: onTap,
-        customBorder: AppShapes.of(context).mediumShape,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-          child: Row(
-            children: [
-              Icon(icon, size: 20, color: colorScheme.primary),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: textTheme.bodyLarge,
+      child: BouncyTap(
+        enabled: true,
+        child: InkWell(
+          onTap: onTap,
+          customBorder: AppShapes.of(context).mediumShape,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+            child: Row(
+              children: [
+                Icon(icon, size: 20, color: colorScheme.primary),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: textTheme.bodyLarge,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Icon(
-                LucideIcons.externalLink300,
-                size: 16,
-                color: colorScheme.onSurfaceVariant,
-              ),
-            ],
+                const SizedBox(width: 8),
+                Icon(
+                  LucideIcons.externalLink300,
+                  size: 16,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ],
+            ),
           ),
         ),
       ),

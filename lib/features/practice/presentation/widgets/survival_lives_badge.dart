@@ -3,6 +3,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/practice/domain/services/survival_run_tracker.dart';
 
 /// Small pill showing a Survival run's remaining lives as hearts (SPEC.md
@@ -46,14 +47,20 @@ class SurvivalLivesBadge extends StatelessWidget {
                     left: i == 0 ? 0 : 2,
                     right: i == tracker.startingLives - 1 ? 0 : 2,
                   ),
-                  child: Icon(
-                    i < lives ? LucideIcons.heart600 : LucideIcons.heart100,
-                    size: 16,
-                    color:
-                        (isCritical
-                                ? colors.onErrorContainer
-                                : colors.onSecondaryContainer)
-                            .withValues(alpha: i < lives ? 1 : 0.38),
+                  child: AnimatedSwitcher(
+                    duration: AppMotion.spatialDefault,
+                    // Losing a life pops the emptied heart in with a bounce.
+                    transitionBuilder: springSwitcherTransition,
+                    child: Icon(
+                      i < lives ? LucideIcons.heart600 : LucideIcons.heart100,
+                      key: ValueKey(i < lives),
+                      size: 16,
+                      color:
+                          (isCritical
+                                  ? colors.onErrorContainer
+                                  : colors.onSecondaryContainer)
+                              .withValues(alpha: i < lives ? 1 : 0.38),
+                    ),
                   ),
                 ),
             ],

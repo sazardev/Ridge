@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:ridge/features/profile/presentation/widgets/profile_about_card.dart';
 import 'package:ridge/features/profile/presentation/widgets/profile_achievements_card.dart';
@@ -101,24 +102,25 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ),
                   if (profile.keyboardModel?.isNotEmpty ?? false) ...[
                     const SizedBox(height: 20),
-                    ProfileKeyboardHeroCard(profile: profile),
+                    ProfileKeyboardHeroCard(profile: profile)
+                        .staggeredIn(context, 0),
                   ],
                   const SizedBox(height: 24),
-                  const ProfileStatsCard(),
+                  const ProfileStatsCard().staggeredIn(context, 1),
                   const SizedBox(height: 16),
-                  const ProfileAchievementsCard(),
+                  const ProfileAchievementsCard().staggeredIn(context, 2),
                   const SizedBox(height: 16),
                   ProfileAboutCard(
                     profile: profile,
                     onEdit: () => context.push('/profile/edit', extra: profile),
-                  ),
+                  ).staggeredIn(context, 3),
                   if (profile.githubUsername != null ||
                       profile.websiteUrl != null) ...[
                     const SizedBox(height: 16),
-                    ProfileLinksCard(profile: profile),
+                    ProfileLinksCard(profile: profile).staggeredIn(context, 4),
                   ],
                   const SizedBox(height: 16),
-                  ProfileDeviceCard(profile: profile),
+                  ProfileDeviceCard(profile: profile).staggeredIn(context, 5),
                 ],
               ),
             );

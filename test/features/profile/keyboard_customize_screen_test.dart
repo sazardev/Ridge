@@ -135,6 +135,9 @@ Future<void> _pump(WidgetTester tester) async {
     ),
   );
   await tester.pump();
+  // flutter_animate starts each entrance on a zero-length timer, which
+  // only fires once time advances; flush it so none outlives the test.
+  await tester.pump(const Duration(milliseconds: 1));
 }
 
 Future<void> _save(WidgetTester tester) async {

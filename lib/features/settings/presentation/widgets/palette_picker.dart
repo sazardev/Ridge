@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/theme/app_palette_catalog.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/widgets/bouncy_tap.dart';
 import 'package:ridge/features/settings/domain/entities/app_palette.dart';
 
 /// A flowing, responsive gallery of live-rendered palette previews for
@@ -111,57 +113,68 @@ class _PaletteTile extends StatelessWidget {
       button: true,
       selected: selected,
       label: label,
-      child: Material(
-        color: preview.surface,
-        shape: RoundedSuperellipseBorder(
-          borderRadius: BorderRadius.circular(AppShapes.of(context).medium),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onTap,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
-            curve: Curves.easeOut,
-            width: _width,
-            height: _height,
-            padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
+      child: BouncyTap(
+        enabled: true,
+        child: AnimatedScale(
+          scale: selected ? 1.06 : 1,
+          duration: AppMotion.spatialDefault,
+          curve: AppMotion.bouncy,
+          child: Material(
+            color: preview.surface,
+            shape: RoundedSuperellipseBorder(
+              borderRadius: BorderRadius.circular(AppShapes.of(context).medium),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: InkWell(
+              onTap: onTap,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 150),
+                curve: Curves.easeOut,
+                width: _width,
+                height: _height,
+                padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _Dot(preview.primary),
-                        const SizedBox(width: 4),
-                        _Dot(preview.secondary),
-                        const SizedBox(width: 4),
-                        _Dot(preview.tertiary),
+                        Row(
+                          children: [
+                            _Dot(preview.primary),
+                            const SizedBox(width: 4),
+                            _Dot(preview.secondary),
+                            const SizedBox(width: 4),
+                            _Dot(preview.tertiary),
+                          ],
+                        ),
+                        AnimatedScale(
+                          duration: AppMotion.spatialDefault,
+                          curve: AppMotion.bouncy,
+                          scale: selected ? 1 : 0,
+                          child: Icon(
+                            LucideIcons.circleCheck300,
+                            size: 16,
+                            color: activePrimary,
+                          ),
+                        ),
                       ],
                     ),
-                    AnimatedOpacity(
-                      duration: const Duration(milliseconds: 150),
-                      opacity: selected ? 1 : 0,
-                      child: Icon(
-                        LucideIcons.circleCheck300,
-                        size: 16,
-                        color: activePrimary,
+                    Text(
+                      label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: preview.onSurface,
+                        fontWeight: selected
+                            ? FontWeight.w600
+                            : FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
-                Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: preview.onSurface,
-                    fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),

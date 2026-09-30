@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/widgets/app_filter_chip.dart';
 import 'package:ridge/features/content/domain/entities/content_category.dart';
 import 'package:ridge/features/content/domain/entities/difficulty.dart';
 import 'package:ridge/features/content/domain/entities/programming_language.dart';
@@ -67,7 +68,7 @@ class SnippetFilterBar extends StatelessWidget {
               children: [
                 Padding(
                   padding: _chipPadding,
-                  child: FilterChip(
+                  child: AppFilterChip(
                     label: Text(l10n.libraryFilterAll),
                     selected: selectedLanguage == null,
                     onSelected: (_) => onLanguageChanged(null),
@@ -76,7 +77,7 @@ class SnippetFilterBar extends StatelessWidget {
                 for (final language in languages)
                   Padding(
                     padding: _chipPadding,
-                    child: FilterChip(
+                    child: AppFilterChip(
                       label: Text(language.label(l10n)),
                       selected: selectedLanguage == language,
                       onSelected: (_) => onLanguageChanged(
@@ -95,7 +96,7 @@ class SnippetFilterBar extends StatelessWidget {
             children: [
               Padding(
                 padding: _chipPadding,
-                child: FilterChip(
+                child: AppFilterChip(
                   label: Text(l10n.libraryFilterAll),
                   selected: selectedDifficulty == null,
                   onSelected: (_) => onDifficultyChanged(null),
@@ -104,7 +105,7 @@ class SnippetFilterBar extends StatelessWidget {
               for (final difficulty in Difficulty.values)
                 Padding(
                   padding: _chipPadding,
-                  child: FilterChip(
+                  child: AppFilterChip(
                     label: Text(difficulty.label(l10n)),
                     selected: selectedDifficulty == difficulty,
                     onSelected: (_) => onDifficultyChanged(
@@ -123,7 +124,7 @@ class SnippetFilterBar extends StatelessWidget {
             children: [
               Padding(
                 padding: _chipPadding,
-                child: FilterChip(
+                child: AppFilterChip(
                   label: Text(l10n.libraryFilterAll),
                   selected: selectedCategory == null,
                   onSelected: (_) => onCategoryChanged(null),
@@ -132,7 +133,7 @@ class SnippetFilterBar extends StatelessWidget {
               for (final category in categories)
                 Padding(
                   padding: _chipPadding,
-                  child: FilterChip(
+                  child: AppFilterChip(
                     label: Text(category.label(l10n)),
                     selected: selectedCategory == category,
                     onSelected: (_) => onCategoryChanged(

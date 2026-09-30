@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 import 'package:ridge/features/practice/domain/value_objects/physical_key_id_label.dart';
 
@@ -95,6 +96,7 @@ Future<KeyboardRemapEdit?> showKeyboardRemapEditorSheet(
   bool isExisting = false,
 }) {
   return showModalBottomSheet<KeyboardRemapEdit>(
+    sheetAnimationStyle: AppMotion.sheet,
     context: context,
     isScrollControlled: true,
     builder: (context) => _KeyboardRemapEditorSheet(

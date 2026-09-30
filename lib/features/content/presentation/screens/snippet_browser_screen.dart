@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/widgets/escape_to_pop.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/content/domain/entities/content_category.dart';
 import 'package:ridge/features/content/domain/entities/difficulty.dart';
 import 'package:ridge/features/content/domain/entities/programming_language.dart';
@@ -121,8 +122,10 @@ class _SnippetBrowserScreenState extends ConsumerState<SnippetBrowserScreen> {
                       controller: _scrollController,
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       itemCount: filtered.length,
-                      itemBuilder: (context, index) =>
-                          SnippetListTile(snippet: filtered[index]),
+                      itemBuilder: (context, index) => index < 10
+                          ? SnippetListTile(snippet: filtered[index])
+                                .staggeredIn(context, index)
+                          : SnippetListTile(snippet: filtered[index]),
                     ),
                   );
                 },

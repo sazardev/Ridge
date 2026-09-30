@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/features/content/domain/entities/programming_language.dart';
@@ -20,6 +21,7 @@ Future<ProgrammingLanguage?> showLanguagePickerSheet(
   required ProgrammingLanguage selected,
 }) {
   return showModalBottomSheet<ProgrammingLanguage>(
+    sheetAnimationStyle: AppMotion.sheet,
     context: context,
     isScrollControlled: true,
     useSafeArea: true,

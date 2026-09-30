@@ -114,8 +114,8 @@ class _OnboardingDeviceInfoPageState
         .slideY(
           begin: 0.06,
           end: 0,
-          duration: AppMotion.spatialDefault,
-          curve: AppMotion.spatial,
+          duration: AppMotion.spatialSlow,
+          curve: AppMotion.gentle,
         );
   }
 }

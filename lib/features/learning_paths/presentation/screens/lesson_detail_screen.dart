@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/learning_paths/application/usecases/get_learning_paths_usecase.dart';
 import 'package:ridge/features/learning_paths/domain/entities/lesson.dart';
 import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
@@ -114,7 +115,7 @@ class _LessonDetailScreenState extends ConsumerState<LessonDetailScreen> {
                       progress,
                       index,
                       isNext: index == nextIndex,
-                    ),
+                    ).staggeredIn(context, index),
                 ],
               ),
             ),

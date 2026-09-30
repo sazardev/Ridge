@@ -76,9 +76,9 @@ class _KeypadButtonState extends State<_KeypadButton> {
     final enabled = widget.onTap != null;
 
     return AnimatedScale(
-      scale: _pressed ? 0.9 : 1.0,
-      duration: AppMotion.effectsFast,
-      curve: AppMotion.spatial,
+      scale: _pressed ? 0.88 : 1.0,
+      duration: AppMotion.spatialFast,
+      curve: AppMotion.bouncy,
       child: Material(
         color: enabled ? colorScheme.surfaceContainerHigh : Colors.transparent,
         shape: AppShapes.of(context).fullShape,

@@ -4,6 +4,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/core/theme/app_typography.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/practice/domain/entities/session_metrics.dart';
 import 'package:ridge/features/practice/domain/services/precision_score_calculator.dart';
 import 'package:ridge/features/practice/domain/services/survival_run_tracker.dart';
@@ -100,7 +101,7 @@ class SessionResultPanel extends StatelessWidget {
             _PassFailBanner(
               passed: passed!,
               score: _scoreCalculator.scoreFor(metrics.accuracyPct),
-            ),
+            ).poppedIn(context, 0),
           ],
           const SizedBox(height: 8),
           Text(
@@ -115,39 +116,39 @@ class SessionResultPanel extends StatelessWidget {
             _MetricRow(
               label: l10n.practiceResultSurvivalScore,
               value: '${survival.score}',
-            ),
+            ).staggeredIn(context, 1),
             _MetricRow(
               label: l10n.practiceResultSurvivalSnippets,
               value: '${survival.snippetsCleared}',
-            ),
+            ).staggeredIn(context, 2),
             _MetricRow(
               label: l10n.practiceResultSurvivalBestMultiplier,
               value: '×${survival.bestMultiplier}',
-            ),
+            ).staggeredIn(context, 3),
             const SizedBox(height: 8),
           ],
           _MetricRow(
             label: l10n.practiceResultNetSpeed,
             value: '${metrics.netSpeedCpm.toStringAsFixed(0)} cpm',
             valueColor: theme.colorScheme.primary,
-          ),
+          ).staggeredIn(context, 4),
           _MetricRow(
             label: l10n.practiceResultRawSpeed,
             value: '${metrics.rawSpeedCpm.toStringAsFixed(0)} cpm',
-          ),
+          ).staggeredIn(context, 5),
           _MetricRow(
             label: l10n.practiceResultAccuracy,
             value: '${metrics.accuracyPct.toStringAsFixed(1)}%',
             valueColor: theme.colorScheme.tertiary,
-          ),
+          ).staggeredIn(context, 6),
           _MetricRow(
             label: l10n.practiceResultConsistency,
             value: metrics.consistencyScore.toStringAsFixed(0),
-          ),
+          ).staggeredIn(context, 7),
           _MetricRow(
             label: l10n.practiceResultStreak,
             value: '${metrics.maxStreak}',
-          ),
+          ).staggeredIn(context, 8),
           if (weakest.isNotEmpty) ...[
             const SizedBox(height: 16),
             Text(

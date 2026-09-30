@@ -4,8 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/widgets/app_filter_chip.dart';
+import 'package:ridge/core/widgets/bouncy_tap.dart';
 import 'package:ridge/core/widgets/escape_to_pop.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
 import 'package:ridge/features/profile/presentation/profile_labels.dart';
@@ -179,7 +182,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   labelText: l10n.profileUsernameLabel,
                   prefixIcon: const Icon(LucideIcons.userRound300),
                 ),
-              ),
+              ).staggeredIn(context, 0),
               const SizedBox(height: 28),
               Text(
                 l10n.profileFavoriteLanguageLabel,
@@ -219,7 +222,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     for (final language in filteredLanguages.take(
                       _visibleLanguageCount,
                     ))
-                      FilterChip(
+                      AppFilterChip(
                         label: Text(language.label(l10n)),
                         selected: _languages.contains(language),
                         onSelected: (selected) => setState(() {
@@ -244,7 +247,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   ],
                 ),
               const SizedBox(height: 28),
-              _KeyboardCard(profile: widget.profile),
+              _KeyboardCard(profile: widget.profile).staggeredIn(context, 2),
               const SizedBox(height: 28),
               SuggestionField(
                 label: l10n.profileFavoriteProgrammerLabel,
@@ -327,53 +330,56 @@ class _KeyboardCard extends StatelessWidget {
         l10n.profileKeyboardRgbEnabledLabel,
     ];
 
-    return Card(
-      shape: shapes.largeShape,
-      child: InkWell(
-        onTap: () =>
-            context.push('/profile/keyboard/customize', extra: profile),
-        customBorder: shapes.largeShape,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            children: [
-              Icon(LucideIcons.keyboard300, color: colorScheme.primary),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.profileKeyboardSectionTitle,
-                      style: textTheme.titleMedium,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: textTheme.bodyMedium,
-                    ),
-                    if (details.isNotEmpty) ...[
-                      const SizedBox(height: 2),
+    return BouncyTap(
+      enabled: true,
+      child: Card(
+        shape: shapes.largeShape,
+        child: InkWell(
+          onTap: () =>
+              context.push('/profile/keyboard/customize', extra: profile),
+          customBorder: shapes.largeShape,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                Icon(LucideIcons.keyboard300, color: colorScheme.primary),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
-                        details.join(' · '),
+                        l10n.profileKeyboardSectionTitle,
+                        style: textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: textTheme.bodySmall?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
+                        style: textTheme.bodyMedium,
                       ),
+                      if (details.isNotEmpty) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          details.join(' · '),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: textTheme.bodySmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Icon(
-                LucideIcons.chevronRight300,
-                color: colorScheme.onSurfaceVariant,
-              ),
-            ],
+                const SizedBox(width: 8),
+                Icon(
+                  LucideIcons.chevronRight300,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ],
+            ),
           ),
         ),
       ),

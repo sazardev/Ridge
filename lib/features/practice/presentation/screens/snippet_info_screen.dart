@@ -6,6 +6,7 @@ import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/core/theme/app_typography.dart';
 import 'package:ridge/core/widgets/inline_code_text.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/domain/services/syntax_tokenizer.dart';
 import 'package:ridge/features/content/presentation/content_labels.dart';
@@ -109,7 +110,7 @@ class _SnippetInfoScreenState extends State<SnippetInfoScreen> {
                       Chip(label: Text(snippet.difficulty.label(l10n))),
                       Chip(label: Text(snippet.category.label(l10n))),
                     ],
-                  ),
+                  ).staggeredIn(context, 0),
                   const SizedBox(height: 16),
                   Container(
                     width: double.infinity,
@@ -133,7 +134,7 @@ class _SnippetInfoScreenState extends State<SnippetInfoScreen> {
                         ],
                       ),
                     ),
-                  ),
+                  ).staggeredIn(context, 1),
                   if (tldr.isNotEmpty) ...[
                     const SizedBox(height: 20),
                     Container(
@@ -182,14 +183,14 @@ class _SnippetInfoScreenState extends State<SnippetInfoScreen> {
                           ),
                         ],
                       ),
-                    ),
+                    ).staggeredIn(context, 2),
                   ],
                   if (explanation.isNotEmpty) ...[
                     const SizedBox(height: 20),
                     InlineCodeText(
                       explanation,
                       style: theme.textTheme.bodyLarge,
-                    ),
+                    ).staggeredIn(context, 3),
                   ],
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/features/profile/presentation/widgets/keyboard_editor/keyboard_editor_fields.dart';
 
 /// The user's verdict from the key editor sheet: new legends, an optional
@@ -57,6 +58,7 @@ Future<KeyboardKeyEdit?> showKeyboardKeyEditorSheet(
   bool isOverridden = false,
 }) {
   return showModalBottomSheet<KeyboardKeyEdit>(
+    sheetAnimationStyle: AppMotion.sheet,
     context: context,
     isScrollControlled: true,
     builder: (context) => _KeyboardKeyEditorSheet(

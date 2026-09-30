@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/core/theme/app_typography.dart';
+import 'package:ridge/core/widgets/bouncy_tap.dart';
 import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/presentation/content_labels.dart';
 import 'package:ridge/features/learning_paths/domain/entities/lesson.dart';
@@ -43,37 +44,40 @@ class LessonTreeTile extends StatelessWidget {
     final theme = Theme.of(context);
     final isLocked = status == LessonStatus.locked;
 
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      shape: AppShapes.of(context).mediumShape,
-      // Without this, the ink splash from `ListTile`'s `onTap` paints
-      // as a plain rectangle overflowing past the card's own rounded
-      // corners, ignoring whatever corner style is currently selected.
-      clipBehavior: Clip.antiAlias,
-      child: Opacity(
-        opacity: isLocked ? 0.5 : 1,
-        child: ListTile(
-          dense: true,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 4,
-          ),
-          leading: Icon(
-            status.icon,
-            color: status.iconColor(theme.colorScheme),
-          ),
-          title: Text(lesson.titleFor(context)),
-          subtitle: snippet == null
-              ? null
-              : Text(
-                  snippet!.titleFor(context),
-                  style: TextStyle(
-                    fontFamily: AppFonts.mono,
-                    color: theme.colorScheme.onSurfaceVariant,
+    return BouncyTap(
+      enabled: onTap != null,
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        shape: AppShapes.of(context).mediumShape,
+        // Without this, the ink splash from `ListTile`'s `onTap` paints
+        // as a plain rectangle overflowing past the card's own rounded
+        // corners, ignoring whatever corner style is currently selected.
+        clipBehavior: Clip.antiAlias,
+        child: Opacity(
+          opacity: isLocked ? 0.5 : 1,
+          child: ListTile(
+            dense: true,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 4,
+            ),
+            leading: Icon(
+              status.icon,
+              color: status.iconColor(theme.colorScheme),
+            ),
+            title: Text(lesson.titleFor(context)),
+            subtitle: snippet == null
+                ? null
+                : Text(
+                    snippet!.titleFor(context),
+                    style: TextStyle(
+                      fontFamily: AppFonts.mono,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
                   ),
-                ),
-          trailing: Text(status.label(l10n)),
-          onTap: onTap,
+            trailing: Text(status.label(l10n)),
+            onTap: onTap,
+          ),
         ),
       ),
     );

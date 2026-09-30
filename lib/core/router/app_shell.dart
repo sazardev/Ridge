@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/widgets/app_navigation_shortcuts.dart';
 import 'package:ridge/core/window/window_bar.dart';
 import 'package:ridge/features/settings/domain/entities/app_settings.dart';
@@ -25,6 +27,23 @@ class AppShell extends ConsumerWidget {
   /// rather than let Material's `NavigationBar` wrap/clip them. Matches
   /// Android's `sw360dp` "small phone" breakpoint.
   static const _compactBreakpoint = 360.0;
+
+  /// Selected destination icons are only built once selected, so this
+  /// plays a springy pop each time a tab is chosen.
+  static Widget _bounceIn(Widget icon) => icon
+      .animate()
+      .scaleXY(
+        begin: 0.55,
+        end: 1,
+        duration: AppMotion.spatialDefault,
+        curve: AppMotion.bouncy,
+      )
+      .rotate(
+        begin: -0.06,
+        end: 0,
+        duration: AppMotion.spatialDefault,
+        curve: AppMotion.bouncy,
+      );
 
   void _onSelect(int index) {
     navigationShell.goBranch(
@@ -106,7 +125,7 @@ class AppShell extends ConsumerWidget {
                                   data: IconThemeData(
                                     size: railExpanded ? 24 : 20,
                                   ),
-                                  child: Icon(d.selectedIcon),
+                                  child: _bounceIn(Icon(d.selectedIcon)),
                                 ),
                                 label: Text(d.label),
                               ),
@@ -153,7 +172,7 @@ class AppShell extends ConsumerWidget {
                       for (final d in destinations)
                         NavigationDestination(
                           icon: Icon(d.icon),
-                          selectedIcon: Icon(d.selectedIcon),
+                          selectedIcon: _bounceIn(Icon(d.selectedIcon)),
                           label: d.label,
                         ),
                     ],

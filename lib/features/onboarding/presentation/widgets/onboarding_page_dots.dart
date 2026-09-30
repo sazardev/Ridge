@@ -25,7 +25,7 @@ class OnboardingPageDots extends StatelessWidget {
           if (i > 0) const SizedBox(width: 8),
           AnimatedContainer(
             duration: AppMotion.spatialFast,
-            curve: AppMotion.spatial,
+            curve: AppMotion.bouncy,
             width: i == activeIndex ? 24 : 8,
             height: 8,
             decoration: BoxDecoration(

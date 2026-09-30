@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/content/domain/entities/programming_language.dart';
 import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/presentation/content_labels.dart';
@@ -101,7 +102,7 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
             controller: _scrollController,
             padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
             children: [
-              const DailyChallengeCard(),
+              const DailyChallengeCard().staggeredIn(context, 0),
               const SizedBox(height: 20),
               if (selectedLanguage != null) ...[
                 Align(
@@ -151,7 +152,7 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
                             quickModeSnippet,
                             practiceModeKindZen,
                           ),
-                        ),
+                        ).staggeredIn(context, 2),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -164,7 +165,7 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
                             quickModeSnippet,
                             practiceModeKindSprint60,
                           ),
-                        ),
+                        ).staggeredIn(context, 3),
                       ),
                     ],
                   ),
@@ -184,7 +185,7 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
                             quickModeSnippet,
                             practiceModeKindPrecision,
                           ),
-                        ),
+                        ).staggeredIn(context, 4),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -197,7 +198,7 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
                             quickModeSnippet,
                             practiceModeKindSurvival,
                           ),
-                        ),
+                        ).staggeredIn(context, 5),
                       ),
                     ],
                   ),

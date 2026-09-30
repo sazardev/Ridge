@@ -36,8 +36,8 @@ class PinDots extends StatelessWidget {
         for (var i = 0; i < length; i++) ...[
           if (i > 0) const SizedBox(width: 18),
           AnimatedContainer(
-            duration: AppMotion.effectsFast,
-            curve: AppMotion.spatial,
+            duration: AppMotion.spatialFast,
+            curve: AppMotion.bouncy,
             width: i < filled ? 18 : 14,
             height: i < filled ? 18 : 14,
             decoration: BoxDecoration(

@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/achievements/domain/entities/achievement.dart';
 import 'package:ridge/features/achievements/presentation/providers/achievements_providers.dart';
 import 'package:ridge/features/achievements/presentation/widgets/achievement_unlocked_toast.dart';
@@ -331,6 +332,7 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
             duration: AppMotion.spatialDefault,
             switchInCurve: AppMotion.enter,
             switchOutCurve: AppMotion.exit,
+            transitionBuilder: springSwitcherTransition,
             child: showResultArea
                 ? Focus(
                     focusNode: _resultFocusNode,
@@ -341,6 +343,7 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
                         duration: AppMotion.spatialDefault,
                         switchInCurve: AppMotion.enter,
                         switchOutCurve: AppMotion.exit,
+                        transitionBuilder: springSwitcherTransition,
                         child: switch (state.status) {
                           PracticeSessionStatus.result
                               when state.error == null =>

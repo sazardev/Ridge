@@ -7,6 +7,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/app_info/app_info_provider.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/core/window/desktop_platform.dart';
 import 'package:ridge/features/data_management/presentation/widgets/data_management_section.dart';
 import 'package:ridge/features/lock/presentation/providers/lock_providers.dart';
@@ -192,7 +193,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     ],
                   ],
                 ],
-              ),
+              ).staggeredIn(context, 0),
               SettingsSection(
                 title: l10n.settingsSectionPalette,
                 children: [
@@ -214,7 +215,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     onSelected: controller.setPalette,
                   ),
                 ],
-              ),
+              ).staggeredIn(context, 1),
               SettingsSection(
                 title: l10n.settingsSectionSound,
                 children: [
@@ -235,7 +236,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     onSelected: controller.setSoundPack,
                   ),
                 ],
-              ),
+              ).staggeredIn(context, 2),
               SettingsSection(
                 title: l10n.settingsSectionLanguage,
                 children: [
@@ -262,7 +263,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     ),
                   ),
                 ],
-              ),
+              ).staggeredIn(context, 3),
               SettingsSection(
                 title: l10n.settingsSectionSecurity,
                 children: [
@@ -309,7 +310,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     ),
                   ],
                 ],
-              ),
+              ).staggeredIn(context, 4),
               if (Platform.isAndroid)
                 SettingsSection(
                   title: l10n.settingsSectionPermissions,
@@ -364,7 +365,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           true,
                     ),
                   ],
-                ),
+                ).staggeredIn(context, 5),
               SettingsSection(
                 title: l10n.settingsSectionShortcuts,
                 children: [
@@ -375,7 +376,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     onTap: () => context.push('/shortcuts'),
                   ),
                 ],
-              ),
+              ).staggeredIn(context, 6),
               SettingsSection(
                 title: l10n.settingsSectionAbout,
                 children: [
@@ -398,8 +399,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     onTap: () => context.push('/changelog'),
                   ),
                 ],
-              ),
-              const DataManagementSection(),
+              ).staggeredIn(context, 7),
+              const DataManagementSection().staggeredIn(context, 8),
             ],
           ),
         ),

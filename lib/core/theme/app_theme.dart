@@ -5,6 +5,7 @@ import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/core/theme/app_typography.dart';
 import 'package:ridge/core/theme/expressive_ink.dart';
+import 'package:ridge/core/theme/spring_page_transitions.dart';
 import 'package:ridge/features/settings/domain/entities/app_corner_style.dart';
 import 'package:ridge/features/settings/domain/entities/app_palette.dart';
 
@@ -117,29 +118,31 @@ abstract final class AppTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           elevation: 0,
-          shape: shapes.fullShape,
+          animationDuration: AppMotion.spatialFast,
+
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           textStyle: textTheme.labelLarge,
-          animationDuration: AppMotion.effectsDefault,
-        ),
+        ).copyWith(shape: _pressMorph(shapes)),
       ),
 
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           elevation: 0,
-          shape: shapes.fullShape,
+          animationDuration: AppMotion.spatialFast,
+
           side: BorderSide.none,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           textStyle: textTheme.labelLarge,
-        ),
+        ).copyWith(shape: _pressMorph(shapes)),
       ),
 
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           elevation: 0,
-          shape: shapes.fullShape,
+          animationDuration: AppMotion.spatialFast,
+
           textStyle: textTheme.labelLarge,
-        ),
+        ).copyWith(shape: _pressMorph(shapes)),
       ),
 
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -147,16 +150,14 @@ abstract final class AppTheme {
           elevation: 0,
           shadowColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
-          shape: shapes.fullShape,
+
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        ),
+        ).copyWith(shape: _pressMorph(shapes)),
       ),
 
       iconButtonTheme: IconButtonThemeData(
-        style: IconButton.styleFrom(
-          shape: shapes.fullShape,
-          highlightColor: Colors.transparent,
-        ),
+        style: IconButton.styleFrom(highlightColor: Colors.transparent)
+            .copyWith(shape: _pressMorph(shapes)),
       ),
 
       floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -178,6 +179,13 @@ abstract final class AppTheme {
         shadowColor: Colors.transparent,
         indicatorColor: colorScheme.secondaryContainer,
         indicatorShape: shapes.mediumShape,
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) => IconThemeData(
+            color: states.contains(WidgetState.selected)
+                ? colorScheme.onSecondaryContainer
+                : colorScheme.onSurfaceVariant,
+          ),
+        ),
         labelTextStyle: WidgetStateProperty.resolveWith(
           (states) => textTheme.labelMedium?.copyWith(
             color: states.contains(WidgetState.selected)
@@ -243,14 +251,24 @@ abstract final class AppTheme {
       segmentedButtonTheme: SegmentedButtonThemeData(
         style: SegmentedButton.styleFrom(
           elevation: 0,
-          shape: shapes.fullShape,
+          animationDuration: AppMotion.spatialFast,
+
           side: BorderSide.none,
+        ).copyWith(shape: _pressMorph(shapes)),
+      ),
+
+      switchTheme: SwitchThemeData(
+        trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
+        // Expressive switch: a check on the thumb when on, so the toggle
+        // reads as a state change and not just a color swap.
+        thumbIcon: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? const Icon(Icons.check)
+              : null,
         ),
       ),
 
-      switchTheme: const SwitchThemeData(
-        trackOutlineColor: WidgetStatePropertyAll(Colors.transparent),
-      ),
+      listTileTheme: ListTileThemeData(shape: shapes.mediumShape),
 
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
@@ -309,11 +327,25 @@ abstract final class AppTheme {
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {
           TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-          TargetPlatform.linux: FadeForwardsPageTransitionsBuilder(),
+          TargetPlatform.linux: SpringPageTransitionsBuilder(),
+          TargetPlatform.windows: SpringPageTransitionsBuilder(),
+          TargetPlatform.macOS: SpringPageTransitionsBuilder(),
+          TargetPlatform.iOS: SpringPageTransitionsBuilder(),
         },
       ),
     );
   }
+
+  /// Expressive press morph: buttons rest in their pill shape and squish
+  /// toward a tighter squircle while pressed. The button's
+  /// `animationDuration` interpolates the shape, so it springs back.
+  static WidgetStateProperty<OutlinedBorder> _pressMorph(
+    AppShapeTheme shapes,
+  ) => WidgetStateProperty.resolveWith(
+    (states) => states.contains(WidgetState.pressed)
+        ? shapes.largeShape
+        : shapes.fullShape,
+  );
 
   static OutlineInputBorder _noInputBorder(AppShapeTheme shapes) =>
       OutlineInputBorder(

@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_motion.dart';
+import 'package:ridge/core/widgets/app_filter_chip.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/core/window/window_bar.dart';
 import 'package:ridge/features/profile/domain/entities/favorite_language.dart';
 import 'package:ridge/features/profile/presentation/profile_labels.dart';
@@ -107,13 +109,13 @@ class _CreateProfileScreenState extends ConsumerState<CreateProfileScreen> {
                             LucideIcons.user300,
                             size: 40,
                             color: colorScheme.primary,
-                          ),
+                          ).poppedIn(context, 0),
                           const SizedBox(height: 24),
                           Text(
                             l10n.profileCreateTitle,
                             style: textTheme.headlineSmall,
                             textAlign: TextAlign.center,
-                          ),
+                          ).staggeredIn(context, 2),
                           const SizedBox(height: 8),
                           Text(
                             l10n.profileCreateSubtitle,
@@ -132,7 +134,7 @@ class _CreateProfileScreenState extends ConsumerState<CreateProfileScreen> {
                               errorText: _errorText,
                             ),
                             onSubmitted: _submitting ? null : (_) => _submit(),
-                          ),
+                          ).staggeredIn(context, 4),
                           const SizedBox(height: 28),
                           Align(
                             alignment: Alignment.centerLeft,
@@ -150,7 +152,7 @@ class _CreateProfileScreenState extends ConsumerState<CreateProfileScreen> {
                                   in FavoriteLanguage.values.take(
                                     _quickPickLanguages,
                                   ))
-                                FilterChip(
+                                AppFilterChip(
                                   label: Text(language.label(l10n)),
                                   selected: _languages.contains(language),
                                   onSelected: (selected) => setState(() {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_typography.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 
 /// The result screen's fixed (never-scrolls) footer: Retry/Continue side
 /// by side — Retry on the left, Continue on the right, matching how a
@@ -81,7 +82,7 @@ class SessionResultFooter extends StatelessWidget {
                       keyHint: 'I',
                     ),
                   ),
-                ),
+                ).staggeredIn(context, 3),
                 const SizedBox(height: 4),
               ],
               Row(
@@ -117,7 +118,7 @@ class SessionResultFooter extends StatelessWidget {
                       ),
                     ),
                 ],
-              ),
+              ).staggeredIn(context, 4),
             ],
           ),
         ),

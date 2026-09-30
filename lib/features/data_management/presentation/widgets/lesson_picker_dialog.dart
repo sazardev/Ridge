@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
 import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
@@ -15,6 +16,7 @@ import 'package:ridge/features/learning_paths/presentation/providers/learning_pa
 /// Returns `null` if the user dismisses the dialog without choosing.
 Future<LessonId?> showLessonPickerDialog(BuildContext context) {
   return showDialog<LessonId>(
+    animationStyle: AppMotion.dialog,
     context: context,
     builder: (context) => const _LessonPickerDialog(),
   );

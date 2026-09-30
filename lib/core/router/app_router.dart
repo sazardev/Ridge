@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ridge/core/router/animated_branch_container.dart';
 import 'package:ridge/core/router/app_shell.dart';
 import 'package:ridge/features/achievements/presentation/screens/achievements_screen.dart';
 import 'package:ridge/features/content/domain/entities/snippet.dart';
@@ -245,7 +246,8 @@ GoRouter appRouter(Ref ref) {
       // tab over, not the default), Profile, Settings, in that order —
       // branch order here is what `app_shell.dart`'s destinations list
       // is positionally indexed against.
-      StatefulShellRoute.indexedStack(
+      StatefulShellRoute(
+        navigatorContainerBuilder: AnimatedBranchContainer.builder,
         builder: (context, state, navigationShell) =>
             AppShell(navigationShell: navigationShell),
         branches: [

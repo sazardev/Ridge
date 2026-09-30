@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/settings/domain/entities/app_settings.dart';
 import 'package:ridge/features/settings/domain/entities/app_shortcut_action.dart';
 import 'package:ridge/features/settings/domain/entities/shortcut_binding.dart';
@@ -75,7 +77,7 @@ class _ShortcutsScreenState extends ConsumerState<ShortcutsScreen> {
                   ),
                 ],
               ],
-            ),
+            ).staggeredIn(context, 0),
           ],
         ),
       ),
@@ -92,6 +94,7 @@ void _showCaptureDialog({
 }) {
   unawaited(
     showDialog<void>(
+      animationStyle: AppMotion.dialog,
       context: context,
       builder: (dialogContext) => _ShortcutCaptureDialog(
         action: action,

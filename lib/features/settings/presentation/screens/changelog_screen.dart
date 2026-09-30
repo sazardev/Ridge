@@ -4,6 +4,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/widgets/escape_to_pop.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 
 /// Displays the project's `CHANGELOG.md`, bundled as a Flutter asset so the
 /// running app can show its own release history without anyone needing the
@@ -65,8 +66,10 @@ class _ChangelogBodyState extends State<_ChangelogBody> {
         controller: _scrollController,
         padding: const EdgeInsets.all(16),
         itemCount: lines.length,
-        itemBuilder: (context, index) =>
-            _lineWidget(lines[index], theme, isFirst: index == 0),
+        itemBuilder: (context, index) {
+          final line = _lineWidget(lines[index], theme, isFirst: index == 0);
+          return index < 8 ? line.staggeredIn(context, index) : line;
+        },
       ),
     );
   }

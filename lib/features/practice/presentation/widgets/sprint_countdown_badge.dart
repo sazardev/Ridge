@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
@@ -34,7 +35,7 @@ class SprintCountdownBadge extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     final isUrgent = remaining <= _urgentThreshold;
 
-    return AnimatedContainer(
+    final badge = AnimatedContainer(
       duration: AppMotion.effectsDefault,
       curve: AppMotion.effects,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -52,5 +53,16 @@ class SprintCountdownBadge extends StatelessWidget {
         ),
       ),
     );
+    // Once urgent, every passing second pops the badge so the last stretch
+    // of the sprint feels like a heartbeat.
+    if (!isUrgent || MediaQuery.disableAnimationsOf(context)) return badge;
+    return badge
+        .animate(key: ValueKey(_formatted))
+        .scaleXY(
+          begin: 1.18,
+          end: 1,
+          duration: AppMotion.spatialDefault,
+          curve: AppMotion.bouncy,
+        );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 
@@ -37,6 +38,7 @@ const practiceModeKindSurvival = 'survival';
 /// constants above, or `null` if dismissed without a choice.
 Future<String?> showPracticeModePickerSheet(BuildContext context) {
   return showModalBottomSheet<String>(
+    sheetAnimationStyle: AppMotion.sheet,
     context: context,
     isScrollControlled: true,
     useSafeArea: true,

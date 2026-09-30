@@ -34,6 +34,9 @@ Future<void> _pumpPanel(WidgetTester tester, {VoidCallback? onShare}) async {
       ),
     ),
   );
+  // flutter_animate starts each entrance on a zero-length timer that only
+  // fires once time advances; flush it so none outlives the test.
+  await tester.pump(const Duration(milliseconds: 1));
 }
 
 void main() {

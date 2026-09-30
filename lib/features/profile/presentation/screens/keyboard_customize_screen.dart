@@ -8,6 +8,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/widgets/escape_to_pop.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_key_spec.dart';
@@ -268,14 +269,14 @@ class _KeyboardCustomizeScreenState
                       onModelChanged: (value) => setState(() => _model = value),
                       onLayoutChanged: (value) =>
                           setState(() => _layout = value),
-                    ),
+                    ).staggeredIn(context, 0),
                     const SizedBox(height: 16),
                     KeyboardShapeSection(
                       key: _shapeKey,
                       shapeFamily: _customization.shapeFamily,
                       onShapeFamilyChanged: (value) =>
                           _update((c) => c.copyWith(shapeFamily: value)),
-                    ),
+                    ).staggeredIn(context, 1),
                     const SizedBox(height: 16),
                     KeyboardKeycapsSection(
                       key: _keycapsKey,

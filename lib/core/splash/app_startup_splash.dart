@@ -128,9 +128,9 @@ class _AppStartupSplashState extends State<AppStartupSplash> {
                                 .animate()
                                 .fadeIn(duration: AppMotion.effectsDefault)
                                 .scale(
-                                  begin: const Offset(0.85, 0.85),
-                                  curve: AppMotion.enter,
-                                  duration: AppMotion.spatialDefault,
+                                  begin: const Offset(0.5, 0.5),
+                                  curve: AppMotion.bouncy,
+                                  duration: AppMotion.spatialSlow,
                                 ),
                             const SizedBox(height: 20),
                             Text(
@@ -146,8 +146,8 @@ class _AppStartupSplashState extends State<AppStartupSplash> {
                                 .slideY(
                                   begin: 0.2,
                                   end: 0,
-                                  curve: AppMotion.enter,
-                                  duration: AppMotion.spatialFast,
+                                  curve: AppMotion.gentle,
+                                  duration: AppMotion.spatialDefault,
                                 ),
                             const SizedBox(height: 8),
                             Text(
@@ -163,8 +163,8 @@ class _AppStartupSplashState extends State<AppStartupSplash> {
                                 .slideY(
                                   begin: 0.2,
                                   end: 0,
-                                  curve: AppMotion.enter,
-                                  duration: AppMotion.spatialFast,
+                                  curve: AppMotion.gentle,
+                                  duration: AppMotion.spatialDefault,
                                 ),
                           ],
                         ),

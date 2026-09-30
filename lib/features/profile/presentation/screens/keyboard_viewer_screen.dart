@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
+import 'package:ridge/core/theme/app_motion.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
 import 'package:ridge/core/widgets/escape_to_pop.dart';
 import 'package:ridge/features/practice/presentation/physical_key_id_mapper.dart';
@@ -183,6 +184,7 @@ class _KeyboardViewerScreenState extends ConsumerState<KeyboardViewerScreen> {
     final rows = keyboardSpecRows(widget.profile, l10n);
     unawaited(
       showModalBottomSheet<void>(
+        sheetAnimationStyle: AppMotion.sheet,
         context: context,
         isScrollControlled: true,
         builder: (context) => SafeArea(

@@ -3,6 +3,8 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_shapes.dart';
+import 'package:ridge/core/widgets/bouncy_tap.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/content/domain/entities/programming_language.dart';
 import 'package:ridge/features/content/presentation/content_labels.dart';
 import 'package:ridge/features/learning_paths/application/usecases/get_learning_paths_usecase.dart';
@@ -62,7 +64,7 @@ class LanguageCatalog extends StatelessWidget {
       controller: scrollController,
       padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
       children: [
-        for (final language in languages)
+        for (final (index, language) in languages.indexed)
           _LanguageCard(
             language: language,
             progress: calculator.compute(
@@ -72,7 +74,7 @@ class LanguageCatalog extends StatelessWidget {
             ),
             isActive: language == activeLanguage,
             onTap: () => onLanguageSelected(language),
-          ),
+          ).staggeredIn(context, index),
       ],
     );
   }
@@ -100,50 +102,53 @@ class _LanguageCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
-      shape: AppShapes.of(context).mediumShape,
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(language.label(l10n), style: textTheme.titleMedium),
-                    const SizedBox(height: 2),
-                    Text(
-                      language.blurb(l10n),
-                      style: textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
+    return BouncyTap(
+      enabled: true,
+      child: Card(
+        margin: const EdgeInsets.only(bottom: 8),
+        shape: AppShapes.of(context).mediumShape,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(language.label(l10n), style: textTheme.titleMedium),
+                      const SizedBox(height: 2),
+                      Text(
+                        language.blurb(l10n),
+                        style: textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    ClipRRect(
-                      borderRadius: AppShapes.squircleRadius(AppRadius.full),
-                      child: LinearProgressIndicator(
-                        value: progress.fraction,
-                        minHeight: 6,
-                        backgroundColor: colorScheme.surfaceContainerHighest,
+                      const SizedBox(height: 10),
+                      ClipRRect(
+                        borderRadius: AppShapes.squircleRadius(AppRadius.full),
+                        child: LinearProgressIndicator(
+                          value: progress.fraction,
+                          minHeight: 6,
+                          backgroundColor: colorScheme.surfaceContainerHighest,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              if (isActive) ...[
-                const SizedBox(width: 12),
-                Icon(
-                  LucideIcons.check300,
-                  size: 18,
-                  color: colorScheme.primary,
-                ),
+                if (isActive) ...[
+                  const SizedBox(width: 12),
+                  Icon(
+                    LucideIcons.check300,
+                    size: 18,
+                    color: colorScheme.primary,
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

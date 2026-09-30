@@ -5,6 +5,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/widgets/escape_to_pop.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
+import 'package:ridge/core/widgets/staggered_entrance.dart';
 import 'package:ridge/features/achievements/domain/entities/achievement.dart';
 import 'package:ridge/features/achievements/domain/entities/achievement_id.dart';
 import 'package:ridge/features/achievements/domain/entities/maratonista_tier.dart';
@@ -87,14 +88,14 @@ class _AchievementsScreenState extends ConsumerState<AchievementsScreen> {
                     spacing: 12,
                     runSpacing: 12,
                     children: [
-                      for (final id in milestoneIds)
+                      for (final (index, id) in milestoneIds.indexed)
                         SizedBox(
                           width: 168,
                           child: AchievementBadgeTile(
                             id: id,
                             unlockedAt: unlockedById[id.storageKey]?.unlockedAt,
                           ),
-                        ),
+                        ).poppedIn(context, index),
                     ],
                   ),
                   const SizedBox(height: 28),

@@ -212,6 +212,35 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ## Historial de sesiones
 
+### 2026-09-29 — Movimiento Material 3 Expressive (springs, rebote, stagger)
+
+- **Alcance:** pasada de UI "más viva". `AppMotion` gana `SpringCurve`
+  (`snappy`/`bouncy`/`gentle`) y tokens (`pressedScale`, `stagger`, estilos
+  `sheet`/`dialog`). `spatial` se queda acotado (sin overshoot) porque lo
+  usan scrolls y controllers clamped; los springs solo van en animaciones
+  implícitas/`flutter_animate`/`CurvedAnimation`.
+- **Piezas nuevas:** `core/widgets/bouncy_tap.dart` (escala al presionar),
+  `core/widgets/staggered_entrance.dart` (`staggeredIn`/`poppedIn`),
+  `core/theme/spring_page_transitions.dart` (todas las plataformas salvo
+  Android, que conserva el back predictivo) y
+  `core/router/animated_branch_container.dart` (entrada animada al cambiar
+  de pestaña, mantiene estado).
+- **Aplicado en:** práctica libre, rutas, detalle de lección, progreso,
+  perfil, ajustes, logros, catálogo de lenguajes, snippet browser, nav
+  bar/rail (ícono seleccionado rebota), diálogos y sheets.
+- **Segunda pasada:** botones con morph de forma al presionar
+  (`_pressMorph` en `AppTheme`, pill→squircle), switches con check en el
+  thumb, `AppFilterChip`, `BouncyTap` en tiles/swatches/paleta, latido del
+  contador de Sprint cuando es urgente, corazones de Survival con pop,
+  resultado de sesión con stagger, splash/onboarding/PIN con springs.
+- **Gotcha tests:** `flutter_animate` arranca cada `Animate` con un `Timer`
+  de duración 0; los tests que montan widgets animados deben hacer
+  `pump(Duration(milliseconds: 1))` para no dejar timers pendientes. Los
+  ítems de `ListView` perezosos (p. ej. secciones del editor de teclado)
+  no llevan stagger para no re-animar al hacer scroll.
+- **Pendiente:** verificar a ojo en `flutter run -d linux`; ajustar
+  intensidades si algo se siente excesivo.
+
 ### 2026-09-25 — Zig 0.16.0 como lenguaje solo-curso
 
 - **Alcance:** se añadió Zig como vigésimo tercer lenguaje de contenido:
