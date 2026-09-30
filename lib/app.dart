@@ -80,9 +80,18 @@ class RidgeApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
       builder: (context, child) {
+        // Performance mode reuses the platform reduced-motion signal, so
+        // every widget that already honors `disableAnimations` switches
+        // off without knowing about the setting.
+        final content = settings.performanceMode
+            ? MediaQuery(
+                data: MediaQuery.of(context).copyWith(disableAnimations: true),
+                child: child!,
+              )
+            : child!;
         final splashed = AppStartupSplash(
           ready: coreContentReady,
-          child: child!,
+          child: content,
         );
         if (!isDesktopPlatform || !settings.windowBorderEnabled) {
           return splashed;

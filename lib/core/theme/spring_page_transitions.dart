@@ -18,6 +18,7 @@ class SpringPageTransitionsBuilder extends PageTransitionsBuilder {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
+    if (MediaQuery.disableAnimationsOf(context)) return child;
     final incoming = CurvedAnimation(
       parent: animation,
       curve: AppMotion.gentle,

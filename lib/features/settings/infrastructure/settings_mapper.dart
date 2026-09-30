@@ -46,6 +46,7 @@ extension SettingsDtoMapper on SettingsDto {
               AppSettings.initial.shortcutBindings[action]!,
       },
       navigationRailExpanded: navigationRailExpanded,
+      performanceMode: performanceMode,
       languageCode: languageCode,
     );
   }
@@ -71,6 +72,7 @@ extension AppSettingsMapper on AppSettings {
           entry.key.name: _encodeBinding(entry.value),
       },
       navigationRailExpanded: navigationRailExpanded,
+      performanceMode: performanceMode,
       languageCode: languageCode,
     );
   }

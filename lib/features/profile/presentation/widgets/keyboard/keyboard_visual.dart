@@ -198,8 +198,10 @@ class _KeyboardVisualState extends ConsumerState<KeyboardVisual>
   }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Idempotent, so it also re-runs when reduced motion / performance
+    // mode flips.
     _syncRgbAnimation();
   }
 
@@ -207,6 +209,7 @@ class _KeyboardVisualState extends ConsumerState<KeyboardVisual>
   /// customization — a no-op for every state it's already in.
   void _syncRgbAnimation() {
     final animated =
+        !MediaQuery.disableAnimationsOf(context) &&
         widget.customization.rgbEnabled &&
         widget.customization.rgbEffect != RgbEffect.static;
     if (!animated) {

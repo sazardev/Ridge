@@ -102,6 +102,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         controller.setExpressiveColor(value: value),
                   ),
                   const Divider(height: 1, indent: 16, endIndent: 16),
+                  SwitchListTile(
+                    title: Text(l10n.settingsPerformanceMode),
+                    subtitle: Text(l10n.settingsPerformanceModeSubtitle),
+                    value: settings.performanceMode,
+                    onChanged: (value) =>
+                        controller.setPerformanceMode(value: value),
+                  ),
+                  const Divider(height: 1, indent: 16, endIndent: 16),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
                     child: Align(

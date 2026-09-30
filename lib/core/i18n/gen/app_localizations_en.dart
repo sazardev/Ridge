@@ -716,6 +716,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Use richer, more vivid Material 3 Expressive tones';
 
   @override
+  String get settingsPerformanceMode => 'Performance mode';
+
+  @override
+  String get settingsPerformanceModeSubtitle =>
+      'Turns off spring motion, page transitions and the keyboard RGB animation. Helps on computers without a GPU';
+
+  @override
   String get settingsSectionPalette => 'Color palette';
 
   @override

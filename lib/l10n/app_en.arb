@@ -260,6 +260,8 @@
   "settingsThemeDark": "Dark",
   "settingsExpressiveColor": "Expressive color",
   "settingsExpressiveColorSubtitle": "Use richer, more vivid Material 3 Expressive tones",
+  "settingsPerformanceMode": "Performance mode",
+  "settingsPerformanceModeSubtitle": "Turns off spring motion, page transitions and the keyboard RGB animation. Helps on computers without a GPU",
   "settingsSectionPalette": "Color palette",
   "settingsPaletteSubtitle": "Pick the accent and background tones for the whole app",
   "paletteEmber": "Ember",

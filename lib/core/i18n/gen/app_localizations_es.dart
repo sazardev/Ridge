@@ -722,6 +722,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Usa tonos Material 3 Expressive más vivos';
 
   @override
+  String get settingsPerformanceMode => 'Modo rendimiento';
+
+  @override
+  String get settingsPerformanceModeSubtitle =>
+      'Desactiva las animaciones con resorte, las transiciones de página y la animación RGB del teclado. Ayuda en equipos sin GPU';
+
+  @override
   String get settingsSectionPalette => 'Paleta de colores';
 
   @override

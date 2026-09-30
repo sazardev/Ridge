@@ -240,6 +240,8 @@
   "settingsThemeDark": "Oscuro",
   "settingsExpressiveColor": "Color expresivo",
   "settingsExpressiveColorSubtitle": "Usa tonos Material 3 Expressive más vivos",
+  "settingsPerformanceMode": "Modo rendimiento",
+  "settingsPerformanceModeSubtitle": "Desactiva las animaciones con resorte, las transiciones de página y la animación RGB del teclado. Ayuda en equipos sin GPU",
   "settingsSectionPalette": "Paleta de colores",
   "settingsPaletteSubtitle": "Elige el acento y los tonos de fondo de toda la app",
   "paletteEmber": "Ember",

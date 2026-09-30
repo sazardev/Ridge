@@ -23,6 +23,7 @@ _SettingsDto _$SettingsDtoFromJson(Map<String, dynamic> json) => _SettingsDto(
       ) ??
       const <String, String>{},
   navigationRailExpanded: json['navigationRailExpanded'] as bool? ?? true,
+  performanceMode: json['performanceMode'] as bool? ?? false,
   languageCode: json['languageCode'] as String?,
 );
 
@@ -40,5 +41,6 @@ Map<String, dynamic> _$SettingsDtoToJson(_SettingsDto instance) =>
       'onboardingCompleted': instance.onboardingCompleted,
       'shortcutBindings': instance.shortcutBindings,
       'navigationRailExpanded': instance.navigationRailExpanded,
+      'performanceMode': instance.performanceMode,
       'languageCode': instance.languageCode,
     };

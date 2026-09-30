@@ -92,6 +92,7 @@ abstract class AppSettings with _$AppSettings {
     required bool onboardingCompleted,
     required Map<AppShortcutAction, ShortcutBinding> shortcutBindings,
     required bool navigationRailExpanded,
+    required bool performanceMode,
     String? languageCode,
   }) = _AppSettings;
 
@@ -109,5 +110,6 @@ abstract class AppSettings with _$AppSettings {
     onboardingCompleted: false,
     shortcutBindings: _defaultShortcutBindings,
     navigationRailExpanded: true,
+    performanceMode: false,
   );
 }

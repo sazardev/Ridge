@@ -1472,6 +1472,18 @@ abstract class AppLocalizations {
   /// **'Use richer, more vivid Material 3 Expressive tones'**
   String get settingsExpressiveColorSubtitle;
 
+  /// No description provided for @settingsPerformanceMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance mode'**
+  String get settingsPerformanceMode;
+
+  /// No description provided for @settingsPerformanceModeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turns off spring motion, page transitions and the keyboard RGB animation. Helps on computers without a GPU'**
+  String get settingsPerformanceModeSubtitle;
+
   /// No description provided for @settingsSectionPalette.
   ///
   /// In en, this message translates to:

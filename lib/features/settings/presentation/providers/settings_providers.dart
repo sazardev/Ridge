@@ -119,4 +119,9 @@ class SettingsController extends _$SettingsController {
   /// icon-only (collapsed) states.
   Future<void> setNavigationRailExpanded({required bool value}) =>
       _update((s) => s.copyWith(navigationRailExpanded: value));
+
+  /// Toggles performance mode: no spring/page motion and a static keyboard,
+  /// for machines that render in software (no GPU).
+  Future<void> setPerformanceMode({required bool value}) =>
+      _update((s) => s.copyWith(performanceMode: value));
 }

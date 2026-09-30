@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppSettings {
 
- AppThemeMode get themeMode; bool get expressiveColor; bool get appLockEnabled; bool get appLockBiometricEnabled; bool get windowBorderEnabled; AppWindowBorderWidth get windowBorderWidth; AppCornerStyle get cornerStyle; AppPaletteId get palette; AppSoundPack get soundPack; bool get onboardingCompleted; Map<AppShortcutAction, ShortcutBinding> get shortcutBindings; bool get navigationRailExpanded; String? get languageCode;
+ AppThemeMode get themeMode; bool get expressiveColor; bool get appLockEnabled; bool get appLockBiometricEnabled; bool get windowBorderEnabled; AppWindowBorderWidth get windowBorderWidth; AppCornerStyle get cornerStyle; AppPaletteId get palette; AppSoundPack get soundPack; bool get onboardingCompleted; Map<AppShortcutAction, ShortcutBinding> get shortcutBindings; bool get navigationRailExpanded; bool get performanceMode; String? get languageCode;
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,20 +27,20 @@ $AppSettingsCopyWith<AppSettings> get copyWith => _$AppSettingsCopyWithImpl<AppS
 @override
 bool operator ==(Object other) {
   final _this = this as AppSettings;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.themeMode, _this.themeMode) || other.themeMode == _this.themeMode)&&(identical(other.expressiveColor, _this.expressiveColor) || other.expressiveColor == _this.expressiveColor)&&(identical(other.appLockEnabled, _this.appLockEnabled) || other.appLockEnabled == _this.appLockEnabled)&&(identical(other.appLockBiometricEnabled, _this.appLockBiometricEnabled) || other.appLockBiometricEnabled == _this.appLockBiometricEnabled)&&(identical(other.windowBorderEnabled, _this.windowBorderEnabled) || other.windowBorderEnabled == _this.windowBorderEnabled)&&(identical(other.windowBorderWidth, _this.windowBorderWidth) || other.windowBorderWidth == _this.windowBorderWidth)&&(identical(other.cornerStyle, _this.cornerStyle) || other.cornerStyle == _this.cornerStyle)&&(identical(other.palette, _this.palette) || other.palette == _this.palette)&&(identical(other.soundPack, _this.soundPack) || other.soundPack == _this.soundPack)&&(identical(other.onboardingCompleted, _this.onboardingCompleted) || other.onboardingCompleted == _this.onboardingCompleted)&&const DeepCollectionEquality().equals(other.shortcutBindings, _this.shortcutBindings)&&(identical(other.navigationRailExpanded, _this.navigationRailExpanded) || other.navigationRailExpanded == _this.navigationRailExpanded)&&(identical(other.languageCode, _this.languageCode) || other.languageCode == _this.languageCode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.themeMode, _this.themeMode) || other.themeMode == _this.themeMode)&&(identical(other.expressiveColor, _this.expressiveColor) || other.expressiveColor == _this.expressiveColor)&&(identical(other.appLockEnabled, _this.appLockEnabled) || other.appLockEnabled == _this.appLockEnabled)&&(identical(other.appLockBiometricEnabled, _this.appLockBiometricEnabled) || other.appLockBiometricEnabled == _this.appLockBiometricEnabled)&&(identical(other.windowBorderEnabled, _this.windowBorderEnabled) || other.windowBorderEnabled == _this.windowBorderEnabled)&&(identical(other.windowBorderWidth, _this.windowBorderWidth) || other.windowBorderWidth == _this.windowBorderWidth)&&(identical(other.cornerStyle, _this.cornerStyle) || other.cornerStyle == _this.cornerStyle)&&(identical(other.palette, _this.palette) || other.palette == _this.palette)&&(identical(other.soundPack, _this.soundPack) || other.soundPack == _this.soundPack)&&(identical(other.onboardingCompleted, _this.onboardingCompleted) || other.onboardingCompleted == _this.onboardingCompleted)&&const DeepCollectionEquality().equals(other.shortcutBindings, _this.shortcutBindings)&&(identical(other.navigationRailExpanded, _this.navigationRailExpanded) || other.navigationRailExpanded == _this.navigationRailExpanded)&&(identical(other.performanceMode, _this.performanceMode) || other.performanceMode == _this.performanceMode)&&(identical(other.languageCode, _this.languageCode) || other.languageCode == _this.languageCode));
 }
 
 
 @override
 int get hashCode {
   final _this = this as AppSettings;
-  return Object.hash(runtimeType,_this.themeMode,_this.expressiveColor,_this.appLockEnabled,_this.appLockBiometricEnabled,_this.windowBorderEnabled,_this.windowBorderWidth,_this.cornerStyle,_this.palette,_this.soundPack,_this.onboardingCompleted,const DeepCollectionEquality().hash(_this.shortcutBindings),_this.navigationRailExpanded,_this.languageCode);
+  return Object.hash(runtimeType,_this.themeMode,_this.expressiveColor,_this.appLockEnabled,_this.appLockBiometricEnabled,_this.windowBorderEnabled,_this.windowBorderWidth,_this.cornerStyle,_this.palette,_this.soundPack,_this.onboardingCompleted,const DeepCollectionEquality().hash(_this.shortcutBindings),_this.navigationRailExpanded,_this.performanceMode,_this.languageCode);
 }
 
 @override
 String toString() {
   final _this = this as AppSettings;
-  return 'AppSettings(themeMode: ${_this.themeMode}, expressiveColor: ${_this.expressiveColor}, appLockEnabled: ${_this.appLockEnabled}, appLockBiometricEnabled: ${_this.appLockBiometricEnabled}, windowBorderEnabled: ${_this.windowBorderEnabled}, windowBorderWidth: ${_this.windowBorderWidth}, cornerStyle: ${_this.cornerStyle}, palette: ${_this.palette}, soundPack: ${_this.soundPack}, onboardingCompleted: ${_this.onboardingCompleted}, shortcutBindings: ${_this.shortcutBindings}, navigationRailExpanded: ${_this.navigationRailExpanded}, languageCode: ${_this.languageCode})';
+  return 'AppSettings(themeMode: ${_this.themeMode}, expressiveColor: ${_this.expressiveColor}, appLockEnabled: ${_this.appLockEnabled}, appLockBiometricEnabled: ${_this.appLockBiometricEnabled}, windowBorderEnabled: ${_this.windowBorderEnabled}, windowBorderWidth: ${_this.windowBorderWidth}, cornerStyle: ${_this.cornerStyle}, palette: ${_this.palette}, soundPack: ${_this.soundPack}, onboardingCompleted: ${_this.onboardingCompleted}, shortcutBindings: ${_this.shortcutBindings}, navigationRailExpanded: ${_this.navigationRailExpanded}, performanceMode: ${_this.performanceMode}, languageCode: ${_this.languageCode})';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $AppSettingsCopyWith<$Res>  {
   factory $AppSettingsCopyWith(AppSettings value, $Res Function(AppSettings) _then) = _$AppSettingsCopyWithImpl;
 @useResult
 $Res call({
- AppThemeMode themeMode, bool expressiveColor, bool appLockEnabled, bool appLockBiometricEnabled, bool windowBorderEnabled, AppWindowBorderWidth windowBorderWidth, AppCornerStyle cornerStyle, AppPaletteId palette, AppSoundPack soundPack, bool onboardingCompleted, Map<AppShortcutAction, ShortcutBinding> shortcutBindings, bool navigationRailExpanded, String? languageCode
+ AppThemeMode themeMode, bool expressiveColor, bool appLockEnabled, bool appLockBiometricEnabled, bool windowBorderEnabled, AppWindowBorderWidth windowBorderWidth, AppCornerStyle cornerStyle, AppPaletteId palette, AppSoundPack soundPack, bool onboardingCompleted, Map<AppShortcutAction, ShortcutBinding> shortcutBindings, bool navigationRailExpanded, bool performanceMode, String? languageCode
 });
 
 
@@ -68,7 +68,7 @@ class _$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? expressiveColor = null,Object? appLockEnabled = null,Object? appLockBiometricEnabled = null,Object? windowBorderEnabled = null,Object? windowBorderWidth = null,Object? cornerStyle = null,Object? palette = null,Object? soundPack = null,Object? onboardingCompleted = null,Object? shortcutBindings = null,Object? navigationRailExpanded = null,Object? languageCode = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? expressiveColor = null,Object? appLockEnabled = null,Object? appLockBiometricEnabled = null,Object? windowBorderEnabled = null,Object? windowBorderWidth = null,Object? cornerStyle = null,Object? palette = null,Object? soundPack = null,Object? onboardingCompleted = null,Object? shortcutBindings = null,Object? navigationRailExpanded = null,Object? performanceMode = null,Object? languageCode = freezed,}) {
   return _then(AppSettings(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as AppThemeMode,expressiveColor: null == expressiveColor ? _self.expressiveColor : expressiveColor // ignore: cast_nullable_to_non_nullable
@@ -82,6 +82,7 @@ as AppPaletteId,soundPack: null == soundPack ? _self.soundPack : soundPack // ig
 as AppSoundPack,onboardingCompleted: null == onboardingCompleted ? _self.onboardingCompleted : onboardingCompleted // ignore: cast_nullable_to_non_nullable
 as bool,shortcutBindings: null == shortcutBindings ? _self.shortcutBindings : shortcutBindings // ignore: cast_nullable_to_non_nullable
 as Map<AppShortcutAction, ShortcutBinding>,navigationRailExpanded: null == navigationRailExpanded ? _self.navigationRailExpanded : navigationRailExpanded // ignore: cast_nullable_to_non_nullable
+as bool,performanceMode: null == performanceMode ? _self.performanceMode : performanceMode // ignore: cast_nullable_to_non_nullable
 as bool,languageCode: freezed == languageCode ? _self.languageCode : languageCode // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -168,10 +169,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppThemeMode themeMode,  bool expressiveColor,  bool appLockEnabled,  bool appLockBiometricEnabled,  bool windowBorderEnabled,  AppWindowBorderWidth windowBorderWidth,  AppCornerStyle cornerStyle,  AppPaletteId palette,  AppSoundPack soundPack,  bool onboardingCompleted,  Map<AppShortcutAction, ShortcutBinding> shortcutBindings,  bool navigationRailExpanded,  String? languageCode)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppThemeMode themeMode,  bool expressiveColor,  bool appLockEnabled,  bool appLockBiometricEnabled,  bool windowBorderEnabled,  AppWindowBorderWidth windowBorderWidth,  AppCornerStyle cornerStyle,  AppPaletteId palette,  AppSoundPack soundPack,  bool onboardingCompleted,  Map<AppShortcutAction, ShortcutBinding> shortcutBindings,  bool navigationRailExpanded,  bool performanceMode,  String? languageCode)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that.appLockBiometricEnabled,_that.windowBorderEnabled,_that.windowBorderWidth,_that.cornerStyle,_that.palette,_that.soundPack,_that.onboardingCompleted,_that.shortcutBindings,_that.navigationRailExpanded,_that.languageCode);case _:
+return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that.appLockBiometricEnabled,_that.windowBorderEnabled,_that.windowBorderWidth,_that.cornerStyle,_that.palette,_that.soundPack,_that.onboardingCompleted,_that.shortcutBindings,_that.navigationRailExpanded,_that.performanceMode,_that.languageCode);case _:
   return orElse();
 
 }
@@ -189,10 +190,10 @@ return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppThemeMode themeMode,  bool expressiveColor,  bool appLockEnabled,  bool appLockBiometricEnabled,  bool windowBorderEnabled,  AppWindowBorderWidth windowBorderWidth,  AppCornerStyle cornerStyle,  AppPaletteId palette,  AppSoundPack soundPack,  bool onboardingCompleted,  Map<AppShortcutAction, ShortcutBinding> shortcutBindings,  bool navigationRailExpanded,  String? languageCode)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppThemeMode themeMode,  bool expressiveColor,  bool appLockEnabled,  bool appLockBiometricEnabled,  bool windowBorderEnabled,  AppWindowBorderWidth windowBorderWidth,  AppCornerStyle cornerStyle,  AppPaletteId palette,  AppSoundPack soundPack,  bool onboardingCompleted,  Map<AppShortcutAction, ShortcutBinding> shortcutBindings,  bool navigationRailExpanded,  bool performanceMode,  String? languageCode)  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings():
-return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that.appLockBiometricEnabled,_that.windowBorderEnabled,_that.windowBorderWidth,_that.cornerStyle,_that.palette,_that.soundPack,_that.onboardingCompleted,_that.shortcutBindings,_that.navigationRailExpanded,_that.languageCode);case _:
+return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that.appLockBiometricEnabled,_that.windowBorderEnabled,_that.windowBorderWidth,_that.cornerStyle,_that.palette,_that.soundPack,_that.onboardingCompleted,_that.shortcutBindings,_that.navigationRailExpanded,_that.performanceMode,_that.languageCode);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -209,10 +210,10 @@ return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppThemeMode themeMode,  bool expressiveColor,  bool appLockEnabled,  bool appLockBiometricEnabled,  bool windowBorderEnabled,  AppWindowBorderWidth windowBorderWidth,  AppCornerStyle cornerStyle,  AppPaletteId palette,  AppSoundPack soundPack,  bool onboardingCompleted,  Map<AppShortcutAction, ShortcutBinding> shortcutBindings,  bool navigationRailExpanded,  String? languageCode)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppThemeMode themeMode,  bool expressiveColor,  bool appLockEnabled,  bool appLockBiometricEnabled,  bool windowBorderEnabled,  AppWindowBorderWidth windowBorderWidth,  AppCornerStyle cornerStyle,  AppPaletteId palette,  AppSoundPack soundPack,  bool onboardingCompleted,  Map<AppShortcutAction, ShortcutBinding> shortcutBindings,  bool navigationRailExpanded,  bool performanceMode,  String? languageCode)?  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that.appLockBiometricEnabled,_that.windowBorderEnabled,_that.windowBorderWidth,_that.cornerStyle,_that.palette,_that.soundPack,_that.onboardingCompleted,_that.shortcutBindings,_that.navigationRailExpanded,_that.languageCode);case _:
+return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that.appLockBiometricEnabled,_that.windowBorderEnabled,_that.windowBorderWidth,_that.cornerStyle,_that.palette,_that.soundPack,_that.onboardingCompleted,_that.shortcutBindings,_that.navigationRailExpanded,_that.performanceMode,_that.languageCode);case _:
   return null;
 
 }
@@ -224,7 +225,7 @@ return $default(_that.themeMode,_that.expressiveColor,_that.appLockEnabled,_that
 
 
 class _AppSettings implements AppSettings {
-  const _AppSettings({required this.themeMode, required this.expressiveColor, required this.appLockEnabled, required this.appLockBiometricEnabled, required this.windowBorderEnabled, required this.windowBorderWidth, required this.cornerStyle, required this.palette, required this.soundPack, required this.onboardingCompleted, required  Map<AppShortcutAction, ShortcutBinding> shortcutBindings, required this.navigationRailExpanded, this.languageCode}): _shortcutBindings = shortcutBindings;
+  const _AppSettings({required this.themeMode, required this.expressiveColor, required this.appLockEnabled, required this.appLockBiometricEnabled, required this.windowBorderEnabled, required this.windowBorderWidth, required this.cornerStyle, required this.palette, required this.soundPack, required this.onboardingCompleted, required  Map<AppShortcutAction, ShortcutBinding> shortcutBindings, required this.navigationRailExpanded, required this.performanceMode, this.languageCode}): _shortcutBindings = shortcutBindings;
   
 
 @override final  AppThemeMode themeMode;
@@ -245,6 +246,7 @@ class _AppSettings implements AppSettings {
 }
 
 @override final  bool navigationRailExpanded;
+@override final  bool performanceMode;
 @override final  String? languageCode;
 
 /// Create a copy of AppSettings
@@ -257,18 +259,18 @@ _$AppSettingsCopyWith<_AppSettings> get copyWith => __$AppSettingsCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.expressiveColor, expressiveColor) || other.expressiveColor == expressiveColor)&&(identical(other.appLockEnabled, appLockEnabled) || other.appLockEnabled == appLockEnabled)&&(identical(other.appLockBiometricEnabled, appLockBiometricEnabled) || other.appLockBiometricEnabled == appLockBiometricEnabled)&&(identical(other.windowBorderEnabled, windowBorderEnabled) || other.windowBorderEnabled == windowBorderEnabled)&&(identical(other.windowBorderWidth, windowBorderWidth) || other.windowBorderWidth == windowBorderWidth)&&(identical(other.cornerStyle, cornerStyle) || other.cornerStyle == cornerStyle)&&(identical(other.palette, palette) || other.palette == palette)&&(identical(other.soundPack, soundPack) || other.soundPack == soundPack)&&(identical(other.onboardingCompleted, onboardingCompleted) || other.onboardingCompleted == onboardingCompleted)&&const DeepCollectionEquality().equals(other.shortcutBindings, _shortcutBindings)&&(identical(other.navigationRailExpanded, navigationRailExpanded) || other.navigationRailExpanded == navigationRailExpanded)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.expressiveColor, expressiveColor) || other.expressiveColor == expressiveColor)&&(identical(other.appLockEnabled, appLockEnabled) || other.appLockEnabled == appLockEnabled)&&(identical(other.appLockBiometricEnabled, appLockBiometricEnabled) || other.appLockBiometricEnabled == appLockBiometricEnabled)&&(identical(other.windowBorderEnabled, windowBorderEnabled) || other.windowBorderEnabled == windowBorderEnabled)&&(identical(other.windowBorderWidth, windowBorderWidth) || other.windowBorderWidth == windowBorderWidth)&&(identical(other.cornerStyle, cornerStyle) || other.cornerStyle == cornerStyle)&&(identical(other.palette, palette) || other.palette == palette)&&(identical(other.soundPack, soundPack) || other.soundPack == soundPack)&&(identical(other.onboardingCompleted, onboardingCompleted) || other.onboardingCompleted == onboardingCompleted)&&const DeepCollectionEquality().equals(other.shortcutBindings, _shortcutBindings)&&(identical(other.navigationRailExpanded, navigationRailExpanded) || other.navigationRailExpanded == navigationRailExpanded)&&(identical(other.performanceMode, performanceMode) || other.performanceMode == performanceMode)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,themeMode,expressiveColor,appLockEnabled,appLockBiometricEnabled,windowBorderEnabled,windowBorderWidth,cornerStyle,palette,soundPack,onboardingCompleted,const DeepCollectionEquality().hash(_shortcutBindings),navigationRailExpanded,languageCode);
+    return Object.hash(runtimeType,themeMode,expressiveColor,appLockEnabled,appLockBiometricEnabled,windowBorderEnabled,windowBorderWidth,cornerStyle,palette,soundPack,onboardingCompleted,const DeepCollectionEquality().hash(_shortcutBindings),navigationRailExpanded,performanceMode,languageCode);
 }
 
 @override
 String toString() {
-    return 'AppSettings(themeMode: $themeMode, expressiveColor: $expressiveColor, appLockEnabled: $appLockEnabled, appLockBiometricEnabled: $appLockBiometricEnabled, windowBorderEnabled: $windowBorderEnabled, windowBorderWidth: $windowBorderWidth, cornerStyle: $cornerStyle, palette: $palette, soundPack: $soundPack, onboardingCompleted: $onboardingCompleted, shortcutBindings: $shortcutBindings, navigationRailExpanded: $navigationRailExpanded, languageCode: $languageCode)';
+    return 'AppSettings(themeMode: $themeMode, expressiveColor: $expressiveColor, appLockEnabled: $appLockEnabled, appLockBiometricEnabled: $appLockBiometricEnabled, windowBorderEnabled: $windowBorderEnabled, windowBorderWidth: $windowBorderWidth, cornerStyle: $cornerStyle, palette: $palette, soundPack: $soundPack, onboardingCompleted: $onboardingCompleted, shortcutBindings: $shortcutBindings, navigationRailExpanded: $navigationRailExpanded, performanceMode: $performanceMode, languageCode: $languageCode)';
 }
 
 
@@ -279,7 +281,7 @@ abstract mixin class _$AppSettingsCopyWith<$Res> implements $AppSettingsCopyWith
   factory _$AppSettingsCopyWith(_AppSettings value, $Res Function(_AppSettings) _then) = __$AppSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- AppThemeMode themeMode, bool expressiveColor, bool appLockEnabled, bool appLockBiometricEnabled, bool windowBorderEnabled, AppWindowBorderWidth windowBorderWidth, AppCornerStyle cornerStyle, AppPaletteId palette, AppSoundPack soundPack, bool onboardingCompleted, Map<AppShortcutAction, ShortcutBinding> shortcutBindings, bool navigationRailExpanded, String? languageCode
+ AppThemeMode themeMode, bool expressiveColor, bool appLockEnabled, bool appLockBiometricEnabled, bool windowBorderEnabled, AppWindowBorderWidth windowBorderWidth, AppCornerStyle cornerStyle, AppPaletteId palette, AppSoundPack soundPack, bool onboardingCompleted, Map<AppShortcutAction, ShortcutBinding> shortcutBindings, bool navigationRailExpanded, bool performanceMode, String? languageCode
 });
 
 
@@ -296,7 +298,7 @@ class __$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? expressiveColor = null,Object? appLockEnabled = null,Object? appLockBiometricEnabled = null,Object? windowBorderEnabled = null,Object? windowBorderWidth = null,Object? cornerStyle = null,Object? palette = null,Object? soundPack = null,Object? onboardingCompleted = null,Object? shortcutBindings = null,Object? navigationRailExpanded = null,Object? languageCode = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? expressiveColor = null,Object? appLockEnabled = null,Object? appLockBiometricEnabled = null,Object? windowBorderEnabled = null,Object? windowBorderWidth = null,Object? cornerStyle = null,Object? palette = null,Object? soundPack = null,Object? onboardingCompleted = null,Object? shortcutBindings = null,Object? navigationRailExpanded = null,Object? performanceMode = null,Object? languageCode = freezed,}) {
   return _then(_AppSettings(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as AppThemeMode,expressiveColor: null == expressiveColor ? _self.expressiveColor : expressiveColor // ignore: cast_nullable_to_non_nullable
@@ -310,6 +312,7 @@ as AppPaletteId,soundPack: null == soundPack ? _self.soundPack : soundPack // ig
 as AppSoundPack,onboardingCompleted: null == onboardingCompleted ? _self.onboardingCompleted : onboardingCompleted // ignore: cast_nullable_to_non_nullable
 as bool,shortcutBindings: null == shortcutBindings ? _self._shortcutBindings : shortcutBindings // ignore: cast_nullable_to_non_nullable
 as Map<AppShortcutAction, ShortcutBinding>,navigationRailExpanded: null == navigationRailExpanded ? _self.navigationRailExpanded : navigationRailExpanded // ignore: cast_nullable_to_non_nullable
+as bool,performanceMode: null == performanceMode ? _self.performanceMode : performanceMode // ignore: cast_nullable_to_non_nullable
 as bool,languageCode: freezed == languageCode ? _self.languageCode : languageCode // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
