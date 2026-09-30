@@ -55,6 +55,15 @@ ARCHITECTURE_LAYER_CATEGORIES = {
     "wailsStyling",
     "wailsPackaging",
     "wailsTesting",
+    "gradleBuild",
+    "androidAppSetup",
+    "composeUi",
+    "androidState",
+    "androidViewModels",
+    "androidTheming",
+    "androidAccessibility",
+    "androidUnitTesting",
+    "androidUiTesting",
     # Mirrors `_topicCategories` — topic categories for the
     # go-algorithms-v1 / rust-algorithms-v1 / zig-algorithms-v1 Learning
     # Routes, the

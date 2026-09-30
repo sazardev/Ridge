@@ -289,6 +289,113 @@ Swift 6.2 on Linux:
 - Keep `code` ASCII-only — `key_layout_map_test.dart` maps every
   character to a physical US-QWERTY key.
 
+## New SwiftUI code: a stub module, because SwiftUI does not exist on Linux
+
+`swift_v1.json` also backs `swift-swiftui-calculator-v1`, whose view lessons
+are SwiftUI. **Apple does not ship SwiftUI for Linux**: inside
+`docker.io/library/swift:6.2`, `import SwiftUI` fails with
+`error: no such module 'SwiftUI'`, so the container above cannot compile a
+view snippet at all.
+
+- **Do not reach for OpenSwiftUI.** `github.com/OpenSwiftUIProject/OpenSwiftUI`
+  (note: *not* `github.com/OpenSwiftUI`, which does not exist) does compile on
+  Linux, but it needs an 8-10 minute build and ~1.2 GB, HEAD requires
+  `swift-tools-version 6.3` so it only works on 6.3.3-jammy (or pinned to tag
+  `0.20.1` for 6.2), and it is **missing 66 of the APIs this catalog uses** —
+  including `Button("7") { }`, the single most idiomatic line in a SwiftUI
+  calculator, plus `List`, `TextField`, `ScrollView` and `.buttonStyle`. Its
+  `.accessibilityLabel` exists but is `internal`.
+- **The bar actually used** is a hand-written stub module at
+  `tool/swiftui_stub/` (three files) whose declarations carry real Swift
+  signatures, typechecked with
+  `tool/swiftui_stub/verify.sh <file.swift>`. That still runs the real swiftc
+  6.2 front end, so it catches Swift syntax errors, wrong argument labels,
+  wrong generic constraints, result-builder misuse and property-wrapper
+  misuse. What it **cannot** check is whether an Apple API exists under exactly
+  that name and signature — the surface was transcribed by hand from Apple's
+  documentation. Say so in the doc, do not bury it.
+- **Flags that matter** (and why): `-parse-as-library` (a lone file is
+  otherwise treated as `main.swift`, which rejects `@main`), `-swift-version 5`
+  (the stub is deliberately not `@MainActor`-isolated, so Swift 6 language mode
+  is not claimed), `-warnings-as-errors` (same bar as the rest of the catalog).
+  `verify.sh` injects `import SwiftUI` when a snippet lacks it, because only
+  the route's first lesson carries the import. If a snippet refers to a type
+  taught in an earlier lesson, put that type in a sibling `<file>.support.swift`
+  — it is compiled with the snippet in the same module, which is what keeps the
+  shipped `code` the fragment the learner types.
+- **Keep the harness honest** with negative controls. Six deliberately broken
+  snippets (bad argument type, unknown view, unknown member, unbalanced brace,
+  wrong argument label, and a plain `String` where a `Binding` is expected)
+  must all fail; the last one matters most because that compiler diagnostic
+  ("use wrapper instead") is exactly what the `@Binding` lesson turns on.
+- **Stub invariants, each found by bisecting a real compiler error** (they are
+  all documented in `SwiftUIStub.swift`'s header): every declaration is
+  `public`; `ViewBuilder` needs the full `buildBlock` arity ladder 0…10,
+  because a result builder dispatches the whole block through `buildBlock`;
+  leaf views declare `typealias Body = Never` and take their `body` from
+  `extension View where Body == Never`; `Binding` must **not** declare a public
+  `init(wrappedValue:)` or `@Binding var x: String` synthesises a memberwise
+  init taking a bare `String` and `.constant(_:)` stops resolving;
+  `@EnvironmentObject`/`@Environment` need a no-argument `init()` so Swift
+  gives the memberwise parameter a default and `DetailView()` still compiles;
+  and `@dynamicMemberLookup` on `Binding` is what makes `$calculator.display`
+  legal.
+- **A stub may be incomplete, but it must never be MORE permissive than the
+  SDK in a way that hides a real error.** This bit for real: the first
+  `ObservableObjectWrapper` declared a
+  `subscript(dynamicMember: ReferenceWritableKeyPath<...>)`, so
+  `$model.display` on an `@StateObject` typechecked against the stub — and does
+  **not** compile in SwiftUI, where `ObservedObject.Wrapper` has no such
+  subscript (reaching into an observable class needs `@Observable` +
+  `@Bindable`, or plain values). The lesson had to be rewritten *and* the stub
+  tightened, and it is now covered by three probes: reading `model.display`
+  compiles, `$model.display` is rejected, and `$value.display` on a `struct` in a
+  `@State` still compiles (that one is real — it goes through `Binding`'s own
+  `@dynamicMemberLookup`). Every convenience the stub adds should be one you
+  can point at in Apple's documentation, and any suspected fiction needs a
+  probe that proves the real SDK rejects it too.
+- **Generate the capstone from the engine you tested.** A hand-written copy of a
+  tested model will drift: the first capstone had no `formattedDisplay`, no
+  `clearEntry`, a `private leftOperand` and an inlined digit cap, so the route's
+  own test suite did not build against the finished app while two lessons
+  claimed it did. Assemble the capstone's type out of the engine package's own
+  declarations — with brace counting, because a SwiftUI `body` is full of nested
+  braces and no regex can find where a type ends — so "the suite proves the
+  engine" is true of the code that ships.
+- **The engine is the test suite's subject, so make the lesson BE the suite.**
+  Ship the package's real `Tests/*.swift` file as the testing lesson, verbatim.
+  When the engine is a `struct` and the model later becomes a `final class`,
+  every test's `var calculator = Calculator()` also has to become `let` or
+  `-warnings-as-errors` rejects it — say that in the lesson that changes the
+  type, and expect the suite's member count to drift when you add a test.
+- **When a lesson adds a key or a case, check nothing else got displaced.**
+  Adding `CE` to the capstone's keypad silently deleted `+/-`, leaving
+  `negate()` unreachable and `case "+/-"` as dead code — the exact mirror of the
+  bug it was fixing. Diff the key set before and after.
+- **Split the course's logic from its UI, and run the logic for real.** The
+  calculator's 7 engine lessons are pure Swift in a real SwiftPM package under
+  marker-delimited regions, compiled cumulatively (lesson N = lessons 15..N plus
+  a throwaway driver) with
+  `swiftc -warnings-as-errors -o /tmp/bin main.swift -lm` and asserted on exact
+  stdout. The route's XCTest lesson is that package's real `Tests/` directory.
+  A bare `swiftc file.swift` does **not** link libm the way SwiftPM and Xcode
+  do, so any `Double` → whole-number conversion (`rounded()`, `abs()`,
+  `Int(exactly:)`) needs `-lm` in the harness.
+- **Compose the lessons, do not just typecheck them one by one.** Per-snippet
+  typechecking passes while the route as a whole is broken: in the first pass
+  lessons 9 and 10 called `KeyButton(title:)`, lesson 11 added `isOperator`
+  with no default, and the keypad stopped compiling the moment a learner
+  reached lesson 11. Compiling the assembled endpoint of the view block and
+  the full capstone as single files caught it.
+- **A lesson that adds a stored property needs a default** if earlier lessons
+  already construct that type, or it breaks every one of them.
+- Keep `code` ASCII-only — `key_layout_map_test.dart` maps every character to a
+  physical US-QWERTY key. Use `x` and `-` for the multiply and minus glyphs.
+- Add the SwiftUI vocabulary to `SwiftSyntaxTokenizer`'s keyword set: a view is
+  almost entirely identifiers (`some View`, property wrappers, chains of
+  capitalized constructors), and without them these snippets read as plain
+  text.
+
 ## New C# code: .NET SDK 10, nullable, warnings-as-errors, differential fuzzing
 
 `csharp_v1.json` is verified against real Roslyn (.NET SDK 10) in a

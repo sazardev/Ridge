@@ -45,7 +45,7 @@ A language is either **free-practice** or **course-only**:
 | Free-practice | Go | backs Zen/Sprint/Precision and the browser | dense grid: ≥3 per (category, difficulty) cell in core categories, ≥1 elsewhere |
 | Course-only | Bash, SQL, Rust, Python, JavaScript, TypeScript, Haskell, C, C++, Java, Crystal, Swift, CSS, C#, Dart, Kotlin, PHP, Git, Linux, GitHub Actions, Docker, Zig | exists only to compose its Learning Route(s) | every active snippet must be used by a bundled path; no orphans |
 
-Zig currently has 46 active snippets across `zig-foundations-v1` (34) and `zig-algorithms-v1` (12), and adds the two generic `ContentCategory` values `comptime` and `testing`.
+Zig currently has 46 active snippets across `zig-foundations-v1` (34) and `zig-algorithms-v1` (12), and adds the two generic `ContentCategory` values `comptime` and `testing`. Swift has 81 across `swift-foundations-v1` (20), `swift-algorithms-v1` (12), `swift-advanced-v1` (15) and `swift-swiftui-calculator-v1` (34), and adds seven: `optionals`, `closures`, `enumsAndPatternMatching`, `codable`, `propertyWrappers` for the language courses, plus `swiftUIViews` and `swiftUIState` for the SwiftUI route, which reuses no generic category at all.
 
 Practical consequences:
 - A course-only language's snippet set is authored together with its path —

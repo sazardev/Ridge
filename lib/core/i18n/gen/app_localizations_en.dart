@@ -1428,6 +1428,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryPropertyWrappers => 'Property wrappers';
 
   @override
+  String get categorySwiftUIViews => 'SwiftUI views';
+
+  @override
+  String get categorySwiftUIState => 'SwiftUI state';
+
+  @override
   String get categoryNullSafety => 'Null safety';
 
   @override
@@ -1738,6 +1744,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get categoryCliChallenges => 'CLI challenges';
+
+  @override
+  String get categoryReactComponents => 'React components';
+
+  @override
+  String get categoryJsxSyntax => 'JSX syntax';
+
+  @override
+  String get categoryPropsAndState => 'Props & state';
+
+  @override
+  String get categoryEventHandling => 'Event handling';
+
+  @override
+  String get categoryListsAndKeys => 'Lists & keys';
+
+  @override
+  String get categoryReactForms => 'React forms';
+
+  @override
+  String get categoryReactHooks => 'React hooks';
+
+  @override
+  String get categoryReactEffects => 'Effects';
+
+  @override
+  String get categoryReactContext => 'Context';
+
+  @override
+  String get categoryReactAsyncData => 'Async data';
+
+  @override
+  String get categoryReactTesting => 'React testing';
 
   @override
   String get languageGo => 'Go';
@@ -2403,6 +2442,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingDeviceTitle => 'We already know your setup';
+
+  @override
+  String get categoryGradleBuild => 'Gradle build';
+
+  @override
+  String get categoryAndroidAppSetup => 'Android app setup';
+
+  @override
+  String get categoryNumberFormatting => 'Number formatting';
+
+  @override
+  String get categoryComposeUi => 'Compose UI';
+
+  @override
+  String get categoryAndroidState => 'Compose state';
+
+  @override
+  String get categoryAndroidViewModels => 'ViewModels';
+
+  @override
+  String get categoryAndroidTheming => 'Theming';
+
+  @override
+  String get categoryAndroidAccessibility => 'Accessibility';
+
+  @override
+  String get categoryAndroidUnitTesting => 'Unit testing';
+
+  @override
+  String get categoryAndroidUiTesting => 'UI testing';
 
   @override
   String get onboardingDeviceDescription =>

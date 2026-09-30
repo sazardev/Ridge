@@ -36,6 +36,7 @@ class SnippetLocalDataSource implements SnippetCatalogSource {
     'assets/content/snippets/csharp_v1.json',
     'assets/content/snippets/swift_v1.json',
     'assets/content/snippets/kotlin_v1.json',
+    'assets/content/snippets/android_v1.json',
     'assets/content/snippets/dart_v1.json',
     'assets/content/snippets/php_v1.json',
     'assets/content/snippets/git_v1.json',

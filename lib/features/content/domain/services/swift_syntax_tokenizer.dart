@@ -34,6 +34,18 @@ class SwiftSyntaxTokenizer implements SyntaxTokenizer {
     // this catalog (`@escaping`, `@propertyWrapper`, `@MainActor`).
     'autoclosure', 'didSet', 'escaping', 'get', 'MainActor',
     'propertyWrapper', 'Sendable', 'set', 'willSet',
+    // SwiftUI's own vocabulary. SwiftUI code is almost entirely identifiers
+    // (a whole view is `some View` plus property wrappers plus chains of
+    // capitalized constructors), so without these the catalog's SwiftUI
+    // snippets read as almost unhighlighted plain text. Same treatment as
+    // the standard-library type names above: a distinct lexical category that
+    // happens to be colored the same.
+    'App', 'Binding', 'Environment', 'EnvironmentObject', 'ObservableObject',
+    'PreviewProvider', 'Published', 'Scene', 'State', 'StateObject', 'View',
+    'main',
+    'AnyView', 'Color', 'Divider', 'Font', 'ForEach', 'Grid', 'GridRow',
+    'Group', 'Image', 'LazyVGrid', 'ScrollView', 'Spacer', 'Text', 'TextField',
+    'Toggle', 'VStack', 'HStack', 'ZStack',
   };
 
   @override

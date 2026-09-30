@@ -1,0 +1,182 @@
+[
+  {
+    "id": "typescript-react-v1",
+    "language": "typescript",
+    "titleEn": "TypeScript and React",
+    "titleEs": "TypeScript y React",
+    "descriptionEn": "Build typed React 19 components, hooks and tests, one lesson at a time.",
+    "descriptionEs": "Construye componentes, hooks y tests tipados de React 19, lección a lección.",
+    "tagEn": "React",
+    "tagEs": "React",
+    "lessons": [
+      {
+        "id": "typescript-react-v1-step01",
+        "snippetId": "typescript-react-001",
+        "order": 1,
+        "titleEn": "Elements, attributes and text",
+        "titleEs": "Elementos, atributos y texto"
+      },
+      {
+        "id": "typescript-react-v1-step02",
+        "snippetId": "typescript-react-002",
+        "order": 2,
+        "titleEn": "Fragments and JSX expressions",
+        "titleEs": "Fragmentos y expresiones JSX"
+      },
+      {
+        "id": "typescript-react-v1-step03",
+        "snippetId": "typescript-react-003",
+        "order": 3,
+        "titleEn": "Conditional rendering and prop spread",
+        "titleEs": "Renderizado condicional y propagación de props"
+      },
+      {
+        "id": "typescript-react-v1-step04",
+        "snippetId": "typescript-react-004",
+        "order": 4,
+        "titleEn": "Optional props with a default value",
+        "titleEs": "Props opcionales con valor por defecto"
+      },
+      {
+        "id": "typescript-react-v1-step05",
+        "snippetId": "typescript-react-005",
+        "order": 5,
+        "titleEn": "Composition with children",
+        "titleEs": "Composición con children"
+      },
+      {
+        "id": "typescript-react-v1-step06",
+        "snippetId": "typescript-react-006",
+        "order": 6,
+        "titleEn": "A reusable card driven by a data object",
+        "titleEs": "Una tarjeta reutilizable guiada por un objeto de datos"
+      },
+      {
+        "id": "typescript-react-v1-step07",
+        "snippetId": "typescript-react-007",
+        "order": 7,
+        "titleEn": "useState with a primitive",
+        "titleEs": "useState con un primitivo"
+      },
+      {
+        "id": "typescript-react-v1-step08",
+        "snippetId": "typescript-react-008",
+        "order": 8,
+        "titleEn": "The functional updater",
+        "titleEs": "El actualizador funcional"
+      },
+      {
+        "id": "typescript-react-v1-step09",
+        "snippetId": "typescript-react-009",
+        "order": 9,
+        "titleEn": "Immutable array state",
+        "titleEs": "Estado de array inmutable"
+      },
+      {
+        "id": "typescript-react-v1-step10",
+        "snippetId": "typescript-react-010",
+        "order": 10,
+        "titleEn": "A typed onClick handler",
+        "titleEs": "Un manejador onClick tipado"
+      },
+      {
+        "id": "typescript-react-v1-step11",
+        "snippetId": "typescript-react-011",
+        "order": 11,
+        "titleEn": "Reading the value on change",
+        "titleEs": "Leer el valor en onChange"
+      },
+      {
+        "id": "typescript-react-v1-step12",
+        "snippetId": "typescript-react-012",
+        "order": 12,
+        "titleEn": "Rendering a list with map",
+        "titleEs": "Renderizar una lista con map"
+      },
+      {
+        "id": "typescript-react-v1-step13",
+        "snippetId": "typescript-react-013",
+        "order": 13,
+        "titleEn": "Keys from a domain id",
+        "titleEs": "Claves desde un id del dominio"
+      },
+      {
+        "id": "typescript-react-v1-step14",
+        "snippetId": "typescript-react-014",
+        "order": 14,
+        "titleEn": "A controlled input",
+        "titleEs": "Un input controlado"
+      },
+      {
+        "id": "typescript-react-v1-step15",
+        "snippetId": "typescript-react-015",
+        "order": 15,
+        "titleEn": "Submitting a form",
+        "titleEs": "Enviar un formulario"
+      },
+      {
+        "id": "typescript-react-v1-step16",
+        "snippetId": "typescript-react-016",
+        "order": 16,
+        "titleEn": "A typed ref on an input",
+        "titleEs": "Una ref tipada en un input"
+      },
+      {
+        "id": "typescript-react-v1-step17",
+        "snippetId": "typescript-react-017",
+        "order": 17,
+        "titleEn": "useMemo for a derived value",
+        "titleEs": "useMemo para un valor derivado"
+      },
+      {
+        "id": "typescript-react-v1-step18",
+        "snippetId": "typescript-react-018",
+        "order": 18,
+        "titleEn": "Syncing the document title",
+        "titleEs": "Sincronizar el título del documento"
+      },
+      {
+        "id": "typescript-react-v1-step19",
+        "snippetId": "typescript-react-019",
+        "order": 19,
+        "titleEn": "Effect cleanup with a timer",
+        "titleEs": "Limpieza de un efecto con un temporizador"
+      },
+      {
+        "id": "typescript-react-v1-step20",
+        "snippetId": "typescript-react-020",
+        "order": 20,
+        "titleEn": "Context for a shared theme",
+        "titleEs": "Contexto para un tema compartido"
+      },
+      {
+        "id": "typescript-react-v1-step21",
+        "snippetId": "typescript-react-021",
+        "order": 21,
+        "titleEn": "A discriminated load state",
+        "titleEs": "Un estado de carga discriminado"
+      },
+      {
+        "id": "typescript-react-v1-step22",
+        "snippetId": "typescript-react-022",
+        "order": 22,
+        "titleEn": "An async hook with cleanup",
+        "titleEs": "Un hook asíncrono con limpieza"
+      },
+      {
+        "id": "typescript-react-v1-step23",
+        "snippetId": "typescript-react-023",
+        "order": 23,
+        "titleEn": "Testing a click interaction",
+        "titleEs": "Probar una interacción de clic"
+      },
+      {
+        "id": "typescript-react-v1-step24",
+        "snippetId": "typescript-react-024",
+        "order": 24,
+        "titleEn": "Testing a form with cleanup",
+        "titleEs": "Probar un formulario con limpieza"
+      }
+    ]
+  }
+]

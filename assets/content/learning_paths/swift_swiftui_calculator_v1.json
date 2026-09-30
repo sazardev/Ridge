@@ -1,0 +1,252 @@
+[
+  {
+    "id": "swift-swiftui-calculator-v1",
+    "language": "swift",
+    "titleEn": "SwiftUI: a calculator from scratch",
+    "titleEs": "SwiftUI: una calculadora desde cero",
+    "descriptionEn": "Build a real calculator in SwiftUI, from the first view to observable state and tests.",
+    "descriptionEs": "Construye una calculadora real en SwiftUI, desde la primera vista hasta el estado observable y las pruebas.",
+    "tagEn": "SwiftUI",
+    "tagEs": "SwiftUI",
+    "lessons": [
+      {
+        "id": "swift-swiftui-calculator-v1-step01",
+        "snippetId": "swiftui-app-001",
+        "order": 1,
+        "titleEn": "Your first SwiftUI app",
+        "titleEs": "Tu primera app SwiftUI"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step02",
+        "snippetId": "swiftui-view-001",
+        "order": 2,
+        "titleEn": "Custom views and `some View`",
+        "titleEs": "Vistas propias y `some View`"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step03",
+        "snippetId": "swiftui-text-001",
+        "order": 3,
+        "titleEn": "Typography with `font` modifiers",
+        "titleEs": "Tipografía con modificadores `font`"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step04",
+        "snippetId": "swiftui-stack-001",
+        "order": 4,
+        "titleEn": "`VStack` and `HStack`",
+        "titleEs": "`VStack` y `HStack`"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step05",
+        "snippetId": "swiftui-stack-002",
+        "order": 5,
+        "titleEn": "`Spacer` and flexible frames",
+        "titleEs": "`Spacer` y marcos flexibles"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step06",
+        "snippetId": "swiftui-stack-003",
+        "order": 6,
+        "titleEn": "Layering with `ZStack`",
+        "titleEs": "Capas con `ZStack`"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step07",
+        "snippetId": "swiftui-mod-001",
+        "order": 7,
+        "titleEn": "Modifiers wrap views",
+        "titleEs": "Los modificadores envuelven vistas"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step08",
+        "snippetId": "swiftui-button-001",
+        "order": 8,
+        "titleEn": "`Button` and its action",
+        "titleEs": "`Button` y su acción"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step09",
+        "snippetId": "swiftui-foreach-001",
+        "order": 9,
+        "titleEn": "`ForEach` over a row of keys",
+        "titleEs": "`ForEach` sobre una fila de teclas"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step10",
+        "snippetId": "swiftui-grid-001",
+        "order": 10,
+        "titleEn": "`Grid` and `GridRow`",
+        "titleEs": "`Grid` y `GridRow`"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step11",
+        "snippetId": "swiftui-color-001",
+        "order": 11,
+        "titleEn": "Coloring keys by role",
+        "titleEs": "Colorear teclas por rol"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step12",
+        "snippetId": "swiftui-preview-001",
+        "order": 12,
+        "titleEn": "Previewing a screen",
+        "titleEs": "Previsualizar una pantalla"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step13",
+        "snippetId": "swiftui-text-002",
+        "order": 13,
+        "titleEn": "Scaling the display for Dynamic Type",
+        "titleEs": "Escalar la pantalla con Dynamic Type"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step14",
+        "snippetId": "swiftui-a11y-001",
+        "order": 14,
+        "titleEn": "Accessibility on a group",
+        "titleEs": "Accesibilidad en un grupo"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step15",
+        "snippetId": "swiftui-model-001",
+        "order": 15,
+        "titleEn": "`Operation`: a String-backed enum",
+        "titleEs": "`Operation`: un enum con String"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step16",
+        "snippetId": "swiftui-model-002",
+        "order": 16,
+        "titleEn": "The calculator's state and digit entry",
+        "titleEs": "El estado de la calculadora y la entrada de dígitos"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step17",
+        "snippetId": "swiftui-model-003",
+        "order": 17,
+        "titleEn": "`clearAll` and formatting a result",
+        "titleEs": "`clearAll` y formatear un resultado"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step18",
+        "snippetId": "swiftui-model-004",
+        "order": 18,
+        "titleEn": "Decimals and thousands grouping",
+        "titleEs": "Decimales y agrupación de millares"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step19",
+        "snippetId": "swiftui-model-005",
+        "order": 19,
+        "titleEn": "`Calculation`: a result enum",
+        "titleEs": "`Calculation`: un enum de resultado"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step20",
+        "snippetId": "swiftui-model-006",
+        "order": 20,
+        "titleEn": "`choose` and `equals`, the pending operation",
+        "titleEs": "`choose` y `equals`, la operación pendiente"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step21",
+        "snippetId": "swiftui-model-007",
+        "order": 21,
+        "titleEn": "`negate`, `percent` and `clearEntry`",
+        "titleEs": "`negate`, `percent` y `clearEntry`"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step22",
+        "snippetId": "swiftui-test-001",
+        "order": 22,
+        "titleEn": "Testing the engine",
+        "titleEs": "Probar el motor"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step23",
+        "snippetId": "swiftui-state-001",
+        "order": 23,
+        "titleEn": "`@State` in a view",
+        "titleEs": "`@State` en una vista"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step24",
+        "snippetId": "swiftui-state-002",
+        "order": 24,
+        "titleEn": "`@Binding` for a child view",
+        "titleEs": "`@Binding` para una vista hija"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step25",
+        "snippetId": "swiftui-state-003",
+        "order": 25,
+        "titleEn": "`ObservableObject` and `@Published`",
+        "titleEs": "`ObservableObject` y `@Published`"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step26",
+        "snippetId": "swiftui-state-004",
+        "order": 26,
+        "titleEn": "`@StateObject` and model lifetime",
+        "titleEs": "`@StateObject` y el ciclo de vida"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step27",
+        "snippetId": "swiftui-state-005",
+        "order": 27,
+        "titleEn": "`@EnvironmentObject` injection",
+        "titleEs": "Inyección con `@EnvironmentObject`"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step28",
+        "snippetId": "swiftui-state-006",
+        "order": 28,
+        "titleEn": "An `Identifiable` key model",
+        "titleEs": "Un modelo de tecla `Identifiable`"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step29",
+        "snippetId": "swiftui-state-007",
+        "order": 29,
+        "titleEn": "Two-way binding in a `TextField`",
+        "titleEs": "Binding bidireccional en un `TextField`"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step30",
+        "snippetId": "swiftui-state-008",
+        "order": 30,
+        "titleEn": "Derived display, no duplicated state",
+        "titleEs": "Display derivado, sin estado duplicado"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step31",
+        "snippetId": "swiftui-state-009",
+        "order": 31,
+        "titleEn": "`onChange` for side effects",
+        "titleEs": "`onChange` para efectos secundarios"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step32",
+        "snippetId": "swiftui-state-010",
+        "order": 32,
+        "titleEn": "`@AppStorage` for preferences",
+        "titleEs": "`@AppStorage` para preferencias"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step33",
+        "snippetId": "swiftui-state-011",
+        "order": 33,
+        "titleEn": "Animating a state change",
+        "titleEs": "Animar un cambio de estado"
+      },
+      {
+        "id": "swift-swiftui-calculator-v1-step34",
+        "snippetId": "swiftui-app-002",
+        "order": 34,
+        "titleEn": "The complete calculator",
+        "titleEs": "La calculadora completa"
+      }
+    ]
+  }
+]
