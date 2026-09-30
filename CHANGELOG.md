@@ -11,6 +11,12 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.19.0] - 2026-09-29
+
+### Added
+- **content:** add SwiftUI, TypeScript React and Kotlin Android course routes (5093e52)
+- **content:** add go-wails-desktop-v1 desktop app course (70cd93f)
+
 ## [1.18.0] - 2026-09-25
 
 ### Added
