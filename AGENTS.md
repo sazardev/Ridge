@@ -222,15 +222,43 @@ course-only — its catalog contains exactly the snippets its bundled
 Learning Path(s) reference, no orphans (Bash, SQL, Rust, Zig, Python —
 including the three Django courses — JavaScript, TypeScript, Haskell, C,
 C++, Java, Crystal, Swift, CSS, C#, Dart, Kotlin, PHP, Git, Linux, GitHub
-Actions, and Docker). Zig 0.16.0's current catalog is
+Actions, and Docker). Kotlin's catalog is split across two bundled assets sharing the same
+`language` value: `kotlin_v1.json` (53 snippets behind
+`kotlin-foundations-v1`, `kotlin-algorithms-v1` and
+`kotlin-advanced-v1`) and `android_v1.json` (32 snippets behind the
+project-style `kotlin-android-calculator-v1`, which builds one real
+calculator app from Gradle setup to a Compose UI). `SnippetLocalDataSource`
+merges every bundled catalog it is given, and
+`snippet_catalog_completeness_test.dart`'s `_catalogAssetByLanguage` is a
+`Map<ProgrammingLanguage, List<String>>` precisely so a language may own
+more than one. That route adds ten categories of its own (`gradleBuild`,
+`androidAppSetup`, `numberFormatting`, `composeUi`, `androidState`,
+`androidViewModels`, `androidTheming`, `androidAccessibility`,
+`androidUnitTesting`, `androidUiTesting`); its `code` is strict ASCII
+(`-` `*` `/` `+` `+/-` `%`, never `−` `×` `÷`) because
+`key_layout_map_test.dart` requires every character of every catalog
+`code` to resolve to a US-QWERTY physical key.
+
+Zig 0.16.0's current catalog is
 `assets/content/snippets/zig_v1.json` with 46 active snippets:
 `zig-foundations-v1` has 34 and `zig-algorithms-v1` has the standard 12
 search/sort/graph lessons. Zig reuses the existing categories and adds
 `comptime` (compile-time evaluation and generics) plus `testing`. Foundations
 routes target beginners and mostly reuse Go's generic
 categories; CSS and PHP are full exceptions with categories of their own.
-Per-route details (categories, snippet counts, special cases) live in
-`Memory.md` and the skill below — trust those over any summary.
+Swift's catalog is 81 active snippets across four routes
+(`swift-foundations-v1` 20, `swift-algorithms-v1` 12, `swift-advanced-v1` 15
+and `swift-swiftui-calculator-v1` 34) and adds the two SwiftUI categories
+`swiftUIViews` and `swiftUIState`. **SwiftUI has no Linux toolchain** — Apple
+does not ship it, and `import SwiftUI` fails inside the `swift:6.2` image — so
+its view snippets are typechecked by the real swiftc front end against the
+hand-written stub module in `tool/swiftui_stub/`
+(`bash tool/swiftui_stub/verify.sh <file>`), and the route is additionally
+compiled as one assembled app, because per-snippet typechecking alone missed a
+breakage where a later lesson made an earlier one stop compiling. The route's
+pure-Swift engine lessons are compiled and run for real. Per-route details
+(categories, snippet counts, special cases) live in `Memory.md` and the skill
+below — trust those over any summary.
 
 Use the `content-curriculum` skill (`.claude/skills/`) before editing
 either JSON: it encodes the DTO/domain/drift mapping, the two failed

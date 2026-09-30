@@ -95,6 +95,22 @@ enum ContentCategory {
   sortingAlgorithms,
   // Adjacency-list graphs, BFS, DFS, Dijkstra. Topic category.
   graphAlgorithms,
+  // Wails' expression lexer, recursive-descent grammar and formatting.
+  calculatorCore,
+  // Wails' `wails.json` and `go.mod`: what the CLI reads to build.
+  wailsProjectSetup,
+  // Wails' `App` struct, `Bind` list, generated shims, Go->JS events.
+  wailsBindings,
+  // Wails' `frontend/`: `index.html`, the vanilla-TS module, the bindings.
+  wailsFrontend,
+  // Wails' `options.App`, `AssetServer`, lifecycle hooks, per-platform.
+  wailsArchitecture,
+  // Wails' embedded CSS: design tokens and the keypad grid.
+  wailsStyling,
+  // `wails build` flags and the `build/` per-platform metadata.
+  wailsPackaging,
+  // Testing the engine's table-driven cases and the bound methods.
+  wailsTesting,
   // Bubble Tea's `Model`/`Init`/`Update`/`View` loop. Architecture.
   tuiArchitecture,
   // Lip Gloss styles, colors, borders, padding. Architecture.
@@ -167,6 +183,10 @@ enum ContentCategory {
   codable,
   // Swift `@propertyWrapper` and `wrappedValue`.
   propertyWrappers,
+  // SwiftUI: `App`, `Scene`, `View`, `body`, layout, modifiers, previews.
+  swiftUIViews,
+  // SwiftUI: `@State`, `@Binding`, `@EnvironmentObject`, `@Published`.
+  swiftUIState,
   // Kotlin/Dart `String?`, `?.`, `?:`, `!!`, `late`, flow promotion.
   nullSafety,
   // Kotlin `data class` and destructuring declarations.
@@ -376,4 +396,46 @@ enum ContentCategory {
   cliMenus,
   // Complete CLI programs combining state, maps, and randomness.
   cliChallenges,
+  // React: function components, composition, returning JSX.
+  reactComponents,
+  // JSX/TSX syntax: elements, fragments, self-closing tags.
+  jsxSyntax,
+  // Component props and `useState` state, lifting state up.
+  propsAndState,
+  // Event props (`onClick`, `onChange`) and synthetic events.
+  eventHandling,
+  // Rendering collections with `.map()` and stable `key`s.
+  listsAndKeys,
+  // Controlled inputs, `onChange` handlers, form submission.
+  reactForms,
+  // `useState`, `useReducer`, `useRef`, `useContext`, custom hooks.
+  reactHooks,
+  // `useEffect` for subscriptions, timers, and cleanup.
+  reactEffects,
+  // Context providers/consumers and the re-render boundary.
+  reactContext,
+  // `fetch` in effects, loading/error state, custom data hooks.
+  reactAsyncData,
+  // Testing components with Testing Library and `userEvent`.
+  reactTesting,
+  // Gradle: the settings file, the version catalog, the module build file.
+  gradleBuild,
+  // The manifest, its resources, and the activity it declares.
+  androidAppSetup,
+  // Rendering a `Double` for humans: precision, trailing zeros, `-0`.
+  numberFormatting,
+  // `@Composable` functions, layout modifiers, Material 3 components.
+  composeUi,
+  // `mutableStateOf`, recomposition, hoisting, `rememberSaveable`.
+  androidState,
+  // `ViewModel`, `StateFlow`, `viewModel()`, `collectAsStateWithLifecycle`.
+  androidViewModels,
+  // `MaterialTheme`, light/dark color schemes, following the system theme.
+  androidTheming,
+  // Spoken names for screen readers via `stringResource` and semantics.
+  androidAccessibility,
+  // Local JVM unit tests for the engine, with no Android runtime in sight.
+  androidUnitTesting,
+  // Instrumented Compose UI tests driving the real composable tree.
+  androidUiTesting,
 }

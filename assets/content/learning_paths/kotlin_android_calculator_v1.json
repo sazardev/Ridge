@@ -1,0 +1,238 @@
+[
+  {
+    "id": "kotlin-android-calculator-v1",
+    "language": "kotlin",
+    "titleEn": "Android: Build a Calculator App with Compose",
+    "titleEs": "Android: construye una calculadora con Compose",
+    "descriptionEn": "Ship a Kotlin calculator on Android, from Gradle setup to a tested Jetpack Compose UI.",
+    "descriptionEs": "Publica una calculadora en Kotlin para Android, del setup de Gradle a una UI probada con Compose.",
+    "tagEn": "Android",
+    "tagEs": "Android",
+    "lessons": [
+      {
+        "id": "kotlin-android-calculator-v1-step01",
+        "snippetId": "android-gradle-001",
+        "order": 1,
+        "titleEn": "Declare repositories and the `:app` module",
+        "titleEs": "Declarar repositorios y el módulo `:app`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step02",
+        "snippetId": "android-gradle-002",
+        "order": 2,
+        "titleEn": "Pin every dependency in a version catalog",
+        "titleEs": "Fijar dependencias en un catálogo de versiones"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step03",
+        "snippetId": "android-gradle-003",
+        "order": 3,
+        "titleEn": "Configure the `:app` module in `build.gradle.kts`",
+        "titleEs": "Configurar el módulo `:app` en `build.gradle.kts`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step04",
+        "snippetId": "android-manifest-001",
+        "order": 4,
+        "titleEn": "Name the app in `strings.xml`",
+        "titleEs": "Nombrar la app en `strings.xml`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step05",
+        "snippetId": "android-manifest-002",
+        "order": 5,
+        "titleEn": "A `NoActionBar` theme for a Compose app",
+        "titleEs": "Un tema `NoActionBar` para una app Compose"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step06",
+        "snippetId": "android-manifest-003",
+        "order": 6,
+        "titleEn": "Declare the app, its activity and the launcher",
+        "titleEs": "Declarar la app, su activity y el lanzador"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step07",
+        "snippetId": "android-oop-001",
+        "order": 7,
+        "titleEn": "`enum class Operator` carrying a `symbol`",
+        "titleEs": "`enum class Operator` con un `symbol`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step08",
+        "snippetId": "android-oop-002",
+        "order": 8,
+        "titleEn": "`sealed interface CalculatorState` with two cases",
+        "titleEs": "`sealed interface CalculatorState` con dos casos"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step09",
+        "snippetId": "android-oop-003",
+        "order": 9,
+        "titleEn": "`CalculatorEngine` owning one piece of state",
+        "titleEs": "`CalculatorEngine` como dueño de un único estado"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step10",
+        "snippetId": "android-format-001",
+        "order": 10,
+        "titleEn": "Format doubles without floating-point noise",
+        "titleEs": "Formatear `Double` sin ruido de coma flotante"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step11",
+        "snippetId": "android-err-001",
+        "order": 11,
+        "titleEn": "Return `null` from `combine` on division by zero",
+        "titleEs": "Devolver `null` desde `combine` al dividir por cero"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step12",
+        "snippetId": "android-cond-001",
+        "order": 12,
+        "titleEn": "Choose replace or append in `digit()`",
+        "titleEs": "Elegir reemplazo o anexado en `digit()`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step13",
+        "snippetId": "android-cond-002",
+        "order": 13,
+        "titleEn": "Keep one decimal point per entry",
+        "titleEs": "Mantener un solo punto decimal por entrada"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step14",
+        "snippetId": "android-cond-003",
+        "order": 14,
+        "titleEn": "Give `%` and `+/-` their real meaning",
+        "titleEs": "Dar a `%` y `+/-` su significado real"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step15",
+        "snippetId": "android-cond-004",
+        "order": 15,
+        "titleEn": "Chain operators in `operator(next)`",
+        "titleEs": "Encadenar operadores en `operator(next)`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step16",
+        "snippetId": "android-cond-005",
+        "order": 16,
+        "titleEn": "Finish the calculation in `equals()`",
+        "titleEs": "Terminar el cálculo en `equals()`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step17",
+        "snippetId": "android-test-001",
+        "order": 17,
+        "titleEn": "Drive the engine with a `presses()` helper",
+        "titleEs": "Manejar el motor con un helper `presses()`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step18",
+        "snippetId": "android-test-002",
+        "order": 18,
+        "titleEn": "Pin nine keypad rules against the visible display",
+        "titleEs": "Fija nueve reglas del teclado contra el display visible"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step19",
+        "snippetId": "android-compose-001",
+        "order": 19,
+        "titleEn": "A stateless `CalculatorScreen` in `Scaffold`",
+        "titleEs": "Una `CalculatorScreen` sin estado en `Scaffold`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step20",
+        "snippetId": "android-compose-002",
+        "order": 20,
+        "titleEn": "Launch it from `MainActivity` with `setContent`",
+        "titleEs": "Arráncala desde `MainActivity` con `setContent`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step21",
+        "snippetId": "android-compose-003",
+        "order": 21,
+        "titleEn": "A themed `CalculatorButton` with an `accent` flag",
+        "titleEs": "Un `CalculatorButton` con tema y flag `accent`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step22",
+        "snippetId": "android-compose-004",
+        "order": 22,
+        "titleEn": "Lay out the keypad with `Modifier.weight`",
+        "titleEs": "Distribuir el teclado con `Modifier.weight`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step23",
+        "snippetId": "android-compose-005",
+        "order": 23,
+        "titleEn": "Stack the keypad under the display",
+        "titleEs": "Apilar el teclado bajo el display"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step24",
+        "snippetId": "android-state-001",
+        "order": 24,
+        "titleEn": "Hold the display in `mutableStateOf`",
+        "titleEs": "Guardar el display en `mutableStateOf`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step25",
+        "snippetId": "android-state-002",
+        "order": 25,
+        "titleEn": "`rememberSaveable` and what it does not save",
+        "titleEs": "`rememberSaveable` y lo que no guarda"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step26",
+        "snippetId": "android-vm-001",
+        "order": 26,
+        "titleEn": "Own the engine in a `ViewModel`",
+        "titleEs": "Poseer el motor en un `ViewModel`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step27",
+        "snippetId": "android-vm-002",
+        "order": 27,
+        "titleEn": "Read the `ViewModel` from a stateless screen",
+        "titleEs": "Leer el `ViewModel` desde una pantalla sin estado"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step28",
+        "snippetId": "android-theme-001",
+        "order": 28,
+        "titleEn": "Define `lightColorScheme` and `darkColorScheme`",
+        "titleEs": "Definir `lightColorScheme` y `darkColorScheme`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step29",
+        "snippetId": "android-theme-002",
+        "order": 29,
+        "titleEn": "Follow the system theme with `CalculatorTheme`",
+        "titleEs": "Seguir el tema del sistema con `CalculatorTheme`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step30",
+        "snippetId": "android-a11y-001",
+        "order": 30,
+        "titleEn": "Name every key for screen readers in `strings.xml`",
+        "titleEs": "Nombrar cada tecla para lectores en `strings.xml`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step31",
+        "snippetId": "android-a11y-002",
+        "order": 31,
+        "titleEn": "Give each key a spoken name with `stringResource`",
+        "titleEs": "Dar a cada tecla un nombre con `stringResource`"
+      },
+      {
+        "id": "kotlin-android-calculator-v1-step32",
+        "snippetId": "android-uitest-001",
+        "order": 32,
+        "titleEn": "Tap the real `CalculatorApp` in an androidTest",
+        "titleEs": "Pulsar la `CalculatorApp` real en un androidTest"
+      }
+    ]
+  }
+]

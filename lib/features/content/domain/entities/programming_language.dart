@@ -33,12 +33,18 @@ enum ProgrammingLanguage {
   /// `js-algorithms-v1` — course-only, like Bash/SQL/Rust/Python.
   javascript,
 
-  /// TypeScript, taught by `typescript-foundations-v1` (beginner) and
-  /// `typescript-algorithms-v1` — course-only, like Bash/SQL/Rust/Python/
+  /// TypeScript, taught by `typescript-foundations-v1` (beginner),
+  /// `typescript-algorithms-v1`, and `typescript-react-v1` (a React +
+  /// JSX/TSX course) — course-only, like Bash/SQL/Rust/Python/
   /// JavaScript. Its foundations route reuses the generic
   /// `variablesAndTypes`/`conditionals`/`loops`/`functions` categories for
   /// the typed core, plus two of its own (`classesAndObjects`, `modules`)
-  /// for the class/module tour the JavaScript route doesn't cover.
+  /// for the class/module tour the JavaScript route doesn't cover. The
+  /// React route is TSX-only and adds eleven categories of its own
+  /// (`reactComponents`, `jsxSyntax`, `propsAndState`, `eventHandling`,
+  /// `listsAndKeys`, `reactForms`, `reactHooks`, `reactEffects`,
+  /// `reactContext`, `reactAsyncData`, `reactTesting`), because React's
+  /// component model reuses none of the Go categories.
   typescript,
 
   /// Haskell, taught by `haskell-foundations-v1` (beginner) and
@@ -89,15 +95,18 @@ enum ProgrammingLanguage {
   crystal,
 
   /// Swift, taught by `swift-foundations-v1` (beginner),
-  /// `swift-algorithms-v1`, and `swift-advanced-v1` — course-only, like
-  /// the languages above. Its foundations route reuses the generic
+  /// `swift-algorithms-v1`, `swift-advanced-v1`, and
+  /// `swift-swiftui-calculator-v1` — course-only, like the languages above.
+  /// Its foundations route reuses the generic
   /// `variablesAndTypes`/`conditionals`/`loops`/`functions`/
   /// `classesAndObjects`/`interfaces`/`errorHandling` categories plus
   /// three of its own (`optionals`, `closures`,
   /// `enumsAndPatternMatching`); the advanced route reuses `optionals`/
   /// `enumsAndPatternMatching`/`closures`/`generics`/`interfaces`/
   /// `memoryManagement`/`errorHandling`/`concurrency` plus two of its own
-  /// (`codable`, `propertyWrappers`).
+  /// (`codable`, `propertyWrappers`); the SwiftUI calculator route adds two
+  /// more (`swiftUIViews` for the view layer, `swiftUIState` for state and
+  /// data flow) and reuses no generic category at all.
   swift,
 
   /// CSS, the stylesheet language of the web — taught by
@@ -124,14 +133,22 @@ enum ProgrammingLanguage {
   csharp,
 
   /// Kotlin, taught by `kotlin-foundations-v1` (beginner),
-  /// `kotlin-algorithms-v1`, and `kotlin-advanced-v1` — course-only, like
-  /// the languages above. Its foundations route reuses the generic
+  /// `kotlin-algorithms-v1`, `kotlin-advanced-v1` and
+  /// `kotlin-android-calculator-v1` — course-only, like the languages above.
+  /// Its foundations route reuses the generic
   /// `variablesAndTypes`/`conditionals`/`loops`/`functions`/
   /// `classesAndObjects`/`errorHandling` categories plus five of its own
   /// (`nullSafety`, `dataClasses`, `lambdas`, `extensions`, `collections`)
   /// for the concepts Go's categories don't represent; the advanced route
   /// reuses `classesAndObjects`/`interfaces`/`generics`/`errorHandling`
   /// plus `coroutines`, its own category for suspend functions and flows.
+  /// The Android route is a project-style build of one calculator app
+  /// (Gradle, manifest, a plain-Kotlin engine, Compose, a `ViewModel`,
+  /// theming, accessibility and both testing tiers), so besides reusing
+  /// `classesAndObjects`/`conditionals`/`errorHandling` it adds ten of
+  /// its own (`gradleBuild`, `androidAppSetup`, `numberFormatting`,
+  /// `composeUi`, `androidState`, `androidViewModels`, `androidTheming`,
+  /// `androidAccessibility`, `androidUnitTesting`, `androidUiTesting`).
   kotlin,
 
   /// Dart, the null-safe, async-first language behind Flutter — taught by

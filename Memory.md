@@ -37,7 +37,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
   | Lenguaje | Catálogo | Ruta | Tier |
   |---|---|---|---|
-  | Go | 293 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) + `go-algorithms-v1` (12) + `go-interfaces-v1` (24, interfaces/type/struct → JSON y diseño testeable) + `go-rest-http-v1` (33, API REST/HTTP/CRUD, cliente y SQLite) + `go-modern-idioms-v1` (34, lenguaje/stdlib 1.26-1.27, iteradores, JSON v2, diseño de API y errores) + `go-production-v1` (24, concurrencia, fugas, testing, perfilado, observabilidad y tooling) + `go-cli-programs-v1` (20, programas CLI completos e independientes — no incrementales: aritmética, texto, menús interactivos con `bufio.Scanner` y desafíos con maps/rand; 4 categorías nuevas `cli*`, ver sesión de hoy) | práctica libre (grid denso) |
+  | Go | 329 snippets | `go-foundations-v1` (~51 lecciones) + `go-intermediate-syntax-v1` (25, con bloque Go 1.27) + notas DDD + `go-tui-notes-v1` (29, TUI Bubble Tea) + `go-algorithms-v1` (12) + `go-interfaces-v1` (24, interfaces/type/struct → JSON y diseño testeable) + `go-rest-http-v1` (33, API REST/HTTP/CRUD, cliente y SQLite) + `go-modern-idioms-v1` (34, lenguaje/stdlib 1.26-1.27, iteradores, JSON v2, diseño de API y errores) + `go-production-v1` (24, concurrencia, fugas, testing, perfilado, observabilidad y tooling) + `go-cli-programs-v1` (20, programas CLI completos e independientes — no incrementales: aritmética, texto, menús interactivos con `bufio.Scanner` y desafíos con maps/rand; 4 categorías nuevas `cli*`) + `go-wails-desktop-v1` (36, calculadora de escritorio con **Wails v2.16.0**: motor de expresiones propio → bindings Go↔JS → frontend vanilla-TS → ciclo de vida/eventos → CSS → `wails build` → tests; 8 categorías nuevas `calculatorCore`/`wails*`, ver sesión de hoy) | práctica libre (grid denso) |
   | Bash (Arch) | 95 snippets | `bash-foundations-v1` + `bash-toolkit-v1` | solo-curso |
   | SQL (PostgreSQL) | 60 snippets | `sql-foundations-v1` (60) | solo-curso |
   | Rust | 24 snippets | `rust-foundations-v1` (12, solo principiante) + `rust-algorithms-v1` (12) | solo-curso |
@@ -52,7 +52,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   | Crystal | 28 snippets | `crystal-foundations-v1` (16, tour amplio) + `crystal-algorithms-v1` (12) — ambos nuevos, ver sesión de hoy | solo-curso |
   | CSS | 45 snippets | `css-foundations-v1` (16, introducción) + `css-layout-v1` (16, flexbox/grid/posicionamiento/responsive) + `css-advanced-v1` (13, cascada/variables/animaciones) — los tres nuevos, ver sesión de hoy | solo-curso |
   | C# (.NET 10) | 52 snippets | `csharp-foundations-v1` (25, introducción) + `csharp-algorithms-v1` (12) + `csharp-advanced-v1` (15, records/patrones/generics/delegados/LINQ/async/`IDisposable`) — los tres nuevos, ver sesión de hoy | solo-curso |
-  | Swift | 47 snippets | `swift-foundations-v1` (20, tour amplio con proyecto final) + `swift-algorithms-v1` (12) + `swift-advanced-v1` (15, ARC/genéricos/opacos/Codable/property wrappers/actores/task groups) — los tres nuevos, ver sesión de hoy | solo-curso |
+  | Swift | 81 snippets | `swift-foundations-v1` (20, tour amplio con proyecto final) + `swift-algorithms-v1` (12) + `swift-advanced-v1` (15, ARC/genéricos/opacos/Codable/property wrappers/actores/task groups) + `swift-swiftui-calculator-v1` (**34**, calculadora completa en SwiftUI: `@main`/`App` → `VStack`/`Grid`/`ForEach` → motor puro testeable + XCTest → `@State`/`@Binding`/`ObservableObject`/`@EnvironmentObject`/`@AppStorage` → capstone; 2 categorías nuevas `swiftUIViews`/`swiftUIState`) | solo-curso |
   | Dart | 53 snippets | `dart-foundations-v1` (25, tour amplio) + `dart-advanced-v1` (16, streams/isolates/patrones/mixins/genéricos) + `dart-algorithms-v1` (12) — los tres nuevos, ver sesión de hoy | solo-curso |
 | Kotlin | 53 snippets | `kotlin-foundations-v1` (22, introducción) + `kotlin-algorithms-v1` (12) + `kotlin-advanced-v1` (19, selladas/`object`/delegación/genéricos y varianza/`lateinit`/extensiones/lambdas/`Result`/corrutinas) — los tres nuevos, ver sesión de hoy | solo-curso |
   | PHP | 48 snippets | `php-foundations-v1` (24, tour: tipos/null-coalescing/strings/condicionales/arreglos/ciclos/funciones/POO/enums/excepciones/namespaces) + `php-web-v1` (12, superglobales/formularios/sesiones/PDO/JSON/archivos) + `php-algorithms-v1` (12) — los tres nuevos, ver sesión de hoy | solo-curso |
@@ -240,6 +240,67 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   no llevan stagger para no re-animar al hacer scroll.
 - **Pendiente:** verificar a ojo en `flutter run -d linux`; ajustar
   intensidades si algo se siente excesivo.
+### 2026-09-25 — Curso Go: apps de escritorio con Wails (`go-wails-desktop-v1`)
+
+- **Curso nuevo de 36 lecciones** que construye una **calculadora de
+  escritorio con Wails v2.16.0**, de principio a fin. La espina dorsal es
+  un motor de expresiones escrito a mano y verificado, y el resto son las
+  piezas reales de Wails: el struct `App` y la lista `Bind`, los shims
+  generados, `//go:embed`, `AssetServer.Handler`, los cuatro hooks del
+  ciclo de vida, eventos Go→JS, opciones por plataforma, `ErrorFormatter`,
+  el frontend vanilla-TS, el CSS, `wails build` y los tests. Ocho
+  categorías nuevas: `calculatorCore`, `wailsProjectSetup`,
+  `wailsBindings`, `wailsFrontend`, `wailsArchitecture`, `wailsStyling`,
+  `wailsPackaging`, `wailsTesting` (registradas en el enum, en
+  `content_labels.dart`, en `_architectureLayerCategories` del test de
+  completitud y en el `audit_lesson_order.py` de la skill).
+- **Verificación real, no de lectura**: se construyó una app Wails completa
+  y funcional en `/tmp` y **compiló y empaquetó de verdad** —
+  `gofmt -l` limpio, `go vet` limpio, `go test` verde, `tsc --noEmit`
+  limpio, y `wails build -clean -tags webkit2_41` produciendo un binario
+  de escritorio de 9 MB. 31 de los 36 snippets son **byte a byte** código
+  de ese proyecto; los 5 restantes son recortes fieles (comandos del CLI
+  realmente ejecutados, los dos archivos generados concatenados y
+  explícitamente etiquetados como tales, y un `go.mod` abreviado con una
+  marca visible de elipsis).
+- **Dos revisiones adversariales** (la skill las exige antes de dar por
+  buena una ordenación). La primera cazó **11 blockers reales**, entre
+  ellos: `OnBeforeClose` invertido (el parámetro se llama `prevent`, así
+  que `true` *cancela* el cierre — el código llegó a hacer la app
+  incerrable), tres snippets cuya prosa describía código que no contenían
+  (`KEYS.map`, `EventsOn`, `render()` nunca definidos), `//go:embed` sin
+  aparecer en ninguna lección, `CalcResult` usado tres lecciones antes de
+  definirse, `Describe`/`History`/`ClearHistory` sin definir, y la
+  afirmación falsa de que los structs de opciones de plataforma están
+  protegidos por `GOOS` (no lo están: no tienen `go:build`). La segunda
+  cazó 8 más, el más grave: **`ErrorFormatter` devuelve `any`, pero el
+  runtime de JS hace `new Error(message.error)`, así que un struct
+  acababa en la UI como el texto literal `[object Object]`** — la lección
+  ahora enseña precisamente esa trampa y devuelve un *string* con código.
+- **Un hallazgo que solo apareció al correr los gates**: los snippets
+  usaban `÷ × − ⌫ ·` y el banner galés `Â MODIWL`, y
+  `key_layout_map_test` los rechazó por no tener tecla física. En una app
+  de tipeo **todo carácter que el usuario teclee necesita una tecla real**,
+  así que se pasó todo el código a ASCII puro y el banner galés se
+  cuenta en la prosa en vez de teclearse. Los 36 `code` son hoy ASCII
+  puro.
+- **Arreglo de paso aparte**: `audit_lesson_order.py` no conocía las
+  categorías `cli*` que el test de completitud ya exime, así que
+  `go-cli-programs-v1` fallaba su propio audit con 7 errores. Sincronizado
+  con `_topicCategories`.
+- **Cuentas drifting que hubo que re-tocar**: el total del catálogo y los
+  id-sets de `findContainingSymbols` en
+  `content_drift_integration_test.dart` (el DAO busca en `code`, no en
+  `symbolFocus`, así que los ids hay que derivarlos del `code` de cada
+  snippet, no de sus `symbolFocus`).
+- **Verificación final**: `flutter analyze --fatal-infos
+  --fatal-warnings` limpio, `dart run tool/check_architecture.dart` sin
+  violaciones, `dart format` sin cambios, `build_runner` sin output
+  generado obsoleto, y **831 tests verdes**. Ojo con el gate de drift: los
+  conteos y los id-sets de `content_drift_integration_test.dart` son un
+  **recurso compartido** —cualquier curso nuevo los mueve—, así que
+  derivarlos siempre del `code` real de los assets y no de un número
+  anotado a mano.
 
 ### 2026-09-25 — Zig 0.16.0 como lenguaje solo-curso
 
@@ -1629,6 +1690,151 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   drift test quedó con un total stale al entrecruzarse con la sesión que
   añadió el snippet 954, y se sincronizó al estado final del catálogo
   (**954 activos / 344 beginner**).
+
+### 2026-09-29 — SwiftUI: guía de calculadora (ruta nueva, 34 snippets, `tool/swiftui_stub/`)
+
+- **Pedido del usuario**: una guía nueva para Swift **usando SwiftUI**, pensada
+  para construir una app — una calculadora. Tras preguntarle el.scope eligió
+  **una sola ruta de ~32 lecciones** (salió en 34), **dos categorías nuevas**
+  (`swiftUIViews`, `swiftUIState`) y verificación con **stub module + ejecución
+  real del motor**.
+- **El problema de fondo: SwiftUI no existe en el toolchain de Linux.** Dentro
+  de `docker.io/library/swift:6.2`, `import SwiftUI` falla con
+  `error: no such module 'SwiftUI'` (Apple no lo publica para Linux). Se
+  investigó la alternativa real: **OpenSwiftUI**
+  (`github.com/OpenSwiftUIProject`, no `OpenSwiftUI`) sí compila en Linux, pero
+  necesita un build de 8-10 min y ~1,2 GB, y le **faltan 66 de las APIs** que
+  el catálogo usa — incluidas `Button("7") { }` (la línea más idiomática de una
+  calculadora SwiftUI), `List`, `TextField`, `ScrollView` y `.buttonStyle`.
+  Descartado. La verificación elegida es un **módulo stub** escrito a mano
+  (`tool/swiftui_stub/`, 3 archivos) que declara la superficie con firmas
+  reales; los 27 snippets de vista se typechequean con el front-end real de
+  `swiftc 6.2` (`-typecheck -parse-as-library -swift-version 5
+  -warnings-as-errors`, ~0,8 s cada uno).
+- **Lo que el stub NO puede verificar**: que exista una API de Apple con
+  exactamente ese nombre y firma. La superficie se transcribió a mano de la
+  documentación de Apple. Documentado en el propio stub y en `verify.sh`, no
+  escondido.
+- **El stub está probando que muerde**: 6 controles negativos (`padding(banana)`,
+  vista inexistente, `.font(.nope)`, llave sin cerrar, `frame(width: "wide")` y
+  — el importante — pasar un `String` donde se espera un `Binding`, que produce
+  justo el diagnóstico *"use wrapper instead"* del que depende la lección de
+  `@Binding`). Todos fallan como deben.
+- **Cinco reglas del stub que hubo que descubrir bisecando errores reales**
+  (documentadas en la cabecera de `SwiftUIStub.swift`): todo `public` (un tipo
+  `internal` es invisible al importador); la escalera completa de
+  `buildBlock` 0…10 (un result builder despacha el bloque entero por
+  `buildBlock`, no por `buildExpression`); las vistas hoja usan
+  `typealias Body = Never` + la extensión `View where Body == Never`; `Binding`
+  **no** declara `init(wrappedValue:)` público (si lo hace,
+  `@Binding var x: String` sintetiza un init que toma un `String` pelado y
+  `.constant(_:)` deja de resolver); y `@EnvironmentObject`/`@Environment`
+  necesitan un `init()` sin argumentos para que Swift dé valor por defecto al
+  parámetro del memberwise init (sin él, `DetailView()` no compila).
+  `@dynamicMemberLookup` en `Binding` es lo que hace legal
+  `$calculator.display`.
+- **El motor puro Swift se ejecuta de verdad**: los 7 snippets del motor
+  viven en un paquete SwiftPM real (`Sources/Calculator`, regiones
+  `// snip:<id>:start/end`) y se compilan **acumulativamente** (lección N =
+  lecciones 15..N + un driver desechable) con `swiftc -warnings-as-errors -lm`
+  y se ejecutan con salida esperada comparada carácter a carácter. La lección
+  de XCTest (22) es el `Tests/` real del paquete: **18 tests verdes**, y un
+  pase de mutación detectó 4 mutantes reales y 1 **mutante equivalente**
+  (`if isTyping, pending != nil` era redundante) que llevó a simplificar el
+  código a `if isTyping`.
+- **Dos bugs de portabilidad encontrados por la ejecución, no por la vista**:
+  (1) `Double.rounded()`/`abs()`/`Int(exactly:)` necesitan libm, que un
+  `swiftc fichero.swift` pelado no enlaza en Linux como sí hace un target de
+  SwiftPM → el harness lleva `-lm` y el código se quedó con
+  `Int(exactly:)`, que además es la comprobación correcta; (2)
+  `999999999 * 999999999` no es representable en `Double` (da
+  `999999998000000000`), así que el test afirma el invariante real —que la
+  pantalla **no** caiga en notación científica— en vez del dígito exacto.
+- **Dos revisiones adversariales y su posted**: la primera (agente sin
+  contexto) encontró **4 bloqueantes y 13 should-fix reales**, y la segunda, ya
+  enfocada en los arreglos, **12 arreglados / 16 abiertos / 11 nuevos**. Lo que
+  encontró y se corrigió:
+  - **El capstone había divergido del motor testeado**: la clase `Calculator`
+    de la lección 34 no tenía `formattedDisplay` ni `clearEntry`, tenía
+    `leftOperand` en `private` e inlineaba el `9` de `maxDigits`, así que **la
+    suite de la lección 22 no compilaba contra ella** mientras dos lecciones
+    afirmaban lo contrario. Ahora el modelo del capstone **se genera desde el
+    paquete SwiftPM** (reensamblando las declaraciones del motor con conteo de
+    llaves, no con una copia escrita a mano), así que la afirmación es cierta
+    por construcción: los 19 miembros están con cuerpos byte a byte idénticos.
+  - **Bug real de comportamiento**: `negate()` dejaba la máquina a mitad de
+    número, así que `5`, `+/-`, `3` leía `-53` y el `-` se comía uno de los
+    nueve dígitos. `enter(_:)` ahora conoce el signo y `negate()` cierra el
+    número. Los 19 tests del paquete son ahora **el archivo de la lección**,
+    verbatim.
+  - **Un agujero de fidelidad en el propio stub**: su
+    `ObservableObjectWrapper` tenía un `subscript(dynamicMember:)` con
+    `ReferenceWritableKeyPath` que el `ObservedObject.Wrapper` real **no
+    tiene**, así que `$model.display` sobre un `@StateObject` typechequeaba
+    aquí y no compila en Xcode. Un stub puede ser más permisivo que el SDK, pero
+    no de una forma que **esconda** un error real. Quitado, y comprobado con
+    tres probes: `model.display` acepta, `$model.display` rechaza, y
+    `$s.display` sobre un `struct` en `@State` acepta (ese sí es real, va por el
+    subscript de `Binding`).
+  - La lección 25 era una reescritura destructiva de 2 propiedades que la prosa
+    llamaba "no-op" (borraba 15 miembros): ahora es **la cabeza del tipo**.
+  - La lección 24 enseñaba `@Binding` con una hija que nunca escribía: ahora
+    tiene un botón `C`. La 7 borraba el `foregroundStyle` blanco de la 6. La
+    11 describía los colores invertidos en español. La 30 inventaba un segundo
+    mensaje de error. La 26 decía que `@State` copia una clase (lo contrario de
+    lo que enseña la 25): ahora explica el **tiempo de vida**. La 28 enseñaba
+    `Identifiable` sin un `ForEach` a la vista. La 27 tenía consumidor sin
+    productor. Y la 31 enseñaba `onChange(of:perform:)`, **deprecado desde
+    iOS 17**.
+  - Al añadir la tecla `CE` al capstone, `+/-` **desapareció** del teclado y
+    `negate()` quedó inalcanzable con `case "+/-"` muerto: la fila superior son
+    ahora cuatro acciones y los operadores empiezan en la segunda fila.
+- **Cambios de forma aceptados a conciencia** (no bugs, decisiones): las
+  lecciones 15-22 son Swift puro bajo la etiqueta `swiftUIState` porque el
+  usuario pidió dos categorías y la prosa deja explícito que el motor no usa
+  SwiftUI; y 15→16 es un salto de tamaño (115→844) que **no** se partió, porque
+  la lección 16 no introduce sintaxis nueva y partirla de nuevo solo daría
+  seismicciones de clumsy en el mismo sitio.
+- **Ensamblado de verdad**: además de typechequear cada snippet por separado,
+  se compilan dos composiciones completas (el endpoint del bloque de vistas y
+  la app entera del capstone). Eso destapó un bug real de orden: las lecciones
+  9 y 10 llamaban a `KeyButton(title:)` y la 11 añadía `isOperator` **sin
+  valor por defecto**, así que el código del keypad dejaba de compilar al llegar a la 11.
+  Se resolvió con `isOperator: Bool = false`, y la lección 14 pasó a tratar la
+  accesibilidad de un **grupo** (`accessibilityElement(children: .contain)`)
+  en vez de la de un botón.
+- **Prosa bilingüe delegada en dos mitades y validada por separado**
+  (views 1-14, state 15-34), más 6 entradas reescritas a mano cuando el split
+  cambió lo que esas lecciones enseñan. Un validador independiente
+  re-deriva cada límite desde cero (80/950 chars, exactamente 3 frases, backticks
+  balanceados, sin `**`, ids y orden) y marca para revisión manual cualquier
+  API mencionada que no esté en el código de esa lección — solo survived
+  `.environmentObject(_:)` (el consumidor sin su punto de inyección) y
+  `.onAppear` (el caso "una sola vez" como contraste), ambos revisados a mano.
+- **Rampa suavizada tras el primer `audit_lesson_order.py`**: lessons
+  16 (115→1002 chars) y 19 (484→1275) se partieron en dos cada una
+  (`model-002`+`003` y `model-006`+`007`), porque un salto de ese tamaño
+  dentro de una categoría es exactamente el modo de fallo que la referencia de
+  la skill describe. La ruta pasó de 32 a 34 lecciones.
+- **Wiring**: `ContentCategory` + `content_labels.dart` + ambos `.arb` +
+  `gen-l10n` (2 pares de etiquetas nuevos), asset en `pubspec.yaml` + en
+  `_defaultAssetPaths` + en `_learningPathAssetPaths`, vocabulario de SwiftUI
+  añadido a `SwiftSyntaxTokenizer` (protocolos, property wrappers y
+  constructores de vista: el código SwiftUI es casi todo identificadores y sin
+  esto se lee como texto plano), y `programming_language.dart` actualizado.
+- **Nota de concurrencia**: el working tree ya traía de otra sesión el
+  `content_drift_integration_test.dart` con los conteos y los sets de `_`/`%`
+  **ya ajustados para 34 snippets SwiftUI** (1507 total, 544 beginner, y
+  `swiftui-app-002`/`swiftui-model-004`/`swiftui-state-006` ya listados como
+  los que contienen `%`). El catálogo construido de forma independiente calza
+  exactamente con esas expectativas, así que el test pasa sin tocarlo. También
+  había trabajo ajeno en vuelo (`go_wails_desktop_v1`, `typescript_react_v1`,
+  `package.json`), **no tocado**.
+- **Verificado**: los 34 snippets extraídos mecánicamente de sus fuentes
+  (ASCII, substring verbatim); 27 typechequeados contra el stub; 2
+  composiciones compiladas; 18 XCTest verdes; 7 lecciones del motor
+  ejecutadas con salida asertada; `audit_lesson_order.py` verde para las 4
+  rutas de Swift; `flutter test` de content/practice verde.
 
 ### 2026-09-12 — Swift: Fundamentos + Algoritmos + Avanzado (lenguaje nuevo, 3 rutas, 47 snippets)
 
@@ -3485,6 +3691,60 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   `findContainingSymbols` (`_`, `%`) actualizados.
 - **Verificado**: `bash tool/check.sh` verde (314 tests; format, analyze y
   arquitectura limpios).
+
+### 2026-09-29 — Ruta Android/Kotlin: calculadora con Compose
+
+- **Cuarta ruta de Kotlin** (`kotlin-android-calculator-v1`, 32 lecciones) +
+  un catálogo nuevo `android_v1.json` (32 snippets, `language: "kotlin"`).
+  Es la primera ruta cuyo toolchain de verificación **no** es el compilador
+  de un lenguaje: cada snippet es un archivo o un bloque de un único
+  proyecto Android real, y se verificó **compilando de verdad**.
+
+- **Versiones fijadas** (las que funcionan hoy en compileSdk 36 + AGP
+  8.13.2; no subirlas a ciegas): Gradle 8.14, AGP 8.13.2, Kotlin 2.4.20,
+  compileSdk/targetSdk 36, minSdk 24, **Compose BOM 2026.06.01**
+  (compose 1.11.4), lifecycle 2.9.4, activity-compose 1.13.0, core-ktx
+  1.18.0. Los últimos disponibles (compose 1.12.x, navigation 2.10+,
+  lifecycle 2.11, core-ktx 1.19) exigen **compileSdk 37 + AGP 9.1**, y AGP
+  9 solo está en alpha — comprobarlo con `aar-metadata.properties`
+  (`minCompileSdk`/`minAndroidGradlePluginVersion`) antes de subir nada.
+
+- **Verificación ejecutada de verdad**: un harness reproduce las 32
+  lecciones acumulativamente en un proyecto Gradle y compila tras cada una
+  (32/32 verdes); `:app:testDebugUnitTest` con 11 tests JUnit del motor;
+  `:app:connectedDebugAndroidTest` con el test instrumentado de Compose
+  **verde en un emulador Android 13 real**; y la app instalada y accionada
+  a mano (7 x 6 = 42, `0.1 + 0.2 =` -> `0.3`, `8 / 0 =` -> Error,
+  `200 + 10 % =` -> 220, `3 + 2 * =` -> 25, tope de 12 caracteres, y
+  recuperación tras error). El `0.1 + 0.2` es la prueba de que la lección
+  de `format` funciona en la app, no solo en el test.
+
+- **Cinco bugs reales que sólo aparecieron al compilar**, ninguno visible
+  leyendo el JSON: (1) `clear()` devuelve `Unit`, así que encadenar
+  `.display` no compila; (2) un bloque de tests añadido con `append` caía
+  fuera de la clase; (3) el delegado `by` necesita el import `setValue`,
+  que es una extensión distinta de `getValue`; (4) `@Preview` no tiene
+  parámetro `height` sino `heightDp`; (5) `rememberSaveable` sin importar
+  `remember`, que la misma lección sigue usando. **Lección para el skill:
+  el harness de compilación acumulativa es lo que los encuentra; el
+  `imports` inyectado por el harness además ocultaba un `import
+  java.util.Locale` que el catálogo debe llevar dentro de su `code`.**
+
+- **Revisión adversarial (obligatoria) encontró dos cosas que compiles o
+  tests no detectan**: `buildFeatures { compose = true }` es un no-op en
+  AGP 8.13.2 (el plugin `org.jetbrains.kotlin.plugin.compose` fuerza
+  Compose y el propio AGP dice "Remove android.buildFeatures.compose
+  flag") — el texto afirmaba que sin él la app "builds but renders
+  nothing", falso; y `Modifier.weight(2f)` sólo reparte **ancho**, así que
+  con `aspectRatio` la tecla `0` salía ~1.4x más ALTA que sus vecinas
+  (bug visible en la captura del emulador). Ambos corregidos y
+  reverificados. También faltaba el modelo de edición (qué archivo
+  reemplaza cada lección) y un "eight callbacks" donde son siete.
+
+- **Pendiente conscientemente dejado fuera** (lecciones naturales de
+  continuación, no bloqueantes): `NavHost`/navegación, DataStore para
+  recordar el tema, y `Room` para el historial. La ruta es de una sola
+  pantalla, así que no las forzamos.
 
 ### 2026-09-10 — Migración de íconos: Material → Lucide
 

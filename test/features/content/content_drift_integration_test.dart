@@ -84,7 +84,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 1413)
+        .firstWhere((snippets) => snippets.length == 1539)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -98,7 +98,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(1413));
+    expect(catalog, hasLength(1539));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -110,7 +110,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(1413));
+      expect(catalog, hasLength(1539));
     },
   );
 
@@ -121,7 +121,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(1413));
+    expect(result, hasLength(1539));
   });
 
   test(
@@ -151,7 +151,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(517));
+    expect(beginnerSnippets, hasLength(557));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -168,6 +168,15 @@ void main() {
     expect(result.isOk, isTrue);
     final ids = result.valueOrNull!.map((s) => s.id.value).toSet();
     expect(ids, {
+      'android-a11y-001',
+      'android-a11y-002',
+      'android-compose-001',
+      'android-compose-005',
+      'android-gradle-001',
+      'android-gradle-003',
+      'android-manifest-001',
+      'android-manifest-003',
+      'android-vm-001',
       'bash-func-003',
       'bash-func-004',
       'bash-profile-007',
@@ -375,6 +384,10 @@ void main() {
       'go-vars-009',
       'go-vars-011',
       'go-vars-012',
+      'go-wails-029',
+      'go-wails-033',
+      'go-wails-035',
+      'go-wails-036',
       'haskell-algo-001',
       'haskell-algo-002',
       'haskell-algo-004',
@@ -504,6 +517,14 @@ void main() {
       'rust-algo-011',
       'rust-algo-012',
       'rust-func-003',
+      'swiftui-app-002',
+      'swiftui-model-002',
+      'swiftui-model-003',
+      'swiftui-model-005',
+      'swiftui-model-006',
+      'swiftui-preview-001',
+      'swiftui-state-006',
+      'swiftui-state-009',
       'zig-algo-006',
       'zig-algo-009',
       'zig-algo-012',
@@ -568,6 +589,10 @@ void main() {
       'swift-func-003',
       'swift-prop-001',
       'swift-proto-002',
+      'typescript-react-004',
+      'typescript-react-005',
+      'typescript-react-006',
+      'typescript-react-012',
     });
   });
 
@@ -581,6 +606,11 @@ void main() {
     expect(result.isOk, isTrue);
     final ids = result.valueOrNull!.map((s) => s.id.value).toSet();
     expect(ids, {
+      'android-a11y-002',
+      'android-compose-004',
+      'android-format-001',
+      'android-test-001',
+      'android-test-002',
       'bash-files-006',
       'bash-vars-007',
       'c-algo-010',
@@ -697,6 +727,12 @@ void main() {
       'go-usecase-004',
       'go-vars-003',
       'go-vars-006',
+      'go-wails-004',
+      'go-wails-006',
+      'go-wails-009',
+      'go-wails-027',
+      'go-wails-035',
+      'go-wails-036',
       'java-cond-003',
       'java-func-003',
       'javascript-func-003',
@@ -720,7 +756,12 @@ void main() {
       'rust-func-003',
       'sql-filtering-008',
       'sql-filtering-009',
+      'swiftui-app-002',
+      'swiftui-model-004',
+      'swiftui-state-006',
       'typescript-func-004',
+      'typescript-react-006',
+      'typescript-react-008',
       'zig-found-002',
       'zig-found-026',
     });

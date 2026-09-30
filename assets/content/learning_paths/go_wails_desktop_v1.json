@@ -1,0 +1,266 @@
+[
+  {
+    "id": "go-wails-desktop-v1",
+    "language": "go",
+    "titleEn": "Go: Desktop Apps with Wails",
+    "titleEs": "Go: apps de escritorio con Wails",
+    "descriptionEn": "Build a desktop calculator in Go, from its expression parser to the Wails bindings.",
+    "descriptionEs": "Construye una calculadora de escritorio en Go, del parser a los bindings de Wails.",
+    "tagEn": "Wails",
+    "tagEs": "Wails",
+    "lessons": [
+      {
+        "id": "go-wails-desktop-v1-step01",
+        "snippetId": "go-wails-001",
+        "order": 1,
+        "titleEn": "Three sentinel errors the whole engine will return",
+        "titleEs": "Tres errores centinela que devolverá todo el motor"
+      },
+      {
+        "id": "go-wails-desktop-v1-step02",
+        "snippetId": "go-wails-002",
+        "order": 2,
+        "titleEn": "`Operand`: the number plus the text that produced it",
+        "titleEs": "`Operand`: el número más el texto que lo produjo"
+      },
+      {
+        "id": "go-wails-desktop-v1-step03",
+        "snippetId": "go-wails-003",
+        "order": 3,
+        "titleEn": "`tokenKind` and `token`: the alphabet the parser will read",
+        "titleEs": "`tokenKind` y `token`: el alfabeto que leerá el parser"
+      },
+      {
+        "id": "go-wails-desktop-v1-step04",
+        "snippetId": "go-wails-004",
+        "order": 4,
+        "titleEn": "`lex`: turning source text into a flat token slice",
+        "titleEs": "`lex`: convertir el texto fuente en un slice plano de tokens"
+      },
+      {
+        "id": "go-wails-desktop-v1-step05",
+        "snippetId": "go-wails-005",
+        "order": 5,
+        "titleEn": "`parser`: a token slice plus a cursor, and two accessors",
+        "titleEs": "`parser`: un slice de tokens más un cursor, y dos accesores"
+      },
+      {
+        "id": "go-wails-desktop-v1-step06",
+        "snippetId": "go-wails-006",
+        "order": 6,
+        "titleEn": "`parseFactor`: numbers, unary signs, and parenthesised groups",
+        "titleEs": "`parseFactor`: números, signos unarios y grupos entre paréntesis"
+      },
+      {
+        "id": "go-wails-desktop-v1-step07",
+        "snippetId": "go-wails-007",
+        "order": 7,
+        "titleEn": "`parseTerm`: `*` and `/` at one precedence level",
+        "titleEs": "`parseTerm`: `*` y `/` en un solo nivel de precedencia"
+      },
+      {
+        "id": "go-wails-desktop-v1-step08",
+        "snippetId": "go-wails-008",
+        "order": 8,
+        "titleEn": "`parseExpr`: the outermost `+` and `-` level",
+        "titleEs": "`parseExpr`: el nivel más externo de `+` y `-`"
+      },
+      {
+        "id": "go-wails-desktop-v1-step09",
+        "snippetId": "go-wails-009",
+        "order": 9,
+        "titleEn": "`Evaluate`: the one exported entry point that takes a string",
+        "titleEs": "`Evaluate`: el único punto de entrada exportado que recibe un string"
+      },
+      {
+        "id": "go-wails-desktop-v1-step10",
+        "snippetId": "go-wails-010",
+        "order": 10,
+        "titleEn": "`Format`: turning a float64 into something worth displaying",
+        "titleEs": "`Format`: convertir un float64 en algo que valga la pena mostrar"
+      },
+      {
+        "id": "go-wails-desktop-v1-step11",
+        "snippetId": "go-wails-011",
+        "order": 11,
+        "titleEn": "Scaffolding a Wails project with the CLI",
+        "titleEs": "Andamiaje de un proyecto Wails con el CLI"
+      },
+      {
+        "id": "go-wails-desktop-v1-step12",
+        "snippetId": "go-wails-012",
+        "order": 12,
+        "titleEn": "`wails.json`: the manifest the CLI reads on every command",
+        "titleEs": "`wails.json`: el manifiesto que el CLI lee en cada comando"
+      },
+      {
+        "id": "go-wails-desktop-v1-step13",
+        "snippetId": "go-wails-013",
+        "order": 13,
+        "titleEn": "`go.mod`: one direct require, and the CLI keeps the rest for you",
+        "titleEs": "`go.mod`: un require directo, y el CLI se encarga del resto"
+      },
+      {
+        "id": "go-wails-desktop-v1-step14",
+        "snippetId": "go-wails-014",
+        "order": 14,
+        "titleEn": "`CalcResult`: the struct whose fields become JavaScript object keys",
+        "titleEs": "`CalcResult`: el struct cuyos campos son las claves del objeto en JavaScript"
+      },
+      {
+        "id": "go-wails-desktop-v1-step15",
+        "snippetId": "go-wails-015",
+        "order": 15,
+        "titleEn": "The `App` struct: everything the bindings are methods on",
+        "titleEs": "El struct `App`: todo sobre lo que son métodos los bindings"
+      },
+      {
+        "id": "go-wails-desktop-v1-step16",
+        "snippetId": "go-wails-016",
+        "order": 16,
+        "titleEn": "`main.go`: its `package`, imports and `//go:embed`",
+        "titleEs": "`main.go`: su `package`, sus imports y `//go:embed`"
+      },
+      {
+        "id": "go-wails-desktop-v1-step17",
+        "snippetId": "go-wails-017",
+        "order": 17,
+        "titleEn": "`main.go`: handing the window options to `wails.Run`",
+        "titleEs": "`main.go`: handing las opciones de ventana a `wails.Run`"
+      },
+      {
+        "id": "go-wails-desktop-v1-step18",
+        "snippetId": "go-wails-018",
+        "order": 18,
+        "titleEn": "`Add`: the smallest possible binding, in and out as numbers",
+        "titleEs": "`Add`: el binding más pequeño posible, entrada y salida numéricas"
+      },
+      {
+        "id": "go-wails-desktop-v1-step19",
+        "snippetId": "go-wails-019",
+        "order": 19,
+        "titleEn": "`Calculate` and the two history bindings beside it",
+        "titleEs": "`Calculate` y los dos bindings de historial que lo acompañan"
+      },
+      {
+        "id": "go-wails-desktop-v1-step20",
+        "snippetId": "go-wails-020",
+        "order": 20,
+        "titleEn": "`App.js` and `App.d.ts`, side by side: read them, never edit them",
+        "titleEs": "`App.js` y `App.d.ts`, uno al lado del otro: léelos, nunca los edites"
+      },
+      {
+        "id": "go-wails-desktop-v1-step21",
+        "snippetId": "go-wails-021",
+        "order": 21,
+        "titleEn": "`index.html`: one root div and one module script",
+        "titleEs": "`index.html`: un div raíz y un script de módulo"
+      },
+      {
+        "id": "go-wails-desktop-v1-step22",
+        "snippetId": "go-wails-022",
+        "order": 22,
+        "titleEn": "`main.ts`: importing the bindings, the key table, and the state",
+        "titleEs": "`main.ts`: importar los bindings, la tabla de teclas y el estado"
+      },
+      {
+        "id": "go-wails-desktop-v1-step23",
+        "snippetId": "go-wails-023",
+        "order": 23,
+        "titleEn": "Building the DOM once, then a single `render()` that repaints",
+        "titleEs": "Construir el DOM una vez, y un único `render()` que repinta"
+      },
+      {
+        "id": "go-wails-desktop-v1-step24",
+        "snippetId": "go-wails-024",
+        "order": 24,
+        "titleEn": "`press` and `evaluate`: one path for every input",
+        "titleEs": "`press` y `evaluate`: un solo camino para toda entrada"
+      },
+      {
+        "id": "go-wails-desktop-v1-step25",
+        "snippetId": "go-wails-025",
+        "order": 25,
+        "titleEn": "The delegated click, the keyboard, and `EventsOn` from Go",
+        "titleEs": "El click delegado, el teclado y `EventsOn` desde Go"
+      },
+      {
+        "id": "go-wails-desktop-v1-step26",
+        "snippetId": "go-wails-026",
+        "order": 26,
+        "titleEn": "`AssetServer.Handler`: serving your own routes from Go",
+        "titleEs": "`AssetServer.Handler`: sirviendo tus propias rutas desde Go"
+      },
+      {
+        "id": "go-wails-desktop-v1-step27",
+        "snippetId": "go-wails-027",
+        "order": 27,
+        "titleEn": "The four lifecycle hooks, and the trap in `OnBeforeClose`",
+        "titleEs": "Los cuatro hooks del ciclo de vida, y la trampa de `OnBeforeClose`"
+      },
+      {
+        "id": "go-wails-desktop-v1-step28",
+        "snippetId": "go-wails-028",
+        "order": 28,
+        "titleEn": "Per-platform options: Windows, macOS and Linux each get their own struct",
+        "titleEs": "Opciones por plataforma: Windows, macOS y Linux tienen su struct"
+      },
+      {
+        "id": "go-wails-desktop-v1-step29",
+        "snippetId": "go-wails-029",
+        "order": 29,
+        "titleEn": "`ErrorFormatter`: why a Go error must become a string",
+        "titleEs": "`ErrorFormatter`: por qué un error de Go debe ser un string"
+      },
+      {
+        "id": "go-wails-desktop-v1-step30",
+        "snippetId": "go-wails-030",
+        "order": 30,
+        "titleEn": "Design tokens as `:root` custom properties",
+        "titleEs": "Tokens de diseño como custom properties de `:root`"
+      },
+      {
+        "id": "go-wails-desktop-v1-step31",
+        "snippetId": "go-wails-031",
+        "order": 31,
+        "titleEn": "`.display` and the `is-error` state the frontend toggles",
+        "titleEs": "`.display` y el estado `is-error` que alterna el frontend"
+      },
+      {
+        "id": "go-wails-desktop-v1-step32",
+        "snippetId": "go-wails-032",
+        "order": 32,
+        "titleEn": "The keypad grid and the toolbar: the last two layout blocks",
+        "titleEs": "La grilla del teclado y la barra: los dos últimos bloques de layout"
+      },
+      {
+        "id": "go-wails-desktop-v1-step33",
+        "snippetId": "go-wails-033",
+        "order": 33,
+        "titleEn": "`wails build`: the flags that decide what actually ships",
+        "titleEs": "`wails build`: los flags que deciden qué se publica de verdad"
+      },
+      {
+        "id": "go-wails-desktop-v1-step34",
+        "snippetId": "go-wails-034",
+        "order": 34,
+        "titleEn": "The `build/` directory: what the OS reads about your app",
+        "titleEs": "El directorio `build/`: lo que el sistema operativo lee de tu app"
+      },
+      {
+        "id": "go-wails-desktop-v1-step35",
+        "snippetId": "go-wails-035",
+        "order": 35,
+        "titleEn": "Table-driven tests for the engine, with no Wails in sight",
+        "titleEs": "Tests dirigidos por tabla para el motor, sin Wails a la vista"
+      },
+      {
+        "id": "go-wails-desktop-v1-step36",
+        "snippetId": "go-wails-036",
+        "order": 36,
+        "titleEn": "Testing the bound methods: the binding needs no Wails runtime",
+        "titleEs": "Probar los métodos bound: el binding no necesita runtime de Wails"
+      }
+    ]
+  }
+]

@@ -23,7 +23,9 @@ backs the three Django routes `python-django-foundations-v1`/
 curated Learning Path curriculum, including
 `zig_foundations_v1.json` (`zig-foundations-v1`) and
 `zig_algorithms_v1.json` (`zig-algorithms-v1`) under
-`assets/content/learning_paths/` (one file per route, SPEC.md §5.7).
+`assets/content/learning_paths/`, and `swift_swiftui_calculator_v1.json`
+(`swift-swiftui-calculator-v1`, 34 lessons that build a working calculator:
+view layer, a pure-Swift testable engine, and SwiftUI state) (one file per route, SPEC.md §5.7).
 All are read-only at runtime; snippet catalogs are idempotently seeded
 into drift tables on launch, paths are read straight from the bundle.
 
@@ -87,7 +89,13 @@ into drift tables on launch, paths are read straight from the bundle.
    `podman run docker.io/library/swift:6.2` (every snippet must compile with
    `swiftc -warnings-as-errors`; definitions-only algorithm snippets get a
    driver and all 12 are differentially fuzzed against independent
-    references — see `references/snippet-authoring.md`), two independent
+    references — see `references/snippet-authoring.md`). **SwiftUI view
+    snippets are the exception**: Apple ships no SwiftUI for Linux, so they are
+    typechecked by the real swiftc front end against a hand-written stub
+    module (`bash tool/swiftui_stub/verify.sh <file>`) *and* by composing the
+    whole route into one compilable file, with the pure-Swift engine lessons
+    compiled and run for real — see `references/snippet-authoring.md`), two
+    independent
     parsers for CSS (`npx --yes csstree-validator` validates every property/value
     against the spec, and `lightningcss` parses it again as a second
     engine; both must be clean — see `references/snippet-authoring.md`), and
@@ -172,7 +180,9 @@ into drift tables on launch, paths are read straight from the bundle.
   `-std=c++20 -Wall -Wextra -Werror -pthread` for C++, `javac` + `java`
   for Java, `podman run docker.io/crystallang/crystal` (Crystal 1.21)
   for Crystal, `podman run docker.io/library/swift:6.2` (Swift 6.2,
-  `swiftc -warnings-as-errors` plus differential fuzzing) for Swift,
+  `swiftc -warnings-as-errors` plus differential fuzzing) for Swift — and for
+  **SwiftUI**, `tool/swiftui_stub/verify.sh` against the stub module plus a
+  composed-route compile, since Apple ships no SwiftUI for Linux,
   `csstree-validator` + `lightningcss` for CSS, and .NET SDK 10
   (`mcr.microsoft.com/dotnet/sdk:10.0`, nullable + warnings-as-errors) for C#,
   and `dart format` + `dart analyze` + `dart run` with the bundled Dart SDK

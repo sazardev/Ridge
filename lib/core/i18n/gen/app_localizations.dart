@@ -2468,6 +2468,54 @@ abstract class AppLocalizations {
   /// **'Testing with fakes'**
   String get categoryTestingWithFakes;
 
+  /// No description provided for @categoryCalculatorCore.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculator engine'**
+  String get categoryCalculatorCore;
+
+  /// No description provided for @categoryWailsProjectSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails project setup'**
+  String get categoryWailsProjectSetup;
+
+  /// No description provided for @categoryWailsBindings.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails bindings'**
+  String get categoryWailsBindings;
+
+  /// No description provided for @categoryWailsFrontend.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails frontend'**
+  String get categoryWailsFrontend;
+
+  /// No description provided for @categoryWailsArchitecture.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails architecture'**
+  String get categoryWailsArchitecture;
+
+  /// No description provided for @categoryWailsStyling.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails styling'**
+  String get categoryWailsStyling;
+
+  /// No description provided for @categoryWailsPackaging.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails packaging'**
+  String get categoryWailsPackaging;
+
+  /// No description provided for @categoryWailsTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'Wails testing'**
+  String get categoryWailsTesting;
+
   /// No description provided for @categoryTuiArchitecture.
   ///
   /// In en, this message translates to:
@@ -2791,6 +2839,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Property wrappers'**
   String get categoryPropertyWrappers;
+
+  /// No description provided for @categorySwiftUIViews.
+  ///
+  /// In en, this message translates to:
+  /// **'SwiftUI views'**
+  String get categorySwiftUIViews;
+
+  /// No description provided for @categorySwiftUIState.
+  ///
+  /// In en, this message translates to:
+  /// **'SwiftUI state'**
+  String get categorySwiftUIState;
 
   /// No description provided for @categoryNullSafety.
   ///
@@ -3415,6 +3475,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'CLI challenges'**
   String get categoryCliChallenges;
+
+  /// No description provided for @categoryReactComponents.
+  ///
+  /// In en, this message translates to:
+  /// **'React components'**
+  String get categoryReactComponents;
+
+  /// No description provided for @categoryJsxSyntax.
+  ///
+  /// In en, this message translates to:
+  /// **'JSX syntax'**
+  String get categoryJsxSyntax;
+
+  /// No description provided for @categoryPropsAndState.
+  ///
+  /// In en, this message translates to:
+  /// **'Props & state'**
+  String get categoryPropsAndState;
+
+  /// No description provided for @categoryEventHandling.
+  ///
+  /// In en, this message translates to:
+  /// **'Event handling'**
+  String get categoryEventHandling;
+
+  /// No description provided for @categoryListsAndKeys.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists & keys'**
+  String get categoryListsAndKeys;
+
+  /// No description provided for @categoryReactForms.
+  ///
+  /// In en, this message translates to:
+  /// **'React forms'**
+  String get categoryReactForms;
+
+  /// No description provided for @categoryReactHooks.
+  ///
+  /// In en, this message translates to:
+  /// **'React hooks'**
+  String get categoryReactHooks;
+
+  /// No description provided for @categoryReactEffects.
+  ///
+  /// In en, this message translates to:
+  /// **'Effects'**
+  String get categoryReactEffects;
+
+  /// No description provided for @categoryReactContext.
+  ///
+  /// In en, this message translates to:
+  /// **'Context'**
+  String get categoryReactContext;
+
+  /// No description provided for @categoryReactAsyncData.
+  ///
+  /// In en, this message translates to:
+  /// **'Async data'**
+  String get categoryReactAsyncData;
+
+  /// No description provided for @categoryReactTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'React testing'**
+  String get categoryReactTesting;
 
   /// No description provided for @languageGo.
   ///
@@ -4573,6 +4699,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We already know your setup'**
   String get onboardingDeviceTitle;
+
+  /// No description provided for @categoryGradleBuild.
+  ///
+  /// In en, this message translates to:
+  /// **'Gradle build'**
+  String get categoryGradleBuild;
+
+  /// No description provided for @categoryAndroidAppSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Android app setup'**
+  String get categoryAndroidAppSetup;
+
+  /// No description provided for @categoryNumberFormatting.
+  ///
+  /// In en, this message translates to:
+  /// **'Number formatting'**
+  String get categoryNumberFormatting;
+
+  /// No description provided for @categoryComposeUi.
+  ///
+  /// In en, this message translates to:
+  /// **'Compose UI'**
+  String get categoryComposeUi;
+
+  /// No description provided for @categoryAndroidState.
+  ///
+  /// In en, this message translates to:
+  /// **'Compose state'**
+  String get categoryAndroidState;
+
+  /// No description provided for @categoryAndroidViewModels.
+  ///
+  /// In en, this message translates to:
+  /// **'ViewModels'**
+  String get categoryAndroidViewModels;
+
+  /// No description provided for @categoryAndroidTheming.
+  ///
+  /// In en, this message translates to:
+  /// **'Theming'**
+  String get categoryAndroidTheming;
+
+  /// No description provided for @categoryAndroidAccessibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility'**
+  String get categoryAndroidAccessibility;
+
+  /// No description provided for @categoryAndroidUnitTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit testing'**
+  String get categoryAndroidUnitTesting;
+
+  /// No description provided for @categoryAndroidUiTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'UI testing'**
+  String get categoryAndroidUiTesting;
 
   /// No description provided for @onboardingDeviceDescription.
   ///

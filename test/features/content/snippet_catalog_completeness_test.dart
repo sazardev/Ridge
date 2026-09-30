@@ -18,32 +18,43 @@ import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/infrastructure/snippet_dto.dart';
 import 'package:ridge/features/content/infrastructure/snippet_mapper.dart';
 
-/// One bundled catalog asset per language.
-const Map<ProgrammingLanguage, String> _catalogAssetByLanguage = {
-  ProgrammingLanguage.go: 'assets/content/snippets/go_v1.json',
-  ProgrammingLanguage.bash: 'assets/content/snippets/bash_v1.json',
-  ProgrammingLanguage.sql: 'assets/content/snippets/sql_v1.json',
-  ProgrammingLanguage.rust: 'assets/content/snippets/rust_v1.json',
-  ProgrammingLanguage.zig: 'assets/content/snippets/zig_v1.json',
-  ProgrammingLanguage.python: 'assets/content/snippets/python_v1.json',
-  ProgrammingLanguage.javascript: 'assets/content/snippets/javascript_v1.json',
-  ProgrammingLanguage.typescript: 'assets/content/snippets/typescript_v1.json',
-  ProgrammingLanguage.haskell: 'assets/content/snippets/haskell_v1.json',
-  ProgrammingLanguage.c: 'assets/content/snippets/c_v1.json',
-  ProgrammingLanguage.cpp: 'assets/content/snippets/cpp_v1.json',
-  ProgrammingLanguage.java: 'assets/content/snippets/java_v1.json',
-  ProgrammingLanguage.crystal: 'assets/content/snippets/crystal_v1.json',
-  ProgrammingLanguage.css: 'assets/content/snippets/css_v1.json',
-  ProgrammingLanguage.csharp: 'assets/content/snippets/csharp_v1.json',
-  ProgrammingLanguage.swift: 'assets/content/snippets/swift_v1.json',
-  ProgrammingLanguage.kotlin: 'assets/content/snippets/kotlin_v1.json',
-  ProgrammingLanguage.dart: 'assets/content/snippets/dart_v1.json',
-  ProgrammingLanguage.php: 'assets/content/snippets/php_v1.json',
-  ProgrammingLanguage.git: 'assets/content/snippets/git_v1.json',
-  ProgrammingLanguage.linux: 'assets/content/snippets/linux_v1.json',
-  ProgrammingLanguage.docker: 'assets/content/snippets/docker_v1.json',
-  ProgrammingLanguage.githubActions:
-      'assets/content/snippets/github_actions_v1.json',
+/// Every bundled catalog asset per language. A language normally has one,
+/// but Kotlin has two: its own `kotlin_v1.json` plus the Android route's
+/// `android_v1.json` — same `language` value, disjoint snippet ids, both
+/// loaded and merged by `SnippetLocalDataSource`.
+const Map<ProgrammingLanguage, List<String>> _catalogAssetByLanguage = {
+  ProgrammingLanguage.go: ['assets/content/snippets/go_v1.json'],
+  ProgrammingLanguage.bash: ['assets/content/snippets/bash_v1.json'],
+  ProgrammingLanguage.sql: ['assets/content/snippets/sql_v1.json'],
+  ProgrammingLanguage.rust: ['assets/content/snippets/rust_v1.json'],
+  ProgrammingLanguage.zig: ['assets/content/snippets/zig_v1.json'],
+  ProgrammingLanguage.python: ['assets/content/snippets/python_v1.json'],
+  ProgrammingLanguage.javascript: [
+    'assets/content/snippets/javascript_v1.json',
+  ],
+  ProgrammingLanguage.typescript: [
+    'assets/content/snippets/typescript_v1.json',
+  ],
+  ProgrammingLanguage.haskell: ['assets/content/snippets/haskell_v1.json'],
+  ProgrammingLanguage.c: ['assets/content/snippets/c_v1.json'],
+  ProgrammingLanguage.cpp: ['assets/content/snippets/cpp_v1.json'],
+  ProgrammingLanguage.java: ['assets/content/snippets/java_v1.json'],
+  ProgrammingLanguage.crystal: ['assets/content/snippets/crystal_v1.json'],
+  ProgrammingLanguage.css: ['assets/content/snippets/css_v1.json'],
+  ProgrammingLanguage.csharp: ['assets/content/snippets/csharp_v1.json'],
+  ProgrammingLanguage.swift: ['assets/content/snippets/swift_v1.json'],
+  ProgrammingLanguage.kotlin: [
+    'assets/content/snippets/kotlin_v1.json',
+    'assets/content/snippets/android_v1.json',
+  ],
+  ProgrammingLanguage.dart: ['assets/content/snippets/dart_v1.json'],
+  ProgrammingLanguage.php: ['assets/content/snippets/php_v1.json'],
+  ProgrammingLanguage.git: ['assets/content/snippets/git_v1.json'],
+  ProgrammingLanguage.linux: ['assets/content/snippets/linux_v1.json'],
+  ProgrammingLanguage.docker: ['assets/content/snippets/docker_v1.json'],
+  ProgrammingLanguage.githubActions: [
+    'assets/content/snippets/github_actions_v1.json',
+  ],
 };
 
 /// Languages whose catalog backs free practice (Zen/Sprint/Precision).
@@ -76,10 +87,10 @@ const Map<ProgrammingLanguage, Set<ContentCategory>> _coreCategoriesByLanguage =
       },
     };
 
-/// The 10 architecture-layer categories represent a DDD/hexagonal or TUI
-/// role, not a language feature, so unlike every other category there's
-/// no meaningful notion of a "beginner" or "expert" tier: held to a
-/// looser bar (>=1 active entry across ANY difficulty) than every other
+/// The architecture-layer categories represent a DDD/hexagonal, TUI or
+/// Wails role, not a language feature, so unlike every other category
+/// there's no meaningful notion of a "beginner" or "expert" tier: held to
+/// a looser bar (>=1 active entry across ANY difficulty) than every other
 /// category. See `.claude/skills/content-curriculum/references/content-model.md`.
 const Set<ContentCategory> _architectureLayerCategories = {
   ContentCategory.domainModeling,
@@ -92,6 +103,23 @@ const Set<ContentCategory> _architectureLayerCategories = {
   ContentCategory.tuiStyling,
   ContentCategory.tuiComponents,
   ContentCategory.tuiAdapter,
+  ContentCategory.calculatorCore,
+  ContentCategory.wailsProjectSetup,
+  ContentCategory.wailsBindings,
+  ContentCategory.wailsFrontend,
+  ContentCategory.wailsArchitecture,
+  ContentCategory.wailsStyling,
+  ContentCategory.wailsPackaging,
+  ContentCategory.wailsTesting,
+  ContentCategory.gradleBuild,
+  ContentCategory.androidAppSetup,
+  ContentCategory.composeUi,
+  ContentCategory.androidState,
+  ContentCategory.androidViewModels,
+  ContentCategory.androidTheming,
+  ContentCategory.androidAccessibility,
+  ContentCategory.androidUnitTesting,
+  ContentCategory.androidUiTesting,
 };
 
 /// Topic categories that aren't a language-feature grid: the algorithm
@@ -136,12 +164,16 @@ const Set<ContentCategory> _topicCategories = {
 };
 
 Future<List<Snippet>> _loadCatalog(ProgrammingLanguage language) async {
-  final raw = await rootBundle.loadString(_catalogAssetByLanguage[language]!);
-  final decoded = jsonDecode(raw) as List<Object?>;
-  return [
-    for (final entry in decoded)
-      SnippetDto.fromJson(entry! as Map<String, Object?>).toDomain(),
-  ];
+  final snippets = <Snippet>[];
+  for (final assetPath in _catalogAssetByLanguage[language]!) {
+    final raw = await rootBundle.loadString(assetPath);
+    final decoded = jsonDecode(raw) as List<Object?>;
+    snippets.addAll([
+      for (final entry in decoded)
+        SnippetDto.fromJson(entry! as Map<String, Object?>).toDomain(),
+    ]);
+  }
+  return snippets;
 }
 
 Future<List<Snippet>> _loadAllCatalogEntries() async {
@@ -159,6 +191,7 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/go_ddd_hexagonal_notes_v1.json',
   'assets/content/learning_paths/go_intermediate_syntax_v1.json',
   'assets/content/learning_paths/go_tui_notes_v1.json',
+  'assets/content/learning_paths/go_wails_desktop_v1.json',
   'assets/content/learning_paths/go_algorithms_v1.json',
   'assets/content/learning_paths/go_interfaces_v1.json',
   'assets/content/learning_paths/go_rest_http_v1.json',
@@ -181,6 +214,7 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/javascript_algorithms_v1.json',
   'assets/content/learning_paths/typescript_foundations_v1.json',
   'assets/content/learning_paths/typescript_algorithms_v1.json',
+  'assets/content/learning_paths/typescript_react_v1.json',
   'assets/content/learning_paths/haskell_foundations_v1.json',
   'assets/content/learning_paths/haskell_algorithms_v1.json',
   'assets/content/learning_paths/c_foundations_v1.json',
@@ -202,9 +236,11 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/swift_foundations_v1.json',
   'assets/content/learning_paths/swift_algorithms_v1.json',
   'assets/content/learning_paths/swift_advanced_v1.json',
+  'assets/content/learning_paths/swift_swiftui_calculator_v1.json',
   'assets/content/learning_paths/kotlin_foundations_v1.json',
   'assets/content/learning_paths/kotlin_algorithms_v1.json',
   'assets/content/learning_paths/kotlin_advanced_v1.json',
+  'assets/content/learning_paths/kotlin_android_calculator_v1.json',
   'assets/content/learning_paths/dart_foundations_v1.json',
   'assets/content/learning_paths/dart_advanced_v1.json',
   'assets/content/learning_paths/dart_algorithms_v1.json',

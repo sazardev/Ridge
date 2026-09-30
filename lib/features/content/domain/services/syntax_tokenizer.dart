@@ -7,6 +7,7 @@ part 'sql_syntax_tokenizer.dart';
 part 'python_syntax_tokenizer.dart';
 part 'javascript_syntax_tokenizer.dart';
 part 'typescript_syntax_tokenizer.dart';
+part 'typescript_jsx_scanner.dart';
 part 'haskell_syntax_tokenizer.dart';
 part 'c_syntax_tokenizer.dart';
 part 'cpp_syntax_tokenizer.dart';
