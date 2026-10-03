@@ -345,16 +345,47 @@ rm /tmp/r_mark_ember.svg
 
 - **Splash de arranque** (`lib/core/splash/app_startup_splash.dart`):
   mark + wordmark ("Ridge") + eslogan, ~1.4s al arrancar en frío, se
-  funde hacia la app real. Es hoy la única superficie que muestra el
-  eslogan.
+  funde hacia la app real.
 - **Onboarding** (`lib/features/onboarding/`): los mensajes de apoyo de
   §3, ya en el tono correcto — no requieren cambio, son la referencia de
   voz para copy nuevo.
-- **Ícono de launcher Android** (`assets/icons/ridge_launcher_master.png`):
-  mark **distinto** al de §6 (una marca de "dos picos" aludiendo al
-  nombre "Ridge" en el naranja ember) — no se generó a partir de
-  `r_mark.svg` y no se tocó en esta ronda de iteración del mark; evaluar
-  en el futuro si conviene unificar ambos marks en uno solo.
+- **Íconos de launcher unificados**: Android, Linux, web y MSIX usan el
+  mark de §6 (keycap con la "R"), no el mark de "dos picos" anterior.
+  Fuente única: `assets/icons/ridge_launcher_master.png`.
+- **Ficha de Google Play** (app `dev.omarcodes.ridge`, publicada): copy
+  completo en `marketing/play/store-listing.md` (descripciones corta y
+  larga EN/ES, notas de versión, respuestas de formularios), capturas de
+  1080×2160 en `marketing/play/screenshots/` y su variante sin borde de
+  emulador en `screenshots/clean/`, gráfico destacado e ícono 512.
+- **Kit de prensa** (`marketing/`): todo el material gráfico y textual se
+  **genera con scripts**, no se edita a mano (§7.1).
+- **Web de documentación en GitHub Pages** (`docs/`): portada
+  (`docs/index.html`), política de privacidad bilingüe
+  (`docs/privacy/index.html`) y press kit (`docs/press/index.html`) con
+  descarga del ZIP, hechos, copy, logos, capturas y vídeos.
+
+### 7.1 Pipeline de material gráfico
+
+Tres scripts, todos en `tool/`, y requieren ImageMagick 7, `ffmpeg` y `zip`:
+
+| Script | Qué genera |
+|---|---|
+| `generate_marketing_assets.sh [en\|es\|both]` | Redes, YouTube, web, promo de Play, press y marca |
+| `generate_marketing_video.sh [en\|es\|both]` | Vídeo promo 1080×1920 y 1920×1080, 21,6 s, sin audio |
+| `build_press_kit.sh` | Assets web reescalados + `ridge-press-kit.zip` |
+
+Reglas que respetan (derivadas de §5 y §6, no preferencias):
+
+- Sin degradados, sin sombras, sin desenfoque: solo superficies planas y
+  roles de color de Material 3 (§5.3).
+- Ember `#FF5A36` como color de marca; ink `#241913` y cream `#FEF1EB`
+  como superficies; Geist y Geist Mono (§5.1).
+- El mark nunca se recolorea ni se deforma: se usa el SVG de
+  `marketing/brand/r-mark.svg` o sus PNG ya renderizados.
+- Todo sale en **inglés y español** desde el mismo script, con el texto
+  metido en el propio script para que las dos versiones no se separen.
+- Las capturas que se componen son **reales**, de la app en ejecución; solo
+  se recorta el borde del emulador, nunca el contenido.
 
 ---
 
@@ -363,11 +394,12 @@ rm /tmp/r_mark_ember.svg
 No implementado ni decidido todavía — anotado para no perderlo, no para
 implicar compromiso de fecha:
 
-- Unificar el ícono de launcher (§7) con el mark nuevo de §6.
-- Materiales para tiendas de apps (capturas, descripción larga/corta,
-  copy de ASO) — el eslogan de §3 es el punto de partida obvio.
-- Presencia en comunidades específicas (§2): ninguna cuenta/canal
-  creado todavía.
-- Landing page / sitio — no existe hoy, la app es offline-only y sin
-  presencia web (`STACK.md` — Windows/Web ni siquiera están scaffoldeados
-  aún).
+- Assets y capturas específicas de Microsoft Store, Flathub y AUR:
+  requieren capturas reales de escritorio, no composiciones con
+  capturas de móvil.
+- Vídeo en Play: exige subir el MP4 a YouTube (público o no listado) y
+  pegar la URL; Play no aloja vídeo.
+- Google Ads: descartado explícitamente. Solo promociones gratuitas de
+  Play (in-app promo y promo en la ficha).
+- Presencia en comunidades específicas (§2): ninguna cuenta/canal creado
+  todavía.

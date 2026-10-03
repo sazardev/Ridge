@@ -55,6 +55,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Press kit staging directory — rebuilt by tool/build_press_kit.sh
+/marketing/press/ridge-press-kit/
+
 # Widget Preview related
 .widget_preview/
 

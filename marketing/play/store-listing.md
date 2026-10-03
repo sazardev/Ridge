@@ -96,6 +96,31 @@ Escribe mejor, no solo más rápido.
 | Ícono de la app | 512×512 PNG 32-bit, ≤1 MB | `icon-512.png` (fuente: `icon-master-1024.png`) |
 | Gráfico destacado | 1024×500 PNG/JPEG | `feature-graphic-1024x500.png` |
 | Capturas de teléfono | 2–8, 320–3840 px, max 2:1 | `screenshots/phone-*.png` (generadas del emulador) |
+| Capturas de teléfono (sin borde del emulador) | ídem | `screenshots/clean/phone-*.png` (1080×2160) |
+| Gráfico de promoción in-app | 1024×500 PNG/JPEG | `../assets/play/promo-graphic-{en,es}.png` |
+
+Las capturas con el borde verde del emulador se sustituyen por las de
+`screenshots/clean/`; ambas se regeneran con
+`bash tool/generate_marketing_assets.sh`.
+
+## Promoción in-app (gratis, sin Google Ads)
+
+Play permite dos promociones gratuitas por app: un **anuncio dentro de la
+app** (in-app promo) y un **mensaje en la ficha** (store listing promo). No
+requieren cuenta publicitaria ni presupuesto, solo el gráfico 1024×500.
+
+| Campo | EN | ES |
+|---|---|---|
+| Tipo | In-app promo (gratuita) | In-app promo (gratuita) |
+| Gráfico | `../assets/play/promo-graphic-en.png` | `../assets/play/promo-graphic-es.png` |
+| Mensaje (≤80) | `Type real code. Twenty-plus languages, free.` | `Escribe código real. Más de veinte lenguajes, gratis.` |
+| Bots | EN (Global, excepto swimsuit) | ES (Global, excepto swimsuit) |
+| Condiciones | Solo Android; Play decide la audiencia y el periodo | ídem |
+
+El **video promocional** (21,6 s, `../video/promo-horizontal-{en,es}.mp4`)
+requiere una URL de YouTube (pública o no listada): Play no aloja vídeo. Subir
+el MP4 a YouTube, marcarlo como público y pegar el enlace en el campo de
+vídeo; el texto de la promoción puede ser el mismo que el del gráfico.
 
 ## Formularios de Play Console (respuestas)
 
