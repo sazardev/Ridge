@@ -212,6 +212,91 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ## Historial de sesiones
 
+### 2026-10-02 — Publicación en Google Play (ficha completa + release)
+
+- **Decisiones del usuario** (preguntadas esta sesión): cuenta de
+  developments **SazarCode** (de 3 disponibles), generar keystore nuevo,
+  **unificar el ícono de launcher con el keycap de la R** (`MARKETING.md`
+  §6) en vez del mark de "dos picos", y **hacer público el repo + GitHub
+  Pages** para alojar la política de privacidad (el repo era privado).
+- **Keystore de release**: `~/keystores/ridge-release.jks` (alias `ridge`,
+  RSA 2048, validez 10000 días). Contraseña aleatoria de 32 chars en
+  `~/.config/ridge/signing-credentials.txt` (chmod 600, **fuera del repo**)
+  y `android/key.properties` (chmod 600, gitignored). **Pendiente del
+  usuario: respaldar el `.jks` + credenciales.** Es la *upload key*; al
+  publicar, Google guarda la app-signing key.
+- **Unificación de marca** (commit `db34d32`): `assets/icons/
+  ridge_launcher_master.png` pasó a ser el keycap ember con la R **blanca**
+  (antes "dos picos"), y se regeneraron mipmaps Android, **adaptive icon**
+  nuevo (`mipmap-anydpi-v26/ic_launcher.xml` + `drawable-*/ic_launcher_
+  foreground.png` con la R al 54 % del lienzo para respetar el safe zone,
+  `values/colors.xml` con `#FF5A36`, y `<monochrome>` para iconos
+  temáticos), iconos hicolor de Linux, iconos web (favicon, Icon-192/512,
+  maskable), y `docs/icon.png`. El PNG maestro de Play es
+  `marketing/play/icon-512.png` (ember full-bleed + R) y el feature
+  graphic `marketing/play/feature-graphic-1024x500.png`.
+  **Lección de ImageMagick 7**: `-resize` aplica a **toda** la lista de
+  imágenes (no solo a la última), y `-background none` debe ir **antes**
+  del input SVG o el rasterizado sale con fondo blanco.
+- **Repo público + Pages** (commit `8dc7ed3`): `sazardev/Ridge` pasó a
+  **PUBLIC** con `gh repo edit --visibility public
+  --accept-visibility-change-consequences`. Se añadió `docs/` (landing +
+  `docs/privacy/index.html`, política bilingüe) y GitHub Pages servido
+  desde `main:/docs` → **https://sazardev.github.io/Ridge/** y
+  **https://sazardev.github.io/Ridge/privacy/** (ya responden 200). El
+  escaneo previo de secretos en todo el historial salió limpio (los 2 hits
+  de "AKIA" eran el ejemplo literal en `CODE_STANDARDS.md` y el hook).
+- **Copy de tienda** en `marketing/play/store-listing.md`: título
+  `Ridge: Code Typing Practice` (27/30), short description EN 78/80 y ES
+  74/80, descripciones completas EN 1398 y ES 1482 chars (límite 4000),
+  release notes y notas de la declaración de firma.
+- **Capturas reales** (no mockups): emulador `Medium_Phone_2` (API 33) con
+  `wm size 1080x2160` para que las capturas caigan en **2:1 exacto**, que
+  es el máximo que acepta Play (el AVD por defecto es 1080×2400 = 2.22:1 y
+  se rechaza). 8 capturas en `marketing/play/screenshots/`
+  (`phone-01`…`phone-09`, sin `phone-05`): catálogo de lenguajes, rutas de
+  Go, lista de lecciones, lección con snippet, práctica libre (Zen/Sprint/
+  Precisión/Survival/Reto diario), perfil con **teclado 3D Keychron Q1**,
+  editor de teclado y Ajustes.
+  - El **modelo de teclado solo aparece si el texto coincide exacto** con
+    una clave de `assets/content/keyboard_layouts/manifest.json`
+    (`"Keychron Q1"`, no "Keychron K8 Pro"): si no coincide, el 3D no se
+    renderiza.
+  - **No se pudo teclear en el emulador**: `adb input text`/`input keyevent`
+    no llegan al campo de captura de Flutter (el `EditorInfo` aparece con
+    `inputType=NULL` y `mServedInputConnection=null`). No hay captura de
+    sesión en progreso por eso; se resolvió con pantallas estáticas.
+- **Play Console (SazarCode, app id `4973255484011804698`)**:
+  app creada (`dev.omarcodes.ridge`, App, Free, en-US). Completadas las
+  **11 tareas** de "Set up your app": privacidad, acceso sin cuenta,
+  **sin anuncios**, **IARC** (ESRB Everyone, PEGI 3, USK 0, IARC 3+),
+  público **13-15/16-17/18+**, **Data safety** (no recopila, no comparte),
+  **sin** advertising ID, sin gobierno, sin finanzas, sin salud; categoría
+  **Education** + tags *Education*/*Keyboard*; contacto
+  `omar.desarrollo@gmtransporterp.com`. Ficha de tienda guardada con
+  ícono 1/1, feature graphic 1/1 y **8/8** capturas de teléfono.
+- **Gotcha de Play**: al subir el AAB y fallar el guardado con un error de
+  servidor (`48FC27CC`), el reintento con el **mismo versionCode** falla con
+  *"Version code 20 has already been used"*, aunque se limpiar el asset. Un
+  `reload` de la página **descarta el bundle subido**. Se bumpeó
+  `pubspec.yaml` a **1.19.0+21** y se recompiló el AAB para subirlo.
+- **Enviado a revisión** (Play Console, 11 cambios): Production ·
+  **1.19.0 (versionCode 21)** · *Start full rollout* · **177 países +
+  "rest of world"** (178 en total) · store listing en-US completa. Play
+  corría los *quick checks* (~12 min) antes de entregar el paquete a revisión;
+  la revisión tarda típicamente 7 días o más. Captura del estado en
+  `marketing/play/console-submitted.png`.
+- **Notas de release**: Play las exige dentro de etiquetas de idioma
+  (`<en-US>…</en-US>`) y con **máximo 500 caracteres**; sin las etiquetas
+  avisa *"Release notes provided for 0 language"*.
+- **Pendiente del usuario** (no bloquea la publicación):
+  1. **Respaldar `~/keystores/ridge-release.jks` y
+     `~/.config/ridge/signing-credentials.txt`** fuera de esta máquina.
+  2. Vigilar la notificación crítica de **Android developer verification**
+     (vence 30 sep 2026) en el panel de la cuenta.
+  3. `git push` del commit de `pubspec` (1.19.0+21) y de las capturas, que
+     quedaron sin commitear tras hacer público el repo.
+
 ### 2026-09-29 — Movimiento Material 3 Expressive (springs, rebote, stagger)
 
 - **Alcance:** pasada de UI "más viva". `AppMotion` gana `SpringCurve`
