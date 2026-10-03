@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.21.0] - 2026-10-03
+
+### Added
+- **marketing:** add generated promo assets, videos and press kit (c8078b1)
+
 ## [1.20.0] - 2026-10-03
 
 ### Added
