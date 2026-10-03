@@ -103,6 +103,14 @@ Las capturas con el borde verde del emulador se sustituyen por las de
 `screenshots/clean/`; ambas se regeneran con
 `bash tool/generate_marketing_assets.sh`.
 
+> **Pendiente (2026-10-03):** en la ficha *Default – English (United
+> States)* de la consola hay un **borrador guardado sin las 8 capturas de
+> teléfono** (se borraron pero la subida falló: el navegador del agente
+> cierra la pestaña al abrir el diálogo de archivos). La ficha publicada
+> sigue intacta. **No enviar ese borrador**: descartarlo o subir las 8 de
+> `screenshots/clean/` más el gráfico destacado nuevo
+> `../assets/play/promo-graphic-en.png`.
+
 ## Promoción in-app (gratis, sin Google Ads)
 
 Play permite dos promociones gratuitas por app: un **anuncio dentro de la

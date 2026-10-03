@@ -3956,6 +3956,33 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ## Pendientes / próximos pasos
 
+- **Borrador de la ficha de Play con las 8 capturas borradas (ATENCIÓN,
+  sesión 2026-10-03)**: en la ficha de la tienda *Default – English
+  (United States)* se quitaron las 8 capturas de teléfono y se guardó como
+  borrador ("Your changes have been saved"), pero **no se pudieron volver a
+  subir**: el navegador que controla el MCP **cierra la pestaña en cuanto se
+  abre un diálogo de selección de archivo** (reproducible en Play Console y
+  en YouTube Studio; el proceso de Chromium aguanta, el renderer de la
+  pestaña muere). La ficha **publicada** sigue intacta (release del 2 de
+  octubre con las capturas viejas), pero **ese borrador no debe enviarse
+  tal cual**: o se descartan los cambios, o se suben
+  `marketing/play/screenshots/clean/phone-*.png` (8, 1080×2160, sin el
+  borde verde del emulador) y el gráfico destacado nuevo
+  `marketing/assets/play/promo-graphic-en.png` (1024×500).
+- **Vídeos de YouTube sin subir (2026-10-03)**: los 4 MP4 de
+  `marketing/video/` están listos y validados (`promo-{vertical,horizontal}-
+  {en,es}.mp4`, 21,6 s, sin audio) pero la subida por navegador falla por el
+  mismo motivo del diálogo de archivos. Títulos y descripciones ya están
+  escritos en `marketing/press/social-captions.md`; hace falta subirlos a
+  YouTube (público o no listado) para poder pegar la URL en el campo
+  *Video* de la ficha de Play.
+- **Play Console ya no ofrece in-app promos**: en la consola actual (build
+  2026-10) la sección *Promotions* **no existe** en la navegación de la app
+  —solo *Promo codes*, dentro de *Monetize with Play*—, ni aparece en el
+  editor de la ficha. Se comprueba en `store-settings`, `store-listings` y
+  `store-listings/default/edit`. Las dos promociones gratuitas que Google
+  sí expone (in-app promo y promo en la ficha) no son accesibles desde esta
+  consola; no se abre ninguna campaña de Google Ads (decisión del usuario).
 - Todo lo online de `SPEC.md` §5/§9 y `STACK.md` §5–6 (Supabase, sync,
   duelos, escuadrones, leaderboards, y la Fase 1 del Reto Diario descrita
   arriba).
