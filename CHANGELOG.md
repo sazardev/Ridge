@@ -11,6 +11,13 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.20.0] - 2026-10-03
+
+### Added
+- **brand:** unify the app icon with the R keycap mark (db34d32)
+- **settings:** add performance mode for machines without a GPU (a775a2f)
+- **ui:** springy Material 3 Expressive motion across the app (813d202)
+
 ## [1.19.0] - 2026-09-29
 
 ### Added
