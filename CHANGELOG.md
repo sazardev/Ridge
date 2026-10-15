@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.22.0] - 2026-10-15
+
+### Added
+- **practice:** add ghost races, live keyboard, warm-ups and daily reminders (857ddd5)
+
 ## [1.20.0] - 2026-10-03
 
 ### Added
