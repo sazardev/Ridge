@@ -3,6 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:ridge/core/router/animated_branch_container.dart';
 import 'package:ridge/core/router/app_shell.dart';
 import 'package:ridge/features/achievements/presentation/screens/achievements_screen.dart';
+import 'package:ridge/features/auth/presentation/screens/recover_account_screen.dart';
+import 'package:ridge/features/auth/presentation/screens/register_account_screen.dart';
+import 'package:ridge/features/auth/presentation/screens/sign_in_account_screen.dart';
 import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/presentation/screens/snippet_browser_screen.dart';
 import 'package:ridge/features/content/presentation/widgets/practice_mode_picker_sheet.dart';
@@ -82,6 +85,13 @@ GoRouter appRouter(Ref ref) {
       final hasProfile = ref.read(hasGuestProfileProvider);
       final onOnboardingRoute = state.matchedLocation == '/onboarding';
       final onProfileCreateRoute = state.matchedLocation == '/profile/create';
+      // Signing into an existing account is deliberately reachable with
+      // no on-device profile at all — it's exactly the "new device"
+      // flow of SPEC.md §8.2, which creates the local profile itself
+      // (`SignInAccountUseCase`).
+      final onAccountEntryRoute =
+          state.matchedLocation == '/account/sign-in' ||
+          state.matchedLocation == '/account/recover';
 
       final settings = ref.read(settingsControllerProvider).value;
       // Defaults to "already seen" while settings are still hydrating, same
@@ -98,6 +108,7 @@ GoRouter appRouter(Ref ref) {
         if (!onboardingCompleted) {
           return onOnboardingRoute ? null : '/onboarding';
         }
+        if (onAccountEntryRoute) return null;
         return onProfileCreateRoute ? null : '/profile/create';
       }
       if (onOnboardingRoute || onProfileCreateRoute) return '/practice';
@@ -159,6 +170,23 @@ GoRouter appRouter(Ref ref) {
         path: '/profile/edit',
         builder: (context, state) =>
             EditProfileScreen(profile: state.extra! as GuestProfile),
+      ),
+      // Pushed as a non-shell route from Profile's account card (same
+      // shape as `/profile/edit`) — the Registered Account flows of
+      // SPEC.md §7.2: create one (guest conversion), sign into an
+      // existing one, or recover it with the one-time code. All three
+      // pop back to Profile on success.
+      GoRoute(
+        path: '/account/register',
+        builder: (context, state) => const RegisterAccountScreen(),
+      ),
+      GoRoute(
+        path: '/account/sign-in',
+        builder: (context, state) => const SignInAccountScreen(),
+      ),
+      GoRoute(
+        path: '/account/recover',
+        builder: (context, state) => const RecoverAccountScreen(),
       ),
       // Pushed as a non-shell route from the keyboard hero card's expand
       // action (same `extra` handover as `/profile/edit`) — a fullscreen

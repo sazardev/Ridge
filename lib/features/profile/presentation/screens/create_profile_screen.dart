@@ -188,6 +188,18 @@ class _CreateProfileScreenState extends ConsumerState<CreateProfileScreen> {
                               ),
                             ),
                           ),
+                          // The other half of SPEC.md §7's identity story:
+                          // an existing Registered Account signing in on a
+                          // new device skips local creation entirely —
+                          // `SignInAccountUseCase` builds the local
+                          // profile from the account.
+                          const SizedBox(height: 8),
+                          TextButton(
+                            onPressed: _submitting
+                                ? null
+                                : () => context.push('/account/sign-in'),
+                            child: Text(l10n.accountSignInAction),
+                          ),
                         ],
                       ),
                     ),

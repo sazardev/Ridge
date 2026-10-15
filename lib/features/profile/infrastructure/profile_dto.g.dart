@@ -24,6 +24,7 @@ _ProfileDto _$ProfileDtoFromJson(Map<String, dynamic> json) => _ProfileDto(
   operatingSystemVersion: json['operatingSystemVersion'] as String?,
   deviceModel: json['deviceModel'] as String?,
   keyboardCustomizationJson: json['keyboardCustomizationJson'] as String?,
+  accountUid: json['accountUid'] as String?,
 );
 
 Map<String, dynamic> _$ProfileDtoToJson(_ProfileDto instance) =>
@@ -43,4 +44,5 @@ Map<String, dynamic> _$ProfileDtoToJson(_ProfileDto instance) =>
       'operatingSystemVersion': instance.operatingSystemVersion,
       'deviceModel': instance.deviceModel,
       'keyboardCustomizationJson': instance.keyboardCustomizationJson,
+      'accountUid': instance.accountUid,
     };

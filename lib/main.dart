@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:ridge/app.dart';
 import 'package:ridge/core/audio/sound_engine.dart';
+import 'package:ridge/core/firebase/firebase_bootstrap.dart';
 import 'package:ridge/core/window/desktop_platform.dart';
 import 'package:ridge/core/window/window_geometry_listener.dart';
 import 'package:ridge/core/window/window_geometry_store.dart';
@@ -15,6 +16,12 @@ import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Firebase (Auth, Firestore, the account Cloud Functions) on the
+  // platforms FlutterFire supports — Android, Web and Windows. A guarded
+  // no-op on Linux, which has no Firebase client at all and stays a
+  // Guest-only, fully offline install (SPEC.md §7.1).
+  await ensureFirebaseInitialized();
 
   // Clean Web URLs (`/tasks` instead of `/#/tasks`) — requires the hosting
   // layer to serve index.html as a fallback for any route (STACK.md §3.4,

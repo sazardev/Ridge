@@ -2605,4 +2605,130 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingDeviceDescription =>
       'We detected your platform and device automatically — nothing to configure.';
+
+  @override
+  String get accountGuestTitle => 'Guest profile';
+
+  @override
+  String get accountGuestBody =>
+      'Your progress lives only on this device. Create a registered account to sign in from any platform and keep everything — still no email, just a username and password.';
+
+  @override
+  String get accountCreateAction => 'Create account';
+
+  @override
+  String get accountSignInAction => 'I already have an account';
+
+  @override
+  String get accountRegisteredTitle => 'Registered account';
+
+  @override
+  String get accountSignOutAction => 'Sign out';
+
+  @override
+  String get accountDeleteAction => 'Delete account';
+
+  @override
+  String get accountCancel => 'Cancel';
+
+  @override
+  String get accountDeleteConfirmTitle => 'Delete your account?';
+
+  @override
+  String get accountDeleteConfirmBody =>
+      'This permanently deletes your account, your cloud profile and all local data on this device. It cannot be undone.';
+
+  @override
+  String get accountDeleteConfirmAction => 'Delete everything';
+
+  @override
+  String get accountUnsupportedBody =>
+      'Registered accounts need Firebase, which has no Linux client — on Linux your profile stays a guest. Use Android, Windows or Web for accounts.';
+
+  @override
+  String get accountUsernameLocked =>
+      'A registered account\'s username can\'t be changed.';
+
+  @override
+  String get accountRegisterTitle => 'Create your account';
+
+  @override
+  String get accountRegisterSubtitle =>
+      'No email, no personal data — just a unique username and a password.';
+
+  @override
+  String get accountRegisterAction => 'Create account';
+
+  @override
+  String get accountUsernameLabel => 'Username';
+
+  @override
+  String get accountUsernameHint =>
+      '3–24 characters: letters, digits, dots, dashes, underscores';
+
+  @override
+  String get accountPasswordLabel => 'Password';
+
+  @override
+  String get accountConfirmPasswordLabel => 'Confirm password';
+
+  @override
+  String get accountPasswordMismatch => 'Passwords don\'t match';
+
+  @override
+  String get accountRecoveryCodeTitle => 'Save your recovery code';
+
+  @override
+  String get accountRecoveryCodeBody =>
+      'This is the only way back into your account if you forget your password. Write it down and keep it somewhere safe — it will never be shown again.';
+
+  @override
+  String get accountRecoveryCodeCopy => 'Copy code';
+
+  @override
+  String get accountRecoveryCodeCopied => 'Code copied';
+
+  @override
+  String get accountRecoveryCodeSaved => 'I\'ve saved it';
+
+  @override
+  String get accountSignInTitle => 'Sign in';
+
+  @override
+  String get accountSignInSubtitle =>
+      'Your progress and stats come back with you.';
+
+  @override
+  String get accountForgotPassword => 'I forgot my password';
+
+  @override
+  String get accountRecoverTitle => 'Recover your account';
+
+  @override
+  String get accountRecoverSubtitle =>
+      'Enter your recovery code and pick a new password. You\'ll get a fresh code afterwards.';
+
+  @override
+  String get accountRecoveryCodeLabel => 'Recovery code';
+
+  @override
+  String get accountNewPasswordLabel => 'New password';
+
+  @override
+  String get accountRecoverAction => 'Recover account';
+
+  @override
+  String get accountErrorInvalidInput =>
+      'Check the username and password requirements';
+
+  @override
+  String get accountErrorBadCredentials =>
+      'Incorrect username, password or recovery code';
+
+  @override
+  String get accountErrorNoSuchAccount => 'No account with that username';
+
+  @override
+  String get accountErrorConnection =>
+      'Couldn\'t reach the account service — check your connection';
 }

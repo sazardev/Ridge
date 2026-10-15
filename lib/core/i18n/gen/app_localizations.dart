@@ -4975,6 +4975,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We detected your platform and device automatically — nothing to configure.'**
   String get onboardingDeviceDescription;
+
+  /// No description provided for @accountGuestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest profile'**
+  String get accountGuestTitle;
+
+  /// No description provided for @accountGuestBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your progress lives only on this device. Create a registered account to sign in from any platform and keep everything — still no email, just a username and password.'**
+  String get accountGuestBody;
+
+  /// No description provided for @accountCreateAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get accountCreateAction;
+
+  /// No description provided for @accountSignInAction.
+  ///
+  /// In en, this message translates to:
+  /// **'I already have an account'**
+  String get accountSignInAction;
+
+  /// No description provided for @accountRegisteredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered account'**
+  String get accountRegisteredTitle;
+
+  /// No description provided for @accountSignOutAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get accountSignOutAction;
+
+  /// No description provided for @accountDeleteAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get accountDeleteAction;
+
+  /// No description provided for @accountCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get accountCancel;
+
+  /// No description provided for @accountDeleteConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account?'**
+  String get accountDeleteConfirmTitle;
+
+  /// No description provided for @accountDeleteConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently deletes your account, your cloud profile and all local data on this device. It cannot be undone.'**
+  String get accountDeleteConfirmBody;
+
+  /// No description provided for @accountDeleteConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete everything'**
+  String get accountDeleteConfirmAction;
+
+  /// No description provided for @accountUnsupportedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered accounts need Firebase, which has no Linux client — on Linux your profile stays a guest. Use Android, Windows or Web for accounts.'**
+  String get accountUnsupportedBody;
+
+  /// No description provided for @accountUsernameLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'A registered account\'s username can\'t be changed.'**
+  String get accountUsernameLocked;
+
+  /// No description provided for @accountRegisterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account'**
+  String get accountRegisterTitle;
+
+  /// No description provided for @accountRegisterSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No email, no personal data — just a unique username and a password.'**
+  String get accountRegisterSubtitle;
+
+  /// No description provided for @accountRegisterAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get accountRegisterAction;
+
+  /// No description provided for @accountUsernameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get accountUsernameLabel;
+
+  /// No description provided for @accountUsernameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'3–24 characters: letters, digits, dots, dashes, underscores'**
+  String get accountUsernameHint;
+
+  /// No description provided for @accountPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get accountPasswordLabel;
+
+  /// No description provided for @accountConfirmPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get accountConfirmPasswordLabel;
+
+  /// No description provided for @accountPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords don\'t match'**
+  String get accountPasswordMismatch;
+
+  /// No description provided for @accountRecoveryCodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save your recovery code'**
+  String get accountRecoveryCodeTitle;
+
+  /// No description provided for @accountRecoveryCodeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the only way back into your account if you forget your password. Write it down and keep it somewhere safe — it will never be shown again.'**
+  String get accountRecoveryCodeBody;
+
+  /// No description provided for @accountRecoveryCodeCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy code'**
+  String get accountRecoveryCodeCopy;
+
+  /// No description provided for @accountRecoveryCodeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Code copied'**
+  String get accountRecoveryCodeCopied;
+
+  /// No description provided for @accountRecoveryCodeSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'ve saved it'**
+  String get accountRecoveryCodeSaved;
+
+  /// No description provided for @accountSignInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get accountSignInTitle;
+
+  /// No description provided for @accountSignInSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your progress and stats come back with you.'**
+  String get accountSignInSubtitle;
+
+  /// No description provided for @accountForgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'I forgot my password'**
+  String get accountForgotPassword;
+
+  /// No description provided for @accountRecoverTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recover your account'**
+  String get accountRecoverTitle;
+
+  /// No description provided for @accountRecoverSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your recovery code and pick a new password. You\'ll get a fresh code afterwards.'**
+  String get accountRecoverSubtitle;
+
+  /// No description provided for @accountRecoveryCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery code'**
+  String get accountRecoveryCodeLabel;
+
+  /// No description provided for @accountNewPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get accountNewPasswordLabel;
+
+  /// No description provided for @accountRecoverAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Recover account'**
+  String get accountRecoverAction;
+
+  /// No description provided for @accountErrorInvalidInput.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the username and password requirements'**
+  String get accountErrorInvalidInput;
+
+  /// No description provided for @accountErrorBadCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect username, password or recovery code'**
+  String get accountErrorBadCredentials;
+
+  /// No description provided for @accountErrorNoSuchAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'No account with that username'**
+  String get accountErrorNoSuchAccount;
+
+  /// No description provided for @accountErrorConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t reach the account service — check your connection'**
+  String get accountErrorConnection;
 }
 
 class _AppLocalizationsDelegate

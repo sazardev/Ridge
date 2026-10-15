@@ -173,6 +173,17 @@ class $GuestProfilesTable extends GuestProfiles
         type: DriftSqlType.string,
         requiredDuringInsert: false,
       );
+  static const VerificationMeta _accountUidMeta = const VerificationMeta(
+    'accountUid',
+  );
+  @override
+  late final GeneratedColumn<String> accountUid = GeneratedColumn<String>(
+    'account_uid',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -190,6 +201,7 @@ class $GuestProfilesTable extends GuestProfiles
     operatingSystemVersion,
     deviceModel,
     keyboardCustomizationJson,
+    accountUid,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -326,6 +338,12 @@ class $GuestProfilesTable extends GuestProfiles
         ),
       );
     }
+    if (data.containsKey('account_uid')) {
+      context.handle(
+        _accountUidMeta,
+        accountUid.isAcceptableOrUnknown(data['account_uid']!, _accountUidMeta),
+      );
+    }
     return context;
   }
 
@@ -394,6 +412,10 @@ class $GuestProfilesTable extends GuestProfiles
       keyboardCustomizationJson: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}keyboard_customization_json'],
+      ),
+      accountUid: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}account_uid'],
       ),
     );
   }
@@ -470,6 +492,13 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
   /// `progress_snapshot_cache`'s report blobs. See
   /// `keyboard_customization_mapper.dart` for the encode/decode pair.
   final String? keyboardCustomizationJson;
+
+  /// The Firebase Auth uid backing this profile once it has been
+  /// converted into a Registered Account (SPEC.md §7.2), or `null` while
+  /// it is still a Guest Profile. This is what makes the on-device
+  /// identity "registered": the account lives in Firebase, the profile
+  /// (and all local history) stays here and gets attached to it.
+  final String? accountUid;
   const GuestProfileRow({
     required this.id,
     required this.username,
@@ -486,6 +515,7 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     this.operatingSystemVersion,
     this.deviceModel,
     this.keyboardCustomizationJson,
+    this.accountUid,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -533,6 +563,9 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
         keyboardCustomizationJson,
       );
     }
+    if (!nullToAbsent || accountUid != null) {
+      map['account_uid'] = Variable<String>(accountUid);
+    }
     return map;
   }
 
@@ -578,6 +611,9 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
           keyboardCustomizationJson == null && nullToAbsent
           ? const Value.absent()
           : Value(keyboardCustomizationJson),
+      accountUid: accountUid == null && nullToAbsent
+          ? const Value.absent()
+          : Value(accountUid),
     );
   }
 
@@ -610,6 +646,7 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       keyboardCustomizationJson: serializer.fromJson<String?>(
         json['keyboardCustomizationJson'],
       ),
+      accountUid: serializer.fromJson<String?>(json['accountUid']),
     );
   }
   @override
@@ -635,6 +672,7 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       'keyboardCustomizationJson': serializer.toJson<String?>(
         keyboardCustomizationJson,
       ),
+      'accountUid': serializer.toJson<String?>(accountUid),
     };
   }
 
@@ -654,6 +692,7 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     Value<String?> operatingSystemVersion = const Value.absent(),
     Value<String?> deviceModel = const Value.absent(),
     Value<String?> keyboardCustomizationJson = const Value.absent(),
+    Value<String?> accountUid = const Value.absent(),
   }) => GuestProfileRow(
     id: id ?? this.id,
     username: username ?? this.username,
@@ -688,6 +727,7 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     keyboardCustomizationJson: keyboardCustomizationJson.present
         ? keyboardCustomizationJson.value
         : this.keyboardCustomizationJson,
+    accountUid: accountUid.present ? accountUid.value : this.accountUid,
   );
   GuestProfileRow copyWithCompanion(GuestProfilesCompanion data) {
     return GuestProfileRow(
@@ -728,6 +768,9 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
       keyboardCustomizationJson: data.keyboardCustomizationJson.present
           ? data.keyboardCustomizationJson.value
           : this.keyboardCustomizationJson,
+      accountUid: data.accountUid.present
+          ? data.accountUid.value
+          : this.accountUid,
     );
   }
 
@@ -748,7 +791,8 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
           ..write('platform: $platform, ')
           ..write('operatingSystemVersion: $operatingSystemVersion, ')
           ..write('deviceModel: $deviceModel, ')
-          ..write('keyboardCustomizationJson: $keyboardCustomizationJson')
+          ..write('keyboardCustomizationJson: $keyboardCustomizationJson, ')
+          ..write('accountUid: $accountUid')
           ..write(')'))
         .toString();
   }
@@ -770,6 +814,7 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
     operatingSystemVersion,
     deviceModel,
     keyboardCustomizationJson,
+    accountUid,
   );
   @override
   bool operator ==(Object other) =>
@@ -789,7 +834,8 @@ class GuestProfileRow extends DataClass implements Insertable<GuestProfileRow> {
           other.platform == this.platform &&
           other.operatingSystemVersion == this.operatingSystemVersion &&
           other.deviceModel == this.deviceModel &&
-          other.keyboardCustomizationJson == this.keyboardCustomizationJson);
+          other.keyboardCustomizationJson == this.keyboardCustomizationJson &&
+          other.accountUid == this.accountUid);
 }
 
 class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
@@ -808,6 +854,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
   final Value<String?> operatingSystemVersion;
   final Value<String?> deviceModel;
   final Value<String?> keyboardCustomizationJson;
+  final Value<String?> accountUid;
   final Value<int> rowid;
   const GuestProfilesCompanion({
     this.id = const Value.absent(),
@@ -825,6 +872,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     this.operatingSystemVersion = const Value.absent(),
     this.deviceModel = const Value.absent(),
     this.keyboardCustomizationJson = const Value.absent(),
+    this.accountUid = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   GuestProfilesCompanion.insert({
@@ -843,6 +891,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     this.operatingSystemVersion = const Value.absent(),
     this.deviceModel = const Value.absent(),
     this.keyboardCustomizationJson = const Value.absent(),
+    this.accountUid = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        username = Value(username),
@@ -863,6 +912,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     Expression<String>? operatingSystemVersion,
     Expression<String>? deviceModel,
     Expression<String>? keyboardCustomizationJson,
+    Expression<String>? accountUid,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -883,6 +933,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
       if (deviceModel != null) 'device_model': deviceModel,
       if (keyboardCustomizationJson != null)
         'keyboard_customization_json': keyboardCustomizationJson,
+      if (accountUid != null) 'account_uid': accountUid,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -903,6 +954,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
     Value<String?>? operatingSystemVersion,
     Value<String?>? deviceModel,
     Value<String?>? keyboardCustomizationJson,
+    Value<String?>? accountUid,
     Value<int>? rowid,
   }) {
     return GuestProfilesCompanion(
@@ -923,6 +975,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
       deviceModel: deviceModel ?? this.deviceModel,
       keyboardCustomizationJson:
           keyboardCustomizationJson ?? this.keyboardCustomizationJson,
+      accountUid: accountUid ?? this.accountUid,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -979,6 +1032,9 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
         keyboardCustomizationJson.value,
       );
     }
+    if (accountUid.present) {
+      map['account_uid'] = Variable<String>(accountUid.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1003,6 +1059,7 @@ class GuestProfilesCompanion extends UpdateCompanion<GuestProfileRow> {
           ..write('operatingSystemVersion: $operatingSystemVersion, ')
           ..write('deviceModel: $deviceModel, ')
           ..write('keyboardCustomizationJson: $keyboardCustomizationJson, ')
+          ..write('accountUid: $accountUid, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -6991,6 +7048,7 @@ typedef $$GuestProfilesTableCreateCompanionBuilder =
       Value<String?> operatingSystemVersion,
       Value<String?> deviceModel,
       Value<String?> keyboardCustomizationJson,
+      Value<String?> accountUid,
       Value<int> rowid,
     });
 typedef $$GuestProfilesTableUpdateCompanionBuilder =
@@ -7010,6 +7068,7 @@ typedef $$GuestProfilesTableUpdateCompanionBuilder =
       Value<String?> operatingSystemVersion,
       Value<String?> deviceModel,
       Value<String?> keyboardCustomizationJson,
+      Value<String?> accountUid,
       Value<int> rowid,
     });
 
@@ -7094,6 +7153,11 @@ class $$GuestProfilesTableFilterComposer
 
   ColumnFilters<String> get keyboardCustomizationJson => $composableBuilder(
     column: $table.keyboardCustomizationJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get accountUid => $composableBuilder(
+    column: $table.accountUid,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -7181,6 +7245,11 @@ class $$GuestProfilesTableOrderingComposer
     column: $table.keyboardCustomizationJson,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get accountUid => $composableBuilder(
+    column: $table.accountUid,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$GuestProfilesTableAnnotationComposer
@@ -7258,6 +7327,11 @@ class $$GuestProfilesTableAnnotationComposer
     column: $table.keyboardCustomizationJson,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get accountUid => $composableBuilder(
+    column: $table.accountUid,
+    builder: (column) => column,
+  );
 }
 
 class $$GuestProfilesTableTableManager
@@ -7306,6 +7380,7 @@ class $$GuestProfilesTableTableManager
                 Value<String?> operatingSystemVersion = const Value.absent(),
                 Value<String?> deviceModel = const Value.absent(),
                 Value<String?> keyboardCustomizationJson = const Value.absent(),
+                Value<String?> accountUid = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => GuestProfilesCompanion(
                 id: id,
@@ -7323,6 +7398,7 @@ class $$GuestProfilesTableTableManager
                 operatingSystemVersion: operatingSystemVersion,
                 deviceModel: deviceModel,
                 keyboardCustomizationJson: keyboardCustomizationJson,
+                accountUid: accountUid,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -7342,6 +7418,7 @@ class $$GuestProfilesTableTableManager
                 Value<String?> operatingSystemVersion = const Value.absent(),
                 Value<String?> deviceModel = const Value.absent(),
                 Value<String?> keyboardCustomizationJson = const Value.absent(),
+                Value<String?> accountUid = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => GuestProfilesCompanion.insert(
                 id: id,
@@ -7359,6 +7436,7 @@ class $$GuestProfilesTableTableManager
                 operatingSystemVersion: operatingSystemVersion,
                 deviceModel: deviceModel,
                 keyboardCustomizationJson: keyboardCustomizationJson,
+                accountUid: accountUid,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

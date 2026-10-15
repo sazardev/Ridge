@@ -112,6 +112,21 @@ class ActiveProfileController extends _$ActiveProfileController {
     return ref.read(renameProfileUseCaseProvider)(newUsername);
   }
 
+  /// Marks the profile as backed by the Registered Account [accountUid]
+  /// (SPEC.md §7.2's guest-to-account conversion). Only `auth`'s use
+  /// cases call this — it's the one write that changes which identity
+  /// type the profile is.
+  Future<Result<void, AppFailure>> linkAccount({required String accountUid}) {
+    return ref
+        .read(profileRepositoryProvider)
+        .linkAccount(accountUid: accountUid);
+  }
+
+  /// Clears the profile's account link (sign-out).
+  Future<Result<void, AppFailure>> unlinkAccount() {
+    return ref.read(profileRepositoryProvider).unlinkAccount();
+  }
+
   /// Updates the Guest Profile's profile-flair fields — always all of
   /// them together, since the editor is a single form.
   Future<Result<void, AppFailure>> updateCustomization({

@@ -24,6 +24,12 @@ part 'guest_profile.freezed.dart';
 /// kind of optional field: auto-detected once (never user-editable, see
 /// `EnsureDeviceInfoUseCase`), `null` until detection has run or when the
 /// current platform doesn't expose that attribute.
+///
+/// `accountUid` is what tells the two identity types of SPEC.md §7 apart
+/// at the domain level: `null` means this is still a Guest Profile; set
+/// means it has been converted into a Registered Account (the uid of the
+/// Firebase Auth user backing it). The local profile — and its whole
+/// history — stays on the device either way.
 @freezed
 abstract class GuestProfile with _$GuestProfile {
   /// Creates an immutable Guest Profile snapshot.
@@ -43,5 +49,6 @@ abstract class GuestProfile with _$GuestProfile {
     String? platform,
     String? operatingSystemVersion,
     String? deviceModel,
+    String? accountUid,
   }) = _GuestProfile;
 }

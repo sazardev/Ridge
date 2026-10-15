@@ -99,4 +99,20 @@ class GuestProfileDao extends DatabaseAccessor<AppDatabase>
       ),
     );
   }
+
+  /// Marks the row identified by [id] as backed by the Registered Account
+  /// [accountUid] (SPEC.md §7.2's guest-to-account conversion).
+  Future<void> linkAccount({required String id, required String accountUid}) {
+    return (update(guestProfiles)..where((row) => row.id.equals(id))).write(
+      GuestProfilesCompanion(accountUid: Value(accountUid)),
+    );
+  }
+
+  /// Clears the Registered Account link on the row identified by [id] —
+  /// the profile goes back to being a plain Guest Profile.
+  Future<void> unlinkAccount({required String id}) {
+    return (update(guestProfiles)..where((row) => row.id.equals(id))).write(
+      const GuestProfilesCompanion(accountUid: Value(null)),
+    );
+  }
 }

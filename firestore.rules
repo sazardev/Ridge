@@ -1,0 +1,33 @@
+rules_version = '2';
+
+// Ridge's Firestore rules (STACK.md §5, SPEC.md §7): everything is
+// server-only by default — the Cloud Functions write through the Admin
+// SDK, which bypasses these rules entirely, so the client surface is
+// deliberately tiny:
+//
+//  - profiles/{uid}: the public identity document. Readable by its owner
+//    (the app reads it to restore the display-cased username); never
+//    writable from the client — profile creation belongs to `register`.
+//  - usernames/{username}: the platform-wide uniqueness index. Server only.
+//  - recoveryCodes/{uid}: the salted hash of the one-time recovery code.
+//    Server only, never readable by anyone.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /profiles/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    match /usernames/{username} {
+      allow read, write: if false;
+    }
+
+    match /recoveryCodes/{uid} {
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

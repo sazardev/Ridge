@@ -6,6 +6,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/widgets/keyboard_scroll_shortcuts.dart';
 import 'package:ridge/core/widgets/staggered_entrance.dart';
+import 'package:ridge/features/auth/presentation/widgets/account_section.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:ridge/features/profile/presentation/widgets/profile_about_card.dart';
 import 'package:ridge/features/profile/presentation/widgets/profile_achievements_card.dart';
@@ -121,6 +122,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ],
                   const SizedBox(height: 16),
                   ProfileDeviceCard(profile: profile).staggeredIn(context, 5),
+                  const SizedBox(height: 16),
+                  AccountSection(profile: profile).staggeredIn(context, 6),
                 ],
               ),
             );

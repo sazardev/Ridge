@@ -72,6 +72,13 @@ class GuestProfiles extends Table {
   /// `keyboard_customization_mapper.dart` for the encode/decode pair.
   TextColumn get keyboardCustomizationJson => text().nullable()();
 
+  /// The Firebase Auth uid backing this profile once it has been
+  /// converted into a Registered Account (SPEC.md §7.2), or `null` while
+  /// it is still a Guest Profile. This is what makes the on-device
+  /// identity "registered": the account lives in Firebase, the profile
+  /// (and all local history) stays here and gets attached to it.
+  TextColumn get accountUid => text().nullable()();
+
   @override
   Set<Column> get primaryKey => {id};
 }

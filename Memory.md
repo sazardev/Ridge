@@ -21,13 +21,17 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ---
 
-## Estado actual (2026-09-25)
+## Estado actual (2026-10-14)
 
-- App **offline-only** (drift/SQLite + secure storage + shared_preferences).
-  Todo lo online (auth, duelos, escuadrones, leaderboards, sync Supabase)
-  está especificado en `SPEC.md`/`STACK.md` pero **sin implementar**.
+- App **offline-first** (drift/SQLite + secure storage + shared_preferences).
+  Las **cuentas registradas** (SPEC.md §7.2) ya están implementadas sobre
+  **Firebase** (Auth + Firestore + Cloud Functions) en Android/Web/Windows;
+  **Linux no tiene cliente FlutterFire y queda invitado/offline** por diseño
+  (`STACK.md §5.1`). El resto de lo online (duelos, escuadrones,
+  leaderboards, sync de historial) sigue especificado en
+  `SPEC.md`/`STACK.md` y **sin implementar**.
 - Features implementadas: `content`, `practice`, `progression`,
-  `learning_paths`, `achievements`, `profile`, `settings`, `lock`,
+  `learning_paths`, `achievements`, `profile`, `auth`, `settings`, `lock`,
   `onboarding`, `data_management`, `daily_challenge`.
 - Modos de práctica: Zen, Sprint, Precisión, **Survival** (SPEC.md §5.8:
   vidas, combo, multiplicador) y **Reto Diario** (SPEC.md §5.4, Fase 0
@@ -211,6 +215,62 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 ---
 
 ## Historial de sesiones
+
+### 2026-10-14 — Firebase: cuentas registradas (SPEC.md §7.2), fase 1
+
+- **Decisión del usuario** (preguntada en sesión): backend **Firebase** en vez
+  del Supabase documentado, y **Blaze ya** (Cloud Functions lo exigen).
+  `STACK.md §5` fue reescrito a Firebase (con nota del cambio en §5.0) y
+  `AGENTS.md`/`CLAUDE.md`/`README.md` actualizados.
+- **Infraestructura creada**: proyecto `ridge-typing` ("Ridge"), Firestore
+  `(default)` en `southamerica-east1`, Auth con Email/Password habilitado
+  (consola vía Chrome DevTools MCP), reglas desplegadas, `flutterfire
+  configure` para android/web/windows. Versionados: `firebase.json`,
+  `.firebaserc`, `lib/firebase_options.dart`, `android/app/google-services.json`
+  (apiKey pública por diseño) y `google-services` en Gradle.
+- **Código**: feature `auth` completo (hexágono): `AccountUsername` /
+  `AccountPassword`, puerto `AccountRepository`, casos de uso
+  registro/login/logout/borrado/recuperación/watch. Adaptadores:
+  `FirebaseAccountRepository` (+ `CallableFunctionsClient`, REST sobre el
+  protocolo callable porque `cloud_functions` no soporta Windows) y
+  `UnsupportedAccountRepository` para Linux. `guest_profiles.account_uid`
+  (drift **v18**) vincula el perfil local a la cuenta; renombrar queda
+  bloqueado si está vinculado. UI: registro (revela el código de recuperación
+  una única vez), login, recuperación (reemite código), tarjeta de cuenta en
+  Perfil, y login en dispositivo nuevo desde la pantalla de creación de perfil.
+- **Backend** (`functions/`, TypeScript gen2, `southamerica-east1`):
+  `register` (crea usuario admin-side con correo sintético
+  `<username>@users.ridge.internal`, reserva username en transacción, guarda
+  hash SHA-256+salt del código de recuperación de un solo uso), `recoverAccount`
+  (compara con `timingSafeEqual`, reemite código) y `deleteAccount`
+  (autenticada). `firestore.rules`: `profiles` solo lectura del dueño,
+  `usernames`/`recoveryCodes` solo servidor, default deny.
+- **Verificado**: 40 tests nuevos del feature en verde, `flutter analyze`
+  limpio, app Linux arrancada con hot reload vía dart-mcp sin errores de
+  runtime (Firebase no-op en Linux).
+- **BLOQUEADO el deploy de Functions**: la cuenta de facturación
+  `01B0FE-C92B38-9FC39E` excedió su cuota de proyectos al intentar vincularla
+  ("Cloud billing quota exceeded"). El usuario debe habilitar Blaze en
+  https://console.firebase.google.com/project/ridge-typing/usage/details
+  (o crear otra cuenta de facturación); luego `firebase deploy --only functions`
+  queda listo para correr (el código compila: `npm run build` verde).
+- **Fase 2 pendiente**: sync del historial local (outbox, `STACK.md §6`),
+  hidratar el histórico remoto al iniciar sesión en dispositivo nuevo,
+  pruebas de integración contra el Emulator Suite en CI.
+
+### 2026-10-14 — Hábito/práctica: ghosts, teclado en vivo, calentamientos y recordatorios (commit `857ddd5`)
+
+- Se commitearon y empujaron features que llevaban tiempo sin commitear:
+  carreras **ghost** contra tu mejor intento por snippet, franja de teclado
+  en vivo en sesión, refactor de la pantalla de sesión en widgets (app bar /
+  área de tipeo / área de resultado, reject shake, tarjeta de código),
+  resumen semanal + tarjeta de **calentamiento** (caracteres/dedo/mano) en
+  Progreso, tarjeta de reanudar curso en Rutas, empujón diario en Práctica
+  libre y recordatorio local opcional (Android) desde Ajustes.
+- **Correcciones necesarias para el gate**: `char_key_map.dart` tenía `'$'`
+  sin escapar (no parseaba), faltaba el import de `Hand` en
+  `warm_up_card.dart`, y el código generado (l10n + riverpod) estaba
+  desactualizado — regenerado. `bash tool/check.sh` verde, **889 tests**.
 
 ### 2026-10-02 — Publicación en Google Play (ficha completa + release)
 
@@ -3956,6 +4016,12 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ## Pendientes / próximos pasos
 
+- **Habilitar Blaze para desplegar las Cloud Functions (sesión 2026-10-14)**:
+  el código y las reglas ya están desplegables, pero el deploy de `functions`
+  falló porque la cuenta de facturación existente excedió su cuota de
+  proyectos. Al habilitarlo: `firebase deploy --only functions` (región
+  `southamerica-east1`). Mientras tanto, registro/recuperación/borrado de
+  cuenta **no funcionan** en runtime (el login sí, pero no hay cuentas aún).
 - **Borrador de la ficha de Play con las 8 capturas borradas (ATENCIÓN,
   sesión 2026-10-03)**: en la ficha de la tienda *Default – English
   (United States)* se quitaron las 8 capturas de teléfono y se guardó como

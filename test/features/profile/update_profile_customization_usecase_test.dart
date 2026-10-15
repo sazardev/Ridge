@@ -63,6 +63,15 @@ class _FakeProfileRepository implements ProfileRepository {
   Future<Result<void, AppFailure>> updateDeviceInfo(
     DetectedDeviceInfo info,
   ) async => const Result.err(ValidationFailure('unused in this test'));
+
+  @override
+  Future<Result<void, AppFailure>> linkAccount({
+    required String accountUid,
+  }) async => const Result.ok(null);
+
+  @override
+  Future<Result<void, AppFailure>> unlinkAccount() async =>
+      const Result.ok(null);
 }
 
 void main() {

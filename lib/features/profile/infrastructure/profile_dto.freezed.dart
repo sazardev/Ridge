@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProfileDto {
 
- String get id; String get username; String get createdAt; List<String>? get favoriteLanguages; String? get keyboardLayout; String? get keyboardBrand; String? get keyboardModel; String? get favoriteQuote; String? get favoriteProgrammer; String? get githubUsername; String? get websiteUrl; String? get platform; String? get operatingSystemVersion; String? get deviceModel; String? get keyboardCustomizationJson;
+ String get id; String get username; String get createdAt; List<String>? get favoriteLanguages; String? get keyboardLayout; String? get keyboardBrand; String? get keyboardModel; String? get favoriteQuote; String? get favoriteProgrammer; String? get githubUsername; String? get websiteUrl; String? get platform; String? get operatingSystemVersion; String? get deviceModel; String? get keyboardCustomizationJson; String? get accountUid;
 /// Create a copy of ProfileDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $ProfileDtoCopyWith<ProfileDto> get copyWith => _$ProfileDtoCopyWithImpl<Profile
 @override
 bool operator ==(Object other) {
   final _this = this as ProfileDto;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileDto&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.username, _this.username) || other.username == _this.username)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&const DeepCollectionEquality().equals(other.favoriteLanguages, _this.favoriteLanguages)&&(identical(other.keyboardLayout, _this.keyboardLayout) || other.keyboardLayout == _this.keyboardLayout)&&(identical(other.keyboardBrand, _this.keyboardBrand) || other.keyboardBrand == _this.keyboardBrand)&&(identical(other.keyboardModel, _this.keyboardModel) || other.keyboardModel == _this.keyboardModel)&&(identical(other.favoriteQuote, _this.favoriteQuote) || other.favoriteQuote == _this.favoriteQuote)&&(identical(other.favoriteProgrammer, _this.favoriteProgrammer) || other.favoriteProgrammer == _this.favoriteProgrammer)&&(identical(other.githubUsername, _this.githubUsername) || other.githubUsername == _this.githubUsername)&&(identical(other.websiteUrl, _this.websiteUrl) || other.websiteUrl == _this.websiteUrl)&&(identical(other.platform, _this.platform) || other.platform == _this.platform)&&(identical(other.operatingSystemVersion, _this.operatingSystemVersion) || other.operatingSystemVersion == _this.operatingSystemVersion)&&(identical(other.deviceModel, _this.deviceModel) || other.deviceModel == _this.deviceModel)&&(identical(other.keyboardCustomizationJson, _this.keyboardCustomizationJson) || other.keyboardCustomizationJson == _this.keyboardCustomizationJson));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileDto&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.username, _this.username) || other.username == _this.username)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&const DeepCollectionEquality().equals(other.favoriteLanguages, _this.favoriteLanguages)&&(identical(other.keyboardLayout, _this.keyboardLayout) || other.keyboardLayout == _this.keyboardLayout)&&(identical(other.keyboardBrand, _this.keyboardBrand) || other.keyboardBrand == _this.keyboardBrand)&&(identical(other.keyboardModel, _this.keyboardModel) || other.keyboardModel == _this.keyboardModel)&&(identical(other.favoriteQuote, _this.favoriteQuote) || other.favoriteQuote == _this.favoriteQuote)&&(identical(other.favoriteProgrammer, _this.favoriteProgrammer) || other.favoriteProgrammer == _this.favoriteProgrammer)&&(identical(other.githubUsername, _this.githubUsername) || other.githubUsername == _this.githubUsername)&&(identical(other.websiteUrl, _this.websiteUrl) || other.websiteUrl == _this.websiteUrl)&&(identical(other.platform, _this.platform) || other.platform == _this.platform)&&(identical(other.operatingSystemVersion, _this.operatingSystemVersion) || other.operatingSystemVersion == _this.operatingSystemVersion)&&(identical(other.deviceModel, _this.deviceModel) || other.deviceModel == _this.deviceModel)&&(identical(other.keyboardCustomizationJson, _this.keyboardCustomizationJson) || other.keyboardCustomizationJson == _this.keyboardCustomizationJson)&&(identical(other.accountUid, _this.accountUid) || other.accountUid == _this.accountUid));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as ProfileDto;
-  return Object.hash(runtimeType,_this.id,_this.username,_this.createdAt,const DeepCollectionEquality().hash(_this.favoriteLanguages),_this.keyboardLayout,_this.keyboardBrand,_this.keyboardModel,_this.favoriteQuote,_this.favoriteProgrammer,_this.githubUsername,_this.websiteUrl,_this.platform,_this.operatingSystemVersion,_this.deviceModel,_this.keyboardCustomizationJson);
+  return Object.hash(runtimeType,_this.id,_this.username,_this.createdAt,const DeepCollectionEquality().hash(_this.favoriteLanguages),_this.keyboardLayout,_this.keyboardBrand,_this.keyboardModel,_this.favoriteQuote,_this.favoriteProgrammer,_this.githubUsername,_this.websiteUrl,_this.platform,_this.operatingSystemVersion,_this.deviceModel,_this.keyboardCustomizationJson,_this.accountUid);
 }
 
 @override
 String toString() {
   final _this = this as ProfileDto;
-  return 'ProfileDto(id: ${_this.id}, username: ${_this.username}, createdAt: ${_this.createdAt}, favoriteLanguages: ${_this.favoriteLanguages}, keyboardLayout: ${_this.keyboardLayout}, keyboardBrand: ${_this.keyboardBrand}, keyboardModel: ${_this.keyboardModel}, favoriteQuote: ${_this.favoriteQuote}, favoriteProgrammer: ${_this.favoriteProgrammer}, githubUsername: ${_this.githubUsername}, websiteUrl: ${_this.websiteUrl}, platform: ${_this.platform}, operatingSystemVersion: ${_this.operatingSystemVersion}, deviceModel: ${_this.deviceModel}, keyboardCustomizationJson: ${_this.keyboardCustomizationJson})';
+  return 'ProfileDto(id: ${_this.id}, username: ${_this.username}, createdAt: ${_this.createdAt}, favoriteLanguages: ${_this.favoriteLanguages}, keyboardLayout: ${_this.keyboardLayout}, keyboardBrand: ${_this.keyboardBrand}, keyboardModel: ${_this.keyboardModel}, favoriteQuote: ${_this.favoriteQuote}, favoriteProgrammer: ${_this.favoriteProgrammer}, githubUsername: ${_this.githubUsername}, websiteUrl: ${_this.websiteUrl}, platform: ${_this.platform}, operatingSystemVersion: ${_this.operatingSystemVersion}, deviceModel: ${_this.deviceModel}, keyboardCustomizationJson: ${_this.keyboardCustomizationJson}, accountUid: ${_this.accountUid})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $ProfileDtoCopyWith<$Res>  {
   factory $ProfileDtoCopyWith(ProfileDto value, $Res Function(ProfileDto) _then) = _$ProfileDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String username, String createdAt, List<String>? favoriteLanguages, String? keyboardLayout, String? keyboardBrand, String? keyboardModel, String? favoriteQuote, String? favoriteProgrammer, String? githubUsername, String? websiteUrl, String? platform, String? operatingSystemVersion, String? deviceModel, String? keyboardCustomizationJson
+ String id, String username, String createdAt, List<String>? favoriteLanguages, String? keyboardLayout, String? keyboardBrand, String? keyboardModel, String? favoriteQuote, String? favoriteProgrammer, String? githubUsername, String? websiteUrl, String? platform, String? operatingSystemVersion, String? deviceModel, String? keyboardCustomizationJson, String? accountUid
 });
 
 
@@ -71,7 +71,7 @@ class _$ProfileDtoCopyWithImpl<$Res>
 
 /// Create a copy of ProfileDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? createdAt = null,Object? favoriteLanguages = freezed,Object? keyboardLayout = freezed,Object? keyboardBrand = freezed,Object? keyboardModel = freezed,Object? favoriteQuote = freezed,Object? favoriteProgrammer = freezed,Object? githubUsername = freezed,Object? websiteUrl = freezed,Object? platform = freezed,Object? operatingSystemVersion = freezed,Object? deviceModel = freezed,Object? keyboardCustomizationJson = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? createdAt = null,Object? favoriteLanguages = freezed,Object? keyboardLayout = freezed,Object? keyboardBrand = freezed,Object? keyboardModel = freezed,Object? favoriteQuote = freezed,Object? favoriteProgrammer = freezed,Object? githubUsername = freezed,Object? websiteUrl = freezed,Object? platform = freezed,Object? operatingSystemVersion = freezed,Object? deviceModel = freezed,Object? keyboardCustomizationJson = freezed,Object? accountUid = freezed,}) {
   return _then(ProfileDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
@@ -88,6 +88,7 @@ as String?,platform: freezed == platform ? _self.platform : platform // ignore: 
 as String?,operatingSystemVersion: freezed == operatingSystemVersion ? _self.operatingSystemVersion : operatingSystemVersion // ignore: cast_nullable_to_non_nullable
 as String?,deviceModel: freezed == deviceModel ? _self.deviceModel : deviceModel // ignore: cast_nullable_to_non_nullable
 as String?,keyboardCustomizationJson: freezed == keyboardCustomizationJson ? _self.keyboardCustomizationJson : keyboardCustomizationJson // ignore: cast_nullable_to_non_nullable
+as String?,accountUid: freezed == accountUid ? _self.accountUid : accountUid // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -173,10 +174,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String username,  String createdAt,  List<String>? favoriteLanguages,  String? keyboardLayout,  String? keyboardBrand,  String? keyboardModel,  String? favoriteQuote,  String? favoriteProgrammer,  String? githubUsername,  String? websiteUrl,  String? platform,  String? operatingSystemVersion,  String? deviceModel,  String? keyboardCustomizationJson)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String username,  String createdAt,  List<String>? favoriteLanguages,  String? keyboardLayout,  String? keyboardBrand,  String? keyboardModel,  String? favoriteQuote,  String? favoriteProgrammer,  String? githubUsername,  String? websiteUrl,  String? platform,  String? operatingSystemVersion,  String? deviceModel,  String? keyboardCustomizationJson,  String? accountUid)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProfileDto() when $default != null:
-return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,_that.keyboardLayout,_that.keyboardBrand,_that.keyboardModel,_that.favoriteQuote,_that.favoriteProgrammer,_that.githubUsername,_that.websiteUrl,_that.platform,_that.operatingSystemVersion,_that.deviceModel,_that.keyboardCustomizationJson);case _:
+return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,_that.keyboardLayout,_that.keyboardBrand,_that.keyboardModel,_that.favoriteQuote,_that.favoriteProgrammer,_that.githubUsername,_that.websiteUrl,_that.platform,_that.operatingSystemVersion,_that.deviceModel,_that.keyboardCustomizationJson,_that.accountUid);case _:
   return orElse();
 
 }
@@ -194,10 +195,10 @@ return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String username,  String createdAt,  List<String>? favoriteLanguages,  String? keyboardLayout,  String? keyboardBrand,  String? keyboardModel,  String? favoriteQuote,  String? favoriteProgrammer,  String? githubUsername,  String? websiteUrl,  String? platform,  String? operatingSystemVersion,  String? deviceModel,  String? keyboardCustomizationJson)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String username,  String createdAt,  List<String>? favoriteLanguages,  String? keyboardLayout,  String? keyboardBrand,  String? keyboardModel,  String? favoriteQuote,  String? favoriteProgrammer,  String? githubUsername,  String? websiteUrl,  String? platform,  String? operatingSystemVersion,  String? deviceModel,  String? keyboardCustomizationJson,  String? accountUid)  $default,) {final _that = this;
 switch (_that) {
 case _ProfileDto():
-return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,_that.keyboardLayout,_that.keyboardBrand,_that.keyboardModel,_that.favoriteQuote,_that.favoriteProgrammer,_that.githubUsername,_that.websiteUrl,_that.platform,_that.operatingSystemVersion,_that.deviceModel,_that.keyboardCustomizationJson);case _:
+return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,_that.keyboardLayout,_that.keyboardBrand,_that.keyboardModel,_that.favoriteQuote,_that.favoriteProgrammer,_that.githubUsername,_that.websiteUrl,_that.platform,_that.operatingSystemVersion,_that.deviceModel,_that.keyboardCustomizationJson,_that.accountUid);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -214,10 +215,10 @@ return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String username,  String createdAt,  List<String>? favoriteLanguages,  String? keyboardLayout,  String? keyboardBrand,  String? keyboardModel,  String? favoriteQuote,  String? favoriteProgrammer,  String? githubUsername,  String? websiteUrl,  String? platform,  String? operatingSystemVersion,  String? deviceModel,  String? keyboardCustomizationJson)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String username,  String createdAt,  List<String>? favoriteLanguages,  String? keyboardLayout,  String? keyboardBrand,  String? keyboardModel,  String? favoriteQuote,  String? favoriteProgrammer,  String? githubUsername,  String? websiteUrl,  String? platform,  String? operatingSystemVersion,  String? deviceModel,  String? keyboardCustomizationJson,  String? accountUid)?  $default,) {final _that = this;
 switch (_that) {
 case _ProfileDto() when $default != null:
-return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,_that.keyboardLayout,_that.keyboardBrand,_that.keyboardModel,_that.favoriteQuote,_that.favoriteProgrammer,_that.githubUsername,_that.websiteUrl,_that.platform,_that.operatingSystemVersion,_that.deviceModel,_that.keyboardCustomizationJson);case _:
+return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,_that.keyboardLayout,_that.keyboardBrand,_that.keyboardModel,_that.favoriteQuote,_that.favoriteProgrammer,_that.githubUsername,_that.websiteUrl,_that.platform,_that.operatingSystemVersion,_that.deviceModel,_that.keyboardCustomizationJson,_that.accountUid);case _:
   return null;
 
 }
@@ -229,7 +230,7 @@ return $default(_that.id,_that.username,_that.createdAt,_that.favoriteLanguages,
 @JsonSerializable()
 
 class _ProfileDto implements ProfileDto {
-  const _ProfileDto({required this.id, required this.username, required this.createdAt,  List<String>? favoriteLanguages, this.keyboardLayout, this.keyboardBrand, this.keyboardModel, this.favoriteQuote, this.favoriteProgrammer, this.githubUsername, this.websiteUrl, this.platform, this.operatingSystemVersion, this.deviceModel, this.keyboardCustomizationJson}): _favoriteLanguages = favoriteLanguages;
+  const _ProfileDto({required this.id, required this.username, required this.createdAt,  List<String>? favoriteLanguages, this.keyboardLayout, this.keyboardBrand, this.keyboardModel, this.favoriteQuote, this.favoriteProgrammer, this.githubUsername, this.websiteUrl, this.platform, this.operatingSystemVersion, this.deviceModel, this.keyboardCustomizationJson, this.accountUid}): _favoriteLanguages = favoriteLanguages;
   factory _ProfileDto.fromJson(Map<String, dynamic> json) => _$ProfileDtoFromJson(json);
 
 @override final  String id;
@@ -255,6 +256,7 @@ class _ProfileDto implements ProfileDto {
 @override final  String? operatingSystemVersion;
 @override final  String? deviceModel;
 @override final  String? keyboardCustomizationJson;
+@override final  String? accountUid;
 
 /// Create a copy of ProfileDto
 /// with the given fields replaced by the non-null parameter values.
@@ -269,18 +271,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileDto&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.favoriteLanguages, _favoriteLanguages)&&(identical(other.keyboardLayout, keyboardLayout) || other.keyboardLayout == keyboardLayout)&&(identical(other.keyboardBrand, keyboardBrand) || other.keyboardBrand == keyboardBrand)&&(identical(other.keyboardModel, keyboardModel) || other.keyboardModel == keyboardModel)&&(identical(other.favoriteQuote, favoriteQuote) || other.favoriteQuote == favoriteQuote)&&(identical(other.favoriteProgrammer, favoriteProgrammer) || other.favoriteProgrammer == favoriteProgrammer)&&(identical(other.githubUsername, githubUsername) || other.githubUsername == githubUsername)&&(identical(other.websiteUrl, websiteUrl) || other.websiteUrl == websiteUrl)&&(identical(other.platform, platform) || other.platform == platform)&&(identical(other.operatingSystemVersion, operatingSystemVersion) || other.operatingSystemVersion == operatingSystemVersion)&&(identical(other.deviceModel, deviceModel) || other.deviceModel == deviceModel)&&(identical(other.keyboardCustomizationJson, keyboardCustomizationJson) || other.keyboardCustomizationJson == keyboardCustomizationJson));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileDto&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.favoriteLanguages, _favoriteLanguages)&&(identical(other.keyboardLayout, keyboardLayout) || other.keyboardLayout == keyboardLayout)&&(identical(other.keyboardBrand, keyboardBrand) || other.keyboardBrand == keyboardBrand)&&(identical(other.keyboardModel, keyboardModel) || other.keyboardModel == keyboardModel)&&(identical(other.favoriteQuote, favoriteQuote) || other.favoriteQuote == favoriteQuote)&&(identical(other.favoriteProgrammer, favoriteProgrammer) || other.favoriteProgrammer == favoriteProgrammer)&&(identical(other.githubUsername, githubUsername) || other.githubUsername == githubUsername)&&(identical(other.websiteUrl, websiteUrl) || other.websiteUrl == websiteUrl)&&(identical(other.platform, platform) || other.platform == platform)&&(identical(other.operatingSystemVersion, operatingSystemVersion) || other.operatingSystemVersion == operatingSystemVersion)&&(identical(other.deviceModel, deviceModel) || other.deviceModel == deviceModel)&&(identical(other.keyboardCustomizationJson, keyboardCustomizationJson) || other.keyboardCustomizationJson == keyboardCustomizationJson)&&(identical(other.accountUid, accountUid) || other.accountUid == accountUid));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,username,createdAt,const DeepCollectionEquality().hash(_favoriteLanguages),keyboardLayout,keyboardBrand,keyboardModel,favoriteQuote,favoriteProgrammer,githubUsername,websiteUrl,platform,operatingSystemVersion,deviceModel,keyboardCustomizationJson);
+    return Object.hash(runtimeType,id,username,createdAt,const DeepCollectionEquality().hash(_favoriteLanguages),keyboardLayout,keyboardBrand,keyboardModel,favoriteQuote,favoriteProgrammer,githubUsername,websiteUrl,platform,operatingSystemVersion,deviceModel,keyboardCustomizationJson,accountUid);
 }
 
 @override
 String toString() {
-    return 'ProfileDto(id: $id, username: $username, createdAt: $createdAt, favoriteLanguages: $favoriteLanguages, keyboardLayout: $keyboardLayout, keyboardBrand: $keyboardBrand, keyboardModel: $keyboardModel, favoriteQuote: $favoriteQuote, favoriteProgrammer: $favoriteProgrammer, githubUsername: $githubUsername, websiteUrl: $websiteUrl, platform: $platform, operatingSystemVersion: $operatingSystemVersion, deviceModel: $deviceModel, keyboardCustomizationJson: $keyboardCustomizationJson)';
+    return 'ProfileDto(id: $id, username: $username, createdAt: $createdAt, favoriteLanguages: $favoriteLanguages, keyboardLayout: $keyboardLayout, keyboardBrand: $keyboardBrand, keyboardModel: $keyboardModel, favoriteQuote: $favoriteQuote, favoriteProgrammer: $favoriteProgrammer, githubUsername: $githubUsername, websiteUrl: $websiteUrl, platform: $platform, operatingSystemVersion: $operatingSystemVersion, deviceModel: $deviceModel, keyboardCustomizationJson: $keyboardCustomizationJson, accountUid: $accountUid)';
 }
 
 
@@ -291,7 +293,7 @@ abstract mixin class _$ProfileDtoCopyWith<$Res> implements $ProfileDtoCopyWith<$
   factory _$ProfileDtoCopyWith(_ProfileDto value, $Res Function(_ProfileDto) _then) = __$ProfileDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String username, String createdAt, List<String>? favoriteLanguages, String? keyboardLayout, String? keyboardBrand, String? keyboardModel, String? favoriteQuote, String? favoriteProgrammer, String? githubUsername, String? websiteUrl, String? platform, String? operatingSystemVersion, String? deviceModel, String? keyboardCustomizationJson
+ String id, String username, String createdAt, List<String>? favoriteLanguages, String? keyboardLayout, String? keyboardBrand, String? keyboardModel, String? favoriteQuote, String? favoriteProgrammer, String? githubUsername, String? websiteUrl, String? platform, String? operatingSystemVersion, String? deviceModel, String? keyboardCustomizationJson, String? accountUid
 });
 
 
@@ -308,7 +310,7 @@ class __$ProfileDtoCopyWithImpl<$Res>
 
 /// Create a copy of ProfileDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? createdAt = null,Object? favoriteLanguages = freezed,Object? keyboardLayout = freezed,Object? keyboardBrand = freezed,Object? keyboardModel = freezed,Object? favoriteQuote = freezed,Object? favoriteProgrammer = freezed,Object? githubUsername = freezed,Object? websiteUrl = freezed,Object? platform = freezed,Object? operatingSystemVersion = freezed,Object? deviceModel = freezed,Object? keyboardCustomizationJson = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? createdAt = null,Object? favoriteLanguages = freezed,Object? keyboardLayout = freezed,Object? keyboardBrand = freezed,Object? keyboardModel = freezed,Object? favoriteQuote = freezed,Object? favoriteProgrammer = freezed,Object? githubUsername = freezed,Object? websiteUrl = freezed,Object? platform = freezed,Object? operatingSystemVersion = freezed,Object? deviceModel = freezed,Object? keyboardCustomizationJson = freezed,Object? accountUid = freezed,}) {
   return _then(_ProfileDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
@@ -325,6 +327,7 @@ as String?,platform: freezed == platform ? _self.platform : platform // ignore: 
 as String?,operatingSystemVersion: freezed == operatingSystemVersion ? _self.operatingSystemVersion : operatingSystemVersion // ignore: cast_nullable_to_non_nullable
 as String?,deviceModel: freezed == deviceModel ? _self.deviceModel : deviceModel // ignore: cast_nullable_to_non_nullable
 as String?,keyboardCustomizationJson: freezed == keyboardCustomizationJson ? _self.keyboardCustomizationJson : keyboardCustomizationJson // ignore: cast_nullable_to_non_nullable
+as String?,accountUid: freezed == accountUid ? _self.accountUid : accountUid // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

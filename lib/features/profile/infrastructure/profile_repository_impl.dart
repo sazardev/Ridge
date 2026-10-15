@@ -63,6 +63,17 @@ class ProfileRepositoryImpl implements ProfileRepository {
       if (current == null) {
         return const Result.err(NotFoundFailure('No guest profile to rename'));
       }
+      // A Registered Account's username is its login identity (SPEC.md
+      // §7.2 — it's what derives the internal sign-in identifier), so it
+      // can't be changed from here; enforced at the boundary so no
+      // caller can bypass it.
+      if (current.accountUid != null) {
+        return const Result.err(
+          ValidationFailure(
+            'A registered account username cannot be changed locally',
+          ),
+        );
+      }
       await _dao.updateUsername(id: current.id, username: newUsername);
       return const Result.ok(null);
     } on Exception catch (e) {
@@ -148,6 +159,36 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return Result.err(
         StorageFailure('Could not update device info', cause: e),
       );
+    }
+  }
+
+  @override
+  Future<Result<void, AppFailure>> linkAccount({
+    required String accountUid,
+  }) async {
+    try {
+      final current = await _dao.getActiveProfile();
+      if (current == null) {
+        return const Result.err(NotFoundFailure('No guest profile to link'));
+      }
+      await _dao.linkAccount(id: current.id, accountUid: accountUid);
+      return const Result.ok(null);
+    } on Exception catch (e) {
+      return Result.err(StorageFailure('Could not link account', cause: e));
+    }
+  }
+
+  @override
+  Future<Result<void, AppFailure>> unlinkAccount() async {
+    try {
+      final current = await _dao.getActiveProfile();
+      if (current == null) {
+        return const Result.err(NotFoundFailure('No guest profile to unlink'));
+      }
+      await _dao.unlinkAccount(id: current.id);
+      return const Result.ok(null);
+    } on Exception catch (e) {
+      return Result.err(StorageFailure('Could not unlink account', cause: e));
     }
   }
 }

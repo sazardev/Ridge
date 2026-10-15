@@ -39,6 +39,7 @@ extension ProfileDtoMapper on ProfileDto {
       platform: platform,
       operatingSystemVersion: operatingSystemVersion,
       deviceModel: deviceModel,
+      accountUid: accountUid,
     );
   }
 
@@ -60,6 +61,7 @@ extension ProfileDtoMapper on ProfileDto {
       operatingSystemVersion: Value(operatingSystemVersion),
       deviceModel: Value(deviceModel),
       keyboardCustomizationJson: Value(keyboardCustomizationJson),
+      accountUid: Value(accountUid),
     );
   }
 }
@@ -86,6 +88,7 @@ extension GuestProfileMapper on GuestProfile {
       platform: platform,
       operatingSystemVersion: operatingSystemVersion,
       deviceModel: deviceModel,
+      accountUid: accountUid,
     );
   }
 }
@@ -113,6 +116,7 @@ extension GuestProfileRowMapper on GuestProfileRow {
       platform: platform,
       operatingSystemVersion: operatingSystemVersion,
       deviceModel: deviceModel,
+      accountUid: accountUid,
     );
   }
 }

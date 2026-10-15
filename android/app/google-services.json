@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1030279227475",
+    "project_id": "ridge-typing",
+    "storage_bucket": "ridge-typing.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030279227475:android:ab4197a1b57b08c00f7ea6",
+        "android_client_info": {
+          "package_name": "dev.omarcodes.ridge"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0jV2gqpiaaF20jWKecv13cFvOsN4b2i0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

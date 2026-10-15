@@ -63,4 +63,14 @@ abstract interface class ProfileRepository {
   /// (platform, OS version, device model) — separate from
   /// [updateCustomization] since these are detected, never user-edited.
   Future<Result<void, AppFailure>> updateDeviceInfo(DetectedDeviceInfo info);
+
+  /// Marks the active profile as backed by the Registered Account
+  /// [accountUid] (SPEC.md §7.2's guest-to-account conversion) — from
+  /// then on it is a Registered Account, locally, while keeping every
+  /// bit of its on-device history.
+  Future<Result<void, AppFailure>> linkAccount({required String accountUid});
+
+  /// Clears the active profile's Registered Account link (sign-out) —
+  /// it becomes a Guest Profile again and keeps its history locally.
+  Future<Result<void, AppFailure>> unlinkAccount();
 }

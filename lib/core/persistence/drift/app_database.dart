@@ -113,7 +113,7 @@ class AppDatabase extends _$AppDatabase {
       );
 
   @override
-  int get schemaVersion => 17;
+  int get schemaVersion => 18;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -277,6 +277,14 @@ class AppDatabase extends _$AppDatabase {
           guestProfiles,
           guestProfiles.keyboardCustomizationJson,
         );
+      }
+      // v17 -> v18: added the nullable account_uid column to
+      // guest_profiles — the Firebase Auth uid backing the profile once
+      // it has been converted into a Registered Account (SPEC.md §7.2,
+      // "Migración desde Invitado"). Existing rows get NULL, i.e. stay
+      // Guest Profiles; nothing else is touched.
+      if (from < 18) {
+        await m.addColumn(guestProfiles, guestProfiles.accountUid);
       }
     },
   );

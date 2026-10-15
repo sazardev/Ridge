@@ -8,6 +8,7 @@ import 'package:ridge/core/splash/app_startup_splash.dart';
 import 'package:ridge/core/theme/app_theme.dart';
 import 'package:ridge/core/window/app_window_frame.dart';
 import 'package:ridge/core/window/desktop_platform.dart';
+import 'package:ridge/features/auth/presentation/providers/auth_providers.dart';
 import 'package:ridge/features/content/presentation/providers/content_providers.dart';
 import 'package:ridge/features/learning_paths/presentation/providers/learning_paths_providers.dart';
 import 'package:ridge/features/practice/presentation/providers/daily_reminder_guard.dart';
@@ -43,7 +44,12 @@ class RidgeApp extends ConsumerWidget {
       ..watch(deepLinkListenerProvider)
       // And again — (re)schedules the daily practice reminder whenever
       // the relevant settings or the session history change.
-      ..watch(dailyReminderGuardProvider);
+      ..watch(dailyReminderGuardProvider)
+      // And once more — keeps the Registered Account session live for
+      // the app's lifetime (the SDK restores it across restarts), so the
+      // Profile screen's account card and any future online feature see
+      // sign-ins/sign-outs immediately. A no-op stream on Linux.
+      ..watch(currentAccountProvider);
 
     // Drives `AppStartupSplash.ready` below: `/practice` (the initial
     // route) is `LearningPathsScreen`, which shows its own

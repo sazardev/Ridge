@@ -2620,4 +2620,131 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get onboardingDeviceDescription =>
       'Detectamos tu plataforma y dispositivo automáticamente — no hay nada que configurar.';
+
+  @override
+  String get accountGuestTitle => 'Perfil de invitado';
+
+  @override
+  String get accountGuestBody =>
+      'Tu progreso vive solo en este dispositivo. Crea una cuenta registrada para iniciar sesión desde cualquier plataforma y conservarlo todo — sin correo, solo usuario y contraseña.';
+
+  @override
+  String get accountCreateAction => 'Crear cuenta';
+
+  @override
+  String get accountSignInAction => 'Ya tengo una cuenta';
+
+  @override
+  String get accountRegisteredTitle => 'Cuenta registrada';
+
+  @override
+  String get accountSignOutAction => 'Cerrar sesión';
+
+  @override
+  String get accountDeleteAction => 'Eliminar cuenta';
+
+  @override
+  String get accountCancel => 'Cancelar';
+
+  @override
+  String get accountDeleteConfirmTitle => '¿Eliminar tu cuenta?';
+
+  @override
+  String get accountDeleteConfirmBody =>
+      'Esto elimina para siempre tu cuenta, tu perfil en la nube y todos los datos locales de este dispositivo. No se puede deshacer.';
+
+  @override
+  String get accountDeleteConfirmAction => 'Eliminar todo';
+
+  @override
+  String get accountUnsupportedBody =>
+      'Las cuentas registradas necesitan Firebase, que no tiene cliente para Linux — en Linux tu perfil sigue siendo de invitado. Usa Android, Windows o Web para tener cuenta.';
+
+  @override
+  String get accountUsernameLocked =>
+      'El nombre de usuario de una cuenta registrada no se puede cambiar.';
+
+  @override
+  String get accountRegisterTitle => 'Crea tu cuenta';
+
+  @override
+  String get accountRegisterSubtitle =>
+      'Sin correo ni datos personales — solo un nombre de usuario único y una contraseña.';
+
+  @override
+  String get accountRegisterAction => 'Crear cuenta';
+
+  @override
+  String get accountUsernameLabel => 'Nombre de usuario';
+
+  @override
+  String get accountUsernameHint =>
+      '3–24 caracteres: letras, dígitos, puntos, guiones y guiones bajos';
+
+  @override
+  String get accountPasswordLabel => 'Contraseña';
+
+  @override
+  String get accountConfirmPasswordLabel => 'Confirma la contraseña';
+
+  @override
+  String get accountPasswordMismatch => 'Las contraseñas no coinciden';
+
+  @override
+  String get accountRecoveryCodeTitle => 'Guarda tu código de recuperación';
+
+  @override
+  String get accountRecoveryCodeBody =>
+      'Es la única forma de volver a tu cuenta si olvidas la contraseña. Anótalo y guárdalo en un lugar seguro — no se volverá a mostrar.';
+
+  @override
+  String get accountRecoveryCodeCopy => 'Copiar código';
+
+  @override
+  String get accountRecoveryCodeCopied => 'Código copiado';
+
+  @override
+  String get accountRecoveryCodeSaved => 'Ya lo guardé';
+
+  @override
+  String get accountSignInTitle => 'Iniciar sesión';
+
+  @override
+  String get accountSignInSubtitle =>
+      'Tu progreso y estadísticas vuelven contigo.';
+
+  @override
+  String get accountForgotPassword => 'Olvidé mi contraseña';
+
+  @override
+  String get accountRecoverTitle => 'Recupera tu cuenta';
+
+  @override
+  String get accountRecoverSubtitle =>
+      'Ingresa tu código de recuperación y elige una nueva contraseña. Después recibirás un código nuevo.';
+
+  @override
+  String get accountRecoveryCodeLabel => 'Código de recuperación';
+
+  @override
+  String get accountNewPasswordLabel => 'Nueva contraseña';
+
+  @override
+  String get accountRecoverAction => 'Recuperar cuenta';
+
+  @override
+  String get accountErrorInvalidInput =>
+      'Revisa los requisitos de usuario y contraseña';
+
+  @override
+  String get accountErrorBadCredentials =>
+      'Usuario, contraseña o código de recuperación incorrectos';
+
+  @override
+  String get accountErrorNoSuchAccount =>
+      'No existe ninguna cuenta con ese usuario';
+
+  @override
+  String get accountErrorConnection =>
+      'No se pudo conectar con el servicio de cuentas — revisa tu conexión';
 }

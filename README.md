@@ -9,7 +9,7 @@
 
 ![Flutter](https://img.shields.io/badge/Flutter-3.13%2B-02569B?logo=flutter&logoColor=white)
 ![Dart](https://img.shields.io/badge/Dart-3.13%2B-0175C2?logo=dart&logoColor=white)
-![Supabase](https://img.shields.io/badge/Backend-Supabase-3FCF8E?logo=supabase&logoColor=white)
+![Firebase](https://img.shields.io/badge/Backend-Firebase-FFCA28?logo=firebase&logoColor=black)
 ![Architecture](https://img.shields.io/badge/architecture-hexagonal-8A2BE2)
 ![State management](https://img.shields.io/badge/state-Riverpod%203-blueviolet)
 ![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)
@@ -31,7 +31,7 @@ Ridge convierte el "calentamiento" antes de programar en un juego con datos real
 - **Contenido real**: se practica con código Go idiomático, no con lorem ipsum ni citas.
 - **Metadata ultra detallada**: tiempo por carácter, dedo y mano usados, n-gramas típicos de código (`:=`, `err`, `{}`), consistencia, rachas y curva de fatiga.
 - **Offline-first**: todo el modo individual funciona sin conexión; la nube solo entra para lo social.
-- **Competencia online**: duelos 1 vs 1 con matchmaking, escuadrones/equipos, leaderboards, todo en tiempo real vía Supabase.
+- **Competencia online**: duelos 1 vs 1 con matchmaking, escuadrones/equipos, leaderboards — backend Firebase (cuentas registradas ya implementadas; el resto, especificado en `STACK.md`).
 - **Multiplataforma real**: Android, Windows, Linux y Web con el mismo código y la misma cuenta.
 - **Identidad mínima**: solo *username*, sin correo ni datos personales — invitado local o cuenta con contraseña.
 
@@ -44,7 +44,7 @@ alguno de ellos. Todos en español salvo donde se indica.
 | Documento | Qué contiene |
 |---|---|
 | [`SPEC.md`](./SPEC.md) | La lógica de negocio completa: modos de juego, sistema de métricas, cuentas, competencia, leaderboards, modelo de negocio. Cero detalle técnico. |
-| [`STACK.md`](./STACK.md) | Cómo se construye: Flutter + Riverpod + arquitectura hexagonal, Supabase (Auth/DB/Realtime/Edge Functions), sincronización offline, matriz de compatibilidad por sistema operativo, versionamiento y despliegue. |
+| [`STACK.md`](./STACK.md) | Cómo se construye: Flutter + Riverpod + arquitectura hexagonal, Firebase (Auth/Firestore/Cloud Functions), sincronización offline, matriz de compatibilidad por sistema operativo, versionamiento y despliegue. |
 | [`MARKETING.md`](./MARKETING.md) | Posicionamiento, eslogan, voz de marca e identidad visual. |
 | [`Memory.md`](./Memory.md) | Bitácora viva: estado actual, historial de sesiones, decisiones duraderas y pendientes. |
 | [`CODE_STANDARDS.md`](./CODE_STANDARDS.md) | Por qué existe cada *quality gate* (formatter, analyzer, chequeo de arquitectura, tests). |
@@ -66,7 +66,7 @@ alguno de ellos. Todos en español salvo donde se indica.
 | Motion | Hand-tuned Material 3 Expressive-style motion tokens + `flutter_animate` |
 | Fonts | Geist / Geist Mono (SIL OFL, bundled in `assets/fonts`) |
 
-El stack objetivo completo (Supabase, sincronización offline, multiplataforma) está en [`STACK.md`](./STACK.md) — incluida la matriz de compatibilidad de cada paquete por sistema operativo en [`STACK.md §3`](./STACK.md#3-compatibilidad-de-paquetes-y-requisitos-por-sistema-operativo).
+El stack objetivo completo (Firebase, sincronización offline, multiplataforma) está en [`STACK.md`](./STACK.md) — incluida la matriz de compatibilidad de cada paquete por sistema operativo en [`STACK.md §3`](./STACK.md#3-compatibilidad-de-paquetes-y-requisitos-por-sistema-operativo).
 
 ## Architecture
 

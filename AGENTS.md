@@ -12,7 +12,7 @@ Ridge is a typing-practice game for programmers (Flutter, hexagonal
 architecture). Business logic lives in **`SPEC.md`** (game modes, metrics
 engine, accounts, competition, business model — zero technical detail);
 technical architecture lives in **`STACK.md`** (Flutter/Riverpod stack,
-Supabase plan, offline sync, hexagonal rules, per-OS package compatibility
+Firebase plan, offline sync, hexagonal rules, per-OS package compatibility
 matrix, versioning/deployment). Any non-trivial code decision should trace
 to a rule written in one of these two docs. Both are in Spanish; code,
 identifiers, and comments are in English.
@@ -33,12 +33,16 @@ describes a removed Tasks scaffold. Trust `lib/features/` and `Memory.md`
 over it.
 
 Currently implemented (`lib/features/`): `content`, `practice`,
-`progression`, `learning_paths`, `achievements`, `profile`, `settings`,
-`lock`, `onboarding`, `data_management`, `daily_challenge`. Everything
-online — auth, duels, squads, leaderboards, Supabase sync (`STACK.md
-§5`–`§6`) — is specified but **not yet implemented**; there is no Supabase
-dependency in `pubspec.yaml` yet and the app is offline-only today (local
-`drift`/SQLite + `flutter_secure_storage` + `shared_preferences`).
+`progression`, `learning_paths`, `achievements`, `profile`, `auth`,
+`settings`, `lock`, `onboarding`, `data_management`, `daily_challenge`.
+`auth` (SPEC.md §7.2 Registered Accounts on Firebase — username+password,
+no email, one-time recovery code, guest→account conversion) is implemented
+on Android/Web/Windows; **Linux has no FlutterFire client and stays a
+Guest-only, offline install** (`STACK.md §5.1`). Everything else online —
+duels, squads, leaderboards, history sync (`STACK.md §5`–`§6`) — is
+specified but **not yet implemented**; the app remains offline-first (local
+`drift`/SQLite + `flutter_secure_storage` + `shared_preferences`), with the
+Firebase pieces additionally wired for accounts.
 
 ## Commands
 

@@ -178,8 +178,16 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               TextField(
                 controller: _usernameController,
                 textInputAction: TextInputAction.next,
+                // A Registered Account's username is its login identity
+                // (SPEC.md §7.2), so it can't be renamed from here — the
+                // repository would reject the write anyway; disabling the
+                // field makes that visible instead of surprising.
+                enabled: widget.profile.accountUid == null,
                 decoration: InputDecoration(
                   labelText: l10n.profileUsernameLabel,
+                  helperText: widget.profile.accountUid == null
+                      ? null
+                      : l10n.accountUsernameLocked,
                   prefixIcon: const Icon(LucideIcons.userRound300),
                 ),
               ).staggeredIn(context, 0),
