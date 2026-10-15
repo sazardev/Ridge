@@ -1,9 +1,11 @@
 import 'package:ridge/core/error/app_failure.dart';
 import 'package:ridge/core/persistence/drift/app_database.dart';
 import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
 import 'package:ridge/features/practice/domain/entities/keystroke.dart';
 import 'package:ridge/features/practice/domain/entities/typing_session.dart';
 import 'package:ridge/features/practice/domain/repositories/session_repository.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
 import 'package:ridge/features/practice/infrastructure/practice_dao.dart';
 import 'package:ridge/features/practice/infrastructure/practice_mapper.dart';
 import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
@@ -74,5 +76,37 @@ class SessionRepositoryImpl implements SessionRepository {
     return _dao
         .watchSessionsForProfile(profileId.value)
         .map((rows) => [for (final row in rows) row.toDto().toDomain()]);
+  }
+
+  @override
+  Future<Result<List<TypingSession>, AppFailure>> getSessionsForSnippet({
+    required ProfileId profileId,
+    required SnippetId snippetId,
+  }) async {
+    try {
+      final rows = await _dao.getSessionsForSnippet(
+        profileId: profileId.value,
+        snippetId: snippetId.value,
+      );
+      return Result.ok([for (final row in rows) row.toDto().toDomain()]);
+    } on Exception catch (e) {
+      return Result.err(
+        StorageFailure('Could not read sessions for snippet', cause: e),
+      );
+    }
+  }
+
+  @override
+  Future<Result<List<Keystroke>, AppFailure>> getKeystrokesForSession(
+    TypingSessionId sessionId,
+  ) async {
+    try {
+      final rows = await _dao.getKeystrokesForSession(sessionId.value);
+      return Result.ok([for (final row in rows) row.toDto().toDomain()]);
+    } on Exception catch (e) {
+      return Result.err(
+        StorageFailure('Could not read keystrokes for session', cause: e),
+      );
+    }
   }
 }

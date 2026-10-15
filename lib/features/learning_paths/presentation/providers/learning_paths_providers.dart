@@ -8,10 +8,13 @@ import 'package:ridge/features/learning_paths/application/usecases/recompute_les
 import 'package:ridge/features/learning_paths/domain/entities/lesson_status.dart';
 import 'package:ridge/features/learning_paths/domain/repositories/learning_path_repository.dart';
 import 'package:ridge/features/learning_paths/domain/repositories/lesson_progress_repository.dart';
+import 'package:ridge/features/learning_paths/domain/services/lesson_status_resolver.dart';
+import 'package:ridge/features/learning_paths/domain/value_objects/learning_path_id.dart';
 import 'package:ridge/features/learning_paths/domain/value_objects/lesson_id.dart';
 import 'package:ridge/features/learning_paths/infrastructure/learning_path_repository_impl.dart';
 import 'package:ridge/features/learning_paths/infrastructure/lesson_progress_dao.dart';
 import 'package:ridge/features/learning_paths/infrastructure/lesson_progress_repository_impl.dart';
+import 'package:ridge/features/learning_paths/presentation/providers/active_language_providers.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -98,4 +101,72 @@ class LessonProgressController extends _$LessonProgressController {
           },
         );
   }
+}
+
+/// The Practice-tab "pick up where you left off" card's data: the active
+/// language's path the profile most recently worked on that still has an
+/// unlocked next lesson, plus that lesson's index within the path.
+typedef ResumeCourseCardData = ({
+  LearningPathOverview overview,
+  int nextLessonIndex,
+});
+
+/// Resolves [ResumeCourseCardData] for the active profile — `null` while
+/// there's no active language, no bundled paths for it, or every path is
+/// already completed.
+@riverpod
+Future<ResumeCourseCardData?> resumeCourse(Ref ref) async {
+  final profile = ref.watch(activeProfileControllerProvider).value;
+  if (profile == null) return null;
+  final language = ref.watch(activeLanguageControllerProvider).value;
+  if (language == null) return null;
+
+  final overviews = await ref.watch(learningPathsControllerProvider.future);
+  final paths = [
+    for (final overview in overviews)
+      if (overview.path.language == language) overview,
+  ];
+  if (paths.isEmpty) return null;
+
+  final progress =
+      ref.watch(lessonProgressControllerProvider).value ??
+      const <LessonId, LessonStatus>{};
+  // "Most recently worked on" = the latest lesson completion in the path.
+  // The reactive status map has no timestamps, so this one extra read of
+  // the same cache is what makes the choice stable across sessions.
+  final records = await ref
+      .watch(lessonProgressRepositoryProvider)
+      .watchProgress(profile.id)
+      .first;
+  final lastCompletedByPath = <LearningPathId, DateTime>{};
+  for (final record in records) {
+    final completedAt = record.completedAt;
+    if (completedAt == null) continue;
+    final current = lastCompletedByPath[record.pathId];
+    if (current == null || completedAt.isAfter(current)) {
+      lastCompletedByPath[record.pathId] = completedAt;
+    }
+  }
+
+  ResumeCourseCardData? best;
+  for (final overview in paths) {
+    final nextIndex = LessonStatusResolver.findNextIndex(
+      overview.path.lessons,
+      progress,
+    );
+    if (nextIndex == null) continue;
+    final candidate = (overview: overview, nextLessonIndex: nextIndex);
+    if (best == null) {
+      best = candidate;
+      continue;
+    }
+    final lastCompleted = lastCompletedByPath[overview.path.id];
+    final bestLastCompleted = lastCompletedByPath[best.overview.path.id];
+    if (lastCompleted != null &&
+        (bestLastCompleted == null ||
+            lastCompleted.isAfter(bestLastCompleted))) {
+      best = candidate;
+    }
+  }
+  return best;
 }

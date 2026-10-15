@@ -10,6 +10,7 @@ import 'package:ridge/core/window/app_window_frame.dart';
 import 'package:ridge/core/window/desktop_platform.dart';
 import 'package:ridge/features/content/presentation/providers/content_providers.dart';
 import 'package:ridge/features/learning_paths/presentation/providers/learning_paths_providers.dart';
+import 'package:ridge/features/practice/presentation/providers/daily_reminder_guard.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:ridge/features/settings/domain/entities/app_settings.dart';
 import 'package:ridge/features/settings/domain/entities/app_theme_mode.dart';
@@ -39,7 +40,10 @@ class RidgeApp extends ConsumerWidget {
       ..watch(deviceInfoSyncProvider)
       // Same fire-on-start shape again — listens for incoming `ridge://`
       // links for the app's lifetime.
-      ..watch(deepLinkListenerProvider);
+      ..watch(deepLinkListenerProvider)
+      // And again — (re)schedules the daily practice reminder whenever
+      // the relevant settings or the session history change.
+      ..watch(dailyReminderGuardProvider);
 
     // Drives `AppStartupSplash.ready` below: `/practice` (the initial
     // route) is `LearningPathsScreen`, which shows its own

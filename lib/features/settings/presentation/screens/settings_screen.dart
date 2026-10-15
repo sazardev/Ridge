@@ -17,6 +17,7 @@ import 'package:ridge/features/settings/domain/entities/app_settings.dart';
 import 'package:ridge/features/settings/domain/entities/app_theme_mode.dart';
 import 'package:ridge/features/settings/domain/entities/app_window_border_width.dart';
 import 'package:ridge/features/settings/presentation/providers/settings_providers.dart';
+import 'package:ridge/features/settings/presentation/widgets/daily_reminder_section.dart';
 import 'package:ridge/features/settings/presentation/widgets/palette_picker.dart';
 import 'package:ridge/features/settings/presentation/widgets/settings_section.dart';
 import 'package:ridge/features/settings/presentation/widgets/sound_pack_picker.dart';
@@ -374,6 +375,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     ),
                   ],
                 ).staggeredIn(context, 5),
+              if (Platform.isAndroid)
+                const DailyReminderSection().staggeredIn(context, 6),
               SettingsSection(
                 title: l10n.settingsSectionShortcuts,
                 children: [
@@ -384,7 +387,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     onTap: () => context.push('/shortcuts'),
                   ),
                 ],
-              ).staggeredIn(context, 6),
+              ).staggeredIn(context, 7),
               SettingsSection(
                 title: l10n.settingsSectionAbout,
                 children: [
@@ -407,8 +410,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     onTap: () => context.push('/changelog'),
                   ),
                 ],
-              ).staggeredIn(context, 7),
-              const DataManagementSection().staggeredIn(context, 8),
+              ).staggeredIn(context, 8),
+              const DataManagementSection().staggeredIn(context, 9),
             ],
           ),
         ),

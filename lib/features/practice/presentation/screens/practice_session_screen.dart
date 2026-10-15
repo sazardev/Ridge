@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/core/theme/app_motion.dart';
@@ -15,16 +16,17 @@ import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/presentation/content_labels.dart';
 import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
 import 'package:ridge/features/practice/domain/entities/practice_session_status.dart';
-import 'package:ridge/features/practice/domain/services/survival_run_tracker.dart';
+import 'package:ridge/features/practice/presentation/providers/live_keyboard_providers.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_session_controller.dart';
-import 'package:ridge/features/practice/presentation/widgets/keyboard_required_notice.dart';
-import 'package:ridge/features/practice/presentation/widgets/keystroke_capture_field.dart';
+import 'package:ridge/features/practice/presentation/widgets/live_keyboard_strip.dart';
+import 'package:ridge/features/practice/presentation/widgets/session_app_bar.dart';
+import 'package:ridge/features/practice/presentation/widgets/session_result_area.dart';
 import 'package:ridge/features/practice/presentation/widgets/session_result_footer.dart';
-import 'package:ridge/features/practice/presentation/widgets/session_result_panel.dart';
-import 'package:ridge/features/practice/presentation/widgets/sprint_countdown_badge.dart';
-import 'package:ridge/features/practice/presentation/widgets/survival_lives_badge.dart';
+import 'package:ridge/features/practice/presentation/widgets/session_typing_area.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
+import 'package:ridge/features/settings/domain/entities/app_settings.dart';
+import 'package:ridge/features/settings/presentation/providers/settings_providers.dart';
 
 /// Hosts one full `idle -> running -> finished -> result` practice run
 /// for [snippet] under [mode] as a single screen — no route change
@@ -200,6 +202,9 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
     });
 
     final state = ref.watch(practiceSessionControllerProvider(snippet, mode));
+    final settings =
+        ref.watch(settingsControllerProvider).value ?? AppSettings.initial;
+    final liveKeyboardAvailable = ref.watch(hasSessionKeyboardVisualProvider);
     // Defaults to connected while the first native check is still in
     // flight (`AsyncValue.loading`) rather than flashing the notice for
     // an instant on every screen — see `HardwareKeyboardRepositoryImpl`.
@@ -293,26 +298,33 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
         // continuous surface — no separate "card floating on the
         // background" seam — letting the code itself be the page.
         backgroundColor: theme.colorScheme.surfaceContainerHigh,
-        appBar: AppBar(
-          backgroundColor: theme.colorScheme.surfaceContainerHigh,
+        appBar: SessionAppBar(
           // The current snippet — for Sprint this may have already
           // advanced past the one this route was pushed with (SPEC.md
           // §5.2's seamless mid-session queue).
-          title: Text(state.snippet.titleFor(context)),
+          title: state.snippet.titleFor(context),
+          countdown: countdown,
+          survival:
+              state.status == PracticeSessionStatus.idle ||
+                  state.status == PracticeSessionStatus.running
+              ? survival
+              : null,
           actions: [
-            if (countdown != null)
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Center(
-                  child: SprintCountdownBadge(remaining: countdown),
+            if (liveKeyboardAvailable)
+              IconButton(
+                icon: Icon(
+                  settings.liveKeyboardVisible
+                      ? LucideIcons.keyboard600
+                      : LucideIcons.keyboard300,
                 ),
-              ),
-            if (survival != null &&
-                (state.status == PracticeSessionStatus.idle ||
-                    state.status == PracticeSessionStatus.running))
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Center(child: SurvivalLivesBadge(tracker: survival)),
+                tooltip: settings.liveKeyboardVisible
+                    ? l10n.practiceLiveKeyboardHide
+                    : l10n.practiceLiveKeyboardShow,
+                onPressed: () => ref
+                    .read(settingsControllerProvider.notifier)
+                    .setLiveKeyboardVisible(
+                      value: !settings.liveKeyboardVisible,
+                    ),
               ),
           ],
         ),
@@ -334,62 +346,26 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
             switchOutCurve: AppMotion.exit,
             transitionBuilder: springSwitcherTransition,
             child: showResultArea
-                ? Focus(
+                ? SessionResultArea(
+                    status: state.status,
+                    error: state.error,
+                    metrics: state.finishedSession?.metrics,
+                    passed: passed,
+                    survival: survival,
+                    onShare: onShareAction,
+                    scrollController: _resultScrollController,
                     focusNode: _resultFocusNode,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: AnimatedSwitcher(
-                        key: const ValueKey('result-area'),
-                        duration: AppMotion.spatialDefault,
-                        switchInCurve: AppMotion.enter,
-                        switchOutCurve: AppMotion.exit,
-                        transitionBuilder: springSwitcherTransition,
-                        child: switch (state.status) {
-                          PracticeSessionStatus.result
-                              when state.error == null =>
-                            SingleChildScrollView(
-                              key: const ValueKey('result'),
-                              controller: _resultScrollController,
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: SessionResultPanel(
-                                metrics: state.finishedSession!.metrics,
-                                passed: passed,
-                                survival: survival,
-                                onShare: onShareAction,
-                              ),
-                            ),
-                          PracticeSessionStatus.result => Center(
-                            key: const ValueKey('error'),
-                            child: Text(state.error ?? ''),
-                          ),
-                          // `showResultArea` narrows this switch to
-                          // `result`, so this catch-all is unreachable in
-                          // practice — kept only so the switch stays
-                          // exhaustive.
-                          _ => const SizedBox.shrink(),
-                        },
-                      ),
-                    ),
                   )
-                : Column(
-                    key: const ValueKey('typing-area'),
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      if (state.status == PracticeSessionStatus.running &&
-                          survival != null)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                          child: _LiveStatsRow(survival: survival),
-                        ),
-                      Expanded(
-                        child: keyboardConnected
-                            ? KeystrokeCaptureField(
-                                snippet: snippet,
-                                mode: mode,
-                              )
-                            : const KeyboardRequiredNotice(),
-                      ),
-                    ],
+                : SessionTypingArea(
+                    snippet: snippet,
+                    mode: mode,
+                    status: state.status,
+                    keyboardConnected: keyboardConnected,
+                    survival: survival,
+                    keyboardStrip:
+                        settings.liveKeyboardVisible && liveKeyboardAvailable
+                        ? const LiveKeyboardStrip()
+                        : null,
                   ),
           ),
         ),
@@ -411,44 +387,6 @@ class _PracticeSessionScreenState extends ConsumerState<PracticeSessionScreen> {
           _ => null,
         },
       ),
-    );
-  }
-}
-
-/// Small live readout for Survival (§5.8) only — the run-local score,
-/// current combo multiplier, and snippets cleared, since lives/score are
-/// the mode's whole point. Every other mode's typing progress is carried
-/// entirely by `TypingProgressBar` now, with no numeric chars-typed/
-/// accuracy readout competing with it.
-class _LiveStatsRow extends StatelessWidget {
-  const new({required this.survival});
-
-  final SurvivalRunTracker survival;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    final subtleStyle = theme.textTheme.labelMedium?.copyWith(
-      color: theme.colorScheme.onSurfaceVariant,
-    );
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(l10n.practiceLiveScore(survival.score), style: subtleStyle),
-        Text(
-          l10n.practiceLiveMultiplier(survival.multiplier),
-          style: theme.textTheme.titleSmall?.copyWith(
-            color: theme.colorScheme.primary,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        Text(
-          l10n.practiceLiveSnippets(survival.snippetsCleared),
-          style: subtleStyle,
-        ),
-      ],
     );
   }
 }

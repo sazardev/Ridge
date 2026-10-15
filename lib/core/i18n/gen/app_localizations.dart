@@ -2006,6 +2006,78 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get shortcutsCaptureCancel;
 
+  /// No description provided for @settingsSectionReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Practice reminder'**
+  String get settingsSectionReminder;
+
+  /// No description provided for @settingsDailyReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder'**
+  String get settingsDailyReminderTitle;
+
+  /// No description provided for @settingsDailyReminderSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A local notification at your chosen time — nothing leaves your device.'**
+  String get settingsDailyReminderSubtitle;
+
+  /// No description provided for @settingsDailyReminderTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get settingsDailyReminderTimeLabel;
+
+  /// No description provided for @settingsDailyReminderUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'This platform can\'t schedule notifications, so the reminder shows up inside the app instead.'**
+  String get settingsDailyReminderUnsupported;
+
+  /// No description provided for @settingsDailyReminderDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are blocked for Ridge in your system settings.'**
+  String get settingsDailyReminderDenied;
+
+  /// No description provided for @settingsDailyReminderSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder set'**
+  String get settingsDailyReminderSaved;
+
+  /// No description provided for @dailyReminderNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time to type some code'**
+  String get dailyReminderNotificationTitle;
+
+  /// No description provided for @dailyReminderNotificationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A few minutes keeps your streak alive.'**
+  String get dailyReminderNotificationBody;
+
+  /// No description provided for @practiceNudgeStreakTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your {streak}-day streak alive'**
+  String practiceNudgeStreakTitle(int streak);
+
+  /// No description provided for @practiceNudgeInactiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{One day without practice} other{{days} days without practice}}'**
+  String practiceNudgeInactiveTitle(int days);
+
+  /// No description provided for @practiceNudgeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A short warm-up is enough.'**
+  String get practiceNudgeBody;
+
   /// No description provided for @settingsSectionAbout.
   ///
   /// In en, this message translates to:
@@ -4100,6 +4172,66 @@ abstract class AppLocalizations {
   /// **'No snippets available yet.'**
   String get practiceHubNoSnippetsAvailable;
 
+  /// No description provided for @practiceWarmUpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Warm up'**
+  String get practiceWarmUpTitle;
+
+  /// No description provided for @practiceWarmUpSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A short session built from your weakest characters.'**
+  String get practiceWarmUpSubtitle;
+
+  /// No description provided for @practiceWarmUpWeakCharsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak spots'**
+  String get practiceWarmUpWeakCharsLabel;
+
+  /// No description provided for @practiceWarmUpTargetCharacters.
+  ///
+  /// In en, this message translates to:
+  /// **'Characters'**
+  String get practiceWarmUpTargetCharacters;
+
+  /// No description provided for @practiceWarmUpHandLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Left hand'**
+  String get practiceWarmUpHandLeft;
+
+  /// No description provided for @practiceWarmUpHandRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right hand'**
+  String get practiceWarmUpHandRight;
+
+  /// No description provided for @practiceLiveKeyboardShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show my keyboard'**
+  String get practiceLiveKeyboardShow;
+
+  /// No description provided for @practiceLiveKeyboardHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide my keyboard'**
+  String get practiceLiveKeyboardHide;
+
+  /// No description provided for @practiceGhostBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Ghost {percent}%'**
+  String practiceGhostBadge(int percent);
+
+  /// No description provided for @practiceGhostRacingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Racing your best: {speed} cpm'**
+  String practiceGhostRacingLabel(int speed);
+
   /// No description provided for @dailyChallengeCardTitle.
   ///
   /// In en, this message translates to:
@@ -4153,6 +4285,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'History'**
   String get progressTabHistory;
+
+  /// No description provided for @progressWeeklyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get progressWeeklyTitle;
+
+  /// No description provided for @progressWeeklyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No sessions yet this week.'**
+  String get progressWeeklyEmpty;
+
+  /// No description provided for @progressWeeklySessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get progressWeeklySessions;
+
+  /// No description provided for @progressWeeklyTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get progressWeeklyTime;
+
+  /// No description provided for @progressWeeklyXp.
+  ///
+  /// In en, this message translates to:
+  /// **'XP'**
+  String get progressWeeklyXp;
+
+  /// No description provided for @progressWeeklyAvgSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg speed'**
+  String get progressWeeklyAvgSpeed;
+
+  /// No description provided for @progressWeeklyAccuracy.
+  ///
+  /// In en, this message translates to:
+  /// **'Accuracy'**
+  String get progressWeeklyAccuracy;
+
+  /// No description provided for @progressWeeklyActiveDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Active days'**
+  String get progressWeeklyActiveDays;
+
+  /// No description provided for @progressWeeklySpeedDelta.
+  ///
+  /// In en, this message translates to:
+  /// **'{delta} cpm vs last week'**
+  String progressWeeklySpeedDelta(String delta);
 
   /// No description provided for @progressLevelLabel.
   ///
@@ -4495,6 +4681,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Share this exercise'**
   String get learningPathsShareLessonAction;
+
+  /// No description provided for @learningPathsResumeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick up where you left off'**
+  String get learningPathsResumeTitle;
+
+  /// No description provided for @learningPathsResumeLessonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson {index} of {total}: {title}'**
+  String learningPathsResumeLessonLabel(int index, int total, String title);
 
   /// No description provided for @learningLessonLocked.
   ///

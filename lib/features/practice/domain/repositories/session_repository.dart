@@ -1,7 +1,9 @@
 import 'package:ridge/core/error/app_failure.dart';
 import 'package:ridge/core/utils/result.dart';
+import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
 import 'package:ridge/features/practice/domain/entities/keystroke.dart';
 import 'package:ridge/features/practice/domain/entities/typing_session.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
 import 'package:ridge/features/profile/domain/value_objects/profile_id.dart';
 
 /// Driven port: the application core depends on this abstraction only.
@@ -27,4 +29,18 @@ abstract interface class SessionRepository {
   /// first, and every subsequent change — powers a personal session
   /// history/result view.
   Stream<List<TypingSession>> watchSessionsForProfile(ProfileId profileId);
+
+  /// Every finished session of [profileId] on [snippetId], most recent
+  /// first, as a one-shot read — the ghost run picks the fastest one to
+  /// race against. Backed by the existing `(snippet_id, revision)` index.
+  Future<Result<List<TypingSession>, AppFailure>> getSessionsForSnippet({
+    required ProfileId profileId,
+    required SnippetId snippetId,
+  });
+
+  /// The full keystroke stream of [sessionId], in sequence order — the
+  /// raw material a ghost timeline is folded from.
+  Future<Result<List<Keystroke>, AppFailure>> getKeystrokesForSession(
+    TypingSessionId sessionId,
+  );
 }

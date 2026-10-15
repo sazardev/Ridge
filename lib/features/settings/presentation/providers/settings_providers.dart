@@ -124,4 +124,17 @@ class SettingsController extends _$SettingsController {
   /// for machines that render in software (no GPU).
   Future<void> setPerformanceMode({required bool value}) =>
       _update((s) => s.copyWith(performanceMode: value));
+
+  /// Enables or disables the daily practice reminder (local notification
+  /// on platforms with a scheduler, in-app nudge everywhere else).
+  Future<void> setDailyReminderEnabled({required bool value}) =>
+      _update((s) => s.copyWith(dailyReminderEnabled: value));
+
+  /// Sets the daily reminder time as minutes since local midnight.
+  Future<void> setDailyReminderMinutes(int minutes) =>
+      _update((s) => s.copyWith(dailyReminderMinutes: minutes));
+
+  /// Toggles the live 3D keyboard strip during a practice session.
+  Future<void> setLiveKeyboardVisible({required bool value}) =>
+      _update((s) => s.copyWith(liveKeyboardVisible: value));
 }

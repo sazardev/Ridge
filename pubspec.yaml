@@ -67,6 +67,15 @@ dependencies:
   # (Profile's links card), like a normal external app would.
   url_launcher: ^6.3.2
 
+  # Daily practice reminder. Local notifications only — never push — and
+  # only Android has a scheduler for them (Linux/Web/Windows degrade to
+  # the in-app nudge card; see STACK.md §3.1). `timezone` is the tz
+  # database `zonedSchedule` needs and `flutter_timezone` resolves the
+  # device's own zone for it.
+  flutter_local_notifications: ^22.3.1
+  timezone: ^0.11.1
+  flutter_timezone: ^5.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -6,12 +6,15 @@ import 'package:ridge/features/content/domain/entities/content_category.dart';
 import 'package:ridge/features/content/domain/entities/snippet.dart';
 import 'package:ridge/features/content/domain/value_objects/snippet_id.dart';
 import 'package:ridge/features/content/presentation/providers/content_providers.dart';
+import 'package:ridge/features/practice/domain/entities/finger.dart';
+import 'package:ridge/features/practice/domain/entities/hand.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:ridge/features/progression/application/usecases/get_personal_history_comparison_usecase.dart';
 import 'package:ridge/features/progression/application/usecases/get_recommended_snippet_usecase.dart';
 import 'package:ridge/features/progression/application/usecases/recompute_progress_snapshot_usecase.dart';
 import 'package:ridge/features/progression/domain/entities/personal_history_comparison.dart';
 import 'package:ridge/features/progression/domain/entities/progress_snapshot.dart';
+import 'package:ridge/features/progression/domain/entities/warm_up_target.dart';
 import 'package:ridge/features/progression/domain/repositories/progression_repository.dart';
 import 'package:ridge/features/progression/infrastructure/progression_dao.dart';
 import 'package:ridge/features/progression/infrastructure/progression_repository_impl.dart';
@@ -50,6 +53,87 @@ GetRecommendedSnippetUseCase getRecommendedSnippetUseCase(Ref ref) {
     ref.watch(progressionRepositoryProvider),
     ref.watch(snippetRepositoryProvider),
   );
+}
+
+/// One selectable "Calentar" drill (SPEC.md §3.3/§6.3): the target kind,
+/// the snippet chosen for it, which finger/hand it means when the target
+/// is `finger`/`hand`, and (characters target only) up to the top three
+/// weak characters for the card's own copy.
+typedef WarmUpOption = ({
+  WarmUpTarget target,
+  Snippet snippet,
+  Finger? finger,
+  Hand? hand,
+  List<String> weakCharacters,
+});
+
+/// Resolves every warm-up drill the profile can currently be given — the
+/// character warm-up first (the default), then the weakest finger's and
+/// that hand's, each only when the weakness report ranks a finger and the
+/// catalog has a candidate. Empty while there's no profile or no
+/// weakness history to recommend from.
+@riverpod
+Future<List<WarmUpOption>> warmUpOptions(Ref ref) async {
+  final profile = ref.watch(activeProfileControllerProvider).value;
+  if (profile == null) return const [];
+
+  final snapshot = await ref.watch(progressSnapshotControllerProvider.future);
+  final report = snapshot?.weaknessReport;
+  if (report == null ||
+      (report.weakCharacters.isEmpty && report.weakFingers.isEmpty)) {
+    return const [];
+  }
+
+  final useCase = ref.watch(getRecommendedSnippetUseCaseProvider);
+  final options = <WarmUpOption>[];
+
+  final charactersResult = await useCase(profile.id);
+  final characterSnippet = charactersResult.valueOrNull;
+  if (characterSnippet != null) {
+    options.add((
+      target: WarmUpTarget.characters,
+      snippet: characterSnippet,
+      finger: null,
+      hand: null,
+      weakCharacters: [
+        for (final entry in report.weakCharacters.take(3)) entry.character,
+      ],
+    ));
+  }
+
+  final weakestFinger = report.weakFingers.isEmpty
+      ? null
+      : report.weakFingers.first.finger;
+  if (weakestFinger == null || weakestFinger == Finger.thumb) {
+    return options;
+  }
+
+  final fingerResult = await useCase(profile.id, target: WarmUpTarget.finger);
+  final fingerSnippet = fingerResult.valueOrNull;
+  if (fingerSnippet != null) {
+    options.add((
+      target: WarmUpTarget.finger,
+      snippet: fingerSnippet,
+      finger: weakestFinger,
+      hand: null,
+      weakCharacters: const [],
+    ));
+  }
+
+  final hand = weakestFinger.hand;
+  if (hand == Hand.neutral) return options;
+  final handResult = await useCase(profile.id, target: WarmUpTarget.hand);
+  final handSnippet = handResult.valueOrNull;
+  if (handSnippet != null) {
+    options.add((
+      target: WarmUpTarget.hand,
+      snippet: handSnippet,
+      finger: null,
+      hand: hand,
+      weakCharacters: const [],
+    ));
+  }
+  return options;
 }
 
 /// Provides the [GetPersonalHistoryComparisonUseCase] for the guest-only

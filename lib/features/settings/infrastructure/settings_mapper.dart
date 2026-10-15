@@ -47,6 +47,9 @@ extension SettingsDtoMapper on SettingsDto {
       },
       navigationRailExpanded: navigationRailExpanded,
       performanceMode: performanceMode,
+      dailyReminderEnabled: dailyReminderEnabled,
+      dailyReminderMinutes: dailyReminderMinutes,
+      liveKeyboardVisible: liveKeyboardVisible,
       languageCode: languageCode,
     );
   }
@@ -73,6 +76,9 @@ extension AppSettingsMapper on AppSettings {
       },
       navigationRailExpanded: navigationRailExpanded,
       performanceMode: performanceMode,
+      dailyReminderEnabled: dailyReminderEnabled,
+      dailyReminderMinutes: dailyReminderMinutes,
+      liveKeyboardVisible: liveKeyboardVisible,
       languageCode: languageCode,
     );
   }

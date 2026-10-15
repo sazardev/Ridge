@@ -1,0 +1,20 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="930"
+    android:viewportHeight="930">
+    <!-- The Ridge mark (the R-keycap, assets/icons/r_mark.svg) as a
+         monochrome notification icon: white fill, the R and its bowl
+         cut out via evenOdd. Android draws small icons from their alpha
+         channel and tints them itself, so only the shape matters.
+         Referenced by LocalNotificationsDailyReminderScheduler and kept
+         by res/raw/keep.xml against R8 resource shrinking. -->
+    <group
+        android:translateX="465"
+        android:translateY="465">
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M -340,-400 L 340,-400 A 60,60 0 0 1 400,-340 L 400,340 A 60,60 0 0 1 340,400 L -340,400 A 60,60 0 0 1 -400,340 L -400,-340 A 60,60 0 0 1 -340,-400 Z M-193.6 284 V-284 H-10.4 Q81.6 -284 133.2 -238 Q184.8 -192 184.8 -113.6 Q184.8 -61.6 157.6 -26 Q130.4 9.6 88.8 22.4 Q132 30.4 154 55.2 Q176 80 180 125.6 L193.6 284 H78.4 L68.8 156 Q64.8 108 46 92.8 Q27.2 77.6 -18.4 77.6 H-80 V284 Z M-80 -24.8 H-14.4 Q25.6 -24.8 46.8 -45.2 Q68 -65.6 68 -103.2 Q68 -140.8 46.8 -161.2 Q25.6 -181.6 -14.4 -181.6 H-80 Z" />
+    </group>
+</vector>

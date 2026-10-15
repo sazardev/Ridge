@@ -18,6 +18,8 @@ import 'package:ridge/features/learning_paths/presentation/lesson_navigation.dar
 import 'package:ridge/features/learning_paths/presentation/providers/active_language_providers.dart';
 import 'package:ridge/features/learning_paths/presentation/providers/learning_paths_providers.dart';
 import 'package:ridge/features/learning_paths/presentation/widgets/language_catalog.dart';
+import 'package:ridge/features/learning_paths/presentation/widgets/resume_course_card.dart';
+import 'package:ridge/features/practice/presentation/widgets/daily_practice_nudge_card.dart';
 
 /// The Practice tab's default, structured home (SPEC.md §5.7): the active
 /// language's curated roadmap — start with the basics, unlock the next
@@ -147,9 +149,25 @@ class _LearningPathsScreenState extends ConsumerState<LearningPathsScreen> {
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 8,
                                 ),
-                                itemCount: visible.length,
+                                itemCount: visible.length + 1,
                                 itemBuilder: (context, index) {
-                                  final overview = visible[index];
+                                  // The exercise nudge and the
+                                  // "pick up where you left off" card
+                                  // lead the guide — each renders
+                                  // nothing when it has nothing to say,
+                                  // so they cost no space on a practiced
+                                  // day with no history to resume.
+                                  if (index == 0) {
+                                    return const Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        DailyPracticeNudgeCard(),
+                                        ResumeCourseCard(),
+                                      ],
+                                    ).staggeredIn(context, 0);
+                                  }
+                                  final overview = visible[index - 1];
                                   final completedCount = overview.path.lessons
                                       .where(
                                         (lesson) =>

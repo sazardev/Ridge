@@ -356,6 +356,32 @@
   },
   "shortcutsCaptureDialogSaved": "Shortcut updated",
   "shortcutsCaptureCancel": "Cancel",
+  "settingsSectionReminder": "Practice reminder",
+  "settingsDailyReminderTitle": "Daily reminder",
+  "settingsDailyReminderSubtitle": "A local notification at your chosen time — nothing leaves your device.",
+  "settingsDailyReminderTimeLabel": "Time",
+  "settingsDailyReminderUnsupported": "This platform can't schedule notifications, so the reminder shows up inside the app instead.",
+  "settingsDailyReminderDenied": "Notifications are blocked for Ridge in your system settings.",
+  "settingsDailyReminderSaved": "Reminder set",
+  "dailyReminderNotificationTitle": "Time to type some code",
+  "dailyReminderNotificationBody": "A few minutes keeps your streak alive.",
+  "practiceNudgeStreakTitle": "Keep your {streak}-day streak alive",
+  "@practiceNudgeStreakTitle": {
+    "placeholders": {
+      "streak": {
+        "type": "int"
+      }
+    }
+  },
+  "practiceNudgeInactiveTitle": "{days, plural, =1{One day without practice} other{{days} days without practice}}",
+  "@practiceNudgeInactiveTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "practiceNudgeBody": "A short warm-up is enough.",
   "settingsSectionAbout": "About",
   "settingsAboutVersion": "Version {version}",
   "@settingsAboutVersion": {
@@ -776,6 +802,31 @@
   "practiceHubBrowseAllAction": "Browse all snippets",
   "practiceHubNoSnippetsAvailable": "No snippets available yet.",
 
+  "practiceWarmUpTitle": "Warm up",
+  "practiceWarmUpSubtitle": "A short session built from your weakest characters.",
+  "practiceWarmUpWeakCharsLabel": "Weak spots",
+  "practiceWarmUpTargetCharacters": "Characters",
+  "practiceWarmUpHandLeft": "Left hand",
+  "practiceWarmUpHandRight": "Right hand",
+  "practiceLiveKeyboardShow": "Show my keyboard",
+  "practiceLiveKeyboardHide": "Hide my keyboard",
+  "practiceGhostBadge": "Ghost {percent}%",
+  "@practiceGhostBadge": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "practiceGhostRacingLabel": "Racing your best: {speed} cpm",
+  "@practiceGhostRacingLabel": {
+    "placeholders": {
+      "speed": {
+        "type": "int"
+      }
+    }
+  },
+
   "dailyChallengeCardTitle": "Daily Challenge",
   "dailyChallengeCardSubtitle": "Today's shared snippet — everyone gets the same one.",
   "dailyChallengeCardAlreadyPlayed": "Played today — scored {score}/10",
@@ -800,6 +851,22 @@
   "progressTabWeaknesses": "Weaknesses",
   "progressTabActivity": "Activity",
   "progressTabHistory": "History",
+  "progressWeeklyTitle": "This week",
+  "progressWeeklyEmpty": "No sessions yet this week.",
+  "progressWeeklySessions": "Sessions",
+  "progressWeeklyTime": "Time",
+  "progressWeeklyXp": "XP",
+  "progressWeeklyAvgSpeed": "Avg speed",
+  "progressWeeklyAccuracy": "Accuracy",
+  "progressWeeklyActiveDays": "Active days",
+  "progressWeeklySpeedDelta": "{delta} cpm vs last week",
+  "@progressWeeklySpeedDelta": {
+    "placeholders": {
+      "delta": {
+        "type": "String"
+      }
+    }
+  },
   "progressLevelLabel": "Level {level}",
   "@progressLevelLabel": {
     "placeholders": {
@@ -914,6 +981,21 @@
   "learningPathsLessonListTitle": "Lessons",
   "learningPathsContinueAction": "Continue lesson",
   "learningPathsShareLessonAction": "Share this exercise",
+  "learningPathsResumeTitle": "Pick up where you left off",
+  "learningPathsResumeLessonLabel": "Lesson {index} of {total}: {title}",
+  "@learningPathsResumeLessonLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "learningLessonLocked": "Locked",
   "learningLessonUnlocked": "Unlocked",
   "learningLessonCompleted": "Completed",

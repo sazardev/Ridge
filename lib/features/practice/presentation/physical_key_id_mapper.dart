@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
 
 /// The one place Flutter's `PhysicalKeyboardKey` space gets translated
 /// into our own domain [PhysicalKeyId] — the capture widget is the only
@@ -124,4 +125,28 @@ String? fallbackCharFor(PhysicalKeyId id, {required bool shiftPressed}) {
     return shiftPressed ? letter.toUpperCase() : letter.toLowerCase();
   }
   return null;
+}
+
+/// The character a keydown prints, resolving in the same precedence the
+/// capture engine relies on: an explicit functional remap (profile
+/// keyboard customization, see `keyboardRemapsByNameProvider`) wins over
+/// both the platform character and the US-QWERTY fallback, read per
+/// keydown so a remap saved between — or even during — sessions takes
+/// effect live. Tab and Enter never reach this: the capture field handles
+/// them with their own dedicated branches.
+String? resolveTypedCharacter({
+  required KeyEvent event,
+  required PhysicalKeyId physicalKeyId,
+  required Map<String, KeyboardKeyRemap> remaps,
+  required bool shiftPressed,
+}) {
+  final remap = remaps[physicalKeyId.name];
+  if (remap != null) {
+    return shiftPressed
+        ? remap.shiftedCharacter ?? remap.character
+        : remap.character;
+  }
+  final character = event.character;
+  if (character != null && character.isNotEmpty) return character;
+  return fallbackCharFor(physicalKeyId, shiftPressed: shiftPressed);
 }

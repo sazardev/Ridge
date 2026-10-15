@@ -17,6 +17,7 @@ import 'package:ridge/features/content/presentation/widgets/practice_mode_picker
 import 'package:ridge/features/daily_challenge/presentation/widgets/daily_challenge_card.dart';
 import 'package:ridge/features/learning_paths/presentation/providers/active_language_providers.dart';
 import 'package:ridge/features/practice/presentation/widgets/quick_mode_tile.dart';
+import 'package:ridge/features/progression/presentation/widgets/warm_up_card.dart';
 
 /// Free-form practice (SPEC.md §5.1–5.3, §5.8) — Zen/Sprint/Precision/
 /// Survival shortcuts on an arbitrary catalog snippet, plus a link out to
@@ -39,6 +40,13 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
   /// Bash is course-only (see `bash_foundations_v1.json`), so it's only
   /// picked here once the user explicitly selects it.
   ProgrammingLanguage? _language;
+
+  /// The snippet the quick-mode tiles target, memoized so it stays stable
+  /// across unrelated rebuilds — re-rolled only when there's no pick yet
+  /// or the current one left the pool (language switch, catalog reseed).
+  /// Without this, `Random()` on every build would silently change "the
+  /// snippet I was about to practice" mid-read.
+  Snippet? _quickModeSnippet;
 
   @override
   void dispose() {
@@ -86,9 +94,12 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
           ];
     // Any catalog entry works equally well here — free practice has no
     // notion of "the next thing," only "something to type right now."
-    final quickModeSnippet = pool.isEmpty
-        ? null
-        : pool[Random().nextInt(pool.length)];
+    if (_quickModeSnippet == null || !pool.contains(_quickModeSnippet)) {
+      _quickModeSnippet = pool.isEmpty
+          ? null
+          : pool[Random().nextInt(pool.length)];
+    }
+    final quickModeSnippet = _quickModeSnippet;
 
     // No `AppBar` title here: the nav rail/bar destination already reads
     // "Free" right next to this screen, so repeating it would just be
@@ -102,7 +113,9 @@ class _FreePracticeScreenState extends ConsumerState<FreePracticeScreen> {
             controller: _scrollController,
             padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
             children: [
-              const DailyChallengeCard().staggeredIn(context, 0),
+              const WarmUpCard().staggeredIn(context, 0),
+              const SizedBox(height: 12),
+              const DailyChallengeCard().staggeredIn(context, 1),
               const SizedBox(height: 20),
               if (selectedLanguage != null) ...[
                 Align(

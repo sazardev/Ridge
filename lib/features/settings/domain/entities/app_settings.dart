@@ -93,6 +93,9 @@ abstract class AppSettings with _$AppSettings {
     required Map<AppShortcutAction, ShortcutBinding> shortcutBindings,
     required bool navigationRailExpanded,
     required bool performanceMode,
+    required bool dailyReminderEnabled,
+    required int dailyReminderMinutes,
+    required bool liveKeyboardVisible,
     String? languageCode,
   }) = _AppSettings;
 
@@ -111,5 +114,8 @@ abstract class AppSettings with _$AppSettings {
     shortcutBindings: _defaultShortcutBindings,
     navigationRailExpanded: true,
     performanceMode: false,
+    dailyReminderEnabled: false,
+    dailyReminderMinutes: 1200,
+    liveKeyboardVisible: false,
   );
 }

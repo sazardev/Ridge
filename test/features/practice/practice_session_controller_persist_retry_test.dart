@@ -30,6 +30,7 @@ import 'package:ridge/features/practice/domain/entities/practice_session_status.
 import 'package:ridge/features/practice/domain/entities/typing_session.dart';
 import 'package:ridge/features/practice/domain/repositories/session_repository.dart';
 import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/domain/value_objects/typing_session_id.dart';
 import 'package:ridge/features/practice/infrastructure/session_repository_impl.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_session_controller.dart';
@@ -101,6 +102,20 @@ class _FlakySessionRepository implements SessionRepository {
   @override
   Stream<List<TypingSession>> watchSessionsForProfile(ProfileId profileId) =>
       _delegate.watchSessionsForProfile(profileId);
+
+  @override
+  Future<Result<List<TypingSession>, AppFailure>> getSessionsForSnippet({
+    required ProfileId profileId,
+    required SnippetId snippetId,
+  }) => _delegate.getSessionsForSnippet(
+    profileId: profileId,
+    snippetId: snippetId,
+  );
+
+  @override
+  Future<Result<List<Keystroke>, AppFailure>> getKeystrokesForSession(
+    TypingSessionId sessionId,
+  ) => _delegate.getKeystrokesForSession(sessionId);
 }
 
 /// Polls [condition] until it holds, failing the test on timeout — the

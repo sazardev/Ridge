@@ -36,11 +36,29 @@ class PracticeDao extends DatabaseAccessor<AppDatabase>
   }
 
   /// Returns every keystroke belonging to [sessionId], in sequence order
-  /// — used by tests to verify the capture-to-persistence pipeline.
+  /// — used by tests to verify the capture-to-persistence pipeline, and
+  /// by the ghost run to fold a past attempt's timeline.
   Future<List<KeystrokeEventRow>> getKeystrokesForSession(String sessionId) {
     return (select(keystrokeEvents)
           ..where((row) => row.sessionId.equals(sessionId))
           ..orderBy([(row) => OrderingTerm.asc(row.seq)]))
+        .get();
+  }
+
+  /// Every finished session of [profileId] on [snippetId], most recent
+  /// first — the ghost run picks the fastest one. Backed by the shared
+  /// `idx_typing_sessions_snippet` index (`app_database.dart`).
+  Future<List<TypingSessionRow>> getSessionsForSnippet({
+    required String profileId,
+    required String snippetId,
+  }) {
+    return (select(typingSessions)
+          ..where(
+            (row) =>
+                row.profileId.equals(profileId) &
+                row.snippetId.equals(snippetId),
+          )
+          ..orderBy([(row) => OrderingTerm.desc(row.startedAtUtcMicros)]))
         .get();
   }
 }

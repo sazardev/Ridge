@@ -90,6 +90,17 @@ class _FakeSessionRepository implements SessionRepository {
   @override
   Stream<List<TypingSession>> watchSessionsForProfile(ProfileId profileId) =>
       const Stream.empty();
+
+  @override
+  Future<Result<List<TypingSession>, AppFailure>> getSessionsForSnippet({
+    required ProfileId profileId,
+    required SnippetId snippetId,
+  }) async => const Result.ok([]);
+
+  @override
+  Future<Result<List<Keystroke>, AppFailure>> getKeystrokesForSession(
+    TypingSessionId sessionId,
+  ) async => const Result.ok([]);
 }
 
 void main() {

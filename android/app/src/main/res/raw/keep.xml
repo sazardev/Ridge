@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- R8 resource shrinking (isShrinkResources = true) removes drawables
+     that aren't referenced from XML/code it can see; the notification
+     icon is only ever named as a string by flutter_local_notifications,
+     so it must be kept explicitly or scheduled reminders break. -->
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/ic_stat_ridge" />

@@ -229,6 +229,64 @@ final class GetRecommendedSnippetUseCaseProvider
 String _$getRecommendedSnippetUseCaseHash() =>
     r'fbf94d24d2f43e4ad8286c434fe1ce00df98c07a';
 
+/// Resolves every warm-up drill the profile can currently be given — the
+/// character warm-up first (the default), then the weakest finger's and
+/// that hand's, each only when the weakness report ranks a finger and the
+/// catalog has a candidate. Empty while there's no profile or no
+/// weakness history to recommend from.
+
+@ProviderFor(warmUpOptions)
+final warmUpOptionsProvider = WarmUpOptionsProvider._();
+
+/// Resolves every warm-up drill the profile can currently be given — the
+/// character warm-up first (the default), then the weakest finger's and
+/// that hand's, each only when the weakness report ranks a finger and the
+/// catalog has a candidate. Empty while there's no profile or no
+/// weakness history to recommend from.
+
+final class WarmUpOptionsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<WarmUpOption>>,
+          List<WarmUpOption>,
+          FutureOr<List<WarmUpOption>>
+        >
+    with
+        $FutureModifier<List<WarmUpOption>>,
+        $FutureProvider<List<WarmUpOption>> {
+  /// Resolves every warm-up drill the profile can currently be given — the
+  /// character warm-up first (the default), then the weakest finger's and
+  /// that hand's, each only when the weakness report ranks a finger and the
+  /// catalog has a candidate. Empty while there's no profile or no
+  /// weakness history to recommend from.
+  WarmUpOptionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'warmUpOptionsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$warmUpOptionsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<WarmUpOption>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<WarmUpOption>> create(Ref ref) {
+    return warmUpOptions(ref);
+  }
+}
+
+String _$warmUpOptionsHash() => r'ec01e2bb78a14599fc5019ab846ff6ab83fb7409';
+
 /// Provides the [GetPersonalHistoryComparisonUseCase] for the guest-only
 /// "local leaderboard" (SPEC.md §7.1/§11.4).
 

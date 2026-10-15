@@ -423,3 +423,55 @@ abstract class _$LessonProgressController
     return element.handleCreate(ref, build);
   }
 }
+
+/// Resolves [ResumeCourseCardData] for the active profile — `null` while
+/// there's no active language, no bundled paths for it, or every path is
+/// already completed.
+
+@ProviderFor(resumeCourse)
+final resumeCourseProvider = ResumeCourseProvider._();
+
+/// Resolves [ResumeCourseCardData] for the active profile — `null` while
+/// there's no active language, no bundled paths for it, or every path is
+/// already completed.
+
+final class ResumeCourseProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<ResumeCourseCardData?>,
+          ResumeCourseCardData?,
+          FutureOr<ResumeCourseCardData?>
+        >
+    with
+        $FutureModifier<ResumeCourseCardData?>,
+        $FutureProvider<ResumeCourseCardData?> {
+  /// Resolves [ResumeCourseCardData] for the active profile — `null` while
+  /// there's no active language, no bundled paths for it, or every path is
+  /// already completed.
+  ResumeCourseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'resumeCourseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$resumeCourseHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<ResumeCourseCardData?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<ResumeCourseCardData?> create(Ref ref) {
+    return resumeCourse(ref);
+  }
+}
+
+String _$resumeCourseHash() => r'd30a9c9c3c4cb0e25db4ee973f8d25277340603b';

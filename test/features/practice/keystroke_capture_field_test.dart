@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ridge/core/i18n/gen/app_localizations.dart';
 import 'package:ridge/features/content/domain/entities/content_category.dart';
 import 'package:ridge/features/content/domain/entities/difficulty.dart';
 import 'package:ridge/features/content/domain/entities/programming_language.dart';
@@ -19,10 +20,12 @@ import 'package:ridge/features/practice/domain/entities/keystroke_result.dart';
 import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
 import 'package:ridge/features/practice/domain/entities/practice_session_status.dart';
 import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
+import 'package:ridge/features/practice/presentation/providers/live_keyboard_providers.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_session_controller.dart';
 import 'package:ridge/features/practice/presentation/services/keystroke_sound_player.dart';
 import 'package:ridge/features/practice/presentation/widgets/keystroke_capture_field.dart';
+import 'package:ridge/features/profile/domain/entities/guest_profile.dart';
 import 'package:ridge/features/profile/domain/entities/keyboard_customization.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 import 'package:ridge/features/settings/domain/entities/app_sound_pack.dart';
@@ -47,6 +50,24 @@ const _snippet = Snippet(
 );
 const _mode = PracticeMode.zen();
 
+/// Wraps the field the way `PracticeSessionScreen` does — with the app's
+/// real localizations installed, since the code card renders localized
+/// copy (the ghost badge) and `AppLocalizations.of` null-asserts without
+/// the delegates.
+Widget _app(Widget child) => MaterialApp(
+  localizationsDelegates: AppLocalizations.localizationsDelegates,
+  supportedLocales: AppLocalizations.supportedLocales,
+  home: Scaffold(body: child),
+);
+
+/// A profile controller that never emits — keeps the ghost `RunProvider`
+/// from walking the real profile -> drift chain (and its pending
+/// database-open timer) in these pure capture tests.
+class _NoProfileController extends ActiveProfileController {
+  @override
+  Stream<GuestProfile?> build() => const Stream.empty();
+}
+
 /// Builds the container the capture field tests run in, with the keystroke
 /// sound player overridden by its silent variant — the field reads it on
 /// every key event, and these tests must never initialize native audio
@@ -60,6 +81,7 @@ ProviderContainer _createContainer() => ProviderContainer(
     // tests aren't about remapping, so the map is pinned empty instead of
     // letting the real profile stack open the drift database.
     keyboardRemapsByNameProvider.overrideWithValue(const {}),
+    activeProfileControllerProvider.overrideWith(_NoProfileController.new),
   ],
 );
 
@@ -172,10 +194,8 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: KeystrokeCaptureField(snippet: _snippet, mode: _mode),
-            ),
+          child: _app(
+            const KeystrokeCaptureField(snippet: _snippet, mode: _mode),
           ),
         ),
       );
@@ -297,10 +317,8 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: const MaterialApp(
-          home: Scaffold(
-            body: KeystrokeCaptureField(snippet: _snippet, mode: _mode),
-          ),
+        child: _app(
+          const KeystrokeCaptureField(snippet: _snippet, mode: _mode),
         ),
       ),
     );
@@ -330,10 +348,8 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: KeystrokeCaptureField(snippet: _burstSnippet, mode: _mode),
-            ),
+          child: _app(
+            const KeystrokeCaptureField(snippet: _burstSnippet, mode: _mode),
           ),
         ),
       );
@@ -419,10 +435,8 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: KeystrokeCaptureField(snippet: _burstSnippet, mode: _mode),
-            ),
+          child: _app(
+            const KeystrokeCaptureField(snippet: _burstSnippet, mode: _mode),
           ),
         ),
       );
@@ -510,10 +524,8 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: KeystrokeCaptureField(snippet: _snippet, mode: _mode),
-            ),
+          child: _app(
+            const KeystrokeCaptureField(snippet: _snippet, mode: _mode),
           ),
         ),
       );
@@ -594,10 +606,8 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: KeystrokeCaptureField(snippet: _snippet, mode: _mode),
-            ),
+          child: _app(
+            const KeystrokeCaptureField(snippet: _snippet, mode: _mode),
           ),
         ),
       );
@@ -662,10 +672,8 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: KeystrokeCaptureField(snippet: _angleSnippet, mode: _mode),
-            ),
+          child: _app(
+            const KeystrokeCaptureField(snippet: _angleSnippet, mode: _mode),
           ),
         ),
       );
@@ -757,6 +765,9 @@ void main() {
               shiftedCharacter: 'Z',
             ),
           }),
+          activeProfileControllerProvider.overrideWith(
+            _NoProfileController.new,
+          ),
         ],
       );
       addTearDown(container.dispose);
@@ -764,10 +775,8 @@ void main() {
       await tester.pumpWidget(
         UncontrolledProviderScope(
           container: container,
-          child: const MaterialApp(
-            home: Scaffold(
-              body: KeystrokeCaptureField(snippet: _remapSnippet, mode: _mode),
-            ),
+          child: _app(
+            const KeystrokeCaptureField(snippet: _remapSnippet, mode: _mode),
           ),
         ),
       );
@@ -803,6 +812,41 @@ void main() {
       expect(state.recorder.expectedCharStatuses, [true, true]);
       expect(state.recorder.keystrokes.last.actualChar, 'Z');
       expect(state.status, PracticeSessionStatus.result);
+    },
+  );
+
+  testWidgets(
+    'held physical keys are mirrored into pressedSessionKeysProvider and '
+    'released on keyup',
+    (tester) async {
+      final container = _createContainer();
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: _app(
+            const KeystrokeCaptureField(snippet: _burstSnippet, mode: _mode),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      final pressed = container.read(pressedSessionKeysProvider);
+      expect(pressed.value, isEmpty);
+
+      // A letter down/up round-trips through the shared notifier.
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.keyA);
+      expect(pressed.value, contains('keyA'));
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.keyA);
+      expect(pressed.value, isEmpty);
+
+      // Shift is not a classified keystroke but still lights its own cap
+      // while held.
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.shiftLeft);
+      expect(pressed.value, contains('shiftLeft'));
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.shiftLeft);
+      expect(pressed.value, isEmpty);
     },
   );
 }

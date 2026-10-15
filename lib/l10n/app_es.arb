@@ -336,6 +336,32 @@
   },
   "shortcutsCaptureDialogSaved": "Atajo actualizado",
   "shortcutsCaptureCancel": "Cancelar",
+  "settingsSectionReminder": "Recordatorio de práctica",
+  "settingsDailyReminderTitle": "Recordatorio diario",
+  "settingsDailyReminderSubtitle": "Una notificación local a la hora que elijas — nada sale de tu dispositivo.",
+  "settingsDailyReminderTimeLabel": "Hora",
+  "settingsDailyReminderUnsupported": "Esta plataforma no puede programar notificaciones, así que el recordatorio se muestra dentro de la app.",
+  "settingsDailyReminderDenied": "Las notificaciones de Ridge están bloqueadas en los ajustes del sistema.",
+  "settingsDailyReminderSaved": "Recordatorio guardado",
+  "dailyReminderNotificationTitle": "Hora de teclear código",
+  "dailyReminderNotificationBody": "Unos minutos mantienen viva tu racha.",
+  "practiceNudgeStreakTitle": "Mantén viva tu racha de {streak} días",
+  "@practiceNudgeStreakTitle": {
+    "placeholders": {
+      "streak": {
+        "type": "int"
+      }
+    }
+  },
+  "practiceNudgeInactiveTitle": "{days, plural, =1{Un día sin practicar} other{{days} días sin practicar}}",
+  "@practiceNudgeInactiveTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "practiceNudgeBody": "Con un calentamiento corto basta.",
   "settingsSectionAbout": "Acerca de",
   "settingsAboutVersion": "Versión {version}",
   "@settingsAboutVersion": {
@@ -756,6 +782,31 @@
   "practiceHubBrowseAllAction": "Explorar todos los snippets",
   "practiceHubNoSnippetsAvailable": "Aún no hay snippets disponibles.",
 
+  "practiceWarmUpTitle": "Calentar",
+  "practiceWarmUpSubtitle": "Una sesión corta armada con tus caracteres más flojos.",
+  "practiceWarmUpWeakCharsLabel": "Puntos flojos",
+  "practiceWarmUpTargetCharacters": "Caracteres",
+  "practiceWarmUpHandLeft": "Mano izquierda",
+  "practiceWarmUpHandRight": "Mano derecha",
+  "practiceLiveKeyboardShow": "Mostrar mi teclado",
+  "practiceLiveKeyboardHide": "Ocultar mi teclado",
+  "practiceGhostBadge": "Fantasma {percent}%",
+  "@practiceGhostBadge": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "practiceGhostRacingLabel": "Compite contra tu mejor: {speed} cpm",
+  "@practiceGhostRacingLabel": {
+    "placeholders": {
+      "speed": {
+        "type": "int"
+      }
+    }
+  },
+
   "dailyChallengeCardTitle": "Reto diario",
   "dailyChallengeCardSubtitle": "El snippet compartido de hoy — todos reciben el mismo.",
   "dailyChallengeCardAlreadyPlayed": "Ya jugado hoy — puntaje {score}/10",
@@ -780,6 +831,22 @@
   "progressTabWeaknesses": "Debilidades",
   "progressTabActivity": "Actividad",
   "progressTabHistory": "Historial",
+  "progressWeeklyTitle": "Esta semana",
+  "progressWeeklyEmpty": "Aún no hay sesiones esta semana.",
+  "progressWeeklySessions": "Sesiones",
+  "progressWeeklyTime": "Tiempo",
+  "progressWeeklyXp": "XP",
+  "progressWeeklyAvgSpeed": "Vel. media",
+  "progressWeeklyAccuracy": "Precisión",
+  "progressWeeklyActiveDays": "Días activos",
+  "progressWeeklySpeedDelta": "{delta} cpm vs. semana pasada",
+  "@progressWeeklySpeedDelta": {
+    "placeholders": {
+      "delta": {
+        "type": "String"
+      }
+    }
+  },
   "progressLevelLabel": "Nivel {level}",
   "progressTotalXp": "{xp} XP",
   "progressStreakLabel": "Racha de {days} días",
@@ -856,6 +923,21 @@
   "learningPathsLessonListTitle": "Lecciones",
   "learningPathsContinueAction": "Continuar lección",
   "learningPathsShareLessonAction": "Compartir este ejercicio",
+  "learningPathsResumeTitle": "Retoma donde lo dejaste",
+  "learningPathsResumeLessonLabel": "Lección {index} de {total}: {title}",
+  "@learningPathsResumeLessonLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "learningLessonLocked": "Bloqueada",
   "learningLessonUnlocked": "Desbloqueada",
   "learningLessonCompleted": "Completada",

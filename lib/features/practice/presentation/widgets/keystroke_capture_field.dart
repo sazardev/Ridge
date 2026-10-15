@@ -15,11 +15,14 @@ import 'package:ridge/features/practice/domain/entities/practice_mode.dart';
 import 'package:ridge/features/practice/domain/entities/practice_session_status.dart';
 import 'package:ridge/features/practice/domain/value_objects/physical_key_id.dart';
 import 'package:ridge/features/practice/presentation/physical_key_id_mapper.dart';
+import 'package:ridge/features/practice/presentation/providers/live_keyboard_providers.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_providers.dart';
 import 'package:ridge/features/practice/presentation/providers/practice_session_controller.dart';
+import 'package:ridge/features/practice/presentation/services/ghost_cursor_controller.dart';
 import 'package:ridge/features/practice/presentation/widgets/keystroke_capture_autoscroll.dart';
+import 'package:ridge/features/practice/presentation/widgets/keystroke_code_card.dart';
 import 'package:ridge/features/practice/presentation/widgets/keystroke_span_builder.dart';
-import 'package:ridge/features/practice/presentation/widgets/typing_progress_bar.dart';
+import 'package:ridge/features/practice/presentation/widgets/reject_shake.dart';
 import 'package:ridge/features/profile/presentation/providers/profile_providers.dart';
 
 /// The capture engine itself: renders [snippet]'s code with live
@@ -52,7 +55,7 @@ class KeystrokeCaptureField extends ConsumerStatefulWidget {
 }
 
 class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late final FocusNode _focusNode;
 
   /// Drives the reject-shake manually (never via a `flutter_animate`
@@ -102,9 +105,25 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
   /// aren't classified keystrokes of their own.
   Duration? _lastKeyDownAt;
 
+  /// The live-keyboard notifier, grabbed once here so `dispose` can
+  /// clear it without an unsafe `ref` use while unmounting.
+  late final ValueNotifier<Set<String>> _pressedKeys;
+
+  /// Drives the ghost-race cursor (see `GhostCursorController`) — its
+  /// clock starts with the session's first classified keystroke, so the
+  /// race is relative to typing time, not to idle screen time.
+  late final GhostCursorController _ghostCursor;
+
   @override
   void initState() {
     super.initState();
+    _pressedKeys = ref.read(pressedSessionKeysProvider);
+    _ghostCursor = GhostCursorController(
+      vsync: this,
+      onAdvance: () {
+        if (mounted) setState(() {});
+      },
+    );
     _focusNode = FocusNode(debugLabel: 'KeystrokeCaptureField')
       ..addListener(_onFocusChange);
     _shakeController = AnimationController(
@@ -115,12 +134,25 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
 
   @override
   void dispose() {
+    // A key still held when the session screen goes away must not stay
+    // lit on the shared live-keyboard notifier.
+    _pressedKeys.value = const {};
+    _ghostCursor.dispose();
     _focusNode
       ..removeListener(_onFocusChange)
       ..dispose();
     _scrollController.dispose();
     _shakeController.dispose();
     super.dispose();
+  }
+
+  /// Mirrors a real key's down/up state into the live-keyboard notifier —
+  /// the strip's input. Position-based on purpose: a functional remap
+  /// changes what a key types, never which cap is under the finger.
+  void _setPressedKey(PhysicalKeyId id, {required bool pressed}) {
+    final next = {..._pressedKeys.value};
+    final changed = pressed ? next.add(id.name) : next.remove(id.name);
+    if (changed) _pressedKeys.value = next;
   }
 
   /// Scrolls just enough to keep [cursorIndex] comfortably in view (a
@@ -165,28 +197,6 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
     });
   }
 
-  String? _resolveChar(KeyEvent event, PhysicalKeyId physicalKeyId) {
-    // A functional keyboard remap (profile customization) wins over both
-    // the platform character and the fallback — see
-    // `keyboardRemapsByNameProvider`. Read per keydown so a remap saved
-    // between sessions (or even mid-session) takes effect live.
-    final remap = ref.read(keyboardRemapsByNameProvider)[physicalKeyId.name];
-    if (remap != null) {
-      return HardwareKeyboard.instance.isShiftPressed
-          ? remap.shiftedCharacter ?? remap.character
-          : remap.character;
-    }
-    // Tab and Enter are handled separately, before this is ever called —
-    // see `_handleKeyEvent`'s dedicated branches calling `ingestTabKey`/
-    // `ingestEnterKey`.
-    final character = event.character;
-    if (character != null && character.isNotEmpty) return character;
-    return fallbackCharFor(
-      physicalKeyId,
-      shiftPressed: HardwareKeyboard.instance.isShiftPressed,
-    );
-  }
-
   KeyEventResult _handleKeyEvent(FocusNode node, KeyEvent event) {
     final status = ref
         .read(practiceSessionControllerProvider(widget.snippet, widget.mode))
@@ -203,6 +213,10 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
     // anymore, tell the controller no more dwell patches are coming so it
     // can persist without waiting out its settle timeout.
     if (event is KeyUpEvent) {
+      final releasedKeyId = physicalKeyIdFor(event.physicalKey);
+      if (releasedKeyId != null) {
+        _setPressedKey(releasedKeyId, pressed: false);
+      }
       if (status != PracticeSessionStatus.running &&
           status != PracticeSessionStatus.finished) {
         return KeyEventResult.ignored;
@@ -238,6 +252,7 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
     if (physicalKeyId == null) return KeyEventResult.ignored;
 
     if (event is! KeyDownEvent) return KeyEventResult.ignored;
+    _setPressedKey(physicalKeyId, pressed: true);
 
     // Shift is a modifier: it never produces its own classified
     // keystroke, and (being usually held slightly before the key it
@@ -258,6 +273,10 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
       notifier.moveReviewCursorRight();
       return KeyEventResult.handled;
     }
+
+    // From here on this is a classified keystroke — the same moment the
+    // session's own clock starts, so the ghost race starts with it.
+    _ghostCursor.start();
 
     final now = event.timeStamp;
     final flight = _lastKeyDownAt == null ? null : now - _lastKeyDownAt!;
@@ -325,7 +344,12 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
       return KeyEventResult.handled;
     }
 
-    final char = _resolveChar(event, physicalKeyId);
+    final char = resolveTypedCharacter(
+      event: event,
+      physicalKeyId: physicalKeyId,
+      remaps: ref.read(keyboardRemapsByNameProvider),
+      shiftPressed: HardwareKeyboard.instance.isShiftPressed,
+    );
     if (char == null) return KeyEventResult.ignored;
     final keystroke = notifier.ingestChar(
       physicalKeyId: physicalKeyId,
@@ -359,7 +383,30 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
         .classify(state.snippet.code);
     final rejectedTick = state.recorder.rejectedTick;
 
-    const containerPadding = EdgeInsets.all(20);
+    // The ghost race: mirror the provider into the cursor controller,
+    // which resets it on a retry and late-starts it in the rare case the
+    // provider resolved only after typing had already begun.
+    final ghost = ref
+        .watch(ghostRunProvider(widget.snippet, widget.mode))
+        .value;
+    _ghostCursor
+      ..ghost = ghost
+      ..reconcile(
+        sessionIdle: state.status == PracticeSessionStatus.idle,
+        sessionRunning: state.status == PracticeSessionStatus.running,
+      );
+    final ghostActive =
+        ghost != null && state.status == PracticeSessionStatus.running;
+
+    final codeLength = state.snippet.code.length;
+    final ghostCursorIndex = ghost == null || codeLength == 0
+        ? null
+        : math.min(_ghostCursor.cursorIndex, codeLength - 1);
+    final ghostPercent = !ghostActive || ghost.steps.isEmpty
+        ? null
+        : (_ghostCursor.committed / ghost.steps.length * 100).round();
+
+    const containerPadding = KeystrokeCodeCard.padding;
     final textSpan = TextSpan(
       style: baseStyle,
       children: buildKeystrokeSpans(
@@ -371,10 +418,10 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
         statuses: state.recorder.expectedCharStatuses,
         liveCursorIndex: state.recorder.expectedCursor,
         reviewCursorIndex: state.recorder.reviewCursor,
+        ghostCursorIndex: ghostCursorIndex,
       ),
     );
 
-    final codeLength = state.snippet.code.length;
     // Raw advance through the snippet, not accuracy — a rejected
     // keystroke never moves `expectedCursor` (this field is hard-locked),
     // so this is simply "how far in" the user has gotten.
@@ -424,42 +471,12 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
               // the app bar and Scaffold share this exact surface color and
               // runs this field edge-to-edge, so the card *is* the screen
               // rather than a distinct shape floating on it.
-              child: Stack(
-                // `loose` (the default) would hand the `Container` below
-                // loosened constraints, discarding the minHeight floor
-                // this `ConstrainedBox` just set — `passthrough` forwards
-                // the incoming constraints unchanged so the card still
-                // fills the available space instead of shrinking back to
-                // its text, with the progress bar still free to position
-                // itself via `Positioned`.
-                fit: StackFit.passthrough,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    padding: containerPadding,
-                    color: theme.colorScheme.surfaceContainerHigh,
-                    // Keyed by the current snippet's id so a Sprint
-                    // mid-session swap (SPEC.md §5.2) cross-fades instead
-                    // of an abrupt cut; ordinary per-keystroke recoloring
-                    // keeps the same key, so it never retriggers this
-                    // transition.
-                    child: AnimatedSwitcher(
-                      duration: AppMotion.effectsDefault,
-                      switchInCurve: AppMotion.enter,
-                      switchOutCurve: AppMotion.exit,
-                      child: RichText(
-                        key: ValueKey(state.snippet.id),
-                        text: textSpan,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: TypingProgressBar(progress: progress),
-                  ),
-                ],
+              child: KeystrokeCodeCard(
+                textSpan: textSpan,
+                snippetKey: ValueKey(state.snippet.id),
+                progress: progress,
+                ghostPercent: ghostPercent,
+                ghostSpeedCpm: ghostActive ? ghost.netSpeedCpm : null,
               ),
             ),
           );
@@ -469,27 +486,12 @@ class _KeystrokeCaptureFieldState extends ConsumerState<KeystrokeCaptureField>
 
     // A restrained shake on every rejected attempt — the hard-lock
     // equivalent of `PinDots`' wrong-PIN shake, so being rejected reads
-    // as a clear physical "no" rather than a silent no-op. Replayed by
-    // driving `_shakeController` again, never by changing a widget key
-    // (see its field doc for why that broke scrolling).
+    // as a clear physical "no" rather than a silent no-op.
     if (rejectedTick != _lastRejectedTick) {
       _lastRejectedTick = rejectedTick;
       if (rejectedTick != 0) _shakeController.forward(from: 0);
     }
 
-    return AnimatedBuilder(
-      animation: _shakeController,
-      // `field`'s whole scrollable subtree is passed as `child` — an
-      // `AnimatedBuilder` never rebuilds `child` on its own animation
-      // ticks, only `builder`, so the shake repositions the field
-      // without ever remounting it.
-      child: field,
-      builder: (context, child) {
-        final t = _shakeController.value;
-        final decay = 1 - t;
-        final dx = 6.0 * math.sin(t * 4 * math.pi) * decay;
-        return Transform.translate(offset: Offset(dx, 0), child: child);
-      },
-    );
+    return RejectShake(controller: _shakeController, child: field);
   }
 }

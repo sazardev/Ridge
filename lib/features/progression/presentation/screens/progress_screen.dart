@@ -12,6 +12,7 @@ import 'package:ridge/features/progression/presentation/widgets/activity_report_
 import 'package:ridge/features/progression/presentation/widgets/keyboard_heatmap.dart';
 import 'package:ridge/features/progression/presentation/widgets/personal_history_chart.dart';
 import 'package:ridge/features/progression/presentation/widgets/weakness_report_card.dart';
+import 'package:ridge/features/progression/presentation/widgets/weekly_summary_card.dart';
 import 'package:ridge/features/progression/presentation/widgets/xp_level_bar.dart';
 import 'package:ridge/features/settings/domain/entities/app_settings.dart';
 import 'package:ridge/features/settings/domain/entities/app_shortcut_action.dart';
@@ -158,6 +159,8 @@ class _OverviewTab extends StatelessWidget {
             l10n.progressStreakLabel(snapshot.currentStreakDays),
             style: textTheme.bodyMedium,
           ),
+          const SizedBox(height: 24),
+          const WeeklySummaryCard(),
           const SizedBox(height: 24),
           Text(l10n.progressMasteryTitle, style: textTheme.titleMedium),
           const SizedBox(height: 12),

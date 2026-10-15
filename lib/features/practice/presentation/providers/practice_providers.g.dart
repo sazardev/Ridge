@@ -106,6 +106,105 @@ final class SessionRepositoryProvider
 
 String _$sessionRepositoryHash() => r'5d852fcbe9af081e93b02399bdef4cbf0a604a6a';
 
+/// Streams every finished session for the active profile, newest first —
+/// the shared read surface for cross-feature summaries (the Progress
+/// weekly report, the daily-reminder guard).
+
+@ProviderFor(typingSessions)
+final typingSessionsProvider = TypingSessionsProvider._();
+
+/// Streams every finished session for the active profile, newest first —
+/// the shared read surface for cross-feature summaries (the Progress
+/// weekly report, the daily-reminder guard).
+
+final class TypingSessionsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<TypingSession>>,
+          List<TypingSession>,
+          Stream<List<TypingSession>>
+        >
+    with
+        $FutureModifier<List<TypingSession>>,
+        $StreamProvider<List<TypingSession>> {
+  /// Streams every finished session for the active profile, newest first —
+  /// the shared read surface for cross-feature summaries (the Progress
+  /// weekly report, the daily-reminder guard).
+  TypingSessionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'typingSessionsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$typingSessionsHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<TypingSession>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<TypingSession>> create(Ref ref) {
+    return typingSessions(ref);
+  }
+}
+
+String _$typingSessionsHash() => r'6218177b21ff0008c19bf282e5f9b9643d7c523c';
+
+/// Resolves [DailyPracticeNudgeData] for the active profile.
+
+@ProviderFor(dailyPracticeNudge)
+final dailyPracticeNudgeProvider = DailyPracticeNudgeProvider._();
+
+/// Resolves [DailyPracticeNudgeData] for the active profile.
+
+final class DailyPracticeNudgeProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<DailyPracticeNudgeData?>,
+          DailyPracticeNudgeData?,
+          FutureOr<DailyPracticeNudgeData?>
+        >
+    with
+        $FutureModifier<DailyPracticeNudgeData?>,
+        $FutureProvider<DailyPracticeNudgeData?> {
+  /// Resolves [DailyPracticeNudgeData] for the active profile.
+  DailyPracticeNudgeProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'dailyPracticeNudgeProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$dailyPracticeNudgeHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<DailyPracticeNudgeData?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<DailyPracticeNudgeData?> create(Ref ref) {
+    return dailyPracticeNudge(ref);
+  }
+}
+
+String _$dailyPracticeNudgeHash() =>
+    r'517b4a258521c9167f328ac96ac5107cc85cac53';
+
 /// Provides the [StartPracticeSessionUseCase] for validating a session
 /// before it starts.
 
@@ -276,6 +375,166 @@ final class GetNextSprintSnippetUseCaseProvider
 
 String _$getNextSprintSnippetUseCaseHash() =>
     r'ab76002fdc5fa25727cc0d4ee22d1adb9c324c35';
+
+/// Provides the [GetGhostRunUseCase] for the ghost-race overlay.
+
+@ProviderFor(getGhostRunUseCase)
+final getGhostRunUseCaseProvider = GetGhostRunUseCaseProvider._();
+
+/// Provides the [GetGhostRunUseCase] for the ghost-race overlay.
+
+final class GetGhostRunUseCaseProvider
+    extends
+        $FunctionalProvider<
+          GetGhostRunUseCase,
+          GetGhostRunUseCase,
+          GetGhostRunUseCase
+        >
+    with $Provider<GetGhostRunUseCase> {
+  /// Provides the [GetGhostRunUseCase] for the ghost-race overlay.
+  GetGhostRunUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getGhostRunUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$getGhostRunUseCaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<GetGhostRunUseCase> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  GetGhostRunUseCase create(Ref ref) {
+    return getGhostRunUseCase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(GetGhostRunUseCase value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<GetGhostRunUseCase>(value),
+    );
+  }
+}
+
+String _$getGhostRunUseCaseHash() =>
+    r'85f47e8d8d79b84a86cd2dc77487d05782a9c9fb';
+
+/// The ghost run for [snippet] under [mode], or `null` when there's
+/// nothing to race against — no prior attempt, or [mode] is one of the
+/// multi-snippet streams (Sprint/Survival) whose stored attempts have no
+/// single-snippet boundary to line up with. Fetched once per session;
+/// the capture field replays it against its own clock.
+
+@ProviderFor(ghostRun)
+final ghostRunProvider = GhostRunFamily._();
+
+/// The ghost run for [snippet] under [mode], or `null` when there's
+/// nothing to race against — no prior attempt, or [mode] is one of the
+/// multi-snippet streams (Sprint/Survival) whose stored attempts have no
+/// single-snippet boundary to line up with. Fetched once per session;
+/// the capture field replays it against its own clock.
+
+final class GhostRunProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<GhostRun?>,
+          GhostRun?,
+          FutureOr<GhostRun?>
+        >
+    with $FutureModifier<GhostRun?>, $FutureProvider<GhostRun?> {
+  /// The ghost run for [snippet] under [mode], or `null` when there's
+  /// nothing to race against — no prior attempt, or [mode] is one of the
+  /// multi-snippet streams (Sprint/Survival) whose stored attempts have no
+  /// single-snippet boundary to line up with. Fetched once per session;
+  /// the capture field replays it against its own clock.
+  GhostRunProvider._({
+    required GhostRunFamily super.from,
+    required (Snippet, PracticeMode) super.argument,
+  }) : super(
+         retry: null,
+         name: r'ghostRunProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$ghostRunHash();
+
+  @override
+  String toString() {
+    return r'ghostRunProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<GhostRun?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<GhostRun?> create(Ref ref) {
+    final argument = this.argument as (Snippet, PracticeMode);
+    return ghostRun(ref, argument.$1, argument.$2);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GhostRunProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$ghostRunHash() => r'28ed73010891d2b017218072789dea1d227fe83e';
+
+/// The ghost run for [snippet] under [mode], or `null` when there's
+/// nothing to race against — no prior attempt, or [mode] is one of the
+/// multi-snippet streams (Sprint/Survival) whose stored attempts have no
+/// single-snippet boundary to line up with. Fetched once per session;
+/// the capture field replays it against its own clock.
+
+final class GhostRunFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<GhostRun?>,
+          (Snippet, PracticeMode)
+        > {
+  GhostRunFamily._()
+    : super(
+        retry: null,
+        name: r'ghostRunProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The ghost run for [snippet] under [mode], or `null` when there's
+  /// nothing to race against — no prior attempt, or [mode] is one of the
+  /// multi-snippet streams (Sprint/Survival) whose stored attempts have no
+  /// single-snippet boundary to line up with. Fetched once per session;
+  /// the capture field replays it against its own clock.
+
+  GhostRunProvider call(Snippet snippet, PracticeMode mode) =>
+      GhostRunProvider._(argument: (snippet, mode), from: this);
+
+  @override
+  String toString() => r'ghostRunProvider';
+}
 
 /// Provides the app-lifetime [KeystrokeSoundPlayer] for the current
 /// settings-chosen sound pack — kept alive (rather than one per session)

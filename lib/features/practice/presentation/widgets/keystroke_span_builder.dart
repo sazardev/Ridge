@@ -14,7 +14,9 @@ const _untypedOpacity = 0.38;
 
 /// Builds the per-character [TextSpan]s `KeystrokeCaptureField` renders:
 /// syntax-colored, dimmed ahead of [liveCursorIndex], and highlighted at
-/// the live/review cursor.
+/// the live/review cursor — plus, when [ghostCursorIndex] is given, a
+/// muted tint where a replayed best attempt currently is (the live and
+/// review cursors always win that cell).
 List<TextSpan> buildKeystrokeSpans({
   required ColorScheme colors,
   required SyntaxColors syntaxColors,
@@ -24,6 +26,7 @@ List<TextSpan> buildKeystrokeSpans({
   required List<bool?> statuses,
   required int liveCursorIndex,
   required int? reviewCursorIndex,
+  int? ghostCursorIndex,
 }) {
   return [
     for (var i = 0; i < code.length; i++)
@@ -35,7 +38,11 @@ List<TextSpan> buildKeystrokeSpans({
               .withValues(alpha: statuses[i] == true ? 1 : _untypedOpacity),
           backgroundColor: i == reviewCursorIndex
               ? colors.secondaryContainer
-              : (i == liveCursorIndex ? colors.primaryContainer : null),
+              : (i == liveCursorIndex
+                    ? colors.primaryContainer
+                    : (i == ghostCursorIndex
+                          ? colors.tertiaryContainer.withValues(alpha: 0.45)
+                          : null)),
         ),
       ),
   ];

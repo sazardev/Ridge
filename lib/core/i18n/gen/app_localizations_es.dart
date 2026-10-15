@@ -1006,6 +1006,56 @@ class AppLocalizationsEs extends AppLocalizations {
   String get shortcutsCaptureCancel => 'Cancelar';
 
   @override
+  String get settingsSectionReminder => 'Recordatorio de práctica';
+
+  @override
+  String get settingsDailyReminderTitle => 'Recordatorio diario';
+
+  @override
+  String get settingsDailyReminderSubtitle =>
+      'Una notificación local a la hora que elijas — nada sale de tu dispositivo.';
+
+  @override
+  String get settingsDailyReminderTimeLabel => 'Hora';
+
+  @override
+  String get settingsDailyReminderUnsupported =>
+      'Esta plataforma no puede programar notificaciones, así que el recordatorio se muestra dentro de la app.';
+
+  @override
+  String get settingsDailyReminderDenied =>
+      'Las notificaciones de Ridge están bloqueadas en los ajustes del sistema.';
+
+  @override
+  String get settingsDailyReminderSaved => 'Recordatorio guardado';
+
+  @override
+  String get dailyReminderNotificationTitle => 'Hora de teclear código';
+
+  @override
+  String get dailyReminderNotificationBody =>
+      'Unos minutos mantienen viva tu racha.';
+
+  @override
+  String practiceNudgeStreakTitle(int streak) {
+    return 'Mantén viva tu racha de $streak días';
+  }
+
+  @override
+  String practiceNudgeInactiveTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days días sin practicar',
+      one: 'Un día sin practicar',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get practiceNudgeBody => 'Con un calentamiento corto basta.';
+
+  @override
   String get settingsSectionAbout => 'Acerca de';
 
   @override
@@ -2112,6 +2162,41 @@ class AppLocalizationsEs extends AppLocalizations {
       'Aún no hay snippets disponibles.';
 
   @override
+  String get practiceWarmUpTitle => 'Calentar';
+
+  @override
+  String get practiceWarmUpSubtitle =>
+      'Una sesión corta armada con tus caracteres más flojos.';
+
+  @override
+  String get practiceWarmUpWeakCharsLabel => 'Puntos flojos';
+
+  @override
+  String get practiceWarmUpTargetCharacters => 'Caracteres';
+
+  @override
+  String get practiceWarmUpHandLeft => 'Mano izquierda';
+
+  @override
+  String get practiceWarmUpHandRight => 'Mano derecha';
+
+  @override
+  String get practiceLiveKeyboardShow => 'Mostrar mi teclado';
+
+  @override
+  String get practiceLiveKeyboardHide => 'Ocultar mi teclado';
+
+  @override
+  String practiceGhostBadge(int percent) {
+    return 'Fantasma $percent%';
+  }
+
+  @override
+  String practiceGhostRacingLabel(int speed) {
+    return 'Compite contra tu mejor: $speed cpm';
+  }
+
+  @override
   String get dailyChallengeCardTitle => 'Reto diario';
 
   @override
@@ -2143,6 +2228,35 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get progressTabHistory => 'Historial';
+
+  @override
+  String get progressWeeklyTitle => 'Esta semana';
+
+  @override
+  String get progressWeeklyEmpty => 'Aún no hay sesiones esta semana.';
+
+  @override
+  String get progressWeeklySessions => 'Sesiones';
+
+  @override
+  String get progressWeeklyTime => 'Tiempo';
+
+  @override
+  String get progressWeeklyXp => 'XP';
+
+  @override
+  String get progressWeeklyAvgSpeed => 'Vel. media';
+
+  @override
+  String get progressWeeklyAccuracy => 'Precisión';
+
+  @override
+  String get progressWeeklyActiveDays => 'Días activos';
+
+  @override
+  String progressWeeklySpeedDelta(String delta) {
+    return '$delta cpm vs. semana pasada';
+  }
 
   @override
   String progressLevelLabel(int level) {
@@ -2335,6 +2449,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get learningPathsShareLessonAction => 'Compartir este ejercicio';
+
+  @override
+  String get learningPathsResumeTitle => 'Retoma donde lo dejaste';
+
+  @override
+  String learningPathsResumeLessonLabel(int index, int total, String title) {
+    return 'Lección $index de $total: $title';
+  }
 
   @override
   String get learningLessonLocked => 'Bloqueada';
