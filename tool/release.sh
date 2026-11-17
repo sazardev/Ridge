@@ -24,7 +24,7 @@ new_version_full="$(echo "$output" | grep '^NEW_VERSION=' | cut -d= -f2)"
 version_name="${new_version_full%%+*}"
 
 git add pubspec.yaml CHANGELOG.md
-git commit -m "chore(release): v${version_name} [skip ci]"
+git commit -m "chore(release): v${version_name}"
 git tag -a "v${version_name}" -m "v${version_name}"
 
 echo "release: tagged v${version_name} (not pushed)."
