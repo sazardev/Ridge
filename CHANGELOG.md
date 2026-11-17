@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.23.1] - 2026-11-16
+
+### Fixed
+- **release:** let release tags trigger the build workflows (a74d723)
+
 ## [1.23.0] - 2026-11-16
 
 ### Added
