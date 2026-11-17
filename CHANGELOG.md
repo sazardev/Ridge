@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.23.2] - 2026-11-16
+
+### Fixed
+- **release:** unblock the tag build matrix (82e54a6)
+
 ## [1.23.1] - 2026-11-16
 
 ### Fixed
