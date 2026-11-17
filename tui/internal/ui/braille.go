@@ -44,7 +44,16 @@ func renderBar(c *Ctx, frac float64, width int) string {
 	frac = clamp01(frac)
 	if !c.G.utf8 {
 		n := int(math.Round(frac * float64(width)))
-		return c.S.Accent.Render(strings.Repeat("#", n)) + c.S.Muted.Render(strings.Repeat("-", width-n))
+		cols := c.Theme.Gradient(RolePrimary, RoleSecondary, width)
+		var b strings.Builder
+		for i := 0; i < width; i++ {
+			if i < n {
+				b.WriteString(fgStyle(cols[i]).Render("#"))
+			} else {
+				b.WriteString(c.S.Muted.Faint(true).Render("-"))
+			}
+		}
+		return b.String()
 	}
 	cols := c.Theme.Gradient(RolePrimary, RoleSecondary, width)
 	filled := frac * float64(width) * 2 // in half-cells

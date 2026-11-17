@@ -92,14 +92,14 @@ and dark terminals, generous padding, gentle spinners and markdown rendered with
 | --- | --- | --- |
 | spinner | `spinner.Dot` / `spinner.MiniDot` (~10–12 fps) | Activity |
 | progress | animated bar with spring easing (`bubbles/progress`), gradient `primary` → `secondary` | Determinate work |
-| frame-budget | 30 fps | Animated components |
+| frame-budget | 60 fps | Animated components |
 | transitions | none between screens | Instant |
 
 - Reduced motion: progress bars jump to the value; spinners static.
 - Spinner frames: braille `⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏` at 80 ms/frame (dots), or `◐ ◓ ◑ ◒`; ASCII fallback `| / - \`.
 - Progress bars with sub-cell precision (`▏▎▍▌▋▊▉█`), percentage and ETA; indeterminate work uses a spinner, never a fake bar.
 - Typewriter or fade-in reveals only for short headings (≤ 40 chars, ≤ 400 ms total).
-- Redraw budget 30 fps for idle animation, 60 fps max while interacting; only changed cells are redrawn.
+- Redraw budget 60 fps for idle animation and interactions; only changed cells are redrawn.
 
 ## Components
 
@@ -112,7 +112,8 @@ and dark terminals, generous padding, gentle spinners and markdown rendered with
 - **Help**: `bubbles/help` short and full views.
 - **Empty/loading/error**: friendly sentence + icon (`• Nothing yet — press n to create one`), spinner + verb, `✗` + cause + next step.
 - Every key binding has a single-key or `Ctrl` alternative (soft keyboards lack `Alt`/function keys); touch scrolling works where the terminal sends mouse events.
-- Keyboard first: arrows and `hjkl`, `Enter` select, `Esc` back, `q` quit, `/` search, `?` help; the mouse is an optional extra.
+- Keyboard first: arrows and `hjkl`, `Enter` select, `Esc` back, `q` quit, `/` search, `?` help; the mouse is an optional extra: clicking a row selects and runs it and the wheel scrolls, but every action is reachable from the keyboard.
+- `F1` (and Home → Guide & shortcuts, and the `:` palette) opens the in-app guide: navigation, commands, mouse, typing keys, theme and accessibility.
 - A status/help line shows the keys that matter on the current screen.
 - Art is data: banners and images live in asset files or are generated at startup, never hand-typed into view code.
 - GUI: open with Cmd/Ctrl+K (and "/" when no input is focused); centered overlay 600 px wide, 15% from the top, search input 48 px with the placeholder "Search or run a command...", results list max 8 rows visible, 40 px each, scrollable.

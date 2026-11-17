@@ -38,6 +38,13 @@ func paletteActions() []action {
 		{"home.profile", "u", func(c *Ctx) tea.Cmd { return pushHome(newProfile(c)) }},
 		{"home.settings", "s", func(c *Ctx) tea.Cmd { return pushHome(newSettings(c)) }},
 		{"home.data", "", func(c *Ctx) tea.Cmd { return pushHome(newData(c)) }},
+		{"guide.title", "f1", func(c *Ctx) tea.Cmd { return pushHome(newGuide(c)) }},
+		{"set.palette", "", func(c *Ctx) tea.Cmd { return pushHome(newPalettePicker(c)) }},
+		{"set.theme", "", func(c *Ctx) tea.Cmd {
+			c.Set.ThemeMode = map[string]string{"system": "light", "light": "dark", "dark": "system"}[c.Set.ThemeMode]
+			c.SaveSettings()
+			return func() tea.Msg { return themeMsg{} }
+		}},
 		{"set.lang", "L", func(c *Ctx) tea.Cmd { return pushHome(newLanguages(c)) }},
 		{"pal.home", "", func(c *Ctx) tea.Cmd { return goHome() }},
 		{"home.quit", "q", func(c *Ctx) tea.Cmd { return tea.Quit }},

@@ -97,9 +97,31 @@ func (p *progressScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	return p, nil
 }
 
+func (p *progressScreen) tabNames() []string {
+	c := p.ctx
+	return []string{c.T("prog.overview"), c.T("prog.weak"), c.T("prog.activity"), c.T("prog.mastery")}
+}
+
+// clickBody selects a tab when the first body row is clicked.
+func (p *progressScreen) clickBody(x, y int) (tea.Cmd, bool) {
+	if y != 0 {
+		return nil, false
+	}
+	x0 := 0
+	for i, n := range p.tabNames() {
+		w := lipgloss.Width(n) + 2
+		if x >= x0 && x < x0+w {
+			p.tab = progressTab(i)
+			return nil, true
+		}
+		x0 += w + 1
+	}
+	return nil, false
+}
+
 func (p *progressScreen) tabs() string {
-	c, s := p.ctx, p.ctx.S
-	names := []string{c.T("prog.overview"), c.T("prog.weak"), c.T("prog.activity"), c.T("prog.mastery")}
+	s := p.ctx.S
+	names := p.tabNames()
 	var out []string
 	for i, n := range names {
 		if progressTab(i) == p.tab {

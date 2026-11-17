@@ -40,7 +40,8 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   contraste WCAG); una paleta con nombre cambia solo el par de acentos.
   Verificada con `cd tui && go test ./...`, `go vet ./...` y `make matrix`
   (claro/oscuro, truecolor/256/ANSI, `NO_COLOR`, `TERM=dumb`, 40×20–200×60,
-  locale C y tmux).
+  locale C y tmux). Motion a 60 fps (incluido el ambiente), ratón con clic en
+  filas/rueda, `F1` abre la guía y `:`/Ctrl+P la paleta de comandos.
 - Modos de práctica: Zen, Sprint, Precisión, **Survival** (SPEC.md §5.8:
   vidas, combo, multiplicador) y **Reto Diario** (SPEC.md §5.4, Fase 0
   offline-only: mismo snippet para todo el mundo calculado
@@ -266,6 +267,31 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   editor 3D de teclado siguen fuera del TUI por las mismas razones que Linux
   en la app (`STACK.md §5.1`).
 
+### 2026-11-16 — TUI segunda pasada: ratón, guía, comandos y 60 fps
+
+- **Pedido**: que la TUI se sienta "brutal": animada, fluida a 60 fps,
+  minimal, con comandos, guía, todo por teclado pero también clicable con
+  ratón, temas/heredado, ayuda, gradiente y resaltado de código.
+- **Ratón**: `tea.WithMouseCellMotion()` + `RIDGE_NO_MOUSE=1` como escape
+  para conservar la selección nativa del terminal. Las filas de menú
+  (Home, ajustes, rutas, lecciones, datos, pickers, paleta de comandos) se
+  pueden clicar y ejecutan el mismo `Enter`; la rueda desplaza con clamp
+  (sin wrap); pestañas de Progreso clicables; Reto Diario arranca con clic;
+  onboarding avanza con clic. Guía y logros hacen scroll con la rueda.
+- **Guía**: pantalla propia (`F1`, Home → Guide & shortcuts y comando) con
+  navegación, comandos, ratón, teclas de práctica, temas, accesibilidad y
+  datos. `?` sigue expandiendo la ayuda contextual del pie.
+- **Comandos**: paleta ampliada con guía, paleta de colores, cambio de
+  tema, idioma, datos y Home; los atajos se muestran a la derecha.
+- **60 fps**: el ticker ambiental sube de 30 a 60 fps (el frame completo
+  cuesta ~0,38 ms: benchmarks `BenchmarkHomeView`/`BenchmarkPracticeView`,
+  presupuesto 16,7 ms). La barra de progreso mantiene el gradiente también
+  en modo ASCII; el resaltado y el flash de tecleo ya usaban el mismo
+  ticker.
+- Verificado: `go vet`, `go test ./...`, benchmarks y `make matrix`;
+  probados clic y rueda reales por PTY (SGR), pestañas, Reto Diario, guía,
+  paleta y tmux. Actualizados README/DESIGN/AGENTS/CLAUDE.
+
 ### 2026-11-03 — Ridge TUI (Go + Charm): paridad con la app y UI premium
 
 - Módulo Go independiente en `tui/` (Bubble Tea v1 + Lip Gloss + Bubbles +
@@ -298,7 +324,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 - **UI**: sin bordes; tema que mide el fondo real (OSC 11) y ajusta el
   contraste a WCAG 4.5:1 (7:1 en alto contraste); degradados/mezclas en OKLCH
   solo con truecolor; ticker único que corre a 60 fps solo mientras algo se
-  mueve (30 fps ambiente) y se apaga en reposo; resortes harmonica (selección,
+  mueve (60 fps ambiente; se apaga con movimiento reducido) y resortes harmonica (selección,
   barras, conteo, scroll, shake del PIN); transición de entrada por pantalla.
 - **Diferencias deliberadas respecto a Flutter** (ver `tui/README.md`):
   cuentas = solo Invitado (Linux no tiene FlutterFire, `STACK.md §5.1`);

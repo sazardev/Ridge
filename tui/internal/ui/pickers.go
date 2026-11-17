@@ -55,8 +55,9 @@ func (f *freeScreen) currentLang() string {
 	return f.ctx.Lang()
 }
 
-func (f *freeScreen) Title() string { return f.ctx.T("free.title") }
-func (f *freeScreen) Init() tea.Cmd { return nil }
+func (f *freeScreen) Title() string    { return f.ctx.T("free.title") }
+func (f *freeScreen) menuModel() *menu { return f.m }
+func (f *freeScreen) Init() tea.Cmd    { return nil }
 
 func (f *freeScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	k, ok := msg.(tea.KeyMsg)
@@ -85,6 +86,7 @@ func (f *freeScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 }
 
 func (f *freeScreen) View() string {
+	f.m.top = 2
 	return lipgloss.JoinVertical(lipgloss.Left, f.ctx.S.Muted.Render(langName(f.currentLang())), "", f.m.view(contentWidth(f.ctx), 8))
 }
 
@@ -118,8 +120,9 @@ func newLanguagePicker(c *Ctx, current string, onPick func(string)) *languagePic
 	return &languagePicker{c, m, onPick}
 }
 
-func (p *languagePicker) Title() string { return p.ctx.T("lang.title") }
-func (p *languagePicker) Init() tea.Cmd { return nil }
+func (p *languagePicker) Title() string    { return p.ctx.T("lang.title") }
+func (p *languagePicker) menuModel() *menu { return p.m }
+func (p *languagePicker) Init() tea.Cmd    { return nil }
 
 func (p *languagePicker) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	k, ok := msg.(tea.KeyMsg)
@@ -186,8 +189,9 @@ func newSnippetPicker(c *Ctx, mode, lang string) *snippetPicker {
 	return &snippetPicker{c, mode, lang, m}
 }
 
-func (p *snippetPicker) Title() string { return p.ctx.T("mode." + p.mode) }
-func (p *snippetPicker) Init() tea.Cmd { return nil }
+func (p *snippetPicker) Title() string    { return p.ctx.T("mode." + p.mode) }
+func (p *snippetPicker) menuModel() *menu { return p.m }
+func (p *snippetPicker) Init() tea.Cmd    { return nil }
 
 func (p *snippetPicker) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	k, ok := msg.(tea.KeyMsg)
@@ -216,6 +220,7 @@ func (p *snippetPicker) View() string {
 	c, s := p.ctx, p.ctx.S
 	w := contentWidth(c)
 	title := s.Muted.Render(langName(p.lang))
+	p.m.top = 2
 	if c.W >= 120 {
 		lw := w/2 + 4
 		list := p.m.view(lw, c.H-10)
@@ -262,8 +267,9 @@ func newSprintPicker(c *Ctx, lang string) *sprintPicker {
 	return &sprintPicker{c, lang, newMenu(c, "sprint", []item{{Label: "30 s", Value: 30}, {Label: "60 s", Value: 60}, {Label: "120 s", Value: 120}})}
 }
 
-func (p *sprintPicker) Title() string { return p.ctx.T("mode.sprint") }
-func (p *sprintPicker) Init() tea.Cmd { return nil }
+func (p *sprintPicker) Title() string    { return p.ctx.T("mode.sprint") }
+func (p *sprintPicker) menuModel() *menu { return p.m }
+func (p *sprintPicker) Init() tea.Cmd    { return nil }
 
 func (p *sprintPicker) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	k, ok := msg.(tea.KeyMsg)
@@ -360,6 +366,11 @@ func (d *dailyScreen) View() string {
 	return strings.Join(lines, "\n") + "\n\n" + s.Muted.Render(c.T("daily.global"))
 }
 
+func (d *dailyScreen) clickBody(int, int) (tea.Cmd, bool) {
+	_, cmd := d.Update(tea.KeyMsg{Type: tea.KeyEnter})
+	return cmd, true
+}
+
 func (d *dailyScreen) Help() help.KeyMap {
 	return bindings{short: kbs(kb("enter", "enter", "start"), kb("esc", "esc", "back"))}
 }
@@ -378,8 +389,9 @@ func newWarmUp(c *Ctx) *warmUpScreen {
 	})}
 }
 
-func (w *warmUpScreen) Title() string { return w.ctx.T("warm.title") }
-func (w *warmUpScreen) Init() tea.Cmd { return nil }
+func (w *warmUpScreen) Title() string    { return w.ctx.T("warm.title") }
+func (w *warmUpScreen) menuModel() *menu { return w.m }
+func (w *warmUpScreen) Init() tea.Cmd    { return nil }
 
 func (w *warmUpScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	k, ok := msg.(tea.KeyMsg)
@@ -416,6 +428,7 @@ func (w *warmUpScreen) View() string {
 		}
 		hint = s.Muted.Render(c.T("weak")+": ") + strings.Join(cs, " ")
 	}
+	w.m.top = 2
 	return lipgloss.JoinVertical(lipgloss.Left, hint, "", w.m.view(contentWidth(c), 6))
 }
 

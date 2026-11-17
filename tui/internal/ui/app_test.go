@@ -176,7 +176,7 @@ func TestAnimationTickerStopsWhenSettled(t *testing.T) {
 	if a.ctx.Anim.Moving() || a.ctx.Anim.V("x") != 1 {
 		t.Fatalf("spring must settle exactly on target, v=%v", a.ctx.Anim.V("x"))
 	}
-	// Settled, but motion is allowed: the ambient mark keeps the 30 fps idle ticker alive.
+	// Settled, but motion is allowed: the ambient mark keeps the 60 fps idle ticker alive.
 	if a.frame() == nil {
 		t.Fatal("ambient motion must keep ticking when idle")
 	}
@@ -270,7 +270,7 @@ func TestEveryScreenFitsTheTerminal(t *testing.T) {
 		screens := []Screen{
 			newHome(c), newFree(c), newLanguages(c), newCourses(c), newSettings(c), newProfile(c), newAchievements(c),
 			newProgress(c), newKeyboardHeat(c), newSnippetPicker(c, "zen", "go"), newSprintPicker(c, "go"), newLanguagePicker(c, "go", func(string) {}), newDaily(c), newWarmUp(c),
-			newLessons(c, c.Cat.PathsFor("go")[0]), newData(c), newPalettePicker(c), newLock(c, lockVerify), newOnboarding(c),
+			newLessons(c, c.Cat.PathsFor("go")[0]), newData(c), newPalettePicker(c), newGuide(c), newLock(c, lockVerify), newOnboarding(c),
 			newPractice(c, runSpec{Mode: "zen", Snippet: sn}), newConfirm(c, "x", func() {}),
 		}
 		for i := 0; i < 4; i++ {
@@ -569,5 +569,107 @@ func TestAccessibleModeDropsColor(t *testing.T) {
 		if m := color.FindString(a.View()); m != "" {
 			t.Fatalf("%T still emits color %q in accessible mode", s, m)
 		}
+	}
+}
+
+func click(a *App, x, y int) {
+	_, cmd := a.Update(tea.MouseMsg{X: x, Y: y, Action: tea.MouseActionPress, Button: tea.MouseButtonLeft})
+	run(a, cmd)
+}
+
+func wheel(a *App, down bool) {
+	button := tea.MouseButtonWheelUp
+	if down {
+		button = tea.MouseButtonWheelDown
+	}
+	_, cmd := a.Update(tea.MouseMsg{Action: tea.MouseActionPress, Button: button})
+	run(a, cmd)
+}
+
+func TestMouseClickSelectsMenuRows(t *testing.T) {
+	a := newApp(t, true)
+	a.stack = []Screen{newHome(a.ctx)}
+	_ = a.View()
+	h := a.top().(*homeScreen)
+	row := 0
+	for i, it := range h.m.items {
+		if it.Value == "daily" {
+			row = i
+		}
+	}
+	click(a, a.pad()+2, 2+h.m.top+row)
+	if _, ok := a.top().(*dailyScreen); !ok {
+		t.Fatalf("clicking Daily must open it, got %T", a.top())
+	}
+}
+
+func TestMouseClickSettingsOpensPalettePicker(t *testing.T) {
+	a := newApp(t, true)
+	a.stack = []Screen{newSettings(a.ctx)}
+	_ = a.View()
+	s := a.top().(*settingsScreen)
+	row := 0
+	for i, it := range s.m.items {
+		if it.Value == "palette" {
+			row = i
+		}
+	}
+	click(a, a.pad()+2, 2+s.m.top+row)
+	if _, ok := a.top().(*palettePicker); !ok {
+		t.Fatalf("clicking Palette must open its picker, got %T", a.top())
+	}
+}
+
+func TestMouseWheelScrollsMenu(t *testing.T) {
+	a := newApp(t, true)
+	a.stack = []Screen{newHome(a.ctx)}
+	h := a.top().(*homeScreen)
+	start := h.m.cursor
+	wheel(a, true)
+	if h.m.cursor != start+1 {
+		t.Fatalf("wheel down moved cursor %d -> %d", start, h.m.cursor)
+	}
+	wheel(a, false)
+	if h.m.cursor != start {
+		t.Fatalf("wheel up did not return to %d: %d", start, h.m.cursor)
+	}
+}
+
+func TestMouseClickProgressTab(t *testing.T) {
+	a := newApp(t, true)
+	p := newProgress(a.ctx)
+	a.stack = []Screen{p}
+	_ = a.View()
+	x := lipgloss.Width(p.tabNames()[0]) + 3
+	click(a, a.pad()+x, 2)
+	if p.tab != tabWeak {
+		t.Fatalf("clicking the second tab selected %v, want weak", p.tab)
+	}
+}
+
+func TestMouseClickPaletteRunsAction(t *testing.T) {
+	a := newApp(t, true)
+	press(a, ":")
+	if a.pal == nil {
+		t.Fatal("palette did not open")
+	}
+	_ = a.View()
+	click(a, a.pad()+2, 2)
+	if a.pal != nil {
+		t.Fatal("palette must close after clicking an action")
+	}
+	if _, ok := a.top().(*snippetPicker); !ok {
+		t.Fatalf("clicking Zen must open the snippet picker, got %T", a.top())
+	}
+}
+
+func TestF1OpensTheGuide(t *testing.T) {
+	a := newApp(t, true)
+	send(a, tea.KeyMsg{Type: tea.KeyF1})
+	if _, ok := a.top().(*guideScreen); !ok {
+		t.Fatalf("F1 must open the guide, got %T", a.top())
+	}
+	if out := a.View(); !strings.Contains(out, "Guide") && !strings.Contains(out, "Guía") {
+		t.Fatal("the guide rendered no title")
 	}
 }

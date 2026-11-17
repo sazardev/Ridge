@@ -25,8 +25,13 @@ func main() {
 	}
 	defer db.Close()
 	ctx := ui.NewCtx(&service.Service{DB: db, Cat: cat})
-	// Alt screen restores the terminal on exit, crash or Ctrl+C.
+	// Alt screen restores the terminal on exit, crash or Ctrl+C; cell-motion
+	// mouse enables click + wheel (SGR mouse reporting). RIDGE_NO_MOUSE=1 keeps
+	// native terminal text selection for users who prefer it.
 	opts := []tea.ProgramOption{tea.WithAltScreen()}
+	if os.Getenv("RIDGE_NO_MOUSE") == "" {
+		opts = append(opts, tea.WithMouseCellMotion())
+	}
 	if _, err := tea.NewProgram(ui.New(ctx), opts...).Run(); err != nil {
 		fmt.Fprintln(os.Stderr, "✗", err)
 		os.Exit(1)

@@ -77,6 +77,9 @@ func newAchievements(c *Ctx) *achievementsScreen { return &achievementsScreen{ct
 func (a *achievementsScreen) Title() string { return a.ctx.T("ach.title") }
 func (a *achievementsScreen) Init() tea.Cmd { return nil }
 
+// wheel scrolls three rows per notch.
+func (a *achievementsScreen) wheel(delta int) { a.offset = max(0, a.offset+delta*3) }
+
 func (a *achievementsScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	if k, ok := msg.(tea.KeyMsg); ok {
 		switch k.String() {

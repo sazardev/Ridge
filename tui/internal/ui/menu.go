@@ -22,6 +22,8 @@ type menu struct {
 	items      []item
 	cursor     int
 	offset     int
+	top        int // body-relative row where the first item is drawn
+	height     int // visible item rows after the filter row
 	filter     string
 	filtering  bool
 	filterable bool
@@ -73,6 +75,36 @@ func (m *menu) move(d int) {
 	}
 	m.cursor = (m.cursor + d + n) % n
 	m.syncHeat(false)
+}
+
+// scroll is the wheel's clamped move: it does not wrap at the ends.
+func (m *menu) scroll(d int) {
+	n := len(m.visible())
+	if n == 0 {
+		return
+	}
+	m.cursor = max(0, min(n-1, m.cursor+d))
+	m.syncHeat(false)
+}
+
+// click selects the row at body-relative y. It returns the item so the caller
+// can activate it with the screen's normal Enter handler.
+func (m *menu) click(y int) (item, bool) {
+	row := y - m.top
+	if m.filtering || m.filter != "" {
+		row--
+	}
+	if row < 0 || (m.height > 0 && row >= m.height) {
+		return item{}, false
+	}
+	vis := m.visible()
+	i := m.offset + row
+	if i < 0 || i >= len(vis) {
+		return item{}, false
+	}
+	m.cursor = i
+	m.syncHeat(false)
+	return m.items[vis[i]], true
 }
 
 func (m *menu) selected() (item, bool) {
@@ -127,6 +159,7 @@ func (m *menu) view(width, height int) string {
 	if height < 1 {
 		height = 1
 	}
+	m.height = height
 	if m.cursor >= len(vis) {
 		m.cursor = max(0, len(vis)-1)
 	}

@@ -103,7 +103,7 @@ type Screen interface {
 // Titled screens contribute a breadcrumb segment.
 type Titled interface{ Title() string }
 
-// Ambient screens ask for 30 fps idle animation (shimmer, caret pulse).
+// Ambient screens ask for idle animation frames (shimmer, caret pulse).
 type Ambient interface{ Ambient() bool }
 
 // Navigation + frame messages.

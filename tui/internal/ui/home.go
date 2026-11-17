@@ -110,6 +110,7 @@ func (h *homeScreen) items() []item {
 		item{Label: c.T("home.keyboard"), Detail: c.T("home.keyboard.d"), Badge: c.S.Key.Render("m"), Value: "keyboard"},
 		item{Label: c.T("home.profile"), Detail: c.T("home.profile.d"), Badge: c.S.Key.Render("u"), Value: "profile"},
 		item{Label: c.T("home.settings"), Detail: c.T("home.settings.d"), Badge: c.S.Key.Render("s"), Value: "settings"},
+		item{Label: c.T("guide.title"), Detail: c.T("guide.home.d"), Badge: c.S.Key.Render("f1"), Value: "help"},
 		item{Label: c.T("home.quit"), Badge: c.S.Key.Render("q"), Value: "quit"},
 	)
 	return out
@@ -176,6 +177,8 @@ func (h *homeScreen) open(v string) tea.Cmd {
 		return push(newProfile(c))
 	case "settings":
 		return push(newSettings(c))
+	case "help":
+		return push(newGuide(c))
 	case "quit":
 		return tea.Quit
 	}
@@ -245,10 +248,14 @@ func (h *homeScreen) View() string {
 		nudge = "\n" + s.Warning.Render(c.G.Bullet+" "+c.T("nudge"))
 	}
 	if status == "" {
+		h.m.top = lipgloss.Height(head) + 1
 		return lipgloss.JoinVertical(lipgloss.Left, head, "", body) + nudge
 	}
+	h.m.top = lipgloss.Height(head) + 1 + lipgloss.Height(status) + 1
 	return lipgloss.JoinVertical(lipgloss.Left, head, "", status, "", body) + nudge
 }
+
+func (h *homeScreen) menuModel() *menu { return h.m }
 
 // reminderDue is the in-app stand-in for the daily notification: after the
 // chosen time of day, if nothing was played today, the home screen nudges.
@@ -269,7 +276,7 @@ func (h *homeScreen) Help() help.KeyMap {
 		short: []key.Binding{kb("up|down", "↑↓", "move"), kb("enter", "enter", "open"), kb(":", ":", "commands"), kb("?", "?", "more"), kb("q", "q", "quit")},
 		full: []key.Binding{kb("d", "d", "daily"), kb("f", "f", "free"), kb("w", "w", "warm-up"), kb("c", "c", "courses"),
 			kb("p", "p", "progress"), kb("a", "a", "achievements"), kb("m", "m", "keyboard"), kb("u", "u", "profile"),
-			kb("s", "s", "settings"), kb(":", ":", "commands"), kb("q", "q", "quit")},
+			kb("s", "s", "settings"), kb("f1", "f1", "guide"), kb(":", ":", "commands"), kb("q", "q", "quit")},
 	}
 }
 

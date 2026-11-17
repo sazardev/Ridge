@@ -16,6 +16,15 @@ make install    # -> ~/.local/bin/ridge (PREFIX=/usr/local make install to chang
 Data lives in `$RIDGE_DATA/ridge.db` (default: your config dir under `ridge/`).
 `NO_COLOR=1` drops colors; a non-UTF-8 locale switches to ASCII glyphs.
 
+Keyboard-first, mouse-friendly: `?` expands the inline help, `F1` opens the
+guide (also in Home → Guide & shortcuts), `:` or `Ctrl+P` opens the command
+palette. Clicking a menu row selects and runs it, and the wheel scrolls lists.
+`RIDGE_NO_MOUSE=1` disables mouse reporting so the terminal keeps its native
+text selection.
+Motion runs on a single 60 fps ticker (including the ambient shimmer) and
+stops with reduced motion; the progress bar and the typed
+code flash animate on the same ticker.
+
 The default palette is `auto`: Ridge reads the terminal's real background
 (OSC 11) and paints only with the terminal's own foreground and ANSI colors,
 so Gruvbox, Catppuccin or Solarized keep their look. Picking one of the

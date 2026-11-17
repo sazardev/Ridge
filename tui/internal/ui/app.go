@@ -54,7 +54,7 @@ func (a *App) top() Screen { return a.stack[len(a.stack)-1] }
 func (a *App) Init() tea.Cmd { return tea.Batch(a.top().Init(), a.frame()) }
 
 // frame starts the ticker only when something moves (60 fps) or an ambient
-// effect asks for idle frames (30 fps); it stops by itself when nothing is
+// effect asks for idle frames (60 fps); it stops with reduced motion.
 // pending.
 func (a *App) frame() tea.Cmd {
 	// Watchdog: if a tick was ever lost (dropped message, program suspended),
@@ -77,7 +77,7 @@ func (a *App) frame() tea.Cmd {
 }
 
 // ambient is always on: the header mark breathes on every screen, so the idle
-// ticker (30 fps) keeps running whenever motion is allowed. It only stops with
+// ticker (60 fps) keeps running whenever motion is allowed. It only stops with
 // reduced motion — never because a particular screen "has nothing to animate".
 func (a *App) ambient() bool { return true }
 
@@ -154,12 +154,83 @@ func (a *App) update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				a.full = !a.full
 				return a, nil
 			}
+		case "f1":
+			return a, push(newGuide(c))
 		}
+	case tea.MouseMsg:
+		return a.mouse(m)
 	}
 	next, cmd := a.top().Update(msg)
 	a.stack[len(a.stack)-1] = next
 	return a, cmd
 }
+
+// menuScreen marks a screen whose body is a menu, so the mouse can select a
+// row and the wheel can scroll it without every screen reimplementing hit
+// testing.
+type menuScreen interface{ menuModel() *menu }
+
+// clickBodyScreen is a screen with custom click regions (e.g. progress tabs).
+type clickBodyScreen interface {
+	clickBody(x, y int) (tea.Cmd, bool)
+}
+
+// wheelScreen is a non-menu screen that can scroll with the wheel.
+type wheelScreen interface{ wheel(delta int) }
+
+// mouse routes a click/wheel to the current screen. Coordinates are absolute
+// terminal cells; the body starts after the one-line header and its blank line.
+func (a *App) mouse(m tea.MouseMsg) (tea.Model, tea.Cmd) {
+	if m.Action != tea.MouseActionPress {
+		return a, nil
+	}
+	switch m.Button {
+	case tea.MouseButtonWheelUp:
+		return a.wheel(-1)
+	case tea.MouseButtonWheelDown:
+		return a.wheel(1)
+	case tea.MouseButtonLeft:
+		y := m.Y - 2 // header + blank line
+		if a.pal != nil {
+			if it, ok := a.pal.m.click(y); ok {
+				p := a.pal
+				a.pal = nil
+				return a, p.acts[it.Value.(int)].Run(p.ctx)
+			}
+			return a, nil
+		}
+		if ms, ok := a.top().(menuScreen); ok {
+			if _, hit := ms.menuModel().click(y); hit {
+				return a.update(tea.KeyMsg{Type: tea.KeyEnter})
+			}
+		}
+		if cb, ok := a.top().(clickBodyScreen); ok {
+			if cmd, handled := cb.clickBody(m.X-a.pad(), y); handled {
+				return a, cmd
+			}
+		}
+	}
+	return a, nil
+}
+
+// wheel scrolls the command palette, a menu, or a custom wheel screen.
+func (a *App) wheel(delta int) (tea.Model, tea.Cmd) {
+	if a.pal != nil {
+		a.pal.m.scroll(delta)
+		return a, nil
+	}
+	if ms, ok := a.top().(menuScreen); ok {
+		ms.menuModel().scroll(delta)
+		return a, nil
+	}
+	if ws, ok := a.top().(wheelScreen); ok {
+		ws.wheel(delta)
+	}
+	return a, nil
+}
+
+// pad is the left margin of the centered content column.
+func (a *App) pad() int { return max(0, (a.ctx.W-contentWidth(a.ctx))/2) }
 
 // enter restarts the screen-entrance animation: content flows in top to
 // bottom over ~150 ms (a spring), and bars/lists key off the same value.

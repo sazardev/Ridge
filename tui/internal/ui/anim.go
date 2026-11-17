@@ -8,10 +8,12 @@ import (
 )
 
 // frameInterval is the 60 fps budget while something moves (DESIGN: 60 fps max
-// while interacting). idleInterval is the 30 fps idle-animation budget.
+// while interacting). idleInterval is the ambient-animation budget; it also
+// runs at 60 fps so the breathing mark and shimmer stay liquid on modern
+// terminals (the whole frame costs well under a millisecond).
 const (
 	frameInterval = time.Second / 60
-	idleInterval  = time.Second / 30
+	idleInterval  = time.Second / 60
 )
 
 type spring struct {
@@ -27,7 +29,7 @@ type Anim struct {
 	Reduced bool
 	springs map[string]*spring
 	last    time.Time
-	Idle    bool    // an ambient animation (shimmer, caret pulse) wants 30 fps
+	Idle    bool    // an ambient animation (shimmer, caret pulse) wants frames
 	T       float64 // seconds since start, for ambient effects
 	start   time.Time
 }

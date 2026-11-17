@@ -125,6 +125,17 @@ func (o *onboardingScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	return o, nil
 }
 
+// clickBody advances the tour; the final page is a text field, so a click
+// there does not submit an empty username.
+func (o *onboardingScreen) clickBody(_, _ int) (tea.Cmd, bool) {
+	if o.page >= obPages-1 {
+		return nil, true
+	}
+	o.page++
+	o.enter()
+	return nil, true
+}
+
 func (o *onboardingScreen) finish() tea.Cmd {
 	c := o.ctx
 	name := strings.TrimSpace(o.input.Value())

@@ -47,8 +47,9 @@ func (s *coursesScreen) items() []item {
 	return items
 }
 
-func (s *coursesScreen) Title() string { return s.ctx.T("courses.title") }
-func (s *coursesScreen) Init() tea.Cmd { return nil }
+func (s *coursesScreen) Title() string    { return s.ctx.T("courses.title") }
+func (s *coursesScreen) menuModel() *menu { return s.m }
+func (s *coursesScreen) Init() tea.Cmd    { return nil }
 
 func (s *coursesScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	k, ok := msg.(tea.KeyMsg)
@@ -76,6 +77,7 @@ func (s *coursesScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 
 func (s *coursesScreen) View() string {
 	c := s.ctx
+	s.m.top = 2
 	return lipgloss.JoinVertical(lipgloss.Left, c.S.BadgeAccent.Render(langName(c.Lang())), "", s.m.view(contentWidth(c), c.H-10))
 }
 
@@ -127,6 +129,8 @@ func (l *lessonsScreen) items() []item {
 	return items
 }
 
+func (l *lessonsScreen) menuModel() *menu { return l.m }
+
 func (l *lessonsScreen) Title() string { return l.path.Title(l.ctx.Loc()) }
 func (l *lessonsScreen) Init() tea.Cmd { return nil }
 
@@ -164,6 +168,7 @@ func (l *lessonsScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 
 func (l *lessonsScreen) View() string {
 	c, s := l.ctx, l.ctx.S
+	l.m.top = 2
 	return lipgloss.JoinVertical(lipgloss.Left, c.inline(l.path.Description(c.Loc()), s.Muted), "", l.m.view(contentWidth(c), c.H-12))
 }
 
@@ -198,8 +203,9 @@ func newLanguages(c *Ctx) *languagesScreen {
 	return &languagesScreen{c, m}
 }
 
-func (l *languagesScreen) Title() string { return l.ctx.T("lang.title") }
-func (l *languagesScreen) Init() tea.Cmd { return nil }
+func (l *languagesScreen) Title() string    { return l.ctx.T("lang.title") }
+func (l *languagesScreen) menuModel() *menu { return l.m }
+func (l *languagesScreen) Init() tea.Cmd    { return nil }
 
 func (l *languagesScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	k, ok := msg.(tea.KeyMsg)

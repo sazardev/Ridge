@@ -41,8 +41,9 @@ func newData(c *Ctx) *dataScreen {
 	})}
 }
 
-func (d *dataScreen) Title() string { return d.ctx.T("data.title") }
-func (d *dataScreen) Init() tea.Cmd { return nil }
+func (d *dataScreen) Title() string    { return d.ctx.T("data.title") }
+func (d *dataScreen) menuModel() *menu { return d.m }
+func (d *dataScreen) Init() tea.Cmd    { return nil }
 
 func (d *dataScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	k, ok := msg.(tea.KeyMsg)
@@ -81,6 +82,7 @@ func (d *dataScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 }
 
 func (d *dataScreen) View() string {
+	d.m.top = 2
 	return lipgloss.JoinVertical(lipgloss.Left, d.ctx.S.Muted.Render(d.ctx.T("data.path")+": "+d.ctx.DB.Path), "", d.m.view(contentWidth(d.ctx), 6))
 }
 

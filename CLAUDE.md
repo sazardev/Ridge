@@ -213,8 +213,11 @@ palette uses the terminal's foreground and ANSI palette (OSC 11 measures the
 background; contrast is WCAG-checked), and a named palette changes only the
 accent pair — text, muted text and success/warning/danger stay
 terminal-owned. `NO_COLOR`/`TERM=dumb` drop color and motion; non-UTF-8
-locales get width-preserving ASCII glyphs (`internal/ui/ascii.go`). Run
-`make matrix` for the supported terminal matrix.
+locales get width-preserving ASCII glyphs (`internal/ui/ascii.go`). It is
+keyboard-first — `F1` opens the in-app guide, `:`/Ctrl+P the command
+palette — but menu rows are clickable, the wheel scrolls, and
+`RIDGE_NO_MOUSE=1` disables mouse reporting. Run `make matrix` for the
+supported terminal matrix.
 
 ## Codebase-wide constructor convention
 

@@ -97,8 +97,9 @@ func (s *settingsScreen) items() []item {
 	}
 }
 
-func (s *settingsScreen) Title() string { return s.ctx.T("set.title") }
-func (s *settingsScreen) Init() tea.Cmd { return nil }
+func (s *settingsScreen) Title() string    { return s.ctx.T("set.title") }
+func (s *settingsScreen) menuModel() *menu { return s.m }
+func (s *settingsScreen) Init() tea.Cmd    { return nil }
 
 func (s *settingsScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 	k, ok := msg.(tea.KeyMsg)
@@ -216,8 +217,9 @@ func swatch(c *Ctx, id string) string {
 	return b.String()
 }
 
-func (p *palettePicker) Title() string { return p.ctx.T("set.palette") }
-func (p *palettePicker) Init() tea.Cmd { return nil }
+func (p *palettePicker) Title() string    { return p.ctx.T("set.palette") }
+func (p *palettePicker) menuModel() *menu { return p.m }
+func (p *palettePicker) Init() tea.Cmd    { return nil }
 
 func (p *palettePicker) preview() tea.Cmd {
 	if it, ok := p.m.selected(); ok {
@@ -255,6 +257,7 @@ func (p *palettePicker) View() string {
 	c, s := p.ctx, p.ctx.S
 	sample := lipgloss.JoinHorizontal(lipgloss.Top, s.Title.Render("Aa Title"), "  ", s.Accent.Render("accent"), "  ",
 		s.Success.Render(c.G.Check+" ok"), "  ", s.Warning.Render("warn"), "  ", s.Error.Render(c.G.Cross+" error"), "  ", s.Muted.Render("muted"))
+	p.m.top = 2
 	return lipgloss.JoinVertical(lipgloss.Left, sample, "", p.m.view(contentWidth(c), c.H-12))
 }
 
