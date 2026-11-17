@@ -106,11 +106,11 @@ func TestScrollKeepsCaretVisibleOnLongSnippets(t *testing.T) {
 
 func TestStatsHiddenUntilTypingStarts(t *testing.T) {
 	a, p := practiceWith(t, "x := 1", 100, 30)
-	if strings.Contains(a.View(), "wpm") {
+	if strings.Contains(a.View(), "cpm") {
 		t.Fatal("no stats before the first key")
 	}
 	send(a, tea.KeyMsg{Type: tea.KeyRunes, Runes: []rune{'x'}})
-	if !strings.Contains(a.View(), "wpm") || p.started == false {
+	if !strings.Contains(a.View(), "cpm") || p.started == false {
 		t.Fatal("quiet stats appear once typing starts")
 	}
 }

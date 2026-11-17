@@ -158,7 +158,7 @@ func (p *progressScreen) overview() string {
 		s.Title.Render(c.T("prog.week")),
 		fmt.Sprintf("%s %s", s.Body.Render(fmt.Sprint(wk.Sessions)), s.Muted.Render(c.T("prog.sessions")+delta(float64(wk.Sessions), float64(wk.PreviousSessions)))),
 		fmt.Sprintf("%s %s", s.Body.Render(wk.Duration.Round(time.Minute).String()), s.Muted.Render(c.T("time"))),
-		fmt.Sprintf("%s %s", s.Body.Render(fmt.Sprintf("%.0f", wk.AvgCPM/5)), s.Muted.Render(c.T("wpm")+delta(wk.AvgCPM, wk.PreviousAvgCPM))),
+		fmt.Sprintf("%s %s", s.Body.Render(fmt.Sprintf("%.0f", wk.AvgCPM)), s.Muted.Render(c.T("cpm")+delta(wk.AvgCPM, wk.PreviousAvgCPM))),
 		fmt.Sprintf("%s %s", s.Body.Render(fmt.Sprintf("%.1f%%", wk.AvgAcc)), s.Muted.Render(c.T("acc"))),
 		fmt.Sprintf("%s %s", s.Body.Render(fmt.Sprintf("+%d", wk.XP)), s.Muted.Render("XP")),
 		fmt.Sprintf("%s %s", s.Body.Render(fmt.Sprintf("%d/7", wk.ActiveDays)), s.Muted.Render(c.T("prog.activedays"))),
@@ -167,14 +167,14 @@ func (p *progressScreen) overview() string {
 	if len(recent) == 0 {
 		return lipgloss.JoinVertical(lipgloss.Left, head, "", s.Muted.Render(c.G.Bullet+" "+c.T("prog.nodata")))
 	}
-	var wpms []float64
+	var cpms []float64
 	for i := len(recent) - 1; i >= 0; i-- {
-		wpms = append(wpms, recent[i].NetCPM/5)
+		cpms = append(cpms, recent[i].NetCPM)
 	}
-	lines := []string{s.Title.Render(c.T("prog.recent")) + "  " + s.Accent.Render(spark(wpms))}
+	lines := []string{s.Title.Render(c.T("prog.recent")) + "  " + s.Accent.Render(spark(cpms))}
 	for _, r := range recent {
 		lines = append(lines, fmt.Sprintf("%s  %s  %s  %s", s.Muted.Render(r.At.Local().Format("01-02 15:04")),
-			s.Body.Render(fmt.Sprintf("%-9s", r.Mode)), s.Accent.Render(fmt.Sprintf("%4.0f wpm", r.NetCPM/5)),
+			s.Body.Render(fmt.Sprintf("%-9s", r.Mode)), s.Accent.Render(fmt.Sprintf("%4.0f %s", r.NetCPM, c.T("cpm"))),
 			s.Muted.Render(fmt.Sprintf("%5.1f%%  +%d xp", r.Accuracy, r.XP))))
 	}
 	left, right := s.Pane.Render(strings.Join(week, "\n")), s.Pane.Render(strings.Join(lines, "\n"))
@@ -221,7 +221,7 @@ func (p *progressScreen) activity() string {
 		}
 		for _, x := range st {
 			out = append(out, fmt.Sprintf("%-26s %s", s.Body.Render(trunc(label(x.Key), 26)),
-				s.Muted.Render(fmt.Sprintf("%d× · %.0f%% · %.0f wpm · %s", x.Sessions, x.AvgAccuracy, x.AvgNetCPM/5, x.Time.Round(time.Second)))+
+				s.Muted.Render(fmt.Sprintf("%d× · %.0f%% · %.0f %s · %s", x.Sessions, x.AvgAccuracy, x.AvgNetCPM, c.T("cpm"), x.Time.Round(time.Second)))+
 					" "+p.trendGlyph(x.Trend, false)))
 		}
 		return append(out, "")

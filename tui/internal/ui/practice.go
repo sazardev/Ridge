@@ -66,7 +66,7 @@ func newPractice(ctx *Ctx, spec runSpec) *practiceScreen {
 			p.ghost, p.ghostCPM = g, cpm
 		}
 	}
-	for _, k := range []string{"p.pulse", "p.err", "p.bar", "p.wpm", "p.hurt", "p.scroll", "p.acc"} {
+	for _, k := range []string{"p.pulse", "p.err", "p.bar", "p.cpm", "p.hurt", "p.scroll", "p.acc"} {
 		ctx.Anim.Set(k, 0)
 	}
 	return p

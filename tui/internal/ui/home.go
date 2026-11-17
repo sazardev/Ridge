@@ -295,7 +295,7 @@ func (h *homeScreen) today() string {
 		row(c.T("home.progress"), s.Body.Render(langName(c.Lang())))}
 	if r := c.Recent(1); len(r) == 1 {
 		lines = append(lines, "", s.Muted.Render(c.T("prog.recent")),
-			s.Body.Render(fmt.Sprintf("%s · %.0f wpm · %.0f%%", r[0].Mode, r[0].NetCPM/5, r[0].Accuracy)))
+			s.Body.Render(fmt.Sprintf("%s · %.0f %s · %.0f%%", r[0].Mode, r[0].NetCPM, c.T("cpm"), r[0].Accuracy)))
 	}
 	return strings.Join(lines, "\n")
 }

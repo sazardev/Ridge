@@ -24,7 +24,6 @@ type FingerStat struct {
 // Metrics is everything derived from a session (SPEC §4.2).
 type Metrics struct {
 	RawCPM, NetCPM       float64
-	RawWPM, NetWPM       float64
 	Accuracy             float64
 	Consistency          float64
 	MaxStreak            int
@@ -63,7 +62,6 @@ func Calculate(events []Keystroke, total time.Duration) Metrics {
 		return float64(n) / mins
 	}
 	m.RawCPM, m.NetCPM = per(len(fwd)), per(correct)
-	m.RawWPM, m.NetWPM = m.RawCPM/5, m.NetCPM/5 // 5 chars = 1 word, the usual convention
 	if len(fwd) > 0 {
 		m.Accuracy = float64(correct) / float64(len(fwd)) * 100
 	}

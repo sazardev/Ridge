@@ -214,7 +214,7 @@ func (r *resultsScreen) View() string {
 		accStyle = s.Warning
 	}
 	cols := []string{
-		hero(fmt.Sprintf("%.0f", m.NetWPM*k), "wpm", s.Accent, delta(m.NetWPM, r.hist.cpm/5)),
+		hero(fmt.Sprintf("%.0f", m.NetCPM*k), c.T("cpm"), s.Accent, delta(m.NetCPM, r.hist.cpm)),
 		hero(fmt.Sprintf("%.0f%%", m.Accuracy*k), strings.ToLower(c.T("acc")), accStyle, delta(m.Accuracy, r.hist.acc)),
 		hero(fmt.Sprintf("%d", int(float64(o.XP)*k)), "xp", s.Body, ""),
 	}
@@ -236,7 +236,7 @@ func (r *resultsScreen) View() string {
 	f := m.FatigueCPM
 	dot := s.Muted.Render("  ·  ")
 	facts := []string{
-		fmt.Sprintf("%s %.0f", s.Muted.Render("raw"), m.RawWPM),
+		fmt.Sprintf("%s %.0f %s", s.Muted.Render(c.T("raw")), m.RawCPM, c.T("cpm")),
 		fmt.Sprintf("%s %.0f%%", s.Muted.Render(strings.ToLower(c.T("cons"))), m.Consistency),
 		fmt.Sprintf("%s %d", s.Muted.Render(strings.ToLower(c.T("streak"))), m.MaxStreak),
 		fmt.Sprintf("%s %d", s.Muted.Render(strings.ToLower(c.T("corr"))), m.Corrections),

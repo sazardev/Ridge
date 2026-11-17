@@ -94,14 +94,14 @@ func (p *practiceScreen) stats(w int) string {
 	if !p.started {
 		return ""
 	}
-	acc, wpm := 100.0, 0.0
+	acc, cpm := 100.0, 0.0
 	if p.total > 0 {
 		acc = float64(p.correct) / float64(p.total) * 100
 	}
 	if mins := c.Now().Sub(p.startAt).Minutes(); mins > 0 {
-		wpm = float64(p.correct) / 5 / mins
+		cpm = float64(p.correct) / mins
 	}
-	c.Anim.To("p.wpm", wpm, 6, 1) // eased readouts instead of jitter
+	c.Anim.To("p.cpm", cpm, 6, 1) // eased readouts instead of jitter
 	c.Anim.To("p.acc", acc, 6, 1)
 	accStyle := s.Muted
 	if c.Anim.V("p.acc") < 90 {
@@ -109,7 +109,7 @@ func (p *practiceScreen) stats(w int) string {
 	}
 	sep := s.Muted.Render("  ·  ")
 	parts := []string{
-		s.Accent.Render(fmt.Sprintf("%.0f", c.Anim.V("p.wpm"))) + s.Muted.Render(" wpm"),
+		s.Accent.Render(fmt.Sprintf("%.0f", c.Anim.V("p.cpm"))) + s.Muted.Render(" "+c.T("cpm")),
 		accStyle.Render(fmt.Sprintf("%.0f%%", c.Anim.V("p.acc"))),
 	}
 	if p.streak >= 10 {
