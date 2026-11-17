@@ -55,6 +55,7 @@ const Map<ProgrammingLanguage, List<String>> _catalogAssetByLanguage = {
   ProgrammingLanguage.githubActions: [
     'assets/content/snippets/github_actions_v1.json',
   ],
+  ProgrammingLanguage.mojo: ['assets/content/snippets/mojo_v1.json'],
 };
 
 /// Languages whose catalog backs free practice (Zen/Sprint/Precision).
@@ -68,7 +69,7 @@ const Map<ProgrammingLanguage, List<String>> _catalogAssetByLanguage = {
 /// contains exactly the snippets its bundled paths use — see the
 /// "course-only" test below. SQL, Rust, Zig, Python, JavaScript, TypeScript,
 /// Haskell, C, C++, Java, Crystal, CSS, C#, Swift, Kotlin, Dart, PHP, Git,
-/// Linux, Docker, and GitHub Actions follow the same course-only rule.
+/// Linux, Docker, GitHub Actions, and Mojo follow the same course-only rule.
 const Set<ProgrammingLanguage> _freePracticeLanguages = {
   ProgrammingLanguage.go,
 };
@@ -259,6 +260,8 @@ const _learningPathAssetPaths = [
   'assets/content/learning_paths/github_actions_foundations_v1.json',
   'assets/content/learning_paths/github_actions_pipelines_v1.json',
   'assets/content/learning_paths/github_actions_devops_v1.json',
+  'assets/content/learning_paths/mojo_foundations_v1.json',
+  'assets/content/learning_paths/mojo_systems_v1.json',
 ];
 
 Future<Map<String, Object?>> _loadLearningPath(String assetPath) async {

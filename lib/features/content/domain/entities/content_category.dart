@@ -23,7 +23,7 @@ enum ContentCategory {
   functions,
   // Struct declarations and field tags.
   structs,
-  // Interface declarations and implementations.
+  // Interface declarations and implementations: Go interfaces, Mojo traits.
   interfaces,
   // Slices and maps: literals, indexing, iteration.
   slicesAndMaps,
@@ -35,7 +35,8 @@ enum ContentCategory {
   concurrency,
   // Generic type parameters and constraints.
   generics,
-  // Zig `comptime` evaluation, `inline` loops, `@compileError`.
+  // Zig `comptime` evaluation, `inline` loops, `@compileError`; Mojo
+  // `comptime` values, `comptime if`/`comptime for`, and parameters.
   comptime,
   // Go 1.27 features: generic methods, promoted struct keys, new stdlib.
   modernGo,
@@ -438,4 +439,14 @@ enum ContentCategory {
   androidUnitTesting,
   // Instrumented Compose UI tests driving the real composable tree.
   androidUiTesting,
+  // Mojo `String` building, `String(...)` conversion, t-strings, methods.
+  strings,
+  // Mojo `from std.python import Python` and the NumPy array bridges.
+  pythonInterop,
+  // Mojo `SIMD[DType, N]` vectors: lane-wise math, casts, reductions.
+  simdVectors,
+  // Mojo argument conventions: borrow, `mut`, `var` ownership, `^`.
+  valueOwnership,
+  // Mojo `@always_inline` / `@no_inline` inline-level decorators.
+  performanceTuning,
 }

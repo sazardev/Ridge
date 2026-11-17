@@ -108,6 +108,8 @@ class LearningPathRepositoryImpl implements LearningPathRepository {
     'assets/content/learning_paths/github_actions_foundations_v1.json',
     'assets/content/learning_paths/github_actions_pipelines_v1.json',
     'assets/content/learning_paths/github_actions_devops_v1.json',
+    'assets/content/learning_paths/mojo_foundations_v1.json',
+    'assets/content/learning_paths/mojo_systems_v1.json',
   ];
 
   final List<String> _assetPaths;

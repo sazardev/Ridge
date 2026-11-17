@@ -229,4 +229,20 @@ enum ProgrammingLanguage {
   /// `ciOperations`), because YAML CI/CD pipelines have no concept that
   /// maps onto a programming-language category.
   githubActions,
+
+  /// Mojo, the AI-oriented systems language that runs like Python and
+  /// compiles like C++ — taught by `mojo-foundations-v1` (variables,
+  /// control flow, strings, collections, functions, errors, structs,
+  /// traits, Python interop, `comptime`) and `mojo-systems-v1` (SIMD
+  /// vectors, argument conventions and ownership, pointers and raw
+  /// memory, compile-time parameters, inlining, traits in depth, tests,
+  /// and a custom type capstone) — course-only, like the languages
+  /// above. Its routes reuse the generic `variablesAndTypes`,
+  /// `conditionals`, `loops`, `functions`, `errorHandling`, `structs`,
+  /// `interfaces` (traits), `collections`, `comptime`, `pointers`,
+  /// `memoryManagement` and `testing` categories plus five of its own
+  /// (`strings`, `pythonInterop`, `simdVectors`, `valueOwnership`,
+  /// `performanceTuning`) for the concepts Go's categories don't
+  /// represent.
+  mojo,
 }

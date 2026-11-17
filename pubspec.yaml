@@ -128,6 +128,7 @@ flutter:
     - assets/content/snippets/linux_v1.json
     - assets/content/snippets/docker_v1.json
     - assets/content/snippets/github_actions_v1.json
+    - assets/content/snippets/mojo_v1.json
     - assets/content/learning_paths/go_foundations_v1.json
     - assets/content/learning_paths/go_ddd_hexagonal_notes_v1.json
     - assets/content/learning_paths/go_intermediate_syntax_v1.json
@@ -200,6 +201,8 @@ flutter:
     - assets/content/learning_paths/github_actions_foundations_v1.json
     - assets/content/learning_paths/github_actions_pipelines_v1.json
     - assets/content/learning_paths/github_actions_devops_v1.json
+    - assets/content/learning_paths/mojo_foundations_v1.json
+    - assets/content/learning_paths/mojo_systems_v1.json
     - assets/content/keyboard_layouts/manifest.json
     - assets/content/keyboard_layouts/ergodox_ez.json
     - assets/content/keyboard_layouts/zsa_moonlander.json

@@ -687,6 +687,7 @@
   "languageLinux": "Linux",
   "languageDocker": "Docker",
   "languageGithubActions": "GitHub Actions",
+  "languageMojo": "Mojo",
   "languageGoBlurb": "Simple and fast — ideal for backend and cloud.",
   "languageBashBlurb": "Automate your workflow and master the Linux terminal.",
   "languageSqlBlurb": "Query and model data — the language of every database.",
@@ -710,6 +711,7 @@
   "languageLinuxBlurb": "Understand and operate the system beneath every server and container.",
   "languageDockerBlurb": "Package it once, run it anywhere.",
   "languageGithubActionsBlurb": "The CI/CD engine of GitHub — YAML workflows that build, test, and ship your code.",
+  "languageMojoBlurb": "Python-familiar syntax that compiles to native speed — built for AI and systems.",
 
   "snippetPracticeAction": "Practice",
 
@@ -1092,6 +1094,11 @@
   "categoryAndroidAccessibility": "Accessibility",
   "categoryAndroidUnitTesting": "Unit testing",
   "categoryAndroidUiTesting": "UI testing",
+  "categoryStrings": "Strings",
+  "categoryPythonInterop": "Python interop",
+  "categorySimdVectors": "SIMD vectors",
+  "categoryValueOwnership": "Ownership",
+  "categoryPerformanceTuning": "Performance",
   "onboardingDeviceDescription": "We detected your platform and device automatically — nothing to configure.",
   "accountGuestTitle": "Guest profile",
   "accountGuestBody": "Your progress lives only on this device. Create a registered account to sign in from any platform and keep everything — still no email, just a username and password.",

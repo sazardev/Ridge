@@ -84,7 +84,7 @@ void main() {
   // in-flight emissions.
   Future<List<Snippet>> settledCatalog() {
     return catalogUpdates.stream
-        .firstWhere((snippets) => snippets.length == 1539)
+        .firstWhere((snippets) => snippets.length == 1584)
         .timeout(const Duration(seconds: 5));
   }
 
@@ -98,7 +98,7 @@ void main() {
     await seed();
 
     final catalog = await settled;
-    expect(catalog, hasLength(1539));
+    expect(catalog, hasLength(1584));
     expect(catalog.every((s) => s.isActive), isTrue);
   });
 
@@ -110,7 +110,7 @@ void main() {
       await seed();
 
       final catalog = await settled;
-      expect(catalog, hasLength(1539));
+      expect(catalog, hasLength(1584));
     },
   );
 
@@ -121,7 +121,7 @@ void main() {
     await seed();
 
     final result = await settled;
-    expect(result, hasLength(1539));
+    expect(result, hasLength(1584));
   });
 
   test(
@@ -151,7 +151,7 @@ void main() {
     );
     expect(result.isOk, isTrue);
     final beginnerSnippets = result.valueOrNull!;
-    expect(beginnerSnippets, hasLength(557));
+    expect(beginnerSnippets, hasLength(580));
     expect(
       beginnerSnippets.every((s) => s.difficulty == Difficulty.beginner),
       isTrue,
@@ -404,6 +404,26 @@ void main() {
       'linux-net-011',
       'linux-net-013',
       'linux-net-014',
+      'mojo-cap-001',
+      'mojo-coll-003',
+      'mojo-err-002',
+      'mojo-func-002',
+      'mojo-loops-002',
+      'mojo-mem-001',
+      'mojo-meta-002',
+      'mojo-own-002',
+      'mojo-perf-001',
+      'mojo-py-001',
+      'mojo-py-002',
+      'mojo-simd-001',
+      'mojo-simd-003',
+      'mojo-struct-001',
+      'mojo-struct-002',
+      'mojo-struct-003',
+      'mojo-struct-004',
+      'mojo-test-001',
+      'mojo-trait-001',
+      'mojo-trait-002',
       'php-algo-006',
       'php-algo-010',
       'php-algo-011',
@@ -517,25 +537,6 @@ void main() {
       'rust-algo-011',
       'rust-algo-012',
       'rust-func-003',
-      'swiftui-app-002',
-      'swiftui-model-002',
-      'swiftui-model-003',
-      'swiftui-model-005',
-      'swiftui-model-006',
-      'swiftui-preview-001',
-      'swiftui-state-006',
-      'swiftui-state-009',
-      'zig-algo-006',
-      'zig-algo-009',
-      'zig-algo-012',
-      'zig-found-002',
-      'zig-found-003',
-      'zig-found-004',
-      'zig-found-010',
-      'zig-found-011',
-      'zig-found-012',
-      'zig-found-020',
-      'zig-found-021',
       'sql-advanced-002',
       'sql-advanced-003',
       'sql-advanced-004',
@@ -589,10 +590,29 @@ void main() {
       'swift-func-003',
       'swift-prop-001',
       'swift-proto-002',
+      'swiftui-app-002',
+      'swiftui-model-002',
+      'swiftui-model-003',
+      'swiftui-model-005',
+      'swiftui-model-006',
+      'swiftui-preview-001',
+      'swiftui-state-006',
+      'swiftui-state-009',
       'typescript-react-004',
       'typescript-react-005',
       'typescript-react-006',
       'typescript-react-012',
+      'zig-algo-006',
+      'zig-algo-009',
+      'zig-algo-012',
+      'zig-found-002',
+      'zig-found-003',
+      'zig-found-004',
+      'zig-found-010',
+      'zig-found-011',
+      'zig-found-012',
+      'zig-found-020',
+      'zig-found-021',
     });
   });
 

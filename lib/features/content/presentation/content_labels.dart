@@ -36,6 +36,7 @@ extension ProgrammingLanguageLabel on ProgrammingLanguage {
     ProgrammingLanguage.linux => l10n.languageLinux,
     ProgrammingLanguage.docker => l10n.languageDocker,
     ProgrammingLanguage.githubActions => l10n.languageGithubActions,
+    ProgrammingLanguage.mojo => l10n.languageMojo,
   };
 }
 
@@ -69,6 +70,7 @@ extension ProgrammingLanguageBlurb on ProgrammingLanguage {
     ProgrammingLanguage.linux => l10n.languageLinuxBlurb,
     ProgrammingLanguage.docker => l10n.languageDockerBlurb,
     ProgrammingLanguage.githubActions => l10n.languageGithubActionsBlurb,
+    ProgrammingLanguage.mojo => l10n.languageMojoBlurb,
   };
 }
 
@@ -306,6 +308,11 @@ extension ContentCategoryLabel on ContentCategory {
     ContentCategory.androidAccessibility => l10n.categoryAndroidAccessibility,
     ContentCategory.androidUnitTesting => l10n.categoryAndroidUnitTesting,
     ContentCategory.androidUiTesting => l10n.categoryAndroidUiTesting,
+    ContentCategory.strings => l10n.categoryStrings,
+    ContentCategory.pythonInterop => l10n.categoryPythonInterop,
+    ContentCategory.simdVectors => l10n.categorySimdVectors,
+    ContentCategory.valueOwnership => l10n.categoryValueOwnership,
+    ContentCategory.performanceTuning => l10n.categoryPerformanceTuning,
   };
 }
 

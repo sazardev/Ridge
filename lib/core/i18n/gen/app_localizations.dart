@@ -3764,6 +3764,12 @@ abstract class AppLocalizations {
   /// **'GitHub Actions'**
   String get languageGithubActions;
 
+  /// No description provided for @languageMojo.
+  ///
+  /// In en, this message translates to:
+  /// **'Mojo'**
+  String get languageMojo;
+
   /// No description provided for @languageGoBlurb.
   ///
   /// In en, this message translates to:
@@ -3901,6 +3907,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The CI/CD engine of GitHub — YAML workflows that build, test, and ship your code.'**
   String get languageGithubActionsBlurb;
+
+  /// No description provided for @languageMojoBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Python-familiar syntax that compiles to native speed — built for AI and systems.'**
+  String get languageMojoBlurb;
 
   /// No description provided for @snippetPracticeAction.
   ///
@@ -4969,6 +4981,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'UI testing'**
   String get categoryAndroidUiTesting;
+
+  /// No description provided for @categoryStrings.
+  ///
+  /// In en, this message translates to:
+  /// **'Strings'**
+  String get categoryStrings;
+
+  /// No description provided for @categoryPythonInterop.
+  ///
+  /// In en, this message translates to:
+  /// **'Python interop'**
+  String get categoryPythonInterop;
+
+  /// No description provided for @categorySimdVectors.
+  ///
+  /// In en, this message translates to:
+  /// **'SIMD vectors'**
+  String get categorySimdVectors;
+
+  /// No description provided for @categoryValueOwnership.
+  ///
+  /// In en, this message translates to:
+  /// **'Ownership'**
+  String get categoryValueOwnership;
+
+  /// No description provided for @categoryPerformanceTuning.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance'**
+  String get categoryPerformanceTuning;
 
   /// No description provided for @onboardingDeviceDescription.
   ///

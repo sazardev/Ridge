@@ -1,0 +1,231 @@
+[
+  {
+    "id": "mojo-foundations-v1",
+    "language": "mojo",
+    "titleEn": "Mojo: Foundations",
+    "titleEs": "Fundamentos",
+    "descriptionEn": "Learn Mojo 1.1 step by step: variables, control flow, strings, collections, functions, errors, structs, traits, and Python interop.",
+    "descriptionEs": "Aprende Mojo 1.1 paso a paso: variables, control de flujo, cadenas, colecciones, funciones, structs, traits e interoperabilidad con Python.",
+    "tagEn": "Beginner",
+    "tagEs": "Principiante",
+    "lessons": [
+      {
+        "id": "mojo-foundations-v1-step01",
+        "snippetId": "mojo-vars-001",
+        "order": 1,
+        "titleEn": "Declare variables with `var`",
+        "titleEs": "Declara variables con `var`"
+      },
+      {
+        "id": "mojo-foundations-v1-step02",
+        "snippetId": "mojo-vars-002",
+        "order": 2,
+        "titleEn": "Write numeric conversions explicitly",
+        "titleEs": "Escribe las conversiones numéricas a mano"
+      },
+      {
+        "id": "mojo-foundations-v1-step03",
+        "snippetId": "mojo-vars-003",
+        "order": 3,
+        "titleEn": "Know when fixed-width integers wrap",
+        "titleEs": "Entiende el envoltorio de los enteros de ancho fijo"
+      },
+      {
+        "id": "mojo-foundations-v1-step04",
+        "snippetId": "mojo-cond-001",
+        "order": 4,
+        "titleEn": "Branch with `if`, `elif` and `else`",
+        "titleEs": "Ramifica con `if`, `elif` y `else`"
+      },
+      {
+        "id": "mojo-foundations-v1-step05",
+        "snippetId": "mojo-cond-002",
+        "order": 5,
+        "titleEn": "Combine conditions with `not`, `and` and `or`",
+        "titleEs": "Combina condiciones con `not`, `and` y `or`"
+      },
+      {
+        "id": "mojo-foundations-v1-step06",
+        "snippetId": "mojo-cond-003",
+        "order": 6,
+        "titleEn": "Pick a value with a conditional expression",
+        "titleEs": "Elige un valor con una expresión condicional"
+      },
+      {
+        "id": "mojo-foundations-v1-step07",
+        "snippetId": "mojo-loops-001",
+        "order": 7,
+        "titleEn": "Count with `for i in range(5)`",
+        "titleEs": "Cuenta con `for i in range(5)`"
+      },
+      {
+        "id": "mojo-foundations-v1-step08",
+        "snippetId": "mojo-loops-002",
+        "order": 8,
+        "titleEn": "Advance a Fibonacci pair with `while`",
+        "titleEs": "Avanza un par de Fibonacci con `while`"
+      },
+      {
+        "id": "mojo-foundations-v1-step09",
+        "snippetId": "mojo-loops-003",
+        "order": 9,
+        "titleEn": "Control loops with `continue`, `break` and `else`",
+        "titleEs": "Controla bucles con `continue`, `break` y `else`"
+      },
+      {
+        "id": "mojo-foundations-v1-step10",
+        "snippetId": "mojo-loops-004",
+        "order": 10,
+        "titleEn": "Mutate elements with `for ref`",
+        "titleEs": "Muta elementos con `for ref`"
+      },
+      {
+        "id": "mojo-foundations-v1-step11",
+        "snippetId": "mojo-str-001",
+        "order": 11,
+        "titleEn": "Build strings with `+=` and `String(...)`",
+        "titleEs": "Construye cadenas con `+=` y `String(...)`"
+      },
+      {
+        "id": "mojo-foundations-v1-step12",
+        "snippetId": "mojo-str-002",
+        "order": 12,
+        "titleEn": "Interpolate with t-strings",
+        "titleEs": "Interpola con t-strings"
+      },
+      {
+        "id": "mojo-foundations-v1-step13",
+        "snippetId": "mojo-str-003",
+        "order": 13,
+        "titleEn": "Search and rewrite with `String` methods",
+        "titleEs": "Busca y reescribe con métodos de `String`"
+      },
+      {
+        "id": "mojo-foundations-v1-step14",
+        "snippetId": "mojo-coll-001",
+        "order": 14,
+        "titleEn": "Grow and shrink a `List[Int]`",
+        "titleEs": "Crece y encoge una `List[Int]`"
+      },
+      {
+        "id": "mojo-foundations-v1-step15",
+        "snippetId": "mojo-coll-002",
+        "order": 15,
+        "titleEn": "Store pairs in a `Dict[String, Int]`",
+        "titleEs": "Guarda pares en un `Dict[String, Int]`"
+      },
+      {
+        "id": "mojo-foundations-v1-step16",
+        "snippetId": "mojo-coll-003",
+        "order": 16,
+        "titleEn": "Model absence with `Optional[Int]`",
+        "titleEs": "Modela la ausencia con `Optional[Int]`"
+      },
+      {
+        "id": "mojo-foundations-v1-step17",
+        "snippetId": "mojo-coll-004",
+        "order": 17,
+        "titleEn": "Filter and map in a comprehension",
+        "titleEs": "Filtra y mapea en una comprensión"
+      },
+      {
+        "id": "mojo-foundations-v1-step18",
+        "snippetId": "mojo-func-001",
+        "order": 18,
+        "titleEn": "Type arguments and results with `def`",
+        "titleEs": "Tipa argumentos y resultado con `def`"
+      },
+      {
+        "id": "mojo-foundations-v1-step19",
+        "snippetId": "mojo-func-002",
+        "order": 19,
+        "titleEn": "Give an argument a default value",
+        "titleEs": "Da un valor por defecto a un argumento"
+      },
+      {
+        "id": "mojo-foundations-v1-step20",
+        "snippetId": "mojo-func-003",
+        "order": 20,
+        "titleEn": "Collect arguments with `*values`",
+        "titleEs": "Recoge argumentos con `*values`"
+      },
+      {
+        "id": "mojo-foundations-v1-step21",
+        "snippetId": "mojo-func-004",
+        "order": 21,
+        "titleEn": "Overload one name for `Int` and `Float64`",
+        "titleEs": "Sobrecarga un nombre para `Int` y `Float64`"
+      },
+      {
+        "id": "mojo-foundations-v1-step22",
+        "snippetId": "mojo-err-001",
+        "order": 22,
+        "titleEn": "Raise and handle errors as values",
+        "titleEs": "Lanza y maneja errores como valores"
+      },
+      {
+        "id": "mojo-foundations-v1-step23",
+        "snippetId": "mojo-err-002",
+        "order": 23,
+        "titleEn": "Cover `else` and `finally` on a `try`",
+        "titleEs": "Cubre `else` y `finally` en un `try`"
+      },
+      {
+        "id": "mojo-foundations-v1-step24",
+        "snippetId": "mojo-struct-001",
+        "order": 24,
+        "titleEn": "Write a struct with your own `__init__`",
+        "titleEs": "Escribe una estructura con tu propio `__init__`"
+      },
+      {
+        "id": "mojo-foundations-v1-step25",
+        "snippetId": "mojo-struct-002",
+        "order": 25,
+        "titleEn": "Let `@fieldwise_init` write the constructor",
+        "titleEs": "Deja que `@fieldwise_init` escriba el constructor"
+      },
+      {
+        "id": "mojo-foundations-v1-step26",
+        "snippetId": "mojo-struct-003",
+        "order": 26,
+        "titleEn": "Mutate state with `mut self`",
+        "titleEs": "Muta el estado con `mut self`"
+      },
+      {
+        "id": "mojo-foundations-v1-step27",
+        "snippetId": "mojo-struct-004",
+        "order": 27,
+        "titleEn": "Clone a struct with `Copyable`",
+        "titleEs": "Clona una estructura con `Copyable`"
+      },
+      {
+        "id": "mojo-foundations-v1-step28",
+        "snippetId": "mojo-trait-001",
+        "order": 28,
+        "titleEn": "Declare a trait and require conformance",
+        "titleEs": "Declara un trait y exige conformidad"
+      },
+      {
+        "id": "mojo-foundations-v1-step29",
+        "snippetId": "mojo-py-001",
+        "order": 29,
+        "titleEn": "Import Python modules from Mojo",
+        "titleEs": "Importa módulos de Python desde Mojo"
+      },
+      {
+        "id": "mojo-foundations-v1-step30",
+        "snippetId": "mojo-py-002",
+        "order": 30,
+        "titleEn": "Hand a `List` to NumPy without extra copies",
+        "titleEs": "Entrega una `List` a NumPy sin copias extra"
+      },
+      {
+        "id": "mojo-foundations-v1-step31",
+        "snippetId": "mojo-comp-001",
+        "order": 31,
+        "titleEn": "Resolve work at compile time with `comptime`",
+        "titleEs": "Resuelve trabajo en compilación con `comptime`"
+      }
+    ]
+  }
+]

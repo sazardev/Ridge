@@ -64,6 +64,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   | Linux (Arch) | 85 snippets | `linux-foundations-v1` (35, distro/kernel/FHS/archivos/permisos/usuarios/procesos/paquetes/servicios/logs) + `linux-admin-v1` (30, cuentas+sudo/ACL/señales/discos/systemd/journald/pacman/timers/tar) + `linux-networking-v1` (20, `ip`/rutas/DNS/`curl`/`ss`/nftables/resolved) — los tres nuevos, ver sesión de hoy | solo-curso |
   | GitHub Actions | 74 snippets | `github-actions-foundations-v1` (25, anatomía del workflow/expresiones/triggers/jobs/matrices/secretos) + `github-actions-pipelines-v1` (24, caché/artefactos/compuestas/reutilizables/contenedores/patrones) + `github-actions-devops-v1` (25, seguridad/OIDC/CodeQL/releases/entornos/`gh`) — los tres nuevos, ver sesión de hoy | solo-curso |
   | Docker | 58 snippets | `docker-foundations-v1` (25, CLI/Dockerfiles/imágenes/contenedores/volúmenes/redes) + `docker-compose-v1` (16, servicios/healthchecks/redes/réplicas/capstone) + `docker-advanced-v1` (17, multi-stage/caché/registry/digest/límites/debug) — los tres nuevos, ver sesión de hoy | solo-curso |
+  | Mojo | 45 snippets | `mojo-foundations-v1` (31, `var`/tipos explícitos/condicionales/ciclos/strings/colecciones/funciones/errores/structs/traits/Python/comptime) + `mojo-systems-v1` (14, SIMD/ownership/memoria cruda/parámetros comptime/inlining/traits en profundidad/tests/capstone `Vector3`) — los dos nuevos, ver sesión de hoy | solo-curso |
 
 - Curso SQL: base de datos de ejemplo compartida tipo biblioteca
   (`authors`, `books`, `members`, `loans`), 8 categorías contiguas:
@@ -215,6 +216,52 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 ---
 
 ## Historial de sesiones
+
+### 2026-10-15 — Mojo: Fundamentos + Sistemas (lenguaje nuevo, 2 rutas, 45 snippets)
+
+- **Pedido del usuario**: un curso bilingüe de Mojo. Alcance acordado:
+  `mojo-foundations-v1` + `mojo-systems-v1`, verificación "compilar todo y
+  ejecutar foundations + muestra representativa".
+- **Mojo es ahora open source y paquete pip**: desde 1.0 (ago 2026) se
+  instala con `uv pip install mojo` (PyPI) — el CLI viejo `modular` ya no
+  reconoce Arch (AUR roto, URL 404). Toolchain usada: **Mojo 1.1.0** en
+  `/tmp/opencode/mojo-venv`. Curso escrito contra sintaxis 1.1 (el `fn`
+  legacy se eliminó; `comptime if`/`comptime for` sustituyen a
+  `@parameter if`/`for`; las conversiones numéricas son explícitas;
+  `ptr[i]` posicional está deprecado → `ptr[unsafe_offset=i]`).
+- Gotchas que el compilador real cazó al escribir (todos verificados con
+  `mojo build`/`mojo run`): indexado negativo (`nums[-1]`) es error de
+  compilación; `dict[key]` puede lanzar → `.get(k, default)` e `in`;
+  t-strings no convierten implícitamente a `String` en un `return`
+  (hay que envolver en `String(t"...")`); un parámetro genérico
+  `Copyable` puede reasignar `best` solo con `.copy()` y aun así hace
+  falta `return best^` (o trackear un índice, que es lo que hizo el
+  catálogo); las aserciones de testing son `raises`.
+- **45 snippets** (`assets/content/snippets/mojo_v1.json`): foundations
+  31 (`mojo-foundations-v1`), systems 14 (`mojo-systems-v1`). Todos
+  compilados con el compilador real; los 31 de foundations + 5 de systems
+  ejecutados con salida asserting. Código ASCII puro
+  (`key_layout_map_test.dart`).
+- 5 categorías nuevas: `strings`, `pythonInterop`, `simdVectors`,
+  `valueOwnership`, `performanceTuning`; se reutilizan las genéricas
+  (`comptime` e `interfaces` ahora documentan también a Mojo).
+- Cableado completo: `ProgrammingLanguage.mojo`, `MojoSyntaxTokenizer`
+  (+ test), labels/blurbs en ARB en/es, assets en pubspec y en los dos
+  `defaultAssetPaths`, catalog+paths en el test de completitud, ids con
+  `_` en `content_drift_integration_test` (1539→1584 filas,
+  557→580 beginner), `COURSE_ONLY_LANGUAGES` del script de auditoría.
+- **Auditoría adversarial de orden** (agente fresco) → correcciones
+  aplicadas: err-002 ahora contiene el `try/except/else/finally` que
+  prometía (antes solo vivía en el harness); structs reordenados a cadena
+  `__init__` propio → `@fieldwise_init` → `mut self` → `Copyable/.copy()`
+  con 4 lecciones (y `@staticmethod` fuera del catálogo); capstone con
+  `main()` que ejecuta e imprime; `main` con llamadas en
+  func-001..004/trait-001; loop `else` añadido al título; systems
+  reordenado (trait-002 después de metaprogramming); prosa parcheada
+  para introducir `Self`, `Writable`, `with assert_raises` y el literal
+  `List` de `for ref`.
+- `bash tool/check.sh` completo en verde (939 tests). Sin migración de
+  drift: no hay campos nuevos.
 
 ### 2026-10-14 — Firebase: cuentas registradas (SPEC.md §7.2), fase 1
 

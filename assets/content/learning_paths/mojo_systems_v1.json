@@ -1,0 +1,112 @@
+[
+  {
+    "id": "mojo-systems-v1",
+    "language": "mojo",
+    "titleEn": "Mojo: Systems & Performance",
+    "titleEs": "Sistemas y rendimiento",
+    "descriptionEn": "SIMD vectors, ownership, raw memory, compile-time metaprogramming, inlining, traits, and tests in real Mojo.",
+    "descriptionEs": "Vectores SIMD, ownership, memoria cruda, metaprogramación en tiempo de compilación e inlining en Mojo real.",
+    "tagEn": "Systems",
+    "tagEs": "Sistemas",
+    "lessons": [
+      {
+        "id": "mojo-systems-v1-step01",
+        "snippetId": "mojo-simd-001",
+        "order": 1,
+        "titleEn": "Multiply `SIMD` vectors lane-wise",
+        "titleEs": "Multiplica vectores `SIMD` carril a carril"
+      },
+      {
+        "id": "mojo-systems-v1-step02",
+        "snippetId": "mojo-simd-002",
+        "order": 2,
+        "titleEn": "Convert scalars before mixing types",
+        "titleEs": "Convierte escalares antes de mezclar tipos"
+      },
+      {
+        "id": "mojo-systems-v1-step03",
+        "snippetId": "mojo-simd-003",
+        "order": 3,
+        "titleEn": "Combine a vector with scalars and vectors",
+        "titleEs": "Combina un vector con escalares y vectores"
+      },
+      {
+        "id": "mojo-systems-v1-step04",
+        "snippetId": "mojo-own-001",
+        "order": 4,
+        "titleEn": "Pick an argument convention for a `List`",
+        "titleEs": "Elige una convención de argumento para una `List`"
+      },
+      {
+        "id": "mojo-systems-v1-step05",
+        "snippetId": "mojo-own-002",
+        "order": 5,
+        "titleEn": "Take ownership of an argument with `var`",
+        "titleEs": "Toma la posesión de un argumento con `var`"
+      },
+      {
+        "id": "mojo-systems-v1-step06",
+        "snippetId": "mojo-own-003",
+        "order": 6,
+        "titleEn": "Copy a `List`, or move it with `^`",
+        "titleEs": "Copia una `List`, o muévela con `^`"
+      },
+      {
+        "id": "mojo-systems-v1-step07",
+        "snippetId": "mojo-ptr-001",
+        "order": 7,
+        "titleEn": "Point at a live value with `Pointer(to=)`",
+        "titleEs": "Apunta a un valor vivo con `Pointer(to=)`"
+      },
+      {
+        "id": "mojo-systems-v1-step08",
+        "snippetId": "mojo-mem-001",
+        "order": 8,
+        "titleEn": "Allocate raw memory and free it once",
+        "titleEs": "Reserva memoria cruda y libérala una sola vez"
+      },
+      {
+        "id": "mojo-systems-v1-step09",
+        "snippetId": "mojo-meta-001",
+        "order": 9,
+        "titleEn": "Unroll a loop with a compile-time parameter",
+        "titleEs": "Desenrolla un bucle con un parámetro de compilación"
+      },
+      {
+        "id": "mojo-systems-v1-step10",
+        "snippetId": "mojo-meta-002",
+        "order": 10,
+        "titleEn": "Write a generic bounded by traits",
+        "titleEs": "Escribe una genérica acotada por traits"
+      },
+      {
+        "id": "mojo-systems-v1-step11",
+        "snippetId": "mojo-perf-001",
+        "order": 11,
+        "titleEn": "Force or block inlining with decorators",
+        "titleEs": "Fuerza o bloquea la inlining con decoradores"
+      },
+      {
+        "id": "mojo-systems-v1-step12",
+        "snippetId": "mojo-trait-002",
+        "order": 12,
+        "titleEn": "Ship defaults and constants from a trait",
+        "titleEs": "Entrega métodos por defecto y constantes desde un trait"
+      },
+      {
+        "id": "mojo-systems-v1-step13",
+        "snippetId": "mojo-test-001",
+        "order": 13,
+        "titleEn": "Run tests with `TestSuite` and `assert_equal`",
+        "titleEs": "Ejecuta pruebas con `TestSuite` y `assert_equal`"
+      },
+      {
+        "id": "mojo-systems-v1-step14",
+        "snippetId": "mojo-cap-001",
+        "order": 14,
+        "titleEn": "Make a struct `Copyable` and `Writable`",
+        "titleEs": "Haz un struct `Copyable` y `Writable`"
+      }
+    ]
+  }
+]

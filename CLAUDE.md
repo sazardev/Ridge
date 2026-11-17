@@ -226,7 +226,7 @@ course-only — its catalog contains exactly the snippets its bundled
 Learning Path(s) reference, no orphans (Bash, SQL, Rust, Zig, Python —
 including the three Django courses — JavaScript, TypeScript, Haskell, C,
 C++, Java, Crystal, Swift, CSS, C#, Dart, Kotlin, PHP, Git, Linux, GitHub
-Actions, and Docker). Kotlin's catalog is split across two bundled assets sharing the same
+Actions, Docker, and Mojo). Kotlin's catalog is split across two bundled assets sharing the same
 `language` value: `kotlin_v1.json` (53 snippets behind
 `kotlin-foundations-v1`, `kotlin-algorithms-v1` and
 `kotlin-advanced-v1`) and `android_v1.json` (32 snippets behind the
@@ -263,6 +263,20 @@ breakage where a later lesson made an earlier one stop compiling. The route's
 pure-Swift engine lessons are compiled and run for real. Per-route details
 (categories, snippet counts, special cases) live in `Memory.md` and the skill
 below — trust those over any summary.
+
+Mojo 1.1's catalog is `assets/content/snippets/mojo_v1.json` with 45
+active snippets: `mojo-foundations-v1` has 31 and `mojo-systems-v1` has 14.
+It reuses the generic categories plus five of its own (`strings`,
+`pythonInterop`, `simdVectors`, `valueOwnership`, `performanceTuning`).
+**Mojo's toolchain is a pip package, not the old `modular` CLI** — since
+Mojo went 1.0/open source, `uv pip install mojo` (from PyPI) installs the
+real compiler and `get.modular.com` no longer recognizes Arch Linux. The
+course is written against **1.1 stable syntax**: `def` (the legacy `fn`
+keyword was removed in 1.1), `comptime if`/`comptime for` (not the removed
+`@parameter if`/`@parameter for`), `var`-only locals with `comptime`
+constants, explicit numeric conversions, and `ptr[unsafe_offset=i]`
+(positional `ptr[i]` is deprecated). Every snippet was compiled with
+`mojo build` and foundations + a systems sample executed.
 
 Use the `content-curriculum` skill (`.claude/skills/`) before editing
 either JSON: it encodes the DTO/domain/drift mapping, the two failed

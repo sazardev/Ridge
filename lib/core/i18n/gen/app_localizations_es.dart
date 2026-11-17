@@ -1917,6 +1917,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get languageGithubActions => 'GitHub Actions';
 
   @override
+  String get languageMojo => 'Mojo';
+
+  @override
   String get languageGoBlurb => 'Simple y rápido — ideal para backend y nube.';
 
   @override
@@ -2004,6 +2007,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get languageGithubActionsBlurb =>
       'El motor CI/CD de GitHub — flujos YAML que construyen, prueban y despliegan tu código.';
+
+  @override
+  String get languageMojoBlurb =>
+      'Sintaxis familiar de Python que compila a velocidad nativa — hecho para IA y sistemas.';
 
   @override
   String get snippetPracticeAction => 'Practicar';
@@ -2616,6 +2623,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get categoryAndroidUiTesting => 'UI testing';
+
+  @override
+  String get categoryStrings => 'Cadenas';
+
+  @override
+  String get categoryPythonInterop => 'Interop con Python';
+
+  @override
+  String get categorySimdVectors => 'Vectores SIMD';
+
+  @override
+  String get categoryValueOwnership => 'Ownership';
+
+  @override
+  String get categoryPerformanceTuning => 'Rendimiento';
 
   @override
   String get onboardingDeviceDescription =>
