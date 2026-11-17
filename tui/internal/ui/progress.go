@@ -313,7 +313,8 @@ func (p *progressScreen) masteryGrid() string {
 				cells[j] = s.Muted.Render(c.G.Dot)
 			}
 		}
-		rows = append(rows, fmt.Sprintf("%-28s %s", s.Body.Render(trunc(categoryLabel(cat), 28)), strings.Join(cells, "  ")))
+		labelW := max(12, min(28, contentWidth(c)-12))
+		rows = append(rows, fmt.Sprintf("%-*s %s", labelW, s.Body.Render(trunc(categoryLabel(cat), labelW)), strings.Join(cells, "  ")))
 	}
 	return strings.Join(rows, "\n")
 }

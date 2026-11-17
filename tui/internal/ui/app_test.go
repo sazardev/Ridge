@@ -262,7 +262,7 @@ func TestCommandPalette(t *testing.T) {
 }
 
 func TestEveryScreenFitsTheTerminal(t *testing.T) {
-	for _, sz := range [][2]int{{80, 24}, {40, 20}, {60, 24}, {200, 60}, {120, 40}, {60, 50}, {80, 50}, {80, 80}, {60, 80}, {160, 40}, {200, 20}, {100, 30}, {100, 26}, {50, 30}} {
+	for _, sz := range [][2]int{{80, 24}, {40, 20}, {60, 24}, {200, 60}, {120, 40}, {60, 50}, {80, 50}, {80, 80}, {60, 80}, {160, 40}, {200, 20}, {100, 30}, {100, 26}, {50, 30}, {40, 80}} {
 		a := newApp(t, true)
 		a.Update(tea.WindowSizeMsg{Width: sz[0], Height: sz[1]})
 		c := a.ctx

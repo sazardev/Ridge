@@ -129,7 +129,8 @@ func (a *achievementsScreen) View() string {
 				cells[j] = s.Muted.Render(c.G.Dot)
 			}
 		}
-		lines = append(lines, fmt.Sprintf("%-28s %s", s.Body.Render(trunc(categoryLabel(cat), 28)), strings.Join(cells, "  ")))
+		labelW := max(12, min(28, contentWidth(c)-12))
+		lines = append(lines, fmt.Sprintf("%-*s %s", labelW, s.Body.Render(trunc(categoryLabel(cat), labelW)), strings.Join(cells, "  ")))
 	}
 	off := min(a.offset, max(0, len(lines)-3))
 	return lipgloss.JoinVertical(lipgloss.Left, strings.Join(lines[off:], "\n"))
