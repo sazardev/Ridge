@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.23.4] - 2026-11-16
+
+### Fixed
+- **release:** build Flatpak in the user installation (c6d4f58)
+
 ## [1.23.3] - 2026-11-16
 
 ### Fixed
