@@ -1,0 +1,23 @@
+  ridge ⣤⣤⣤⣤ › Zen
+
+  Short variable declarations  ·  Short variable declaration with :=
+  ⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀
+
+
+
+
+                            name, age := "Ada", 36
+                            fmt.Println(name, age)
+
+
+
+
+
+
+
+
+
+
+
+
+  esc back • ctrl+r restart • ⌫ undo • tab indent

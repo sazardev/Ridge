@@ -217,6 +217,58 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ## Historial de sesiones
 
+### 2026-11-03 — Ridge TUI (Go + Charm): paridad con la app y UI premium
+
+- Módulo Go independiente en `tui/` (Bubble Tea v1 + Lip Gloss + Bubbles +
+  harmonica, SQLite puro-Go `modernc.org/sqlite`). Comandos: `cd tui && make
+  run | build | test`. Los snippets/rutas son los mismos JSON de
+  `assets/content` (copiados por `sync_assets.sh` y embebidos con `go:embed`).
+- **Dominio portado 1:1 de Dart** (`internal/typing`, `internal/progress`):
+  grabador de pulsaciones (tecla errónea no avanza; Tab/Enter consumen
+  indentación; dedo/fila de la tecla *pulsada*), métricas (bruta/neta,
+  precisión, consistencia, racha, fatiga por tercios, balance de manos,
+  n-gramas, transiciones, mapa de calor), XP/niveles, precisión (≥80 %),
+  supervivencia, ranking de debilidades (vida media 14 d), ranking de
+  actividad, resumen semanal, maestría (5 pruebas; 4/5 para conservar),
+  logros (cero errores, ambidiestro, maratonista ×3, racha ×4, maestría por
+  categoría×dificultad), desbloqueo de lecciones en orden, reto diario
+  (FNV-1a32 de la fecha UTC sobre Go principiante+intermedio), ghost.
+- **Persistencia SQLite** (`internal/store`): sesiones, pulsaciones, muestras
+  de n-gramas/transiciones, intentos de lección, maestría, logros, reto
+  diario, ajustes, perfil y PIN (sha256(sal:pin), archivo 0600). No comparte
+  base con la app Flutter.
+- **Pantallas**: onboarding (6 pasos), bloqueo PIN con shake, inicio (banner
+  con degradado y brillo), Zen/Sprint/Precisión/Supervivencia, reto diario,
+  calentamiento, rutas/lecciones/lenguajes, progreso (resumen, puntos
+  débiles, actividad, dominio), logros, mapa de calor del teclado, teclado en
+  vivo al teclear, perfil + edición + lenguajes favoritos + teclado, ajustes
+  (idioma, tema, 25 paletas con vista previa en vivo, color expresivo, texto
+  grande, alto contraste, movimiento reducido, modo accesible, campana,
+  recordatorio, PIN), datos (reiniciar, exportar JSON, borrar), paleta de
+  comandos (`:`/Ctrl+P). en/es.
+- **UI**: sin bordes; tema que mide el fondo real (OSC 11) y ajusta el
+  contraste a WCAG 4.5:1 (7:1 en alto contraste); degradados/mezclas en OKLCH
+  solo con truecolor; ticker único que corre a 60 fps solo mientras algo se
+  mueve (30 fps ambiente) y se apaga en reposo; resortes harmonica (selección,
+  barras, conteo, scroll, shake del PIN); transición de entrada por pantalla.
+- **Diferencias deliberadas respecto a Flutter** (ver `tui/README.md`):
+  cuentas = solo Invitado (Linux no tiene FlutterFire, `STACK.md §5.1`);
+  recordatorio diario = aviso en Inicio (no hay notificaciones del SO);
+  packs de sonido = campana de la terminal; editor 3D de teclado no portado
+  (hay mapa de calor + teclado en vivo); modo accesible = estilos planos sin
+  movimiento (no un CLI lineal aparte); formularios con `textinput`, no `huh`.
+- Rendimiento (sesión siguiente): `View` de práctica ≈ 0,14 ms y Home ≈ 0,5 ms
+  (antes 1,5 / 1,2 ms; presupuesto 60 fps = 16 ms): estilos agrupados por tramo,
+  caché de mezclas OKLCH/degradados/banner, sin consultas SQLite en frames
+  (`ctx_memo.go`, se invalida solo con teclas y cambios de pantalla). Código a
+  teclear sin iconos de retorno ni números de línea, con quiebre de líneas
+  largas (sangría colgante) y scroll con resorte; estadísticas en una línea
+  discreta. Benchmarks: `go test ./internal/ui -run xxx -bench View`.
+- Verificado: `cd tui && go vet ./... && go test ./...` verde (motor, dominio,
+  SQLite, servicio, flujos de UI, tamaños 40×20…200×60, golden 80×24 sin
+  color). Mirado en tmux con truecolor. **No** verificado: terminales de tema
+  claro, SSH/tmux anidado, ni medición real de FPS.
+
 ### 2026-10-15 — Mojo: Fundamentos + Sistemas (lenguaje nuevo, 2 rutas, 45 snippets)
 
 - **Pedido del usuario**: un curso bilingüe de Mojo. Alcance acordado:

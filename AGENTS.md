@@ -6,6 +6,10 @@
 This file provides guidance to coding agents (OpenCode, Claude Code, etc.)
 when working in this repository.
 
+## Read first
+
+- [DESIGN.md](DESIGN.md): the design system: tokens, components and UI rules.
+
 ## What this is
 
 Ridge is a typing-practice game for programmers (Flutter, hexagonal
