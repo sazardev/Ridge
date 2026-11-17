@@ -11,6 +11,21 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.23.0] - 2026-11-16
+
+### Added
+- **tui:** reflow by terminal orientation (51fce8d)
+- **tui:** mouse, guide, commands and 60 fps polish (8649448)
+- **tui:** inherit the terminal theme and tighten app parity (a365efd)
+- **content:** add the Mojo 1.1 course routes (e8f5d06)
+- **tui:** add the Go terminal edition of Ridge (b525149)
+- **auth:** add Registered Accounts on Firebase (09ee6d0)
+
+### Fixed
+- **router:** refresh the generated provider hash (6f603e1)
+- **tui:** fit mastery grids and test 40x80 portrait (faa8d31)
+- **tui:** report cpm like the app (bbfa647)
+
 ## [1.22.0] - 2026-10-15
 
 ### Added
