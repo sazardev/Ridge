@@ -33,7 +33,22 @@ Ridge convierte el "calentamiento" antes de programar en un juego con datos real
 - **Offline-first**: todo el modo individual funciona sin conexión; la nube solo entra para lo social.
 - **Competencia online**: duelos 1 vs 1 con matchmaking, escuadrones/equipos, leaderboards — backend Firebase (cuentas registradas ya implementadas; el resto, especificado en `STACK.md`).
 - **Multiplataforma real**: Android, Windows, Linux y Web con el mismo código y la misma cuenta.
+- **También en la terminal**: edición TUI nativa (Go + Bubble Tea) con el mismo catálogo, rutas, modos y logros, y el tema de tu terminal (`auto`). Ver [`tui/README.md`](./tui/README.md).
 - **Identidad mínima**: solo *username*, sin correo ni datos personales — invitado local o cuenta con contraseña.
+
+### Edición de terminal
+
+```sh
+cd tui
+make run        # syncs assets + runs
+make install    # -> ~/.local/bin/ridge
+```
+
+La TUI comparte los JSON de `assets/content` (no una copia a mano), guarda su
+propio SQLite y no comparte progreso con la app Flutter. Por defecto usa solo
+la paleta ANSI y el fondo de la terminal; `NO_COLOR`, `TERM=dumb` y locales no
+UTF-8 degradan a texto/ASCII sin romper el layout. `make matrix` prueba la
+matriz de terminales soportada.
 
 ## Documentación
 

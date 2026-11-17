@@ -50,15 +50,36 @@ func onOff(c *Ctx, v bool) string {
 	return c.S.Muted.Render(c.T("off"))
 }
 
+// paletteNames are the display names used by the Flutter app's palette picker.
+var paletteNames = map[string]string{
+	"ember": "Ember", "ocean": "Ocean", "forest": "Forest", "grape": "Grape", "rose": "Rose",
+	"sunflower": "Sunflower", "teal": "Teal", "crimson": "Crimson", "mono": "Mono", "nord": "Nord",
+	"gruvbox": "Gruvbox", "dracula": "Dracula", "solarized": "Solarized", "catppuccin": "Catppuccin",
+	"tokyoNight": "Tokyo Night", "terminal": "Terminal", "matrix": "Matrix", "fallout": "Fallout",
+	"blackWhite": "Black & White", "monokai": "Monokai", "oneDark": "One Dark", "cyberpunk": "Cyberpunk",
+	"synthwave": "Synthwave", "github": "GitHub", "vscode": "VS Code",
+}
+
+func paletteLabel(id string) string {
+	if n, ok := paletteNames[id]; ok {
+		return n
+	}
+	return id
+}
+
 func (s *settingsScreen) items() []item {
 	c, st := s.ctx, s.ctx.Set
 	theme := map[string]string{"system": c.T("set.system"), "light": c.T("set.light"), "dark": c.T("set.dark")}[st.ThemeMode]
-	pal := st.Palette
-	if pal == "auto" {
+	pal := paletteLabel(st.Palette)
+	if st.Palette == "auto" {
 		pal = c.T("set.auto")
 	}
+	loc := c.T("set.system")
+	if st.Locale != "" {
+		loc = strings.ToUpper(st.Locale)
+	}
 	return []item{
-		{Label: c.T("set.locale"), Badge: c.S.Accent.Render(strings.ToUpper(string(c.Loc()))), Value: "locale"},
+		{Label: c.T("set.locale"), Badge: c.S.Accent.Render(loc), Value: "locale"},
 		{Label: c.T("set.lang"), Badge: c.S.Accent.Render(langName(c.Lang())), Value: "lang"},
 		{Label: c.T("set.theme"), Badge: c.S.Accent.Render(theme), Value: "theme"},
 		{Label: c.T("set.palette"), Badge: c.S.Accent.Render(pal), Value: "palette"},
@@ -98,10 +119,13 @@ func (s *settingsScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 		var cmd tea.Cmd
 		switch it.Value {
 		case "locale":
-			if c.Loc() == content.ES {
+			switch st.Locale {
+			case "":
 				st.Locale = string(content.EN)
-			} else {
+			case string(content.EN):
 				st.Locale = string(content.ES)
+			default:
+				st.Locale = "" // follow $LANG again
 			}
 		case "lang":
 			return s, push(newLanguages(c))
@@ -165,10 +189,7 @@ func newPalettePicker(c *Ctx) *palettePicker {
 	var items []item
 	cur := 0
 	for i, id := range PaletteIDs {
-		label := id
-		a, b := RolePrimary, RoleSecondary
-		_ = a
-		_ = b
+		label := paletteLabel(id)
 		sw := swatch(c, id)
 		if id == "auto" {
 			label = c.T("set.auto")

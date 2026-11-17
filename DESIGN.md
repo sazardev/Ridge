@@ -17,7 +17,7 @@ and dark terminals, generous padding, gentle spinners and markdown rendered with
 | Token | Light terminal | Dark terminal | ANSI 16 fallback | Use |
 | --- | --- | --- | --- | --- |
 | `fg` | `#1A1A1A` | `#DDDDDD` | default | Text |
-| `muted` | `#8A8A8A` | `#6C6C6C` | 8 | Hints, help |
+| `muted` | `#8A8A8A` | `#6C6C6C` | default fg, dimmed (SGR 2) | Hints, help |
 | `primary` | `#7D56F4` | `#9B7CFF` (approx.) | 5 | Titles, focus, selection |
 | `secondary` | `#EE6FF8` | `#F78CFF` (approx.) | 13 | Highlights, badges |
 | `success` | `#02BA84` | `#04D99A` (approx.) | 2 | Done |
@@ -26,7 +26,7 @@ and dark terminals, generous padding, gentle spinners and markdown rendered with
 | `surface` | `#F2F0FA` (approx.) | `#2A2438` (approx.) | none | Badges and selected items background |
 
 - Adaptive colors via `lipgloss.AdaptiveColor{Light, Dark}`; background detected once at start.
-- Colors are **ANSI roles, not hex**: default foreground/background for text, `8`/bright black for muted, `1` red for danger, `2` green for success, `3` yellow for warning, `4` blue for accent, `5` magenta for highlights, `6` cyan for links/info.
+- Colors are **ANSI roles, not hex**: default foreground/background for text, the default foreground with SGR 2 (dim) for muted — never bright black, which is near-white on several light themes — `1` red for danger, `2` green for success, `3` yellow for warning, `4` blue for accent, `5` magenta for highlights, `6` cyan for links/info. High contrast keeps the full foreground instead of dimming.
 - Never set a background on the whole screen; selections use reverse video (`SGR 7`) or the accent as background with the default background as text.
 - Truecolor (`COLORTERM=truecolor`) only for gradients and charts, always with an ANSI 16 fallback; 256-color in between.
 - `NO_COLOR` set or `TERM=dumb` → no colors at all, hierarchy by bold, dim, underline and spacing alone; not a TTY → plain text.

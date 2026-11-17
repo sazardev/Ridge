@@ -31,6 +31,7 @@ var keywords = func() map[string]bool {
 	return yield await async go defer chan select case switch default break continue goto fallthrough
 	if else elif unless for foreach while do loop in range match when try catch except finally throw throws raise
 	var let const val mut static final public private protected internal abstract override virtual extern inline
+	comptime ref out deinit raises owned borrowed inout
 	new delete this self super nil null None true false True False void int uint string bool byte rune float double char long short
 	and or not is as with pass del global where then end begin SELECT FROM WHERE JOIN INSERT UPDATE DELETE CREATE TABLE ORDER BY GROUP LIMIT`) {
 		m[k] = true
@@ -40,7 +41,7 @@ var keywords = func() map[string]bool {
 
 func lineComment(lang string) string {
 	switch lang {
-	case "python", "bash", "linux", "git", "githubActions", "docker", "crystal", "dockerfile":
+	case "python", "bash", "linux", "git", "githubActions", "docker", "crystal", "dockerfile", "mojo":
 		return "#"
 	case "sql", "haskell":
 		return "--"

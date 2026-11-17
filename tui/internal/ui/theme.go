@@ -33,7 +33,7 @@ type roleDef struct{ dark, light, ansi string }
 // keep their colors; the hex pair is the adaptive fallback everywhere else.
 var baseRoles = [roleCount]roleDef{
 	RoleFg:        {"#DDDDDD", "#1A1A1A", ""},
-	RoleMuted:     {"#6C6C6C", "#8A8A8A", "8"},
+	RoleMuted:     {"#6C6C6C", "#8A8A8A", "faint"},
 	RolePrimary:   {"#9B7CFF", "#7D56F4", "4"},
 	RoleSecondary: {"#F78CFF", "#EE6FF8", "5"},
 	RoleSuccess:   {"#04D99A", "#02BA84", "2"},
@@ -148,6 +148,10 @@ func clampMidLuminance(h string) string {
 func (t Theme) Color(r Role) lipgloss.TerminalColor {
 	if t.Accent && (r == RolePrimary || r == RoleSecondary) {
 		return lipgloss.Color(t.hex(r))
+	}
+	if t.High && r == RoleMuted {
+		// High contrast never dims text: muted becomes the full default fg.
+		return lipgloss.NoColor{}
 	}
 	switch t.roles[r].ansi {
 	case "": // foreground and surface: the terminal's own defaults

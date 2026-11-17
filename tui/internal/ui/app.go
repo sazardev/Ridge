@@ -225,7 +225,8 @@ func (a *App) breadcrumb() string {
 func (a *App) View() string {
 	c, s := a.ctx, a.ctx.S
 	if c.W < 40 || c.H < 20 {
-		return lipgloss.Place(c.W, c.H, lipgloss.Center, lipgloss.Center, s.Warning.Render(c.T("tooSmall")))
+		out := lipgloss.Place(c.W, c.H, lipgloss.Center, lipgloss.Center, s.Warning.Render(c.T("tooSmall")))
+		return a.maybeASCII(out)
 	}
 	w := contentWidth(c)
 	if wd, ok := a.top().(Wide); ok && wd.Wide() && a.pal == nil {
@@ -272,7 +273,16 @@ func (a *App) View() string {
 			lines[i] = pad + lines[i]
 		}
 	}
-	return strings.Join(lines, "\n")
+	return a.maybeASCII(strings.Join(lines, "\n"))
+}
+
+// maybeASCII sanitizes the finished frame for non-UTF-8 terminals. It runs last
+// so width math already done by lipgloss stays valid (every mapping is 1:1).
+func (a *App) maybeASCII(s string) string {
+	if a.ctx.G.utf8 {
+		return s
+	}
+	return toASCII(s)
 }
 
 // toastView renders the newest toast with a fade-out in its last 400 ms.

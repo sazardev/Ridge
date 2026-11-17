@@ -269,7 +269,7 @@ func TestEveryScreenFitsTheTerminal(t *testing.T) {
 		sn := c.Cat.SnippetsFor("go")[0]
 		screens := []Screen{
 			newHome(c), newFree(c), newLanguages(c), newCourses(c), newSettings(c), newProfile(c), newAchievements(c),
-			newProgress(c), newKeyboardHeat(c), newSnippetPicker(c, "zen"), newSprintPicker(c), newDaily(c), newWarmUp(c),
+			newProgress(c), newKeyboardHeat(c), newSnippetPicker(c, "zen", "go"), newSprintPicker(c, "go"), newLanguagePicker(c, "go", func(string) {}), newDaily(c), newWarmUp(c),
 			newLessons(c, c.Cat.PathsFor("go")[0]), newData(c), newPalettePicker(c), newLock(c, lockVerify), newOnboarding(c),
 			newPractice(c, runSpec{Mode: "zen", Snippet: sn}), newConfirm(c, "x", func() {}),
 		}
@@ -489,6 +489,85 @@ func TestUnknownBackgroundStillReadable(t *testing.T) {
 		got := clampMidLuminance(h)
 		if contrast(got, "#000000") < 2.9 || contrast(got, "#FFFFFF") < 2.9 {
 			t.Fatalf("%s → %s has contrast %.1f on black / %.1f on white, want ≥ ~3 on both", h, got, contrast(got, "#000000"), contrast(got, "#FFFFFF"))
+		}
+	}
+}
+
+// Non-UTF-8 terminals get only ASCII glyphs: the sanitizer runs after layout,
+// so the frame keeps its measured widths.
+func TestASCIIModeUsesOnlyASCIIGlyphs(t *testing.T) {
+	a := newApp(t, true)
+	a.ctx.G = NewGlyphs(false)
+	for _, s := range []Screen{newHome(a.ctx), newSettings(a.ctx), newProgress(a.ctx), newAchievements(a.ctx)} {
+		a.stack = []Screen{s}
+		out := a.View()
+		for _, r := range out {
+			if r == '\n' || r == '\r' || r == '\t' {
+				continue
+			}
+			if r > 127 {
+				t.Fatalf("%T left the non-ASCII rune %q in ASCII mode", s, r)
+			}
+		}
+	}
+}
+
+func TestLocaleCyclesSystemEnglishSpanish(t *testing.T) {
+	a := newApp(t, true)
+	s := newSettings(a.ctx)
+	if a.ctx.Set.Locale != "en" {
+		t.Fatalf("test starts in English, got %q", a.ctx.Set.Locale)
+	}
+	enter := tea.KeyMsg{Type: tea.KeyEnter}
+	for i, want := range []string{"es", "", "en"} {
+		_, _ = s.Update(enter)
+		if a.ctx.Set.Locale != want {
+			t.Fatalf("cycle %d: locale = %q, want %q", i, a.ctx.Set.Locale, want)
+		}
+	}
+}
+
+func TestFreeLanguagePickerOnlyChangesThatScreen(t *testing.T) {
+	c := newCtx(t, true)
+	c.Set.ActiveLanguage = "go"
+	picked := ""
+	p := newLanguagePicker(c, "go", func(l string) { picked = l })
+	for i, l := range c.Cat.Languages() {
+		if l == "python" {
+			p.m.cursor = i
+		}
+	}
+	_, cmd := p.Update(tea.KeyMsg{Type: tea.KeyEnter})
+	if picked != "python" {
+		t.Fatalf("picked = %q, want python", picked)
+	}
+	if cmd == nil {
+		t.Fatal("picking a language must pop the picker")
+	}
+	if c.Set.ActiveLanguage != "go" {
+		t.Fatalf("free-practice picker changed the active course language to %q", c.Set.ActiveLanguage)
+	}
+}
+
+func TestPaletteLabelsMatchTheApp(t *testing.T) {
+	for _, want := range []struct{ id, label string }{
+		{"blackWhite", "Black & White"}, {"tokyoNight", "Tokyo Night"}, {"vscode", "VS Code"}, {"auto", "auto"},
+	} {
+		if got := paletteLabel(want.id); got != want.label {
+			t.Errorf("paletteLabel(%q) = %q, want %q", want.id, got, want.label)
+		}
+	}
+}
+
+func TestAccessibleModeDropsColor(t *testing.T) {
+	a := newApp(t, true)
+	a.ctx.Set.Accessible = true
+	a.ctx.Reload()
+	color := regexp.MustCompile(`\x1b\[(3[0-7]|9[0-7]|38;|48;)`)
+	for _, s := range []Screen{newHome(a.ctx), newSettings(a.ctx), newProgress(a.ctx), newPractice(a.ctx, runSpec{Mode: "zen", Snippet: a.ctx.Cat.SnippetsFor("go")[0]})} {
+		a.stack = []Screen{s}
+		if m := color.FindString(a.View()); m != "" {
+			t.Fatalf("%T still emits color %q in accessible mode", s, m)
 		}
 	}
 }

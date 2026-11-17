@@ -160,8 +160,9 @@ func TestMarkdownRendersCleanly(t *testing.T) {
 	}
 }
 
-// Typed and untyped text must differ by HUE (syntax color vs the theme's gray),
-// not only by dimness — "dim" is nearly invisible on light terminals.
+// Typed and untyped text must differ: typed text is the full syntax color,
+// untyped text keeps that hue dimmed (SGR 2), mirroring the app's opacity.
+// Never ANSI 8: bright black is near-white on light terminals.
 func TestTypedAndPendingDifferByColor(t *testing.T) {
 	defer lipgloss.SetColorProfile(termenv.Ascii)
 	for _, mode := range []string{"light", "dark"} { // theme mode must not change the rule
@@ -184,8 +185,8 @@ func TestTypedAndPendingDifferByColor(t *testing.T) {
 		if !strings.Contains(out, "\x1b[32m") { // string → green (theme's)
 			t.Fatalf("%s: typed strings should be colored by syntax", mode)
 		}
-		if !strings.Contains(out, "\x1b[90m") { // untyped → theme gray
-			t.Fatalf("%s: untyped text should be the theme's gray (ANSI 8)", mode)
+		if !strings.Contains(out, "\x1b[2") { // untyped → same hue, dimmed
+			t.Fatalf("%s: untyped text should be dimmed syntax color", mode)
 		}
 		if strings.Contains(out, "38;2;") {
 			t.Fatalf("%s: no baked truecolor in auto", mode)

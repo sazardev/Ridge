@@ -287,10 +287,10 @@ func (p *practiceScreen) renderCode(width, height int) string {
 	for li := start; li < end; li++ {
 		l := lines[li]
 		// Typed text takes its syntax color from the terminal theme (keywords,
-		// strings, numbers, calls…); untyped text is the theme's gray. The two
-		// differ by hue, not only by brightness, so the contrast survives light
-		// terminals where "dim" is barely visible. The 2–3 characters just ahead
-		// of the caret keep the normal text color as a halo.
+		// strings, numbers, calls…); untyped text keeps that hue but is dimmed,
+		// mirroring the app's 38% opacity. Never a fixed ANSI 8: bright black is
+		// near-white on several light themes. The 2–3 characters just ahead of
+		// the caret stay at full strength.
 		typedAt := func(idx int) (string, lipgloss.Style) {
 			k := clsPlain
 			if idx < len(p.classes) {
@@ -301,12 +301,20 @@ func (p *practiceScreen) renderCode(width, height int) string {
 			}
 			return "T" + itoa(int(k)), c.classStyle(k)
 		}
-		pendingAt := func(ahead int) lipgloss.Style {
-			op := 0.30 + 0.45*math.Exp(-float64(max(0, ahead))/3.5) // ≥ 0.55 for the next 2 characters
+		pendingAt := func(idx, ahead int) lipgloss.Style {
 			if c.Set.HighContrast {
-				op = 0.7
+				return s.Body
 			}
-			return fgStyle(c.Theme.Opacity(RoleFg, op))
+			k := clsPlain
+			if idx < len(p.classes) {
+				k = p.classes[idx]
+			}
+			st := c.classStyle(k)
+			op := 0.30 + 0.45*math.Exp(-float64(max(0, ahead))/3.5) // ≥ 0.55 for the next 2 characters
+			if op >= 0.55 {
+				return st
+			}
+			return st.Faint(true)
 		}
 		var segs []*seg
 		add := func(key string, st lipgloss.Style, text string) {
@@ -343,7 +351,7 @@ func (p *practiceScreen) renderCode(width, height int) string {
 				}
 				add("C", st, txt[:1]) // on a tab only the first cell is the caret
 				if len(txt) > 1 {
-					add("P0", pendingAt(0), txt[1:])
+					add("P0", pendingAt(ce.idx, 0), txt[1:])
 				}
 			default:
 				if ce.idx == ghostAt && ghostAt > cur {
@@ -354,7 +362,7 @@ func (p *practiceScreen) renderCode(width, height int) string {
 					if ahead > 18 { // beyond the halo every char shares one style
 						q = 99
 					}
-					add("P"+itoa(q), pendingAt(ahead), txt)
+					add("P"+itoa(q), pendingAt(ce.idx, ahead), txt)
 				}
 			}
 		}

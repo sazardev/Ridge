@@ -121,7 +121,7 @@ func (h *homeScreen) Init() tea.Cmd { return nil }
 func (h *homeScreen) Ambient() bool { return h.showBanner() }
 
 func (h *homeScreen) showBanner() bool {
-	return h.ctx.W >= 50 && h.ctx.H >= 30 && !h.ctx.Set.Accessible
+	return h.ctx.W >= 50 && h.ctx.H >= 30 && h.ctx.G.utf8 && !h.ctx.Set.Accessible
 }
 
 var homeKeys = map[string]string{"d": "daily", "f": "free", "w": "warmup", "c": "courses", "p": "progress",
@@ -223,6 +223,13 @@ func (h *homeScreen) View() string {
 		s.Muted.Render(fmt.Sprintf(" %d/%d", xp, h.snap.hi-h.snap.lo)), "  ",
 		s.Badge.Render(fmt.Sprintf("%d %s", h.snap.streak, c.T("streakdays"))), " ",
 		s.Badge.Render(langName(c.Lang())))
+	if lipgloss.Width(status) > w { // narrow terminals: drop the streak badge first
+		bar = renderBar(c, c.Anim.V("home.xp"), max(4, min(12, w-24)))
+		status = lipgloss.JoinHorizontal(lipgloss.Top,
+			s.BadgeAccent.Render(fmt.Sprintf("%s %d", c.T("level"), h.snap.lvl)), " ", bar,
+			s.Muted.Render(fmt.Sprintf(" %d/%d", xp, h.snap.hi-h.snap.lo)), " ",
+			s.Badge.Render(langName(c.Lang())))
+	}
 	wide := c.W >= 112
 	lw := w
 	if wide {

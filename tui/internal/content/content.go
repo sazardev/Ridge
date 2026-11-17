@@ -225,6 +225,7 @@ var langNames = map[string]string{
 	"cpp": "C++", "java": "Java", "crystal": "Crystal", "swift": "Swift", "css": "CSS",
 	"csharp": "C#", "dart": "Dart", "kotlin": "Kotlin", "php": "PHP", "git": "Git",
 	"linux": "Linux", "githubActions": "GitHub Actions", "dockerfile": "Docker", "docker": "Docker",
+	"mojo": "Mojo",
 }
 
 // LanguageName returns the display name of a language id.

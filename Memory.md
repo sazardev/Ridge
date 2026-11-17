@@ -21,7 +21,7 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 
 ---
 
-## Estado actual (2026-10-14)
+## Estado actual (2026-11-16)
 
 - App **offline-first** (drift/SQLite + secure storage + shared_preferences).
   Las **cuentas registradas** (SPEC.md §7.2) ya están implementadas sobre
@@ -33,6 +33,14 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 - Features implementadas: `content`, `practice`, `progression`,
   `learning_paths`, `achievements`, `profile`, `auth`, `settings`, `lock`,
   `onboarding`, `data_management`, `daily_challenge`.
+- Edición **TUI** (`tui/`, Go + Bubble Tea, `DESIGN.md`): mismos JSON de
+  contenido, mismos modos/rutas/logros/progreso y mismos cálculos de dominio
+  que la app; SQLite propio (no comparte el archivo drift). Tema heredado de
+  la terminal por defecto (`auto`: fg/ANSI propios, fondo medido por OSC 11,
+  contraste WCAG); una paleta con nombre cambia solo el par de acentos.
+  Verificada con `cd tui && go test ./...`, `go vet ./...` y `make matrix`
+  (claro/oscuro, truecolor/256/ANSI, `NO_COLOR`, `TERM=dumb`, 40×20–200×60,
+  locale C y tmux).
 - Modos de práctica: Zen, Sprint, Precisión, **Survival** (SPEC.md §5.8:
   vidas, combo, multiplicador) y **Reto Diario** (SPEC.md §5.4, Fase 0
   offline-only: mismo snippet para todo el mundo calculado
@@ -216,6 +224,46 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 ---
 
 ## Historial de sesiones
+
+### 2026-11-16 — TUI integrada + Mojo fusionado: auditoría PC↔TUI y tema de terminal
+
+- **Pedido del usuario**: traer la edición TUI, fusionarla con el trabajo de
+  Mojo y dejar "Ridge PC = Ridge TUI" (auditar, probar en terminales
+  simuladas, pulir el esquema heredado de la terminal).
+- **Fusión**: `origin/main` (TUI Go + `DESIGN.md`) mergeado sobre el commit
+  `feat(content): add the Mojo 1.1 course routes`; único conflicto
+  `Memory.md`, resuelto conservando las dos entradas (TUI primero).
+- **Bug real de herencia de color**: `RoleMuted` seguía en ANSI `8`
+  (bright black) aunque `theme.go` ya documentaba `faintColor`; en temas
+  claros (p. ej. Solarized Light) el texto secundario se volvía casi
+  blanco. Ahora `muted` = foreground de la terminal atenuado (SGR 2), y
+  alto contraste usa el foreground completo. El texto sin teclear pasó de
+  gris fijo a **el mismo tono sintáctico atenuado** (espejo del 38 % de
+  opacidad de la app). `DESIGN.md` actualizado.
+- **Paridad de contenido**: `sync_assets.sh` copia los 25 catálogos y 74
+  rutas; nuevo test compara byte a byte el embed con
+  `assets/content/**` (falla si divergen). Mojo aparece en el catálogo TUI
+  (45 snippets, 2 rutas) y en `langNames`; su highlighter usa comentarios
+  `#` y resalta `comptime`/ownership.
+- **Paridad de UI**: selector de idioma de práctica libre (`L`, sin cambiar
+  el idioma activo de los cursos), opción "sistema" en idioma de interfaz
+  (ciclo sistema→EN→ES), nombres de paleta iguales a la app, `make install`
+  y `make matrix` (PTY: claro/oscuro, truecolor/256/ANSI, `NO_COLOR`,
+  `TERM=dumb`, 40×20–200×60, locale C).
+- **Entornos no UTF-8**: `ascii.go` sanea el frame final con reemplazos 1:1
+  (preserva anchos); banner braille oculto; cabecera de Home compacta a
+  40 columnas sin partir "Day streak". Añadidos tests de tema, ASCII y
+  paridad.
+- Verificado: `cd tui && go vet ./... && go test ./...` y
+  `bash tool/terminal-matrix.sh` en verde (tmux comprobado aparte con el
+  harness PTY); `dart format`, `tool/check_architecture.dart` y `flutter
+  test` (939) en verde. `flutter analyze` local falla solo por 148
+  `deprecated_member_use` de `package:flutter/material.dart` que introduce
+  Flutter 3.50 (aquí instalado); CI fija 3.47.2 y esos avisos no existen
+  allí. **No** se comparte la base SQLite entre app y TUI; siguen siendo
+  perfiles/progresos independientes (decisión de diseño, no bug). Cuentas y
+  editor 3D de teclado siguen fuera del TUI por las mismas razones que Linux
+  en la app (`STACK.md §5.1`).
 
 ### 2026-11-03 — Ridge TUI (Go + Charm): paridad con la app y UI premium
 

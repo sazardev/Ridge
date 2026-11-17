@@ -17,15 +17,18 @@ type Styles struct {
 	Typed, Pending, Cursor, CursorBad, Wrong, Ghost          lipgloss.Style
 }
 
-// NewStyles builds the style table; plain strips borders for accessible mode.
+// NewStyles builds the style table; plain drops color (accessible mode keeps
+// structure through bold, underline and spacing alone).
 func NewStyles(t Theme, plain bool) Styles {
 	col := t.Color
+	if plain {
+		col = func(Role) lipgloss.TerminalColor { return lipgloss.NoColor{} }
+	}
 	fg := func(r Role) lipgloss.Style { return styleOf(col(r)) }
 	badge := lipgloss.NewStyle().Padding(0, 1).Background(col(RoleSurface))
 	// Clean, borderless layout: structure comes from whitespace and type, not boxes.
 	pane := func(Role) lipgloss.Style { return lipgloss.NewStyle().Padding(0, 2, 0, 0) }
 	dlg := lipgloss.NewStyle().Padding(1, 3)
-	_ = plain
 	return Styles{
 		Title:       fg(RolePrimary).Bold(true),
 		Body:        fg(RoleFg),

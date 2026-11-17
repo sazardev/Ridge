@@ -31,10 +31,12 @@ func init() {
 	})
 }
 
-// freeScreen is the free-practice hub.
+// freeScreen is the free-practice hub. lang is this screen's own language
+// pick (like the app's free-practice chip); empty follows the active language.
 type freeScreen struct {
-	ctx *Ctx
-	m   *menu
+	ctx  *Ctx
+	m    *menu
+	lang string
 }
 
 func newFree(c *Ctx) *freeScreen {
@@ -43,7 +45,14 @@ func newFree(c *Ctx) *freeScreen {
 		{Label: c.T("home.sprint"), Detail: c.T("home.sprint.d"), Value: "sprint"},
 		{Label: c.T("home.prec"), Detail: c.T("home.prec.d"), Value: "precision"},
 		{Label: c.T("home.surv"), Detail: c.T("home.surv.d"), Value: "survival"},
-	})}
+	}), ""}
+}
+
+func (f *freeScreen) currentLang() string {
+	if f.lang != "" {
+		return f.lang
+	}
+	return f.ctx.Lang()
 }
 
 func (f *freeScreen) Title() string { return f.ctx.T("free.title") }
@@ -59,26 +68,88 @@ func (f *freeScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 		f.m.move(-1)
 	case "down", "j":
 		f.m.move(1)
+	case "L":
+		return f, push(newLanguagePicker(f.ctx, f.currentLang(), func(l string) { f.lang = l }))
 	case "esc", "q":
 		return f, pop()
 	case "enter":
 		it, _ := f.m.selected()
 		switch v := it.Value.(string); v {
 		case "sprint":
-			return f, push(newSprintPicker(f.ctx))
+			return f, push(newSprintPicker(f.ctx, f.currentLang()))
 		default:
-			return f, push(newSnippetPicker(f.ctx, v))
+			return f, push(newSnippetPicker(f.ctx, v, f.currentLang()))
 		}
 	}
 	return f, nil
 }
 
 func (f *freeScreen) View() string {
-	return lipgloss.JoinVertical(lipgloss.Left, f.ctx.S.Muted.Render(langName(f.ctx.Lang())), "", f.m.view(contentWidth(f.ctx), 8))
+	return lipgloss.JoinVertical(lipgloss.Left, f.ctx.S.Muted.Render(langName(f.currentLang())), "", f.m.view(contentWidth(f.ctx), 8))
 }
 
 func (f *freeScreen) Help() help.KeyMap {
-	return bindings{short: kbs(kb("up|k", "↑/k", "up"), kb("down|j", "↓/j", "down"), kb("enter", "enter", "open"), kb("esc", "esc", "back"))}
+	return bindings{short: kbs(kb("up|k", "↑/k", "up"), kb("down|j", "↓/j", "down"), kb("enter", "enter", "open"), kb("L", "L", "language"), kb("esc", "esc", "back"))}
+}
+
+// languagePicker chooses one language for the screen that pushed it, without
+// changing the active course language (the app's free-practice chip behavior).
+type languagePicker struct {
+	ctx    *Ctx
+	m      *menu
+	onPick func(string)
+}
+
+func newLanguagePicker(c *Ctx, current string, onPick func(string)) *languagePicker {
+	var items []item
+	cur := 0
+	for i, l := range c.Cat.Languages() {
+		badge := ""
+		if l == current {
+			badge = c.S.Success.Render(c.G.Check)
+			cur = i
+		}
+		items = append(items, item{Label: langName(l), Value: l, Badge: badge})
+	}
+	m := newMenu(c, "langs.pick", items)
+	m.cursor = cur
+	m.filterable = true
+	m.syncHeat(true)
+	return &languagePicker{c, m, onPick}
+}
+
+func (p *languagePicker) Title() string { return p.ctx.T("lang.title") }
+func (p *languagePicker) Init() tea.Cmd { return nil }
+
+func (p *languagePicker) Update(msg tea.Msg) (Screen, tea.Cmd) {
+	k, ok := msg.(tea.KeyMsg)
+	if !ok {
+		return p, nil
+	}
+	if p.m.handleFilter(k.String(), k.Runes) {
+		return p, nil
+	}
+	switch k.String() {
+	case "up", "k":
+		p.m.move(-1)
+	case "down", "j":
+		p.m.move(1)
+	case "esc", "q":
+		return p, pop()
+	case "enter":
+		if it, ok := p.m.selected(); ok {
+			p.onPick(it.Value.(string))
+			return p, pop()
+		}
+	}
+	return p, nil
+}
+
+func (p *languagePicker) View() string { return p.m.view(contentWidth(p.ctx), p.ctx.H-10) }
+
+func (p *languagePicker) Help() help.KeyMap {
+	return bindings{short: kbs(kb("up|k", "↑/k", "up"), kb("down|j", "↓/j", "down"),
+		kb("enter", "enter", "select"), kb("/", "/", "filter"), kb("esc", "esc", "back"))}
 }
 
 // snippetPicker lists the active language's snippets (Zen / Precision /
@@ -87,15 +158,16 @@ func (f *freeScreen) Help() help.KeyMap {
 type snippetPicker struct {
 	ctx  *Ctx
 	mode string
+	lang string
 	m    *menu
 }
 
 var diffRank = map[content.Difficulty]int{content.Beginner: 0, content.Intermediate: 1, content.Advanced: 2, content.Expert: 3}
 
-func newSnippetPicker(c *Ctx, mode string) *snippetPicker {
+func newSnippetPicker(c *Ctx, mode, lang string) *snippetPicker {
 	lvl := typing.LevelForXP(c.TotalXP())
 	done := c.DB.SnippetsDone()
-	list := append([]content.Snippet(nil), c.Cat.SnippetsFor(c.Lang())...)
+	list := append([]content.Snippet(nil), c.Cat.SnippetsFor(lang)...)
 	sort.SliceStable(list, func(i, j int) bool { return diffRank[list[i].Difficulty] < diffRank[list[j].Difficulty] })
 	var items []item
 	for _, sn := range list {
@@ -111,7 +183,7 @@ func newSnippetPicker(c *Ctx, mode string) *snippetPicker {
 	}
 	m := newMenu(c, "snip."+mode, items)
 	m.filterable = true
-	return &snippetPicker{c, mode, m}
+	return &snippetPicker{c, mode, lang, m}
 }
 
 func (p *snippetPicker) Title() string { return p.ctx.T("mode." + p.mode) }
@@ -143,7 +215,7 @@ func (p *snippetPicker) Update(msg tea.Msg) (Screen, tea.Cmd) {
 func (p *snippetPicker) View() string {
 	c, s := p.ctx, p.ctx.S
 	w := contentWidth(c)
-	title := s.Muted.Render(langName(c.Lang()))
+	title := s.Muted.Render(langName(p.lang))
 	if c.W >= 120 {
 		lw := w/2 + 4
 		list := p.m.view(lw, c.H-10)
@@ -181,12 +253,13 @@ func categoryLabel(cat string) string {
 
 // sprintPicker chooses the window, then starts a chained run.
 type sprintPicker struct {
-	ctx *Ctx
-	m   *menu
+	ctx  *Ctx
+	lang string
+	m    *menu
 }
 
-func newSprintPicker(c *Ctx) *sprintPicker {
-	return &sprintPicker{c, newMenu(c, "sprint", []item{{Label: "30 s", Value: 30}, {Label: "60 s", Value: 60}, {Label: "120 s", Value: 120}})}
+func newSprintPicker(c *Ctx, lang string) *sprintPicker {
+	return &sprintPicker{c, lang, newMenu(c, "sprint", []item{{Label: "30 s", Value: 30}, {Label: "60 s", Value: 60}, {Label: "120 s", Value: 120}})}
 }
 
 func (p *sprintPicker) Title() string { return p.ctx.T("mode.sprint") }
@@ -213,21 +286,21 @@ func (p *sprintPicker) Update(msg tea.Msg) (Screen, tea.Cmd) {
 				break
 			}
 		}
-		return p, push(newPractice(p.ctx, runSpec{Mode: "sprint", Snippet: randomSnippet(p.ctx, d), Window: time.Duration(it.Value.(int)) * time.Second}))
+		return p, push(newPractice(p.ctx, runSpec{Mode: "sprint", Snippet: randomSnippet(p.ctx, p.lang, d), Window: time.Duration(it.Value.(int)) * time.Second}))
 	}
 	return p, nil
 }
 
-// randomSnippet is a random snippet of the active language at a difficulty.
-func randomSnippet(c *Ctx, d content.Difficulty) content.Snippet {
+// randomSnippet is a random snippet of a language at a difficulty.
+func randomSnippet(c *Ctx, lang string, d content.Difficulty) content.Snippet {
 	var pool []content.Snippet
-	for _, s := range c.Cat.SnippetsFor(c.Lang()) {
+	for _, s := range c.Cat.SnippetsFor(lang) {
 		if s.Difficulty == d {
 			pool = append(pool, s)
 		}
 	}
 	if len(pool) == 0 {
-		pool = c.Cat.SnippetsFor(c.Lang())
+		pool = c.Cat.SnippetsFor(lang)
 	}
 	return pool[rand.Intn(len(pool))]
 }

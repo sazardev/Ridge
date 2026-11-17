@@ -9,10 +9,20 @@ cd tui
 make run        # syncs ../assets/content into the embed dir, then runs
 make build      # -> bin/ridge
 make test       # go test ./...   (go test ./internal/ui -update rewrites goldens)
+make matrix     # PTY smoke test: dark/light, truecolor/256/ANSI, NO_COLOR, dumb, 40x20–200x60, C locale
+make install    # -> ~/.local/bin/ridge (PREFIX=/usr/local make install to change)
 ```
 
 Data lives in `$RIDGE_DATA/ridge.db` (default: your config dir under `ridge/`).
 `NO_COLOR=1` drops colors; a non-UTF-8 locale switches to ASCII glyphs.
+
+The default palette is `auto`: Ridge reads the terminal's real background
+(OSC 11) and paints only with the terminal's own foreground and ANSI colors,
+so Gruvbox, Catppuccin or Solarized keep their look. Picking one of the
+app's palettes only swaps the accent pair; semantic colors stay inherited.
+`RIDGE_PALETTE=auto ridge` overrides the saved palette for one run.
+Accessible mode drops color and motion; non-UTF-8 locales get width-preserving
+ASCII glyphs. `make matrix` exercises those cases in a PTY.
 
 ## Layout
 

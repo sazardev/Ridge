@@ -25,10 +25,10 @@ type action struct {
 
 func paletteActions() []action {
 	return []action{
-		{"home.zen", "", func(c *Ctx) tea.Cmd { return pushHome(newSnippetPicker(c, "zen")) }},
-		{"home.sprint", "", func(c *Ctx) tea.Cmd { return pushHome(newSprintPicker(c)) }},
-		{"home.prec", "", func(c *Ctx) tea.Cmd { return pushHome(newSnippetPicker(c, "precision")) }},
-		{"home.surv", "", func(c *Ctx) tea.Cmd { return pushHome(newSnippetPicker(c, "survival")) }},
+		{"home.zen", "", func(c *Ctx) tea.Cmd { return pushHome(newSnippetPicker(c, "zen", c.Lang())) }},
+		{"home.sprint", "", func(c *Ctx) tea.Cmd { return pushHome(newSprintPicker(c, c.Lang())) }},
+		{"home.prec", "", func(c *Ctx) tea.Cmd { return pushHome(newSnippetPicker(c, "precision", c.Lang())) }},
+		{"home.surv", "", func(c *Ctx) tea.Cmd { return pushHome(newSnippetPicker(c, "survival", c.Lang())) }},
 		{"home.daily", "d", func(c *Ctx) tea.Cmd { return pushHome(newDaily(c)) }},
 		{"home.warmup", "w", func(c *Ctx) tea.Cmd { return pushHome(newWarmUp(c)) }},
 		{"home.courses", "c", func(c *Ctx) tea.Cmd { return pushHome(newCourses(c)) }},

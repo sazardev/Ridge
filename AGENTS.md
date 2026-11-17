@@ -48,6 +48,12 @@ specified but **not yet implemented**; the app remains offline-first (local
 `drift`/SQLite + `flutter_secure_storage` + `shared_preferences`), with the
 Firebase pieces additionally wired for accounts.
 
+A second, terminal-native edition lives in **`tui/`** (Go + Bubble Tea):
+the same snippet + learning-path JSON, the same game rules and modes,
+rendered as a TUI. It keeps its own SQLite DB (never the Flutter drift
+file) and inherits the terminal's own palette by default (`auto`), per
+`DESIGN.md`.
+
 ## Commands
 
 ```sh
@@ -67,6 +73,12 @@ flutter test test/features/practice/finish_practice_session_usecase_test.dart   
 bash tool/check.sh                 # the full gate: format check, analyze, architecture check, tests — same as pre-push/CI
 bash tool/format.sh                # auto-format the whole repo (check.sh only verifies formatting)
 dart run tool/check_architecture.dart   # just the layering + 500-line-file rules
+
+cd tui && make run                 # terminal edition (syncs assets, then runs)
+cd tui && make build               # -> tui/bin/ridge
+cd tui && make test                # Go suite; `go test ./internal/ui -update` rewrites goldens
+cd tui && make matrix              # PTY smoke matrix: light/dark, color depths, NO_COLOR, sizes, C locale
+cd tui && make install             # -> ~/.local/bin/ridge (PREFIX=... to change)
 ```
 
 On Linux, `flutter test` and any `dart run tool/*` resolve the package and
@@ -186,6 +198,23 @@ codegen (`riverpod_generator`) — providers live in
 `presentation/providers/*.dart` with a generated `.g.dart` part file.
 Navigation is `go_router`, wired reactively to auth/lock/settings state via
 a `ChangeNotifier` refresh listener in `lib/core/router/app_router.dart`.
+
+### Terminal edition (`tui/`)
+
+`tui/` is a standalone Go module (`go 1.27`) — not a Flutter feature. It
+ports the domain 1:1 (`internal/typing`, `internal/progress`), persists to
+its own SQLite file, and reads the *same* `assets/content/**` JSON through
+`sync_assets.sh` + `go:embed`; `internal/content` tests fail if the embedded
+copy drifts from the Flutter assets. UI is Bubble Tea + Lip Gloss in
+`internal/ui`, with `DESIGN.md` as its design contract.
+
+Colors are semantic roles only (`internal/ui/theme.go`): the default `auto`
+palette uses the terminal's foreground and ANSI palette (OSC 11 measures the
+background; contrast is WCAG-checked), and a named palette changes only the
+accent pair — text, muted text and success/warning/danger stay
+terminal-owned. `NO_COLOR`/`TERM=dumb` drop color and motion; non-UTF-8
+locales get width-preserving ASCII glyphs (`internal/ui/ascii.go`). Run
+`make matrix` for the supported terminal matrix.
 
 ## Codebase-wide constructor convention
 
