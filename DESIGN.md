@@ -60,7 +60,8 @@ and dark terminals, generous padding, gentle spinners and markdown rendered with
 ## Spacing and layout
 
 - Unit = one cell; padding 1×2 (rows×cols) inside boxes; margins of 1 row between blocks.
-- Minimum 80×24; centered content column of ≤ 100 cells on wide terminals; lists fill height.
+- **Orientation decides the frame**: landscape (wide) composes side-by-side panes, square stacks the level/facts panel under the menu, portrait stacks list + preview and gives the typing view more breathing room. The same screen never assumes a desktop grid.
+- Designed for 80×24; usable from 40×20; centered content column of ≤ 100 cells on wide terminals; lists fill height.
 - Help view at the bottom, one line short help, `?` toggles the full help.
 - Usable from 40×20 cells: a single column, no side-by-side panes below 60 columns.
 - Labels shorten before content does (`Downloads` → `DL`); tables drop low-priority columns first, by a declared priority.

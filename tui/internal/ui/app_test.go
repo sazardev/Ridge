@@ -262,7 +262,7 @@ func TestCommandPalette(t *testing.T) {
 }
 
 func TestEveryScreenFitsTheTerminal(t *testing.T) {
-	for _, sz := range [][2]int{{80, 24}, {40, 20}, {60, 24}, {200, 60}, {120, 40}} {
+	for _, sz := range [][2]int{{80, 24}, {40, 20}, {60, 24}, {200, 60}, {120, 40}, {60, 50}, {80, 50}, {80, 80}, {60, 80}, {160, 40}, {200, 20}, {100, 30}, {100, 26}, {50, 30}} {
 		a := newApp(t, true)
 		a.Update(tea.WindowSizeMsg{Width: sz[0], Height: sz[1]})
 		c := a.ctx
@@ -671,5 +671,46 @@ func TestF1OpensTheGuide(t *testing.T) {
 	}
 	if out := a.View(); !strings.Contains(out, "Guide") && !strings.Contains(out, "Guía") {
 		t.Fatal("the guide rendered no title")
+	}
+}
+
+func TestOrientationClassification(t *testing.T) {
+	for _, tc := range []struct {
+		w, h int
+		want orientation
+	}{
+		{60, 80, portrait}, {50, 90, portrait}, {80, 50, landscape},
+		{200, 30, landscape}, {80, 80, square}, {100, 100, square}, {60, 50, square},
+	} {
+		if got := orientationFor(tc.w, tc.h); got != tc.want {
+			t.Errorf("orientationFor(%d,%d) = %v, want %v", tc.w, tc.h, got, tc.want)
+		}
+	}
+}
+
+func TestResponsiveHomeSideColumn(t *testing.T) {
+	lineWith := func(out, a, b string) bool {
+		for _, ln := range strings.Split(out, "\n") {
+			if strings.Contains(ln, a) && strings.Contains(ln, b) {
+				return true
+			}
+		}
+		return false
+	}
+	wide := newApp(t, true)
+	wide.Update(tea.WindowSizeMsg{Width: 160, Height: 40})
+	wide.stack = []Screen{newHome(wide.ctx)}
+	if !lineWith(wide.View(), "Continue", "LEVEL") {
+		t.Fatal("a wide terminal should put the level panel beside the menu")
+	}
+	portrait := newApp(t, true)
+	portrait.Update(tea.WindowSizeMsg{Width: 60, Height: 80})
+	portrait.stack = []Screen{newHome(portrait.ctx)}
+	out := portrait.View()
+	if lineWith(out, "Continue", "LEVEL") {
+		t.Fatal("a portrait pane should stack the level panel below the menu")
+	}
+	if !strings.Contains(out, "LEVEL") {
+		t.Fatal("a tall portrait pane should still show the level panel")
 	}
 }

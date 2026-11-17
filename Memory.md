@@ -41,7 +41,9 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   Verificada con `cd tui && go test ./...`, `go vet ./...` y `make matrix`
   (claro/oscuro, truecolor/256/ANSI, `NO_COLOR`, `TERM=dumb`, 40×20–200×60,
   locale C y tmux). Motion a 60 fps (incluido el ambiente), ratón con clic en
-  filas/rueda, `F1` abre la guía y `:`/Ctrl+P la paleta de comandos.
+  filas/rueda, `F1` abre la guía y `:`/Ctrl+P la paleta de comandos. Layout
+  orientado por proporción: landscape con paneles laterales, square/portrait
+  apilados.
 - Modos de práctica: Zen, Sprint, Precisión, **Survival** (SPEC.md §5.8:
   vidas, combo, multiplicador) y **Reto Diario** (SPEC.md §5.4, Fase 0
   offline-only: mismo snippet para todo el mundo calculado
@@ -288,6 +290,14 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   presupuesto 16,7 ms). La barra de progreso mantiene el gradiente también
   en modo ASCII; el resaltado y el flash de tecleo ya usaban el mismo
   ticker.
+- **Responsive**: `layout.go` clasifica por proporción (portrait <0.85,
+  square <1.45, landscape). Home usa panel lateral en landscape (≥100×26),
+  apila nivel/hechos bajo el menú en square/portrait altos; el picker de
+  snippets pasa a preview lateral en landscape y apilada en portrait/square;
+  resultados usa cifras compactas si el ancho <72; pestañas de Progreso se
+  abrevian bajo 48 celdas; la práctica gana aire vertical en portrait.
+  Matriz de tests 40×20, 50×30, 60×50, 60×80, 80×80, 100×26, 160×40,
+  200×20 y 200×60.
 - Verificado: `go vet`, `go test ./...`, benchmarks y `make matrix`;
   probados clic y rueda reales por PTY (SGR), pestañas, Reto Diario, guía,
   paleta y tmux. Actualizados README/DESIGN/AGENTS/CLAUDE.

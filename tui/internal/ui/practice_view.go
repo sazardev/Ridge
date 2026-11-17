@@ -61,7 +61,10 @@ func (p *practiceScreen) View() string {
 	h := max(3, c.H-9-kbRows)
 	code := p.renderCode(w, h)
 	free := h - lipgloss.Height(code)
-	top := strings.Repeat("\n", min(4, max(0, free*2/5)))
+	// Tall portrait panes get a little more breathing room above the code;
+	// short windows keep it near the top where the eye already is.
+	topCap := max(4, c.H/6)
+	top := strings.Repeat("\n", min(topCap, max(0, free*2/5)))
 	parts := []string{title, bar, top + code, "", ansi.Truncate(p.stats(w), w, "…")}
 	if kbView != "" {
 		parts = append(parts, "", kbView)

@@ -49,7 +49,9 @@ propio SQLite y no comparte progreso con la app Flutter. Por defecto usa solo
 la paleta ANSI y el fondo de la terminal; `NO_COLOR`, `TERM=dumb` y locales no
 UTF-8 degradan a texto/ASCII sin romper el layout. Es teclado-primero pero con
 ratón (clic en filas, rueda para listas), guía con `F1` y paleta de comandos
-con `:`/`Ctrl+P`; `make matrix` prueba la matriz de terminales soportada.
+con `:`/`Ctrl+P`; el layout responde a la orientación del terminal
+(landscape con paneles laterales, square/portrait apilados). `make matrix`
+prueba la matriz de terminales soportada.
 
 ## Documentación
 

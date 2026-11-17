@@ -8,6 +8,7 @@ import (
 	"github.com/charmbracelet/bubbles/help"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/charmbracelet/x/ansi"
 	"github.com/omar/ridge/tui/internal/service"
 	"github.com/omar/ridge/tui/internal/typing"
 )
@@ -199,8 +200,9 @@ func (r *resultsScreen) View() string {
 		}
 		return ""
 	}
+	compact := c.H < 32 || w < 72 || c.Set.Accessible
 	hero := func(n, label string, st lipgloss.Style, extra string) string {
-		if c.H < 32 || c.Set.Accessible { // small windows: plain text instead of big digits
+		if compact { // small windows: plain text instead of big digits
 			return st.Render(n) + " " + s.Muted.Render(label) + extra
 		}
 		rows := bigNumber(n)
@@ -221,8 +223,8 @@ func (r *resultsScreen) View() string {
 	if r.r.Surv != nil {
 		cols = append(cols, hero(fmt.Sprint(r.r.Surv.Score), strings.ToLower(c.T("score")), s.Body, ""))
 	}
-	if c.H < 32 || c.Set.Accessible {
-		lines = append(lines, strings.Join(cols, s.Muted.Render("  ·  ")))
+	if compact {
+		lines = append(lines, ansi.Truncate(strings.Join(cols, s.Muted.Render("  ·  ")), w, "…"))
 	} else {
 		var spaced []string
 		for i, col := range cols {

@@ -233,14 +233,22 @@ func (h *homeScreen) View() string {
 			s.Muted.Render(fmt.Sprintf(" %d/%d", xp, h.snap.hi-h.snap.lo)), " ",
 			s.Badge.Render(langName(c.Lang())))
 	}
-	wide := c.W >= 112
+	wide := c.W >= 100 && c.H >= 26 && !c.isPortrait()
 	lw := w
 	if wide {
 		lw = 62
 	}
-	body := h.m.view(lw, c.H-lipgloss.Height(head)-8)
+	// Tall portrait/square panes have vertical room the menu cannot use:
+	// stack the day's facts below it instead of leaving a blank half-screen.
+	tail := ""
+	tailRows := 0
+	if !wide && !c.isLandscape() && c.H >= 50 {
+		tail = "\n\n" + h.today()
+		tailRows = lipgloss.Height(tail)
+	}
+	body := h.m.view(lw, max(3, c.H-lipgloss.Height(head)-8-tailRows))
 	if wide {
-		body = lipgloss.JoinHorizontal(lipgloss.Top, body, "      ", h.today())
+		body = lipgloss.JoinHorizontal(lipgloss.Top, body, "    ", h.today())
 		status = ""
 	}
 	nudge := ""
@@ -249,10 +257,10 @@ func (h *homeScreen) View() string {
 	}
 	if status == "" {
 		h.m.top = lipgloss.Height(head) + 1
-		return lipgloss.JoinVertical(lipgloss.Left, head, "", body) + nudge
+		return lipgloss.JoinVertical(lipgloss.Left, head, "", body) + nudge + tail
 	}
 	h.m.top = lipgloss.Height(head) + 1 + lipgloss.Height(status) + 1
-	return lipgloss.JoinVertical(lipgloss.Left, head, "", status, "", body) + nudge
+	return lipgloss.JoinVertical(lipgloss.Left, head, "", status, "", body) + nudge + tail
 }
 
 func (h *homeScreen) menuModel() *menu { return h.m }

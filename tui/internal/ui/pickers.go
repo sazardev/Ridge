@@ -221,20 +221,28 @@ func (p *snippetPicker) View() string {
 	w := contentWidth(c)
 	title := s.Muted.Render(langName(p.lang))
 	p.m.top = 2
-	if c.W >= 120 {
+	preview := func(width int) string {
+		it, ok := p.m.selected()
+		if !ok {
+			return ""
+		}
+		sn := it.Value.(content.Snippet)
+		return s.Title.Render(sn.Title(c.Loc())) + "\n" + c.inline(sn.Tldr(c.Loc()), s.Muted) + "\n\n" +
+			c.renderMarkdown(sn.Explanation(c.Loc()), sn.Language, width)
+	}
+	switch {
+	case c.W >= 96 && !c.isPortrait(): // landscape / square: list + preview side by side
 		lw := w/2 + 4
 		list := p.m.view(lw, c.H-10)
-		it, ok := p.m.selected()
-		prev := ""
-		if ok {
-			sn := it.Value.(content.Snippet)
-			prev = s.Title.Render(sn.Title(c.Loc())) + "\n" + c.inline(sn.Tldr(c.Loc()), s.Muted) + "\n\n" +
-				c.renderMarkdown(sn.Explanation(c.Loc()), sn.Language, w-lw-6)
-		}
 		return lipgloss.JoinVertical(lipgloss.Left, title, "", lipgloss.JoinHorizontal(lipgloss.Top, list, "  ",
-			s.Pane.Width(w-lw-6).Render(prev)))
+			s.Pane.Width(w-lw-6).Render(preview(w-lw-6))))
+	case !c.isLandscape() && c.H >= 40: // tall pane: preview under the list
+		listH := max(6, c.H/2-2)
+		list := p.m.view(w, listH)
+		return lipgloss.JoinVertical(lipgloss.Left, title, "", list, "", s.Pane.Width(w).Render(preview(w)))
+	default:
+		return lipgloss.JoinVertical(lipgloss.Left, title, "", p.m.view(w, c.H-10))
 	}
-	return lipgloss.JoinVertical(lipgloss.Left, title, "", p.m.view(w, c.H-10))
 }
 
 func (p *snippetPicker) Help() help.KeyMap {

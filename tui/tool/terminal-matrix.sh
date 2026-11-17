@@ -56,6 +56,10 @@ run utf8-c-locale   "TERM=screen-256color COLORFGBG='15;0' LANG=C LC_ALL=C '$bin
 run 40x20           "TERM=screen-256color COLORFGBG='15;0' '$bin'"                             40 20
 run 80x24           "TERM=screen-256color COLORFGBG='15;0' '$bin'"                             80 24
 run 200x60          "TERM=screen-256color COLORFGBG='15;0' '$bin'"                            200 60
+run 60x50-square    "TERM=screen-256color COLORFGBG='15;0' '$bin'"                             60 50
+run 60x80-portrait  "TERM=screen-256color COLORFGBG='15;0' '$bin'"                             60 80
+run 160x40-landscape "TERM=screen-256color COLORFGBG='15;0' '$bin'"                           160 40
+run 100x26-short    "TERM=screen-256color COLORFGBG='15;0' '$bin'"                            100 26
 
 if [ "$fail" != 0 ]; then
   echo "terminal matrix failed" >&2

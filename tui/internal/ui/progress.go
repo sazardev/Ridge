@@ -99,7 +99,21 @@ func (p *progressScreen) Update(msg tea.Msg) (Screen, tea.Cmd) {
 
 func (p *progressScreen) tabNames() []string {
 	c := p.ctx
-	return []string{c.T("prog.overview"), c.T("prog.weak"), c.T("prog.activity"), c.T("prog.mastery")}
+	names := []string{c.T("prog.overview"), c.T("prog.weak"), c.T("prog.activity"), c.T("prog.mastery")}
+	if contentWidth(c) < 48 {
+		for i := range names {
+			names[i] = firstRunes(names[i], 4)
+		}
+	}
+	return names
+}
+
+func firstRunes(s string, n int) string {
+	r := []rune(s)
+	if len(r) <= n {
+		return s
+	}
+	return string(r[:n])
 }
 
 // clickBody selects a tab when the first body row is clicked.

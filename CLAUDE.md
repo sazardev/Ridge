@@ -216,8 +216,10 @@ terminal-owned. `NO_COLOR`/`TERM=dumb` drop color and motion; non-UTF-8
 locales get width-preserving ASCII glyphs (`internal/ui/ascii.go`). It is
 keyboard-first — `F1` opens the in-app guide, `:`/Ctrl+P the command
 palette — but menu rows are clickable, the wheel scrolls, and
-`RIDGE_NO_MOUSE=1` disables mouse reporting. Run `make matrix` for the
-supported terminal matrix.
+`RIDGE_NO_MOUSE=1` disables mouse reporting. Layout is orientation-aware
+(`internal/ui/layout.go`): landscape side panes, square/portrait stacked
+panels; test 40×20 through 200×60 and portrait/square panes. Run
+`make matrix` for the supported terminal matrix.
 
 ## Codebase-wide constructor convention
 
