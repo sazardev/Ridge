@@ -111,9 +111,9 @@ jobs:
 
       - name: Register the Flathub remote
         run: |
-          sudo flatpak remote-add --if-not-exists flathub \
+          flatpak remote-add --user --if-not-exists flathub \
             https://flathub.org/repo/flathub.flatpakrepo
-          flatpak remote-list
+          flatpak remote-list --user
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
@@ -173,15 +173,21 @@ jobs:
             -e "s|__RIDGE_TARBALL_SHA256__|$RIDGE_SHA256|" \
             linux/packaging/dev.omarcodes.ridge.yml
 
-      # Community-standard action for CI Flatpak builds (used by GNOME/KDE
-      # projects). We install flatpak-builder and register Flathub above
-      # because the runner does not ship either.
+      # Build as the runner user: `--install-deps-from` installs the GNOME
+      # runtime through the user installation. The system helper is not
+      # available to a non-root CI user.
       - name: Package Flatpak
-        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
-        with:
-          bundle: dev.omarcodes.ridge.flatpak
-          manifest-path: linux/packaging/dev.omarcodes.ridge.yml
-          cache-key: flatpak-builder-${{ github.sha }}
+        run: |
+          xvfb-run -a flatpak-builder --user \
+            --repo=repo --disable-rofiles-fuse \
+            --install-deps-from=flathub \
+            --subject="Built from $GITHUB_SHA" \
+            --force-clean --default-branch=master --arch=x86_64 \
+            --ccache --state-dir .flatpak-builder build-dir \
+            linux/packaging/dev.omarcodes.ridge.yml
+          flatpak build-bundle --arch=x86_64 repo \
+            dev.omarcodes.ridge.flatpak dev.omarcodes.ridge master
+          ls -lh dev.omarcodes.ridge.flatpak
 
       - uses: actions/upload-artifact@v4
         with:
