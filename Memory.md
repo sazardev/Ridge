@@ -44,6 +44,12 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   filas/rueda, `F1` abre la guía y `:`/Ctrl+P la paleta de comandos. Layout
   orientado por proporción: landscape con paneles laterales, square/portrait
   apilados.
+- **Release actual `v1.23.4+28`**: CI + release-builds verdes (Android AAB,
+  Windows MSIX, Linux Flatpak, Web, AUR metadata); GitHub Release con AAB,
+  MSIX, Flatpak, Web zip, tarball Linux y símbolos. Web desplegada en
+  `https://ridge-typing.web.app` (Firebase Hosting, COOP/COEP + SPA
+  fallback); reglas/indexes de Firestore desplegadas. Functions sigue
+  bloqueado por plan Blaze y AUR/stores no tienen secrets de publicación.
 - Modos de práctica: Zen, Sprint, Precisión, **Survival** (SPEC.md §5.8:
   vidas, combo, multiplicador) y **Reto Diario** (SPEC.md §5.4, Fase 0
   offline-only: mismo snippet para todo el mundo calculado
@@ -227,6 +233,35 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
 ---
 
 ## Historial de sesiones
+
+### 2026-11-16 — Release v1.23.4: tag, artifacts, web y bloqueos externos
+
+- **Bump/tag**: `tool/version_bump.dart` calculó `1.23.0` (feat TUI + Mojo),
+  pero el commit de release llevaba `[skip ci]` y GitHub también salta los
+  workflows disparados por el **tag**; se corrigió `tool/release.sh`, se
+  añadió `workflow_dispatch` a release-builds y se cortó `1.23.4+28` como
+  release realmente desplegable.
+- **Fixes de release**: tests TUI heredaban `CI=true` (forzaba reduced
+  motion) y fallaban en CI; `flatpak-builder` no existía en el runner y el
+  system helper rechazaba `Deploy` como no-root (se construye con
+  `--user`); Visual Studio 2022 18 rompía `local_auth_windows` por
+  `<experimental/coroutine>` (define de silencio); MSIX pedía confirmación
+  interactiva del certificado (`--install-certificate false`).
+- **Green**: CI (quality gate + TUI), Android AAB, Windows MSIX, Linux
+  Flatpak, Web y AUR metadata; `v1.23.4` es el primer tag con la matriz
+  completa. Los tags `v1.23.0`–`v1.23.3` quedan como intentos intermedios
+  (algunos con release parcial); el vigente es `v1.23.4`.
+- **Deploy**: `https://ridge-typing.web.app` (Firebase Hosting) sirve el
+  artifact web exacto de `v1.23.4` con COOP/COEP, SPA fallback y caché
+  inmutable para `/assets`, `/canvaskit`, `/icons`; reglas e índices de
+  Firestore desplegados. GitHub Release `v1.23.4` publica AAB, MSIX,
+  Flatpak, Web zip, tarball Linux y símbolos.
+- **Bloqueado**: `firebase deploy --only functions` falla porque el
+  proyecto sigue en plan Spark (requiere Blaze); AUR no se empuja sin
+  `AUR_SSH_PRIVATE_KEY`; Play Store/Windows Store/Flathub no tienen secrets
+  ni submission automática todavía. El artifact Flatpak queda descargable,
+  no enviado a Flathub.
+
 
 ### 2026-11-16 — TUI integrada + Mojo fusionado: auditoría PC↔TUI y tema de terminal
 
