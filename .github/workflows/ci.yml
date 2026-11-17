@@ -47,6 +47,7 @@ jobs:
       - name: Go vet and tests
         working-directory: tui
         run: |
+          make assets
           go vet ./...
           make test
 
