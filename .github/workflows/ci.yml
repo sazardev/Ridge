@@ -34,12 +34,34 @@ jobs:
             exit 1
           }
 
+  tui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: tui/go.mod
+          cache-dependency-path: tui/go.sum
+
+      - name: Go vet and tests
+        working-directory: tui
+        run: |
+          go vet ./...
+          make test
+
+      # PTY smoke matrix: light/dark, truecolor/256/ANSI, NO_COLOR, dumb,
+      # 40x20–200x60 and a non-UTF-8 locale. `script` ships with util-linux.
+      - name: Terminal matrix
+        working-directory: tui
+        run: make matrix
+
   # Bumps pubspec.yaml + CHANGELOG.md from Conventional Commits and tags the
   # release (STACK.md §10.4). The tag it creates is what triggers the
   # per-platform build jobs in §12 — this job never builds or publishes
   # anything itself.
   release:
-    needs: quality-gate
+    needs: [quality-gate, tui]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:

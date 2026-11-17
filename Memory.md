@@ -249,11 +249,12 @@ fechada al historial, actualiza "Estado actual" si cambió, y ajusta
   el idioma activo de los cursos), opción "sistema" en idioma de interfaz
   (ciclo sistema→EN→ES), nombres de paleta iguales a la app, `make install`
   y `make matrix` (PTY: claro/oscuro, truecolor/256/ANSI, `NO_COLOR`,
-  `TERM=dumb`, 40×20–200×60, locale C).
+  `TERM=dumb`, 40×20–200×60, locale C). Resultados, progreso e historial
+  muestran **cpm** (no wpm /5) como la app.
 - **Entornos no UTF-8**: `ascii.go` sanea el frame final con reemplazos 1:1
   (preserva anchos); banner braille oculto; cabecera de Home compacta a
   40 columnas sin partir "Day streak". Añadidos tests de tema, ASCII y
-  paridad.
+  paridad; job `tui` en CI (`go vet`, `make test`, `make matrix`).
 - Verificado: `cd tui && go vet ./... && go test ./...` y
   `bash tool/terminal-matrix.sh` en verde (tmux comprobado aparte con el
   harness PTY); `dart format`, `tool/check_architecture.dart` y `flutter

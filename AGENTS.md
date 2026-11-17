@@ -241,7 +241,8 @@ writing new constructors instead of writing `const ClassName(...)`.
   `tool/check_architecture.dart`, `flutter test`. CI
   (`.github/workflows/ci.yml`, Flutter 3.47.2 stable) additionally
   re-runs `build_runner build` and fails if generated output differs
-  from what's committed.
+  from what's committed, and runs a separate `tui` job (`go vet ./...`,
+  `make test`, `make matrix`).
 - Lints: `very_good_analysis` (strict superset of `flutter_lints`) plus
   `strict-casts`/`strict-inference`/`strict-raw-types`, configured in
   `analysis_options.yaml`. Any disabled rule there carries an inline
