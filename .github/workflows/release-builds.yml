@@ -103,6 +103,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y clang cmake ninja-build pkg-config \
             libgtk-3-dev liblzma-dev libsecret-1-dev libasound2-dev
+
+      # The flatpak action invokes flatpak-builder through xvfb-run; install
+      # the tooling explicitly instead of assuming the runner image has it.
+      - name: Install Flatpak builder
+        run: sudo apt-get install -y flatpak flatpak-builder xvfb
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}

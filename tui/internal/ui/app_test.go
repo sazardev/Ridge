@@ -18,6 +18,11 @@ import (
 
 func newCtx(t *testing.T, onboarded bool) *Ctx {
 	t.Helper()
+	// GitHub Actions exports CI=true and some terminals use TERM=dumb; both
+	// force reduced motion in Reload. Tests must start from an interactive
+	// terminal so motion assertions are deterministic.
+	t.Setenv("CI", "")
+	t.Setenv("TERM", "xterm-256color")
 	lipgloss.SetColorProfile(termenv.Ascii) // goldens/tests never depend on the terminal
 	cat, err := content.Load()
 	if err != nil {
