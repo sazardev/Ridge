@@ -11,6 +11,11 @@ mano una sección ya publicada; una corrección es siempre una entrada nueva.
 
 ## [Unreleased]
 
+## [1.23.3] - 2026-11-16
+
+### Fixed
+- **release:** package MSIX and Flatpak unattended (a43358b)
+
 ## [1.23.2] - 2026-11-16
 
 ### Fixed
